@@ -3,7 +3,6 @@ using System.Linq;
 using Dapper;
 using Eagles.Interface.Infrastructure.DataAccess;
 using Ealges.Infrastructure.DataBaseModel.Model;
-
 namespace Eagles.Infrastructure.DataAccess
 {
     public class TestDapper:IAreaDataAccess

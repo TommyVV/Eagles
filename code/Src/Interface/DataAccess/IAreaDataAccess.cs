@@ -7,5 +7,7 @@ namespace Eagles.Interface.Infrastructure.DataAccess
     public interface IAreaDataAccess: IInterfaceBase
     {
         List<Area> GetAreas(string id);
+
+
     }
 }
