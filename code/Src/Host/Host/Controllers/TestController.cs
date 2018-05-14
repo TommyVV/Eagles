@@ -1,5 +1,8 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Eagles.Application.Model.Test;
+using Eagles.Base;
+using Eagles.Base.Logger;
 using Eagles.Interface.Core.Test;
 
 namespace Eagles.Host.Controllers
@@ -8,9 +11,12 @@ namespace Eagles.Host.Controllers
     {
         private ITestHandler testHandler;
 
-        public TestController(ITestHandler testHandler)
+        private ILogger log;
+
+        public TestController(ITestHandler testHandler, ILogger log)
         {
             this.testHandler = testHandler;
+            this.log = log;
         }
 
         /// <summary>
@@ -22,6 +28,7 @@ namespace Eagles.Host.Controllers
         [HttpPost]
         public TestResponse Demo(TestRequest request)
         {
+            log.LoggerInfo("hahaha");
             return testHandler.Porcess(request);
         }
     }
