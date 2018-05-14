@@ -56,10 +56,6 @@
       <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
       <Name>Eagles.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Interface\DataAccess\Eagles.Interface.Infrastructure.DataAccess.csproj">
-      <Project>{4AEB0EB8-3463-4DD3-88D2-EA6E9FED2650}</Project>
-      <Name>Eagles.Interface.Infrastructure.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Ealges.Infrastructure.DataBaseModel.csproj">
       <Project>{1C97F109-9391-4E0F-B44D-A3C6E7326DBB}</Project>
       <Name>Ealges.Infrastructure.DataBaseModel</Name>

@@ -156,7 +156,6 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CurdController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -182,18 +181,6 @@
     <ProjectReference Include="..\..\DomainService\Core\Eagles.DomainService.Core.csproj">
       <Project>{19a46959-bcc7-40de-a9ab-ab40160920e4}</Project>
       <Name>Eagles.DomainService.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DomainService\Model\Eagles.DomainService.Model.csproj">
-      <Project>{5f6b0913-2209-42a6-874a-096d0e2b52fc}</Project>
-      <Name>Eagles.DomainService.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\DataAccess\Eagles.Infrastructure.DataAccess.csproj">
-      <Project>{d730d59c-5778-49d5-893f-655c7ca5f290}</Project>
-      <Name>Eagles.Infrastructure.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\Model\Ealges.Infrastructure.DataBaseModel.csproj">
-      <Project>{1c97f109-9391-4e0f-b44d-a3c6e7326dbb}</Project>
-      <Name>Ealges.Infrastructure.DataBaseModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Interface\Core\Eagles.Interface.Core.csproj">
       <Project>{2a747e03-d095-4b54-ae55-976576a82886}</Project>
