@@ -6,6 +6,7 @@ namespace Eagles.Interface.Core
 {
     public interface ITestDemo: IInterfaceBase
     {
-        List<AreaInfo> Test(string id);
+        List<AreaInfo> Test();
+
     }
 }

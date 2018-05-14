@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICurdDataAccess.cs" />
     <Compile Include="IAreaDataAccess.cs" />
+    <Compile Include="IPartyMissionAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,5 +6,6 @@ namespace Eagles.Interface.Core.Test
     public interface ITestHandler:IInterfaceBase
     {
         TestResponse Porcess(TestRequest request);
+
     }
 }

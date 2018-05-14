@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Curd\ICurdHandler.cs" />
+    <Compile Include="PartyMission\IPartyMissionHandler.cs" />
     <Compile Include="Test\ITestHandler.cs" />
     <Compile Include="ITestDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +55,9 @@
       <Project>{3DE06D44-2860-4A92-9FDD-1529093CC970}</Project>
       <Name>Eagles.Application.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

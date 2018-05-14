@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,11 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Curd\AfterInfoRequest.cs" />
+    <Compile Include="Curd\AfterInfoResponse.cs" />
+    <Compile Include="Curd\GetInfoRequest.cs" />
+    <Compile Include="Curd\GetInfoResponse.cs" />
+    <Compile Include="Curd\GetInfosRequest.cs" />
+    <Compile Include="Curd\GetInfosRespone.cs" />
+    <Compile Include="Curd\RemoveInfoRequest.cs" />
+    <Compile Include="Curd\RemoveInfoResponse.cs" />
+    <Compile Include="Curd\UserInfo.cs" />
+    <Compile Include="PartyMission\PartyMissionRequest.cs" />
+    <Compile Include="PartyMission\PartyMissionResponse.cs" />
     <Compile Include="RequestBase.cs" />
     <Compile Include="ResponseBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestRequest.cs" />
     <Compile Include="Test\TestResponse.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
