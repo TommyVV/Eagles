@@ -19,6 +19,7 @@ namespace Eagles.Host
                         c.SingleApiVersion("v1", "TestSwagger");
                         //添加XML解析
                         c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(GetModelSummary());
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
@@ -255,7 +256,11 @@ namespace Eagles.Host
                     });
         }
 
-        //添加XML解析
+        private static string GetModelSummary()
+        {
+            return string.Format($"{System.AppDomain.CurrentDomain.BaseDirectory}/bin/Eagles.Application.Model.xml");
+        }
+
         private static string GetXmlCommentsPath()
         {
             return string.Format("{0}/bin/Eagles.Host.XML", System.AppDomain.CurrentDomain.BaseDirectory);

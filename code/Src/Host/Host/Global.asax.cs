@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
 using System.Web.Http;
@@ -12,9 +13,22 @@ namespace Eagles.Host
     {
         protected void Application_Start()
         {
-            RegisterService();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            try
+            {
+                RegisterService();
+                GlobalConfiguration.Configure(WebApiConfig.Register);
+                GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            }
+            catch (TransactionException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         private void RegisterService()

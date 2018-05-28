@@ -156,6 +156,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\WebApiException.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -165,7 +166,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="SwaggerUI\lib\.DS_Store" />
-    <Content Include="Configuration\Test.config" />
+    <Content Include="Configuration\Test.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

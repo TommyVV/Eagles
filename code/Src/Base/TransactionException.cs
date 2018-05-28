@@ -4,9 +4,9 @@ namespace Eagles.Base
 {
     public class TransactionException : Exception
     {
-        private string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
-        private string ErrorCode { get; set; }
+        public string ErrorCode { get; set; }
 
         public TransactionException(string errorCode, string errorMessage)
         {
