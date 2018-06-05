@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.Curd
 {
-    public class AfterInfoRequest: RequestBase
+    public class UserInfoQueryRequest : RequestBase
     {
-        public UserInfo UserInfo { get; set; }
+        public string UserId { get; set; }
+        public string Token { get; set; }
     }
 }

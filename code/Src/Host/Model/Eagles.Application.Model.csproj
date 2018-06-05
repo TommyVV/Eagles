@@ -44,15 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Curd\AfterInfoRequest.cs" />
-    <Compile Include="Curd\AfterInfoResponse.cs" />
-    <Compile Include="Curd\GetInfoRequest.cs" />
-    <Compile Include="Curd\GetInfoResponse.cs" />
-    <Compile Include="Curd\GetInfosRequest.cs" />
-    <Compile Include="Curd\GetInfosRespone.cs" />
-    <Compile Include="Curd\RemoveInfoRequest.cs" />
-    <Compile Include="Curd\RemoveInfoResponse.cs" />
+    <Compile Include="Curd\LoginRequest.cs" />
+    <Compile Include="Curd\LoginRespone.cs" />
     <Compile Include="Curd\UserInfo.cs" />
+    <Compile Include="Curd\UserInfoQueryRequest.cs" />
+    <Compile Include="Curd\UserInfoQueryResponse.cs" />
+    <Compile Include="Curd\UserModifyRequest.cs" />
+    <Compile Include="Curd\UserModifyResponse.cs" />
     <Compile Include="RequestBase.cs" />
     <Compile Include="ResponseBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

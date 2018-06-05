@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.Curd
 {
-   public  class RemoveInfoRequest : RequestBase
+    public class UserInfoQueryResponse : ResponseBase
     {
+        public UserInfo ResultUserInfo { get; set; }
     }
 }
