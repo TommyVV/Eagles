@@ -44,8 +44,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Curd\ActivityDetailQueryRequest.cs" />
+    <Compile Include="Curd\ActivityDetailQueryResponse.cs" />
+    <Compile Include="Curd\ActivityQueryRequest.cs" />
+    <Compile Include="Curd\ActivityQueryResponse.cs" />
+    <Compile Include="Curd\ArticleQueryRequest.cs" />
+    <Compile Include="Curd\ArticleQueryResponse.cs" />
+    <Compile Include="Curd\ArticleReleaseRequest.cs" />
+    <Compile Include="Curd\ArticleReleaseResponse.cs" />
+    <Compile Include="Curd\IntegralExchangeQueryRequest.cs" />
+    <Compile Include="Curd\IntegralExchangeQueryResponse.cs" />
+    <Compile Include="Curd\IntegralGoodsDetailQueryRequest.cs" />
+    <Compile Include="Curd\IntegralGoodsDetailQueryResponse.cs" />
+    <Compile Include="Curd\IntegralGoodsQueryRequest.cs" />
+    <Compile Include="Curd\IntegralGoodsQueryResponse.cs" />
+    <Compile Include="Curd\IntegralRankQueryRequest.cs" />
+    <Compile Include="Curd\IntegralRankQueryResponse.cs" />
     <Compile Include="Curd\LoginRequest.cs" />
-    <Compile Include="Curd\LoginRespone.cs" />
+    <Compile Include="Curd\LoginResponse.cs" />
+    <Compile Include="Curd\MenuQueryRequest.cs" />
+    <Compile Include="Curd\MenuQueryResponse.cs" />
+    <Compile Include="Curd\RollImgQueryRequest.cs" />
+    <Compile Include="Curd\RollImgQueryResponse.cs" />
+    <Compile Include="Curd\TaskDetailQueryRequest.cs" />
+    <Compile Include="Curd\TaskDetailQueryResponse.cs" />
+    <Compile Include="Curd\TaskQueryRequest.cs" />
+    <Compile Include="Curd\TaskQueryResponse.cs" />
     <Compile Include="Curd\UserInfo.cs" />
     <Compile Include="Curd\UserInfoQueryRequest.cs" />
     <Compile Include="Curd\UserInfoQueryResponse.cs" />

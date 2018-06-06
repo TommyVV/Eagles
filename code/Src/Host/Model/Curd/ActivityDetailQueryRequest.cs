@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.Curd
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class LoginRespone : ResponseBase
+    class ActivityDetailQueryRequest : RequestBase
     {
         public string Token { get; set; }
+
+        public string ActivityId { get; set; }
     }
 }
