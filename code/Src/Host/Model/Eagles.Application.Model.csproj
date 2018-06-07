@@ -48,8 +48,14 @@
     <Compile Include="Curd\ActivityDetailQueryResponse.cs" />
     <Compile Include="Curd\ActivityQueryRequest.cs" />
     <Compile Include="Curd\ActivityQueryResponse.cs" />
+    <Compile Include="Curd\ActivityReleaseCompleteRequest.cs" />
+    <Compile Include="Curd\ActivityReleaseRequest.cs" />
+    <Compile Include="Curd\ActivityReleaseCompleteResponse.cs" />
+    <Compile Include="Curd\ActivityReleaseResponse.cs" />
     <Compile Include="Curd\ActivitySignCountRequest.cs" />
     <Compile Include="Curd\ActivitySignCountResponse.cs" />
+    <Compile Include="Curd\ActivityTaskOperRequest.cs" />
+    <Compile Include="Curd\ActivityTaskOperResponse.cs" />
     <Compile Include="Curd\ArticleQueryRequest.cs" />
     <Compile Include="Curd\ArticleQueryResponse.cs" />
     <Compile Include="Curd\ArticleReleaseRequest.cs" />
@@ -76,6 +82,10 @@
     <Compile Include="Curd\TaskQueryResponse.cs" />
     <Compile Include="Curd\TaskCommentQueryRequest.cs" />
     <Compile Include="Curd\TaskCommentQueryResponse.cs" />
+    <Compile Include="Curd\TaskReleaseCompleteRequest.cs" />
+    <Compile Include="Curd\TaskReleaseRequest.cs" />
+    <Compile Include="Curd\TaskReleaseCompleteResponse.cs" />
+    <Compile Include="Curd\TaskReleaseResponse.cs" />
     <Compile Include="Curd\TaskScoreRequest.cs" />
     <Compile Include="Curd\TaskScoreResponse.cs" />
     <Compile Include="Curd\TaskStepOperationRequest.cs" />
