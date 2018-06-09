@@ -1,0 +1,81 @@
+.scroll-area {
+  margin-bottom: 4.9066666667rem; }
+
+.goods-img {
+  width: 100%;
+  height: auto !important; }
+
+.good-intro {
+  padding: 15px 19px; }
+  .good-intro .goods-info {
+    width: 100%;
+    height: 0.7466666667rem; }
+    .good-intro .goods-info .goods-title {
+      float: left;
+      width: 80%;
+      font-size: 0.64rem;
+      color: #141414;
+      line-height: 0.7466666667rem; }
+    .good-intro .goods-info .num {
+      float: left;
+      width: 20%;
+      text-align: right;
+      color: #949494;
+      font-size: 0.512rem;
+      line-break: 0.7466666667rem; }
+  .good-intro .points {
+    font-size: 0.64rem;
+    color: #e52424;
+    line-height: 1.024rem; }
+  .good-intro .time {
+    margin-top: 1.536rem;
+    font-size: 0.512rem;
+    color: #949494;
+    padding-top: 0.448rem;
+    border-top: 1px solid #EEEEEE; }
+
+.goods-detail {
+  padding: 0px 15px;
+  border-top: 0.4266666667rem solid #F8F8F8; }
+  .goods-detail .detail-title {
+    padding: 0.64rem 10px;
+    height: 2.1333333333rem;
+    line-height: 1.28rem;
+    color: #141414;
+    font-size: 0.768rem;
+    border-bottom: 1px solid #EEEEEE; }
+  .goods-detail .detail-content {
+    margin-top: 1.0026666667rem;
+    font-size: px2em(30);
+    color: #141414; }
+
+.oper-area {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 740px;
+  height: 4.6933333333rem;
+  background-color: white; }
+  .oper-area .oper-pos {
+    border-top: 1px solid #EEEEEE;
+    margin: 0 15px;
+    width: calc(100% - 30px);
+    border-top: 1px solid #EEEEEE;
+    text-align: center; }
+    .oper-area .oper-pos .sub-btn {
+      display: inline-block;
+      margin-top: 1.5786666667rem;
+      width: 11.0933333333rem;
+      height: 1.792rem;
+      line-height: 1.792rem;
+      color: #FFFFFF;
+      font-size: 0.64rem;
+      border-radius: 0.1706666667rem;
+      text-align: center;
+      background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+      background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+      background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+      background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+      background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818); }
+
+/*# sourceMappingURL=goodsDetail.css.map */

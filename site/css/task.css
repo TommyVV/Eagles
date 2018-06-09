@@ -1,0 +1,58 @@
+.head-area {
+  width: 100%;
+  height: 1.7066666667rem; }
+  .head-area .task-cate {
+    float: left;
+    width: 33.33%;
+    line-height: 1.7066666667rem;
+    text-align: center; }
+
+.drog-down-menu {
+  width: 100%;
+  position: relative; }
+  .drog-down-menu .menu-list {
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    padding: 0px 15px;
+    z-index: 2; }
+    .drog-down-menu .menu-list .list-item {
+      height: 1.4933333333rem;
+      border-bottom: 1px solid #EEEEEE;
+      line-height: 1.4933333333rem; }
+
+.task-item {
+  width: 100%;
+  background-color: white;
+  border-top: 0.384rem solid #f8f8f8;
+  text-align: center;
+  padding: 0.4266666667rem 17px 0px 17px; }
+  .task-item img {
+    width: 100%;
+    height: auto !important; }
+  .task-item .task-content {
+    height: 2.1973333333rem;
+    position: relative; }
+    .task-item .task-content .task-title {
+      text-align: left;
+      position: absolute;
+      top: 0.512rem;
+      left: 0;
+      right: 3.2rem;
+      color: #000000;
+      font-size: 0.768rem; }
+    .task-item .task-content .task-status {
+      float: right;
+      margin-top: 0.448rem;
+      width: 2.9866666667rem;
+      height: 0.8533333333rem;
+      font-size: 0.512rem;
+      line-height: 0.8533333333rem;
+      border-radius: 0.4266666667rem; }
+    .task-item .task-content .accept-status {
+      color: white; }
+    .task-item .task-content .init-status {
+      border: 1px solid #949494;
+      color: #949494; }
+
+/*# sourceMappingURL=task.css.map */

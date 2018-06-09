@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+body {
+  background-color: #F8F8F8; }
+
+.search-area {
+  background-color: white;
+  width: 100%;
+  height: 2.3466666667rem;
+  text-align: center; }
+  .search-area .search-position {
+    margin-top: 0.4266666667rem;
+    width: 13.2266666667rem;
+    height: 1.28rem;
+    display: inline-block; }
+  .search-area .searc-content {
+    float: left;
+    height: 1.28rem;
+    width: 10.0266666667rem;
+    background: #EEEEEE;
+    border-top-left-radius: 0.64rem;
+    border-bottom-left-radius: 0.64rem;
+    color: #949494;
+    display: inline-flex; }
+  .search-area .search-icon {
+    padding-left: 0.832rem;
+    padding-right: 0.4266666667rem;
+    font-size: 0.5973333333rem;
+    height: 1.28rem;
+    line-height: 1.28rem; }
+  .search-area .search-input {
+    width: 8.32rem;
+    height: 1.28rem;
+    border: none;
+    background: #EEEEEE;
+    outline: none; }
+  .search-area .search-btn {
+    float: left;
+    color: white;
+    width: 3.2rem;
+    height: 1.28rem;
+    background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+    text-align: center;
+    line-height: 1.28rem;
+    border-top-right-radius: 0.64rem;
+    border-bottom-right-radius: 0.64rem; }
+
+.goods-area {
+  border-top: 0.2133333333rem solid #F8F8F8; }
+
+.goods-item {
+  float: left;
+  margin: 0.2133333333rem;
+  width: 7.04rem;
+  height: 10.5173333333rem;
+  background: white; }
+  .goods-item img {
+    margin-top: 1.088rem;
+    margin-left: 1.28rem;
+    width: 4.48rem;
+    height: 4.48rem; }
+  .goods-item .item-title {
+    margin-top: 1.5786666667rem;
+    margin-left: 0.4693333333rem;
+    width: 6.1013333333rem;
+    font-size: 0.512rem;
+    height: 1.1306666667rem;
+    line-height: 0.64rem; }
+  .goods-item .item-point {
+    float: left;
+    margin-top: 1.088rem;
+    margin-left: 0.448rem;
+    font-size: 0.512rem;
+    line-height: 0.768rem;
+    color: #949494; }
+  .goods-item .item-btn {
+    float: right;
+    margin-top: 0.896rem;
+    margin-right: 0.5546666667rem;
+    width: 2.56rem;
+    height: 0.8533333333rem;
+    background: #f24848;
+    border-radius: 0.0853333333rem;
+    color: white;
+    text-align: center;
+    line-height: 0.8533333333rem; }
+
+/*# sourceMappingURL=exchange.css.map */
