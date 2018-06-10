@@ -1,87 +1,52 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+/*
+Error: File to import not found or unreadable: common/px2rem.scss.
+       Load path: E:/myProject/Eagles/site/css
+        on line 1 of E:\myProject\Eagles\site\css\login.scss
 
-html, body {
-  height: 100%; }
+1: @import 'common/px2rem.scss';
+2: * {
+3:     margin: 0;
+4:     padding: 0;
+5:     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+6: 
 
-.container {
-  height: 100%; }
-
-@media screen and (max-width: 768px) {
-  .loginModal {
-    background-color: #f8f8f8;
-    height: 100%; } }
-@media screen and (min-width: 768px) {
-  .loginModal {
-    background-color: #fff;
-    height: 100%; } }
-.loginBox {
-  background-color: #f8f8f8; }
-  .loginBox .logo {
-    margin-top: 2.3466666667rem;
-    text-align: center; }
-
-.form-horizontal {
-  padding: 2.3466666667rem 1.6rem 0rem 1.6rem; }
-  .form-horizontal .form-group {
-    position: relative;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 1.7066666667rem; }
-    .form-horizontal .form-group .form-control {
-      background-color: #f8f8f8;
-      border: none;
-      border-bottom: 1px solid #A8A8A8;
-      box-shadow: none;
-      border-radius: 0;
-      padding-left: 0.96rem;
-      font-size: 0.512rem; }
-    .form-horizontal .form-group .form-control:focus {
-      box-shadow: none; }
-    .form-horizontal .form-group .icon {
-      position: absolute;
-      display: inline-block;
-      width: 0.512rem;
-      height: 0.5546666667rem;
-      left: 0.1066666667rem;
-      bottom: 0.3413333333rem; }
-    .form-horizontal .form-group .user-icon {
-      background: url("../assets/images/user.png") no-repeat center center; }
-    .form-horizontal .form-group .pwd-icon {
-      background: url("../assets/images/lock.png") no-repeat center center; }
-    .form-horizontal .form-group .cap-icon {
-      background: url("../assets/images/verifycode.png") no-repeat center center; }
-    .form-horizontal .form-group .btn-cap {
-      position: absolute;
-      display: inline-block;
-      box-sizing: border-box;
-      width: 2.4533333333rem;
-      height: 0.8533333333rem;
-      right: 0.4266666667rem;
-      bottom: 0.2773333333rem;
-      line-height: 0.8533333333rem;
-      border-radius: 0.2133333333rem;
-      color: #fff;
-      background-color: #b5b5b5;
-      font-size: 0.64rem;
-      text-align: center; }
-    .form-horizontal .form-group .btn-login {
-      display: block;
-      margin: 0 auto;
-      margin-top: 1.472rem;
-      width: 90%;
-      height: 1.792rem;
-      background-color: #EE2F2F;
-      color: #fff;
-      border: none;
-      outline: none;
-      font-size: 0.64rem; }
-    .form-horizontal .form-group .btn-login:focus, .form-horizontal .form-group .btn-login:hover {
-      border: none;
-      outline: none;
-      color: #fff;
-      box-shadow: none; }
-
-/*# sourceMappingURL=login.css.map */
+Backtrace:
+E:\myProject\Eagles\site\css\login.scss:1
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:67:in `rescue in import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:45:in `import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:28:in `imported_file'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:37:in `css_import?'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:314:in `visit_import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `block in with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:161:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:10:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:307:in `render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:391:in `run'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:63:in `process_result'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:52:in `parse'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:19:in `parse!'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/bin/sass:13:in `<top (required)>'
+C:/Program Files (x86)/Koala/bin/sass:22:in `load'
+C:/Program Files (x86)/Koala/bin/sass:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: common/px2rem.scss.\A        Load path: E:/myProject/Eagles/site/css\A         on line 1 of E:\myProject\Eagles\site\css\login.scss\A \A 1: @import 'common/px2rem.scss';\A 2: * {\A 3:     margin: 0;\A 4:     padding: 0;\A 5:     font-family: -apple-system-font, \"Helvetica Neue\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif; \A 6: "; }

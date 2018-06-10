@@ -1,119 +1,52 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+/*
+Error: File to import not found or unreadable: common/px2rem.scss.
+       Load path: E:/myProject/Eagles/site/css
+        on line 1 of E:\myProject\Eagles\site\css\partyLearning_detail.scss
 
-.clear:after {
-  display: block;
-  content: "";
-  clear: both; }
+1: @import 'common/px2rem.scss';
+2: * {
+3:     margin: 0;
+4:     padding: 0;
+5:     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+6: 
 
-.container > .row {
-  background-color: #f8f8f8; }
-
-.main_content {
-  background-color: #fff;
-  margin-top: 0.768rem;
-  padding: 0 0.7466666667rem 0.7466666667rem 0.7466666667rem; }
-  .main_content .header .title {
-    color: #141414;
-    font-size: 1.024rem;
-    padding-top: 0.704rem; }
-  .main_content .header .time-box {
-    color: #949494;
-    font-size: 0.64rem;
-    margin-top: 0.5333333333rem; }
-  .main_content .header .source-box {
-    color: #949494;
-    font-size: 0.64rem;
-    margin-top: 0.5333333333rem;
-    padding-bottom: 1.1093333333rem;
-    border-bottom: 1px solid #eee; }
-  .main_content .header .author-box {
-    color: #949494;
-    font-size: 0.64rem;
-    margin-top: 1.28rem;
-    position: relative; }
-    .main_content .header .author-box .study-time {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      color: #949494;
-      font-size: 0.512rem; }
-  .main_content .content-box .content {
-    padding-top: 0.8533333333rem;
-    color: #141414;
-    font-size: 0.64rem; }
-  .main_content .content-box .person-box {
-    text-align: right;
-    color: #949494;
-    font-size: 0.512rem;
-    padding: 0.768rem 0;
-    border-bottom: 1px solid #eee; }
-  .main_content .content-box .file {
-    padding: 1.1733333333rem 0; }
-
-.footer {
-  background-color: #fff;
-  margin-top: 0.768rem;
-  padding: 0 0.7466666667rem 0.7466666667rem 0.7466666667rem; }
-  .footer .title {
-    padding-top: 0.96rem;
-    padding-bottom: 0.576rem;
-    font-size: 0.768rem;
-    color: #141414;
-    border-bottom: 1px solid #eee; }
-  .footer .content .question {
-    color: #141414;
-    font-size: 0.64rem;
-    padding-top: 0.768rem; }
-  .footer .content .answer {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.96rem; }
-    .footer .content .answer .demo--label {
-      padding: 20px 20px 0 0;
-      display: inline-block;
-      min-width: 40%;
-      color: #141414;
-      font-size: 0.64rem;
-      font-weight: normal; }
-    .footer .content .answer .demo--radio {
-      display: none; }
-    .footer .content .answer .demo--radioInput {
-      background-color: #fff;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 100%;
-      display: inline-block;
-      height: 16px;
-      margin-right: 10px;
-      margin-top: -1px;
-      vertical-align: middle;
-      width: 16px;
-      line-height: 1; }
-    .footer .content .answer .demo--radio:checked + .demo--radioInput:after {
-      background-color: #57ad68;
-      border-radius: 100%;
-      content: "";
-      display: inline-block;
-      height: 12px;
-      margin: 2px;
-      width: 12px; }
-    .footer .content .answer .demo--checkbox.demo--radioInput, .footer .content .answer .demo--radio:checked + .demo--checkbox.demo--radioInput:after {
-      border-radius: 0; }
-  .footer .submit-box {
-    padding: 2.4533333333rem 0rem 1.6rem 0;
-    text-align: center; }
-    .footer .submit-box .answer-submit {
-      width: 85%;
-      height: 1.792rem;
-      color: #fff;
-      font-size: 0.64rem;
-      outline: none;
-      border: none;
-      background: -moz-linear-gradient(to bottom right, #FF5454, #E51A1A);
-      background: -webkit-linear-gradient(to bottom right, #FF5454, #E51A1A);
-      background: -o-linear-gradient(to bottom right, #FF5454, #E51A1A);
-      background: -ms-linear-gradient(to bottom right, #FF5454, #E51A1A);
-      background: linear-gradient(to bottom right, #FF5454, #E51A1A); }
-
-/*# sourceMappingURL=partyLearning_detail.css.map */
+Backtrace:
+E:\myProject\Eagles\site\css\partyLearning_detail.scss:1
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:67:in `rescue in import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:45:in `import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:28:in `imported_file'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:37:in `css_import?'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:314:in `visit_import'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `block in with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `with_base'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:161:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:10:in `visit'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:307:in `render_with_sourcemap'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:391:in `run'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:63:in `process_result'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:52:in `parse'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:19:in `parse!'
+C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/bin/sass:13:in `<top (required)>'
+C:/Program Files (x86)/Koala/bin/sass:22:in `load'
+C:/Program Files (x86)/Koala/bin/sass:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: common/px2rem.scss.\A        Load path: E:/myProject/Eagles/site/css\A         on line 1 of E:\myProject\Eagles\site\css\partyLearning_detail.scss\A \A 1: @import 'common/px2rem.scss';\A 2: * {\A 3:     margin: 0;\A 4:     padding: 0;\A 5:     font-family: -apple-system-font, \"Helvetica Neue\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif; \A 6: "; }

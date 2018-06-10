@@ -1,0 +1,35 @@
+@import 'common/px2rem.scss';
+body{
+    margin: 0 auto;
+    background-color: #f8f8f8;
+    text-align: center
+}
+.result-area{
+    margin-top: px2rem(146);
+    width:px2rem(500);
+    height: px2rem(427);
+    background-color: white;
+    display: inline-block;
+    .result-bg{
+        margin: px2rem(106) px2rem(161) 0 px2rem(161);
+        width:px2rem(178);
+        height: px2rem(178);
+        border-radius: 50%;
+        .icon{
+            font-size: px2rem(100);
+            line-height: px2rem(178);
+            color: white;
+        }
+    }
+    .result-success{
+        background-color: #48C52B;
+    }
+    .result-fail{
+        background-color: #F24848;
+    }
+}
+.result-des{
+    margin-top: px2rem(33);
+    font-size: px2rem(30);
+    color: #141414;
+}

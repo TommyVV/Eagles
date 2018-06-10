@@ -4,12 +4,12 @@ namespace Eagles.Interface.Core.Curd
 {
     public interface ICurdHandler:IInterfaceBase
     {
-        GetInfosRespone GetInfos();
+        //GetInfosRespone GetInfos();
 
-        AfterInfoResponse AfterInfo(AfterInfoRequest info);
+        //AfterInfoResponse AfterInfo(AfterInfoRequest info);
 
-        GetInfoResponse GetInfo(GetInfoRequest id);
+        //GetInfoResponse GetInfo(GetInfoRequest id);
 
-        RemoveInfoResponse RemoveInfo(RemoveInfoRequest id);
+        //RemoveInfoResponse RemoveInfo(RemoveInfoRequest id);
     }
 }

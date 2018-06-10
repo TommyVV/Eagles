@@ -32,7 +32,8 @@
 		<!--[if lte IE 8]>
 		<script src="../assets/js/html5shiv.min.js"></script>
 		<script src="../assets/js/respond.min.js"></script>
-		<![endif]-->
+        <![endif]-->
+       
 </head>
 <body class="no-skin">
         <div id="navbar" class="navbar navbar-default ace-save-state">
@@ -163,6 +164,21 @@
 
 		<!-- ace scripts -->
 		<script src="../assets/js/ace-elements.min.js"></script>
-		<script src="../assets/js/ace.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $.ajax({
+                    url:'',
+                    type:'POST',
+                    data:'json',
+                    success:function(data){
+                        alert('haha')
+                    },
+                    error:function(data){
+                        console.dir(data);
+                    }
+                })
+            });
+        </script>
 </body>
 </html>

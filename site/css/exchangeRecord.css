@@ -1,0 +1,30 @@
+.dj-container {
+  padding: 0px 17.5px; }
+
+.record-item {
+  width: 100%;
+  background-color: white;
+  height: 6.4rem;
+  position: relative;
+  border-top: 0.8533333333rem solid #f8f8f8;
+  padding: 0.64rem; }
+  .record-item img {
+    width: 4.2666666667rem;
+    height: 4.2666666667rem; }
+  .record-item .record-content {
+    position: absolute;
+    left: 5.3333333333rem;
+    right: 0.64rem;
+    top: 0.64rem;
+    height: 4.2666666667rem; }
+    .record-item .record-content .item-title {
+      color: #141414;
+      font-size: 0.64rem; }
+    .record-item .record-content .item-time {
+      color: #949494;
+      font-size: 0.512rem;
+      position: absolute;
+      left: 0;
+      bottom: 3px; }
+
+/*# sourceMappingURL=exchangeRecord.css.map */
