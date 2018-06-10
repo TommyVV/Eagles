@@ -1,0 +1,155 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+.clear:after{
+	display: block;
+	content: "";
+	clear:both;
+}
+// 导航栏
+.navbar-default{
+	background-color: #fff;
+	margin-bottom: 0;
+	min-height: 0;
+	.navbar-header{
+		height: px2rem(70);
+		.navbar-toggle{
+	    float:left;
+	    height: 100%;
+	    border:none;
+	    margin:0;
+	    padding:0;
+		}
+		.navbar-toggle:focus, .navbar-toggle:hover{
+			background-color: #fff;
+		}
+	}
+	.navbar-search{
+		display: none;
+		float: left;
+		position: relative;
+		margin-left: px2rem(75);
+		.form-control{
+			width: px2rem(250);
+			height: px2rem(40);
+			background-color: #ededed;
+			margin-top:px2rem(15);
+			display: inline-block;
+			padding-left:px2rem(51);
+			color: #949494;
+		}
+		.glyphicon-search{
+			position: absolute;
+			left: px2rem(20);
+			top:50%;
+			font-size: px2rem(22);
+			margin-top:px2rem(-6);
+			color: #949494;
+		}
+		.search-cancle{
+			color:#5B5B5B;
+			font-size: px2rem(24);
+			cursor: pointer;
+		}
+	}
+	.navbar-right{
+		float:right;
+		height: 100%;
+    position: relative;
+		.glyphicon{
+			font-size: px2rem(36);
+			position: absolute;
+			top:50%;
+			margin-top:px2rem(-18.5);
+			color:#1e1e1e;
+			cursor: pointer;
+		}
+		.glyphicon-home{
+			right: px2rem(47);
+		}
+		.glyphicon-search{
+			right: px2rem(2*47+36);
+		}
+	}
+}
+// 轮波图
+.carousel-box{
+	margin-top: px2rem(70);
+}
+.main_content{
+	background-color: #f8f8f8;
+	padding-top:px2rem(20);
+	.list-box{
+		background-color: #fff;
+		.list-header{
+			padding:px2rem(26) px2rem(0);
+			margin:px2rem(0) px2rem(30);
+			border-bottom: 1px solid #eee;
+			.glyphicon-book{
+				font-size: px2rem(34);
+				color: #FF5555;
+			}
+			.title{
+				font-size: px2rem(36);
+				color:#0F0F0F;
+			}
+			.more{
+				float: right;
+				color: #949494;
+				font-size: px2rem(24);
+			}
+		}
+		.list-body{
+			padding: px2rem(26) px2rem(40);
+			.list-top{
+				padding-bottom: px2rem(20);
+				.media{
+					margin-top: 0;
+					.media-body{
+						padding-top:px2rem(20);
+						.media-heading{
+							color:#141414;
+							font-size: px2rem(30);
+						}
+					}
+					.media-object{
+						width:px2rem(325);
+						height: px2rem(225);
+					}
+				}
+			}
+			.list-bottom{
+				.media{
+					padding:px2rem(20) 0;
+					border-bottom: 1px solid #eee;
+					margin-top: 0;
+					.media-body{
+						position: relative;
+						.media-heading{
+							color:#141414;
+							font-size: px2rem(30);
+						}
+						.list-time{
+							position: absolute;
+							left: 0;
+							bottom: 0;
+							color: #949494;
+							font-size: px2rem(24);
+						}
+					}
+					.media-object{
+						width:px2rem(225);
+						height: px2rem(145);
+					}
+				}	
+			}			
+		}
+	}
+	.list-box:not(:first-child){
+		margin-top:px2rem(20);
+	}
+}
