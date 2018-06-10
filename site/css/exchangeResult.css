@@ -1,0 +1,31 @@
+body {
+  margin: 0 auto;
+  background-color: #f8f8f8;
+  text-align: center; }
+
+.result-area {
+  margin-top: 3.1146666667rem;
+  width: 10.6666666667rem;
+  height: 9.1093333333rem;
+  background-color: white;
+  display: inline-block; }
+  .result-area .result-bg {
+    margin: 2.2613333333rem 3.4346666667rem 0 3.4346666667rem;
+    width: 3.7973333333rem;
+    height: 3.7973333333rem;
+    border-radius: 50%; }
+    .result-area .result-bg .icon {
+      font-size: 2.1333333333rem;
+      line-height: 3.7973333333rem;
+      color: white; }
+  .result-area .result-success {
+    background-color: #48C52B; }
+  .result-area .result-fail {
+    background-color: #F24848; }
+
+.result-des{
+  margin-top: 0.704rem;
+  font-size: 0.64rem;
+  color: #141414; }
+
+/*# sourceMappingURL=exchangeResult.css.map */

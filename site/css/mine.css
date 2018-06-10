@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+.head-area {
+  width: 100%;
+  height: 6.2293333333rem;
+  background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+  background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+  background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+  background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+  background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 1.7706666667rem 0.7253333333rem 0.8533333333rem 0.7253333333rem;
+  color: white; }
+
+.head-icon {
+  width: 3.6266666667rem;
+  height: 3.6266666667rem;
+  border-radius: 50%;
+  float: left; }
+
+.head-info {
+  float: left;
+  margin-left: 0.7253333333rem; }
+  .head-info .info-name {
+    font-size: 0.768rem;
+    height: 1.8133333333rem;
+    line-height: 1;
+    vertical-align: bottom;
+    display: table-cell; }
+  .head-info .info-tel {
+    font-size: 0.512rem;
+    margin-top: 0.2133333333rem; }
+
+.info-edit {
+  float: right;
+  width: 1.0666666667rem;
+  height: 3.6266666667rem;
+  text-align: center;
+  position: relative; }
+  .info-edit span {
+    position: absolute;
+    left: 0;
+    top: 1.0666666667rem;
+    font-size: 0.5546666667rem; }
+
+.mid-area {
+  width: 100%;
+  height: 3.712rem; }
+  .mid-area .mid-part {
+    width: 33.3333%;
+    float: left;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    .mid-area .mid-part .points {
+      font-size: 0.768rem;
+      color: #f8773e;
+      line-height: 1.3; }
+    .mid-area .mid-part .email {
+      font-size: 0.768rem;
+      color: #F5C55C;
+      line-height: 1.3; }
+    .mid-area .mid-part .file {
+      font-size: 0.768rem;
+      color: #58A8ED;
+      line-height: 1.3; }
+    .mid-area .mid-part .small-title {
+      font-size: 0.512rem;
+      color: #949494;
+      line-height: 2; }
+
+.task-area {
+  width: 100%;
+  border-top: 0.4693333333rem solid #F8F8F8; }
+  .task-area .task-part {
+    box-sizing: border-box;
+    padding: 0.64rem 0.7466666667rem;
+    height: 1.92rem;
+    border-bottom: 1px solid #EEEEEE; }
+  .task-area .d-right {
+    color: #AFAFB1;
+    float: right; }
+
+/*# sourceMappingURL=mine.css.map */
