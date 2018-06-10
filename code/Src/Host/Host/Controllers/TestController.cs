@@ -28,14 +28,11 @@ namespace Eagles.Host.Controllers
         [HttpPost]
         public TestResponse Demo(TestRequest request)
         {
-            log.LoggerInfo("hahaha");
-            throw new TransactionException("nihao","haha");
            return new TestResponse()
            {
                ErrorCode = "00",
                Message = "hha"
            };
-            return testHandler.Porcess(request);
         }
     }
 }

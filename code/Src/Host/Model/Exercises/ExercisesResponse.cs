@@ -12,9 +12,10 @@ namespace Eagles.Application.Model.Exercises
         /// 总条数
         /// </summary>
         public int TotalCount { get; set; }
-        /// <summary>
-        /// 集合
-        /// </summary>
-        public List<> List { get; set; }
+
+        ///// <summary>
+        ///// 集合
+        ///// </summary>
+        ////public List<> List { get; set; }
     }
 }

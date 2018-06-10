@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Web.Http;
-using Autofac;
-using Eagles.Interface.Core;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Eagles.Host
 {
@@ -11,11 +8,10 @@ namespace Eagles.Host
         public static void Register(HttpConfiguration config)
         {
             // Web API 配置和服务
-
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API 路由
             config.MapHttpAttributeRoutes();
-            //ioc 注入
-
+           
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
