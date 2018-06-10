@@ -28,6 +28,7 @@ namespace Eagles.Host.Controllers
         [HttpPost]
         public TestResponse Demo(TestRequest request)
         {
+            testHandler.Porcess(request);
            return new TestResponse()
            {
                ErrorCode = "00",
