@@ -43,9 +43,11 @@
     <Compile Include="Activity\IActivityHandler.cs" />
     <Compile Include="Curd\ICurdHandler.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
+    <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Test\ITestHandler.cs" />
     <Compile Include="ITestDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\IUserHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
