@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Eagles.Base.CustomAttr;
 using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase;
 
@@ -13,16 +14,16 @@ namespace Eagles.DomainService.Core.DataBase
             this.dbManager = dbManager;
         }
 
-        private IDbCommand command;
-
         public void GetAreas(string id)
         {
-            var t=dbManager.Query<Test>("select * from tb_oper where oper_id=@id", new {id = new[] {10000000}});
+            var t=dbManager.Query<Test>("select * from tb_oper where oper_id=@id", new {id = new int[1] {10000000}});
         }
     }
 
+    
     public class Test
     {
-        public string Oper_Id { get; set; }
+        [Column(Name = "oper_id")]
+        public string OperId { get; set; }
     }
 }
