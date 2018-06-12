@@ -11,7 +11,7 @@ using Eagles.Application.Model.Curd.Task.GetTaskDetail;
 using Eagles.Application.Model.Curd.Task.GetTaskStep;
 using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
 
-namespace Eagles.Interface.Core.Activity
+namespace Eagles.Interface.Core.Task
 {
     public interface ITaskHandler : IInterfaceBase
     {

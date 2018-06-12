@@ -81,7 +81,7 @@
     <Compile Include="Common\News.cs" />
     <Compile Include="Common\Attachment.cs" />
     <Compile Include="Common\Menu.cs" />
-    <Compile Include="Common\Socre.cs" />
+    <Compile Include="Common\Score.cs" />
     <Compile Include="Common\Step.cs" />
     <Compile Include="Common\Task.cs" />
     <Compile Include="Common\UserRank.cs" />
@@ -104,22 +104,22 @@
     <Compile Include="Curd\Enum\NewsEnum.cs" />
     <Compile Include="Curd\GetPartyInfo\GetPartyInfoRequest.cs" />
     <Compile Include="Curd\GetPartyInfo\GetPartyInfoResponse.cs" />
-    <Compile Include="Curd\GetNews\GetNewsRequest.cs" />
-    <Compile Include="Curd\GetNews\GetNewsResponse.cs" />
+    <Compile Include="Curd\News\GetNews\GetNewsRequest.cs" />
+    <Compile Include="Curd\News\GetNews\GetNewsResponse.cs" />
     <Compile Include="Curd\GetNotice\GetNoticRequest.cs" />
     <Compile Include="Curd\GetNotice\GetNoticResponse.cs" />
     <Compile Include="Curd\GetScrollNew\GetScrollNewsRequest.cs" />
     <Compile Include="Curd\GetScrollNew\GetScrollNewsResponse.cs" />
-    <Compile Include="Curd\CreateNews\CreateNewsRequest.cs" />
-    <Compile Include="Curd\CreateNews\CreateNewsResponse.cs" />
-    <Compile Include="Curd\GetSocreExchangeLs\GetSocreExchangeLsRequest.cs" />
-    <Compile Include="Curd\GetSocreExchangeLs\GetSocreExchangeLsResponse.cs" />
+    <Compile Include="Curd\News\CreateNews\CreateNewsRequest.cs" />
+    <Compile Include="Curd\News\CreateNews\CreateNewsResponse.cs" />
+    <Compile Include="Curd\Score\GetScoreExchangeLs\GetScoreExchangeLsRequest.cs" />
+    <Compile Include="Curd\Score\GetScoreExchangeLs\GetScoreExchangeLsResponse.cs" />
     <Compile Include="Curd\Product\GetProductDetail\GetProductDetailRequest.cs" />
     <Compile Include="Curd\Product\GetProductDetail\GetProductDetailResponse.cs" />
     <Compile Include="Curd\Product\GetProduct\GetProductRequest.cs" />
     <Compile Include="Curd\Product\GetProduct\GetProductResponse.cs" />
-    <Compile Include="Curd\GetSocreRank\GetSocreRankRequest.cs" />
-    <Compile Include="Curd\GetSocreRank\GetSocreRankResponse.cs" />
+    <Compile Include="Curd\Score\GetScoreRank\GetScoreRankRequest.cs" />
+    <Compile Include="Curd\Score\GetScoreRank\GetScoreRankResponse.cs" />
     <Compile Include="Curd\User\Login\LoginRequest.cs" />
     <Compile Include="Curd\User\Login\LoginResponse.cs" />
     <Compile Include="Curd\GetMenu\GetMenuRequest.cs" />
@@ -302,8 +302,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

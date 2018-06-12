@@ -25,6 +25,6 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 积分
         /// </summary>
-        public string Socre;
+        public string Score;
     }
 }
