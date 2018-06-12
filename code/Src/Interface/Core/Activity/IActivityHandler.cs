@@ -1,12 +1,12 @@
 ﻿using Eagles.Base;
-using Eagles.Application.Model.Curd.Activity.EditActivityComment;
-using Eagles.Application.Model.Curd.Activity.EditActivityComplete;
-using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.Curd.Activity.EditActivityJoin;
 using Eagles.Application.Model.Curd.Activity.GetActivity;
 using Eagles.Application.Model.Curd.Activity.CreateActivity;
 using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using Eagles.Application.Model.Curd.Activity.EditActivityJoin;
+using Eagles.Application.Model.Curd.Activity.EditActivityComment;
+using Eagles.Application.Model.Curd.Activity.EditActivityComplete;
+using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
 
 namespace Eagles.Interface.Core.Activity
 {

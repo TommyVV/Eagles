@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Curd.Task.GettaskStep
+namespace Eagles.Application.Model.Curd.Task.GetTaskStep
 {
     /// <summary>
     /// 任务步骤查询
