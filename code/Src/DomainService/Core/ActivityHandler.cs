@@ -15,7 +15,7 @@ namespace Eagles.DomainService.Core
     {
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
-
+            //var activity = new Activity.Activity();
             return new CreateActivityResponse()
             {
                 ErrorCode = "00",

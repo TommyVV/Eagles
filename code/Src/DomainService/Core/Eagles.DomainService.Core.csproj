@@ -74,6 +74,10 @@
       <Project>{2A747E03-D095-4B54-AE55-976576A82886}</Project>
       <Name>Eagles.Interface.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Model\Eagles.DomainService.Model.csproj">
+      <Project>{843f8547-b8a7-4fb7-8b57-27937bc3cbee}</Project>
+      <Name>Eagles.DomainService.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
