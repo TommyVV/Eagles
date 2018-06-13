@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Eagles.Application.Model.Common
 {
-    public class SocreExchange
+    public class ScoreExchange
     {
         /// <summary>
         /// 兑换商品名称
@@ -11,7 +11,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 兑换积分
         /// </summary>
-        public string Socre { get; set; }
+        public string Score { get; set; }
 
         /// <summary>
         /// 兑换时间

@@ -3,7 +3,7 @@
 namespace Eagles.Application.Model.Curd.Product.GetProduct
 {
     /// <summary>
-    /// 获取商品产品
+    /// 获取积分商品
     /// </summary>
     public class GetProductResponse : ResponseBase
     {
@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Curd.Product.GetProduct
         /// <summary>
         /// 产品积分
         /// </summary>
-        public string ProductSocre { get; set; }
+        public string ProductScore { get; set; }
 
         /// <summary>
         /// 产品图片Url

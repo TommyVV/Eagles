@@ -1,7 +1,7 @@
 ﻿using System;
 using Eagles.Application.Model.Curd.Enum;
 
-namespace Eagles.Application.Model.Curd.CreateNews
+namespace Eagles.Application.Model.Curd.News.CreateNews
 {
     /// <summary>
     /// 新闻文章发布

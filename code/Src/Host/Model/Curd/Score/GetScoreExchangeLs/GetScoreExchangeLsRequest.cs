@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Curd.GetSocreExchangeLs
+namespace Eagles.Application.Model.Curd.Score.GetScoreExchangeLs
 {
     /// <summary>
     /// 积分兑换流水查询
     /// </summary>
-    class GetSocreExchangeLsRequest : RequestBase
+    public class GetScoreExchangeLsRequest : RequestBase
     {
         public string Token { get; set; }
     }

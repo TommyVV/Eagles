@@ -51,10 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewsHandler.cs" />
+    <Compile Include="ScoreHandler.cs" />
+    <Compile Include="TaskHandler.cs" />
     <Compile Include="ActivityHandler.cs" />
     <Compile Include="DataBase\DataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestHandler.cs" />
+    <Compile Include="ProductHandler.cs" />
+    <Compile Include="UserHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">

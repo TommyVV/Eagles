@@ -1,12 +1,12 @@
 ﻿using System;
 using Eagles.Application.Model.Curd.Enum;
 
-namespace Eagles.Application.Model.Curd.GetNews
+namespace Eagles.Application.Model.Curd.News.GetNews
 {
     /// <summary>
     /// 文章列表查询
     /// </summary>
-    class GetNewsRequest : RequestBase
+    public class GetNewsRequest : RequestBase
     {
         public string Token { get; set; }
 

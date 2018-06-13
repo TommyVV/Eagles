@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Curd.Product.GetProductDetail
         /// <summary>
         /// 产品积分
         /// </summary>
-        public string ProductSocre { get; set; }
+        public string ProductScore { get; set; }
 
         /// <summary>
         /// 
