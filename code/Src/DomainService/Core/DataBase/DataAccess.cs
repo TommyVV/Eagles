@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Eagles.Base.CustomAttr;
+﻿using Eagles.Base.CustomAttr;
 using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase;
 
@@ -16,14 +15,15 @@ namespace Eagles.DomainService.Core.DataBase
 
         public void GetAreas(string id)
         {
-            var t=dbManager.Query<Test>("select * from tb_oper where oper_id=@id", new {id = new int[1] {10000000}});
+            Dapper.SqlMapper.SetTypeMap(typeof(Test), new ColumnAttributeTypeMapper<Test>());
+            var t=dbManager.Query<Test>("select * from tb_oper",null);
+            var operId = t[0].OperId;
         }
     }
 
     
     public class Test
     {
-        [Column(Name = "oper_id")]
-        public string OperId { get; set; }
+        public int OperId { get; set; }
     }
 }
