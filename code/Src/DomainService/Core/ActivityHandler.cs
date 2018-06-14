@@ -8,6 +8,7 @@ using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Curd.Activity.GetActivity;
 using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using DomainModel= Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core
 {
@@ -15,7 +16,7 @@ namespace Eagles.DomainService.Core
     {
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
-            //var activity = new Activity.Activity();
+            var activity = new DomainModel.Activity.Activity();
             return new CreateActivityResponse()
             {
                 ErrorCode = "00",
