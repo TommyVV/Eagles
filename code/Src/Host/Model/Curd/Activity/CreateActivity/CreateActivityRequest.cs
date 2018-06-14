@@ -31,7 +31,7 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
         /// <summary>
         /// 活动发起人
         /// </summary>
-        public string ActivityFromUser { get; set; }
+        public int ActivityFromUser { get; set; }
 
         /// <summary>
         /// 活动起始日期
@@ -51,7 +51,7 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
         /// <summary>
         /// 是否允许评论;0:允许;1:禁止
         /// </summary>
-        public string CanComment { get; set; }
+        public int CanComment { get; set; }
 
         /// <summary>
         /// 是否公开

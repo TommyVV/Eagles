@@ -25,6 +25,6 @@ namespace Eagles.Application.Model.Curd.Activity.EditActivityComment
         /// <summary>
         /// 评论用户Id
         /// </summary>
-        public string CommentUserId { get; set; }
+        public int CommentUserId { get; set; }
     }
 }

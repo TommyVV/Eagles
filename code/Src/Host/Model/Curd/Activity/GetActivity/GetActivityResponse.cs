@@ -11,6 +11,6 @@ namespace Eagles.Application.Model.Curd.Activity.GetActivity
         /// <summary>
         /// 活动列表
         /// </summary>
-        public List<Common.Activity> ActivityList { get; }
+        public List<Common.Activity> ActivityList { get; set }
     }
 }

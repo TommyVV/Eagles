@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动Id
         /// </summary>
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
 
         /// <summary>
         /// 活动名称
@@ -30,7 +30,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动日期
         /// </summary>
-        public string ActivityDate { get; set; }
+        public DateTime ActivityDate { get; set; }
 
         /// <summary>
         /// 活动图片Url
