@@ -41,7 +41,7 @@ namespace Eagles.Base.DataBase.Implement
         public int Excuted(string command, object paramster)
         {
             var conn = new MySqlConnection(connstr);
-            int result = 0;
+            var result = 0;
             try
             {
                  result=conn.Execute(command,paramster);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Eagles.Application.Model.Common;
 using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Curd.Activity.CreateActivity;
 using Eagles.Application.Model.Curd.Activity.EditActivityJoin;
@@ -85,6 +87,12 @@ namespace Eagles.DomainService.Core
             var activityId = request.UserId;
             var activityType = request.ActivityType;
             var result = dbManager.Query<DomainModel.Activity.Activity>("select activityId,activityName,ImageUrl,HtmlContent,Attach1,Attach2,Attach3,Attach4 from TB_ACTIVITY where activityId = @id", activityId);
+            response.ActivityList = result?.Select(x => new Activity
+            {
+                ActivityId = x.ActivityId,
+                ActivityName = x.ActivityName
+                //todo any more 
+            }).ToList();
             if (result.Count > 0)
             {
                 foreach (var item in result)
