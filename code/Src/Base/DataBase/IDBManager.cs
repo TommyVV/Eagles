@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Eagles.Base.DataBase.Modle;
 
 namespace Eagles.Base.DataBase
 {
@@ -8,6 +9,6 @@ namespace Eagles.Base.DataBase
 
         int Excuted(string command, object parameter=null);
 
-        bool ExcutedByTransaction(Dictionary<string, object> command);
+        bool ExcutedByTransaction(List<TransactionCommand> command);
     }
 }

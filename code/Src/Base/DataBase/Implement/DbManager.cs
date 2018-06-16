@@ -4,6 +4,7 @@ using System.Linq;
 using Dapper;
 using Eagles.Base.Config;
 using Eagles.Base.Configuration;
+using Eagles.Base.DataBase.Modle;
 using Eagles.Base.Logger;
 using MySql.Data.MySqlClient;
 
@@ -66,7 +67,7 @@ namespace Eagles.Base.DataBase.Implement
         /// </summary>
         /// <param name="command">command string, object is parameters</param>
         /// <returns></returns>
-        public bool ExcutedByTransaction(Dictionary<string,object> command)
+        public bool ExcutedByTransaction(List<TransactionCommand> command)
         {
             var response = true;
             using (var conn = new MySqlConnection(DbConfig.DataBaseConnectString))
@@ -75,10 +76,9 @@ namespace Eagles.Base.DataBase.Implement
                 var trans = conn.BeginTransaction();
                 try
                 {
-
                     foreach (var cmd in command)
                     {
-                        var result = conn.Execute(cmd.Key, cmd.Value);
+                        var result = conn.Execute(cmd.CommandString, cmd.Parameter);
                         if (result <= 0)
                         {
                             trans.Rollback();

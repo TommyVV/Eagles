@@ -22,6 +22,7 @@ namespace Eagles.DomainService.Core.Test
 
         public TestResponse Porcess(TestRequest request)
         {
+            
             var s=configurationManager.GetConfiguration<TestConfig>();
             dataAccess.GetAreas("");
             var result = new TestResponse()
