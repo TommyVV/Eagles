@@ -7,13 +7,10 @@ namespace Eagles.Host.Controllers
     public class DefaultController : ApiController
     {
 
-        private readonly IDesEncrypt desEncrypt;
-
         private readonly ITestHandler testHandler;
 
-        public DefaultController(IDesEncrypt desEncrypt, ITestHandler testHandler)
+        public DefaultController(ITestHandler testHandler)
         {
-            this.desEncrypt = desEncrypt;
             this.testHandler = testHandler;
         }
 
@@ -26,12 +23,8 @@ namespace Eagles.Host.Controllers
         [HttpGet]
         public string GetActivity(string str)
         {
-            var t=desEncrypt.Encrypt(str);
-            var a = desEncrypt.Decrypt(t);
-            var b = desEncrypt.EncryptToHex(str);
-            var c = desEncrypt.DecryptToHex(b);
             testHandler.Porcess(null);
-            return t;
+            return null;
         }
     }
 }
