@@ -16,7 +16,7 @@ namespace Eagles.DomainService.Model.Task
         public string BranchReview { get; set; }
         public int CanComment { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime endTime { get; set; }
+        public DateTime EndTime { get; set; }
         public int FromUser { get; set; }
         public int IsPublic { get; set; }
         public int OrgId { get; set; }

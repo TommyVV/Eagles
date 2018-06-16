@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
-namespace Eagles.Application.Model.Curd.Task.EditTaslFeedBack
+namespace Eagles.Application.Model.Curd.Task.EditTaskFeedBack
 {
     /// <summary>
     /// 任务反馈接口
     /// </summary>
-    public class EditTaslFeedBackRequest : RequestBase
+    public class EditTaskFeedBackRequest : RequestBase
     {
         /// <summary>
         /// Token
@@ -16,7 +15,7 @@ namespace Eagles.Application.Model.Curd.Task.EditTaslFeedBack
         /// <summary>
         /// 任务Id
         /// </summary>
-        public string TaskId { get; set; }
+        public int TaskId { get; set; }
 
         /// <summary>
         /// 反馈内容

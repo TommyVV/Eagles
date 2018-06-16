@@ -6,7 +6,7 @@ using Eagles.Application.Model.Curd.Task.EditTaskStep;
 using Eagles.Application.Model.Curd.Task.EditTaskAccept;
 using Eagles.Application.Model.Curd.Task.EditTaskComment;
 using Eagles.Application.Model.Curd.Task.EditTaskComplete;
-using Eagles.Application.Model.Curd.Task.EditTaslFeedBack;
+using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Curd.Task.GetTask;
 using Eagles.Application.Model.Curd.Task.GetTaskDetail;
 using Eagles.Application.Model.Curd.Task.GetTaskStep;
@@ -88,9 +88,9 @@ namespace Eagles.Host.Controllers
         /// <returns></returns>
         [Route("api/EditTaslFeedBack")]
         [HttpGet]
-        public EditTaslFeedBackResponse EditTaslFeedBack(EditTaslFeedBackRequest request)
+        public EditTaskFeedBackResponse EditTaslFeedBack(EditTaskFeedBackRequest request)
         {
-            return taskHandler.EditTaslFeedBack(request);
+            return taskHandler.EditTaskFeedBack(request);
         }
 
         /// <summary>

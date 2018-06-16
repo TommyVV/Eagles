@@ -134,8 +134,8 @@
     <Compile Include="Curd\Task\EditTaskAccept\EditTaskAcceptResponse.cs" />
     <Compile Include="Curd\Task\EditTaskComment\EditTaskCommentRequest.cs" />
     <Compile Include="Curd\Task\EditTaskComment\EditTaskCommentResponse.cs" />
-    <Compile Include="Curd\Task\EditTaslFeedBack\EditTaslFeedBackRequest.cs" />
-    <Compile Include="Curd\Task\EditTaslFeedBack\EditTaslFeedBackResponse.cs" />
+    <Compile Include="Curd\Task\EditTaskFeedBack\EditTaskFeedBackRequest.cs" />
+    <Compile Include="Curd\Task\EditTaskFeedBack\EditTaskFeedBackResponse.cs" />
     <Compile Include="Curd\Task\GetTaskDetail\GetTaskDetailRequest.cs" />
     <Compile Include="Curd\Task\GetTaskDetail\GetTaskDetailResponse.cs" />
     <Compile Include="Curd\Task\GetTask\GetTaskRequest.cs" />

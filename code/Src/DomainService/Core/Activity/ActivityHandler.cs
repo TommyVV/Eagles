@@ -127,10 +127,10 @@ namespace Eagles.DomainService.Core.Activity
         public EditActivityFeedBackResponse EditActivityFeedBack(EditActivityFeedBackRequest request)
         {
             var response = new EditActivityFeedBackResponse();
-            var activityyId = request.ActivityId;
+            var activityId = request.ActivityId;
             var content = request.Content;
             var attachList = request.AttachList;
-            var result = iActivityAccess.EditActivityFeedBack(activityyId, content, attachList);
+            var result = iActivityAccess.EditActivityFeedBack(activityId, content, attachList);
             if (result > 0)
             {
                 response.ErrorCode = "00";

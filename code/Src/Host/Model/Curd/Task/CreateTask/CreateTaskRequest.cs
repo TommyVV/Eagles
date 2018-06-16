@@ -27,7 +27,7 @@ namespace Eagles.Application.Model.Curd.Task.CreateTask
         /// <summary>
         /// 任务发起人
         /// </summary>
-        public string TaskFromUser { get; set; }
+        public int TaskFromUser { get; set; }
 
         /// <summary>
         /// 任务开始时间
@@ -47,12 +47,12 @@ namespace Eagles.Application.Model.Curd.Task.CreateTask
         /// <summary>
         /// 是否评论
         /// </summary>
-        public string CanComment { get; set; }
+        public int CanComment { get; set; }
 
         /// <summary>
         /// 是否公开
         /// </summary>
-        public string IsPublic { get; set; }
+        public int IsPublic { get; set; }
 
         public List<Attachment> AttachList { get; set; }
     }

@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskComment
         /// <summary>
         /// 任务Id
         /// </summary>
-        public string TaskId { get; set; }
+        public int TaskId { get; set; }
     }
 }

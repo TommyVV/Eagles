@@ -16,7 +16,6 @@ namespace Ealges.DomianService.DataAccess.ActivityData
 
         public int CreateActivity(Eagles.DomainService.Model.Activity.Activity reqActivity)
         {
-
             return dbManager.Excuted(@"insert into eagles.tb_activity (ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview) 
 value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, 
@@ -45,7 +44,6 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                     OrgReview = new[] {"-1"},
                     BranchReview = new[] {"-1"}
                 });
-
         }
 
         public int EditActivityComment(int activityId, int userId, string content)
