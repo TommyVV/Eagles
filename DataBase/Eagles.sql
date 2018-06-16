@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/6/13 20:35:18                           */
+/* Created on:     2018/6/16 10:20:55                           */
 /*==============================================================*/
 
 
@@ -518,7 +518,7 @@ create table TB_SCROLL_IMAGE
             1:党建门户;
             2:党务工作;
             3:党建学习',
-   ImageUrl             INT(8) comment '操作员id',
+   ImageUrl             CHAR(255) comment '图片地址',
    primary key (OrgId, PageType)
 );
 
@@ -694,6 +694,7 @@ alter table TB_USER_ACTIVITY comment '用户参与活动表';
 create table TB_USER_COMMENT
 (
    OrgId                int(8) not null comment '组织id',
+   Id                   INT(8) comment '任务/活动/文章 id',
    MessageId            int(12) not null auto_increment comment '评论id',
    Content              NVARCHAR(200) not null comment '评论内容',
    CreateTime           DATETIME comment '评论时间',
