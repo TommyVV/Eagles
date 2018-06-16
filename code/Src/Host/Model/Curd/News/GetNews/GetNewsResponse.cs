@@ -9,6 +9,9 @@ namespace Eagles.Application.Model.Curd.News.GetNews
     /// </summary>
     public class GetNewsResponse : ResponseBase
     {
-        public List<Common.News> NewsList { get; }
+        /// <summary>
+        /// NewsList
+        /// </summary>
+        public List<Common.News> NewsList { get; set; }
     }
 }

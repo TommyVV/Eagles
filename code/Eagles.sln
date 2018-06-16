@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Interface.Configurat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ealges.DomainService.Configuration", "Src\DomainService\Configuration\Ealges.DomainService.Configuration.csproj", "{68625192-1850-4947-A87D-A1D2FEEB99CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Interface.DataAccess", "Src\Interface\DataAccess\Eagles.Interface.DataAccess.csproj", "{2CDEB506-579C-4739-8D2F-F69360BB50C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ealges.DomianService.DataAccess", "Src\DomainService\DataAccess\Ealges.DomianService.DataAccess.csproj", "{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{68625192-1850-4947-A87D-A1D2FEEB99CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68625192-1850-4947-A87D-A1D2FEEB99CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68625192-1850-4947-A87D-A1D2FEEB99CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CDEB506-579C-4739-8D2F-F69360BB50C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CDEB506-579C-4739-8D2F-F69360BB50C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CDEB506-579C-4739-8D2F-F69360BB50C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CDEB506-579C-4739-8D2F-F69360BB50C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +90,8 @@ Global
 		{843F8547-B8A7-4FB7-8B57-27937BC3CBEE} = {2BA7910F-E682-49A3-A1FE-410922BF8366}
 		{F08E21B3-E00F-4A9C-99BA-C69458F4617D} = {430459C4-235B-4947-B5F8-222A680C232C}
 		{68625192-1850-4947-A87D-A1D2FEEB99CE} = {2BA7910F-E682-49A3-A1FE-410922BF8366}
+		{2CDEB506-579C-4739-8D2F-F69360BB50C8} = {430459C4-235B-4947-B5F8-222A680C232C}
+		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC} = {2BA7910F-E682-49A3-A1FE-410922BF8366}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD0029D0-8432-4E71-A2DA-69064098ED08}
