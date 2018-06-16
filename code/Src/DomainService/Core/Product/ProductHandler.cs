@@ -7,7 +7,7 @@ using Eagles.Application.Model.Curd.Product.GetProduct;
 using Eagles.Application.Model.Curd.Product.GetProductDetail;
 using DomainModel = Eagles.DomainService.Model;
 
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.Product
 {
     public class ProductHandler : IProductHandler
     {
@@ -19,7 +19,7 @@ namespace Eagles.DomainService.Core
             var result = dbManager.Query<DomainModel.Product.Product>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", null);
             if (result != null && result.Count > 0)
             {
-                response.ProductList = result?.Select(x => new Product
+                response.ProductList = result?.Select(x => new Application.Model.Common.Product
                 {
                     ProductId = x.ProdId,
                     ProductName = x.ProdName,

@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 步骤Id
         /// </summary>
-        public string StepId { get; set; }
+        public int StepId { get; set; }
 
         /// <summary>
         /// 步骤名称

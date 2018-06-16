@@ -52,16 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewsHandler.cs" />
-    <Compile Include="ScoreHandler.cs" />
-    <Compile Include="ScrollHandler.cs" />
-    <Compile Include="TaskHandler.cs" />
-    <Compile Include="ActivityHandler.cs" />
+    <Compile Include="News\NewsHandler.cs" />
+    <Compile Include="Score\ScoreHandler.cs" />
+    <Compile Include="Scroll\ScrollHandler.cs" />
+    <Compile Include="Task\TaskHandler.cs" />
+    <Compile Include="Activity\ActivityHandler.cs" />
     <Compile Include="DataBase\DataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestHandler.cs" />
-    <Compile Include="ProductHandler.cs" />
-    <Compile Include="UserHandler.cs" />
+    <Compile Include="Product\ProductHandler.cs" />
+    <Compile Include="User\UserHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">

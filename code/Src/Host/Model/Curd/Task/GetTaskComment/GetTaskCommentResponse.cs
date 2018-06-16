@@ -12,6 +12,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskComment
         /// <summary>
         /// 任务评论列表
         /// </summary>
-        public List<Comment> TaskCommentList { get; }
+        public List<Comment> TaskCommentList { get; set; }
     }
 }

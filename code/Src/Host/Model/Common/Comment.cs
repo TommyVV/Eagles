@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 评论Id
         /// </summary>
-        public string CommentId { get; set; }
+        public int CommentId { get; set; }
 
         /// <summary>
         /// 评论内容
@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 评论用户
         /// </summary>
-        public string CommentUserId { get; set; }
+        public int CommentUserId { get; set; }
 
         /// <summary>
         /// 评论时间

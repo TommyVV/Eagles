@@ -3,7 +3,7 @@ using Eagles.Interface.Core.Score;
 using Eagles.Application.Model.Curd.Score.GetScoreRank;
 using Eagles.Application.Model.Curd.Score.GetScoreExchangeLs;
 
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.Score
 {
     public class ScoreHandler : IScoreHandler
     {

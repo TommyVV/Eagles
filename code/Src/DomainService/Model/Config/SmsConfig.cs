@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.DomainService.Model.Sms
+namespace Eagles.DomainService.Model.Config
 {
     /// <summary>
     /// TB_SMS_CONFIG

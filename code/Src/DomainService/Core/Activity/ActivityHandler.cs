@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base.DataBase;
 using Eagles.Interface.Core.Activity;
@@ -13,7 +14,7 @@ using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
 using DomainModel = Eagles.DomainService.Model;
 
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.Activity
 {
     public class ActivityHandler : IActivityHandler
     {
@@ -127,7 +128,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
             var activityyId = request.ActivityId;
             var content = request.Content;
             var attachList = request.AttachList;
-            //var list = new List<Attachment>();
+            var list = new List<Attachment>();
             //list = request.AttachList;
             throw new NotImplementedException();
         }
@@ -159,7 +160,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
             var activityId = request.UserId;
             var activityType = request.ActivityType;
             var result = dbManager.Query<DomainModel.Activity.Activity>("select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY where activityId = @id and ActivityType = @type", new object[] {activityId, activityType});
-            response.ActivityList = result?.Select(x => new Activity
+            response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
@@ -183,7 +184,27 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
 
         public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
         {
-            throw new NotImplementedException();
+            var response = new GetActivityCommentResponse();
+            var activityId = request.ActivityId;
+            var result = dbManager.Query<DomainModel.User.UserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", activityId);
+            response.ActivityCommentList = result?.Select(x => new Comment
+            {
+                CommentId = x.MessageId,
+                CommentTime = x.ReviewTime,
+                CommentUserId = x.UserId,
+                CommentContent = x.Content
+            }).ToList();
+            if (result != null && result.Count > 0)
+            {
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
 
         public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)

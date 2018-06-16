@@ -5,7 +5,7 @@ using Eagles.Application.Model.Curd.Scroll.GetScrollImg;
 using Eagles.Application.Model.Curd.Scroll.GetScrollNew;
 using DomainModel = Eagles.DomainService.Model;
 
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.Scroll
 {
     public class ScrollHandler : IScrollHanler
     {

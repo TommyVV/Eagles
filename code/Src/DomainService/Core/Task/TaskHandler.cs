@@ -16,7 +16,7 @@ using Eagles.Application.Model.Curd.Task.GetTaskStep;
 using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
 using DomainModel = Eagles.DomainService.Model;
 
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.Task
 {
     public class TaskHandler : ITaskHandler
     {
@@ -78,6 +78,11 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
             return response;
         }
 
+        public RemoveTaskStepResponse RemoveTaskStep(RemoveTaskStepRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         public EditTaskAcceptResponse EditTaskAccept(EditTaskAcceptRequest request)
         {
             throw new NotImplementedException();
@@ -108,12 +113,12 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
             var response = new GetTaskResponse();
             var userId = request.EncryptUserid;
             var result = dbManager.Query<DomainModel.Task.Task>("select taskId,taskName,ImageUrl,HtmlContent from eagles.TB_Task", null);
-            response.TaskList = result?.Select(x => new Task
+            response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskFromUser = x.FromUser,
-                TaskeDate = x.BeginTime
+                TaskDate = x.BeginTime
             }).ToList();
             if (result != null && result.Count > 0)
             {
@@ -130,31 +135,18 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
 
         public GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request)
         {
-            throw new NotImplementedException();
-        }
-
-        public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
-        {
-            var response = new GetTaskDetailResponse();
+            var response = new GetTaskCommentResponse();
             var taskId = request.TaskId;
-            //request.EncryptUserid;
-            var result = dbManager.Query<DomainModel.Task.Task>("select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.TB_TASK where taskId = @id", taskId);
-
+            var result = dbManager.Query<DomainModel.User.UserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", taskId);
+            response.TaskCommentList = result?.Select(x => new Comment
+            {
+                CommentId = x.MessageId,
+                CommentTime = x.ReviewTime,
+                CommentUserId = x.UserId,
+                CommentContent = x.Content
+            }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.TaskName = result[0].TaskName;
-                response.TaskContent = result[0].TaskContent;
-                response.TaskStatus = result[0].Status;
-                response.TaskBeginDate = result[0].BeginTime;
-                response.TaskEndDate = result[0].endTime;
-                response.TaskFounder = result[0].FromUser;
-                response.TaskImageUrl = "";
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach1 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach4 });
-                //response
-
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }
@@ -163,18 +155,60 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
                 response.ErrorCode = "96";
                 response.Message = "查无数据";
             }
+            return response;
+        }
 
+        public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
+        {
+            var response = new GetTaskDetailResponse();
+            var taskId = request.TaskId;
+            //request.EncryptUserid;
+            var result = dbManager.Query<DomainModel.Task.Task>("select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.TB_TASK where taskId = @id", taskId);
+            if (result != null && result.Count > 0)
+            {
+                response.TaskName = result[0].TaskName;
+                response.TaskContent = result[0].TaskContent;
+                response.TaskStatus = result[0].Status;
+                response.TaskBeginDate = result[0].BeginTime;
+                response.TaskEndDate = result[0].endTime;
+                response.TaskFounder = result[0].FromUser;
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach1 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach2 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach3 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach4 });
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
             return response;
         }
 
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
-            throw new NotImplementedException();
+            var response = new GetTaskStepResponse();
+            var taskId = request.TaskId;
+            var result = dbManager.Query<DomainModel.User.UserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime FROM eagles.tb_user_task_step where taskId = @taskId", taskId);
+            response.StepList = result?.Select(x => new Step
+            {
+                StepId = x.StepId,
+                StepName = x.StepName
+            }).ToList();
+            if (result != null && result.Count > 0)
+            {
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
 
-        public RemoveTaskStepResponse RemoveTaskStep(RemoveTaskStepRequest request)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

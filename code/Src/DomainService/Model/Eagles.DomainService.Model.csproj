@@ -48,6 +48,7 @@
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />
     <Compile Include="ImportLog\ImportLog.cs" />
+    <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
     <Compile Include="News\News.cs" />
     <Compile Include="Oper\Oper.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Review\Review.cs" />
     <Compile Include="RewardScore\RewardScore.cs" />
     <Compile Include="ScrollImage\ScrollImage.cs" />
-    <Compile Include="Sms\SmsConfig.cs" />
+    <Compile Include="Config\SmsConfig.cs" />
     <Compile Include="Sms\SmsSendLog.cs" />
     <Compile Include="Task\Task.cs" />
     <Compile Include="Test.cs" />

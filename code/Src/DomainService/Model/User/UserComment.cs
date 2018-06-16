@@ -15,5 +15,6 @@ namespace Eagles.DomainService.Model.User
         public DateTime ReviewTime { get; set; }
         public int ReviewUser { get; set; }
         public int UserId { get; set; }
+        public int Id { get; set; }
     }
 }
