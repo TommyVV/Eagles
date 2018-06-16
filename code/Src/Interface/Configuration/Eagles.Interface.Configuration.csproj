@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A747E03-D095-4B54-AE55-976576A82886}</ProjectGuid>
+    <ProjectGuid>{F08E21B3-E00F-4A9C-99BA-C69458F4617D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eagles.Interface.Core</RootNamespace>
-    <AssemblyName>Eagles.Interface.Core</AssemblyName>
+    <RootNamespace>Eagles.Interface.Configuration</RootNamespace>
+    <AssemblyName>Eagles.Interface.Configuration</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,19 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\IActivityHandler.cs" />
-    <Compile Include="Common\ITokenHadler.cs" />
-    <Compile Include="Curd\ICurdHandler.cs" />
-    <Compile Include="DataBase\IDataAccess.cs" />
-    <Compile Include="News\INewsHandler.cs" />
-    <Compile Include="Product\IProductHandler.cs" />
-    <Compile Include="Score\IScoreHandler.cs" />
-    <Compile Include="Scroll\IScrollHanler.cs" />
-    <Compile Include="Task\ITaskHandler.cs" />
-    <Compile Include="Test\ITestHandler.cs" />
-    <Compile Include="ITestDemo.cs" />
+    <Compile Include="IDataBaseConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\IUserHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
@@ -64,14 +52,6 @@
       <Project>{843F8547-B8A7-4FB7-8B57-27937BC3CBEE}</Project>
       <Name>Eagles.DomainService.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Host\Model\Eagles.Application.Model.csproj">
-      <Project>{3DE06D44-2860-4A92-9FDD-1529093CC970}</Project>
-      <Name>Eagles.Application.Model</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

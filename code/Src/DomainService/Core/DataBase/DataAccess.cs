@@ -14,7 +14,7 @@ namespace Eagles.DomainService.Core.DataBase
 
         public void GetAreas(string id)
         {
-            var t = dbManager.Query<Model.Test>("select * from tb_oper where operId=@id", new int[] { 10000000 });
+            var t = dbManager.Query<Model.Test>("select * from tb_oper where OperId=@id", new { id = new[] { 10000000 } });
             var operId = t[0].OperId;
         }
     }

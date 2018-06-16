@@ -44,6 +44,7 @@
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Authority\Authority.cs" />
+    <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />
     <Compile Include="ImportLog\ImportLog.cs" />
@@ -80,6 +81,11 @@
     <Compile Include="User\UserTestQuestion.cs" />
     <Compile Include="User\UserToken.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

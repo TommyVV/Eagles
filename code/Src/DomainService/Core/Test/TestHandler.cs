@@ -23,7 +23,7 @@ namespace Eagles.DomainService.Core.Test
         public TestResponse Porcess(TestRequest request)
         {
             var s=configurationManager.GetConfiguration<TestConfig>();
-            dataAccess.GetAreas(request.Id);
+            dataAccess.GetAreas("");
             var result = new TestResponse()
             {
                 AreaInfo = new List<AreaInfo>()

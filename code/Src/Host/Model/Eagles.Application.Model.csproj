@@ -306,6 +306,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

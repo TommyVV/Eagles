@@ -163,6 +163,7 @@
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
@@ -178,6 +179,9 @@
     <Content Include="SwaggerUI\lib\.DS_Store" />
     <Content Include="Configuration\Test.config">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configuration\DataBase.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">

@@ -4,6 +4,6 @@ namespace Eagles.DomainService.Model
 {
     public class Test
     {
-        public int OperId { get; set; }
+        public string OperId { get; set; }
     }
 }
