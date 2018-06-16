@@ -180,6 +180,9 @@
     <Content Include="Configuration\Test.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configuration\DataBase.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

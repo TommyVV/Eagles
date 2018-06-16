@@ -92,6 +92,7 @@
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\Implement\ConfigurationManager.cs" />
     <Compile Include="Configuration\XmlPath.cs" />
+    <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="DataBase\IDbManager.cs" />
     <Compile Include="DataBase\Implement\DbManager.cs" />
     <Compile Include="DesEncrypt\IDesEncrypt.cs" />

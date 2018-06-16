@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Eagles.Base.DesEncrypt;
+using Eagles.Interface.Core.Test;
 
 namespace Eagles.Host.Controllers
 {
@@ -8,9 +9,12 @@ namespace Eagles.Host.Controllers
 
         private readonly IDesEncrypt desEncrypt;
 
-        public DefaultController(IDesEncrypt desEncrypt)
+        private readonly ITestHandler testHandler;
+
+        public DefaultController(IDesEncrypt desEncrypt, ITestHandler testHandler)
         {
             this.desEncrypt = desEncrypt;
+            this.testHandler = testHandler;
         }
 
         /// <summary>
@@ -26,6 +30,7 @@ namespace Eagles.Host.Controllers
             var a = desEncrypt.Decrypt(t);
             var b = desEncrypt.EncryptToHex(str);
             var c = desEncrypt.DecryptToHex(b);
+            testHandler.Porcess(null);
             return t;
         }
     }
