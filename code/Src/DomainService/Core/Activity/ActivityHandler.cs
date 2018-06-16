@@ -12,6 +12,7 @@ using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Curd.Activity.GetActivity;
 using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using Eagles.Interface.DataAccess.Util;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity
@@ -19,11 +20,18 @@ namespace Eagles.DomainService.Core.Activity
     public class ActivityHandler : IActivityHandler
     {
         private readonly IDbManager dbManager;
+        private readonly IUtil util;
 
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
             var response = new CreateActivityResponse();
-            //校验Token
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
             var token = request.Token;
             var attachType1 = "";
             var attachType2 = "";
@@ -82,12 +90,18 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
         public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
         {
             var response = new EditActivityCommentResponse();
-            //校验Token
-            var token = request.Token;
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
             var activityId = request.ActivityId;
             var userId = request.CommentUserId;
             var content = request.Comment;
-            var result = dbManager.Excuted("insert into eagles.tb_user_comment(orgid,messageid,content,createtime,userid,reviewstatus,reviewuser,reviewtime ) value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] { });
+            var result = dbManager.Excuted(@"insert into eagles.tb_user_comment(orgid,messageid,content,createtime,userid,reviewstatus,reviewuser,reviewtime ) 
+value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] { });
             if (result > 0)
             {
                 response.ErrorCode = "00";

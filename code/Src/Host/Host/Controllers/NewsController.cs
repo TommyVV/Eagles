@@ -24,7 +24,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/CreateNews")]
-        [HttpGet]
+        [HttpPost]
         public CreateNewsResponse CreateNews(CreateNewsRequest request)
         {
             return newsHandler.CreateNews(request);

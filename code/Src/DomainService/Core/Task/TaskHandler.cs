@@ -14,18 +14,28 @@ using Eagles.Application.Model.Curd.Task.GetTaskComment;
 using Eagles.Application.Model.Curd.Task.GetTaskDetail;
 using Eagles.Application.Model.Curd.Task.GetTaskStep;
 using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
+using Eagles.Base.DesEncrypt;
+using Eagles.Interface.DataAccess.Util;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
 {
     public class TaskHandler : ITaskHandler
     {
+        private readonly IDesEncrypt desEncrypt;
         private readonly IDbManager dbManager;
+        private readonly IUtil util;
 
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
         {
             var response = new CreateTaskResponse();
-            //校验Token
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
             var token = request.Token;
             var attachType1 = "";
             var attachType2 = "";
@@ -80,38 +90,92 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
 
         public RemoveTaskStepResponse RemoveTaskStep(RemoveTaskStepRequest request)
         {
-            throw new NotImplementedException();
+            var response = new RemoveTaskStepResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public EditTaskAcceptResponse EditTaskAccept(EditTaskAcceptRequest request)
         {
-            throw new NotImplementedException();
+            var response = new EditTaskAcceptResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public EditTaskCommentResponse EditTaskComment(EditTaskCommentRequest request)
         {
-            throw new NotImplementedException();
+            var response = new EditTaskCommentResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public EditTaskCompleteResponse EditTaskComplete(EditTaskCompleteRequest request)
         {
-            throw new NotImplementedException();
+            var response = new EditTaskCompleteResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public EditTaskStepResponse EditTaskStep(EditTaskStepRequest request)
         {
-            throw new NotImplementedException();
+            var response = new EditTaskStepResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public EditTaslFeedBackResponse EditTaslFeedBack(EditTaslFeedBackRequest request)
         {
-            throw new NotImplementedException();
+            var response = new EditTaslFeedBackResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            return response;
         }
 
         public GetTaskResponse GetTask(GetTaskRequest request)
         {
             var response = new GetTaskResponse();
-            var userId = request.EncryptUserid;
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
             var result = dbManager.Query<DomainModel.Task.Task>("select taskId,taskName,ImageUrl,HtmlContent from eagles.TB_Task", null);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
@@ -122,6 +186,41 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
             }).ToList();
             if (result != null && result.Count > 0)
             {
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
+        }
+
+        public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
+        {
+            var response = new GetTaskDetailResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var taskId = request.TaskId;
+            var result = dbManager.Query<DomainModel.Task.Task>("select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.TB_TASK where taskId = @id", taskId);
+            if (result != null && result.Count > 0)
+            {
+                response.TaskName = result[0].TaskName;
+                response.TaskContent = result[0].TaskContent;
+                response.TaskStatus = result[0].Status;
+                response.TaskBeginDate = result[0].BeginTime;
+                response.TaskEndDate = result[0].endTime;
+                response.TaskFounder = result[0].FromUser;
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach1 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach2 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach3 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach4 });
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }
@@ -157,36 +256,7 @@ value (@taskName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @taskType, @Max
             }
             return response;
         }
-
-        public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
-        {
-            var response = new GetTaskDetailResponse();
-            var taskId = request.TaskId;
-            //request.EncryptUserid;
-            var result = dbManager.Query<DomainModel.Task.Task>("select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.TB_TASK where taskId = @id", taskId);
-            if (result != null && result.Count > 0)
-            {
-                response.TaskName = result[0].TaskName;
-                response.TaskContent = result[0].TaskContent;
-                response.TaskStatus = result[0].Status;
-                response.TaskBeginDate = result[0].BeginTime;
-                response.TaskEndDate = result[0].endTime;
-                response.TaskFounder = result[0].FromUser;
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach1 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result[0].Attach4 });
-                response.ErrorCode = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.ErrorCode = "96";
-                response.Message = "查无数据";
-            }
-            return response;
-        }
-
+        
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
             var response = new GetTaskStepResponse();
