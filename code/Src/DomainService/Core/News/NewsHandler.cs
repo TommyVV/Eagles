@@ -33,6 +33,11 @@ namespace Eagles.DomainService.Core.News
             return response;
         }
 
+        public GetNewsResponse GetUserArticle(GetNewsRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         public GetNewsResponse GetNews(GetNewsRequest request)
         {
             throw new NotImplementedException();
