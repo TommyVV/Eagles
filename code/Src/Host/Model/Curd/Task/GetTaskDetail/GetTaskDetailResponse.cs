@@ -12,7 +12,7 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskDetail
         /// <summary>
         /// 任务Id
         /// </summary>
-        public string TaskId { get; set; }
+        public int TaskId { get; set; }
         
         /// <summary>
         /// 任务名称
@@ -22,7 +22,7 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskDetail
         /// <summary>
         /// 任务创建者
         /// </summary>
-        public string TaskFounder { get; set; }
+        public int TaskFounder { get; set; }
         
         /// <summary>
         /// 任务内容
@@ -32,17 +32,17 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskDetail
         /// <summary>
         /// 任务开始日期
         /// </summary>
-        public string TaskBeginDate { get; set; }
+        public DateTime TaskBeginDate { get; set; }
 
         /// <summary>
         /// 任务结束日期
         /// </summary>
-        public string TaskEndDate { get; set; }
+        public DateTime TaskEndDate { get; set; }
 
         /// <summary>
         /// 任务状态
         /// </summary>
-        public string TaskStatus { get; set; }
+        public int TaskStatus { get; set; }
                 
         /// <summary>
         /// 任务图片Url

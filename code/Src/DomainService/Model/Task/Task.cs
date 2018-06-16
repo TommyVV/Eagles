@@ -7,10 +7,10 @@ namespace Eagles.DomainService.Model.Task
     /// </summary>
     public class Task
     {
-        public string Attch1 { get; set; }
-        public string Attch2 { get; set; }
-        public string Attch3 { get; set; }
-        public string Attch4 { get; set; }
+        public string Attach1 { get; set; }
+        public string Attach2 { get; set; }
+        public string Attach3 { get; set; }
+        public string Attach4 { get; set; }
         public DateTime BeginTime { get; set; }
         public int BranchId { get; set; }
         public string BranchReview { get; set; }

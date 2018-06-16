@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Curd.Product.GetProductDetail
         /// <summary>
         /// 商品Id
         /// </summary>
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// 产品名称
@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Curd.Product.GetProductDetail
         /// <summary>
         /// 产品积分
         /// </summary>
-        public string ProductScore { get; set; }
+        public int ProductScore { get; set; }
 
         /// <summary>
         /// 
@@ -45,7 +45,7 @@ namespace Eagles.Application.Model.Curd.Product.GetProductDetail
         /// <summary>
         /// 兑换人数
         /// </summary>
-        public string PeopleCount { get; set; }
+        public int PeopleCount { get; set; }
         
     }
 }

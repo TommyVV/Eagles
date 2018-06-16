@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Curd.GetScrollImg
+namespace Eagles.Application.Model.Curd.Scroll.GetScrollImg
 {
     /// <summary>
     /// 滚动图片查询

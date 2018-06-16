@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="NewsHandler.cs" />
     <Compile Include="ScoreHandler.cs" />
+    <Compile Include="ScrollHandler.cs" />
     <Compile Include="TaskHandler.cs" />
     <Compile Include="ActivityHandler.cs" />
     <Compile Include="DataBase\DataAccess.cs" />

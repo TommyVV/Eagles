@@ -7,7 +7,7 @@ namespace Eagles.DomainService.Model.ScrollImage
     /// </summary>
     public class ScrollImage
     {
-        public int ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
         public int OrgId { get; set; }
         public string PageType { get; set; }
     }

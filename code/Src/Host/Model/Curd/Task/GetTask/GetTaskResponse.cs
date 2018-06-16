@@ -12,6 +12,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTask
         /// <summary>
         /// 任务列表
         /// </summary>
-        public List<Common.Task> TaskList { get; }
+        public List<Common.Task> TaskList { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Curd.GetScrollNew
+namespace Eagles.Application.Model.Curd.Scroll.GetScrollNew
 {
     /// <summary>
     /// 滚动消息查询

@@ -42,11 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\IActivityHandler.cs" />
+    <Compile Include="Common\ITokenHadler.cs" />
     <Compile Include="Curd\ICurdHandler.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
     <Compile Include="News\INewsHandler.cs" />
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />
+    <Compile Include="Scroll\IScrollHanler.cs" />
     <Compile Include="Task\ITaskHandler.cs" />
     <Compile Include="Test\ITestHandler.cs" />
     <Compile Include="ITestDemo.cs" />

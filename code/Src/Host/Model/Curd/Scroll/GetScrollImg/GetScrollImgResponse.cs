@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Eagles.Application.Model.Curd.GetScrollImg
+namespace Eagles.Application.Model.Curd.Scroll.GetScrollImg
 {
     /// <summary>
     /// 滚动图片查询
@@ -15,6 +16,6 @@ namespace Eagles.Application.Model.Curd.GetScrollImg
         /// <summary>
         /// 滚动图片Url
         /// </summary>
-        public string RollImgUrl { get; set; }
+        public List<string> RollImgUrl { get; set; }
     }
 }

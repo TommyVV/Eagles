@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Curd.GetScrollNew
+namespace Eagles.Application.Model.Curd.Scroll.GetScrollNew
 {
     /// <summary>
     /// 滚动消息查询
@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Curd.GetScrollNew
         /// <summary>
         /// 消息Id
         /// </summary>
-        public string NewsId { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// 消息名称

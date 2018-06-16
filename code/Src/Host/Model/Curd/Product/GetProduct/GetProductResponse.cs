@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Eagles.Application.Model.Curd.Product.GetProduct
 {
@@ -8,24 +9,8 @@ namespace Eagles.Application.Model.Curd.Product.GetProduct
     public class GetProductResponse : ResponseBase
     {
         /// <summary>
-        /// 产品Id
+        /// 商品列表
         /// </summary>
-        public string ProductId { get; set; }
-
-        /// <summary>
-        /// 产品名称
-        /// </summary>
-        public string ProductName { get; set; }
-
-        /// <summary>
-        /// 产品积分
-        /// </summary>
-        public string ProductScore { get; set; }
-
-        /// <summary>
-        /// 产品图片Url
-        /// </summary>
-        public string ProductImageUrl { get; set; }
-        
+        public List<Common.Product> ProductList { get; set; }
     }
 }

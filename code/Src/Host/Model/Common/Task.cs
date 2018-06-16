@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 任务编号
         /// </summary>
-        public string TaskId { get; set; }
+        public int TaskId { get; set; }
 
         /// <summary>
         /// 任务名称
@@ -20,11 +20,11 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 任务日期
         /// </summary>
-        public string TaskeDate { get; set; }
+        public DateTime TaskeDate { get; set; }
 
         /// <summary>
         /// 任务发起人
         /// </summary>
-        public string TaskFromUser { get; set; }
+        public int TaskFromUser { get; set; }
     }
 }

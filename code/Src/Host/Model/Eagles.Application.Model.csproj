@@ -82,6 +82,7 @@
     <Compile Include="Common\News.cs" />
     <Compile Include="Common\Attachment.cs" />
     <Compile Include="Common\Menu.cs" />
+    <Compile Include="Common\Product.cs" />
     <Compile Include="Common\Score.cs" />
     <Compile Include="Common\Step.cs" />
     <Compile Include="Common\Task.cs" />
@@ -109,8 +110,8 @@
     <Compile Include="Curd\News\GetNews\GetNewsResponse.cs" />
     <Compile Include="Curd\GetNotice\GetNoticRequest.cs" />
     <Compile Include="Curd\GetNotice\GetNoticResponse.cs" />
-    <Compile Include="Curd\GetScrollNew\GetScrollNewsRequest.cs" />
-    <Compile Include="Curd\GetScrollNew\GetScrollNewsResponse.cs" />
+    <Compile Include="Curd\Scroll\GetScrollNew\GetScrollNewsRequest.cs" />
+    <Compile Include="Curd\Scroll\GetScrollNew\GetScrollNewsResponse.cs" />
     <Compile Include="Curd\News\CreateNews\CreateNewsRequest.cs" />
     <Compile Include="Curd\News\CreateNews\CreateNewsResponse.cs" />
     <Compile Include="Curd\Score\GetScoreExchangeLs\GetScoreExchangeLsRequest.cs" />
@@ -125,8 +126,8 @@
     <Compile Include="Curd\User\Login\LoginResponse.cs" />
     <Compile Include="Curd\GetMenu\GetMenuRequest.cs" />
     <Compile Include="Curd\GetMenu\GetMenuResponse.cs" />
-    <Compile Include="Curd\GetScrollImg\GetScrollImgRequest.cs" />
-    <Compile Include="Curd\GetScrollImg\GetScrollImgResponse.cs" />
+    <Compile Include="Curd\Scroll\GetScrollImg\GetScrollImgRequest.cs" />
+    <Compile Include="Curd\Scroll\GetScrollImg\GetScrollImgResponse.cs" />
     <Compile Include="Curd\Activity\GetActivityComment\GetActivityCommentRequest.cs" />
     <Compile Include="Curd\Activity\GetActivityComment\GetActivityCommentResponse.cs" />
     <Compile Include="Curd\Task\EditTaskAccept\EditTaskAcceptRequest.cs" />
@@ -158,6 +159,8 @@
     <Compile Include="Curd\Task\RemoveTaskStep\RemoveTaskStepResponse.cs" />
     <Compile Include="Curd\User\Register\RegisterRequest.cs" />
     <Compile Include="Curd\User\Register\RegisterResponse.cs" />
+    <Compile Include="Curd\User\Token\TokenRequest.cs" />
+    <Compile Include="Curd\User\Token\TokenResponse.cs" />
     <Compile Include="DeliverGoods\AlterDeliverGoodsInfoRequest.cs" />
     <Compile Include="DeliverGoods\DeliverGoodsInfo.cs" />
     <Compile Include="DeliverGoods\DeliverGoodsRequset.cs" />
