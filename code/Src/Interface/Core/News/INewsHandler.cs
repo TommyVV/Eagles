@@ -8,6 +8,6 @@ namespace Eagles.Interface.Core.News
     public interface INewsHandler : IInterfaceBase
     {
         CreateNewsResponse CreateNews(CreateNewsRequest request);
-        GetNewsResponse GetNews(GetNewsRequest request);
+        GetNewsResponse GetUserArticle(GetNewsRequest request);
     }
 }

@@ -13,6 +13,11 @@ namespace Eagles.Host.Controllers
     {
         private INewsHandler newsHandler;
 
+        public NewsController(INewsHandler newsHandler)
+        {
+            this.newsHandler = newsHandler;
+        }
+
         /// <summary>
         /// 文章发布
         /// </summary>
@@ -26,15 +31,15 @@ namespace Eagles.Host.Controllers
         }
 
         /// <summary>
-        /// 文章发布
+        /// 我的文章列表
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/GetNews")]
-        [HttpGet]
-        public GetNewsResponse GetNews(GetNewsRequest request)
+        [Route("api/GetUserArticle")]
+        [HttpPost]
+        public GetNewsResponse GetUserArticle(GetNewsRequest request)
         {
-            return newsHandler.GetNews(request);
+            return newsHandler.GetUserArticle(request);
         }
     }
 }

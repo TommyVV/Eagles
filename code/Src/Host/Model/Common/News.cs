@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 新闻文章Id
         /// </summary>
-        public string NewsId { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// 新闻文章标题
