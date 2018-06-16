@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Eagles.Interface.Core.User;
 using Eagles.Application.Model.Curd.User.Login;
 using Eagles.Application.Model.Curd.User.Register;
@@ -15,13 +14,18 @@ namespace Eagles.Host.Controllers
     {
         private IUserHandler userHandler;
 
+        public UserController(IUserHandler userHandler)
+        {
+            this.userHandler = userHandler;
+        }
+
         /// <summary>
         /// 登录
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/Login")]
-        [HttpGet]
+        [HttpPost]
         public LoginResponse Login(LoginRequest request)
         {
             return userHandler.Login(request);
@@ -33,7 +37,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/Register")]
-        [HttpGet]
+        [HttpPost]
         public RegisterResponse Register(RegisterRequest request)
         {
             return userHandler.Register(request);
@@ -45,7 +49,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditUser")]
-        [HttpGet]
+        [HttpPost]
         public EditUserResponse EditUser(EditUserRequest request)
         {
             return userHandler.EditUser(request);
@@ -57,7 +61,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetUserInfo")]
-        [HttpGet]
+        [HttpPost]
         public GetUserInfoResponse GetUserInfo(GetUserInfoRequest request)
         {
             return userHandler.GetUserInfo(request);

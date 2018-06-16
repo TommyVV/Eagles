@@ -10,6 +10,10 @@ namespace Eagles.Application.Model.Curd.Task.EditTaslFeedBack
     public class EditTaslFeedBackRequest : RequestBase
     {
         /// <summary>
+        /// Token
+        /// </summary>
+        public string Token { get; set; }
+        /// <summary>
         /// 任务Id
         /// </summary>
         public string TaskId { get; set; }
