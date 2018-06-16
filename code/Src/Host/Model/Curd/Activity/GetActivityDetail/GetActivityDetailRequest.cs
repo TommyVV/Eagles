@@ -15,11 +15,11 @@ namespace Eagles.Application.Model.Curd.Activity.GetActivityDetail
         /// <summary>
         /// 活动Id
         /// </summary>
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
 
         /// <summary>
         /// 密文UserId
         /// </summary>
-        public string EncryptUserid { get; set; }
+        public int EncryptUserid { get; set; }
     }
 }

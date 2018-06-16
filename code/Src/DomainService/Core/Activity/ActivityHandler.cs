@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Eagles.Base.DataBase;
 using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Curd.Activity.CreateActivity;
@@ -12,6 +10,7 @@ using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Curd.Activity.GetActivity;
 using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Interface.DataAccess.Util;
 using DomainModel = Eagles.DomainService.Model;
 
@@ -19,8 +18,14 @@ namespace Eagles.DomainService.Core.Activity
 {
     public class ActivityHandler : IActivityHandler
     {
-        private readonly IDbManager dbManager;
+        private readonly IActivityAccess iActivityAccess;
         private readonly IUtil util;
+
+        public ActivityHandler(IActivityAccess iActivityAccess, IUtil util)
+        {
+            this.iActivityAccess = iActivityAccess;
+            this.util = util;
+        }
 
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
@@ -32,48 +37,32 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var token = request.Token;
-            var attachType1 = "";
-            var attachType2 = "";
-            var attachType3 = "";
-            var attachType4 = "";
-            var attach1 ="";
-            var attach2 ="";
-            var attach3 ="";
-            var attach4 = "";
-            var activityType = request.ActivityType;
-            var activityName = request.ActivityName;
-            var beginTime = request.ActivityBeginDate;
-            var endTime = request.ActivityEndDate;
-            var maxCount = "";
-            var testId = "";
-            var maxUser = "";
-            var content = request.ActivityContent;
-            var fromUser = request.ActivityFromUser;
-            var canComment = request.CanComment;
-            var isPublic = request.IsPublic;
-            var imageUrl = "";
+            var act = new DomainModel.Activity.Activity();
+            act.ActivityName = request.ActivityName;
+            act.ActivityType = request.ActivityType;
+            act.BeginTime = request.ActivityBeginDate;
+            act.EndTime = request.ActivityEndDate;
+            act.HtmlContent = request.ActivityContent;
+            act.FromUser = request.ActivityFromUser;
+            act.CanComment = request.CanComment;
+            act.IsPublic = request.IsPublic;
+            act.MaxCount = 0;
+            act.TestId = 0;
+            act.MaxUser = 99;
+            act.ImageUrl = "";
             var list = request.AttachList;
             if (request.AttachList != null && request.AttachList.Count > 0)
             {
-                attachType1 = list[0].AttachmentType is null ? null : list[0].AttachmentType;
-                attachType2 = list[1].AttachmentType is null ? null : list[1].AttachmentType;
-                attachType3 = list[2].AttachmentType is null ? null : list[2].AttachmentType;
-                attachType4 = list[3].AttachmentType is null ? null : list[3].AttachmentType;
-                attach1 = list[0].AttachmentDownloadUrl is null ? null : list[0].AttachmentDownloadUrl;
-                attach2 = list[1].AttachmentDownloadUrl is null ? null : list[1].AttachmentDownloadUrl;
-                attach3 = list[2].AttachmentDownloadUrl is null ? null : list[2].AttachmentDownloadUrl;
-                attach4 = list[3].AttachmentDownloadUrl is null ? null : list[3].AttachmentDownloadUrl;
+                act.AttachType1 = list[0].AttachmentType is null ? null : list[0].AttachmentType;
+                act.AttachType2 = list[1].AttachmentType is null ? null : list[1].AttachmentType;
+                act.AttachType3 = list[2].AttachmentType is null ? null : list[2].AttachmentType;
+                act.AttachType4 = list[3].AttachmentType is null ? null : list[3].AttachmentType;
+                act.Attach1 = list[0].AttachmentDownloadUrl is null ? null : list[0].AttachmentDownloadUrl;
+                act.Attach2 = list[1].AttachmentDownloadUrl is null ? null : list[1].AttachmentDownloadUrl;
+                act.Attach3 = list[2].AttachmentDownloadUrl is null ? null : list[2].AttachmentDownloadUrl;
+                act.Attach4 = list[3].AttachmentDownloadUrl is null ? null : list[3].AttachmentDownloadUrl;
             }
-            var result = dbManager.Excuted(@"insert into eagles.tb_activity (ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
-TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview) 
-value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, 
-@TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, @AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview)",
-                new object[]
-                {
-                    activityName, content, beginTime, endTime, fromUser, activityType, maxCount, canComment, testId, maxUser, 
-                    attach1, attach2, attach3, attach4, attachType1, attachType2, attachType3, attachType4, imageUrl, isPublic, "-1", "-1"
-                });
+            var result = iActivityAccess.CreateActivity(act);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -97,11 +86,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                 response.Message = "获取Token失败";
                 return response;
             }
-            var activityId = request.ActivityId;
-            var userId = request.CommentUserId;
-            var content = request.Comment;
-            var result = dbManager.Excuted(@"insert into eagles.tb_user_comment(orgid,messageid,content,createtime,userid,reviewstatus,reviewuser,reviewtime ) 
-value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] { });
+            var result = iActivityAccess.EditActivityComment(request.ActivityId, request.CommentUserId, request.Comment);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -118,11 +103,14 @@ value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] 
         public EditActivityCompleteResponse EditActivityComplete(EditActivityCompleteRequest request)
         {
             var response = new EditActivityCompleteResponse();
-            //校验Token
-            var token = request.Token;
-            var activityId = request.ActivityId;
-            var userId = request.ActivityType;
-            var result = dbManager.Excuted("update eagles.tb_activity set Status = '' where ActivityId = @ActivityId ", new object[] {activityId});
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -142,28 +130,40 @@ value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] 
             var activityyId = request.ActivityId;
             var content = request.Content;
             var attachList = request.AttachList;
-            var list = new List<Attachment>();
-            //list = request.AttachList;
-            throw new NotImplementedException();
+            var result = iActivityAccess.EditActivityFeedBack(activityyId, content, attachList);
+            if (result > 0)
+            {
+                response.ErrorCode = "00";
+                response.Message = "成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "失败";
+            }
+            return response;
         }
 
         public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
         {
             var response = new EditActivityJoinResponse();
-            //校验Token
-            var token = request.Token;
-            var activityId = request.ActivityId;
-
-            var result = dbManager.Excuted("update eagles.tb_activity set Status = '' where ActivityId = @ActivityId ", new object[] { activityId });
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iActivityAccess.EditActivityJoin(request.ActivityId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
-                response.Message = "查询成功";
+                response.Message = "成功";
             }
             else
             {
                 response.ErrorCode = "96";
-                response.Message = "查无数据";
+                response.Message = "失败";
             }
             return response;
         }
@@ -171,9 +171,14 @@ value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] 
         public GetActivityResponse GetActivity(GetActivityRequest request)
         {
             var response = new GetActivityResponse();
-            var activityId = request.UserId;
-            var activityType = request.ActivityType;
-            var result = dbManager.Query<DomainModel.Activity.Activity>("select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY where activityId = @id and ActivityType = @type", new object[] {activityId, activityType});
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iActivityAccess.GetActivity(Convert.ToInt32(request.ActivityType));
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,
@@ -195,21 +200,20 @@ value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] 
             }
             return response;
         }
-
-        public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
+        
+        public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
         {
-            var response = new GetActivityCommentResponse();
-            var activityId = request.ActivityId;
-            var result = dbManager.Query<DomainModel.User.UserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", activityId);
-            response.ActivityCommentList = result?.Select(x => new Comment
+            var response = new GetActivityDetailResponse();
+            var result = iActivityAccess.GetActivityDetail(request.ActivityId);
+            if (result != null)
             {
-                CommentId = x.MessageId,
-                CommentTime = x.ReviewTime,
-                CommentUserId = x.UserId,
-                CommentContent = x.Content
-            }).ToList();
-            if (result != null && result.Count > 0)
-            {
+                response.ActivityName = result.ActivityName;
+                response.ActivityContent = result.HtmlContent;
+                response.ActivityImageUrl = result.ImageUrl;
+                response.AcctachmentList.Add(new Attachment() {AttachmentType = result.AttachType1, AttachmentName = result.Attach1});
+                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentName = result.Attach2 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentName = result.Attach3 });
+                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentName = result.Attach4 });
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }
@@ -221,22 +225,19 @@ value ('123','321',@content,'2018-6-14',123,'0',321,'2018-6-14')", new object[] 
             return response;
         }
 
-        public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
+        public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
         {
-            var response = new GetActivityDetailResponse();
-            var activityId = request.ActivityId;
-            //request.EncryptUserid;
-            var result = dbManager.Query<DomainModel.Activity.Activity>("select activityId,activityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.TB_ACTIVITY where activityId = @id", activityId);
-
+            var response = new GetActivityCommentResponse();
+            var result = iActivityAccess.GetActivityComment(request.ActivityId);
+            response.ActivityCommentList = result?.Select(x => new Comment
+            {
+                CommentId = x.MessageId,
+                CommentTime = x.ReviewTime,
+                CommentUserId = x.UserId,
+                CommentContent = x.Content
+            }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.ActivityName = result[0].ActivityName;
-                response.ActivityContent = result[0].HtmlContent;
-                response.ActivityImageUrl = result[0].ImageUrl;
-                response.AcctachmentList.Add(new Attachment() {AttachmentType = result[0].AttachType1, AttachmentName = result[0].Attach1});
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result[0].AttachType2, AttachmentName = result[0].Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result[0].AttachType3, AttachmentName = result[0].Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result[0].AttachType4, AttachmentName = result[0].Attach4 });
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }
