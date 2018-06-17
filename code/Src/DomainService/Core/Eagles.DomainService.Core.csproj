@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppModule\AppModuleHanlder.cs" />
+    <Compile Include="ColumnHandler.cs" />
+    <Compile Include="DataBase\ColumnDataAccess.cs" />
     <Compile Include="News\NewsHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />

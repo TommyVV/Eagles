@@ -44,6 +44,7 @@
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Authority\Authority.cs" />
+    <Compile Include="Column\TB_APP_MODULE.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />

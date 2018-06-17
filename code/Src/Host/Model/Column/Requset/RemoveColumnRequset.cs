@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class RemoveColumnInfoRequset:RequestBase
+    public class RemoveColumnRequset:RequestBase
     {
         /// <summary>
         /// 栏目id

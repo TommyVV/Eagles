@@ -46,10 +46,12 @@
     <Compile Include="Common\ITokenHadler.cs" />
     <Compile Include="Curd\ICurdHandler.cs" />
     <Compile Include="DataBase\ActivityAccess\IActivityAccess.cs" />
+    <Compile Include="DataBase\IColumnDataAccess.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
     <Compile Include="DataBase\TaskAccess\ITaskAccess.cs" />
     <Compile Include="DataBase\UserArticle\IArticleDataAccess.cs" />
     <Compile Include="DataBase\UserInfo\IUserInfo.cs" />
+    <Compile Include="IColumnHandler.cs" />
     <Compile Include="News\INewsHandler.cs" />
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />
