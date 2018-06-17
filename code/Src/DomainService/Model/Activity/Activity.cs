@@ -33,5 +33,6 @@ namespace Eagles.DomainService.Model.Activity
         public string OrgReview { get; set; }
         public int TestId { get; set; }
         public int ToUserId { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityComment(request.ActivityId, request.CommentUserId, request.Comment);
+            var result = iActivityAccess.EditActivityComment(tokens.OrgId, request.ActivityId, request.CommentUserId, request.Comment);
             if (result > 0)
             {
                 response.ErrorCode = "00";
