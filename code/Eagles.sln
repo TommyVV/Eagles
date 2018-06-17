@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Interface.DataAccess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ealges.DomianService.DataAccess", "Src\DomainService\DataAccess\Ealges.DomianService.DataAccess.csproj", "{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Application.Host", "Src\Host\Eagles.Application.Host\Eagles.Application.Host.csproj", "{FEA4774E-5181-4075-8EBD-11B5756EC0F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEA4774E-5181-4075-8EBD-11B5756EC0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEA4774E-5181-4075-8EBD-11B5756EC0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEA4774E-5181-4075-8EBD-11B5756EC0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEA4774E-5181-4075-8EBD-11B5756EC0F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{68625192-1850-4947-A87D-A1D2FEEB99CE} = {2BA7910F-E682-49A3-A1FE-410922BF8366}
 		{2CDEB506-579C-4739-8D2F-F69360BB50C8} = {430459C4-235B-4947-B5F8-222A680C232C}
 		{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC} = {2BA7910F-E682-49A3-A1FE-410922BF8366}
+		{FEA4774E-5181-4075-8EBD-11B5756EC0F4} = {FF0A53D2-9CE9-4EB0-8945-61C601E2FF9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD0029D0-8432-4E71-A2DA-69064098ED08}
