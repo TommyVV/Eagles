@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Common;
@@ -50,17 +51,29 @@ namespace Eagles.DomainService.Core.Activity
             act.TestId = 0;
             act.MaxUser = 99;
             act.ImageUrl = "";
-            var list = request.AttachList;
-            if (request.AttachList != null && request.AttachList.Count > 0)
+            var attachList = request.AttachList;
+            for (int i = 0; i < attachList.Count; i++)
             {
-                act.AttachType1 = list[0].AttachmentType is null ? null : list[0].AttachmentType;
-                act.AttachType2 = list[1].AttachmentType is null ? null : list[1].AttachmentType;
-                act.AttachType3 = list[2].AttachmentType is null ? null : list[2].AttachmentType;
-                act.AttachType4 = list[3].AttachmentType is null ? null : list[3].AttachmentType;
-                act.Attach1 = list[0].AttachmentDownloadUrl is null ? null : list[0].AttachmentDownloadUrl;
-                act.Attach2 = list[1].AttachmentDownloadUrl is null ? null : list[1].AttachmentDownloadUrl;
-                act.Attach3 = list[2].AttachmentDownloadUrl is null ? null : list[2].AttachmentDownloadUrl;
-                act.Attach4 = list[3].AttachmentDownloadUrl is null ? null : list[3].AttachmentDownloadUrl;
+                if (i == 0)
+                {
+                    act.AttachType1 = attachList[i].AttachmentType;
+                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 1)
+                {
+                    act.AttachType2 = attachList[i].AttachmentType;
+                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 2)
+                {
+                    act.AttachType3 = attachList[i].AttachmentType;
+                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 3)
+                {
+                    act.AttachType4 = attachList[i].AttachmentType;
+                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                }
             }
             var result = iActivityAccess.CreateActivity(act);
             if (result > 0)
@@ -207,13 +220,15 @@ namespace Eagles.DomainService.Core.Activity
             var result = iActivityAccess.GetActivityDetail(request.ActivityId);
             if (result != null)
             {
+                response.ActivityId = request.ActivityId;
                 response.ActivityName = result.ActivityName;
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
-                response.AcctachmentList.Add(new Attachment() {AttachmentType = result.AttachType1, AttachmentName = result.Attach1});
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentName = result.Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentName = result.Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentName = result.Attach4 });
+                response.AttachmentList = new List<Attachment>();
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

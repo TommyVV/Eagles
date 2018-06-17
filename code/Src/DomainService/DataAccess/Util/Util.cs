@@ -17,15 +17,9 @@ namespace Ealges.DomianService.DataAccess.Util
 
         public UserToken GetUserId(string token,int tokenType)
         {
-            var tokens=dbManager.Query<UserToken>(@" SELECT OrgId,
-                BranchId,
-                UserId,
-                Token,
-                CreateTime,
-                ExpireTime,
-                TokenType
-            FROM eagles.tb_user_token where Token=@Token AND TokenType=@TokenType",
-                new {Token = new string [1] {token}, TokenType = new int[1] { tokenType } });
+            var tokens = dbManager.Query<UserToken>(
+                @" SELECT OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token where Token=@Token AND TokenType=@TokenType",
+                new {Token = token, TokenType = tokenType});
             if (tokens != null && tokens.Any())
             {
                 return tokens.FirstOrDefault();

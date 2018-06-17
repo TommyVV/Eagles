@@ -14,6 +14,10 @@ namespace Eagles.Host.Controllers
     {
         private IUserHandler userHandler;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userHandler"></param>
         public UserController(IUserHandler userHandler)
         {
             this.userHandler = userHandler;
