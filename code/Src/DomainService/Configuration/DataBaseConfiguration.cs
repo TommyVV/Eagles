@@ -1,5 +1,5 @@
-﻿using Eagles.Base.Configuration;
-using Eagles.DomainService.Model.Config;
+﻿using Eagles.Base.Config;
+using Eagles.Base.Configuration;
 using Eagles.Interface.Configuration;
 
 namespace Ealges.DomainService.Configuration
