@@ -99,7 +99,8 @@ value (@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachType1,@Attach
 
         public DomainModel.Task.Task GetTaskDetail(int taskId)
         {
-            var result = dbManager.Query<DomainModel.Task.Task>(@"select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.tb_task 
+            var result = dbManager.Query<DomainModel.Task.Task>(@"select TaskId,TaskName,FromUser,Status,TaskContent,AttachType1
+,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4,CreateTime from eagles.tb_task 
 where TaskId = @TaskId", new {TaskId = taskId});
             return result[0];
         }

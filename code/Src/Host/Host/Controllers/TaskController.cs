@@ -155,7 +155,7 @@ namespace Eagles.Host.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/GetTaskDetail")]
+        [Route("api/GetTaskComment")]
         [HttpPost]
         public GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request)
         {
