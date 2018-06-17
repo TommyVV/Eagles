@@ -1,25 +1,13 @@
 const DOMAIN = 'http://www.51service.xyz/Eagles/swagger/ui/index';
 
-let checkLoginInfo = function () {
-    $.ajax({
-        type: 'POST',
-        url: DOMAIN + ''
-    })
-        .success(() => {
-
-        })
-        .error(() => {
-
-        })
-}
-$('.btn-login').on('click', function (e) {
+$('.btn-signup').on('click', function (e) {
     e.preventDefault();
 
     let password = $('#inputPassword').val();
     let account = $('#inputUser').val();
     let captcha = $('#inputCaptcha').val();
     if (!account) {
-        alert('请输入账号');
+        alert('请输入手机号');
         return;
     } else if (!password) {
         alert('请输入密码');

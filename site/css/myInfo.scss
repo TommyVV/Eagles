@@ -1,0 +1,89 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+html,body{
+	height: 100%;
+}
+.container{
+	height: 100%;
+}
+@media screen and (max-width: 768px) {
+    .myInfoModal{
+        background-color: #f8f8f8;
+        min-height: 100%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .myInfoModal{
+        background-color: rgba(248,248,248,1);
+        min-height: 100%;
+    } 
+}
+.myInfoBox{
+	padding-left: 0;
+	padding-right: 0;
+	background: rgba(248,248,248,1);
+	& > .item:not(:last-child){
+		margin-bottom: px2rem(20);
+	}
+    .item{
+		position: relative;
+		padding: 0 px2rem(35);
+		background:rgba(255,255,255,1);
+		& > div:not(:last-child) {
+			border-bottom: 1px solid rgba(238,238,238,1);
+		}
+		& > div{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.left{
+				font-size:px2rem(30);
+				font-family:SourceHanSansCN-Regular;
+				color:rgba(20,20,20,1);
+				line-height:px2rem(48);
+			}
+			.right{
+				font-size:px2rem(30);
+				font-family:SourceHanSansCN-Regular;
+				line-height:px2rem(48);
+				color:rgba(148,148,148,1);
+			}
+		}
+		.photo{
+			height: px2rem(190);
+			.right{
+				img{
+					display: inline-block;
+					height: px2rem(114);
+					width: px2rem(114);
+					border-radius: 50%;
+				}
+			}
+		}
+		.normal{
+			height: px2rem(79);
+		}
+		.button{
+			display: flex;
+			justify-content: center;
+			.confirmBtn{
+				margin-top: px2rem(94);
+				margin-bottom: px2rem(57);
+				width:px2rem(520);
+				height:px2rem(84);
+				background:#EE2F2F;
+				border-radius:px2rem(8);
+				text-align: center;
+				line-height: px2rem(84);
+				font-size: px2rem(30);
+				font-family:SourceHanSansCN-Regular;
+				color:rgba(255,255,255,1);
+			}
+		}
+	}
+}

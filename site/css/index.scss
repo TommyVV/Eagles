@@ -3,7 +3,12 @@
     margin: 0;
     padding: 0;
     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
-
+}
+.overflow-two-line{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
 }
 .clear:after{
 	display: block;
@@ -22,11 +27,84 @@
 	    height: 100%;
 	    border:none;
 	    margin:0;
-	    padding:0;
+	    padding:0 0 0 px2rem(16);
 		}
 		.navbar-toggle:focus, .navbar-toggle:hover{
 			background-color: #fff;
 		}
+	}
+	.search-modal{
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height:100%;
+		width:100%;
+		background-color:#fff;
+		// display:flex;
+		flex-direction: column;
+		.search-header{
+			height: px2rem(70);
+			display:flex;
+			padding:0 px2rem(29) 0 px2rem(38);
+			align-items: center;
+			border-bottom: px2rem(1) solid #eee;
+			&-wrap{
+				position: relative;
+				.search-input{
+					width: px2rem(600);
+					height: px2rem(50);
+					border-radius: px2rem(25);
+					flex:1;
+					-webkit-appearance: none;
+					outline: none;
+					background-color: #EDEDED;
+					color:#949494;
+					font-size: px2rem(24);
+					padding-left:px2rem(60);
+					box-shadow: none;
+					border:none;
+				}
+				span{
+					position: absolute;
+					top:px2rem(13);
+					left:px2rem(20);
+				}
+			}
+			
+			.search-cancle{
+				margin-left:px2rem(17);
+				font-size: px2rem(30);
+				color:#5B5B5B;
+			}
+		}
+		&-content{
+			flex:1;
+			padding:0 px2rem(49);
+			.search-label{
+				color:#5B5B5B;
+				font-size:px2rem(30);
+				line-height: px2rem(121);
+			}
+			ul{
+				list-style: none;
+				display:flex;
+				flex-wrap: wrap;
+				li{
+					list-style: none;
+					padding:px2rem(13) px2rem(32) px2rem(14) px2rem(31);
+					margin:0 px2rem(41) px2rem(20) 0;
+					line-height: 1;
+					text-align: center;
+					font-size:px2rem(24);
+					color:#949494;
+					background-color:rgba(243,243,243,1);
+					border-radius: px2rem(50);
+					
+				}
+			}
+		}
+		
 	}
 	.navbar-search{
 		display: none;

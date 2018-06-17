@@ -1,0 +1,107 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+html,body{
+	height: 100%;
+}
+.container{
+	height: 100%;
+}
+@media screen and (max-width: 768px) {
+    .signupModal{
+        background-color: #f8f8f8;
+        height: 100%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .signupModal{
+        background-color: #fff;
+        height: 100%;
+    } 
+}
+.signupBox{
+    background-color: #f8f8f8;
+    .title{
+		margin-top:px2rem(188);
+		color: #141414;
+		font-weight: bolder;
+		font-size: px2rem(48);
+	    text-align: center;
+	}
+}
+.form-horizontal{
+    padding: px2rem(159) px2rem(75) px2rem(0) px2rem(75);
+    .form-group{
+		    position: relative;
+		    margin-left:0;
+		    margin-right: 0;
+		    margin-bottom: px2rem(80);
+		    .form-control{
+				    background-color: #f8f8f8;
+				    border:none;
+				    border-bottom: 1px solid #A8A8A8;
+				    box-shadow: none;
+				    border-radius: 0;
+				    padding-left: px2rem(60);
+				    font-size: px2rem(24);
+				}
+				.form-control:focus{
+				    box-shadow: none;
+				}
+				.icon{
+				    position: absolute;
+				    display: inline-block;
+				    width: px2rem(32);
+				    height: px2rem(32);
+				    left: px2rem(15);
+				    bottom:px2rem(16);
+				}
+				.user-icon{
+				    background: url('../assets/images/user.png') no-repeat center center;
+				}
+				.pwd-icon{
+				    background: url('../assets/images/lock.png') no-repeat center center;
+				}
+				.cap-icon{
+				    background: url('../assets/images/verifycode.png') no-repeat center center;
+				}
+				.btn-cap{
+				    position: absolute;
+				    display: inline-block;
+				    box-sizing: border-box;
+				    width: px2rem(115);
+				    height: px2rem(40);
+				    right: px2rem(20);
+				    bottom:px2rem(13);
+				    // padding: 0px px2rem(15);
+				    line-height: px2rem(40);
+				    border-radius: px2rem(10);
+				    color: #fff;
+				    background-color: #b5b5b5;
+				    font-size: px2rem(30);
+				    text-align: center;
+				}
+				.btn-signup{
+				    display: block;
+				    margin:0 auto;
+				    margin-top:px2rem(69);
+				    width: 90%;
+				    height: px2rem(84);
+				    background-color: #EE2F2F;
+				    color: #fff;
+				    border:none;
+				    outline: none;
+				    font-size: px2rem(30);
+				}
+				.btn-signup:focus,.btn-signup:hover{
+				    border:none;
+				    outline: none;
+				    color:#fff;
+				    box-shadow: none;
+				}
+		}
+}

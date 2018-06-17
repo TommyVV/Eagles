@@ -1,0 +1,78 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
+.container{
+    padding:0;
+}
+.result{
+    &-overview{
+        padding-top:px2rem(124);
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        img{
+            width:px2rem(178);
+            height:px2rem(178);
+            margin-bottom:px2rem(49);
+        }
+        &-lists{
+            font-size: px2rem(24);
+            line-height: 1;
+            &-list{
+                margin-bottom: px2rem(28);
+                .title{
+                    color:#949494;
+                }
+                .explain{
+                    color:#141414;
+                }
+            }
+        }
+    }
+    &-detail{
+        padding-top:px2rem(86);
+        &-statistics{
+            height:px2rem(32);
+            line-height: 1;
+            font-size: px2rem(30);
+            color:#141414;
+            padding-left:px2rem(37);
+            span{
+                margin-right: px2rem(113);
+            }
+        }
+        &-list{
+            background:#fff;
+            display:flex;
+            flex-wrap: wrap;
+            padding-top:px2rem(46);
+            padding-left:px2rem(18.5);
+            align-content: flex-start; 
+            span{
+                width:px2rem(84);
+                height:px2rem(84);
+                border:1px solid #48C52B;
+                line-height: px2rem(84);
+                text-align: center;
+                border-radius: px2rem(42);
+                margin:0 px2rem(17.5) px2rem(40) px2rem(17.5);
+                &.wrong{
+                    border:1px solid #48C52B;
+                    color:#48C52B;
+                }
+                &.right{
+                    border:1px solid #F24848;
+                    color:#F24848;
+                }
+                &.Unanswered{
+                    border:1px solid #949494;
+                    color:#949494;
+                }
+
+            }
+        }
+    }
+}

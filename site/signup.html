@@ -6,35 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="hotcss" content="initial-dpr=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>登录</title>
+    <title>注册</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/login.css" rel="stylesheet">
+    <link href="./css/signup.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <!-- 登录页 -->
-        <div class="row loginModal">
-            <div class="col-md-offset-3 col-md-6 loginBox">
-                <div class="logo">
-                    <img src="./assets/images/index_logo.png" alt="">
+        <!-- 注册页 -->
+        <div class="row signupModal">
+            <div class="col-md-offset-3 col-md-6 signupBox">
+                <div class="title">
+                    用户注册
                 </div>
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inputUser" placeholder="请输入用户名">
+                        <input type="text" class="form-control" id="inputUser" placeholder="请输入手机号">
                         <i class="icon user-icon"></i>
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
-                        <i class="icon pwd-icon"></i>
                     </div>
                     <div class="form-group help">
                         <input type="text" class="form-control" id="inputCaptcha" placeholder="请输入验证码">
                         <i class="icon cap-icon"></i>
                         <span class="btn-cap">7823</span>
                     </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+                        <i class="icon pwd-icon"></i>
+                    </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-login">登&nbsp;&nbsp;录</button>
+                        <button type="submit" class="btn btn-signup">注&nbsp;&nbsp;册</button>
                     </div>
                 </form>
             </div>
@@ -43,7 +43,7 @@
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/login.js"></script>
+    <script src="js/signup.js"></script>
 </body>
 
 </html>

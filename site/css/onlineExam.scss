@@ -1,0 +1,64 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
+.exam{
+    display:none;
+    &-title{
+        height:px2rem(185);
+        line-height: 1;
+        padding:0;
+        margin:0;
+        padding-top:px2rem(102);
+        text-align: center;
+        font-size:px2rem(48);
+    }
+    &-img{
+        height:px2rem(360);
+        width:px2rem(680);
+        padding-bottom:px2rem(65);
+        border-bottom:px2rem(1) solid rgba(238,238,238,1);
+        img{
+            width:100%;
+            height:100%;
+        }
+    }
+    &-rules{
+        &-name{
+            line-height: 1;
+            padding:px2rem(54) 0 px2rem(45) 0;
+            color:#141414;
+            font-size: px2rem(36);
+        }
+        &-line{
+            line-height: 1;
+            font-size: px2rem(24);
+            margin-bottom:px2rem(28);
+            &-label{
+                color:#949494;
+            }
+            &-explain{
+                color:#141414;
+            }
+        }
+    }
+    &-button{
+        display:flex;
+        justify-content: center;
+        padding-top:px2rem(85);
+        &-jump{
+            height:px2rem(84);
+            width:px2rem(520);
+            text-align: center;
+            border:none;
+            // background:#EE2F2F;
+            border-radius:px2rem(8);
+            color:#FFFFFF;
+            letter-spacing: px2rem(5);
+            font-size:px2rem(30);
+            background: linear-gradient(to bottom right, #FF5454, #E51A1A);
+        }
+    }
+}
