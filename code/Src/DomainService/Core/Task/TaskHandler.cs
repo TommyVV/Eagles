@@ -47,13 +47,29 @@ namespace Eagles.DomainService.Core.Task
             act.FromUser = request.TaskFromUser;
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
-            var list = request.AttachList;
-            if (request.AttachList != null && request.AttachList.Count > 0)
+            var attachList = request.AttachList;
+            for (int i = 0; i < attachList.Count; i++)
             {
-                act.Attach1 = list[0].AttachmentDownloadUrl is null ? null : list[0].AttachmentDownloadUrl;
-                act.Attach2 = list[1].AttachmentDownloadUrl is null ? null : list[1].AttachmentDownloadUrl;
-                act.Attach3 = list[2].AttachmentDownloadUrl is null ? null : list[2].AttachmentDownloadUrl;
-                act.Attach4 = list[3].AttachmentDownloadUrl is null ? null : list[3].AttachmentDownloadUrl;
+                if (i == 0)
+                {
+                    act.AttachType1 = attachList[i].AttachmentType;
+                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 1)
+                {
+                    act.AttachType2 = attachList[i].AttachmentType;
+                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 2)
+                {
+                    act.AttachType3 = attachList[i].AttachmentType;
+                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 3)
+                {
+                    act.AttachType4 = attachList[i].AttachmentType;
+                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                }
             }
             var result = iTaskAccess.CreateTask(act);
             if (result > 0)

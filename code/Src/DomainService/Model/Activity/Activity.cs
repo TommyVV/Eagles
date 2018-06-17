@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Model.Activity
         public int FromUser { get; set; }
         public string HtmlContent { get; set; }
         public string ImageUrl { get; set; }
-        public string IsPublic { get; set; }
+        public int IsPublic { get; set; }
         public int MaxCount { get; set; }
         public int MaxUser { get; set; }
         public int OrgId { get; set; }

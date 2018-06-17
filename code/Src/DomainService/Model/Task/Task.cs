@@ -11,6 +11,10 @@ namespace Eagles.DomainService.Model.Task
         public string Attach2 { get; set; }
         public string Attach3 { get; set; }
         public string Attach4 { get; set; }
+        public string AttachType1 { get; set; }
+        public string AttachType2 { get; set; }
+        public string AttachType3 { get; set; }
+        public string AttachType4 { get; set; }
         public DateTime BeginTime { get; set; }
         public int BranchId { get; set; }
         public string BranchReview { get; set; }

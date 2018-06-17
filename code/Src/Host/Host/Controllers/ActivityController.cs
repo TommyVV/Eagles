@@ -21,12 +21,21 @@ namespace Eagles.Host.Controllers
         private IActivityHandler activityHandler;
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="activityHandler"></param>
+        public ActivityController(IActivityHandler activityHandler)
+        {
+            this.activityHandler = activityHandler;
+        }
+
+        /// <summary>
         /// 活动查询
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetActivity")]
-        [HttpGet]
+        [HttpPost]
         public GetActivityResponse GetActivity(GetActivityRequest request)
         {
             return activityHandler.GetActivity(request);
@@ -38,7 +47,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetActivityDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
         {
             return activityHandler.GetActivityDetail(request);
@@ -50,7 +59,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetActivityComment")]
-        [HttpGet]
+        [HttpPost]
         public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
         {
             return activityHandler.GetActivityComment(request);
