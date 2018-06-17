@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Eagles.Interface.Core.Task;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Curd.Task.CreateTask;
@@ -280,6 +281,7 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
                 response.TaskFounder = result.FromUser;
+                response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
