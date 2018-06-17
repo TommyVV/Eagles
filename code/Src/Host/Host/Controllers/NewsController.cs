@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Http;
-using Eagles.Interface.Core.News;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
+using Eagles.Interface.Core.News;
 
 namespace Eagles.Host.Controllers
 {

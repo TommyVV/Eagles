@@ -1,5 +1,5 @@
 ﻿using Eagles.Base;
-using Eagles.DomainService.Model.Config;
+using Eagles.Base.Config;
 
 namespace Eagles.Interface.Configuration
 {
