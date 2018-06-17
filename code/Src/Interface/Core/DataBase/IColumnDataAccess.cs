@@ -14,5 +14,6 @@ namespace Eagles.Interface.Core.DataBase
         TB_APP_MODULE GetColumnDetail(GetColumnDetailRequset requset);
         int RemoveColumn(RemoveColumnRequset requset);
         int EditColumn(TB_APP_MODULE mod);
+        int CreateColumn(TB_APP_MODULE mod);
     }
 }

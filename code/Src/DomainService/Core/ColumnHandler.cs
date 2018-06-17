@@ -8,7 +8,6 @@ using Eagles.Application.Model.Column.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
 using Eagles.Application.Model.Enums;
-using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Column;
 using Eagles.Interface.Core;
 using Eagles.Interface.Core.DataBase;
@@ -17,15 +16,7 @@ namespace Eagles.DomainService.Core
 {
     public class ColumnHandler : IColumnHandler
     {
-        private readonly IColumnDataAccess dataAccess;
-
-        private readonly IConfigurationManager configurationManager;
-
-        public ColumnHandler(IColumnDataAccess dataAccess, IConfigurationManager configurationManager)
-        {
-            this.dataAccess = dataAccess;
-            this.configurationManager = configurationManager;
-        }
+        private  IColumnDataAccess dataAccess;
 
         public ResponseBase EditColumn(EditColumnRequset requset)
         {
@@ -37,28 +28,55 @@ namespace Eagles.DomainService.Core
 
             TB_APP_MODULE mod;
 
-            mod=new TB_APP_MODULE
+            if (requset.Info.ColumnId > 0)
             {
+                mod = new TB_APP_MODULE
+                {
 
-                TragetUrl = requset.Info.ColumnAddress,
-                Priority = requset.Info.OrderBy,
-                SmallImageUrl = requset.Info.ColumnIcon,
-                ImageUrl = requset.Info.ColumnImg,
-                IndexDisplay = requset.Info.IsSetTop,
-                ModuleType = requset.Info.ModuleType,
-                //ModuleId = requset.Info.ModuleId,
-                //ModuleName = requset.Info.ModuleName
-            };
+                    TragetUrl = requset.Info.ColumnAddress,
+                    Priority = requset.Info.OrderBy,
+                    SmallImageUrl = requset.Info.ColumnIcon,
+                    ImageUrl = requset.Info.ColumnImg,
+                    IndexDisplay = requset.Info.IsSetTop,
+                    ModuleType = requset.Info.ModuleType,
+                    OrgId = requset.Info.OrgId,
+                    ModuleId = requset.Info.ColumnId,
+                    ModuleName = requset.Info.ColumnName,
+                    IndexPageCount = requset.Info.IndexPageCount
+                };
 
-            int result = dataAccess.EditColumn(mod);
+                int result = dataAccess.EditColumn(mod);
 
-            if (result > 0)
+                if (result > 0)
+                {
+                    response.IsSuccess = true;
+                }
+            }
+            else
             {
-                response.IsSuccess = true;
+                mod = new TB_APP_MODULE
+                {
+                    TragetUrl = requset.Info.ColumnAddress,
+                    Priority = requset.Info.OrderBy,
+                    SmallImageUrl = requset.Info.ColumnIcon,
+                    ImageUrl = requset.Info.ColumnImg,
+                    IndexDisplay = requset.Info.IsSetTop,
+                    ModuleType = requset.Info.ModuleType,
+                    OrgId = requset.Info.OrgId,
+                    ModuleName = requset.Info.ColumnName,
+                    IndexPageCount = requset.Info.IndexPageCount
+                };
+
+                int result = dataAccess.CreateColumn(mod);
+
+                if (result > 0)
+                {
+                    response.IsSuccess = true;
+                }
             }
 
             return response;
-            
+
         }
 
         public ResponseBase RemoveColumn(RemoveColumnRequset requset)

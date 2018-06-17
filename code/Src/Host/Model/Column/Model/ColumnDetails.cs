@@ -23,10 +23,10 @@ namespace Eagles.Application.Model.Column.Model
         public int IsSetTop { get; set; }
 
 
-        ///// <summary>
-        ///// 所属页面
-        ///// </summary>
-        //public int PageId { get; set; }
+        /// <summary>
+        /// 所属页面
+        /// </summary>
+        public int OrgId { get; set; }
 
         /// <summary>
         /// 小图
@@ -38,10 +38,10 @@ namespace Eagles.Application.Model.Column.Model
         /// </summary>
         public string ColumnImg { get; set; }
 
-        ///// <summary>
-        ///// 菜单id
-        ///// </summary>
-        //public int ModuleId { get; set; }
+        /// <summary>
+        /// 首页显示数量
+        /// </summary>
+        public int IndexPageCount { get; set; }
 
         ///// <summary>
         ///// 菜单名称
