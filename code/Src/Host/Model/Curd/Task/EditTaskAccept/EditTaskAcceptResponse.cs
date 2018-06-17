@@ -3,7 +3,7 @@
 namespace Eagles.Application.Model.Curd.Task.EditTaskAccept
 {
     /// <summary>
-    /// 任务完成接口
+    /// 任务接受接口
     /// </summary>
     public class EditTaskAcceptResponse : ResponseBase
     {

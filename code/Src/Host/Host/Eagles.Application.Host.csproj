@@ -25,6 +25,7 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <TargetFrameworkProfile />
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +164,9 @@
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\AppModuleController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
@@ -179,6 +183,9 @@
     <Content Include="Configuration\Test.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configuration\DataBase.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -192,13 +199,33 @@
       <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
       <Name>Eagles.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DomainService\Configuration\Ealges.DomainService.Configuration.csproj">
+      <Project>{68625192-1850-4947-a87d-a1d2feeb99ce}</Project>
+      <Name>Ealges.DomainService.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DomainService\Core\Eagles.DomainService.Core.csproj">
       <Project>{19a46959-bcc7-40de-a9ab-ab40160920e4}</Project>
       <Name>Eagles.DomainService.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DomainService\DataAccess\Ealges.DomianService.DataAccess.csproj">
+      <Project>{5ae3fab8-5bfd-46a7-b1e7-a9765975ccdc}</Project>
+      <Name>Ealges.DomianService.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomainService\Model\Eagles.DomainService.Model.csproj">
+      <Project>{843f8547-b8a7-4fb7-8b57-27937bc3cbee}</Project>
+      <Name>Eagles.DomainService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interface\Configuration\Eagles.Interface.Configuration.csproj">
+      <Project>{f08e21b3-e00f-4a9c-99ba-c69458f4617d}</Project>
+      <Name>Eagles.Interface.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Interface\Core\Eagles.Interface.Core.csproj">
       <Project>{2a747e03-d095-4b54-ae55-976576a82886}</Project>
       <Name>Eagles.Interface.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interface\DataAccess\Eagles.Interface.DataAccess.csproj">
+      <Project>{2cdeb506-579c-4739-8d2f-f69360bb50c8}</Project>
+      <Name>Eagles.Interface.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Eagles.Application.Model.csproj">
       <Project>{3de06d44-2860-4a92-9fdd-1529093cc970}</Project>
@@ -207,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

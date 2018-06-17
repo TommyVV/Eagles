@@ -8,6 +8,11 @@ namespace Eagles.Application.Model.Common
     public class UserInfo
     {
         /// <summary>
+        /// 用户Id
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
         /// 用户名
         /// </summary>
         public string Name { get; set; }
@@ -15,7 +20,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 性别
         /// </summary>
-        public string Gender { get; set; }
+        public int Gender { get; set; }
 
         /// <summary>
         /// 民族
@@ -25,7 +30,22 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 生日
         /// </summary>
-        public string Birth { get; set; }
+        public DateTime Birth { get; set; }
+
+        /// <summary>
+        /// 省
+        /// </summary>
+        public string Provice { get; set; }
+
+        /// <summary>
+        /// 市
+        /// </summary>
+        public string City { get; set; }
+
+        /// <summary>
+        /// 区
+        /// </summary>
+        public string District { get; set; }
 
         /// <summary>
         /// 籍贯
@@ -75,17 +95,17 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 转预备党员日期
         /// </summary>
-        public string PrepPartyDate { get; set; }
+        public DateTime PrepPartyDate { get; set; }
 
         /// <summary>
         /// 转正式党员日期
         /// </summary>
-        public string FormalPartyDat { get; set; }
+        public DateTime FormalPartyDat { get; set; }
 
         /// <summary>
         /// 人员类别(正式/预备党员)
         /// </summary>
-        public string PartyType { get; set; }
+        public int PartyType { get; set; }
 
         /// <summary>
         /// 党费缴纳情况
@@ -95,7 +115,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 我的支部
         /// </summary>
-        public string Branch { get; set; }
+        public int Branch { get; set; }
 
         /// <summary>
         /// 入支部日期
@@ -116,5 +136,10 @@ namespace Eagles.Application.Model.Common
         /// 党籍状态(正常/除党籍)
         /// </summary>
         public string MembershipStatus { get; set; }
+
+        /// <summary>
+        /// 头像Url
+        /// </summary>
+        public string PhotoUrl { get; set; }
     }
 }

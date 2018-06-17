@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using Eagles.Base.DataBase.Modle;
 
 namespace Eagles.Base.DataBase
 {
     public interface IDbManager:IInterfaceBase
     {
-        List<T> Query<T>(string command, object parameter);
+        List<T> Query<T>(string command, object parameter=null);
 
-        int Excuted(string command, object paramster);
+        T QuerySingle<T>(string command, object parameter = null);
+
+        int Excuted(string command, object parameter=null);
+
+        bool ExcutedByTransaction(List<TransactionCommand> command);
     }
 }

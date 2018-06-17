@@ -19,7 +19,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetProduct")]
-        [HttpGet]
+        [HttpPost]
         public GetProductResponse GetProduct(GetProductRequest request)
         {
             return productHandler.GetProduct(request);
@@ -31,7 +31,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetProductDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetProductDetailResponse GetProductDetail(GetProductDetailRequest request)
         {
             return productHandler.GetProductDetail(request);

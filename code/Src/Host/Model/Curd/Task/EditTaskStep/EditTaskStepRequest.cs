@@ -26,7 +26,7 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskStep
         /// <summary>
         /// 步骤Id
         /// </summary>
-        public string StepId { get; set; }
+        public int StepId { get; set; }
 
         /// <summary>
         /// 步骤内容

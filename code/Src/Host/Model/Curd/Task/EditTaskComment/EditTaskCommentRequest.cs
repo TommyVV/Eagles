@@ -7,6 +7,7 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskComment
     /// </summary>
     public class EditTaskCommentRequest : RequestBase
     {
+
         /// <summary>
         /// Token
         /// </summary>
@@ -15,7 +16,7 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskComment
         /// <summary>
         /// 任务Id
         /// </summary>
-        public string TaskId { get; set; }
+        public int TaskId { get; set; }
 
         /// <summary>
         /// 评论内容
@@ -25,6 +26,6 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskComment
         /// <summary>
         /// 评论用户Id
         /// </summary>
-        public string CommentUserId { get; set; }
+        public int CommentUserId { get; set; }
     }
 }

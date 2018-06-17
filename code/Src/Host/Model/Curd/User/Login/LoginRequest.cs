@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Curd.User.Login
         /// <summary>
         /// 用户Id
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 用户密码

@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.Curd.Activity.EditActivityComplete
         /// <summary>
         /// 活动Id
         /// </summary>
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
 
         /// <summary>
         /// 活动完成/审核

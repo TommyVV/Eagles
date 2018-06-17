@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Web.Http;
-using Eagles.Interface.Core.News;
+using Eagles.Application.Model.Curd.News;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
+using Eagles.Base;
+using Eagles.Interface.Core.News;
 
 namespace Eagles.Host.Controllers
 {
@@ -13,28 +15,75 @@ namespace Eagles.Host.Controllers
     {
         private INewsHandler newsHandler;
 
-        /// <summary>
-        /// 文章发布
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Route("api/CreateNews")]
-        [HttpGet]
-        public CreateNewsResponse CreateNews(CreateNewsRequest request)
+        public NewsController(INewsHandler newsHandler)
         {
-            return newsHandler.CreateNews(request);
+            this.newsHandler = newsHandler;
         }
 
         /// <summary>
-        /// 文章发布
+        /// 获取模块文章
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/GetNews")]
-        [HttpGet]
-        public GetNewsResponse GetNews(GetNewsRequest request)
+        [Route("api/GetModuleNews")]
+        [HttpPost]
+        public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
         {
-            return newsHandler.GetNews(request);
+            try
+            {
+                return newsHandler.GetModuleNews(request);
+            }
+            catch (TransactionException e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+                
+            }
+            catch (Exception e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
+            
+        }
+
+        /// <summary>
+        /// 获取模块文章
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Route("api/GetNewsDetail")]
+        [HttpPost]
+        public GetModuleNewsResponse GetNewsDetail(GetNewsDetailRequest request)
+        {
+            try
+            {
+                return newsHandler.GetModuleNews(request);
+            }
+            catch (TransactionException e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+
+            }
+            catch (Exception e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
+
         }
     }
 }

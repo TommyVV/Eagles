@@ -12,7 +12,7 @@ namespace Eagles.Application.Model.Curd.Activity.GetActivityDetail
         /// <summary>
         /// 活动Id
         /// </summary>
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
 
         /// <summary>
         /// 活动名称
@@ -47,6 +47,6 @@ namespace Eagles.Application.Model.Curd.Activity.GetActivityDetail
         /// <summary>
         /// 附件集合
         /// </summary>
-        public List<Attachment> AcctachmentList { get; set; }
+        public List<Attachment> AttachmentList { get; set; }
     }
 }

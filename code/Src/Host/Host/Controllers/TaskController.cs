@@ -6,7 +6,7 @@ using Eagles.Application.Model.Curd.Task.EditTaskStep;
 using Eagles.Application.Model.Curd.Task.EditTaskAccept;
 using Eagles.Application.Model.Curd.Task.EditTaskComment;
 using Eagles.Application.Model.Curd.Task.EditTaskComplete;
-using Eagles.Application.Model.Curd.Task.EditTaslFeedBack;
+using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Curd.Task.GetTask;
 using Eagles.Application.Model.Curd.Task.GetTaskDetail;
 using Eagles.Application.Model.Curd.Task.GetTaskStep;
@@ -22,12 +22,21 @@ namespace Eagles.Host.Controllers
         private ITaskHandler taskHandler;
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="taskHandler"></param>
+        public TaskController(ITaskHandler taskHandler)
+        {
+            this.taskHandler = taskHandler;
+        }
+
+        /// <summary>
         /// 任务发布
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/CreateTask")]
-        [HttpGet]
+        [HttpPost]
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
         {
             return taskHandler.CreateTask(request);
@@ -39,7 +48,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/RemoveTaskStep")]
-        [HttpGet]
+        [HttpPost]
         public RemoveTaskStepResponse RemoveTaskStep(RemoveTaskStepRequest request)
         {
             return taskHandler.RemoveTaskStep(request);
@@ -51,7 +60,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditTaskComplete")]
-        [HttpGet]
+        [HttpPost]
         public EditTaskCompleteResponse EditTaskComplete(EditTaskCompleteRequest request)
         {
             return taskHandler.EditTaskComplete(request);
@@ -63,7 +72,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditTaskStep")]
-        [HttpGet]
+        [HttpPost]
         public EditTaskStepResponse EditTaskStep(EditTaskStepRequest request)
         {
             return taskHandler.EditTaskStep(request);
@@ -75,7 +84,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditTaskAccept")]
-        [HttpGet]
+        [HttpPost]
         public EditTaskAcceptResponse EditTaskAccept(EditTaskAcceptRequest request)
         {
             return taskHandler.EditTaskAccept(request);
@@ -87,10 +96,10 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditTaslFeedBack")]
-        [HttpGet]
-        public EditTaslFeedBackResponse EditTaslFeedBack(EditTaslFeedBackRequest request)
+        [HttpPost]
+        public EditTaskFeedBackResponse EditTaslFeedBack(EditTaskFeedBackRequest request)
         {
-            return taskHandler.EditTaslFeedBack(request);
+            return taskHandler.EditTaskFeedBack(request);
         }
 
         /// <summary>
@@ -99,7 +108,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/EditTaskComment")]
-        [HttpGet]
+        [HttpPost]
         public EditTaskCommentResponse EditTaskComment(EditTaskCommentRequest request)
         {
             return taskHandler.EditTaskComment(request);
@@ -111,7 +120,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetTask")]
-        [HttpGet]
+        [HttpPost]
         public GetTaskResponse GetTask(GetTaskRequest request)
         {
             return taskHandler.GetTask(request);
@@ -123,7 +132,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetTaskDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
         {
             return taskHandler.GetTaskDetail(request);
@@ -135,7 +144,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetTaskStep")]
-        [HttpGet]
+        [HttpPost]
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
             return taskHandler.GetTaskStep(request);
@@ -146,8 +155,8 @@ namespace Eagles.Host.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/GetTaskDetail")]
-        [HttpGet]
+        [Route("api/GetTaskComment")]
+        [HttpPost]
         public GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request)
         {
             return taskHandler.GetTaskComment(request);

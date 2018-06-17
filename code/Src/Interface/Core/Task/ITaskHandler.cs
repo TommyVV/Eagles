@@ -4,7 +4,7 @@ using Eagles.Application.Model.Curd.Task.EditTaskAccept;
 using Eagles.Application.Model.Curd.Task.EditTaskComment;
 using Eagles.Application.Model.Curd.Task.EditTaskComplete;
 using Eagles.Application.Model.Curd.Task.EditTaskStep;
-using Eagles.Application.Model.Curd.Task.EditTaslFeedBack;
+using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Curd.Task.GetTask;
 using Eagles.Application.Model.Curd.Task.GetTaskComment;
 using Eagles.Application.Model.Curd.Task.GetTaskDetail;
@@ -21,7 +21,7 @@ namespace Eagles.Interface.Core.Task
         EditTaskAcceptResponse EditTaskAccept(EditTaskAcceptRequest request);
         EditTaskCommentResponse EditTaskComment(EditTaskCommentRequest request);
         EditTaskCompleteResponse EditTaskComplete(EditTaskCompleteRequest request);
-        EditTaslFeedBackResponse EditTaslFeedBack(EditTaslFeedBackRequest request);
+        EditTaskFeedBackResponse EditTaskFeedBack(EditTaskFeedBackRequest request);
         GetTaskResponse GetTask(GetTaskRequest request);
         GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request);
         GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request);

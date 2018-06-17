@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Eagles.DomainService.Model.App
 {
@@ -17,5 +17,7 @@ namespace Eagles.DomainService.Model.App
         public int Priority { get; set; }
         public string SmallImageUrl { get; set; }
         public string TragetUrl { get; set; }
+
+        public List<News.News> News { get; set; }
     }
 }

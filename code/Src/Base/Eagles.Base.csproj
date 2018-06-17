@@ -92,8 +92,12 @@
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\Implement\ConfigurationManager.cs" />
     <Compile Include="Configuration\XmlPath.cs" />
+    <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="DataBase\IDbManager.cs" />
     <Compile Include="DataBase\Implement\DbManager.cs" />
+    <Compile Include="DataBase\Modle\TransactionCommand.cs" />
+    <Compile Include="DesEncrypt\IDesEncrypt.cs" />
+    <Compile Include="DesEncrypt\Implement\DesEncrypt.cs" />
     <Compile Include="IInterfaceBase.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\Implement\Logger.cs" />

@@ -10,14 +10,14 @@ namespace Eagles.Application.Model.Curd.Enum
         /// <summary>
         /// 报名
         /// </summary>
-        Article = 00,
+        Article = 0,
         /// <summary>
         /// 投票
         /// </summary>
-        Experience = 01,
+        Experience = 1,
         /// <summary>
         /// 问卷调查
         /// </summary>
-        Meeting = 02
+        Meeting = 2
     }
 }

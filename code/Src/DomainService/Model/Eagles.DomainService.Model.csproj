@@ -44,9 +44,11 @@
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Authority\Authority.cs" />
+    <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />
     <Compile Include="ImportLog\ImportLog.cs" />
+    <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
     <Compile Include="News\News.cs" />
     <Compile Include="Oper\Oper.cs" />
@@ -56,15 +58,19 @@
     <Compile Include="Org\OrgRelationship.cs" />
     <Compile Include="Org\OrgSmsConfig.cs" />
     <Compile Include="Product\Product.cs" />
+    <Compile Include="Exercises\TB_QUESTION.cs" />
+    <Compile Include="Exercises\TB_QUEST_ANWSER.cs" />
+    <Compile Include="Exercises\TB_TEST_QUESTION.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question\Question.cs" />
     <Compile Include="Question\QuestAnwser.cs" />
     <Compile Include="Review\Review.cs" />
     <Compile Include="RewardScore\RewardScore.cs" />
     <Compile Include="ScrollImage\ScrollImage.cs" />
-    <Compile Include="Sms\SmsConfig.cs" />
+    <Compile Include="Config\SmsConfig.cs" />
     <Compile Include="Sms\SmsSendLog.cs" />
     <Compile Include="Task\Task.cs" />
+    <Compile Include="Exercises\TB_TEST_PAPER.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="User\UserActivity.cs" />
     <Compile Include="User\UserComment.cs" />
@@ -80,6 +86,15 @@
     <Compile Include="User\UserTestQuestion.cs" />
     <Compile Include="User\UserToken.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Host\Model\Eagles.Application.Model.csproj">
+      <Project>{3DE06D44-2860-4A92-9FDD-1529093CC970}</Project>
+      <Name>Eagles.Application.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

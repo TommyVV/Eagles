@@ -34,6 +34,12 @@
     <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MySql.Data.8.0.11\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -52,15 +58,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewsHandler.cs" />
-    <Compile Include="ScoreHandler.cs" />
-    <Compile Include="TaskHandler.cs" />
-    <Compile Include="ActivityHandler.cs" />
+    <Compile Include="AppModule\AppModuleHanlder.cs" />
+    <Compile Include="News\NewsHandler.cs" />
+    <Compile Include="Product\ProductHandler.cs" />
+    <Compile Include="Score\ScoreHandler.cs" />
+    <Compile Include="Scroll\ScrollHandler.cs" />
+    <Compile Include="Task\TaskHandler.cs" />
+    <Compile Include="Activity\ActivityHandler.cs" />
     <Compile Include="DataBase\DataAccess.cs" />
+    <Compile Include="DataBase\ExercisesDataAccess.cs" />
+    <Compile Include="ExercisesHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestHandler.cs" />
-    <Compile Include="ProductHandler.cs" />
-    <Compile Include="UserHandler.cs" />
+    <Compile Include="User\UserHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
@@ -75,6 +85,10 @@
       <Project>{2A747E03-D095-4B54-AE55-976576A82886}</Project>
       <Name>Eagles.Interface.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Interface\DataAccess\Eagles.Interface.DataAccess.csproj">
+      <Project>{2CDEB506-579C-4739-8D2F-F69360BB50C8}</Project>
+      <Name>Eagles.Interface.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Eagles.DomainService.Model.csproj">
       <Project>{843f8547-b8a7-4fb7-8b57-27937bc3cbee}</Project>
       <Name>Eagles.DomainService.Model</Name>
@@ -83,6 +97,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exercises\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

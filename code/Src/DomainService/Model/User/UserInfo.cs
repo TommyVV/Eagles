@@ -16,8 +16,8 @@ namespace Eagles.DomainService.Model.User
         public string Dept { get; set; }
         public string District { get; set; }
         public DateTime EditTime { get; set; }
-        public string Eduction { get; set; }
-        public string Ethinc { get; set; }
+        public string Education { get; set; }
+        public string Ethnic { get; set; }
         public string IdNumber { get; set; }
         public int IsCustomer { get; set; }
         public int MemberStatus { get; set; }

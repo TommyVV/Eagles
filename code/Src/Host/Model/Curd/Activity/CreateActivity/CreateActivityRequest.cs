@@ -13,11 +13,7 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
         /// Token
         /// </summary>
         public string Token { get; set; }
-
-        //public string OrgId { get; set; }
-
-        //public string BranchId { get; set; }
-
+        
         /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
@@ -56,7 +52,7 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
         /// <summary>
         /// 是否公开
         /// </summary>
-        public string IsPublic { get; set; }
+        public int IsPublic { get; set; }
 
         /// <summary>
         /// 附件列表

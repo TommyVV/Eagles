@@ -12,6 +12,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskStep
         /// <summary>
         /// 步骤列表
         /// </summary>
-        public List<Step> StepList { get; }
+        public List<Step> StepList { get; set; }
     }
 }

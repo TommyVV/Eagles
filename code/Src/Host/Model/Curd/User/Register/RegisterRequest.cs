@@ -15,6 +15,6 @@ namespace Eagles.Application.Model.Curd.User.Register
         /// <summary>
         /// 短信验证码
         /// </summary>
-        public string SmsCode { get; set; }
+        public int SmsCode { get; set; }
     }
 }

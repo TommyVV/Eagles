@@ -1,10 +1,16 @@
 ﻿namespace Eagles.Application.Model
 {
+    /// <summary>
+    /// 基本的 凭证
+    /// </summary>
     public class RequestBase
     {
         /// <summary>
-        /// just for test
+        /// 凭证
         /// </summary>
-        public string Id { get; set; }
+        public string Token { get; set; }
+
+
+        public int AppId { get; set; }
     }
 }
