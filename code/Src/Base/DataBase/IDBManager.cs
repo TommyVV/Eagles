@@ -7,6 +7,8 @@ namespace Eagles.Base.DataBase
     {
         List<T> Query<T>(string command, object parameter=null);
 
+        T QuerySingle<T>(string command, object parameter = null);
+
         int Excuted(string command, object parameter=null);
 
         bool ExcutedByTransaction(List<TransactionCommand> command);

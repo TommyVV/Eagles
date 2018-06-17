@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Linq;
-using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Curd.News;
-using Eagles.Interface.Core.News;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
 using Eagles.Application.Model.News;
+using Eagles.Application.Model.News.Model;
 using Eagles.Base;
-using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase.UserArticle;
+using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.NewsDA;
 using Eagles.Interface.DataAccess.Util;
 
-
-namespace Eagles.DomainService.Core
+namespace Eagles.DomainService.Core.News
 {
     public class NewsHandler : INewsHandler
     {
@@ -69,7 +67,7 @@ namespace Eagles.DomainService.Core
             //convert news 
             return new GetNewsResponse()
             {
-                NewsList = news.Select(x => new News
+                NewsList = news.Select(x => new Application.Model.Common.News
                 {
                     NewsContent = x.HtmlContent,
                     NewsDate = x.CreateTime,
@@ -103,6 +101,26 @@ namespace Eagles.DomainService.Core
                     Source = x.Source,
                     UserName = x.Author,
                 }).ToList()
+            };
+        }
+
+        public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
+        {
+            if (request.AppId < 0)
+            {
+                throw new TransactionException("01", "appid 非法");
+            }
+
+            if (request.NewsId < 0)
+            {
+                throw new TransactionException("01", "NewsId 非法");
+            }
+            return new GetNewsDetailResponse()
+            {
+                NewsDetail = new NewsDetail()
+                {
+                    //todo 
+                }
             };
         }
     }

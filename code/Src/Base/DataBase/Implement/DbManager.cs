@@ -43,6 +43,25 @@ namespace Eagles.Base.DataBase.Implement
             return result;
         }
 
+        public T QuerySingle<T>(string command, object parameter = null) 
+        {
+            var conn = new MySqlConnection(DbConfig.DataBaseConnectString);
+            var result = default(T);
+            try
+            {
+                result = conn.QuerySingle<T>(command, parameter);
+            }
+            catch (Exception e)
+            {
+                logger.LoggerError(e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
         public int Excuted(string command, object parameter)
         {
             var conn = new MySqlConnection(DbConfig.DataBaseConnectString);

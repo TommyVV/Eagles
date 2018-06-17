@@ -7,5 +7,7 @@ namespace Eagles.Interface.DataAccess.NewsDA
     public interface INewsDA:IInterfaceBase
     {
         List<News> GetModuleNews(int moduleId,int appId,int count);
+
+        News GetNewsDetail(string newsId, string appId);
     }
 }

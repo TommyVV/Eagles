@@ -48,5 +48,39 @@ namespace Ealges.DomianService.DataAccess.NewsDA
 FROM eagles.tb_news where Module=@Module And OrgId=@OrgId  limit @count", new {Module = moduleId, OrgId =appId, count =count});
 
         }
+
+        public News GetNewsDetail(string newsId, string appId)
+        {
+            return dbManager.QuerySingle<News>(@"SELECT OrgId,
+    NewsId,
+    ShortDesc,
+    Title,
+    HtmlContent,
+    Author,
+    Source,
+    Module,
+    Status,
+    BeginTime,
+    EndTime,
+    TestId,
+    Attach1,
+    Attach2,
+    Attach3,
+    Attach4,
+    Attach5,
+    OperId,
+    CreateTime,
+    IsImage,
+    IsVideo,
+    IsAttach,
+    IsClass,
+    IsLearning,
+    IsText,
+    ViewCount,
+    ReviewId,
+    CanStudy,
+    ImageUrl
+FROM eagles.tb_news where NewsId=@NewsId And OrgId=@OrgId", new { NewsId = newsId, OrgId = appId });
+        }
     }
 }

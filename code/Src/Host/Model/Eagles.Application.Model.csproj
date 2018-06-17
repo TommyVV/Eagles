@@ -111,6 +111,8 @@
     <Compile Include="Curd\Module\Module.cs" />
     <Compile Include="Curd\News\GetModuleNewsRequest.cs" />
     <Compile Include="Curd\News\GetModuleNewsResponse.cs" />
+    <Compile Include="Curd\News\GetNewsDetailRequest.cs" />
+    <Compile Include="Curd\News\GetNewsDetailResponse.cs" />
     <Compile Include="Curd\News\GetNews\GetNewsRequest.cs" />
     <Compile Include="Curd\News\GetNews\GetNewsResponse.cs" />
     <Compile Include="Curd\GetNotice\GetNoticRequest.cs" />

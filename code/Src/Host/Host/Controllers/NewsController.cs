@@ -21,7 +21,7 @@ namespace Eagles.Host.Controllers
         }
 
         /// <summary>
-        /// 文章发布
+        /// 获取模块文章
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -51,6 +51,39 @@ namespace Eagles.Host.Controllers
                 };
             }
             
+        }
+
+        /// <summary>
+        /// 获取模块文章
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Route("api/GetNewsDetail")]
+        [HttpPost]
+        public GetModuleNewsResponse GetNewsDetail(GetNewsDetailRequest request)
+        {
+            try
+            {
+                return newsHandler.GetModuleNews(request);
+            }
+            catch (TransactionException e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+
+            }
+            catch (Exception e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
+
         }
     }
 }
