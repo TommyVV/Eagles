@@ -10,5 +10,7 @@
         /// </summary>
         public string Token { get; set; }
 
+
+        public int AppId { get; set; }
     }
 }

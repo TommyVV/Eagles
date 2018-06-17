@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.News
         /// <summary>
         /// 新闻名字
         /// </summary>
-        public string NewsId { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// 新闻名字

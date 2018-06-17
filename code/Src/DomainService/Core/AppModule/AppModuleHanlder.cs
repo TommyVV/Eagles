@@ -3,6 +3,7 @@ using Eagles.Application.Model.Curd.Module;
 using Eagles.Base;
 using Eagles.Interface.Core.AppModule;
 using Eagles.Interface.DataAccess.AppModule;
+using Eagles.Interface.DataAccess.NewsDA;
 using Module = Eagles.Application.Model.Curd.Module.Module;
 
 namespace Eagles.DomainService.Core.AppModule
@@ -11,14 +12,16 @@ namespace Eagles.DomainService.Core.AppModule
     {
         private readonly IAppModuleDA appModule;
 
-        public AppModuleHanlder(IAppModuleDA appModule)
+        private readonly INewsDA newsDa;
+
+        public AppModuleHanlder(IAppModuleDA appModule, INewsDA newsDa)
         {
             this.appModule = appModule;
+            this.newsDa = newsDa;
         }
 
         public AppModuleResponse Process(GetAppModuleRequest request)
         {
-
             if (request.AppId<=0)
             {
                 throw new TransactionException("01","appId 不允许为空");
@@ -30,7 +33,7 @@ namespace Eagles.DomainService.Core.AppModule
             }
             //查询数据库
             var modules = appModule.GetAppModule(request.AppId,request.ModuleType);
-            return new AppModuleResponse()
+            var response=new AppModuleResponse()
             {
                 Modules = modules.Select(x => new Module()
                 {
@@ -44,6 +47,20 @@ namespace Eagles.DomainService.Core.AppModule
                     TragetUrl = x.TragetUrl
                 }).ToList()
             };
+            //foreach (var module in response.Modules)
+            //{
+            //    var news = newsDa.GetModuleNews(module.ModuleId);
+            //    module.News = news.Select(x => new NewsInfo()
+            //    {
+            //        NewsId = x.NewsId,
+            //        NewsImg = x.ImageUrl,
+            //        NewsName = x.Title,
+            //        CreateTime = x.CreateTime,
+            //        Source = x.Source,
+            //        UserName = x.Author,
+            //    }).ToList();
+            //}
+            return response;
         }
     }
 }

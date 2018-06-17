@@ -35,7 +35,6 @@ namespace Eagles.DomainService.Core
             var response = new GetSubjectDetailResponse
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
 
             };
@@ -79,7 +78,6 @@ namespace Eagles.DomainService.Core
             var response = new ResponseBase
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
             //todo 删除题目答案表中的信息 事务处理  删除题目时 删除选项 删除题目  删除和试卷关联的关系
@@ -87,9 +85,9 @@ namespace Eagles.DomainService.Core
             int result1 = dataAccess.RemoveTestQuestionRelationshipByQuestionId(requset.QuestionId);
             int optionResult = dataAccess.RemoveOptionByQuestionId(requset.QuestionId);
 
-            if (subjectResult > 0)
+            if (subjectResult < 0)
             {
-                response.IsSuccess = "1";
+                response.IsSuccess = false;
             }
 
             return response;
@@ -106,7 +104,6 @@ namespace Eagles.DomainService.Core
             var response = new ResponseBase
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
 
@@ -137,9 +134,9 @@ namespace Eagles.DomainService.Core
                 }).ToList());
 
                 int result = dataAccess.EditSubject(info);
-                if (result > 0)
+                if (result < 0)
                 {
-                    response.IsSuccess = "1";
+                    response.IsSuccess = false;
                 }
             }
             else
@@ -166,9 +163,9 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.CreateSubject(info);
 
-                if (result > 0)
+                if (result < 0)
                 {
-                    response.IsSuccess = result.ToString();
+                    response.IsSuccess = false;
                 }
             }
             return response;
@@ -185,7 +182,6 @@ namespace Eagles.DomainService.Core
             var response = new ResponseBase
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
 
@@ -218,9 +214,9 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.EditExercises(info);
 
-                if (result > 0)
+                if (result < 0)
                 {
-                    response.IsSuccess = "1";
+                    response.IsSuccess = false;
                 }
 
             }
@@ -255,9 +251,9 @@ namespace Eagles.DomainService.Core
                 }).ToList();
                 //创建题目试卷 关系
                 int result1 = dataAccess.CreateTestQuestionRelationship(list);
-                if (result > 0)
+                if (result < 0)
                 {
-                    response.IsSuccess = "1";
+                    response.IsSuccess = false;
                 }
             }
 
@@ -274,16 +270,15 @@ namespace Eagles.DomainService.Core
             var response = new ResponseBase
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
             //TODO 删除试卷 题目关系
             int result = dataAccess.RemoveExercises(requset);
             int result1 = dataAccess.RemoveTestQuestionRelationshipByTestId(requset.ExercisesId);
 
-            if (result > 0)
+            if (result < 0)
             {
-                response.IsSuccess = "1";
+                response.IsSuccess = false;
             }
 
             return response;
@@ -299,7 +294,6 @@ namespace Eagles.DomainService.Core
             var response = new GetExercisesDetailResponse
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
             TB_TEST_PAPER info = dataAccess.GetExercisesDetail(requset);
@@ -348,7 +342,6 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0,
                 ErrorCode = "00",
-                IsSuccess = "0",
                 List = new List<Exercises>(),
                 Message = "成功",
             };
@@ -397,7 +390,6 @@ namespace Eagles.DomainService.Core
             var response = new GetRandomSubjectResponse
             {
                 ErrorCode = "00",
-                IsSuccess = "0",
                 Message = "成功",
             };
             //得到试卷 + 习题的关系

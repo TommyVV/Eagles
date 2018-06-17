@@ -42,6 +42,7 @@
         /// </summary>
         public int Priority { get; set; }
 
+        //public List<NewsInfo> News { get; set; }
 
     }
 }

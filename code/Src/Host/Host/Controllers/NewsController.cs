@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Web.Http;
+using Eagles.Application.Model.Curd.News;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
+using Eagles.Base;
 using Eagles.Interface.Core.News;
 
 namespace Eagles.Host.Controllers
@@ -23,23 +25,32 @@ namespace Eagles.Host.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/CreateNews")]
+        [Route("api/GetModuleNews")]
         [HttpPost]
-        public CreateNewsResponse CreateNews(CreateNewsRequest request)
+        public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
         {
-            return newsHandler.CreateNews(request);
-        }
-
-        /// <summary>
-        /// 我的文章列表
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Route("api/GetUserArticle")]
-        [HttpPost]
-        public GetNewsResponse GetUserArticle(GetNewsRequest request)
-        {
-            return newsHandler.GetUserArticle(request);
+            try
+            {
+                return newsHandler.GetModuleNews(request);
+            }
+            catch (TransactionException e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+                
+            }
+            catch (Exception e)
+            {
+                return new GetModuleNewsResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
+            
         }
     }
 }

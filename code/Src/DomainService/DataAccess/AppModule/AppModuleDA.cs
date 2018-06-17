@@ -26,7 +26,7 @@ namespace Ealges.DomianService.DataAccess.AppModule
     Priority,
     IndexPageCount,
     IndexDisplay
-FROM eagles.tb_app_module where OrgId=@OrgId And ModuleType=@ModuleType", new {OrgId = orgId, ModuleType =moduleType});
+FROM eagles.tb_app_module where OrgId=@OrgId And ModuleType=@ModuleType order by Priority desc ", new {OrgId = orgId, ModuleType =moduleType});
             return result;
         }
     }

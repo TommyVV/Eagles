@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
 using Eagles.Application.Model.Common;
+using Eagles.Application.Model.Curd.News;
 using Eagles.Interface.Core.News;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
+using Eagles.Application.Model.News;
+using Eagles.Base;
 using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase.UserArticle;
+using Eagles.Interface.DataAccess.NewsDA;
 using Eagles.Interface.DataAccess.Util;
 
 
@@ -15,12 +19,15 @@ namespace Eagles.DomainService.Core
     {
         private readonly IArticleDataAccess articleData;
 
+        private readonly INewsDA newsDa;
+
         private readonly IUtil util;
 
-        public NewsHandler(IArticleDataAccess articleData, IUtil util)
+        public NewsHandler(IArticleDataAccess articleData, IUtil util, INewsDA newsDa)
         {
             this.articleData = articleData;
             this.util = util;
+            this.newsDa = newsDa;
         }
 
         public CreateNewsResponse CreateNews(CreateNewsRequest request)
@@ -69,6 +76,32 @@ namespace Eagles.DomainService.Core
                     NewsId = x.NewsId,
                     NewsTitle = x.Title,
                     NewsType = x.NewsType
+                }).ToList()
+            };
+        }
+
+        public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
+        {
+            if (request.AppId < 0)
+            {
+                throw new TransactionException("01","appid 非法");
+            }
+
+            if (request.ModuleId < 0)
+            {
+                throw new TransactionException("01", "moduleId 非法");
+            }
+            var result=newsDa.GetModuleNews(request.ModuleId, request.AppId,request.NewsCount);
+            return new GetModuleNewsResponse()
+            {
+                NewsInfos = result.Select(x=>new NewsInfo
+                {
+                    NewsId = x.NewsId,
+                    NewsImg = x.ImageUrl,
+                    NewsName = x.Title,
+                    CreateTime = x.CreateTime,
+                    Source = x.Source,
+                    UserName = x.Author,
                 }).ToList()
             };
         }

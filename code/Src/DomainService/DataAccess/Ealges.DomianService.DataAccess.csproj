@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ActivityData\ActivityDataAccess.cs" />
     <Compile Include="AppModule\AppModuleDA.cs" />
+    <Compile Include="NewsDA\NewsDA.cs" />
     <Compile Include="ProductData\ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskData\TaskDataAccess.cs" />

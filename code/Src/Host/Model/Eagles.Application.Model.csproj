@@ -109,6 +109,8 @@
     <Compile Include="Curd\Module\AppModuleResponse.cs" />
     <Compile Include="Curd\Module\GetAppModuleRequest.cs" />
     <Compile Include="Curd\Module\Module.cs" />
+    <Compile Include="Curd\News\GetModuleNewsRequest.cs" />
+    <Compile Include="Curd\News\GetModuleNewsResponse.cs" />
     <Compile Include="Curd\News\GetNews\GetNewsRequest.cs" />
     <Compile Include="Curd\News\GetNews\GetNewsResponse.cs" />
     <Compile Include="Curd\GetNotice\GetNoticRequest.cs" />
@@ -275,6 +277,14 @@
     <Compile Include="Menus\Model\Menus.cs" />
     <Compile Include="Menus\Requset\GetMenusRequset.cs" />
     <Compile Include="Menus\Response\GetMenusResponse.cs" />
+    <Compile Include="News\AlterNewsInfoRequset.cs" />
+    <Compile Include="News\DeleteNewsRequset.cs" />
+    <Compile Include="News\GetNewsInfoDetailsRequset.cs" />
+    <Compile Include="News\GetNewsInfoDetailsResponse.cs" />
+    <Compile Include="News\NewsInfo.cs" />
+    <Compile Include="News\NewsInfoDetails.cs" />
+    <Compile Include="News\NewsRequset.cs" />
+    <Compile Include="News\NewsResponse.cs" />
     <Compile Include="News\Requset\EditNewsRequset.cs" />
     <Compile Include="News\Requset\RemoveNewsRequset.cs" />
     <Compile Include="News\Requset\GetNewsDetailRequset.cs" />

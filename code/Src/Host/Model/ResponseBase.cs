@@ -7,6 +7,11 @@ namespace Eagles.Application.Model
     /// </summary>
     public class ResponseBase
     {
+        public ResponseBase()
+        {
+            IsSuccess = true;
+        }
+
         /// <summary>
         /// 时间
         /// </summary>
@@ -24,6 +29,6 @@ namespace Eagles.Application.Model
         /// <summary>
         /// 是否成功
         /// </summary>
-        public string IsSuccess { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }
