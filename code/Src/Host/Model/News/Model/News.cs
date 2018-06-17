@@ -11,7 +11,7 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 新闻名字
         /// </summary>
-        public string NewsId { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// 新闻名字
@@ -21,12 +21,7 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 作者id
         /// </summary>
-        public int UserId { get; set; }
-
-        /// <summary>
-        /// 作者id
-        /// </summary>
-        public string UserName { get; set; }
+        public string Author { get; set; }
 
         /// <summary>
         /// 新闻图片

@@ -60,15 +60,15 @@ namespace Eagles.Host.Controllers
         /// <returns></returns>
         [Route("api/GetNewsDetail")]
         [HttpPost]
-        public GetModuleNewsResponse GetNewsDetail(GetNewsDetailRequest request)
+        public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
         {
             try
             {
-                return newsHandler.GetModuleNews(request);
+                return newsHandler.GetNewsDetail(request);
             }
             catch (TransactionException e)
             {
-                return new GetModuleNewsResponse()
+                return new GetNewsDetailResponse()
                 {
                     ErrorCode = e.ErrorCode,
                     Message = e.Message
@@ -77,7 +77,7 @@ namespace Eagles.Host.Controllers
             }
             catch (Exception e)
             {
-                return new GetModuleNewsResponse()
+                return new GetNewsDetailResponse()
                 {
                     ErrorCode = "99",
                     Message = "系统错误"

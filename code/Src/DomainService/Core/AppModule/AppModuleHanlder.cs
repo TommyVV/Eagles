@@ -57,7 +57,7 @@ namespace Eagles.DomainService.Core.AppModule
             //        NewsName = x.Title,
             //        CreateTime = x.CreateTime,
             //        Source = x.Source,
-            //        UserName = x.Author,
+            //        Author = x.Author,
             //    }).ToList();
             //}
             return response;
