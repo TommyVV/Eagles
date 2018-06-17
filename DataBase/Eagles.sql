@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/6/16 10:20:55                           */
+/* Created on:     2018/6/17 12:37:33                           */
 /*==============================================================*/
 
 
@@ -601,10 +601,14 @@ create table TB_TASK
    TaskContent          NVARCHAR(4000) comment '任务内容',
    BeginTime            DATETIME comment '开始时间',
    endTime              DATETIME comment '结束时间',
-   Attch1               NVARCHAR(255) comment '附件1',
-   Attch2               NVARCHAR(255) comment '附件2',
-   Attch3               NVARCHAR(255) comment '附件3',
-   Attch4               NVARCHAR(255) comment '附件4',
+   Attach1              CHAR(255) comment '附件1',
+   Attach2              CHAR(255) comment '附件2',
+   Attach3              CHAR(255) comment '附件3',
+   Attach4              CHAR(255) comment '附件4',
+   AttachType1          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType2          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType3          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType4          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
    CreateTime           DATETIME comment '发起时间',
    CanComment           INT(2) comment '是否允许评论;0:允许;1:禁止',
    Status               INT(2) comment '任务状态;
@@ -683,6 +687,14 @@ create table TB_USER_ACTIVITY
    Status               CHAR(2) comment '活动状态',
    CompleteTime         INT(8) comment '完成时间',
    RewardsScore         INT(5) comment '奖励积分',
+   Attach1              CHAR(255) comment '附件1',
+   Attach2              CHAR(255) comment '附件2',
+   Attach3              CHAR(255) comment '附件3',
+   Attach4              CHAR(255) comment '附件4',
+   AttachType1          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType2          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType3          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType4          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
    primary key (ActivityId, UserId)
 );
 
@@ -892,6 +904,14 @@ create table TB_USER_TASK
    RewardsScore         INT(5) comment '奖励积分',
    Comment              NVARCHAR(200) comment '评语',
    Score                INT(2) comment '打分;1~5分',
+   Attach1              CHAR(255) comment '附件1',
+   Attach2              CHAR(255) comment '附件2',
+   Attach3              CHAR(255) comment '附件3',
+   Attach4              CHAR(255) comment '附件4',
+   AttachType1          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType2          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType3          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
+   AttachType4          CHAR(2) comment '附件1类型; 0:图片; 1:其他',
    primary key (TaskId, UserId)
 );
 

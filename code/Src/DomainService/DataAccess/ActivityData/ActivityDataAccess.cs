@@ -76,14 +76,16 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
 
         public List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType)
         {
-            return dbManager.Query<Eagles.DomainService.Model.Activity.Activity>("select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY where activityId = @id and ActivityType = @type",
+            return dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(@"select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY 
+where activityId = @id and ActivityType = @type",
                 new {ActivityType = new[] {activityType}});
         }
 
         public Eagles.DomainService.Model.Activity.Activity GetActivityDetail(int activityId)
         {
             var result = dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(
-                "select activityId,activityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.TB_ACTIVITY where activityId = @id",
+                @"select activityId,activityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4
+,Attach1,Attach2,Attach3,Attach4 from eagles.TB_ACTIVITY where activityId = @id",
                 new { Id = new[] { activityId } });
             return result[0];
         }
@@ -91,7 +93,8 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
         public List<Eagles.DomainService.Model.User.UserComment> GetActivityComment(int activityId)
         {
             return dbManager.Query<Eagles.DomainService.Model.User.UserComment>(
-                "select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id",
+                @"select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime
+from eagles.tb_user_comment where Id = @Id",
                 new {Id = new[] {activityId}});
         }
     }
