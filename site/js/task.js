@@ -13,25 +13,22 @@ $(document).ready(function () {
         $($("#t-cate").find('span')).css('transform', 'rotate(360deg)');
         $($("#m-cate").find('span')).css('transform', 'rotate(360deg)');
     });
+    //已接受
+    $("#accept").click(function(){
+        window.location.href = "taskStatus.html?status=1";
+    });
+    $("#accept1").click(function(){
+        window.location.href = "taskStatus.html?status=2";
+    });
+    $("#complete").click(function(){
+        window.location.href = "taskStatus.html?status=3";
+    });
+    $("#init").click(function(){
+        window.location.href = "taskStatus.html?status=0";
+    });
     //列表内容
-    taskList();
     function taskList() {
-        var str = `<div class="task-item">
-        <img src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3094324923,617905685&fm=85&s=D23E3CC4D6C9912E31101C7903005050" alt="">
-        <div class="task-content">
-            <div class="task-title">三会一课
-            </div>
-            <div class="task-status line-color accept-status">已接受</div>
-        </div>
-    </div>
-    <div class="task-item">
-        <img src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3094324923,617905685&fm=85&s=D23E3CC4D6C9912E31101C7903005050" alt="">
-        <div class="task-content">
-            <div class="task-title">高效落实三会一课
-            </div>
-            <div class="task-status init-status">已接受</div>
-        </div>
-    </div>`;
+        var str = ``;
         $(".task-list").html(str+str+str);
     }
     function cateStatus(id) {

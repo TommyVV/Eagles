@@ -1,0 +1,80 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.plan-area {
+    margin: 0 px2rem(36);
+    .plan-text {
+        margin-top: px2rem(40);
+        height: px2rem(377);
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #EEEEEE;
+        outline: none;
+        resize: none;
+        font-size: px2rem(30);
+    }
+    .img-area {
+        margin-top: px2rem(45);
+        .title {
+            font-size: px2rem(24);
+            height: px2rem(52);
+            line-height: px2rem(52);
+            color: #949494;
+        }
+        .imgs {
+            width: 100%;
+            .img-wrap {
+                width: calc(25% - 15px);
+                .img-container {
+                    width: 100%;
+                    height: 0px;
+                    padding-bottom: 65.4%;
+                    overflow: hidden;
+                    margin: 0;
+                    position: relative;
+                    background-color: #E7E7E7;
+                    color: white;
+                    text-align: center;
+                    img{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .add{
+                        font-size:80%;
+                        position: absolute;
+                        height: 100%;
+                        display: table;
+                        width:100%;
+                        div{
+                            font-size: px2rem(60);
+                            display: table-cell;
+                            vertical-align: middle;
+                        }
+                    }
+                    input{
+                        width:100%;
+                        height: 100%;
+                        position: absolute;
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+    .pub-area{
+        margin-top:px2rem(80);
+        font-size: px2rem(30);
+        .glyphicon{
+            color: #E51A1A;
+            font-size:px2rem(32);
+        }
+    }
+    .sub-btn{
+        margin-top:px2rem(142);
+    }
+}

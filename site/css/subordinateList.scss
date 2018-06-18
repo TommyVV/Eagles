@@ -1,0 +1,21 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
+//指派人员
+.subordinates{
+    margin:0 px2rem(35);
+    .subordinate-item{
+        height:px2rem(80);
+        line-height: px2rem(80);
+        border-bottom: 1px solid #EEEEEE;
+        font-size: px2rem(30);
+        .right-dir{
+            color: #AFAFB1;
+            float: right;
+            font-size: px2rem(24);
+        }
+    }
+}

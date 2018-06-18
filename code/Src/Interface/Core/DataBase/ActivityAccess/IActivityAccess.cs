@@ -8,7 +8,7 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
     {
         int CreateActivity(DomainService.Model.Activity.Activity activity);
 
-        int EditActivityComment(int activityId, int userId, string content);
+        int EditActivityComment(int orgId, int activityId, int userId, string content);
 
         int EditActivityComplete(int activityId);
 

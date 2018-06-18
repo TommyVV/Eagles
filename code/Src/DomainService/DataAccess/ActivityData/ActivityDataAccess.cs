@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Application.Model.Common;
 using Eagles.Interface.Core.DataBase.ActivityAccess;
@@ -47,13 +49,15 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                 });
         }
 
-        public int EditActivityComment(int activityId, int userId, string content)
+        public int EditActivityComment(int orgId, int activityId, int userId, string content)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_comment(Id,Content,Createtime,UserId,ReviewStatus) value (@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
+            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,ReviewStatus) value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
                 new
                 {
+                    OrgId = orgId,
                     Id = activityId,
                     Content = content,
+                    Createtime = DateTime.Now,
                     UserId = userId,
                     ReviewStatus = "-1"
                 });
@@ -88,7 +92,11 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
             var result = dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(
                 @"select ActivityId,ActivityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",
                 new { ActivityId = activityId});
-            return result[0];
+            if (result != null && result.Any())
+            {
+                return result.FirstOrDefault();
+            }
+            return null;
         }
 
         public List<Eagles.DomainService.Model.User.UserComment> GetActivityComment(int activityId)

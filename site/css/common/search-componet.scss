@@ -1,0 +1,52 @@
+@import 'px2rem.scss';
+.search-area {
+    background-color: white;
+    width: 100%;
+    height: px2rem(110);
+    text-align: center;
+    .search-position {
+        margin-top: px2rem(20);
+        width: px2rem(620);
+        height: px2rem(60);
+        display: inline-block;
+    }
+    .searc-content {
+        float: left;
+        height: px2rem(60);
+        width: px2rem(470);
+        background: #EEEEEE;
+        border-top-left-radius: px2rem(30);
+        border-bottom-left-radius: px2rem(30);
+        color: #949494;
+        display: inline-flex;
+    }
+    .search-icon {
+        padding-left: px2rem(39);
+        padding-right: px2rem(20);
+        font-size: px2rem(28);
+        height: px2rem(60);
+        line-height: px2rem(60);
+    }
+    .search-input {
+        width: px2rem(390);
+        height: px2rem(60);
+        border: none;
+        background: #EEEEEE;
+        outline: none;
+    }
+    .search-btn {
+        float: left;
+        color: white;
+        width: px2rem(150);
+        height: px2rem(60);
+        background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+        background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+        background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+        background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+        background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+        text-align: center;
+        line-height: px2rem(60);
+        border-top-right-radius: px2rem(30);
+        border-bottom-right-radius: px2rem(30);
+    }
+}

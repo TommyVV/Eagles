@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase.UserInfo;
@@ -72,16 +73,22 @@ where userId = @userId");
 
         public Eagles.DomainService.Model.User.UserInfo GetUserInfo(int userId)
         {
-            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethinc,Birthday,Origin,OriginAddress,Phone,IdNumber,Eduction,
+            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(
+                @"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethinc,Birthday,Origin,OriginAddress,Phone,IdNumber,Eduction,
 School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
-PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_info where userId=@userId", new { userId = new[] { userId } });
-            return userInfo[0];
+PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
+            if (userInfo != null && userInfo.Any())
+                return userInfo.FirstOrDefault();
+            return null;
         }
 
         public Eagles.DomainService.Model.User.UserInfo GetLogin(int userId)
         {
-            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>("select UserId,Password from eagles.tb_user_info where UserId = @UserId ", new { UserId = new[] { userId } });
-            return userInfo[0];
+            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(
+                "select UserId,Password from eagles.tb_user_info where UserId = @UserId ", new {UserId = userId});
+            if (userInfo != null && userInfo.Any())
+                return userInfo.FirstOrDefault();
+            return null;
         }
 
         public string InsertToken(int userId)

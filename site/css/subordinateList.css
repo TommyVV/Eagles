@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+.subordinates {
+  margin: 0 0.7466666667rem; }
+  .subordinates .subordinate-item {
+    height: 1.7066666667rem;
+    line-height: 1.7066666667rem;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 0.64rem; }
+    .subordinates .subordinate-item .right-dir {
+      color: #AFAFB1;
+      float: right;
+      font-size: 0.512rem; }
+
+/*# sourceMappingURL=subordinateList.css.map */
