@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+.plan-item {
+  background-color: white;
+  padding: 0 0.7466666667rem;
+  margin-bottom: 0.4266666667rem; }
+  .plan-item .item-content {
+    padding: 0.64rem 0;
+    font-size: 0.64rem;
+    line-height: 0.7466666667rem;
+    color: #141414;
+    border-bottom: 1px solid #EEEEEE; }
+  .plan-item .item-opers {
+    height: 1.3226666667rem;
+    font-size: 0.512rem;
+    line-height: 1.3226666667rem;
+    color: #949494; }
+    .plan-item .item-opers .oper {
+      float: left;
+      padding: 0 0.4266666667rem; }
+      .plan-item .item-opers .oper .glyphicon {
+        padding-right: 2px; }
+    .plan-item .item-opers .oper-re {
+      color: #F24848; }
+
+.plan-add {
+  margin-top: 1.472rem;
+  margin-left: 0.768rem; }
+  .plan-add .glyphicon {
+    font-size: 0.8106666667rem;
+    color: #F24848; }
+  .plan-add .text {
+    font-size: 0.768rem; }
+
+/*# sourceMappingURL=taskPlan.css.map */

@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class RemoveNewsRequset : RequestBase
+    public class GetNewDetailRequset : RequestBase
     {
         /// <summary>
         /// 新闻名字

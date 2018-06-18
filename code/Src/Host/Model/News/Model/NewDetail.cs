@@ -6,12 +6,17 @@ namespace Eagles.Application.Model.News.Model
     /// <summary>
     /// 
     /// </summary>
-    public class NewsDetail : News
+    public class NewDetail : New
     {
         /// <summary>
         /// 生效时间
         /// </summary>
-        public DateTime EnableTime { get; set; }
+        public DateTime EndTime { get; set; }
+
+        /// <summary>
+        /// 生效时间
+        /// </summary>
+        public DateTime StarTime { get; set; }
 
         /// <summary>
         /// 内容 json格式 图片 文字
@@ -36,6 +41,13 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 附件 json格式
         /// </summary>
-        public string Attach { get; set; }
+        //   public string Attach { get; set; }
+
+        public string Attach1 { get; set; }
+
+        public string Attach2 { get; set; }
+        public string Attach3 { get; set; }
+        public string Attach4 { get; set; }
+        public string Attach5 { get; set; }
     }
 }

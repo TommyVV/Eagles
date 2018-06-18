@@ -1,0 +1,53 @@
+.head-area {
+  margin: 0.32rem;
+  padding: 0 0.7466666667rem;
+  height: 1.7066666667rem;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #EEEEEE; }
+  .head-area .activity-cate {
+    flex: 1;
+    line-height: 1.7066666667rem;
+    text-align: center; }
+    .head-area .activity-cate span {
+      height: 1.7066666667rem;
+      display: inline-block; }
+    .head-area .activity-cate .select {
+      border-bottom: 2px solid #F24848; }
+
+.item {
+  padding-left: 0.7466666667rem;
+  padding-right: 0.7466666667rem;
+  position: relative; }
+  .item > .article:not(:last-child) {
+    border-bottom: 1px solid #eeeeee; }
+  .item > .article {
+    display: flex;
+    align-items: center;
+    height: 4.2453333333rem;
+    box-sizing: border-box;
+    padding: 0.576rem 0; }
+    .item > .article .left {
+      margin: 0 1.024rem 0 0.3626666667rem;
+      height: 3.0933333333rem;
+      width: 4.8rem; }
+      .item > .article .left img {
+        display: block;
+        height: 100%;
+        width: 100%; }
+    .item > .article .right {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; }
+      .item > .article .right .content {
+        font-size: 0.64rem;
+        font-family: SourceHanSansCN-Normal;
+        color: #141414;
+        line-height: 0.768rem; }
+      .item > .article .right .date {
+        font-size: 0.512rem;
+        font-family: Roboto-Regular;
+        color: #949494; }
+
+/*# sourceMappingURL=activityList.css.map */

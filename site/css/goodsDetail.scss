@@ -1,7 +1,4 @@
 @import 'common/px2rem.scss';
-.scroll-area{
-    margin-bottom: px2rem(230);
-}
 .goods-img{
     width: 100%;
     height: auto !important;
@@ -42,8 +39,9 @@
     }
 }
 .goods-detail{
-    padding: 0px 15px;
+    padding: 0px 15px 20px 15px;
     border-top: px2rem(20) solid #F8F8F8;
+    border-bottom:1px solid #F8F8F8;
     .detail-title{
         padding:px2rem(30) 10px;
         height: px2rem(100);
@@ -58,34 +56,6 @@
         color: #141414;
     }
 }
-.oper-area{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 740px;
-    height: px2rem(220);
-    background-color: white;
-    .oper-pos{
-        border-top: 1px solid #EEEEEE;
-        margin: 0 15px;
-        width: calc(100% - 30px);
-        border-top: 1px solid #EEEEEE;
-        text-align: center;
-        .sub-btn{
-            display: inline-block;
-            margin-top:px2rem(74);
-            width:px2rem(520);
-            height:px2rem(84);
-            line-height:px2rem(84); 
-            color: #FFFFFF;
-            font-size: px2rem(30);
-            border-radius:px2rem(8);
-            text-align: center;
-            background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
-            background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
-            background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
-            background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
-            background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
-        }
-    }
+.sub-btn{
+    margin-top:px2rem(74); 
 }

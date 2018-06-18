@@ -1,0 +1,57 @@
+.comment-content {
+  border-top: 0.2346666667rem solid #F8F8F8;
+  padding: 0 0.7466666667rem;
+  margin-bottom: 1.7493333333rem; }
+  .comment-content .title {
+    height: 2.2613333333rem;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 0.768rem;
+    line-height: 2.2613333333rem;
+    padding-left: 5px; }
+  .comment-content .edit-comment {
+    font-size: 0.512rem;
+    float: right;
+    color: #949494; }
+  .comment-content .comment-item {
+    border-bottom: 1px solid #EEEEEE;
+    padding: 0.5973333333rem 0 0.8533333333rem 0;
+    font-size: 0.64rem; }
+    .comment-content .comment-item .item-head {
+      height: 1.1093333333rem;
+      line-height: 1.1093333333rem; }
+      .comment-content .comment-item .item-head .item-name {
+        color: #949494;
+        width: 50%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        float: left; }
+      .comment-content .comment-item .item-head .item-status {
+        width: 50%;
+        float: left; }
+        .comment-content .comment-item .item-head .item-status .c-status {
+          float: right;
+          height: 0.768rem;
+          line-height: 0.768rem;
+          border-radius: 0.384rem;
+          font-size: 0.4266666667rem;
+          text-align: center; }
+        .comment-content .comment-item .item-head .item-status .c-pass {
+          width: 2.56rem;
+          border: 1px solid #EE2F2F;
+          color: #EE2F2F;
+          margin-right: 0.3413333333rem; }
+        .comment-content .comment-item .item-head .item-status .c-nopass {
+          width: 3.2rem;
+          border: 1px solid #949494;
+          color: #949494; }
+    .comment-content .comment-item .item-content {
+      line-break: 0.768rem; }
+    .comment-content .comment-item .item-time {
+      font-size: 0.512rem;
+      line-height: 1.1946666667rem;
+      color: #949494; }
+  .comment-content .comment-item:last-child {
+    border-bottom: none; }
+
+/*# sourceMappingURL=comment-componet.css.map */

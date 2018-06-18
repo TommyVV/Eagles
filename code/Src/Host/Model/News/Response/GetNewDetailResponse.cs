@@ -5,11 +5,11 @@ namespace Eagles.Application.Model.News.Response
    /// <summary>
    /// 
    /// </summary>
-   public  class GetNewsDetailResponse : ResponseBase
+   public  class GetNewDetailResponse : ResponseBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public NewsDetail Info { get; set; }
+        public NewDetail Info { get; set; }
     }
 }

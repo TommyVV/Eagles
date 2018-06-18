@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Interface.DataAccess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ealges.DomianService.DataAccess", "Src\DomainService\DataAccess\Ealges.DomianService.DataAccess.csproj", "{5AE3FAB8-5BFD-46A7-B1E7-A9765975CCDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Application.Host", "Src\Host\Eagles.Application.Host\Eagles.Application.Host.csproj", "{FEA4774E-5181-4075-8EBD-11B5756EC0F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eagles.Application.Host", "Src\Host\Host\Eagles.Application.Host.csproj", "{FEA4774E-5181-4075-8EBD-11B5756EC0F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

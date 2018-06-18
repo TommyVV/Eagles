@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="hotcss" content="initial-dpr=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/taskPlanEdit.css">
+    <link rel="stylesheet" href="css/publishTask.css">
+    <title>我的任务</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="pub-area">
+                <div class="pub-item">
+                    标题:
+                    <input class="item-content" placeholder="任务/活动标题" />
+                </div>
+                <div class="pub-item">
+                    指派:
+                    <span class="item-content">Tommy</span>
+                    <span class="item-select" id="subord">选择</span>
+                </div>
+                <div class="pub-item">
+                    开始时间:
+                    <span class="item-time">2018-02-10</span>
+                    <span class="item-select">选择</span>
+                </div>
+                <div class="pub-item">
+                    结束时间:
+                    <span class="item-time">2018-02-10</span>
+                    <span class="item-select">选择</span>
+                </div>
+            </div>
+            <div class="plan-area">
+                <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="" cols="30" rows="10"></textarea>
+                <div class="img-area">
+                    <div class="title">图片上传</div>
+                    <div class="imgs">
+                        <div class='img-wrap'>
+                            <div class="img-container">
+                                <div class="add">
+                                    <div>+</div>
+                                </div>
+                                <input type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pub-area">
+                    <span class="glyphicon glyphicon-record"></span>申请公开
+                </div>
+                <div class="sub-btn">发布任务</div>
+            </div>
+        </div>
+    </div>
+    <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
+    <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/publishTask.js"></script>
+</body>
+
+</html>
+
+</html>

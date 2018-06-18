@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.News.Model
     /// <summary>
     /// 新闻信息
     /// </summary>
-    public class News
+    public class New
     {
         /// <summary>
         /// 新闻名字
@@ -49,5 +49,10 @@ namespace Eagles.Application.Model.News.Model
         ///新闻类型 
         /// </summary>
         public NewsType NewsType { get; set; }
+
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        public  string UserName { get; set; }
     }
 }

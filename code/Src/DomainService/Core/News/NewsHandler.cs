@@ -92,7 +92,7 @@ namespace Eagles.DomainService.Core.News
             var result=newsDa.GetModuleNews(request.ModuleId, request.AppId,request.NewsCount);
             return new GetModuleNewsResponse()
             {
-                NewsInfos = result.Select(x=>new NewsInfo
+                NewsInfos = result.Select(x=>new New
                 {
                     NewsId = x.NewsId,
                     NewsImg = x.ImageUrl,
@@ -119,7 +119,7 @@ namespace Eagles.DomainService.Core.News
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             return new GetNewsDetailResponse()
             {
-                NewsDetail = new NewsDetail()
+                NewsDetail = new NewDetail()
                 {
                     Author = result.Author,
                     NewsId = result.NewsId,

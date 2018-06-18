@@ -18,6 +18,6 @@ namespace Eagles.DomainService.Model.App
         public string SmallImageUrl { get; set; }
         public string TragetUrl { get; set; }
 
-        public List<News.News> News { get; set; }
+        public List<News.TB_NEWS> News { get; set; }
     }
 }

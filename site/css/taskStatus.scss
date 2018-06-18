@@ -1,0 +1,154 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.task-info {
+    margin: 0 px2rem(49) px2rem(65) px2rem(65);
+    font-size: px2rem(30);
+    .info-icon {
+        margin-top: px2rem(27);
+        margin-bottom: px2rem(2);
+        color: #949494;
+        img {
+            width: px2rem(88);
+            height: px2rem(88);
+            border-radius: 50%;
+        }
+        .time {
+            float: right;
+            line-height: px2rem(88);
+        }
+    }
+    .info-item {
+        color: #949494;
+        margin-top: px2rem(47);
+        span {
+            color: #141414;
+            padding-left: 5px;
+        }
+        .status {
+            color: #F24848;
+        }
+    }
+}
+
+.task-content {
+    border-top: px2rem(11) solid #F8F8F8;
+    padding: 0 px2rem(35);
+    margin-bottom: px2rem(82);
+    .title {
+        height: px2rem(106);
+        border-bottom: 1px solid #EEEEEE;
+        font-size: px2rem(36);
+        line-height: px2rem(106);
+        padding-left: 5px;
+    }
+    .content {
+        margin-top: px2rem(66);
+        color: #141414;
+        font-size: px2rem(30);
+        margin-bottom: px2rem(32);
+    }
+    .img-area {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        .img-wrap {
+            width: calc(33.3% - 8px);
+            /* 这里设置占屏幕宽度百分比 */
+            margin: 0 auto;
+            .img-container {
+                width: 100%;
+                height: 0px;
+                padding-bottom: 100%;
+                overflow: hidden;
+                margin: 0;
+                position: relative;
+                img {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+    .add-area {
+        margin-top: px2rem(102);
+        font-size: px2rem(30);
+        line-height: px2rem(36);
+        .g-color {
+            color: #65BBDE;
+        }
+        a {
+            color: #141414;
+            text-decoration: underline;
+        }
+    }
+}
+
+.oper-item {
+    height: px2rem(80);
+    line-height: px2rem(80);
+    border-bottom: 1px solid #EEEEEE;
+    .oper-text {
+        font-size: px2rem(30);
+        width: 75%;
+        float: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .opers {
+        font-size: px2rem(24);
+        width: 25%;
+        float: right;
+        color: #949494;
+    }
+}
+
+// 分数
+.points-area {
+    margin-top: px2rem(85);
+    .points-tip {
+        font-size: px2rem(30);
+    }
+    .points-stars {
+        margin-top: px2rem(30);
+        text-align: center;
+        .glyphicon {
+            padding: 0px 3px;
+            font-size: px2rem(47);
+        }
+        .s-star {
+            color: #FFD35A;
+        }
+        .n-star {
+            color: #DDDDDD;
+        }
+    }
+    .points-result {
+        margin-top: px2rem(110);
+        text-align: center;
+        div {
+            width: 35.3%;
+            height: px2rem(80);
+            font-size: px2rem(30);
+            line-height: px2rem(80);
+            color: white;
+            text-align: center;
+            display: inline-block;
+            border-radius: px2rem(8);
+        }
+        .pass {
+            background-color: #FF0000;
+        }
+        .nopass {
+            margin-left: px2rem(60);
+            background-color: #949494;
+        }
+    }
+}

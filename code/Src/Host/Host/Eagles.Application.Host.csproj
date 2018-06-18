@@ -201,12 +201,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="obj\Debug\Eagles.Application.Host.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\Eagles.Host.dll" />
-    <Content Include="obj\Debug\Eagles.Host.pdb" />
-    <Content Include="obj\Release\Eagles.Application.Host.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Release\Eagles.Host.dll" />
-    <Content Include="obj\Release\Eagles.Host.pdb" />
     <Content Include="Properties\PublishProfiles\FolderProfile.pubxml.user" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -257,6 +251,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AppModuleController.cs" />
+    <Compile Include="Controllers\NewController.cs" />
     <Compile Include="Controllers\ColumnController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
@@ -268,36 +263,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log\2018051413.log" />
-    <Content Include="log\2018051421.log" />
-    <Content Include="log\2018051521.log" />
-    <Content Include="log\2018051522.log" />
-    <Content Include="log\2018061121.log" />
-    <Content Include="log\2018061612.log" />
-    <Content Include="log\2018061615.log" />
-    <Content Include="obj\Debug\build.force" />
-    <Content Include="obj\Debug\CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\Eagles.Application.Host.csproj.CopyComplete" />
-    <Content Include="obj\Debug\Eagles.Application.Host.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\Eagles.Application.Host.csprojAssemblyReference.cache" />
-    <Content Include="obj\Debug\Eagles.Application.Host.csprojResolveAssemblyReference.cache" />
-    <Content Include="obj\Debug\Tsc.out" />
-    <Content Include="obj\Release\CoreCompileInputs.cache" />
-    <Content Include="obj\Release\Eagles.Application.Host.csproj.CopyComplete" />
-    <Content Include="obj\Release\Eagles.Application.Host.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Release\Eagles.Application.Host.csprojAssemblyReference.cache" />
-    <Content Include="obj\Release\Tsc.out" />
     <Content Include="Configuration\DataBase.config" />
     <Content Include="Configuration\Test.config" />
     <None Include="packages.config" />
@@ -331,9 +299,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="obj\Release\Package\" />
-    <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

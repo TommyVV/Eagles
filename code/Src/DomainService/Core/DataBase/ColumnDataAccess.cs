@@ -16,6 +16,11 @@ namespace Eagles.DomainService.Core.DataBase
 
         private readonly IDbManager dbManager;
 
+        public ColumnDataAccess(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
+
         public List<TB_APP_MODULE> GetColumnList(GetColumnRequset requset)
         {
 
@@ -59,7 +64,7 @@ namespace Eagles.DomainService.Core.DataBase
     `tb_app_module`.`Priority`,
     `tb_app_module`.`IndexPageCount`,
     `tb_app_module`.`IndexDisplay`
-FROM `eagles`.`tb_app_module`  where where 1=1  {0}  
+FROM `eagles`.`tb_app_module`   where 1=1  {0}  
  ", parameter);
 
             return dbManager.Query<TB_APP_MODULE>(sql.ToString(), dynamicParams);
