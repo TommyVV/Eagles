@@ -51,7 +51,7 @@
     <Compile Include="ImportLog\ImportLog.cs" />
     <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
-    <Compile Include="News\News.cs" />
+    <Compile Include="News\TB_NEWS.cs" />
     <Compile Include="Oper\Oper.cs" />
     <Compile Include="Oper\OperGroup.cs" />
     <Compile Include="Order\Order.cs" />

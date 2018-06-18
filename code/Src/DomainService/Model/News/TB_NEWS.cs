@@ -5,7 +5,7 @@ namespace Eagles.DomainService.Model.News
     /// <summary>
     /// TB_NEWS
     /// </summary>
-    public class News
+    public class TB_NEWS
     {
         /// <summary>
         /// 附件1

@@ -11,7 +11,12 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 生效时间
         /// </summary>
-        public DateTime EnableTime { get; set; }
+        public DateTime EndTime { get; set; }
+
+        /// <summary>
+        /// 生效时间
+        /// </summary>
+        public DateTime StarTime { get; set; }
 
         /// <summary>
         /// 内容 json格式 图片 文字
