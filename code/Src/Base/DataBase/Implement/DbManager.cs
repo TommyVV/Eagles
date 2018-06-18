@@ -54,6 +54,7 @@ namespace Eagles.Base.DataBase.Implement
             }
             catch (Exception e)
             {
+
                 logger.LoggerError(e.ToString());
             }
             finally

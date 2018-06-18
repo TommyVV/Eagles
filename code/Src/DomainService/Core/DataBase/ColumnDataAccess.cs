@@ -87,16 +87,16 @@ FROM `eagles`.`tb_app_module`   where 1=1  {0}
     `tb_app_module`.`IndexDisplay`
 FROM `eagles`.`tb_app_module`  where ModuleId=@ColumnId;
  ");
-            dynamicParams.Add("ColumnId", new {requset.ColumnId});
+            dynamicParams.Add("ColumnId", requset.ColumnId);
 
-            return dbManager.Query<TB_APP_MODULE>(sql.ToString(), dynamicParams).FirstOrDefault();
+            return dbManager.QuerySingle<TB_APP_MODULE>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveColumn(RemoveColumnRequset requset)
         {
-            return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_app_module`
-                `ModuleId` = @ModuleId;
-", requset.ColumnId);
+            return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_app_module`  where
+                `ModuleId` = @ColumnId;
+", new { requset.ColumnId });
         }
 
         public int EditColumn(TB_APP_MODULE mod)
