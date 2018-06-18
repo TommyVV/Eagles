@@ -21,12 +21,12 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 习题id
         /// </summary>
-        public int ExampleId { get; set; }
+        public int TestId { get; set; }
 
         /// <summary>
         /// 栏目id
         /// </summary>
-        public int ColumnId { get; set; }
+        public int ModuleId { get; set; }
 
         /// <summary>
         /// 分类
@@ -36,6 +36,6 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         /// 附件 json格式
         /// </summary>
-        public string Enclosure { get; set; }
+        public string Attach { get; set; }
     }
 }

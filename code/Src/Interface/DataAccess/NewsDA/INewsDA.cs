@@ -8,6 +8,6 @@ namespace Eagles.Interface.DataAccess.NewsDA
     {
         List<News> GetModuleNews(int moduleId,int appId,int count);
 
-        News GetNewsDetail(string newsId, string appId);
+        News GetNewsDetail(int newsId, int appId);
     }
 }

@@ -115,10 +115,20 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "NewsId 非法");
             }
+
+            var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             return new GetNewsDetailResponse()
             {
                 NewsDetail = new NewsDetail()
                 {
+                    Author = result.Author,
+                    NewsId = result.NewsId,
+                    NewsName = result.Title,
+                    Content = result.HtmlContent,
+                    CreateTime = result.CreateTime,
+                    ModuleId = result.Module,
+                    NewsImg = result.ImageUrl,
+                    TestId = result.TestId,
                     //todo 
                 }
             };

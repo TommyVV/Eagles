@@ -49,7 +49,7 @@ FROM eagles.tb_news where Module=@Module And OrgId=@OrgId  limit @count", new {M
 
         }
 
-        public News GetNewsDetail(string newsId, string appId)
+        public News GetNewsDetail(int newsId, int appId)
         {
             return dbManager.QuerySingle<News>(@"SELECT OrgId,
     NewsId,

@@ -66,14 +66,6 @@
     <Compile Include="AuthorityGroup\DeleteAuthorityGroupInfoRequset.cs" />
     <Compile Include="AuthorityGroup\GetAuthorityGroupInfoRequset.cs" />
     <Compile Include="AuthorityGroup\GetAuthorityGroupInfoResponse.cs" />
-    <Compile Include="Column\AlterColumnInfoRequset.cs" />
-    <Compile Include="Column\ColumnInfo.cs" />
-    <Compile Include="Column\ColumnInfoDetails.cs" />
-    <Compile Include="Column\ColumnRequset.cs" />
-    <Compile Include="Column\ColumnResponse.cs" />
-    <Compile Include="Column\DeleteColumnInfoRequset.cs" />
-    <Compile Include="Column\GetColumnInfoRequset.cs" />
-    <Compile Include="Column\GetColumnInfoResponse.cs" />
     <Compile Include="Common\Activity.cs" />
     <Compile Include="Common\BranchRank.cs" />
     <Compile Include="Common\Comment.cs" />
@@ -202,7 +194,7 @@
     <Compile Include="Column\Model\ColumnDetails.cs" />
     <Compile Include="Column\Requset\GetColumnRequset.cs" />
     <Compile Include="Column\Response\GetColumnResponse.cs" />
-    <Compile Include="Column\Requset\RemoveColumnInfoRequset.cs" />
+    <Compile Include="Column\Requset\RemoveColumnRequset.cs" />
     <Compile Include="Column\Requset\GetColumnDetailRequset.cs" />
     <Compile Include="Column\Response\GetColumnDetailResponse.cs" />
     <Compile Include="DeliverGoods\Requset\EditDeliverGoodsRequest.cs" />
