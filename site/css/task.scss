@@ -1,65 +1,73 @@
 @import 'common/px2rem.scss';
-.head-area{
-    width:100%;
+.head-area {
+    width: 100%;
     height: px2rem(80);
-    .task-cate{
+    .task-cate {
         float: left;
-        width:33.33%;
+        width: 33.33%;
         line-height: px2rem(80);
         text-align: center;
     }
 }
-.drog-down-menu{
+
+.drog-down-menu {
     width: 100%;
     position: relative;
-    .menu-list{
-        width:100%;
+    .menu-list {
+        width: 100%;
         background-color: white;
         position: absolute;
         padding: 0px 15px;
         z-index: 2;
-        .list-item{
+        .list-item {
             height: px2rem(70);
             border-bottom: 1px solid #EEEEEE;
             line-height: px2rem(70);
         }
     }
 }
-.task-item{
-    width:100%;
-    background-color: white;
-    border-top:px2rem(18) solid #f8f8f8;
-    text-align: center; 
-    padding: px2rem(20) 17px 0px 17px;
-    img{
-        width:100%;
-        height: auto !important;
+
+.task-list {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+.task-item {
+    margin: 0 21px;
+    border-bottom: 1px solid #EEEEEE;
+    .task-title {
+        padding-top: 30px;
+        line-height: 23px;
+        font-size: 18px;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        -webkit-line-clamp: 2; /** 显示的行数 **/
+        overflow: hidden;  /** 隐藏超出的内容 **/
     }
-    .task-content{
-        height: px2rem(103);
-        position: relative;
-        .task-title{
+    .task-content {
+        margin-top: 21px;
+        margin-bottom: 30px;
+        height: 36px;
+        font-size: 12px;
+        .task-info {
             text-align: left;
-            position: absolute;
-            top:px2rem(24);
-            left: 0;
-            right:px2rem(150);
-            color: #000000;
-            font-size: px2rem(36);
+            float: left;
+            color: #949494;
         }
-        .task-status{
+        .task-status {
             float: right;
             margin-top: px2rem(21);
-            width:px2rem(140);
+            width: px2rem(140);
             height: px2rem(40);
-            font-size: px2rem(24);
             line-height: px2rem(40);
             border-radius: px2rem(20);
+            text-align: center;
         }
-        .accept-status{
+        .accept-status {
             color: white;
         }
-        .init-status{
+        .init-status {
             border: 1px solid #949494;
             color: #949494;
         }

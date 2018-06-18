@@ -1,0 +1,45 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+  .plan-item{
+    background-color: white;
+     padding:0 px2rem(35);
+     margin-bottom:px2rem(20); 
+     .item-content{
+         padding: px2rem(30) 0;
+         font-size: px2rem(30);
+         line-height: px2rem(35);
+         color:#141414;
+         border-bottom: 1px solid #EEEEEE;
+     }
+     .item-opers{
+         height: px2rem(62);
+         font-size: px2rem(24);
+         line-height: px2rem(62);
+         color: #949494;
+         .oper{
+            float: left;
+            padding:0 px2rem(20);
+            .glyphicon{
+                padding-right: 2px;
+            }
+         }
+         .oper-re{
+             color: #F24848;
+         }
+     }
+  }
+  .plan-add{
+      margin-top:px2rem(69);
+      margin-left: px2rem(36);
+      .glyphicon{
+          font-size:px2rem(38);
+          color: #F24848;
+      }
+      .text{
+          font-size: px2rem(36);
+      }
+  }

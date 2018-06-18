@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+.pub-area {
+  margin: 0 0.7466666667rem; }
+  .pub-area .pub-item {
+    height: 1.7066666667rem;
+    line-height: 1.7066666667rem;
+    font-size: 0.64rem;
+    border-bottom: 1px solid #EEEEEE; }
+    .pub-area .pub-item input {
+      height: 1.28rem;
+      outline: none;
+      border: none; }
+    .pub-area .pub-item .item-content {
+      color: #949494;
+      padding-left: 3px; }
+    .pub-area .pub-item .item-time {
+      color: #141414;
+      padding-left: 3px; }
+    .pub-area .pub-item .item-select {
+      color: #949494;
+      float: right;
+      font-size: 0.512rem;
+      height: 1.7066666667rem;
+      width: 1.7066666667rem; }
+
+/*# sourceMappingURL=publishTask.css.map */

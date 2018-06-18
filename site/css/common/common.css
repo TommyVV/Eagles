@@ -4,13 +4,6 @@
     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
 
 }
-@media screen and (min-width: 1024px){
-    .dj-container{
-        width: 740px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
 .bg-color{
     background-color: #f8f8f8;
 }
@@ -24,3 +17,16 @@
 .hide{
     display: none;
 }
+.sub-btn {
+    width: 70%;
+    margin-left: 15%;
+    font-size: 0.64rem;
+    height: 1.792rem;
+    margin-bottom: 1.8773333333rem;
+    text-align: center;
+    line-height: 1.792rem;
+    color: white;
+    border-radius: 0.1706666667rem;
+    background-color: #EE2F2F; 
+    letter-spacing: 5px;}
+    

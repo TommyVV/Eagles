@@ -1,4 +1,7 @@
 @function px2rem( $px ){
 	@return $px*320/$designWidth/20 + rem;
 }
+@function ratio($n,$par){
+    @return $n/$par*100*1%;
+}
 $designWidth : 750;
