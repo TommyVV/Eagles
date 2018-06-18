@@ -11,11 +11,11 @@ namespace Eagles.Application.Host.Controllers
     /// </summary>
     public class NewController : ApiController
     {
-        private readonly INewsHandler _NewController;
+        private readonly INewsHandler testHandler;
 
         public NewController(INewsHandler testHandler)
         {
-            this._NewController = testHandler;
+            this.testHandler = testHandler;
         }
 
 
@@ -29,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseBase EditNews(EditNewRequset requset)
         {
-            return _NewController.EditNews(requset);
+            return testHandler.EditNews(requset);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseBase RemoveNews(RemoveNewRequset requset)
         {
-            return _NewController.RemoveNews(requset);
+            return testHandler.RemoveNews(requset);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {
-            return _NewController.GetNewsDetail(requset);
+            return testHandler.GetNewsDetail(requset);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public GetNewResponse GetNews(GetNewRequset requset)
         {
-            return _NewController.GetNews(requset);
+            return testHandler.GetNews(requset);
         }
     }
 }

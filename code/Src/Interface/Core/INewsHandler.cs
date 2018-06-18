@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
+﻿using Eagles.Application.Model;
 using Eagles.Application.Model.News.Requset;
 using Eagles.Application.Model.News.Response;
 using Eagles.Base;

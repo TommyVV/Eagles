@@ -271,6 +271,14 @@
     <Compile Include="Menus\Model\Menus.cs" />
     <Compile Include="Menus\Requset\GetMenusRequset.cs" />
     <Compile Include="Menus\Response\GetMenusResponse.cs" />
+    <Compile Include="News\AlterNewsInfoRequset.cs" />
+    <Compile Include="News\DeleteNewsRequset.cs" />
+    <Compile Include="News\GetNewsInfoDetailsRequset.cs" />
+    <Compile Include="News\GetNewsInfoDetailsResponse.cs" />
+    <Compile Include="News\NewsInfo.cs" />
+    <Compile Include="News\NewsInfoDetails.cs" />
+    <Compile Include="News\NewsRequset.cs" />
+    <Compile Include="News\NewsResponse.cs" />
     <Compile Include="News\Requset\EditNewRequset.cs" />
     <Compile Include="News\Requset\RemoveNewRequset.cs" />
     <Compile Include="News\Requset\GetNewDetailRequset.cs" />
