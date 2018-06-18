@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Curd.Product.GetProductDetail
 {
     /// <summary>
@@ -10,6 +9,6 @@ namespace Eagles.Application.Model.Curd.Product.GetProductDetail
         /// <summary>
         /// 商品Id
         /// </summary>
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
     }
 }

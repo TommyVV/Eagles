@@ -48,6 +48,16 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                     BranchReview = "-1"
                 });
         }
+        
+        public int EditActivityJoin(int activityId)
+        {
+            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new { ActivityId = activityId });
+        }
+        
+        public int EditActivityComplete(int activityId)
+        {
+            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new { ActivityId = activityId });
+        }
 
         public int EditActivityComment(int orgId, int activityId, int userId, string content)
         {
@@ -62,24 +72,52 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                     ReviewStatus = "-1"
                 });
         }
-
-        public int EditActivityComplete(int activityId)
+        
+        public int EditActivityFeedBack(int activityId, string content, List<Attachment> attachList)
         {
-            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new {ActivityId = activityId});
+            string attach1 = string.Empty, attach2 = string.Empty, attach3 = string.Empty, attach4 = string.Empty,
+                attachType1 = string.Empty, attachType2 = string.Empty, attachType3 = string.Empty, attachType4 = string.Empty;
+            for (int i = 0; i < attachList.Count; i++)
+            {
+                if (i == 0)
+                {
+                    attachType1 = attachList[i].AttachmentType;
+                    attach1 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 1)
+                {
+                    attachType2 = attachList[i].AttachmentType;
+                    attach2 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 2)
+                {
+                    attachType3 = attachList[i].AttachmentType;
+                    attach3 = attachList[i].AttachmentDownloadUrl;
+                }
+                else if (i == 3)
+                {
+                    attachType4 = attachList[i].AttachmentType;
+                    attach4 = attachList[i].AttachmentDownloadUrl;
+                }
+            }
+            return dbManager.Excuted(@"update eagles.tb_user_activity set UserFeedBack = @UserFeedBack, 
+AttachType1 = @AttachType1, AttachType2 = @AttachType2, AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4
+where ActivityId = @ActivityId ",
+                new
+                {
+                    UserFeedBack = content,
+                    AttachType1 = attachType1,
+                    AttachType2 = attachType2,
+                    AttachType3 = attachType3,
+                    AttachType4 = attachType4,
+                    Attach1 = attach1,
+                    Attach2 = attach2,
+                    Attach3 = attach3,
+                    Attach4 = attach4,
+                    ActivityId = activityId
+                });
         }
-
-        public int EditActivityFeedBack(int activityId, string content, List<Attachment> list)
-        {
-            return dbManager.Excuted(
-                "update eagles.tb_user_activity set UserFeedBack = @UserFeedBack where ActivityId = @ActivityId ",
-                new {UserFeedBack = content, ActivityId = activityId});
-        }
-
-        public int EditActivityJoin(int activityId)
-        {
-            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new {ActivityId = activityId});
-        }
-
+        
         public List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType)
         {
             return dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(

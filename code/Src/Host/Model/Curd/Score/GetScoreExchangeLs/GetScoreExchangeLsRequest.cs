@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Curd.Score.GetScoreExchangeLs
 {
     /// <summary>
@@ -7,6 +6,6 @@ namespace Eagles.Application.Model.Curd.Score.GetScoreExchangeLs
     /// </summary>
     public class GetScoreExchangeLsRequest : RequestBase
     {
-        public string Token { get; set; }
+
     }
 }
