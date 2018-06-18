@@ -81,6 +81,25 @@ namespace Eagles.Base.DataBase.Implement
             return result;
         }
 
+        public object ExecuteScalar(string command, object parameter)
+        {
+            var conn = new MySqlConnection(DbConfig.DataBaseConnectString);
+            object result = null;
+            try
+            {
+                result = conn.ExecuteScalar(command, parameter);
+            }
+            catch (Exception e)
+            {
+                logger.LoggerError(e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
         /// <summary>
         /// ExcutedByTransaction
         /// </summary>

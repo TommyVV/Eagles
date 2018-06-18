@@ -10,11 +10,6 @@ namespace Eagles.Application.Model.Curd.Task.CreateTask
     public class CreateTaskRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
         /// 上下级人物类型
         /// </summary>
         public string TaskType { get; set; }

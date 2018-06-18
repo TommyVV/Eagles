@@ -1,18 +1,12 @@
-﻿using System;
-using Eagles.Application.Model.Curd.Enum;
+﻿using Eagles.Application.Model.Curd.Enum;
 
 namespace Eagles.Application.Model.Curd.Task.EditTaskStep
 {
     /// <summary>
-    /// 任务步骤编辑
+    /// 任务计划编辑
     /// </summary>
     public class EditTaskStepRequest : RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-
         /// <summary>
         /// 操作类型 增、删、改
         /// </summary>
@@ -24,7 +18,12 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskStep
         public string BranchId { get; set; }
 
         /// <summary>
-        /// 步骤Id
+        /// 任务Id
+        /// </summary>
+        public int TaskId { get; set; }
+
+        /// <summary>
+        /// 计划Id
         /// </summary>
         public int StepId { get; set; }
 

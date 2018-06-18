@@ -23,6 +23,11 @@ namespace Eagles.Application.Model.Common
         public DateTime TaskDate { get; set; }
 
         /// <summary>
+        /// 任务日期
+        /// </summary>
+        public int TaskStatus { get; set; }
+
+        /// <summary>
         /// 任务发起人
         /// </summary>
         public int TaskFromUser { get; set; }
