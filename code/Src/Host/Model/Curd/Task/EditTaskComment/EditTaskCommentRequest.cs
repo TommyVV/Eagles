@@ -7,12 +7,6 @@ namespace Eagles.Application.Model.Curd.Task.EditTaskComment
     /// </summary>
     public class EditTaskCommentRequest : RequestBase
     {
-
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-        
         /// <summary>
         /// 任务Id
         /// </summary>

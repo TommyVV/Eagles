@@ -14,6 +14,15 @@ namespace Eagles.Host.Controllers
         private IProductHandler productHandler;
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productHandler"></param>
+        public ProductController(IProductHandler productHandler)
+        {
+            this.productHandler = productHandler;
+        }
+
+        /// <summary>
         /// 积分商品查询
         /// </summary>
         /// <param name="request"></param>

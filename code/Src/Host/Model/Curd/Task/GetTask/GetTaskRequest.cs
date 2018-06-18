@@ -8,11 +8,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTask
     public class GetTaskRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
         /// 加密用户编号
         /// </summary>
         public string EncryptUserid { get; set; }

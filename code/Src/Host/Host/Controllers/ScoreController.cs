@@ -1,14 +1,21 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Eagles.Interface.Core.Score;
 using Eagles.Application.Model.Curd.Score.GetScoreRank;
 using Eagles.Application.Model.Curd.Score.GetScoreExchangeLs;
 
 namespace Eagles.Host.Controllers
 {
+    /// <summary>
+    /// 积分查询
+    /// </summary>
     public class ScoreController : ApiController
     {
         private IScoreHandler scoreHandler;
+
+        public ScoreController(IScoreHandler scoreHandler)
+        {
+            this.scoreHandler = scoreHandler;
+        }
 
         /// <summary>
         /// 积分兑换流水查询
@@ -16,7 +23,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetScoreExchangeLs")]
-        [HttpGet]
+        [HttpPost]
         public GetScoreExchangeLsResponse GetScoreExchangeLs(GetScoreExchangeLsRequest request)
         {
             return scoreHandler.GetScoreExchangeLs(request);
@@ -28,7 +35,7 @@ namespace Eagles.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Route("api/GetScoreRank")]
-        [HttpGet]
+        [HttpPost]
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
         {
             return scoreHandler.GetScoreRank(request);

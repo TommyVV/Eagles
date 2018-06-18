@@ -45,6 +45,8 @@
     <Compile Include="NewsDA\NewsDA.cs" />
     <Compile Include="ProductData\ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreData\ScoreDataAccess.cs" />
+    <Compile Include="ScrollData\ScrollDataAccess.cs" />
     <Compile Include="TaskData\TaskDataAccess.cs" />
     <Compile Include="UserArticle\ArticleDataAccess.cs" />
     <Compile Include="UserInfo\UserDataAccess.cs" />

@@ -96,6 +96,7 @@
     <Compile Include="Curd\Activity\EditActivityComplete\EditActivityCompleteResponse.cs" />
     <Compile Include="Curd\Activity\CreateActivity\CreateActivityResponse.cs" />
     <Compile Include="Curd\Enum\NewsEnum.cs" />
+    <Compile Include="Curd\Enum\TaskTypeEnum.cs" />
     <Compile Include="Curd\GetPartyInfo\GetPartyInfoRequest.cs" />
     <Compile Include="Curd\GetPartyInfo\GetPartyInfoResponse.cs" />
     <Compile Include="Curd\Module\AppModuleResponse.cs" />
