@@ -16,7 +16,12 @@ namespace Eagles.DomainService.Core
 {
     public class ColumnHandler : IColumnHandler
     {
-        private  IColumnDataAccess dataAccess;
+        private readonly IColumnDataAccess dataAccess;
+
+        public ColumnHandler(IColumnDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess;
+        }
 
         public ResponseBase EditColumn(EditColumnRequset requset)
         {

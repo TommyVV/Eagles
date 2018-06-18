@@ -2,15 +2,23 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
-using Eagles.Application.Model.Exercises.Requset;
-using Eagles.Application.Model.Exercises.Response;
 using Eagles.Interface.Core;
 
-namespace Eagles.Host.Controllers
+namespace Eagles.Application.Host.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ColumnController : ApiController
     {
-        private IColumnHandler ColumnHandler;
+        private readonly IColumnHandler _columnHandler;
+
+        public ColumnController(IColumnHandler testHandler)
+        {
+            this._columnHandler = testHandler;
+        }
+
+
 
         /// <summary>
         /// 编辑 栏目
@@ -18,10 +26,10 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/EditColumn")]
-        [HttpGet]
+        [HttpPost]
         public ResponseBase EditColumn(EditColumnRequset requset)
         {
-            return ColumnHandler.EditColumn(requset);
+            return _columnHandler.EditColumn(requset);
         }
 
         /// <summary>
@@ -30,10 +38,10 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/RemoveColumn")]
-        [HttpGet]
+        [HttpPost]
         public ResponseBase RemoveColumn(RemoveColumnRequset requset)
         {
-            return ColumnHandler.RemoveColumn(requset);
+            return _columnHandler.RemoveColumn(requset);
         }
 
         /// <summary>
@@ -42,10 +50,10 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetColumnDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetColumnDetailResponse GetColumnDetail(GetColumnDetailRequset requset)
         {
-            return ColumnHandler.GetColumnDetail(requset);
+            return _columnHandler.GetColumnDetail(requset);
         }
 
         /// <summary>
@@ -54,10 +62,10 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetColumn")]
-        [HttpGet]
+        [HttpPost]
         public GetColumnResponse GetColumn(GetColumnRequset requset)
         {
-            return ColumnHandler.GetColumn(requset);
+            return _columnHandler.GetColumn(requset);
         }
     }
 }

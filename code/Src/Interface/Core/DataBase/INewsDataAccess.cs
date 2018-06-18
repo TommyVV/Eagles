@@ -9,7 +9,7 @@ using Eagles.DomainService.Model.Column;
 
 namespace Eagles.Interface.Core.DataBase
 {
-    public interface IColumnDataAccess: IInterfaceBase
+    public interface INewsDataAccess : IInterfaceBase
     {
         List<TB_APP_MODULE> GetColumnList(GetColumnRequset requset);
         TB_APP_MODULE GetColumnDetail(GetColumnDetailRequset requset);
