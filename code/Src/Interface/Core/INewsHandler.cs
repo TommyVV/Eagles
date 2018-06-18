@@ -17,27 +17,27 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditNews(EditNewsRequset requset);
+        ResponseBase EditNews(EditNewRequset requset);
 
         /// <summary>
         /// 删除 新闻
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveNews(RemoveNewsRequset requset);
+        ResponseBase RemoveNews(RemoveNewRequset requset);
 
         /// <summary>
         /// 新闻 详情
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequset requset);
+        GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset);
 
         /// <summary>
         /// 新闻 列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        GetNewsResponse GetNews(GetNewsRequset requset);
+        GetNewResponse GetNews(GetNewRequset requset);
     }
 }

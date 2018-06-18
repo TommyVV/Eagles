@@ -14,7 +14,13 @@ namespace Eagles.DomainService.Core.DataBase
     public class NewsDataAccess : INewsDataAccess
     {
         private readonly IDbManager dbManager;
-        public List<TB_NEWS> GetNewsList(GetNewsRequset requset)
+
+        public NewsDataAccess(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
+
+        public List<TB_NEWS> GetNewsList(GetNewRequset requset)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -74,14 +80,14 @@ namespace Eagles.DomainService.Core.DataBase
     `tb_news`.`ReviewId`,
     `tb_news`.`CanStudy`,
     `tb_news`.`ImageUrl`
-FROM `eagles`.`tb_news`;
-  where where 1=1  {0}  
+FROM `eagles`.`tb_news`
+  where  1=1  {0}  
  ", parameter);
 
             return dbManager.Query<TB_NEWS>(sql.ToString(), dynamicParams);
         }
 
-        public TB_NEWS GetNewsDetail(GetNewsDetailRequset requset)
+        public TB_NEWS GetNewsDetail(GetNewDetailRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -125,7 +131,7 @@ FROM `eagles`.`tb_news`;
 
         }
 
-        public int RemoveNews(RemoveNewsRequset requset)
+        public int RemoveNews(RemoveNewRequset requset)
         {
 
             return dbManager.Excuted(@" DELETE FROM `eagles`.`tb_news`

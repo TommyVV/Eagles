@@ -7,9 +7,9 @@ namespace Eagles.Interface.Core.DataBase
 {
     public interface INewsDataAccess : IInterfaceBase
     {
-        List<TB_NEWS> GetNewsList(GetNewsRequset requset);
-        TB_NEWS GetNewsDetail(GetNewsDetailRequset requset);
-        int RemoveNews(RemoveNewsRequset requset);
+        List<TB_NEWS> GetNewsList(GetNewRequset requset);
+        TB_NEWS GetNewsDetail(GetNewDetailRequset requset);
+        int RemoveNews(RemoveNewRequset requset);
         int EditNews(TB_NEWS mod);
         int CreateNews(TB_NEWS mod);
     }

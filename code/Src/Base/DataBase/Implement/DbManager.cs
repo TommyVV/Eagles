@@ -33,6 +33,7 @@ namespace Eagles.Base.DataBase.Implement
                 result = conn.Query<T>(command, parameter).ToList();
             }
             catch (Exception e)
+
             {
                 logger.LoggerError(e.ToString());
             }

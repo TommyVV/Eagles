@@ -2,7 +2,10 @@
 
 namespace Eagles.Application.Model.News.Response
 {
-    public class GetNewsResponse : ResponseBase
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GetNewResponse : ResponseBase
     {
         /// <summary>
         /// 总条数
@@ -11,6 +14,6 @@ namespace Eagles.Application.Model.News.Response
         /// <summary>
         /// 集合
         /// </summary>
-        public List<Model.News> List { get; set; }
+        public List<Model.New> List { get; set; }
     }
 }

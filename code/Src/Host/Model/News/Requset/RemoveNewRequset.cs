@@ -3,10 +3,10 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetNewsDetailRequset : RequestBase
+    public class RemoveNewRequset : RequestBase
     {
         /// <summary>
-        /// 新闻名字
+        /// 新闻id
         /// </summary>
         public string NewsId { get; set; }
     }

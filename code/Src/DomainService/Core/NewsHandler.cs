@@ -24,7 +24,7 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase EditNews(EditNewsRequset requset)
+        public ResponseBase EditNews(EditNewRequset requset)
         {
             var response = new ResponseBase
             {
@@ -34,18 +34,17 @@ namespace Eagles.DomainService.Core
 
             TB_NEWS mod;
 
-            var json = new JsonSerialize();
-            var attach = json.Deserialize<Dictionary<string, string>>(requset.Info.Attach);
+         
 
             if (requset.Info.NewsId > 0)
             {
                 mod = new TB_NEWS
                 {
-                    Attach1 = attach["Attach1"],
-                    Attach2 = attach["Attach2"],
-                    Attach3 = attach["Attach3"],
-                    Attach4 = attach["Attach4"],
-                    Attach5 = attach["Attach5"],
+                    Attach1 = requset.Info.Attach1,
+                    Attach2 = requset.Info.Attach2,
+                    Attach3 = requset.Info.Attach3,
+                    Attach4 = requset.Info.Attach4,
+                    Attach5 = requset.Info.Attach5,
                     Author = requset.Info.Author,
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
@@ -71,11 +70,11 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TB_NEWS
                 {
-                    Attach1 = attach["Attach1"],
-                    Attach2 = attach["Attach2"],
-                    Attach3 = attach["Attach3"],
-                    Attach4 = attach["Attach4"],
-                    Attach5 = attach["Attach5"],
+                    Attach1 = requset.Info.Attach1,
+                    Attach2 = requset.Info.Attach2,
+                    Attach3 = requset.Info.Attach3,
+                    Attach4 = requset.Info.Attach4,
+                    Attach5 = requset.Info.Attach5,
                     Author = requset.Info.Author,
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
@@ -102,7 +101,7 @@ namespace Eagles.DomainService.Core
 
         }
 
-        public ResponseBase RemoveNews(RemoveNewsRequset requset)
+        public ResponseBase RemoveNews(RemoveNewRequset requset)
         {
             var response = new ResponseBase
             {
@@ -119,9 +118,9 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequset requset)
+        public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {
-            var response = new GetNewsDetailResponse
+            var response = new GetNewDetailResponse
             {
                 ErrorCode = "00",
                 Message = "成功",
@@ -131,7 +130,7 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new Exception("无数据");
 
-            response.Info = new NewsDetail
+            response.Info = new NewDetail
             {
                 //AuditStatus = AuditStatus.审核通过,
                 AuditStatus = AuditStatus.审核通过,
@@ -142,14 +141,12 @@ namespace Eagles.DomainService.Core
                 NewsName = detail.Title,
                 // NewsType=NewsType.
                 Source = detail.Source,
-                Attach = json.SerializeObject(new
-                {
-                    detail.Attach1,
-                    detail.Attach2,
-                    detail.Attach3,
-                    detail.Attach4,
-                    detail.Attach5
-                }),
+
+                Attach1 = detail.Attach1,
+                Attach2 = detail.Attach2,
+                Attach3 = detail.Attach3,
+                Attach4 = detail.Attach4,
+                Attach5 = detail.Attach5,
                 StarTime = detail.CreateTime,
                 EndTime = detail.EndTime,
                 ModuleId = detail.Module,
@@ -160,10 +157,10 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public GetNewsResponse GetNews(GetNewsRequset requset)
+        public GetNewResponse GetNews(GetNewRequset requset)
         {
 
-            var response = new GetNewsResponse
+            var response = new GetNewResponse
             {
                 TotalCount = 0,
                 ErrorCode = "00",
@@ -173,7 +170,7 @@ namespace Eagles.DomainService.Core
 
             if (list.Count == 0) throw new Exception("无数据");
 
-            response.List = list.Select(x => new Application.Model.News.Model.News
+            response.List = list.Select(x => new Application.Model.News.Model.New
             {
                 AuditStatus= AuditStatus.审核通过,
                 Author=x.Author,

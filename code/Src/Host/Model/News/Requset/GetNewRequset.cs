@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.News.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetNewsRequset : OrgListRequestBase
+    public class GetNewRequset : OrgListRequestBase
     {
         /// <summary>
         /// 作者id

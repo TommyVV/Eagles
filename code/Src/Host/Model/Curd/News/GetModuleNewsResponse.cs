@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.News;
+using Eagles.Application.Model.News.Model;
 
 namespace Eagles.Application.Model.Curd.News
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class GetModuleNewsResponse:ResponseBase
     {
-        public List<NewsInfo> NewsInfos { get; set; }
+        public List<New> NewsInfos { get; set; }
     }
 }

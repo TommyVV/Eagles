@@ -4,6 +4,7 @@ namespace Eagles.Base.Json.Implement
 {
     public class JsonSerialize:IJsonSerialize
     {
+
         public object DeserializeObject(string json)
         {
             return JsonConvert.DeserializeObject(json);
