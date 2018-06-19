@@ -251,6 +251,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AppModuleController.cs" />
+    <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\NewController.cs" />
     <Compile Include="Controllers\ColumnController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />

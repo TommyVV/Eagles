@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetOrganizationDetailsRequset : RequestBase
+    public class GetOrganizationDetailRequset : RequestBase
     {
         /// <summary>
         /// 凭证
