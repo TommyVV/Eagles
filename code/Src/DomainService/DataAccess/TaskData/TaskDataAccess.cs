@@ -19,7 +19,7 @@ namespace Ealges.DomianService.DataAccess.TaskData
             this.dbManager = dbManager;
         }
 
-        public int CreateTask(int orgId, int branchId, DomainModel.Task.Task reqTask)
+        public int CreateTask(int orgId, int branchId, int toUserId, DomainModel.Task.Task reqTask)
         {
             #region 事务操作taskId无法获取
             /*
@@ -50,15 +50,15 @@ namespace Ealges.DomianService.DataAccess.TaskData
 
             var result = 0;
             result = dbManager.Excuted(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
-Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview) 
+Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,ToUserId) 
 value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachType1,@AttachType2,@AttachType3,@AttachType4,@Attach1,@Attach2,@Attach3,@Attach4,
-@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview) ",
+@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@ToUserId) ",
                 new
                 {
                     OrgId = orgId,
                     BranchId = branchId,
                     TaskName = reqTask.TaskName,
-                    FromUser = reqTask.FromUser,
+                    FromUser = reqTask.FromUser, //任务发起人
                     TaskContent = reqTask.TaskContent,
                     BeginTime = reqTask.BeginTime,
                     EndTime = reqTask.EndTime,
@@ -70,21 +70,21 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                     Attach2 = reqTask.Attach2,
                     Attach3 = reqTask.Attach3,
                     Attach4 = reqTask.Attach4,
-                    CreateTime = reqTask.CreateTime,
+                    CreateTime = DateTime.Now,
                     CanComment = reqTask.CanComment,
-                    Status = 0,
+                    Status = reqTask.Status, //任务状态初始状态
                     IsPublic = reqTask.IsPublic,
                     OrgReview = "-1",
                     BranchReview = "-1"
                 });
-            var taskId = dbManager.ExecuteScalar("select LAST_INSERT_ID()", null);
+            var taskId = dbManager.ExecuteScalar<int>("select LAST_INSERT_ID()", null);
             result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
                 new
                 {
                     OrgId = orgId,
                     BranchId = branchId,
                     TaskId = taskId,
-                    UserId = reqTask.FromUser
+                    UserId = toUserId //任务责任人
                 });
             return result;
         }
@@ -115,7 +115,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
         public bool EditTaskComplete(int taskId, int isPublic)
         {
             //查询任务奖励积分
-            var score = dbManager.ExecuteScalar("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()

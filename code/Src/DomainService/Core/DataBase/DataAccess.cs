@@ -16,20 +16,12 @@ namespace Eagles.DomainService.Core.DataBase
 
         public void GetAreas(string id)
         {
-            var commands = new List<TransactionCommand>()
-          {
-              new TransactionCommand()
-              {
-                  CommandString = "Update tb_user_token set UserId=@userId where Token=@token",
-                  Parameter =  new { userId = 20000000,token="abc001" }
-              },
-              new TransactionCommand()
-              {
-                  CommandString = "Update tb_oper set OperName=@operName where operId=@userId",
-                  Parameter =  new { userId = 10000000,operName="tommy" }
-              },
-          };
-            dbManager.ExcutedByTransaction(commands);
+            var t=dbManager.ExecuteScalar<int>(@"INSERT INTO `eagles`.`tb_test`
+                (
+                `Name`)
+            VALUES
+            (
+                '1'); select LAST_INSERT_ID(); ",null);
         }
     }
 }

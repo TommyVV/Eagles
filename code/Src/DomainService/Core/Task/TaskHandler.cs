@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
@@ -43,6 +44,11 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
             var act = new DomainModel.Task.Task();
             act.TaskName = request.TaskName;
             act.BeginTime = request.TaskBeginDate;
@@ -51,6 +57,10 @@ namespace Eagles.DomainService.Core.Task
             act.FromUser = request.TaskFromUser;
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
+            if (0 == userInfo.IsLeader)
+                act.Status = 1; //1:初始状态;(上级发给下级的初始状态) 
+            else
+                act.Status = 2; //2:下级发起任务;上级审核任务是否允许开始
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
@@ -75,7 +85,7 @@ namespace Eagles.DomainService.Core.Task
                     act.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, act);
+            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, act);
             if (result > 0)
             {
                 response.ErrorCode = "00";

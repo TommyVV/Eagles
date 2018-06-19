@@ -10,11 +10,11 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
 
         int EditActivityComment(int orgId, int activityId, int userId, string content);
 
-        int EditActivityComplete(int activityId);
+        bool EditActivityComplete(int activityId);
 
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
 
-        int EditActivityJoin(int activityId);
+        int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
 
         List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType);
 
