@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Enum;
+using Eagles.Application.Model.AppModel.Enum;
 using Eagles.Interface.Core.DataBase.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 
@@ -49,10 +49,10 @@ namespace Ealges.DomianService.DataAccess.TaskData
             #endregion
 
             var result = 0;
-            result = dbManager.Excuted(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
-Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,ToUserId) 
+            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
+Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview) 
 value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachType1,@AttachType2,@AttachType3,@AttachType4,@Attach1,@Attach2,@Attach3,@Attach4,
-@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@ToUserId) ",
+@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview); select LAST_INSERT_ID(); ",
                 new
                 {
                     OrgId = orgId,
@@ -77,7 +77,6 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                     OrgReview = "-1",
                     BranchReview = "-1"
                 });
-            var taskId = dbManager.ExecuteScalar<int>("select LAST_INSERT_ID()", null);
             result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
                 new
                 {
@@ -100,13 +99,16 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             switch (type)
             {
                 case TaskTypeEnum.Audit:
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId ", new { TaskId = taskId });
+                    //上级审核任务
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId ", new { TaskId = taskId }); //3-审核通过
                     break;
                 case TaskTypeEnum.Accept:
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 1 where TaskId = @TaskId ", new { TaskId = taskId });
+                    //下级接受任务
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId ", new { TaskId = taskId }); //0-任务已接受
                     break;
                 case TaskTypeEnum.Apply:
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 2 where TaskId = @TaskId ", new { TaskId = taskId });
+                    //下级申请完成任务
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 2 where TaskId = @TaskId ", new { TaskId = taskId }); //2-完成任务待审核
                     break;
             }
             return result;

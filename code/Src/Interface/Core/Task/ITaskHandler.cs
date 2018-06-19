@@ -1,15 +1,15 @@
 ﻿using Eagles.Base;
-using Eagles.Application.Model.Curd.Task.CreateTask;
-using Eagles.Application.Model.Curd.Task.EditTaskAccept;
-using Eagles.Application.Model.Curd.Task.EditTaskComment;
-using Eagles.Application.Model.Curd.Task.EditTaskComplete;
-using Eagles.Application.Model.Curd.Task.EditTaskStep;
-using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
-using Eagles.Application.Model.Curd.Task.GetTask;
-using Eagles.Application.Model.Curd.Task.GetTaskComment;
-using Eagles.Application.Model.Curd.Task.GetTaskDetail;
-using Eagles.Application.Model.Curd.Task.GetTaskStep;
-using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
+using Eagles.Application.Model.AppModel.Task.CreateTask;
+using Eagles.Application.Model.AppModel.Task.EditTaskAccept;
+using Eagles.Application.Model.AppModel.Task.EditTaskComment;
+using Eagles.Application.Model.AppModel.Task.EditTaskComplete;
+using Eagles.Application.Model.AppModel.Task.EditTaskStep;
+using Eagles.Application.Model.AppModel.Task.EditTaskFeedBack;
+using Eagles.Application.Model.AppModel.Task.GetTask;
+using Eagles.Application.Model.AppModel.Task.GetTaskComment;
+using Eagles.Application.Model.AppModel.Task.GetTaskDetail;
+using Eagles.Application.Model.AppModel.Task.GetTaskStep;
+using Eagles.Application.Model.AppModel.Task.RemoveTaskStep;
 
 namespace Eagles.Interface.Core.Task
 {

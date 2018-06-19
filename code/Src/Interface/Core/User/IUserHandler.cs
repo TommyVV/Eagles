@@ -1,9 +1,9 @@
 ﻿using System;
 using Eagles.Base;
-using Eagles.Application.Model.Curd.User.Login;
-using Eagles.Application.Model.Curd.User.EditUser;
-using Eagles.Application.Model.Curd.User.Register;
-using Eagles.Application.Model.Curd.User.GetUserInfo;
+using Eagles.Application.Model.AppModel.User.Login;
+using Eagles.Application.Model.AppModel.User.EditUser;
+using Eagles.Application.Model.AppModel.User.Register;
+using Eagles.Application.Model.AppModel.User.GetUserInfo;
 
 namespace Eagles.Interface.Core.User
 {

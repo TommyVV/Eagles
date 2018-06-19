@@ -2,8 +2,8 @@
 using Eagles.Interface.Core.Product;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.ProductAccess;
-using Eagles.Application.Model.Curd.Product.GetProduct;
-using Eagles.Application.Model.Curd.Product.GetProductDetail;
+using Eagles.Application.Model.AppModel.Product.GetProduct;
+using Eagles.Application.Model.AppModel.Product.GetProductDetail;
 
 namespace Eagles.DomainService.Core.Product
 {

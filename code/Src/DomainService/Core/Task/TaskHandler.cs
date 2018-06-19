@@ -6,17 +6,17 @@ using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.TaskAccess;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Task.CreateTask;
-using Eagles.Application.Model.Curd.Task.EditTaskAccept;
-using Eagles.Application.Model.Curd.Task.EditTaskComment;
-using Eagles.Application.Model.Curd.Task.EditTaskComplete;
-using Eagles.Application.Model.Curd.Task.EditTaskStep;
-using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
-using Eagles.Application.Model.Curd.Task.GetTask;
-using Eagles.Application.Model.Curd.Task.GetTaskComment;
-using Eagles.Application.Model.Curd.Task.GetTaskDetail;
-using Eagles.Application.Model.Curd.Task.GetTaskStep;
-using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
+using Eagles.Application.Model.AppModel.Task.CreateTask;
+using Eagles.Application.Model.AppModel.Task.EditTaskAccept;
+using Eagles.Application.Model.AppModel.Task.EditTaskComment;
+using Eagles.Application.Model.AppModel.Task.EditTaskComplete;
+using Eagles.Application.Model.AppModel.Task.EditTaskStep;
+using Eagles.Application.Model.AppModel.Task.EditTaskFeedBack;
+using Eagles.Application.Model.AppModel.Task.GetTask;
+using Eagles.Application.Model.AppModel.Task.GetTaskComment;
+using Eagles.Application.Model.AppModel.Task.GetTaskDetail;
+using Eagles.Application.Model.AppModel.Task.GetTaskStep;
+using Eagles.Application.Model.AppModel.Task.RemoveTaskStep;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
@@ -49,43 +49,43 @@ namespace Eagles.DomainService.Core.Task
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            var act = new DomainModel.Task.Task();
-            act.TaskName = request.TaskName;
-            act.BeginTime = request.TaskBeginDate;
-            act.EndTime = request.TaskEndDate;
-            act.TaskContent = request.TaskContent;
-            act.FromUser = request.TaskFromUser;
-            act.CanComment = request.CanComment;
-            act.IsPublic = request.IsPublic;
+            var task = new DomainModel.Task.Task();
+            task.TaskName = request.TaskName;
+            task.BeginTime = request.TaskBeginDate;
+            task.EndTime = request.TaskEndDate;
+            task.TaskContent = request.TaskContent;
+            task.FromUser = request.TaskFromUser;
+            task.CanComment = request.CanComment;
+            task.IsPublic = request.IsPublic;
             if (0 == userInfo.IsLeader)
-                act.Status = 1; //1:初始状态;(上级发给下级的初始状态) 
+                task.Status = -2; // -2:上级发起(待接受)
             else
-                act.Status = 2; //2:下级发起任务;上级审核任务是否允许开始
+                task.Status = -1; // -1:下级申请上级待审核状态
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
                 if (i == 0)
                 {
-                    act.AttachType1 = attachList[i].AttachmentType;
-                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType1 = attachList[i].AttachmentType;
+                    task.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    act.AttachType2 = attachList[i].AttachmentType;
-                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType2 = attachList[i].AttachmentType;
+                    task.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    act.AttachType3 = attachList[i].AttachmentType;
-                    act.Attach3 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType3 = attachList[i].AttachmentType;
+                    task.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    act.AttachType4 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType4 = attachList[i].AttachmentType;
+                    task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, act);
+            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, task);
             if (result > 0)
             {
                 response.ErrorCode = "00";

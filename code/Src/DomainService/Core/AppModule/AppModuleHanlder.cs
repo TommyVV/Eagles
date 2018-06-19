@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Eagles.Application.Model.Curd.Module;
+using Eagles.Application.Model.AppModel.Module;
 using Eagles.Base;
 using Eagles.Interface.Core.AppModule;
 using Eagles.Interface.DataAccess.AppModule;
 using Eagles.Interface.DataAccess.NewsDA;
-using Module = Eagles.Application.Model.Curd.Module.Module;
+using Module = Eagles.Application.Model.AppModel.Module.Module;
 
 namespace Eagles.DomainService.Core.AppModule
 {
