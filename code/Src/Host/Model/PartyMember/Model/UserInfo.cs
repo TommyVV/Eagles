@@ -19,7 +19,7 @@
         /// <summary>
         /// 机构编号所属
         /// </summary>
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
 
         /// <summary>
         /// 所属机构名称

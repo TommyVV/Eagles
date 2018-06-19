@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.Organization.Requset;
+using Eagles.Application.Model.PartyMember.Model;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Org;
+using Eagles.DomainService.Model.PartyMember;
 using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core.DataBase
 {
-   public  class OrganizationDataAccess : IOrganizationDataAccess
+    public class OrganizationDataAccess : IOrganizationDataAccess
     {
         private readonly IDbManager dbManager;
 
@@ -19,6 +21,7 @@ namespace Eagles.DomainService.Core.DataBase
         {
             this.dbManager = dbManager;
         }
+
         public List<TB_ORG_INFO> GetOrganizationList(GetOrganizationRequset requset)
         {
             var sql = new StringBuilder();
@@ -85,7 +88,7 @@ FROM `eagles`.`tb_org_info`  where OrgId=@OrgId;
         {
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_org_info`  where
                 `OrgId` = @OrgId;
-", new { requset.OrgId });
+", new {requset.OrgId});
         }
 
         public int EditOrganization(TB_ORG_INFO mod)
@@ -131,6 +134,39 @@ VALUES
 @OperId,
 @Logo);
 ", mod);
+        }
+
+        public List<TB_USER_RELATIONSHIP> GetOrganizationList(List<UserInfoDetails> list)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<TB_ORG_INFO> IOrganizationDataAccess.GetOrganizationList(List<int> list)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TB_ORG_INFO> GetOrganizationList(List<int> list)
+        {
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_org_info`.`OrgId`,
+    `tb_org_info`.`OrgName`,
+    `tb_org_info`.`Province`,
+    `tb_org_info`.`City`,
+    `tb_org_info`.`District`,
+    `tb_org_info`.`Address`,
+    `tb_org_info`.`CreateTime`,
+    `tb_org_info`.`EditTime`,
+    `tb_org_info`.`OperId`,
+    `tb_org_info`.`Logo`
+FROM `eagles`.`tb_org_info`  where  OrgId  in @OrgId
+ ");
+            dynamicParams.Add("OrgId", new {OrgId = list.ToArray()});
+
+            return dbManager.Query<TB_ORG_INFO>(sql.ToString(), dynamicParams);
+
         }
     }
 }

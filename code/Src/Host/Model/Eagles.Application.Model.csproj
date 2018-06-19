@@ -306,7 +306,9 @@
     <Compile Include="Organization\Response\GetOrganizationResponse.cs" />
     <Compile Include="OrgListRequestBase.cs" />
     <Compile Include="OrgRequestBase.cs" />
-    <Compile Include="PartyMember\Requset\EditAuthorityUserSetUpRequset.cs" />
+    <Compile Include="PartyMember\Model\UserInfoCheck.cs" />
+    <Compile Include="PartyMember\Requset\CreateAuthorityUserSetUp.cs" />
+    <Compile Include="PartyMember\Requset\RemoveAuthorityUserSetUp.cs" />
     <Compile Include="PartyMember\Requset\EditUserInfoDetailsRequest.cs" />
     <Compile Include="PartyMember\Requset\GetAuthorityUserSetUpRequset.cs" />
     <Compile Include="PartyMember\Response\GetAuthorityUserSetUpResponse.cs" />

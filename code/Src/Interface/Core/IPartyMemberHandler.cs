@@ -17,6 +17,7 @@ namespace Eagles.Interface.Core
         ResponseBase RemoveUserInfoDetails(RemoveUserInfoDetailsRequest request);
         ResponseBase EditUserInfoDetails(EditUserInfoDetailsRequest request);
         GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset);
-        ResponseBase EditAuthorityUserSetUp(EditAuthorityUserSetUpRequset requset);
+        ResponseBase CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset);
+        ResponseBase RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset);
     }
 }
