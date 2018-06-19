@@ -4,10 +4,10 @@ using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.UserInfo;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.User.Login;
-using Eagles.Application.Model.Curd.User.Register;
-using Eagles.Application.Model.Curd.User.EditUser;
-using Eagles.Application.Model.Curd.User.GetUserInfo;
+using Eagles.Application.Model.AppModel.User.Login;
+using Eagles.Application.Model.AppModel.User.Register;
+using Eagles.Application.Model.AppModel.User.EditUser;
+using Eagles.Application.Model.AppModel.User.GetUserInfo;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.User

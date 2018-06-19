@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Activity.CreateActivity;
-using Eagles.Application.Model.Curd.Activity.EditActivityJoin;
-using Eagles.Application.Model.Curd.Activity.EditActivityComment;
-using Eagles.Application.Model.Curd.Activity.EditActivityComplete;
-using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.Curd.Activity.GetActivity;
-using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
-using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using Eagles.Application.Model.AppModel.Activity.CreateActivity;
+using Eagles.Application.Model.AppModel.Activity.EditActivityJoin;
+using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
+using Eagles.Application.Model.AppModel.Activity.EditActivityComplete;
+using Eagles.Application.Model.AppModel.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.AppModel.Activity.GetActivity;
+using Eagles.Application.Model.AppModel.Activity.GetActivityDetail;
+using Eagles.Application.Model.AppModel.Activity.GetActivityComment;
 using Eagles.Base;
 using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Interface.DataAccess.Util;
@@ -58,6 +58,10 @@ namespace Eagles.DomainService.Core.Activity
             act.TestId = 0;
             act.MaxUser = 99;
             act.ImageUrl = "";
+            if (0 == userInfo.IsLeader)
+                act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
+            else
+                act.Status = -1; //2:下级发起任务;上级审核任务是否允许开始
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {

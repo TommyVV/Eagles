@@ -2,8 +2,8 @@
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.ScoreAccess;
-using Eagles.Application.Model.Curd.Score.GetScoreRank;
-using Eagles.Application.Model.Curd.Score.GetScoreExchangeLs;
+using Eagles.Application.Model.AppModel.Score.GetScoreRank;
+using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
 
 namespace Eagles.DomainService.Core.Score
 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Eagles.Application.Model.Curd.News;
-using Eagles.Application.Model.Curd.News.CreateNews;
-using Eagles.Application.Model.Curd.News.GetNews;
+using Eagles.Application.Model.AppModel.News;
+using Eagles.Application.Model.AppModel.News.CreateNews;
+using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.News.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.DataBase.UserArticle;

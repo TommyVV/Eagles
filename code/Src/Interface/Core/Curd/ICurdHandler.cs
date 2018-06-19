@@ -1,4 +1,4 @@
-﻿using Eagles.Application.Model.Curd;
+﻿using Eagles.Application.Model.AppModel;
 using Eagles.Base;
 namespace Eagles.Interface.Core.Curd
 {

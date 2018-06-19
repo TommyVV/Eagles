@@ -20,9 +20,9 @@ namespace Ealges.DomianService.DataAccess.ActivityData
         public int CreateActivity(Eagles.DomainService.Model.Activity.Activity reqActivity)
         {
             return dbManager.Excuted(@"insert into eagles.tb_activity (ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
-TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview) 
-value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, 
-@TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, @AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview)",
+TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status) 
+value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
+@AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status)",
                 new
                 {
                     ActivityName = reqActivity.ActivityName,
@@ -46,7 +46,9 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                     ImageUrl = reqActivity.ImageUrl,
                     IsPublic = reqActivity.IsPublic,
                     OrgReview = "-1",
-                    BranchReview = "-1"
+                    BranchReview = "-1",
+                    ToUserId = reqActivity.ToUserId,
+                    Status = reqActivity.Status
                 });
         }
         
@@ -72,7 +74,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
             {
                 new TransactionCommand()
                 {
-                    CommandString = @"update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ",
+                    CommandString = @"update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId ",
                     Parameter =   new { ActivityId = activityId }
                 },
                 new TransactionCommand()

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Enum;
+using Eagles.Application.Model.AppModel.Enum;
 
 namespace Eagles.Interface.Core.DataBase.TaskAccess
 {

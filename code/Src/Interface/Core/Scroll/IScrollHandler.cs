@@ -1,6 +1,6 @@
 ﻿using Eagles.Base;
-using Eagles.Application.Model.Curd.Scroll.GetScrollImg;
-using Eagles.Application.Model.Curd.Scroll.GetScrollNew;
+using Eagles.Application.Model.AppModel.Scroll.GetScrollImg;
+using Eagles.Application.Model.AppModel.Scroll.GetScrollNew;
 
 namespace Eagles.Interface.Core.Scroll
 {

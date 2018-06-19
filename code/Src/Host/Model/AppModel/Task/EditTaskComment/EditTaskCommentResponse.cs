@@ -1,0 +1,11 @@
+﻿
+namespace Eagles.Application.Model.AppModel.Task.EditTaskComment
+{
+    /// <summary>
+    /// 任务评论接口
+    /// </summary>
+    public class EditTaskCommentResponse : ResponseBase
+    {
+
+    }
+}

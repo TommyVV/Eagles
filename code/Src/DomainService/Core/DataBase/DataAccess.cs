@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Eagles.Base.DataBase;
-using Eagles.Base.DataBase.Modle;
+﻿using Eagles.Base.DataBase;
 using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core.DataBase
@@ -21,7 +19,7 @@ namespace Eagles.DomainService.Core.DataBase
                 `Name`)
             VALUES
             (
-                '1'); select LAST_INSERT_ID(); ",null);
+                @name); select LAST_INSERT_ID(); ",new{name="1"});
         }
     }
 }
