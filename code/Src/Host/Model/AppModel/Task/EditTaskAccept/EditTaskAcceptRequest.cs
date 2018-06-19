@@ -1,5 +1,4 @@
-﻿using System;
-using Eagles.Application.Model.AppModel.Enum;
+﻿using Eagles.Application.Model.AppModel.Enum;
 
 namespace Eagles.Application.Model.AppModel.Task.EditTaskAccept
 {

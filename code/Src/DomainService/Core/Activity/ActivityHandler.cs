@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Eagles.Base;
 using Eagles.Interface.Core.Activity;
+using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.AppModel.Activity.CreateActivity;
 using Eagles.Application.Model.AppModel.Activity.EditActivityJoin;
-using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
+using Eagles.Application.Model.AppModel.Activity.EditActivityReview;
 using Eagles.Application.Model.AppModel.Activity.EditActivityComplete;
 using Eagles.Application.Model.AppModel.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
 using Eagles.Application.Model.AppModel.Activity.GetActivity;
 using Eagles.Application.Model.AppModel.Activity.GetActivityDetail;
 using Eagles.Application.Model.AppModel.Activity.GetActivityComment;
-using Eagles.Base;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
-using Eagles.Interface.DataAccess.Util;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity
@@ -111,6 +112,30 @@ namespace Eagles.DomainService.Core.Activity
                 return response;
             }
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, request.JoinUserid);
+            if (result > 0)
+            {
+                response.ErrorCode = "00";
+                response.Message = "成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "失败";
+            }
+            return response;
+        }
+
+        public EditActivityReviewResponse EditTaskAccept(EditActivityReviewRequest request)
+        {
+            var response = new EditActivityReviewResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iActivityAccess.EditActivityReview(request.Type, request.TaskId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
