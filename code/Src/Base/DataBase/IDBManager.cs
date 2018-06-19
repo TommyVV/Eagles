@@ -11,7 +11,7 @@ namespace Eagles.Base.DataBase
 
         int Excuted(string command, object parameter=null);
 
-        object ExecuteScalar(string command, object parameter);
+        T ExecuteScalar<T>(string command, object parameter);
 
         bool ExcutedByTransaction(List<TransactionCommand> command);
     }
