@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.PartyMember
 {
@@ -71,7 +72,7 @@ namespace Eagles.DomainService.Model.PartyMember
         /// <summary>
         /// 党员类型;0:党员;1:预备党员'
         /// </summary>
-        public int MemberType { get; set; }
+        public UserStatus MemberType { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
@@ -123,7 +124,7 @@ namespace Eagles.DomainService.Model.PartyMember
         /// <summary>
         /// 性别;0:男;1:女
         /// </summary>
-        public int Sex { get; set; }
+        public Sex Sex { get; set; }
         /// <summary>
         /// 用户状态;0:正常;1:禁用
         /// </summary>

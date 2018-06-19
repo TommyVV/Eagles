@@ -88,5 +88,59 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// </summary>
         public string Picture { get; set; }
 
+        /// <summary>
+        /// 游客;
+        /// 0:是 ;
+        ///1:否',
+        /// </summary>
+        public int IsCustomer { get; set; }
+        /// <summary>
+        /// 支部编号
+        /// </summary>
+        public int BranchId { get; set; }
+        /// <summary>
+        /// 市
+        /// </summary>
+        public string City { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public string Dept { get; set; }
+        /// <summary>
+        /// 区
+        /// </summary>
+        public string District { get; set; }
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        public DateTime EditTime { get; set; }
+        /// <summary>
+        /// 党员状态;0:正常;1:禁用
+        /// </summary>
+        public int MemberStatus { get; set; }
+        /// <summary>
+        /// 操作员id
+        /// </summary>
+        public int OperId { get; set; }
+        /// <summary>
+        ///  密码
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// 头像
+        /// </summary>
+        public string PhotoUrl { get; set; }
+        /// <summary>
+        /// 省
+        /// </summary>
+        public string Provice { get; set; }
+        /// <summary>
+        /// 用户状态;0:正常;1:禁用
+        /// </summary>
+        public int Status { get; set; }
     }
 }

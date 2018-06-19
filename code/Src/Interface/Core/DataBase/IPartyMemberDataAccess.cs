@@ -17,5 +17,9 @@ namespace Eagles.Interface.Core.DataBase
         int EditUserInfo(TB_USER_INFO info);
         int CreateUserInfo(TB_USER_INFO info);
         List<TB_USER_INFO> GetUserInfoList(GetPartyMemberRequest request, out int totalCount);
+        List<TB_USER_INFO> GetUserInfoList(GetAuthorityUserSetUpRequset requset, out int totalCount);
+        int RemoveAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list);
+        int CreateAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list);
+        List<TB_USER_INFO> GetAuthorityUserSetUp(int requsetUserId);
     }
 }
