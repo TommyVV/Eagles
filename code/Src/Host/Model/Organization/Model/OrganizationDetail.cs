@@ -1,31 +1,27 @@
-﻿namespace Eagles.Application.Model.Organization.Model
+﻿using System;
+
+namespace Eagles.Application.Model.Organization.Model
 {
     /// <summary>
     /// 
     /// </summary>
     public class OrganizationDetail : Organization
     {
-        /// <summary>
-        /// 省id
-        /// </summary>
-        public string ProvinceId { get; set; }
-        /// <summary>
-        /// 市id
-        /// </summary>
-        public string CityId { get; set; }
-        /// <summary>
-        /// 区id
-        /// </summary>
-        public string DistrictId { get; set; }
-
-        ///// <summary>
-        ///// 下级机构id
-        ///// </summary>
-        //public int BranchOrgId { get; set; }
+      
 
         /// <summary>
-        /// 地址
+        /// '修改时间',
         /// </summary>
-        public string  Address { get; set; }
+        public DateTime EditTime { get; set; }
+
+        /// <summary>
+        /// '操作员'
+        /// </summary>
+        public int OperId { get; set; }
+
+        /// <summary>
+        /// '组织logo',
+        /// </summary>
+        public string Logo { get; set; }
     }
 }
