@@ -54,6 +54,7 @@ namespace Eagles.Base.DataBase.Implement
             }
             catch (Exception e)
             {
+
                 logger.LoggerError(e.ToString());
             }
             finally
@@ -82,13 +83,13 @@ namespace Eagles.Base.DataBase.Implement
             return result;
         }
 
-        public object ExecuteScalar(string command, object parameter)
+        public T ExecuteScalar<T>(string command, object parameter)
         {
             var conn = new MySqlConnection(DbConfig.DataBaseConnectString);
-            object result = null;
+            var result = default(T);
             try
             {
-                result = conn.ExecuteScalar(command, parameter);
+                result = conn.ExecuteScalar<T>(command, parameter);
             }
             catch (Exception e)
             {

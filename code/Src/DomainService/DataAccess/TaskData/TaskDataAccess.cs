@@ -77,7 +77,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                     OrgReview = "-1",
                     BranchReview = "-1"
                 });
-            var taskId = dbManager.ExecuteScalar("select LAST_INSERT_ID()", null);
+            var taskId = dbManager.ExecuteScalar<int>("select LAST_INSERT_ID()", null);
             result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
                 new
                 {
@@ -115,7 +115,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
         public bool EditTaskComplete(int taskId, int isPublic)
         {
             //查询任务奖励积分
-            var score = dbManager.ExecuteScalar("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()

@@ -122,21 +122,21 @@ FROM `eagles`.`tb_news`
     `tb_news`.`ReviewId`,
     `tb_news`.`CanStudy`,
     `tb_news`.`ImageUrl`
-FROM `eagles`.`tb_news`;
+FROM `eagles`.`tb_news`
   where NewsId=@NewsId;
  ");
-            dynamicParams.Add("NewsId", new { requset.NewsId });
+            dynamicParams.Add("NewsId", requset.NewsId );
 
-            return dbManager.Query<TB_NEWS>(sql.ToString(), dynamicParams).FirstOrDefault();
+            return dbManager.QuerySingle<TB_NEWS>(sql.ToString(), dynamicParams);
 
         }
 
         public int RemoveNews(RemoveNewRequset requset)
         {
 
-            return dbManager.Excuted(@" DELETE FROM `eagles`.`tb_news`
+            return dbManager.Excuted(@" DELETE FROM `eagles`.`tb_news` where
                 `NewsId` = @NewsId;
-", requset.NewsId);
+", new {requset.NewsId});
         }
 
         public int EditNews(TB_NEWS mod)

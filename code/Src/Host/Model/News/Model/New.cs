@@ -54,5 +54,10 @@ namespace Eagles.Application.Model.News.Model
         /// 姓名
         /// </summary>
         public  string UserName { get; set; }
+
+        /// <summary>
+        /// 机构id
+        /// </summary>
+        public int OrgId { get; set; }
     }
 }
