@@ -10,11 +10,6 @@ namespace Eagles.Application.Model.Curd.Task.CreateTask
     public class CreateTaskRequest : RequestBase
     {
         /// <summary>
-        /// 上下级人物类型
-        /// </summary>
-        public string TaskType { get; set; }
-        
-        /// <summary>
         /// 任务名称
         /// </summary>
         public string TaskName { get; set; }
@@ -23,6 +18,12 @@ namespace Eagles.Application.Model.Curd.Task.CreateTask
         /// 任务发起人
         /// </summary>
         public int TaskFromUser { get; set; }
+
+
+        /// <summary>
+        /// 任务负责人
+        /// </summary>
+        public int TaskToUserId { get; set; }
 
         /// <summary>
         /// 任务开始时间

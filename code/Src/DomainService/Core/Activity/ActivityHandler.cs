@@ -11,6 +11,7 @@ using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Curd.Activity.GetActivity;
 using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
 using Eagles.Application.Model.Curd.Activity.GetActivityComment;
+using Eagles.Base;
 using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Interface.DataAccess.Util;
 using DomainModel = Eagles.DomainService.Model;
@@ -38,13 +39,19 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
             var act = new DomainModel.Activity.Activity();
             act.ActivityName = request.ActivityName;
             act.ActivityType = request.ActivityType;
             act.BeginTime = request.ActivityBeginDate;
             act.EndTime = request.ActivityEndDate;
             act.HtmlContent = request.ActivityContent;
-            act.FromUser = request.ActivityFromUser;
+            act.FromUser = request.ActivityFromUser; //活动发起人
+            act.ToUserId = request.ActivityToUserId; //活动负责人
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
             act.MaxCount = 0;
@@ -89,9 +96,9 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
+        public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
         {
-            var response = new EditActivityCommentResponse();
+            var response = new EditActivityJoinResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -99,7 +106,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityComment(tokens.OrgId, request.ActivityId, request.CommentUserId, request.Comment);
+            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, request.JoinUserid);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -124,7 +131,7 @@ namespace Eagles.DomainService.Core.Activity
                 return response;
             }
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
-            if (result > 0)
+            if (result)
             {
                 response.ErrorCode = "00";
                 response.Message = "成功";
@@ -157,9 +164,9 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
+        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
         {
-            var response = new EditActivityJoinResponse();
+            var response = new EditActivityCommentResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -167,7 +174,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityJoin(request.ActivityId);
+            var result = iActivityAccess.EditActivityComment(tokens.OrgId, request.ActivityId, request.CommentUserId, request.Comment);
             if (result > 0)
             {
                 response.ErrorCode = "00";

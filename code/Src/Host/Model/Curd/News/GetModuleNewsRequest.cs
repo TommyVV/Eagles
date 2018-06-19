@@ -1,6 +1,9 @@
 ﻿namespace Eagles.Application.Model.Curd.News
 {
-    public class GetModuleNewsRequest:RequestBase
+    /// <summary>
+    /// 模块查询
+    /// </summary>
+    public class GetModuleNewsRequest : RequestBase
     {
         public int ModuleId { get; set; }
 
