@@ -1,9 +1,7 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Host;
-using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Test;
 
-namespace Eagles.Host.Controllers
+namespace Eagles.Application.Host.Controllers
 {
     [ValidServiceToken]
     public class DefaultController : ApiController
