@@ -49,6 +49,8 @@
     <Compile Include="DataBase\INewsDataAccess.cs" />
     <Compile Include="DataBase\IColumnDataAccess.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
+    <Compile Include="DataBase\IOrganizationDataAccess.cs" />
+    <Compile Include="DataBase\IPartyMemberDataAccess.cs" />
     <Compile Include="DataBase\ScoreAccess\IScoreAccess.cs" />
     <Compile Include="DataBase\ScrollAccess\IScrollAccess.cs" />
     <Compile Include="DataBase\ProductAccess\IProductAccess.cs" />
@@ -57,6 +59,8 @@
     <Compile Include="DataBase\UserInfo\IUserInfo.cs" />
     <Compile Include="IColumnHandler.cs" />
     <Compile Include="INewsHandler.cs" />
+    <Compile Include="IOrganizationHandler.cs" />
+    <Compile Include="IPartyMemberHandler.cs" />
     <Compile Include="News\INewsHandler.cs" />
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />

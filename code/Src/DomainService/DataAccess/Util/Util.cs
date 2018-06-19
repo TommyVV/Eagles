@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.Util;
@@ -23,6 +22,16 @@ namespace Ealges.DomianService.DataAccess.Util
             if (tokens != null && tokens.Any())
             {
                 return tokens.FirstOrDefault();
+            }
+            return null;
+        }
+        
+        public Eagles.DomainService.Model.User.UserInfo GetUserInfo(int userId)
+        {
+            var user = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(@" select IsLeader from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
+            if (user != null && user.Any())
+            {
+                return user.FirstOrDefault();
             }
             return null;
         }

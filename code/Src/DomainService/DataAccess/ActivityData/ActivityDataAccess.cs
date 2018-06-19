@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Application.Model.Common;
+using Eagles.Base.DataBase.Modle;
 using Eagles.Interface.Core.DataBase.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
@@ -49,14 +50,38 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                 });
         }
         
-        public int EditActivityJoin(int activityId)
+        public int EditActivityJoin(int orgId, int branchId, int activityId, int userId)
         {
-            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new { ActivityId = activityId });
+
+            return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)",
+                new
+                {
+                    OrgId = orgId,
+                    BranchId = branchId,
+                    ActivityId = activityId,
+                    UserId = userId,
+                    CreateTime = DateTime.Now
+                });
         }
         
-        public int EditActivityComplete(int activityId)
+        public bool EditActivityComplete(int activityId)
         {
-            return dbManager.Excuted("update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ", new { ActivityId = activityId });
+            //查询任务奖励积分
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
+            var commands = new List<TransactionCommand>()
+            {
+                new TransactionCommand()
+                {
+                    CommandString = @"update eagles.tb_activity set Status = '0' where ActivityId = @ActivityId ",
+                    Parameter =   new { ActivityId = activityId }
+                },
+                new TransactionCommand()
+                {
+                    CommandString = "update eagles.tb_user_activity set RewardsScore = @RewardsScore, CompleteTime=@CompleteTime where ActivityId = @ActivityId",
+                    Parameter =  new {RewardsScore=score,CompleteTime= DateTime.Now, ActivityId = activityId }
+                }
+            };
+            return dbManager.ExcutedByTransaction(commands);
         }
 
         public int EditActivityComment(int orgId, int activityId, int userId, string content)

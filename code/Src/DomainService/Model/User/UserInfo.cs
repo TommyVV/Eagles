@@ -39,5 +39,7 @@ namespace Eagles.DomainService.Model.User
         public int Status { get; set; }
         public string Title { get; set; }
         public int UserId { get; set; }
+        public int IsLeader { get; set; }
+        public int Score { get; set; }
     }
 }

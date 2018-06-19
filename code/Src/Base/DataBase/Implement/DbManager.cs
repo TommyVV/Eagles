@@ -101,7 +101,7 @@ namespace Eagles.Base.DataBase.Implement
             }
             return result;
         }
-
+        
         /// <summary>
         /// ExcutedByTransaction
         /// </summary>

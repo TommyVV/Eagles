@@ -49,6 +49,8 @@
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />
     <Compile Include="ImportLog\ImportLog.cs" />
+    <Compile Include="Org\TB_ORG_INFO.cs" />
+    <Compile Include="PartyMember\TB_USER_INFO.cs" />
     <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
     <Compile Include="News\TB_NEWS.cs" />

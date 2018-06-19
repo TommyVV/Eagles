@@ -3,7 +3,7 @@ using Eagles.Base.DataBase.Modle;
 
 namespace Eagles.Base.DataBase
 {
-    public interface IDbManager:IInterfaceBase
+    public interface IDbManager : IInterfaceBase
     {
         List<T> Query<T>(string command, object parameter=null);
 
@@ -12,7 +12,7 @@ namespace Eagles.Base.DataBase
         int Excuted(string command, object parameter=null);
 
         T ExecuteScalar<T>(string command, object parameter);
-
+        
         bool ExcutedByTransaction(List<TransactionCommand> command);
     }
 }

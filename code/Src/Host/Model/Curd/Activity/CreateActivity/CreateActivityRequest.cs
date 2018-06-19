@@ -10,11 +10,6 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
     public class CreateActivityRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-        
-        /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
         public string ActivityType { get; set; }
@@ -28,6 +23,11 @@ namespace Eagles.Application.Model.Curd.Activity.CreateActivity
         /// 活动发起人
         /// </summary>
         public int ActivityFromUser { get; set; }
+
+        /// <summary>
+        /// 活动负责人
+        /// </summary>
+        public int ActivityToUserId { get; set; }
 
         /// <summary>
         /// 活动起始日期
