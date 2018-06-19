@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.Curd.Score.GetScoreExchangeLs
@@ -12,6 +11,6 @@ namespace Eagles.Application.Model.Curd.Score.GetScoreExchangeLs
         /// <summary>
         /// 积分流水
         /// </summary>
-        public List<ScoreExchange> ScoreList { get; }
+        public List<ScoreExchange> ScoreList { get; set; }
     }
 }

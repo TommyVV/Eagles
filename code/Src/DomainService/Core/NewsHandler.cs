@@ -57,6 +57,7 @@ namespace Eagles.DomainService.Core
                     // NewsType=NewsType.
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
+                    OrgId = requset.Info.OrgId,
                 };
 
                 int result = dataAccess.EditNews(mod);
@@ -87,6 +88,7 @@ namespace Eagles.DomainService.Core
                     // NewsType=NewsType.
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
+                    OrgId = requset.Info.OrgId,
                 };
 
                 int result = dataAccess.CreateNews(mod);
@@ -152,6 +154,7 @@ namespace Eagles.DomainService.Core
                 ModuleId = detail.Module,
                 TestId = detail.TestId,
                 Content = detail.HtmlContent,
+                OrgId=detail.OrgId,
                 // Category=detail.ViewCount
             };
             return response;
@@ -179,7 +182,8 @@ namespace Eagles.DomainService.Core
                 NewsImg=x.ImageUrl,
                 NewsName=x.Title,
                // NewsType=NewsType.
-               Source=x.Source
+               Source=x.Source,
+                OrgId=x.OrgId
             }).ToList();
             return response;
         }

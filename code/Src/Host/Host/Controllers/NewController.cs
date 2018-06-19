@@ -25,7 +25,7 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditNews")]
+        [Route("api/EditNew")]
         [HttpPost]
         public ResponseBase EditNews(EditNewRequset requset)
         {
@@ -37,7 +37,7 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveNews")]
+        [Route("api/RemoveNew")]
         [HttpPost]
         public ResponseBase RemoveNews(RemoveNewRequset requset)
         {
@@ -49,7 +49,7 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetNewsDetail")]
+        [Route("api/GetNewDetail")]
         [HttpPost]
         public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {
@@ -61,7 +61,7 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetNews")]
+        [Route("api/GetNew")]
         [HttpPost]
         public GetNewResponse GetNews(GetNewRequset requset)
         {

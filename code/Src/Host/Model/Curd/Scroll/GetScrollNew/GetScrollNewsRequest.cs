@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Curd.Scroll.GetScrollNew
 {
     /// <summary>
@@ -7,9 +6,6 @@ namespace Eagles.Application.Model.Curd.Scroll.GetScrollNew
     /// </summary>
     public class GetScrollNewsRequest : RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
+
     }
 }

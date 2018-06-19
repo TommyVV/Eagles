@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
+using Eagles.Interface.Core.User;
 using Eagles.Application.Model.Curd.News.CreateNews;
 using Eagles.Application.Model.Curd.News.GetNews;
-using Eagles.Interface.Core.User;
 using Eagles.Application.Model.Curd.User.Login;
 using Eagles.Application.Model.Curd.User.Register;
 using Eagles.Application.Model.Curd.User.EditUser;

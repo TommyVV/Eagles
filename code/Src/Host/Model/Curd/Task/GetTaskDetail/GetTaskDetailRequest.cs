@@ -8,11 +8,6 @@ namespace Eagles.Application.Model.Curd.Task.GetTaskDetail
     public class GetTaskDetailRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
         /// 任务Id
         /// </summary>
         public int TaskId { get; set; }

@@ -95,9 +95,9 @@ namespace Eagles.Host.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Route("api/EditTaslFeedBack")]
+        [Route("api/EditTaskFeedBack")]
         [HttpPost]
-        public EditTaskFeedBackResponse EditTaslFeedBack(EditTaskFeedBackRequest request)
+        public EditTaskFeedBackResponse EditTaskFeedBack(EditTaskFeedBackRequest request)
         {
             return taskHandler.EditTaskFeedBack(request);
         }

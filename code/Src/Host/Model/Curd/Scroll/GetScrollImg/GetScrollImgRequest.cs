@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Curd.Scroll.GetScrollImg
 {
     /// <summary>
@@ -7,9 +6,6 @@ namespace Eagles.Application.Model.Curd.Scroll.GetScrollImg
     /// </summary>
     public class GetScrollImgRequest : RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
+
     }
 }

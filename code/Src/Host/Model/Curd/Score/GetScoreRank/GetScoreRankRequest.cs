@@ -7,10 +7,6 @@ namespace Eagles.Application.Model.Curd.Score.GetScoreRank
     /// </summary>
     public class GetScoreRankRequest : RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
         
     }
 }

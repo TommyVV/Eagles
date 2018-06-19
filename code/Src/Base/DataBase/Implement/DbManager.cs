@@ -54,6 +54,7 @@ namespace Eagles.Base.DataBase.Implement
             }
             catch (Exception e)
             {
+
                 logger.LoggerError(e.ToString());
             }
             finally
@@ -70,6 +71,25 @@ namespace Eagles.Base.DataBase.Implement
             try
             {
                 result = conn.Execute(command, parameter);
+            }
+            catch (Exception e)
+            {
+                logger.LoggerError(e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
+        public object ExecuteScalar(string command, object parameter)
+        {
+            var conn = new MySqlConnection(DbConfig.DataBaseConnectString);
+            object result = null;
+            try
+            {
+                result = conn.ExecuteScalar(command, parameter);
             }
             catch (Exception e)
             {

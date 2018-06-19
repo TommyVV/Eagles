@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.Curd.Score.GetScoreRank
