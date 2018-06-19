@@ -67,7 +67,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
         public bool EditActivityComplete(int activityId)
         {
             //查询任务奖励积分
-            var score = dbManager.ExecuteScalar("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
