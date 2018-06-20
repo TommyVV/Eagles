@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Eagles.Base;
 using Eagles.Interface.Core.Activity;
-using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Activity.CreateActivity;
-using Eagles.Application.Model.Curd.Activity.EditActivityJoin;
-using Eagles.Application.Model.Curd.Activity.EditActivityComment;
-using Eagles.Application.Model.Curd.Activity.EditActivityComplete;
-using Eagles.Application.Model.Curd.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.Curd.Activity.GetActivity;
-using Eagles.Application.Model.Curd.Activity.GetActivityDetail;
-using Eagles.Application.Model.Curd.Activity.GetActivityComment;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.Core.DataBase.ActivityAccess;
+using Eagles.Application.Model.Common;
+using Eagles.Application.Model.AppModel.Activity.CreateActivity;
+using Eagles.Application.Model.AppModel.Activity.EditActivityJoin;
+using Eagles.Application.Model.AppModel.Activity.EditActivityReview;
+using Eagles.Application.Model.AppModel.Activity.EditActivityComplete;
+using Eagles.Application.Model.AppModel.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
+using Eagles.Application.Model.AppModel.Activity.GetActivity;
+using Eagles.Application.Model.AppModel.Activity.GetActivityDetail;
+using Eagles.Application.Model.AppModel.Activity.GetActivityComment;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity
@@ -38,19 +40,29 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
             var act = new DomainModel.Activity.Activity();
             act.ActivityName = request.ActivityName;
             act.ActivityType = request.ActivityType;
             act.BeginTime = request.ActivityBeginDate;
             act.EndTime = request.ActivityEndDate;
             act.HtmlContent = request.ActivityContent;
-            act.FromUser = request.ActivityFromUser;
+            act.FromUser = request.ActivityFromUser; //活动发起人
+            act.ToUserId = request.ActivityToUserId; //活动负责人
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
             act.MaxCount = 0;
             act.TestId = 0;
             act.MaxUser = 99;
             act.ImageUrl = "";
+            if (0 == userInfo.IsLeader)
+                act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
+            else
+                act.Status = -1; //2:下级发起任务;上级审核任务是否允许开始
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
@@ -89,9 +101,9 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
+        public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
         {
-            var response = new EditActivityCommentResponse();
+            var response = new EditActivityJoinResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -99,7 +111,31 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityComment(request.ActivityId, request.CommentUserId, request.Comment);
+            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, request.JoinUserid);
+            if (result > 0)
+            {
+                response.ErrorCode = "00";
+                response.Message = "成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "失败";
+            }
+            return response;
+        }
+
+        public EditActivityReviewResponse EditTaskAccept(EditActivityReviewRequest request)
+        {
+            var response = new EditActivityReviewResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -124,7 +160,7 @@ namespace Eagles.DomainService.Core.Activity
                 return response;
             }
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
-            if (result > 0)
+            if (result)
             {
                 response.ErrorCode = "00";
                 response.Message = "成功";
@@ -157,9 +193,9 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
+        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
         {
-            var response = new EditActivityJoinResponse();
+            var response = new EditActivityCommentResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -167,7 +203,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityJoin(request.ActivityId);
+            var result = iActivityAccess.EditActivityComment(tokens.OrgId, request.ActivityId, request.CommentUserId, request.Comment);
             if (result > 0)
             {
                 response.ErrorCode = "00";

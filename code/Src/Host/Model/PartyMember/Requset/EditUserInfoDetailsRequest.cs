@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.PartyMember.Requset
         /// <summary>
         /// 集合
         /// </summary>
-        public UserInfoDetails List { get; set; }
+        public UserInfoDetails Info { get; set; }
     }
 }

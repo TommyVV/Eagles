@@ -14,9 +14,9 @@ namespace Ealges.DomianService.DataAccess.NewsDA
             this.dbManager = dbManager;
         }
 
-        public List<News> GetModuleNews(int moduleId,int appId,int count)
+        public List<TB_NEWS> GetModuleNews(int moduleId,int appId,int count)
         {
-          return  dbManager.Query<News>(@"SELECT OrgId,
+          return  dbManager.Query<TB_NEWS>(@"SELECT OrgId,
     NewsId,
     ShortDesc,
     Title,
@@ -49,9 +49,9 @@ FROM eagles.tb_news where Module=@Module And OrgId=@OrgId  limit @count", new {M
 
         }
 
-        public News GetNewsDetail(string newsId, string appId)
+        public TB_NEWS GetNewsDetail(int newsId, int appId)
         {
-            return dbManager.QuerySingle<News>(@"SELECT OrgId,
+            return dbManager.QuerySingle<TB_NEWS>(@"SELECT OrgId,
     NewsId,
     ShortDesc,
     Title,

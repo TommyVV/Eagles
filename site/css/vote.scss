@@ -1,0 +1,119 @@
+@import 'common/px2rem.scss';
+.main_content {
+    padding: 0px px2rem(35);
+    background-color: white;
+    .header {
+        padding: px2rem(55) 0 px2rem(50) 0;
+        border-bottom: 1px solid #EEEEEE;
+        .title {
+            font-size: px2rem(48);
+            line-height: px2rem(58);
+        }
+        .endTime,
+        .num {
+            font-size: px2rem(30);
+            line-height: px2rem(30);
+            color: #949494;
+        }
+        .num {
+            margin-top: px2rem(70);
+        }
+    }
+    .content-box {
+        padding: px2rem(62) 0;
+        font-size: px2rem(30);
+    }
+    .vote-box {
+        border-top: 1px solid #EEEEEE;
+        border-bottom: 1px solid #EEEEEE;
+        padding: 0 0 px2rem(80) 0;
+        font-size: px2rem(30);
+        line-height: px2rem(50);
+        .item {
+            padding-top: px2rem(44);
+        }
+        .options {
+            .option {
+                display: flex;
+                flex-direction: row;
+                padding-bottom: px2rem(30);
+                padding-top: px2rem(30);
+                .flag {
+                    width: 30px;
+                }
+                .c-area {
+                    width: calc(100% - 30px);
+                    .content {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        .num {
+                            font-size: px2rem(24);
+                            color: #949494;
+                        }
+                    }
+                    .out-ratio {
+                        margin-top: px2rem(10);
+                        width: 100%;
+                        height: px2rem(30);
+                        background-color: #E9E9E9;
+                        border-radius: px2rem(15);
+                        .in-ratio {
+                            width: 30%;
+                            height: 100%;
+                            background-color: #86C8EB;
+                            font-size: px2rem(24);
+                            border-radius: px2rem(15);
+                            color: white;
+                            text-align: center;
+                            line-height: px2rem(30);
+                        }
+                    }
+                }
+            }
+        }
+        .img-options {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            .img-option {
+                padding-bottom: px2rem(30);
+                padding-top: px2rem(30);
+                width: px2rem(240);
+                display: flex;
+                flex-direction: column;
+                .option-name {
+                    text-align: center;
+                }
+                img {
+                    margin-top: px2rem(10);
+                    width: px2rem(240);
+                    height: px2rem(240);
+                }
+                .out-ratio {
+                    margin-top: px2rem(22);
+                    width: 100%;
+                    height: px2rem(20);
+                    background-color: #E9E9E9;
+                    border-radius: px2rem(15);
+                    .in-ratio {
+                        width: 30%;
+                        height: 100%;
+                        background-color: #86C8EB;
+                        border-radius: px2rem(10);
+                    }
+                }
+                .ratio-text {
+                    color: #949494;
+                    font-size: px2rem(24);
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .sub-btn{
+        margin-top:px2rem(68);
+    }
+}

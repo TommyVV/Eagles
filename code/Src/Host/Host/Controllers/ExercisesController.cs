@@ -10,6 +10,11 @@ namespace Eagles.Host.Controllers
     {
         private IExercisesHandler ExercisesHandler;
 
+        public ExercisesController(IExercisesHandler exercisesHandler)
+        {
+            ExercisesHandler = exercisesHandler;
+        }
+
         #region
 
         /// <summary>

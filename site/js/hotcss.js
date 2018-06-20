@@ -10,7 +10,7 @@
         var viewportEl = document.querySelector('meta[name="viewport"]'),
             hotcssEl = document.querySelector('meta[name="hotcss"]'),
             dpr = window.devicePixelRatio || 1,
-            maxWidth = 600,
+            maxWidth = 400,
             designWidth = 0;
 
         dpr = dpr >= 3 ? 3 : ( dpr >=2 ? 2 : 1 );

@@ -7,9 +7,7 @@ using System.Web.Http.Dispatcher;
 using System.Web.Routing;
 using Swagger.Net;
 
-//[assembly: WebActivator.PreApplicationStartMethod(typeof(Eagles.Host.App_Start.SwaggerNet), "PreStart")]
-//[assembly: WebActivator.PostApplicationStartMethod(typeof(Eagles.Host.App_Start.SwaggerNet), "PostStart")]
-namespace Eagles.Host.App_Start 
+namespace Eagles.Application.Host.App_Start 
 {
     public static class SwaggerNet 
     {
@@ -31,11 +29,11 @@ namespace Eagles.Host.App_Start
             try
             {
                 config.Services.Replace(typeof(IDocumentationProvider),
-                    new XmlCommentDocumentationProvider(HttpContext.Current.Server.MapPath("~/bin/Eagles.Host.XML")));
+                    new XmlCommentDocumentationProvider(HttpContext.Current.Server.MapPath("~/bin/Eagles.Application.Host.XML")));
             }
             catch (FileNotFoundException)
             {
-                throw new Exception("Please enable \"XML documentation file\" in project properties with default (bin\\Eagles.Host.XML) value or edit value in App_Start\\SwaggerNet.cs");
+                throw new Exception("Please enable \"XML documentation file\" in project properties with default (bin\\Eagles.Application.Host.XML) value or edit value in App_Start\\SwaggerNet.cs");
             }
         }
     }

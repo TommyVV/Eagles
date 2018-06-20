@@ -1,7 +1,4 @@
 @import 'common/px2rem.scss';
-.scroll-area{
-    margin-bottom: px2rem(230);
-}
 .goods-img{
     width: 100%;
     height: auto !important;
@@ -42,8 +39,9 @@
     }
 }
 .goods-detail{
-    padding: 0px 15px;
+    padding: 0px 15px 20px 15px;
     border-top: px2rem(20) solid #F8F8F8;
+    border-bottom:1px solid #F8F8F8;
     .detail-title{
         padding:px2rem(30) 10px;
         height: px2rem(100);
@@ -239,4 +237,7 @@
             }
         }
     }
+}
+.sub-btn{
+    margin-top:px2rem(74); 
 }

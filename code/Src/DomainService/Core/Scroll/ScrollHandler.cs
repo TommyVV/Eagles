@@ -1,21 +1,33 @@
-﻿using System;
-using Eagles.Base.DataBase;
-using Eagles.Interface.Core.Scroll;
-using Eagles.Application.Model.Curd.Scroll.GetScrollImg;
-using Eagles.Application.Model.Curd.Scroll.GetScrollNew;
-using DomainModel = Eagles.DomainService.Model;
+﻿using Eagles.Interface.Core.Scroll;
+using Eagles.Interface.DataAccess.Util;
+using Eagles.Application.Model.AppModel.Scroll.GetScrollImg;
+using Eagles.Application.Model.AppModel.Scroll.GetScrollNew;
+using Eagles.Interface.Core.DataBase.ScrollAccess;
 
 namespace Eagles.DomainService.Core.Scroll
 {
-    public class ScrollHandler : IScrollHanler
+    public class ScrollHandler : IScrollHandler
     {
-        private readonly IDbManager dbManager;
+        private readonly IScrollAccess iScrollAccess;
+        private readonly IUtil util;
 
-        public GetScrollImgResponse GetScoreExchangeLs(GetScrollImgRequest request)
+        public ScrollHandler(IScrollAccess iScrollAccess, IUtil util)
+        {
+            this.iScrollAccess = iScrollAccess;
+            this.util = util;
+        }
+
+        public GetScrollImgResponse GetScrollImg(GetScrollImgRequest request)
         {
             var response = new GetScrollImgResponse();
-            var token = request.Token;
-            var result = dbManager.Query<DomainModel.ScrollImage.ScrollImage>("select OrgId,PageType,ImageUrl from eagles.TB_SCROLL_IMAGE ", null);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iScrollAccess.GetScrollImg();
             if (result != null && result.Count > 0)
             {
                 foreach (var image in result)
@@ -31,11 +43,17 @@ namespace Eagles.DomainService.Core.Scroll
             return response;
         }
 
-        public GetScrollNewsResponse GetScoreRank(GetScrollNewsRequest request)
+        public GetScrollNewsResponse GetScrollNews(GetScrollNewsRequest request)
         {
             var response = new GetScrollNewsResponse();
-            var token = request.Token;
-            var result = dbManager.Query<DomainModel.News.SystemNews>("select OrgId,PageType,ImageUrl from eagles.TB_SYSTEM_NEWS ", null);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iScrollAccess.GetScrollNews();
             if (result != null && result.Count > 0)
             {
                 response.NewsId = result[0].NewsId;

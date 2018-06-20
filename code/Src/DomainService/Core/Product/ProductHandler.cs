@@ -1,22 +1,34 @@
-﻿using System;
-using System.Linq;
-using Eagles.Base.DataBase;
+﻿using System.Linq;
 using Eagles.Interface.Core.Product;
-using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Product.GetProduct;
-using Eagles.Application.Model.Curd.Product.GetProductDetail;
-using DomainModel = Eagles.DomainService.Model;
+using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.Core.DataBase.ProductAccess;
+using Eagles.Application.Model.AppModel.Product.GetProduct;
+using Eagles.Application.Model.AppModel.Product.GetProductDetail;
 
 namespace Eagles.DomainService.Core.Product
 {
     public class ProductHandler : IProductHandler
     {
-        private readonly IDbManager dbManager;
+        private readonly IProductAccess iProductAccess;
+        private readonly IUtil util;
+
+        public ProductHandler(IProductAccess iProductAccess, IUtil util)
+        {
+            this.iProductAccess = iProductAccess;
+            this.util = util;
+        }
+
         public GetProductResponse GetProduct(GetProductRequest request)
         {
             var response = new GetProductResponse();
-            var token = request.Token;
-            var result = dbManager.Query<DomainModel.Product.Product>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", null);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iProductAccess.GetProduct();
             if (result != null && result.Count > 0)
             {
                 response.ProductList = result?.Select(x => new Application.Model.Common.Product
@@ -39,18 +51,24 @@ namespace Eagles.DomainService.Core.Product
         public GetProductDetailResponse GetProductDetail(GetProductDetailRequest request)
         {
             var response = new GetProductDetailResponse();
-            var productId = request.ProductId;
-            var result = dbManager.Query<DomainModel.Product.Product>("select ProdId,ProdName,Score,ImageUrl,SaleCount,BeginTime,EndTime,HtmlDescription from eagles.tb_product where ProdId = @ProdId ", productId);
-            if (result != null && result.Count > 0)
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
             {
-                response.ProductId = result[0].ProdId;
-                response.ProductName = result[0].ProdName;
-                response.PeopleCount = result[0].SaleCount;
-                response.ProductBeginTime = result[0].BeginTime;
-                response.ProductEndTime = result[0].EndTime;
-                response.ProductScore = result[0].Score;
-                response.ProductImgUrl = result[0].ImageUrl;
-                response.ProductDescrption = result[0].HtmlDescription;
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = iProductAccess.GetProductDetail(request.ProductId);
+            if (result != null)
+            {
+                response.ProductId = result.ProdId;
+                response.ProductName = result.ProdName;
+                response.PeopleCount = result.SaleCount;
+                response.ProductBeginTime = result.BeginTime;
+                response.ProductEndTime = result.EndTime;
+                response.ProductScore = result.Score;
+                response.ProductImgUrl = result.ImageUrl;
+                response.ProductDescrption = result.HtmlDescription;
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

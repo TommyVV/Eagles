@@ -1,33 +1,37 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
+using Eagles.Base;
+using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
-using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Curd.Task.CreateTask;
-using Eagles.Application.Model.Curd.Task.EditTaskAccept;
-using Eagles.Application.Model.Curd.Task.EditTaskComment;
-using Eagles.Application.Model.Curd.Task.EditTaskComplete;
-using Eagles.Application.Model.Curd.Task.EditTaskStep;
-using Eagles.Application.Model.Curd.Task.EditTaskFeedBack;
-using Eagles.Application.Model.Curd.Task.GetTask;
-using Eagles.Application.Model.Curd.Task.GetTaskComment;
-using Eagles.Application.Model.Curd.Task.GetTaskDetail;
-using Eagles.Application.Model.Curd.Task.GetTaskStep;
-using Eagles.Application.Model.Curd.Task.RemoveTaskStep;
-using Eagles.Interface.Core.DataBase.TaskAccess;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.Core.DataBase.TaskAccess;
+using Eagles.Application.Model.Common;
+using Eagles.Application.Model.AppModel.Task.CreateTask;
+using Eagles.Application.Model.AppModel.Task.EditTaskAccept;
+using Eagles.Application.Model.AppModel.Task.EditTaskComment;
+using Eagles.Application.Model.AppModel.Task.EditTaskComplete;
+using Eagles.Application.Model.AppModel.Task.EditTaskStep;
+using Eagles.Application.Model.AppModel.Task.EditTaskFeedBack;
+using Eagles.Application.Model.AppModel.Task.GetTask;
+using Eagles.Application.Model.AppModel.Task.GetTaskComment;
+using Eagles.Application.Model.AppModel.Task.GetTaskDetail;
+using Eagles.Application.Model.AppModel.Task.GetTaskStep;
+using Eagles.Application.Model.AppModel.Task.RemoveTaskStep;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
 {
     public class TaskHandler : ITaskHandler
     {
+        private readonly IDesEncrypt desEncrypt;
         private readonly ITaskAccess iTaskAccess;
         private readonly IUtil util;
 
-        public TaskHandler(ITaskAccess iTaskAccess, IUtil util)
+        public TaskHandler(ITaskAccess iTaskAccess, IUtil util, IDesEncrypt desEncrypt)
         {
             this.iTaskAccess = iTaskAccess;
             this.util = util;
+            this.desEncrypt = desEncrypt;
         }
 
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
@@ -40,39 +44,48 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var act = new DomainModel.Task.Task();
-            act.TaskName = request.TaskName;
-            act.BeginTime = request.TaskBeginDate;
-            act.EndTime = request.TaskEndDate;
-            act.TaskContent = request.TaskContent;
-            act.FromUser = request.TaskFromUser;
-            act.CanComment = request.CanComment;
-            act.IsPublic = request.IsPublic;
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
+            var task = new DomainModel.Task.Task();
+            task.TaskName = request.TaskName;
+            task.BeginTime = request.TaskBeginDate;
+            task.EndTime = request.TaskEndDate;
+            task.TaskContent = request.TaskContent;
+            task.FromUser = request.TaskFromUser;
+            task.CanComment = request.CanComment;
+            task.IsPublic = request.IsPublic;
+            if (0 == userInfo.IsLeader)
+                task.Status = -2; // -2:上级发起(待接受)
+            else
+                task.Status = -1; // -1:下级申请上级待审核状态
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
                 if (i == 0)
                 {
-                    act.AttachType1 = attachList[i].AttachmentType;
-                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType1 = attachList[i].AttachmentType;
+                    task.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    act.AttachType2 = attachList[i].AttachmentType;
-                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType2 = attachList[i].AttachmentType;
+                    task.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    act.AttachType3 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType3 = attachList[i].AttachmentType;
+                    task.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    act.AttachType4 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    task.AttachType4 = attachList[i].AttachmentType;
+                    task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(act);
+            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, task);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -120,7 +133,7 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iTaskAccess.EditTaskAccept(request.TaskId);
+            var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -145,7 +158,7 @@ namespace Eagles.DomainService.Core.Task
                 return response;
             }
             var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic);
-            if (result > 0)
+            if (result)
             {
                 response.ErrorCode = "00";
                 response.Message = "成功";
@@ -192,8 +205,8 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            //todo
-            var result = iTaskAccess.EditTaskStep(request.Action, request.StepContent, request.StepId.ToString());
+            var result = iTaskAccess.EditTaskStep(request.Action, tokens.OrgId, tokens.BranchId, tokens.UserId,
+                request.StepContent, request.TaskId.ToString(), request.StepId.ToString());
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -241,12 +254,14 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iTaskAccess.GetTask();
+            var userId = desEncrypt.Decrypt(request.EncryptUserid);
+            var result = iTaskAccess.GetTask(userId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskFromUser = x.FromUser,
+                TaskStatus = x.Status,
                 TaskDate = x.BeginTime
             }).ToList();
             if (result != null && result.Count > 0)

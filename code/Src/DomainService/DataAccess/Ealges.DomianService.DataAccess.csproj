@@ -45,6 +45,8 @@
     <Compile Include="NewsDA\NewsDA.cs" />
     <Compile Include="ProductData\ProductDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreData\ScoreDataAccess.cs" />
+    <Compile Include="ScrollData\ScrollDataAccess.cs" />
     <Compile Include="TaskData\TaskDataAccess.cs" />
     <Compile Include="UserArticle\ArticleDataAccess.cs" />
     <Compile Include="UserInfo\UserDataAccess.cs" />
@@ -71,6 +73,9 @@
       <Project>{843F8547-B8A7-4FB7-8B57-27937BC3CBEE}</Project>
       <Name>Eagles.DomainService.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

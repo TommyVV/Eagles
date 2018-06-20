@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Application.Model.Common;
+using Eagles.Application.Model.AppModel.Enum;
 
 namespace Eagles.Interface.Core.DataBase.ActivityAccess
 {
@@ -8,13 +9,15 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
     {
         int CreateActivity(DomainService.Model.Activity.Activity activity);
 
-        int EditActivityComment(int activityId, int userId, string content);
+        int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
 
-        int EditActivityComplete(int activityId);
+        int EditActivityReview(ActivityTypeEnum type, int activityId);
 
+        bool EditActivityComplete(int activityId);
+        
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
 
-        int EditActivityJoin(int activityId);
+        int EditActivityComment(int orgId, int activityId, int userId, string content);
 
         List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType);
 

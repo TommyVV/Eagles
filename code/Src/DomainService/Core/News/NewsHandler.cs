@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Eagles.Application.Model.Curd.News;
-using Eagles.Application.Model.Curd.News.CreateNews;
-using Eagles.Application.Model.Curd.News.GetNews;
-using Eagles.Application.Model.News;
+﻿using System.Linq;
+using Eagles.Application.Model.AppModel.News;
+using Eagles.Application.Model.AppModel.News.CreateNews;
+using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.News.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.DataBase.UserArticle;
@@ -92,7 +90,7 @@ namespace Eagles.DomainService.Core.News
             var result=newsDa.GetModuleNews(request.ModuleId, request.AppId,request.NewsCount);
             return new GetModuleNewsResponse()
             {
-                NewsInfos = result.Select(x=>new NewsInfo
+                NewsInfos = result.Select(x=>new New
                 {
                     NewsId = x.NewsId,
                     NewsImg = x.ImageUrl,
@@ -115,10 +113,20 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "NewsId 非法");
             }
+
+            var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             return new GetNewsDetailResponse()
             {
-                NewsDetail = new NewsDetail()
+                NewsDetail = new NewDetail()
                 {
+                    Author = result.Author,
+                    NewsId = result.NewsId,
+                    NewsName = result.Title,
+                    Content = result.HtmlContent,
+                    CreateTime = result.CreateTime,
+                    ModuleId = result.Module,
+                    NewsImg = result.ImageUrl,
+                    TestId = result.TestId,
                     //todo 
                 }
             };

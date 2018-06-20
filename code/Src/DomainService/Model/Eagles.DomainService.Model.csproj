@@ -44,13 +44,17 @@
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Authority\Authority.cs" />
+    <Compile Include="Column\TB_APP_MODULE.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="News\SystemNews.cs" />
     <Compile Include="Org\Branch.cs" />
     <Compile Include="ImportLog\ImportLog.cs" />
+    <Compile Include="Org\TB_ORG_INFO.cs" />
+    <Compile Include="PartyMember\TB_USER_INFO.cs" />
+    <Compile Include="PartyMember\TB_USER_RELATIONSHIP.cs" />
     <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
-    <Compile Include="News\News.cs" />
+    <Compile Include="News\TB_NEWS.cs" />
     <Compile Include="Oper\Oper.cs" />
     <Compile Include="Oper\OperGroup.cs" />
     <Compile Include="Order\Order.cs" />
@@ -95,6 +99,9 @@
       <Project>{3DE06D44-2860-4A92-9FDD-1529093CC970}</Project>
       <Name>Eagles.Application.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

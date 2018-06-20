@@ -2,51 +2,52 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
-
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
-body{
+
+body {
     background-color: #F8F8F8;
 }
-.search-area{
+
+.search-area {
     background-color: white;
-    width:100%;
+    width: 100%;
     height: px2rem(110);
     text-align: center;
-    .search-position{
+    .search-position {
         margin-top: px2rem(20);
-        width:px2rem(620);
+        width: px2rem(620);
         height: px2rem(60);
         display: inline-block;
     }
-    .searc-content{
+    .searc-content {
         float: left;
         height: px2rem(60);
-        width:px2rem(470);
+        width: px2rem(470);
         background: #EEEEEE;
         border-top-left-radius: px2rem(30);
         border-bottom-left-radius: px2rem(30);
         color: #949494;
         display: inline-flex;
     }
-    .search-icon{
+    .search-icon {
         padding-left: px2rem(39);
         padding-right: px2rem(20);
         font-size: px2rem(28);
         height: px2rem(60);
-        line-height:px2rem(60);
+        line-height: px2rem(60);
     }
-    .search-input{
-        width:px2rem(390);
+    .search-input {
+        width: px2rem(390);
         height: px2rem(60);
         border: none;
         background: #EEEEEE;
         outline: none;
     }
-    .search-btn{
+    .search-btn {
         float: left;
         color: white;
-        width:px2rem(150);
+        width: px2rem(150);
         height: px2rem(60);
         background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
         background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
@@ -59,49 +60,73 @@ body{
         border-bottom-right-radius: px2rem(30);
     }
 }
+
 // 商品展示区域
-.goods-area{
+.goods-area {
     border-top: px2rem(10) solid #F8F8F8;
-    
+    padding: 0 px2rem(35);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
-.goods-item{
-    float: left;
-    margin: px2rem(10);
-    width:px2rem(330);
-    height: px2rem(493);
+
+.goods-item {
+    border: 5px solid #f8f8f8;
     background: white;
-    img{
-        margin-top: px2rem(51);
-        margin-left: px2rem(60);
-        width:px2rem(210);
-        height: px2rem(210);
+    padding: 0;
+    width:px2rem(330);
+    .image-wrap {
+        margin-top: 15.4%;
+        margin-left: 18.2%;
+        width: 63.6%;
+        /* 创建一个正方形容器 */
+        .img-container {
+            width: 100%;
+            height: 0px;
+            padding-bottom: 100%;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        background: rebeccapurple;
     }
-    .item-title{
-        margin-top:px2rem(74);
-        margin-left:px2rem(22);
-        width:px2rem(286);
-        font-size:px2rem(24);
-        height: px2rem(53);
-        line-height:px2rem(30);
-    }
-    .item-point{
-        float: left;
-        margin-top:px2rem(51);
-        margin-left: px2rem(21);
-        font-size:px2rem(24);
-        line-height: px2rem(36);
-        color:rgba(148,148,148,1);
-    }
-    .item-btn{
-        float: right;
-        margin-top:px2rem(42);
-        margin-right:px2rem(26);
-        width:px2rem(120);
-        height:px2rem(40);
-        background:rgba(242,72,72,1);
-        border-radius:px2rem(4);
-        color: white;
-        text-align: center;
-        line-height:px2rem(40);
+    .item-intro {
+        margin-top: px2rem(74);
+        margin-left: ratio(11, 165);
+        width: ratio(143, 165);
+        height: px2rem(158);
+        .item-title {
+            font-size: px2rem(24);
+            height: px2rem(60);
+            line-height: px2rem(30);
+            overflow: hidden;
+        }
+        .item-point {
+            float: left;
+            margin-top: px2rem(51);
+            font-size: px2rem(24);
+            line-height: px2rem(36);
+            color: rgba(148, 148, 148, 1);
+        }
+        .item-btn {
+            float: right;
+            margin-top: px2rem(42);
+            width: px2rem(120);
+            height: px2rem(40);
+            font-size: px2rem(24);
+            background: rgba(242, 72, 72, 1);
+            border-radius: px2rem(4);
+            color: white;
+            text-align: center;
+            line-height: px2rem(40);
+        }
     }
 }

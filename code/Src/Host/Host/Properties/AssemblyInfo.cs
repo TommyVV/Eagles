@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Eagles.Host")]
+[assembly: AssemblyTitle("Eagles.Application.Host")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Eagles.Host")]
+[assembly: AssemblyProduct("Eagles.Application.Host")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于 typelib 的 ID
-[assembly: Guid("e2e95a42-004d-42e9-88d0-64fcb9222464")]
+[assembly: Guid("fea4774e-5181-4075-8ebd-11b5756ec0f4")]
 
 // 程序集的版本信息由下列四个值组成:
 //

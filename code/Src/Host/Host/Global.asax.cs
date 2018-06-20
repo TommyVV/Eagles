@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Compilation;
 using System.Web.Http;
+using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
 using Eagles.Base;
 
-namespace Eagles.Host
+namespace Eagles.Application.Host
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
@@ -28,7 +31,6 @@ namespace Eagles.Host
                 Console.WriteLine(e);
                 throw;
             }
-            
         }
 
         private void RegisterService()

@@ -59,7 +59,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppModule\AppModuleHanlder.cs" />
+    <Compile Include="ColumnHandler.cs" />
+    <Compile Include="DataBase\ColumnDataAccess.cs" />
+    <Compile Include="DataBase\NewsDataAccess.cs" />
+    <Compile Include="DataBase\OrganizationDataAccess.cs" />
+    <Compile Include="DataBase\PartyMemberDataAccess.cs" />
+    <Compile Include="NewsHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
+    <Compile Include="OrganizationHandler.cs" />
+    <Compile Include="PartyMemberHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />
     <Compile Include="Scroll\ScrollHandler.cs" />

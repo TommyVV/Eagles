@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.PartyMember.Response
     /// <summary>
     /// 
     /// </summary>
-    public class AuthorityUserSetUpResponse:ResponseBase
+    public class GetAuthorityUserSetUpResponse : ResponseBase
     {
         /// <summary>
         /// 总条数

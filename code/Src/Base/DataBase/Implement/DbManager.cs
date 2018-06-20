@@ -33,6 +33,7 @@ namespace Eagles.Base.DataBase.Implement
                 result = conn.Query<T>(command, parameter).ToList();
             }
             catch (Exception e)
+
             {
                 logger.LoggerError(e.ToString());
             }
@@ -53,6 +54,7 @@ namespace Eagles.Base.DataBase.Implement
             }
             catch (Exception e)
             {
+
                 logger.LoggerError(e.ToString());
             }
             finally
@@ -81,6 +83,25 @@ namespace Eagles.Base.DataBase.Implement
             return result;
         }
 
+        public T ExecuteScalar<T>(string command, object parameter)
+        {
+            var conn = new MySqlConnection(DbConfig.DataBaseConnectString);
+            var result = default(T);
+            try
+            {
+                result = conn.ExecuteScalar<T>(command, parameter);
+            }
+            catch (Exception e)
+            {
+                logger.LoggerError(e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+        
         /// <summary>
         /// ExcutedByTransaction
         /// </summary>
@@ -120,7 +141,5 @@ namespace Eagles.Base.DataBase.Implement
             }
             return response;
         }
-
-        
     }
 }
