@@ -135,7 +135,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityReview(request.Type, request.TaskId);
+            var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
             if (result > 0)
             {
                 response.ErrorCode = "00";

@@ -17,7 +17,7 @@ namespace Eagles.Interface.Core.DataBase
         int RemoveOrganization(RemoveOrganizationRequset requset);
         int EditOrganization(TB_ORG_INFO mod);
         int CreateOrganization(TB_ORG_INFO mod);
-        List<TB_USER_RELATIONSHIP> GetOrganizationList(List<Application.Model.PartyMember.Model.UserInfoDetails> list);
+     //   List<TB_USER_RELATIONSHIP> GetOrganizationList(List<Application.Model.PartyMember.Model.UserInfoDetails> list);
         List<TB_ORG_INFO> GetOrganizationList(List<int> list);
     }
 }

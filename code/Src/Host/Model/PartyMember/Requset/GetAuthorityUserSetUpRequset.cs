@@ -1,4 +1,6 @@
-﻿namespace Eagles.Application.Model.PartyMember.Requset
+﻿using Eagles.Application.Model.Enums;
+
+namespace Eagles.Application.Model.PartyMember.Requset
 {
     /// <summary>
     /// 
@@ -13,12 +15,18 @@
         /// <summary>
         /// 是否关联
         /// </summary>
-        public bool IsRelation { get; set; }
+        public IsRelation IsRelation { get; set; }
 
         /// <summary>
         /// 支部编号
         /// </summary>
         public int BranchId { get; set; }
+
+        /// <summary>
+        /// 机构编号
+        /// </summary>
+        public int OrgId { get; set; }
+        
 
 
     }

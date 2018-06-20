@@ -136,15 +136,12 @@ VALUES
 ", mod);
         }
 
-        public List<TB_USER_RELATIONSHIP> GetOrganizationList(List<UserInfoDetails> list)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<TB_USER_RELATIONSHIP> GetOrganizationList(List<UserInfoDetails> list)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        List<TB_ORG_INFO> IOrganizationDataAccess.GetOrganizationList(List<int> list)
-        {
-            throw new NotImplementedException();
-        }
+   
 
         public List<TB_ORG_INFO> GetOrganizationList(List<int> list)
         {

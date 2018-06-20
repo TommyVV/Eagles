@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Eagles.Application.Model;
+using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.PartyMember.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
@@ -241,24 +242,38 @@ namespace Eagles.DomainService.Core
                 IsSuccess = true,
                 Message = "成功",
             };
-            //  //得到试卷 + 习题的关系
+            //  用户列表
             List<TB_USER_INFO> list = dataAccess.GetUserInfoList(requset, out int totalCount);
 
-            List<TB_USER_INFO> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
+            //获取用户下级权限
+            List<TB_USER_RELATIONSHIP> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
 
             if (list.Count == 0) throw new Exception("无数据");
 
-           // List<TB_USER_RELATIONSHIP> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
+            //机构信息
+            var orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
             response.TotalCount = totalCount;
-            //response.List = list.Select(x => new UserInfoCheck
-            //{
-            //    OrgName = orgList.First(o => o.OrgId == x.OrgId).OrgName,
-            //    Phone = x.Phone,
-            //    UserId = x.UserId,
-            //    UserName = x.Name,
-            //    isCheck=userSetUp.Where(up=> up.c== orgList.)
-            //}).ToList();
+
+           var userChecklist =  list.Select(x => new UserInfoCheck
+            {
+                OrgName = orgList.First(o => o.OrgId == x.OrgId).OrgName,
+                Phone = x.Phone,
+                UserId = x.UserId,
+                UserName = x.Name,
+                IsCheck = userSetUp.Any(up => up.SubUserId == x.UserId)
+            }).ToList();
+
+            if (requset.IsRelation == IsRelation.关联)
+            {
+                userChecklist = userChecklist.Where(x => x.IsCheck).ToList();
+            }
+            else if (requset.IsRelation == IsRelation.未关联)
+            {
+                userChecklist = userChecklist.Where(x => !x.IsCheck).ToList();
+            }
+
+            response.List = userChecklist;
             return response;
         }
 
