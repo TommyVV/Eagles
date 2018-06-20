@@ -2,9 +2,9 @@
 using Eagles.Base;
 using Eagles.DomainService.Model.News;
 
-namespace Eagles.Interface.DataAccess.NewsDA
+namespace Eagles.Interface.DataAccess.NewsDa
 {
-    public interface INewsDA:IInterfaceBase
+    public interface INewsDa : IInterfaceBase
     {
         List<TB_NEWS> GetModuleNews(int moduleId,int appId,int count);
 
