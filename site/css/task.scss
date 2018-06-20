@@ -65,3 +65,126 @@
         }
     }
 }
+
+.mobile,.pc{
+    display:none;
+}
+.pc-wrap{
+    width:1000px;
+    margin:0 auto;
+    .assign{
+        background:#fff;
+        height:107px;
+        color:#949494;
+        display:flex;
+        align-items: center;
+        padding-left:48px;
+        margin-bottom: 10px;
+        .name-label{
+            font-size: 24px;
+        }
+        .select{
+            width:118px;
+            height:30px;
+            background:#fff;
+            border:1px solid #EEEEEE;
+            position: relative;
+            display:flex;
+            font-size: 16px;
+            color:#949494;
+            align-items: center;
+            padding:0 14px 0 18px;
+            &-name{
+                flex:1;
+            }
+            i{
+                font-size: 8px;
+            }
+            ul{
+                display:none;
+                list-style: none;
+                position: absolute;
+                top:33px;
+                left:0;
+                background:#fff;
+                width:100%;
+                box-shadow: -4px 4px 4px #dfdfdf;
+                li{
+                    padding-left:18px;
+                    height:30px;
+                    font-size: 16px;
+                    color:#949494;
+                    line-height: 30px;
+                    cursor: pointer;
+                    &:hover{
+                        background:rgba(242,242,242,1);
+                    }
+                }
+            }
+        }
+    }
+    .list{
+        background:#fff;
+        padding:0 35px;
+        &-header{
+            display:flex;
+            border:1px solid #EEEEEE;
+            line-height: 1;
+            padding:35px 0 20px 0;
+            &-list{
+                flex:1;
+                color:#0F0F0F;
+                font-size: 30px;
+            }
+            &-more{
+                font-size: 18px;
+                color:#949494;
+            }
+        }
+        ul{
+            padding:0 14px;
+            list-style: none;
+            padding-bottom:58px;
+            li{
+                padding-bottom: 41px;
+                border-bottom: 1px solid #EEEEEE;
+                .title{
+                    font-size: 24px;
+                    padding:24px 0 0 0;
+                    line-height: 1;
+                }
+                p{
+                    font-size: 14px;
+                    color:#949494;
+                    margin-bottom: 45px;
+                }
+                .props{
+                    display:flex;
+                    &-left{
+                        flex:1;
+                        font-size: 18px;
+                        color:#949494;
+                        .detail{
+                            color:#141414;
+                        }
+                    }
+                    &-btn{
+                        font-size: 18px;
+                        color:#FFFFFF;
+                        width:120px;
+                        height:40px;
+                        border-radius: 20px;
+                        background:#F24848;
+                        line-height: 40px;
+                        text-align: center;
+                        &.already{
+                            background:#fff;
+                            color:#949494;
+                            border:1px solid #949494;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

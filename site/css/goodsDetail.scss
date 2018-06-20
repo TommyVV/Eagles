@@ -89,3 +89,154 @@
         }
     }
 }
+
+
+
+.mobile,.pc{
+    display:none;
+}
+
+.pc-wrap{
+    width:1000px;
+    margin:0 auto;
+    .overview{
+        padding:30px 31px 30px 24px;
+        display:flex;
+        background:#fff;
+        margin-bottom: 19px;
+        & > img{
+            width:460px;
+            height:460px;
+        }
+        &-props{
+            flex:1;
+            padding-left: 34px;
+            &-name{
+                width:360px;
+                color:#141414;
+                font-size: 30px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                height:80px;
+            }
+            &-count{
+                margin-top:16px;
+                font-size: 18px;
+                color:#949494;
+                line-height: 1;
+            }
+            &-price{
+                font-size: 18px;
+                color:#141414;
+                height:80px;
+                background:#FFE8E8;
+                line-height: 80px;
+                padding-left:17px;
+                margin-top: 65px;
+                span{
+                    font-size: 36px;
+                    vertical-align: middle;
+                }
+            }
+            &-date{
+                font-size: 18px;
+                color:#949494;
+                line-height: 1;
+                margin-top:18px;
+            }
+            &-btn{
+                width:200px;
+                height:40px;
+                line-height: 40px;
+                color:#fff;
+                font-size: 18px;
+                background: linear-gradient(to bottom right, #EE2F2F, #E51A1A);
+                text-align: center;
+                border-radius:4px;
+                letter-spacing: 4px;
+                cursor: pointer;
+                margin-top:74px;
+            }
+        }
+    }
+    .bottom{
+        display:flex;
+        .popular{
+            background:#fff;
+            padding:0 19px 0 17px;
+            margin-right: 20px;
+            & > .title{
+                margin:0;
+                font-size: 18px;
+                color:#141414;
+                padding:29px 0 11px 0;
+            }
+            ul{
+                list-style: none;
+                li{
+                    width:204px;
+                    border:1px solid #EEEEEE;
+                    display:flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding:23px 16px 17px;
+                    margin-bottom: 18px;
+                    .goods-head{
+                        width:131px;
+                        height:131px;
+                    }
+                    .title{
+                        font-size: 15px;
+                        color:#000000;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                        height:35px;
+                        line-height:1.2;
+                        margin:37px 0 23px;
+                    }
+                    .props{
+                        height:22px;
+                        display:flex;
+                        width:100%;
+                        span{
+                            font-size: 15px;
+                            color:#949494;
+                            flex:1;
+                        }
+                        a{
+                            text-decoration: none;
+                            width:76px;
+                            height:22px;
+                            color:#fff;
+                            line-height: 22px;
+                            text-align: center;
+                            background:#F24848;
+                            font-size: 13px;
+                            border-radius: 4px;
+                        }
+                    }
+                }
+            }
+
+        }
+        .detail{
+            padding:0 20px 53px;
+            background:#fff;
+            flex:1;
+            h3{
+                font-size: 24px;
+                padding:22px 0 12px;
+                color:#141414;
+                border-bottom: 2px solid #141414;
+                margin:0 0 23px 0;
+            }
+            & > img{
+                width:100%;
+            }
+        }
+    }
+}

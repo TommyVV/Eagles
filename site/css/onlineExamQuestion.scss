@@ -10,6 +10,7 @@ html,body{
 .container{
     padding:0;
     height:100%;
+    width:pc(1980);
 }
 .ques{
     display:flex;
@@ -40,9 +41,15 @@ html,body{
                 padding-bottom:px2rem(38);
                 display: flex;
                 align-items: center;
-                &-explain{
-                    padding-left:px2rem(18);
+                label{
+                    font-weight: 400;
+                    width:100%;
+                    display:inline-block;
+                    &-explain{
+                        padding-left:px2rem(18);
+                    }
                 }
+                
             }
         }
 
@@ -111,4 +118,25 @@ html,body{
             }
         }
     }
+}
+
+input[type=radio] + span{
+    display:inline-block;
+    width:10px;
+    height:10px;
+}
+input[type=radio]:checked + span{
+    // display:inline-block;
+    background:peru;
+    border-radius: 50%;
+}
+
+input[type=checkbox] + span{
+    display:inline-block;
+    width:10px;
+    height:10px;
+}
+input[type=checkbox]:checked + span{
+    // display:inline-block;
+    background:peru;
 }

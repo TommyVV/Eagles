@@ -2,3 +2,7 @@
 	@return $px*320/$designWidth/20 + rem;
 }
 $designWidth : 750;
+
+@function pc( $px ){
+	@return $px*1200/1980 + px;
+}

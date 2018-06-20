@@ -32,7 +32,7 @@ $(document).ready(function () {
             <div class="task-status init-status">已接受</div>
         </div>
     </div>`;
-        $(".task-list").html(str+str+str);
+        $(".task-list").html(str + str + str);
     }
     function cateStatus(id) {
         $(".drog-down-menu").toggleClass("hide");
@@ -42,5 +42,40 @@ $(document).ready(function () {
             $($("#" + id).find('span')).css('transform', 'rotate(180deg)');
         }
     }
+
+
+    $("#select-result").on('click', (e) => {
+        if (e.target.tagName === 'LI') {
+            $('#select-result > span').html($(e.target).html().trim());
+        }
+        $('#person-name').toggle();
+    })
+
+
+    class CalculateScreen {
+        constructor() {
+            this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+            this.init();
+        }
+        init() {
+            if (!this.isMobile) {
+                $('.mobile').hide();
+                $('.pc').show();
+                $('#top-nav').load('head.html', () => {
+
+                })
+                $('body').css('background-color', 'rgb(248,248,248)');
+            } else {
+                $('.mobile').show();
+                $('.pc').hide();
+                $('body').css('background-color', '#fff');
+            }
+        }
+    }
+    new CalculateScreen();
+
+    $(window).resize(function () {
+        new CalculateScreen();
+    })
 
 });
