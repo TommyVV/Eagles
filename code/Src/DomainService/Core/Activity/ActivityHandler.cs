@@ -125,7 +125,7 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityReviewResponse EditTaskAccept(EditActivityReviewRequest request)
+        public EditActivityReviewResponse EditActivityReview(EditActivityReviewRequest request)
         {
             var response = new EditActivityReviewResponse();
             var tokens = util.GetUserId(request.Token, 0);

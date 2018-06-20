@@ -87,7 +87,7 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "moduleId 非法");
             }
-            var result=newsDa.GetModuleNews(request.ModuleId, request.AppId,request.NewsCount);
+            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
             return new GetModuleNewsResponse()
             {
                 NewsInfos = result.Select(x=>new New
@@ -104,32 +104,42 @@ namespace Eagles.DomainService.Core.News
 
         public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
         {
+            var response = new GetNewsDetailResponse();
             if (request.AppId < 0)
             {
                 throw new TransactionException("01", "appid 非法");
             }
-
             if (request.NewsId < 0)
             {
                 throw new TransactionException("01", "NewsId 非法");
             }
-
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
-            return new GetNewsDetailResponse()
+            if (result != null)
             {
-                NewsDetail = new NewDetail()
-                {
-                    Author = result.Author,
-                    NewsId = result.NewsId,
-                    NewsName = result.Title,
-                    Content = result.HtmlContent,
-                    CreateTime = result.CreateTime,
-                    ModuleId = result.Module,
-                    NewsImg = result.ImageUrl,
-                    TestId = result.TestId,
-                    //todo 
-                }
-            };
+                response.NewsId = result.NewsId;
+                response.Title = result.Title;
+                response.HtmlContent = result.HtmlContent;
+                response.Author = result.Author;
+                response.Source = result.Source;
+                response.Module = result.Module;
+                response.CreateTime = result.CreateTime;
+                response.TestId = result.TestId;
+                response.IsAttach = result.IsAttach;
+                response.Attach1 = result.Attach1;
+                response.Attach2 = result.Attach2;
+                response.Attach3 = result.Attach3;
+                response.Attach4 = result.Attach4;
+                response.ViewCount = result.ViewCount;
+                response.CanStudy = result.CanStudy;
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
     }
 }

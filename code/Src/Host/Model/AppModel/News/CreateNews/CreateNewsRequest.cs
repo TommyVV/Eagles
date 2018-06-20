@@ -8,11 +8,6 @@ namespace Eagles.Application.Model.AppModel.News.CreateNews
     public class CreateNewsRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-
-        /// <summary>
         /// 新闻文章标题
         /// </summary>
         public string NewsTitle { get; set; }

@@ -78,7 +78,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
                     break;                
                 case ActivityTypeEnum.Apply:
                     //下级申请完成任务
-                    result = dbManager.Excuted("update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId ", new { ActivityId = activityId }); //2-完成任务待审核
+                    result = dbManager.Excuted("update eagles.tb_activity set Status = 1 where ActivityId = @ActivityId ", new { ActivityId = activityId }); //2-完成任务待审核
                     break;
             }
             return result;
@@ -92,7 +92,7 @@ value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityTy
             {
                 new TransactionCommand()
                 {
-                    CommandString = @"update eagles.tb_activity set Status = 3 where ActivityId = @ActivityId ",
+                    CommandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId ",
                     Parameter =   new { ActivityId = activityId }
                 },
                 new TransactionCommand()
