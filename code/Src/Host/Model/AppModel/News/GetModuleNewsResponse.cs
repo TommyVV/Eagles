@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.News.Model;
 
 namespace Eagles.Application.Model.AppModel.News
 {
@@ -11,6 +10,6 @@ namespace Eagles.Application.Model.AppModel.News
         /// <summary>
         /// 
         /// </summary>
-        public List<New> NewsInfos { get; set; }
+        public List<Common.News> NewsInfos { get; set; }
     }
 }

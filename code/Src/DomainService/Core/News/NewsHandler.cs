@@ -6,7 +6,7 @@ using Eagles.Application.Model.News.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Interface.Core.News;
-using Eagles.Interface.DataAccess.NewsDA;
+using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.Util;
 
 namespace Eagles.DomainService.Core.News
@@ -15,11 +15,11 @@ namespace Eagles.DomainService.Core.News
     {
         private readonly IArticleDataAccess articleData;
 
-        private readonly INewsDA newsDa;
+        private readonly INewsDa newsDa;
 
         private readonly IUtil util;
 
-        public NewsHandler(IArticleDataAccess articleData, IUtil util, INewsDA newsDa)
+        public NewsHandler(IArticleDataAccess articleData, IUtil util, INewsDa newsDa)
         {
             this.articleData = articleData;
             this.util = util;
@@ -67,17 +67,16 @@ namespace Eagles.DomainService.Core.News
             {
                 NewsList = news.Select(x => new Application.Model.Common.News
                 {
-                    NewsContent = x.HtmlContent,
-                    NewsDate = x.CreateTime,
+                    CreateTime = x.CreateTime,
                     NewsId = x.NewsId,
-                    NewsTitle = x.Title,
-                    NewsType = x.NewsType
+                    Title = x.Title
                 }).ToList()
             };
         }
 
         public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
         {
+            var response = new GetModuleNewsResponse();
             if (request.AppId < 0)
             {
                 throw new TransactionException("01","appid 非法");
@@ -88,18 +87,24 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException("01", "moduleId 非法");
             }
             var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
-            return new GetModuleNewsResponse()
+            if (result != null && result.Count > 0)
             {
-                NewsInfos = result.Select(x=>new New
+                response.NewsInfos = result?.Select(x => new Application.Model.Common.News()
                 {
                     NewsId = x.NewsId,
-                    NewsImg = x.ImageUrl,
-                    NewsName = x.Title,
+                    Title = x.Title,
                     CreateTime = x.CreateTime,
-                    Source = x.Source,
-                    UserName = x.Author,
-                }).ToList()
-            };
+                    ImageUrl = x.ImageUrl
+                }).ToList();
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
 
         public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
