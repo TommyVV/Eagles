@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.PartyMember.Model
     /// <summary>
     /// 
     /// </summary>
-    public class UserInfoCheck : UserInfo
+    public class UserInfoCheck : Member
     {
         /// <summary>
         /// 是否选中

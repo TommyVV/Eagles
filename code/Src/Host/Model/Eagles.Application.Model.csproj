@@ -323,7 +323,7 @@
     <Compile Include="PartyMember\Response\GetUserInfoDetailResponse.cs" />
     <Compile Include="PartyMember\Requset\GetPartyMemberRequest.cs" />
     <Compile Include="PartyMember\Response\GetPartyMemberResponse.cs" />
-    <Compile Include="PartyMember\Model\UserInfo.cs" />
+    <Compile Include="PartyMember\Model\Member.cs" />
     <Compile Include="PartyMember\Model\UserInfoDetails.cs" />
     <Compile Include="PartyMember\Model\UserInfoResult.cs" />
     <Compile Include="RequestBase.cs" />

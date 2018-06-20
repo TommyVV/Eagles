@@ -41,7 +41,7 @@ namespace Eagles.DomainService.Core
             List<TB_ORG_INFO> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
             response.TotalCount = totalCount;
-            response.List = list.Select(x => new UserInfo
+            response.List = list.Select(x => new Member
             {
                 OrgName = orgList.First(o => o.OrgId == x.OrgId).OrgName,
                 Phone = x.Phone,
