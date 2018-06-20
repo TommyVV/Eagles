@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityTaskHandler.cs" />
     <Compile Include="AppModule\AppModuleHanlder.cs" />
     <Compile Include="ColumnHandler.cs" />
     <Compile Include="DataBase\ColumnDataAccess.cs" />

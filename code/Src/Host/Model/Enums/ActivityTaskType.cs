@@ -8,7 +8,8 @@ namespace Eagles.Application.Model.Enums
 {
     public enum ActivityTaskType
     {
-        活动=5,
-        任务=10
+        报名 = 0,
+        投票 = 1,
+        问卷调查 = 2
     }
 }

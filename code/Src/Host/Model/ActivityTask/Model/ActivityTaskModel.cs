@@ -12,7 +12,7 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// <summary>
         /// 主键
         /// </summary>
-        public string ActivityTaskId { get; set; }
+        public int ActivityTaskId { get; set; }
         /// <summary>
         /// 新闻名字
         /// </summary>

@@ -23,7 +23,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetSubjectDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetSubjectDetailResponse GetSubjectDetail(GetSubjectDetailRequset requset)
         {
             return ExercisesHandler.GetSubjectDetail(requset);
@@ -35,7 +35,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/RemoveSubject")]
-        [HttpGet]
+        [HttpPost]
         ResponseBase RemoveSubject(RemoveSubjectRequset requset)
         {
             return ExercisesHandler.RemoveSubject(requset);
@@ -47,7 +47,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/EditSubject")]
-        [HttpGet]
+        [HttpPost]
         public ResponseBase EditSubject(EditSubjectRequset requset)
         {
             return ExercisesHandler.EditSubject(requset);
@@ -62,7 +62,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/EditExercises")]
-        [HttpGet]
+        [HttpPost]
         ResponseBase EditExercises(EditExercisesRequset requset)
         {
             return ExercisesHandler.EditExercises(requset);
@@ -74,7 +74,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/RemoveExercises")]
-        [HttpGet]
+        [HttpPost]
         public ResponseBase RemoveExercises(RemoveExercisesRequset requset)
         {
             return ExercisesHandler.RemoveExercises(requset);
@@ -86,7 +86,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetExercisesDetail")]
-        [HttpGet]
+        [HttpPost]
         public GetExercisesDetailResponse GetExercisesDetail(GetExercisesDetailRequset requset)
         {
             return ExercisesHandler.GetExercisesDetail(requset);
@@ -98,7 +98,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetExercises")]
-        [HttpGet]
+        [HttpPost]
         public GetExercisesResponse GetExercises(GetExercisesRequset requset)
         {
             return ExercisesHandler.GetExercises(requset);
@@ -112,7 +112,7 @@ namespace Eagles.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [Route("api/GetRandomSubject")]
-        [HttpGet]
+        [HttpPost]
         public GetRandomSubjectResponse GetRandomSubject(GetRandomSubjectRequset requset)
         {
             return ExercisesHandler.GetRandomSubject(requset);
