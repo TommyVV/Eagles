@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class UserInfo
+    public class Member
     {
 
         /// <summary>

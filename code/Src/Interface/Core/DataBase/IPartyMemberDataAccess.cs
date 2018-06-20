@@ -20,6 +20,6 @@ namespace Eagles.Interface.Core.DataBase
         List<TB_USER_INFO> GetUserInfoList(GetAuthorityUserSetUpRequset requset, out int totalCount);
         int RemoveAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list);
         int CreateAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list);
-        List<TB_USER_INFO> GetAuthorityUserSetUp(int requsetUserId);
+        List<TB_USER_RELATIONSHIP> GetAuthorityUserSetUp(int requsetUserId);
     }
 }

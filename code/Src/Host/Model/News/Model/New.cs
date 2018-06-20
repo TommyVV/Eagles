@@ -48,7 +48,7 @@ namespace Eagles.Application.Model.News.Model
         /// <summary>
         ///新闻类型 
         /// </summary>
-        public NewsType NewsType { get; set; }
+     //   public NewsType NewsType { get; set; }
 
         /// <summary>
         /// 姓名

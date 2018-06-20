@@ -214,6 +214,7 @@
     <Compile Include="Enums\ExamType.cs" />
     <Compile Include="Enums\ExercisesType.cs" />
     <Compile Include="Enums\GoodsStatus.cs" />
+    <Compile Include="Enums\IsRelation.cs" />
     <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\MenuLevel.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
@@ -322,7 +323,7 @@
     <Compile Include="PartyMember\Response\GetUserInfoDetailResponse.cs" />
     <Compile Include="PartyMember\Requset\GetPartyMemberRequest.cs" />
     <Compile Include="PartyMember\Response\GetPartyMemberResponse.cs" />
-    <Compile Include="PartyMember\Model\UserInfo.cs" />
+    <Compile Include="PartyMember\Model\Member.cs" />
     <Compile Include="PartyMember\Model\UserInfoDetails.cs" />
     <Compile Include="PartyMember\Model\UserInfoResult.cs" />
     <Compile Include="RequestBase.cs" />

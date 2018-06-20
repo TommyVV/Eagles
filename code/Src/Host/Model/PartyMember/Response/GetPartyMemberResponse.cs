@@ -15,6 +15,6 @@ namespace Eagles.Application.Model.PartyMember.Response
         /// <summary>
         /// 集合
         /// </summary>
-        public List<UserInfo> List { get; set; }
+        public List<Member> List { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.PartyMember.Model
     /// <summary>
     /// 
     /// </summary>
-    public class UserInfoDetails : UserInfo
+    public class UserInfoDetails : Member
     {
         /// <summary>
         /// 
