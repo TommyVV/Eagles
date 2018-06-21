@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\IActivityHandler.cs" />
+    <Compile Include="AppMenu\IAppMenuHandler.cs" />
     <Compile Include="AppModule\IAppModuleHanlder.cs" />
     <Compile Include="Common\ITokenHadler.cs" />
     <Compile Include="Curd\ICurdHandler.cs" />

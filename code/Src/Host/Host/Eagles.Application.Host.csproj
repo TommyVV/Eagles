@@ -251,6 +251,7 @@
     <Compile Include="App_Start\ValidServiceToken.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\App\ActivityController.cs" />
+    <Compile Include="Controllers\App\AppMenuController.cs" />
     <Compile Include="Controllers\App\AppModuleController.cs" />
     <Compile Include="Controllers\ActivityTaskController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />

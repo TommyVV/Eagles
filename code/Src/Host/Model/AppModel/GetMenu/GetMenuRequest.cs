@@ -7,5 +7,6 @@ namespace Eagles.Application.Model.AppModel.GetMenu
     /// </summary>
     public class GetMenuRequest :RequestBase
     {
+
     }
 }
