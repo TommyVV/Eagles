@@ -17,9 +17,7 @@ namespace Eagles.Application.Host.Controllers
         {
             this.testHandler = testHandler;
         }
-
-
-
+        
         /// <summary>
         /// 编辑  新闻
         /// </summary>
@@ -45,6 +43,18 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
+        /// 新闻 列表
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [Route("api/GetNew")]
+        [HttpPost]
+        public GetNewResponse GetNews(GetNewRequset requset)
+        {
+            return testHandler.GetNews(requset);
+        }
+
+        /// <summary>
         ///  新闻 详情
         /// </summary>
         /// <param name="requset"></param>
@@ -56,16 +66,5 @@ namespace Eagles.Application.Host.Controllers
             return testHandler.GetNewsDetail(requset);
         }
 
-        /// <summary>
-        /// 新闻 列表
-        /// </summary>
-        /// <param name="requset"></param>
-        /// <returns></returns>
-        [Route("api/GetNew")]
-        [HttpPost]
-        public GetNewResponse GetNews(GetNewRequset requset)
-        {
-            return testHandler.GetNews(requset);
-        }
     }
 }

@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+    <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
+    <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeResponse.cs" />
     <Compile Include="Audit\AlterAuditInfoRequset.cs" />
     <Compile Include="Audit\AuditInfo.cs" />
     <Compile Include="Audit\AuditRequset.cs" />
