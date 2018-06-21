@@ -26,5 +26,20 @@ namespace Eagles.Application.Host.Controllers
             testHandler.Porcess(null);
             return null;
         }
+
+        [Route("api/corsTest")]
+        [HttpGet]
+        public Test GetTest()
+        {
+           return new Test()
+           {
+               Name = "1"
+           };
+        }
+    }
+
+    public class Test
+    {
+        public string Name { get; set; }
     }
 }

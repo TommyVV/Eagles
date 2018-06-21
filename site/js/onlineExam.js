@@ -1,5 +1,5 @@
 $('#exam-button-jump').on('click', () => {
-    window.location.href = './onlineExamQuesiton.html'
+    window.location.href = './onlineExamQuestion.html'
 })
 
 

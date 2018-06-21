@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityTaskHandler.cs" />
+    <Compile Include="AppMenu\AppMenuHandler.cs" />
     <Compile Include="AppModule\AppModuleHanlder.cs" />
     <Compile Include="ColumnHandler.cs" />
     <Compile Include="DataBase\ActivityTaskDataAccess.cs" />
