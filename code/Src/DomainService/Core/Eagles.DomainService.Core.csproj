@@ -61,6 +61,7 @@
     <Compile Include="ActivityTaskHandler.cs" />
     <Compile Include="AppModule\AppModuleHanlder.cs" />
     <Compile Include="ColumnHandler.cs" />
+    <Compile Include="DataBase\ActivityTaskDataAccess.cs" />
     <Compile Include="DataBase\ColumnDataAccess.cs" />
     <Compile Include="DataBase\NewsDataAccess.cs" />
     <Compile Include="DataBase\OrganizationDataAccess.cs" />

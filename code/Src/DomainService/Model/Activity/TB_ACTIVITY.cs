@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.Activity
 {
@@ -19,7 +20,7 @@ namespace Eagles.DomainService.Model.Activity
         /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
-        public string ActivityType { get; set; }
+        public ActivityTaskType ActivityType { get; set; }
         /// <summary>
         /// 附件1
         /// </summary>
