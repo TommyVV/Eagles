@@ -11,7 +11,7 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// <summary>
         /// 
         /// </summary>
-        public Sex Sex { get; set; }
+        public int Sex { get; set; }
 
         /// <summary>
         /// 民族
@@ -81,7 +81,7 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// <summary>
         /// 人员类别
         /// </summary>
-        public UserStatus UserStatus { get; set; }
+        public int UserStatus { get; set; }
 
         /// <summary>
         /// 头像

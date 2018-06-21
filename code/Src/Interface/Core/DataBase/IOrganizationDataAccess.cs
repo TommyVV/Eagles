@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.Org;
-using Eagles.DomainService.Model.PartyMember;
 
 namespace Eagles.Interface.Core.DataBase
 {

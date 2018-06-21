@@ -8,11 +8,6 @@ namespace Eagles.Application.Model.AppModel.Activity.EditActivityComment
     public class EditActivityCommentRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-        
-        /// <summary>
         /// 活动Id
         /// </summary>
         public int ActivityId { get; set; }

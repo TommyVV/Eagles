@@ -75,7 +75,6 @@
     <Compile Include="Common\DwWork.cs" />
     <Compile Include="AppModel\News\GetNewsTest\AppQuestion.cs" />
     <Compile Include="Common\News.cs" />
-    <Compile Include="Common\PartyInfo.cs" />
     <Compile Include="Common\Attachment.cs" />
     <Compile Include="Common\Product.cs" />
     <Compile Include="Common\Score.cs" />
@@ -101,8 +100,6 @@
     <Compile Include="AppModel\Enum\NewsEnum.cs" />
     <Compile Include="AppModel\Enum\ActivityTypeEnum.cs" />
     <Compile Include="AppModel\Enum\TaskTypeEnum.cs" />
-    <Compile Include="AppModel\GetPartyInfo\GetPartyInfoRequest.cs" />
-    <Compile Include="AppModel\GetPartyInfo\GetPartyInfoResponse.cs" />
     <Compile Include="AppModel\Module\AppModuleResponse.cs" />
     <Compile Include="AppModel\Module\GetAppModuleRequest.cs" />
     <Compile Include="AppModel\Module\Module.cs" />

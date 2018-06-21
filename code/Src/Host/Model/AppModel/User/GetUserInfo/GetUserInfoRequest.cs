@@ -7,9 +7,6 @@ namespace Eagles.Application.Model.AppModel.User.GetUserInfo
     /// </summary>
     public class GetUserInfoRequest : RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
+
     }
 }

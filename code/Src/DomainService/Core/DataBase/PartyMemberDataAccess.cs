@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Dapper;
-using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Base.DataBase;
-using Eagles.DomainService.Model.News;
-using Eagles.DomainService.Model.PartyMember;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core.DataBase;
+using Eagles.Application.Model.PartyMember.Requset;
 
 namespace Eagles.DomainService.Core.DataBase
 {
@@ -22,7 +19,7 @@ namespace Eagles.DomainService.Core.DataBase
         }
 
 
-        public TB_USER_INFO GetUserInfoDetail(GetUserInfoDetailRequest requset)
+        public TbUserInfo GetUserInfoDetail(GetUserInfoDetailRequest requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -66,7 +63,7 @@ FROM `eagles`.`tb_user_info`
  ");
             dynamicParams.Add("UserId", requset.UserId);
 
-            return dbManager.QuerySingle<TB_USER_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbUserInfo>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveUserInfo(RemoveUserInfoDetailsRequest requset)
@@ -76,7 +73,7 @@ FROM `eagles`.`tb_user_info`
 ", new {requset.UserId});
         }
 
-        public int EditUserInfo(TB_USER_INFO info)
+        public int EditUserInfo(TbUserInfo info)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_user_info`
 SET
@@ -118,7 +115,7 @@ WHERE `UserId` = @UserId;
             
         }
 
-        public int CreateUserInfo(TB_USER_INFO info)
+        public int CreateUserInfo(TbUserInfo info)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_user_info`
 (`OrgId`,
@@ -195,7 +192,7 @@ VALUES
 ", info);
         }
 
-        public List<TB_USER_INFO> GetUserInfoList(GetPartyMemberRequest request, out int totalCount)
+        public List<TbUserInfo> GetUserInfoList(GetPartyMemberRequest request, out int totalCount)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -275,11 +272,11 @@ VALUES
 FROM `eagles`.`tb_user_info`  where 1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_USER_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
            // throw new NotImplementedException();
         }
 
-        public List<TB_USER_INFO> GetUserInfoList(GetAuthorityUserSetUpRequset requset, out int totalCount)
+        public List<TbUserInfo> GetUserInfoList(GetAuthorityUserSetUpRequset requset, out int totalCount)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -343,17 +340,17 @@ FROM `eagles`.`tb_user_info`  where 1=1  {0}
 FROM `eagles`.`tb_user_info`  where 1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_USER_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
         }
 
-        public int RemoveAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list)
+        public int RemoveAuthorityUserSetUp(List<TbUserRelationship> list)
         {
 
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_user_relationship`
             WHERE  `UserId` in @UserId;", new {UserId = list.Select(x => x.UserId).ToArray()});
         }
 
-        public int CreateAuthorityUserSetUp(List<TB_USER_RELATIONSHIP> list)
+        public int CreateAuthorityUserSetUp(List<TbUserRelationship> list)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_user_relationship`
 (`OrgId`,
@@ -365,7 +362,7 @@ VALUES
 @SubUserId);", list);
         }
 
-        public List<TB_USER_RELATIONSHIP> GetAuthorityUserSetUp(int requsetUserId)
+        public List<TbUserRelationship> GetAuthorityUserSetUp(int requsetUserId)
         {
 
             var sql = new StringBuilder();
@@ -375,7 +372,7 @@ VALUES
     `tb_user_relationship`.`SubUserId`
 FROM `eagles`.`tb_user_relationship`  where `UserId` = @UserId;
  ");
-            return dbManager.Query<TB_USER_RELATIONSHIP>(sql.ToString(), new {UserId = requsetUserId});
+            return dbManager.Query<TbUserRelationship>(sql.ToString(), new {UserId = requsetUserId});
         }
     }
 }

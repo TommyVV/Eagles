@@ -7,10 +7,6 @@ namespace Eagles.Application.Model.AppModel.GetNotice
     /// </summary>
     public class GetNoticRequest :RequestBase
     {
-        /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-        
+
     }
 }

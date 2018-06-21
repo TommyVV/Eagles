@@ -9,11 +9,6 @@ namespace Eagles.Application.Model.AppModel.Activity.GetActivity
     public class GetActivityRequest : RequestBase
     {
         /// <summary>
-        /// Token
-        /// </summary>
-        public string Token { get; set; }
-        
-        /// <summary>
         /// 用户编号
         /// </summary>
         public string UserId { get; set; }

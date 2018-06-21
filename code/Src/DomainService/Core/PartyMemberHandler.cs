@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.PartyMember.Model;
@@ -10,7 +8,7 @@ using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
 using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Org;
-using Eagles.DomainService.Model.PartyMember;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.Core.DataBase;
 
@@ -34,7 +32,7 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
             //  //得到试卷 + 习题的关系
-            List<TB_USER_INFO> list = dataAccess.GetUserInfoList(request, out int totalCount);
+            List<TbUserInfo> list = dataAccess.GetUserInfoList(request, out int totalCount);
 
             if (list.Count == 0) throw new Exception("无数据");
 
@@ -61,7 +59,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_USER_INFO detail = dataAccess.GetUserInfoDetail(request);
+            TbUserInfo detail = dataAccess.GetUserInfoDetail(request);
 
             if (detail == null) throw new Exception("无数据");
 
@@ -77,13 +75,13 @@ namespace Eagles.DomainService.Core
                 Birth = detail.Birthday,
                 Company = detail.Company,
                 DefaultAddress = detail.Address,
-                Education = detail.Eduction,
+                Education = detail.Education,
                 FamilyAddress = detail.OriginAddress,
                 FormalJoinTime = detail.MemberTime,
                 GraduateSchool = detail.School,
                 IdCard = detail.IdNumber,
                 // IsMoney=detail.
-                Nation = detail.Ethinc,
+                Nation = detail.Ethnic,
                 NativePlace = detail.Origin,
                 OrgId = detail.OrgId,
                 Picture = detail.NickPhotoUrl,
@@ -134,11 +132,11 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_USER_INFO mod;
+            TbUserInfo mod;
 
             if (request.Info.UserId > 0)
             {
-                mod = new TB_USER_INFO
+                mod = new TbUserInfo
                 {
                     Phone = request.Info.Phone,
                     UserId = request.Info.UserId,
@@ -147,13 +145,13 @@ namespace Eagles.DomainService.Core
                     Birthday = request.Info.Birth,
                     Company = request.Info.Company,
                     Address = request.Info.DefaultAddress,
-                    Eduction = request.Info.Education,
+                    Education = request.Info.Education,
                     OriginAddress = request.Info.FamilyAddress,
                     MemberTime = request.Info.FormalJoinTime,
                     School = request.Info.GraduateSchool,
                     IdNumber = request.Info.IdCard,
                     // IsMoney   ,                                                                  
-                    Ethinc = request.Info.Nation,
+                    Ethnic = request.Info.Nation,
                     Origin = request.Info.NativePlace,
                     OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
@@ -184,7 +182,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_USER_INFO
+                mod = new TbUserInfo
                 {
 
                     Phone = request.Info.Phone,
@@ -194,13 +192,13 @@ namespace Eagles.DomainService.Core
                     Birthday = request.Info.Birth,
                     Company = request.Info.Company,
                     Address = request.Info.DefaultAddress,
-                    Eduction = request.Info.Education,
+                    Education = request.Info.Education,
                     OriginAddress = request.Info.FamilyAddress,
                     MemberTime = request.Info.FormalJoinTime,
                     School = request.Info.GraduateSchool,
                     IdNumber = request.Info.IdCard,
                     // IsMoney   ,                                                                  
-                    Ethinc = request.Info.Nation,
+                    Ethnic = request.Info.Nation,
                     Origin = request.Info.NativePlace,
                     OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
@@ -243,10 +241,10 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
             //  用户列表
-            List<TB_USER_INFO> list = dataAccess.GetUserInfoList(requset, out int totalCount);
+            List<TbUserInfo> list = dataAccess.GetUserInfoList(requset, out int totalCount);
 
             //获取用户下级权限
-            List<TB_USER_RELATIONSHIP> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
+            List<TbUserRelationship> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
 
             if (list.Count == 0) throw new Exception("无数据");
 
@@ -285,10 +283,10 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            List<TB_USER_RELATIONSHIP> list;
+            List<TbUserRelationship> list;
 
 
-            list = requset.UserIds.Select(x => new TB_USER_RELATIONSHIP
+            list = requset.UserIds.Select(x => new TbUserRelationship
             {
                 OrgId = requset.OrgId,
                 UserId = requset.UserId,
@@ -313,10 +311,10 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            List<TB_USER_RELATIONSHIP> list;
+            List<TbUserRelationship> list;
 
 
-            list = requset.UserIds.Select(x => new TB_USER_RELATIONSHIP
+            list = requset.UserIds.Select(x => new TbUserRelationship
             {
                 OrgId = requset.OrgId,
                 UserId = requset.UserId,

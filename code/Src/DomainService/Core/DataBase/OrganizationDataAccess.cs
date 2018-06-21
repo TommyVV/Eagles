@@ -1,15 +1,10 @@
-﻿using System;
+﻿using System.Text;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
-using Eagles.Application.Model.Organization.Requset;
-using Eagles.Application.Model.PartyMember.Model;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Org;
-using Eagles.DomainService.Model.PartyMember;
 using Eagles.Interface.Core.DataBase;
+using Eagles.Application.Model.Organization.Requset;
 
 namespace Eagles.DomainService.Core.DataBase
 {

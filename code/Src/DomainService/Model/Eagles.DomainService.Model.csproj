@@ -48,13 +48,11 @@
     <Compile Include="News\TbSystemNews.cs" />
     <Compile Include="Org\TbBranch.cs" />
     <Compile Include="ImportLog\TbImportLog.cs" />
-    <Compile Include="PartyMember\TB_USER_INFO.cs" />
-    <Compile Include="PartyMember\TB_USER_RELATIONSHIP.cs" />
     <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\TbMeetingUser.cs" />
     <Compile Include="News\TbNews.cs" />
-    <Compile Include="Oper\Oper.cs" />
-    <Compile Include="Oper\OperGroup.cs" />
+    <Compile Include="Oper\TbOper.cs" />
+    <Compile Include="Oper\TbOperGroup.cs" />
     <Compile Include="Order\TbOrder.cs" />
     <Compile Include="Org\TbOrgInfo.cs" />
     <Compile Include="Org\TbOrgRelationship.cs" />
