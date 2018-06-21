@@ -1,13 +1,12 @@
 ﻿using System.Linq;
-using Eagles.Application.Model.AppModel.News;
-using Eagles.Application.Model.AppModel.News.CreateNews;
-using Eagles.Application.Model.AppModel.News.GetNews;
-using Eagles.Application.Model.News.Model;
 using Eagles.Base;
-using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Interface.Core.News;
-using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.DataAccess.NewsDa;
+using Eagles.Interface.Core.DataBase.UserArticle;
+using Eagles.Application.Model.AppModel.News;
+using Eagles.Application.Model.AppModel.News.GetNews;
+using Eagles.Application.Model.AppModel.News.CreateNews;
 
 namespace Eagles.DomainService.Core.News
 {
@@ -81,7 +80,6 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01","appid 非法");
             }
-
             if (request.ModuleId < 0)
             {
                 throw new TransactionException("01", "moduleId 非法");
@@ -144,6 +142,22 @@ namespace Eagles.DomainService.Core.News
                 response.ErrorCode = "96";
                 response.Message = "查无数据";
             }
+            return response;
+        }
+
+        public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
+        {
+            var response = new GetNewsTestResponse();
+            if (request.AppId < 0)
+            {
+                throw new TransactionException("01", "appid 非法");
+            }
+            if (request.TestId < 0)
+            {
+                throw new TransactionException("01", "TestId 非法");
+            }
+
+
             return response;
         }
     }

@@ -103,3 +103,63 @@
     }
 }
 
+.pc,.mobile{
+    display:none;
+}
+.left-nav{
+    height:717px;
+    background:#fff;
+}
+.min-wrap{
+    width:1200px;
+    margin:0 auto;
+    display:flex;
+    height:717px;
+    .main-content{
+        flex:1;
+        background:#fff;
+        padding:0 60px;
+        &-top{
+            line-height: 1;
+            padding:39px 0 71px 0 ;
+            &-name{
+                font-size: 18px;
+                color:#0F0F0F;
+                margin-right: 5px;         
+            }
+            &-tel{
+                margin-left: 29px;  
+                font-size: 14px;
+                color:#949494;
+            }
+        }
+        ul{
+            list-style: none;
+            display:flex;
+            li{
+                display:flex;
+                flex:1;
+                background:#F5F5F5;
+                height:182px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                &:nth-child(2){
+                    margin:0 20px;
+                }
+                .pro-label{
+                    font-size: 21px;
+                    color:#949494;
+                }
+                .integral{
+                    color:#F8773E;
+                    font-size: 47px;
+                }
+                img{
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+    }
+}

@@ -47,6 +47,10 @@
   <ItemGroup>
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+	<Compile Include="AppModel\News\CompleteTestResponse.cs" />
+    <Compile Include="AppModel\News\CompleteTestRequest.cs" />
+    <Compile Include="AppModel\News\GetNewsTestResponse.cs" />
+    <Compile Include="AppModel\News\GetNewsTestRequest.cs" />
     <Compile Include="AppModel\GetMenu\AppMenu.cs" />
     <Compile Include="AppModel\GetMenu\AppSubMenu.cs" />
     <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="Common\BranchRank.cs" />
     <Compile Include="Common\Comment.cs" />
     <Compile Include="Common\DwWork.cs" />
+	<Compile Include="Common\NewsTest.cs" />
     <Compile Include="Common\PartyInfo.cs" />
     <Compile Include="Common\News.cs" />
     <Compile Include="Common\Attachment.cs" />

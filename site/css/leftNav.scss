@@ -1,0 +1,38 @@
+.personal-info{
+    display:flex;
+    flex-direction: column;
+    width:240px;
+    align-items: center;
+    padding-top:52px;
+    background:#fff;
+    margin-right: 18px;
+      & > img{
+        width:135px;
+        height:135px;
+        border-radius: 50%;
+        margin-bottom: 35px;
+    }
+    ul{
+        list-style: none;
+        padding:0;
+        li{
+            height:49px;
+            display:flex;
+            align-items: center;
+            img{
+                width:30px;
+                height:30px;
+                margin-right: 4px;
+            }
+            a{
+                display:inline-block;
+                height:49px;
+                width:100%;
+                line-height: 49px;
+                font-size: 18px;
+                color:#949494;
+                text-decoration: none;
+            }
+        }
+    }
+}

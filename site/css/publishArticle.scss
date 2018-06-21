@@ -11,7 +11,7 @@ html,body{
     padding:0 px2rem(55);
 }
 .publish{
-    font-size: px2rem(24);
+    font-size: px2rem(24) !important;
     padding-top:px2rem(61);
     color:#949494;
     &-title{
@@ -24,6 +24,7 @@ html,body{
         margin-bottom:px2rem(20);
         -webkit-appearance: none;
         border: none ;  
+        font-size: px2rem(24) !important
     }
     &-type{
         width:px2rem(150);
@@ -33,6 +34,7 @@ html,body{
         margin-bottom:px2rem(20);
         outline: none;
         padding-left:px2rem(38);
+        font-size: px2rem(24) !important
     }
     &-content{
         height:px2rem(600);
@@ -43,6 +45,7 @@ html,body{
         outline: none;
         padding:px2rem(22) px2rem(38);
         margin-bottom:px2rem(121);
+        font-size: px2rem(24) !important
     }
     &-btn{
         height:px2rem(84);

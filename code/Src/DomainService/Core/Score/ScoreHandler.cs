@@ -51,8 +51,6 @@ namespace Eagles.DomainService.Core.Score
                 response.ErrorCode = "96";
                 response.Message = "商品信息不存在";
             }
-            
-            
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分
             var userScore = userInfo.Score; //用户积分
@@ -72,8 +70,20 @@ namespace Eagles.DomainService.Core.Score
                 District = request.District,
                 CreateTime = DateTime.Now
             };
-            iScoreAccess.AppScoreExchange(order, userScore);
-
+            //订单表、流水表
+            var result = iScoreAccess.AppScoreExchange(order, userScore);
+            //更新用户积分
+            util.EditUserScore(tokens.UserId, score * -1);
+            if (result)
+            {
+                response.ErrorCode = "00";
+                response.Message = "兑换成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "兑换失败";
+            }
             return response;
         }
 

@@ -1,0 +1,82 @@
+/**
+* 分享详情 
+**/
+
+.qtui-article {
+    padding: 20px 16px;
+    background-color: #ffffff;
+    .title-abc {
+        font-size: 18px;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+    p {
+        margin: 0 0 12px;
+        font-size: 16px;
+        color: #555555;
+    }
+    .share__people--wrapper {
+        margin-bottom: 16px;
+        .publish-status {
+            margin-top: 20px;
+        }
+        .share__people--img {
+            float: left;
+            width: 32px;
+            height: 32px;
+            border-radius: 100%;
+            margin-right: 8px;
+        }
+        .share__people--name {
+            float: left;
+            font-size: 13px;
+            margin-right: 8px;
+            line-height: 32px;
+            color: #3D82E1;
+            position: relative;
+            top: 1px;
+        }
+        .share__people--time {
+            font-size: 12px;
+            color: #919191;
+            line-height: 32px;
+            position: relative;
+            top: 1px;
+        }
+        .concern {
+            border-radius: 3px;
+            font-size: 13px;
+            width: 64px;
+            height: 28px;
+            text-align: center;
+            line-height: 28px;
+            margin-top: 2px;
+            float: right;
+        }
+        .add-concern {
+            background: #3D82E1;
+            color: #ffffff;
+        }
+        .del-concern {
+            background: #ffffff;
+            color: #3D82E1;
+            border: 1px solid #3D82E1;
+            line-height: 26px
+        }
+    }
+    .share__people--wrapper:after {
+        clear: both;
+        display: block;
+        content: "";
+    }
+    .details_image {
+        display: block;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        margin-bottom: 10px;
+    }
+}

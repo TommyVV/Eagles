@@ -1,0 +1,45 @@
+{
+    "code": 0,
+    "data": {
+        "shareList": [
+            {
+                "approvalStatus": 0,
+                "createTime": 45102,
+                "shareId": "测试内容3071",
+                "indroduction": "测试内容jbm2",
+                "price": 75117,
+                "rejectReason": "",
+                "title": "测试内容nbbh"
+            },
+            {
+                "approvalStatus": 1,
+                "createTime": 45102,
+                "shareId": "测试内容3071",
+                "indroduction": "测试内容jbm2",
+                "price": 75117,
+                "rejectReason": "",
+                "title": "测试内容nbbh"
+            },
+            {
+                "approvalStatus": 2,
+                "createTime": 45102,
+                "shareId": "测试内容3071",
+                "indroduction": "测试内容jbm2",
+                "price": 75117,
+                "rejectReason": "",
+                "title": "测试内容nbbh"
+            },
+            {
+                "approvalStatus": 3,
+                "createTime": 45102,
+                "shareId": "测试内容3071",
+                "indroduction": "测试内容jbm2",
+                "price": 75117,
+                "rejectReason": "含敏感内容",
+                "title": "测试内容nbbh"
+            }
+        ],
+        "totalSize": 20
+    },
+    "message": "测试内容os1d"
+}

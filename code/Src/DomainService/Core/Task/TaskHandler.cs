@@ -109,7 +109,7 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iTaskAccess.RemoveTaskStep(request.TaskId);
+            var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -181,7 +181,7 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iTaskAccess.EditTaskComment(request.TaskId, request.CommentUserId, request.Comment);
+            var result = iTaskAccess.EditTaskComment(tokens.OrgId, request.TaskId, request.CommentUserId, request.Comment);
             if (result > 0)
             {
                 response.ErrorCode = "00";

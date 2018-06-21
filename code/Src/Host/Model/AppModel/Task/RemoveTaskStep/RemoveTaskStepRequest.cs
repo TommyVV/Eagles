@@ -11,5 +11,10 @@ namespace Eagles.Application.Model.AppModel.Task.RemoveTaskStep
         /// 任务Id
         /// </summary>
         public int TaskId { get; set; }
+
+        /// <summary>
+        /// 步骤Id
+        /// </summary>
+        public int StepId { get; set; }
     }
 }

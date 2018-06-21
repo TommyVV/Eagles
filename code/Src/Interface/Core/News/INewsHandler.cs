@@ -14,5 +14,7 @@ namespace Eagles.Interface.Core.News
         GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request);
 
         GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request);
+
+        GetNewsTestResponse GetNewsTest(GetNewsTestRequest request);
     }
 }

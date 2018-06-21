@@ -1,0 +1,121 @@
+/*
+* 需求列表的item
+*/
+
+.demand__item {
+    padding: 20px 16px 16px; // border-top: 1px solid #d8d8d8;
+    background-color: #ffffff;
+    position: relative;
+    cursor: pointer;
+    &:first-child:before {
+        display: none;
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 1px;
+        border-top: 1px solid #D9D9D9;
+        color: #D9D9D9;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    &:active {
+        background-color: #ECECEC;
+    }
+    .demand__item--name {
+        font-size: 18px;
+        color: #333333;
+        line-height: 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .demand__item--content {
+        font-size: 14px;
+        color: #999999;
+        margin-top: 8px; 
+    }
+    .demand_item--info {
+        margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        .demand__info--user {
+            color: #999999;
+            font-size: 12px;
+            .demand__info--type {
+                border: 1px solid #3D82E1;
+                border-radius: 4px;
+                font-size: 12px;
+                height: 20px;
+                padding: 2px 6px;
+                color: #3D82E1;
+                margin-left: 16px;
+            }
+        }
+        .demand_select--icon {
+            font-size: 18px;
+        }
+        .qtui-icon-success {
+            color: #3D82E1;
+        }
+    }
+    .demand-item__info__user {
+        font-size: 12px;
+        color: #999;
+    }
+    .demand_item--wrapper {
+        .demand__info--state {
+            background: #81CD4A;
+            border-radius: 4px;
+            color: #ffffff;
+            padding: 3px 5px;
+            font-size: 12px;
+            img {
+                width: 14px;
+                margin-right: 2px;
+            }
+        }
+        .demand__info--reason {
+            color: #666666;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+    }
+    .demand-item-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        .demand-btn {
+            display: inline-block;
+            border-radius: 2px; // padding: 3px 10px;
+            font-size: 13px;
+            line-height: 24px;
+            height: 24px;
+            width: 48px;
+            text-align: center;
+            &.del {
+                color: #666666;
+                border: 1px solid #666666;
+            }
+            &.edit {
+                border: 1px solid #3D82E1;
+                color: #3D82E1;
+                margin-left: 16px;
+            }
+        }
+        .share-status--wrapper {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis
+        }
+    }
+}
+.demand__item:hover {
+    background: #ECECEC;
+}
