@@ -9,5 +9,7 @@ namespace Eagles.Interface.DataAccess.NewsDa
         List<TbNews> GetModuleNews(int moduleId,int appId,int count);
 
         TbNews GetNewsDetail(int newsId, int appId);
+
+        TbNews GetNewsTest(int testId);
     }
 }

@@ -7,9 +7,9 @@ namespace Eagles.DomainService.Model.Exercises
     public class TbQuestAnwser
     {
         /// <summary>
-        /// 选项名称
+        /// 答案选项
         /// </summary>
-        public string Answer { get; set; }
+        public string AnswerOptions { get; set; }
         /// <summary>
         /// 选项编号
         /// </summary>

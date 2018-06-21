@@ -45,6 +45,7 @@
     <Compile Include="App\TbAppModule.cs" />
     <Compile Include="Authority\TbAuthority.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
+    <Compile Include="Exercises\TbQuestEx.cs" />
     <Compile Include="News\TbSystemNews.cs" />
     <Compile Include="Org\TbBranch.cs" />
     <Compile Include="ImportLog\TbImportLog.cs" />

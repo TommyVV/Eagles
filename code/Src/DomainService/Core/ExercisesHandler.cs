@@ -56,7 +56,7 @@ namespace Eagles.DomainService.Core
                     IsImg = string.IsNullOrWhiteSpace(x.ImageUrl),
                     IsTrue = x.IsRight == 0,
                     OptionId = x.AnswerId,
-                    OptionName = x.Answer,
+                    OptionName = x.AnswerOptions,
                 }).ToList(),
                 MultipleCount = result.MultipleCount,
                 Multiple = result.Multiple,
@@ -121,7 +121,7 @@ namespace Eagles.DomainService.Core
                 //todo 事务修改 批量修改选项信息
                 int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
                 {
-                    Answer = x.OptionName,
+                    AnswerOptions = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
                     ImageUrl = x.IsImg ? x.Img : string.Empty,
                     IsRight = x.IsTrue ? 0 : 1,
@@ -150,7 +150,7 @@ namespace Eagles.DomainService.Core
                 //todo 事务添加 批量新增选项信息
                 int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
                 {
-                    Answer = x.OptionName,
+                    AnswerOptions = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
                     ImageUrl = x.IsImg ? x.Img : string.Empty,
                     IsRight = x.IsTrue ? 0 : 1,

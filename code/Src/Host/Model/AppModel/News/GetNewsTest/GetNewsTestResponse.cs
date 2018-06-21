@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.AppModel.News.GetNewsTest
         /// <summary>
         /// 
         /// </summary>
-        private List<AppQuestion> TestList { get; set; }
+        public List<AppQuestion> TestList { get; set; }
     }
 }

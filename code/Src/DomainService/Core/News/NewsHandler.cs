@@ -158,8 +158,55 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "TestId 非法");
             }
+            //response.TestList = newsDa.GetNewsTest(request.TestId);
 
-            
+
+
+            //if (menus == null || !menus.Any())
+            //{
+            //    return response;
+            //}
+
+            //var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.AppModel.GetMenu.AppMenu
+            //{
+            //    MenuId = x.MenuId,
+            //    MenuName = x.MenuName,
+            //    TargetUrl = x.TragetUrl,
+            //    SubMenus = new List<AppSubMenu>(),
+            //    HasSubMenu = false
+
+            //}).ToList();
+
+            //var secondMenu = menus.Where(x => x.Level == "2").Select(x =>
+            //    new AppSubMenu()
+            //    {
+            //        MenuId = x.MenuId,
+            //        MenuName = x.MenuName,
+            //        TargetUrl = x.TragetUrl,
+            //        ParentMenuId = x.ParentMenuId,
+            //    }).ToList();
+
+            //// build relations 
+
+            //mainMenu.ForEach(x =>
+            //{
+            //    var sub = secondMenu.FindAll(y => y.ParentMenuId == x.MenuId).ToList();
+            //    if (sub.Any())
+            //    {
+            //        x.SubMenus = sub;
+            //        x.HasSubMenu = true;
+            //    }
+            //});
+
+            //response.AppMenus = mainMenu;
+
+
+
+
+
+
+
+
             return response;
         }
     }
