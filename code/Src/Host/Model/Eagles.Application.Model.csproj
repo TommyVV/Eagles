@@ -160,12 +160,6 @@
     <Compile Include="AppModel\User\Register\RegisterResponse.cs" />
     <Compile Include="AppModel\User\Token\TokenRequest.cs" />
     <Compile Include="AppModel\User\Token\TokenResponse.cs" />
-    <Compile Include="DeliverGoods\AlterDeliverGoodsInfoRequest.cs" />
-    <Compile Include="DeliverGoods\DeliverGoodsInfo.cs" />
-    <Compile Include="DeliverGoods\DeliverGoodsRequset.cs" />
-    <Compile Include="DeliverGoods\DeliverGoodsResponse.cs" />
-    <Compile Include="DeliverGoods\GetDeliverGoodsInfoRequest.cs" />
-    <Compile Include="DeliverGoods\GetDeliverGoodsInfoResponse.cs" />
     <Compile Include="ActivityTask\Model\ActivityTaskModel.cs" />
     <Compile Include="ActivityTask\Model\ActivityTaskDetailModel.cs" />
     <Compile Include="ActivityTask\Requset\GetActivityTaskRequset.cs" />

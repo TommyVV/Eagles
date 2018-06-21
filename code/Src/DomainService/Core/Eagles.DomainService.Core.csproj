@@ -64,9 +64,13 @@
     <Compile Include="ColumnHandler.cs" />
     <Compile Include="DataBase\ActivityTaskDataAccess.cs" />
     <Compile Include="DataBase\ColumnDataAccess.cs" />
+    <Compile Include="DataBase\GoodsDataAccess.cs" />
+    <Compile Include="DataBase\MenusDataAccess.cs" />
     <Compile Include="DataBase\NewsDataAccess.cs" />
     <Compile Include="DataBase\OrganizationDataAccess.cs" />
     <Compile Include="DataBase\PartyMemberDataAccess.cs" />
+    <Compile Include="GoodsHandler.cs" />
+    <Compile Include="MenusHandler.cs" />
     <Compile Include="NewsHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
     <Compile Include="OrganizationHandler.cs" />

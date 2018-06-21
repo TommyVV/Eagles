@@ -254,6 +254,8 @@
     <Compile Include="Controllers\App\AppMenuController.cs" />
     <Compile Include="Controllers\App\AppModuleController.cs" />
     <Compile Include="Controllers\ActivityTaskController.cs" />
+    <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\PartyMemberController.cs" />
     <Compile Include="Controllers\NewController.cs" />

@@ -34,8 +34,7 @@ namespace Eagles.DomainService.Core
 
             TB_NEWS mod;
 
-         
-
+        
             if (requset.Info.NewsId > 0)
             {
                 mod = new TB_NEWS

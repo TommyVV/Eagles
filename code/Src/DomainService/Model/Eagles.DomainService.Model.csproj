@@ -44,6 +44,7 @@
     <Compile Include="Activity\TB_ACTIVITY.cs" />
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
+    <Compile Include="App\TB_APP_MENU.cs" />
     <Compile Include="Authority\Authority.cs" />
     <Compile Include="Column\TB_APP_MODULE.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Org\TB_ORG_INFO.cs" />
     <Compile Include="PartyMember\TB_USER_INFO.cs" />
     <Compile Include="PartyMember\TB_USER_RELATIONSHIP.cs" />
+    <Compile Include="Product\TB_PRODUCT.cs" />
     <Compile Include="Sms\ValidCode.cs" />
     <Compile Include="User\MeetingUser.cs" />
     <Compile Include="News\TB_NEWS.cs" />

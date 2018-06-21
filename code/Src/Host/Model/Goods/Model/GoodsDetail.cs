@@ -31,7 +31,7 @@ namespace Eagles.Application.Model.Goods.Model
         /// <summary>
         /// 参考价格
         /// </summary>
-        public int ReferePrice { get; set; }
+        public decimal ReferePrice { get; set; }
 
         /// <summary>
         /// 内容 json格式 图片 文字
@@ -41,12 +41,12 @@ namespace Eagles.Application.Model.Goods.Model
         /// <summary>
         /// 小图
         /// </summary>
-        public string ColumnIcon { get; set; }
+        public string GoodsIcon { get; set; }
 
         /// <summary>
         /// 大图
         /// </summary>
-        public string ColumnImg { get; set; }
+        public string GoodsImg { get; set; }
 
     }
 }
