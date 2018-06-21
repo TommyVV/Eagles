@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Menus.Model
         /// <summary>
         /// 机构ID
         /// </summary>
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
 
         /// <summary>
         /// 机构名称
@@ -19,7 +19,7 @@ namespace Eagles.Application.Model.Menus.Model
         /// <summary>
         /// 级菜单名称
         /// </summary>
-        public string MenuId { get; set; }
+        public int MenuId { get; set; }
 
         /// <summary>
         /// 级菜单名称
@@ -39,7 +39,7 @@ namespace Eagles.Application.Model.Menus.Model
         /// <summary>
         /// 父菜单id 新建二级菜单时必须传 
         /// </summary>
-        public string ParentId { get; set; }
+        public int ParentId { get; set; }
 
     }
 

@@ -14,7 +14,7 @@ namespace Eagles.Application.Model.Goods.Model
         /// <summary>
         /// 商品名称
         /// </summary>
-        public int GoodsName { get; set; }
+        public string GoodsName { get; set; }
 
         /// <summary>
         /// 库存

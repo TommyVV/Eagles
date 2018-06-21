@@ -1,0 +1,13 @@
+{
+    "code": 0,
+    "data": {
+       "list": [{
+           "avatar": "https://avatarcdn.qingtui.im/d4b3e7a0efa54af5ac96f783b3890199.jpg@!84x",
+            "createTime": 1523354324752,
+            "dealPrice": 111,
+            "userName": "王颖"
+       }],
+       "totalSize": 11
+    },
+    "message": "测试内容"
+}

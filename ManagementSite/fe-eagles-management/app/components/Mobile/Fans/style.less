@@ -1,0 +1,76 @@
+/*
+* 粉丝列表的item
+*/
+
+.fans-item {
+    display: flex;
+    // border-bottom: 1px solid #D8D8D8;
+    position: relative;
+    padding: 15px 16px;
+    justify-content: space-between;
+    &:first-child:before {
+        display: none;
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 1px;
+        border-top: 1px solid #D9D9D9;
+        color: #D9D9D9;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    .item-info {
+        width: 81%;
+        display: flex;
+    }
+    .fans-img-div {
+        width: 48px;
+        height: 48px;
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+        }
+    }
+    .fans-info {
+        margin-left: 8px;
+        width: 76%;
+        .name {
+            font-size: 16px;
+            color: #333333;
+        }
+        .detail {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #999999;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    .fans-div {
+        margin-top: 10px;
+        text-align: right;
+        .concern {
+            border-radius: 6px;
+            color: #3D82E1;
+            font-size: 13px;
+            width: 58px;
+            height: 28px;
+            text-align: center;
+            display: inline-block;
+            line-height: 26px;
+            border: 1px solid #3D82E1;
+        }
+    }
+}
+
+.fans-item:active {
+    background-color: #ECECEC;
+}

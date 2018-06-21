@@ -48,6 +48,8 @@
     <Compile Include="Curd\ICurdHandler.cs" />
     <Compile Include="DataBase\ActivityAccess\IActivityAccess.cs" />
     <Compile Include="DataBase\IActivityTaskDataAccess.cs" />
+    <Compile Include="DataBase\IGoodsDataAccess.cs" />
+    <Compile Include="DataBase\IMenusDataAccess.cs" />
     <Compile Include="DataBase\INewsDataAccess.cs" />
     <Compile Include="DataBase\IColumnDataAccess.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
@@ -61,6 +63,8 @@
     <Compile Include="DataBase\UserInfo\IUserInfo.cs" />
     <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IColumnHandler.cs" />
+    <Compile Include="IGoodsHandler.cs" />
+    <Compile Include="IMenusHandler.cs" />
     <Compile Include="INewsHandler.cs" />
     <Compile Include="IOrganizationHandler.cs" />
     <Compile Include="IPartyMemberHandler.cs" />

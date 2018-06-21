@@ -1,0 +1,61 @@
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVUaW1lIjoxNTIyODA3MjQ1LCJ1c2VySWQiOiIzNGQwN2JhODU0ZDM1NWZmOWIyZDFkNWE3MGVmMDljOSJ9.OtkEh9TlXi3B-3zQmXhgrndbw4GBgoEfWsRAN8txATU",
+        "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVUaW1lIjoxNTIyODA3MjQ1LCJxaW5ndHVpIjoicWluZ3R1aSIsInVzZXJJZCI6IjM0ZDA3YmE4NTRkMzU1ZmY5YjJkMWQ1YTcwZWYwOWM5In0.PVJLr4xoXlhf7Ird-ZwWCzXsOOKPqxmAiCvSas8OOjU",
+        "userData": {
+            "hashAttributes": {
+                "id": "1716C40F-2DA2-46A8-89D8-F3AC7924AE4C",
+                "createTime": 1522748325000,
+                "updateTime": 1522748325000
+            },
+            "userId": "34d07ba854d355ff9b2d1d5a70ef09c9",
+            "userName": "刘强",
+            "openId": "0b263e1f9d314a9298f191d6ef4a3a99",
+            "avatar": "https://avatarcdn.qingtui.im/b0bc11c3fd954090b891140bd6d52fb8.jpg",
+            "mobile": "13996089164",
+            "mail": null,
+            "appId": "4605896140",
+            "id": "1716C40F-2DA2-46A8-89D8-F3AC7924AE4C",
+            "updateTime": 1522748325000,
+            "createTime": 1522748325000
+        },
+        "appDataList": [
+            {
+                "hashAttributes": {
+                    "id": "E20D89E7-3718-4EEF-9513-CA7BC6FA3F32",
+                    "createTime": 1522749655000,
+                    "updateTime": 1522749655000
+                },
+                "name": "参数化设计仿真",
+                "briefDescription": "产品应用文字介绍",
+                "introduction": "多专业、全流程、全生命周期的服务能力，为您提供产业选择、招商产业组团与政策设计、基础设施规划与开发模式设计等一体化咨询服务。",
+                "icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522759326297&di=48d0b096c9536862a108f89e465aef62&imgtype=0&src=http%3A%2F%2Fwww.jituwang.com%2Fuploads%2Fallimg%2F150906%2F258342-150Z622160473.jpg",
+                "image": "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=c3ce0b097d3e6709aa0d4dad5aaef458/63d9f2d3572c11dfcda4480d612762d0f703c2a3.jpg",
+                "dynamics": "1.发布应用第一个移动端版本",
+                "flag": 0,
+                "id": "E20D89E7-3718-4EEF-9513-CA7BC6FA3F32",
+                "updateTime": 1522749655000,
+                "createTime": 1522749655000
+            },
+            {
+                "hashAttributes": {
+                    "id": "FC7FC443-525D-4BE6-B9B9-294E2C8569FF",
+                    "createTime": 1522749510000,
+                    "updateTime": 1522749510000
+                },
+                "name": "产业咨询",
+                "briefDescription": "产品应用文字介绍",
+                "introduction": "多专业、全流程、全生命周期的服务能力，为您提供产业选择、招商产业组团与政策设计、基础设施规划与开发模式设计等一体化咨询服务。",
+                "icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522759326297&di=48d0b096c9536862a108f89e465aef62&imgtype=0&src=http%3A%2F%2Fwww.jituwang.com%2Fuploads%2Fallimg%2F150906%2F258342-150Z622160473.jpg",
+                "image": "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=c3ce0b097d3e6709aa0d4dad5aaef458/63d9f2d3572c11dfcda4480d612762d0f703c2a3.jpg",
+                "dynamics": "1.发布应用第一个移动端版本",
+                "flag": 0,
+                "id": "FC7FC443-525D-4BE6-B9B9-294E2C8569FF",
+                "updateTime": 1522749510000,
+                "createTime": 1522749510000
+            }
+        ]
+    }
+}

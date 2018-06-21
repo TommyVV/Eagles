@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Goods.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GoodsRequest:OrgListRequestBase
+    public class GetGoodsRequest : OrgListRequestBase
     {
         /// <summary>
         /// 商品名称

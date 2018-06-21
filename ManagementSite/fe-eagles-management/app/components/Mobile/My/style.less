@@ -1,0 +1,76 @@
+/*
+* 我的页面
+*/
+
+.my-info {
+    display: flex;
+    padding: 15px 16px;
+    background-color: #ffffff;
+    margin-bottom: 8px;
+    .my-img {
+        flex-grow: 1;
+        max-width: 68px;
+        img {
+            border-radius: 50%;
+            width: 68px;
+        }
+    }
+    .my-info-detail {
+        flex-grow: 2;
+        margin-left: 12px;
+        .name {
+            color: #333333;
+            margin-top: 5px;
+            font-size: 18px;
+        }
+        .my-follow-list {
+            margin-top: 7px;
+            .concern {
+                color: #999999;
+                font-size: 12px;
+                span {
+                    color: #3D82E1;
+                    font-size: 18px;
+                    margin-right: 4px;
+                }
+            }
+            .fans {
+                margin-left: 24px;
+                color: #999999;
+                font-size: 12px;
+                span {
+                    color: #3D82E1;
+                    margin-right: 4px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    .is-follow {
+        flex-grow: 1;
+        text-align: right;
+        margin-top: 20px;
+         .concern {
+        background: #3D82E1;
+        border-radius: 6px;
+        color: #ffffff;
+        font-size: 13px;
+        width: 58px;
+        height: 28px;
+        text-align: center;
+        display: inline-block;
+        line-height: 26px;
+    }
+    .concerned {
+        border-radius: 6px;
+        color: #3D82E1;
+        font-size: 13px;
+        width: 58px;
+        height: 28px;
+        text-align: center;
+        display: inline-block;
+        line-height: 28px;
+        border: 1px solid #3D82E1;
+    }
+    }
+}
