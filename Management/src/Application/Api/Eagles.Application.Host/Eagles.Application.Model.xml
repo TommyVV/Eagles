@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Eagles.Application.Model</name>
+    </assembly>
+    <members>
+        <member name="T:Eagles.Application.Model.RequestBase">
+            <summary>
+            基本的 凭证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RequestBase.Token">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RequestBase.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ResponseBase">
+            <summary>
+            基本的返回
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ResponseBase.DateTime">
+            <summary>
+            时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ResponseBase.ErrorCode">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ResponseBase.Message">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ResponseBase.IsSuccess">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Test.TestRequest.Name">
+            <summary>
+            user Name 
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Test.AreaInfo.AreaId">
+            <summary>
+            area id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Test.AreaInfo.AreaName">
+            <summary>
+            area name 
+            </summary>
+        </member>
+    </members>
+</doc>
