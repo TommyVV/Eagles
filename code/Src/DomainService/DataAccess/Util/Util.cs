@@ -38,7 +38,7 @@ namespace Ealges.DomianService.DataAccess.Util
 
         public int EditUserScore(int userId, int score)
         {
-            return dbManager.Excuted(@"update eagles.tb_user_info set Score += @Score where UserId = @UserId", new { UserId = userId });
+            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score + @Score where UserId = @UserId", new {UserId = userId, Score = score});
         }
     }
 }

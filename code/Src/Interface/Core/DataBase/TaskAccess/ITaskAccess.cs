@@ -9,13 +9,13 @@ namespace Eagles.Interface.Core.DataBase.TaskAccess
     {
         int CreateTask(int orgId, int branchId, int toUserId, DomainService.Model.Task.Task task);
 
-        int RemoveTaskStep(int taskId);
+        int RemoveTaskStep(int taskId, int stepId);
 
         int EditTaskAccept(TaskTypeEnum type, int taskId);
 
         bool EditTaskComplete(int taskId, int isPublic);
 
-        int EditTaskComment(int taskId, int userId, string content);
+        int EditTaskComment(int orgId, int taskId, int userId, string content);
         
         int EditTaskStep(ActionEnum action, int orgId, int branchId, int userId, string content, string taskId = null, string stepId = null);
 

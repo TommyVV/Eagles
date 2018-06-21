@@ -31,8 +31,8 @@ Address = order.Address, Province = order.Province, City = order.City, District 
                 new TransactionCommand()
                 {
                     CommandString = "insert into eagles.tb_user_score_trace (OrgId,UserId,CreateTime,Score,Comment,OriScore) value (@OrgId,@UserId,@CreateTime,@Score,@Comment,@OriScore) ",
-                    Parameter =  new {OrgId = order.OperId}
-                },
+                    Parameter =  new {OrgId = order.OperId, UserId = order.UserId, CreateTime = order.CreateTime, Score = order.Score, Comment = "兑换商品积分扣除", OriScore = userScore}
+                }
             };
             return dbManager.ExcutedByTransaction(commands);
         }

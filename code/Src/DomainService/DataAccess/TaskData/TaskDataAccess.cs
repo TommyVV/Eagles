@@ -88,9 +88,9 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return result;
         }
 
-        public int RemoveTaskStep(int taskId)
+        public int RemoveTaskStep(int taskId, int stepId)
         {
-            return dbManager.Excuted("delete eagles.tb_user_task_step where TaskId = @TaskId ", new {TaskId = taskId});
+            return dbManager.Excuted("delete from eagles.tb_user_task_step where TaskId = @TaskId and StepId = @StepId", new { TaskId = taskId, StepId = stepId });
         }
 
         public int EditTaskAccept(TaskTypeEnum type, int taskId)
@@ -134,13 +134,15 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return dbManager.ExcutedByTransaction(commands);
         }
 
-        public int EditTaskComment(int taskId, int userId, string content)
+        public int EditTaskComment(int orgId, int taskId, int userId, string content)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_comment(Id,Content,Createtime,UserId,ReviewStatus) value (@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
+            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,ReviewStatus) value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
                 new
                 {
+                    OrgId = orgId,
                     Id = taskId,
                     Content = content,
+                    Createtime = DateTime.Now,
                     UserId = userId,
                     ReviewStatus = "-1"
                 });
