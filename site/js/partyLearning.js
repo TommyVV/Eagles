@@ -26,6 +26,9 @@ class CalculateScreen {
 			$('#left-nav').load('leftNav.html', () => {
 
 			})
+			$('#footer').load('footer.html', () => {
+
+			})
 			$('body').css('background-color', 'rgb(248,248,248)');
 		} else {
 			$('.mobile').show();

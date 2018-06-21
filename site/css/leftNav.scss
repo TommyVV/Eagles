@@ -5,7 +5,8 @@
     align-items: center;
     padding-top:52px;
     background:#fff;
-    img{
+    margin-right: 18px;
+      & > img{
         width:135px;
         height:135px;
         border-radius: 50%;
@@ -16,6 +17,13 @@
         padding:0;
         li{
             height:49px;
+            display:flex;
+            align-items: center;
+            img{
+                width:30px;
+                height:30px;
+                margin-right: 4px;
+            }
             a{
                 display:inline-block;
                 height:49px;

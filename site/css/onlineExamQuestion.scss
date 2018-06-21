@@ -44,10 +44,12 @@ html,body{
                 label{
                     font-weight: 400;
                     width:100%;
-                    display:inline-block;
+                    // display:inline-block;
+                    display:flex;
                     &-explain{
                         padding-left:px2rem(18);
                     }
+                    
                 }
                 
             }
@@ -122,21 +124,36 @@ html,body{
 
 input[type=radio] + span{
     display:inline-block;
-    width:10px;
-    height:10px;
+    background:url(./../icons/sel_no@2x.png);
+    width:15px;
+    height:15px;
+    background-size: cover;
+    margin-right: 9px;
 }
 input[type=radio]:checked + span{
     // display:inline-block;
-    background:peru;
+    background:url(./../icons/sel_yes@2x.png);
+    background-size: cover;
     border-radius: 50%;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
 }
 
 input[type=checkbox] + span{
+    background:url(./../icons/sel_no@2x.png);
+    background-size: cover;
     display:inline-block;
-    width:10px;
-    height:10px;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
+    background-size: cover;
 }
 input[type=checkbox]:checked + span{
     // display:inline-block;
-    background:peru;
+    background:url(./../icons/sel_yes@2x.png);
+    background-size: cover;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
 }

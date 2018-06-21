@@ -366,6 +366,11 @@ body{
 			flex:1;
 			font-size: 20px;
 			color:#0F0F0F;
+			display:flex;
+			align-items: center;
+			img{
+				width:18px;
+			}
 		}
 		.more{
 			font-size: 14px;

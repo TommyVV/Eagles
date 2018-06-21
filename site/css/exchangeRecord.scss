@@ -1,31 +1,147 @@
 @import 'common/px2rem.scss';
-.record-item{
-    width:100%;
-    background-color: white;
-    height: px2rem(300);
-    position: relative;
-    border-top:px2rem(40) solid #f8f8f8; 
-    padding: px2rem(30);
-    img{
-        width:px2rem(200);
-        height: px2rem(200);
+
+@media screen and (max-width: 768px) {
+    #pc-header{
+        display: none;
     }
-    .record-content{
-        position: absolute;
-        left:px2rem(250);;
-        right:px2rem(30);
-        top:px2rem(30);
-        height: px2rem(200);
-        .item-title{
-            color: #141414;
-            font-size: px2rem(30);
+    #pc-footer{
+		display: none;
+	}
+    .dj-title{
+        display:none;
+    }
+    .dj-container{
+        padding: 0px 17.5px;
+    }
+    .record-item{
+        width:100%;
+        background-color: white;
+        height: px2rem(300);
+        position: relative;
+        border-top:px2rem(40) solid #f8f8f8; 
+        padding: px2rem(30);
+        .orderNum{
+            display: none;
         }
-        .item-time{
-            color: #949494;
-            font-size: px2rem(24);
+        img{
+            width:px2rem(200);
+            height: px2rem(200);
+        }
+        .record-content{
             position: absolute;
-            left: 0;
-            bottom: 3px;
+            left:px2rem(250);;
+            right:px2rem(30);
+            top:px2rem(30);
+            height: px2rem(200);
+            .item-title{
+                color: #141414;
+                font-size: px2rem(30);
+            }
+            .point{
+                display: none;
+            }
+            .item-time{
+                color: #949494;
+                font-size: px2rem(24);
+                position: absolute;
+                left: 0;
+                bottom: 3px;
+            }
+        }
+    }
+}
+@media screen and (min-width: 768px) {
+    .dj-title{
+        width:1000px;
+        height:32px;
+        background:rgba(241,241,241,1);
+        margin: 12px auto 0;
+        display: flex;
+        flex-wrap: nowrap;
+        font-size:18px;
+        font-family:SourceHanSansCN-Regular;
+        color:rgba(148,148,148,1);
+        line-height:32px;
+        text-align: center;
+        .name{
+            flex: 3;
+            text-align: left;
+            box-sizing: border-box;
+            padding-left: 80px;
+            width: 0;
+        }
+        .point{
+            flex: 1;
+        }
+        .time{
+            flex: 1;
+        }
+    }
+    .dj-container{
+        padding: 30px 20px 20px;
+        width:1000px;
+        background:rgba(255,255,255,1);
+        margin: 0 auto;
+    }
+    .record-item{
+        width:960px;
+        background-color: white;
+        height: 180px;
+        border: 1px solid #F3F3F3;
+        position: relative;
+        margin-bottom: 21px;
+        .orderNum{
+            display: block;
+            height:28px;
+            background:rgba(255,239,239,1);
+            font-size:14px;
+            font-family:SourceHanSansCN-Regular;
+            color:rgba(148,148,148,1);
+            line-height:28px;
+            padding-left: 13px;
+            margin-bottom: 15px;
+        }
+        img{
+            width:120px;
+            height: 120px;
+            margin-left: 15px;
+            margin-right: 17px;
+        }
+        .record-content{
+            position: absolute;
+            left:152px;
+            right:px2rem(30);
+            top:46px;
+            height: px2rem(200);
+            .item-title{
+                width:175px;
+                font-size:16px;
+                font-family:SourceHanSansCN-Regular;
+                color:rgba(20,20,20,1);
+                line-height:24px;
+            }
+            .point{
+                font-size:18px;
+                font-family:Roboto-Regular;
+                color:rgba(20,20,20,1);
+                position: absolute;
+                right: 233px;
+                top: 53px;
+                font-size:18px;
+            }
+            .item-time{
+                color: #949494;
+                font-size: px2rem(24);
+                position: absolute;
+                right: 0;
+                top: 53px;
+                font-size:18px;
+                font-family:Roboto-Regular;
+                color:rgba(148,148,148,1);
+                span{
+                    display: none;
+                }
+            }
         }
     }
 }
