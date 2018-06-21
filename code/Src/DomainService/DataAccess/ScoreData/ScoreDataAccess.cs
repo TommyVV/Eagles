@@ -16,7 +16,7 @@ namespace Ealges.DomianService.DataAccess.ScoreData
             this.dbManager = dbManager;
         }
 
-        public bool AppScoreExchange(DomainModel.Order.Order order)
+        public bool AppScoreExchange(DomainModel.Order.Order order, int userScore)
         {
 
             var commands = new List<TransactionCommand>()
@@ -24,14 +24,14 @@ namespace Ealges.DomianService.DataAccess.ScoreData
                 new TransactionCommand()
                 {
                     CommandString = @"insert into eagles.tb_order (OrgId,ProdId,ProdName,OrderStatus,Score,Count,Address,Province,City,District,CreateTime) value 
-(@OrgId,@ProdId,@ProdName,@OrderStatus,@Score,@Count,@Address,@Province,@City,@District,@CreateTime)",
+(@OrgId,@ProdId,@ProdName,@OrderStatus,@Score,@Count,@Address,@Province,@City,@District,@CreateTime) ",
                     Parameter =  new {OrgId = order.OperId, ProdId = order.ProdId, ProdName = order.ProdName, OrderStatus = order.OrderStatus, Score = order.Score, Count = order.Count,
-Address = order.Address, Province = order.Province,City=order.City,District=order.District,order.CreateTime}
+Address = order.Address, Province = order.Province, City = order.City, District = order.District, CreateTime = order.CreateTime}
                 },
                 new TransactionCommand()
                 {
-                    CommandString = "update tb_user_task set RewardsScore=@RewardsScore where TaskId=@TaskId",
-                    Parameter =  new {RewardsScore = score, TaskId = taskId}
+                    CommandString = "insert into eagles.tb_user_score_trace (OrgId,UserId,CreateTime,Score,Comment,OriScore) value (@OrgId,@UserId,@CreateTime,@Score,@Comment,@OriScore) ",
+                    Parameter =  new {OrgId = order.OperId}
                 },
             };
             return dbManager.ExcutedByTransaction(commands);

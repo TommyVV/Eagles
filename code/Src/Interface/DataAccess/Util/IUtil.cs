@@ -26,6 +26,6 @@ namespace Eagles.Interface.DataAccess.Util
         /// <param name="userId"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        int EditUserScore(int userId, int score)
+        int EditUserScore(int userId, int score);
     }
 }

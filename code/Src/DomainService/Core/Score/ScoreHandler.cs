@@ -1,12 +1,14 @@
 ﻿using System.Linq;
+using System.Transactions;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.ScoreAccess;
+using Eagles.Interface.Core.DataBase.ProductAccess;
 using Eagles.Application.Model.AppModel.Score.GetScoreRank;
 using Eagles.Application.Model.AppModel.Score.AppScoreExchange;
 using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
-using Eagles.Interface.Core.DataBase.ProductAccess;
-using System.Transactions;
+using DomainModel = Eagles.DomainService.Model;
+using System;
 
 namespace Eagles.DomainService.Core.Score
 {
@@ -49,12 +51,28 @@ namespace Eagles.DomainService.Core.Score
                 response.ErrorCode = "96";
                 response.Message = "商品信息不存在";
             }
+            
+            
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分
             var userScore = userInfo.Score; //用户积分
             if(userScore < score)
                 throw new TransactionException("用户积分不足");
-            iScoreAccess.AppScoreExchange(tokens.UserId, request.ProductId, prodName, score, userScore);
+            var order = new DomainModel.Order.Order()
+            {
+                OrgId = tokens.OrgId,
+                ProdId = request.ProductId,
+                ProdName = prodName,
+                OrderStatus = 0,
+                Score = score,
+                Count = request.Count,
+                Address = request.Address,
+                Province = request.Province,
+                City = request.City,
+                District = request.District,
+                CreateTime = DateTime.Now
+            };
+            iScoreAccess.AppScoreExchange(order, userScore);
 
             return response;
         }
