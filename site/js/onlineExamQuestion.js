@@ -5,7 +5,7 @@ const CONFIG = {
 }
 
 class Formatter {
-    constructor(msec) {
+    constructor(msec = 0) {
         this.msec = msec;
         this.html = '';
     }
@@ -17,15 +17,14 @@ class Formatter {
 }
 
 class Countdown extends Formatter {
-    constructor({ msec }) {
+    constructor({ msec = 0 }) {
         super(msec);
-        this.msec = msec;
         this.start();
     }
     start() {
         this.interval = setInterval(() => {
             this.msec -= 1000;
-            if (this.msec <= 0) {
+            if (this.msec < 0) {
                 this.clear();
             } else {
                 this.format();
@@ -78,7 +77,7 @@ class Modal {
 }
 
 
-let countdown = new Countdown({ msec: 3609000 });
+let countdown = new Countdown({ msec: 9000 });
 let action = new Action();
 
 
@@ -116,7 +115,7 @@ $('#ques-content-button').on('click', (e) => {
 
 $('#num-modal').on('click', () => {
     action.questionId = 543;
-    return;
+    // return;
     $('#ques-modal').show();
     $('#ques-modal-wrap').removeClass('list-hide').addClass('list-show');
 })
@@ -128,7 +127,11 @@ $('#ques-modal').on('click', (e) => {
 
     }
 })
-
+$('#ques-modal').on('touchmove', (e) => {
+    // e.preventDefault();
+    e.stopPropagation()
+    console.log(123)
+})
 
 
 

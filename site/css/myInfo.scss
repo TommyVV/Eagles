@@ -7,82 +7,197 @@
 }
 html,body{
 	height: 100%;
+	background-color: rgba(248,248,248,1);
 }
 .container{
 	height: 100%;
 }
 @media screen and (max-width: 768px) {
+	#pc-header{
+		display: none;
+	}
+	#pc-footer{
+		display: none;
+	}
     .myInfoModal{
         background-color: #f8f8f8;
         min-height: 100%;
-    }
-}
-@media screen and (min-width: 768px) {
-    .myInfoModal{
-        background-color: rgba(248,248,248,1);
-        min-height: 100%;
-    } 
-}
-.myInfoBox{
-	padding-left: 0;
-	padding-right: 0;
-	background: rgba(248,248,248,1);
-	& > .item:not(:last-child){
-		margin-bottom: px2rem(20);
 	}
-    .item{
-		position: relative;
-		padding: 0 px2rem(35);
-		background:rgba(255,255,255,1);
-		& > div:not(:last-child) {
-			border-bottom: 1px solid rgba(238,238,238,1);
+	.personal-info{
+		display: none !important;
+	}
+	.myInfoBox{
+		padding-left: 0;
+		padding-right: 0;
+		background: rgba(248,248,248,1);
+		& > .item:not(:last-child){
+			margin-bottom: px2rem(20);
 		}
-		& > div{
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			.left{
-				font-size:px2rem(30);
-				font-family:SourceHanSansCN-Regular;
-				color:rgba(20,20,20,1);
-				line-height:px2rem(48);
+		.item{
+			position: relative;
+			padding: 0 px2rem(35);
+			background:rgba(255,255,255,1);
+			& > div:not(:last-child) {
+				border-bottom: 1px solid rgba(238,238,238,1);
 			}
-			.right{
-				font-size:px2rem(30);
-				font-family:SourceHanSansCN-Regular;
-				line-height:px2rem(48);
-				color:rgba(148,148,148,1);
+			& > div{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.left{
+					font-size:px2rem(30);
+					font-family:SourceHanSansCN-Regular;
+					color:rgba(20,20,20,1);
+					line-height:px2rem(48);
+				}
+				.right{
+					.edit{
+						input{
+							outline: none;
+							border: none;
+							background: rgba(237,237,237,1);
+							border-radius: px2rem(5);
+							padding: px2rem(5);
+							box-sizing: border-box;
+							height: 80%;
+							width: 53%;
+							display: inline-block;
+							font-size:px2rem(30);
+							font-family:SourceHanSansCN-Regular;
+							color:rgba(148,148,148,1);
+							line-height:px2rem(48);
+						}
+						.ensure{
+	
+						}
+						.cancel{
+	
+						}
+					}
+					font-size:px2rem(30);
+					font-family:SourceHanSansCN-Regular;
+					line-height:px2rem(48);
+					color:rgba(148,148,148,1);
+				}
 			}
-		}
-		.photo{
-			height: px2rem(190);
-			.right{
-				img{
-					display: inline-block;
-					height: px2rem(114);
-					width: px2rem(114);
-					border-radius: 50%;
+			.photo{
+				height: px2rem(190);
+				.right{
+					img{
+						display: inline-block;
+						height: px2rem(114);
+						width: px2rem(114);
+						border-radius: 50%;
+					}
+				}
+			}
+			.normal{
+				height: px2rem(79);
+			}
+			.button{
+				display: flex;
+				justify-content: center;
+				.confirmBtn{
+					margin-top: px2rem(94);
+					margin-bottom: px2rem(57);
+					width:px2rem(520);
+					height:px2rem(84);
+					background:#EE2F2F;
+					border-radius:px2rem(8);
+					text-align: center;
+					line-height: px2rem(84);
+					font-size: px2rem(30);
+					font-family:SourceHanSansCN-Regular;
+					color:rgba(255,255,255,1);
 				}
 			}
 		}
-		.normal{
-			height: px2rem(79);
+	}
+}
+@media screen and (min-width: 768px) {
+	.container{
+		width: 1200px;
+		margin: 0 auto;
+	}
+	.myInfoModal{
+        background-color: rgba(248,248,248,1);
+		min-height: 100%;
+		display: flex;
+		.col-md-offset-3{
+			margin-left: auto;
 		}
-		.button{
-			display: flex;
-			justify-content: center;
-			.confirmBtn{
-				margin-top: px2rem(94);
-				margin-bottom: px2rem(57);
-				width:px2rem(520);
-				height:px2rem(84);
-				background:#EE2F2F;
-				border-radius:px2rem(8);
-				text-align: center;
-				line-height: px2rem(84);
-				font-size: px2rem(30);
-				font-family:SourceHanSansCN-Regular;
-				color:rgba(255,255,255,1);
+	} 
+	.myInfoBox{
+		width: 940px;
+		padding-left: 0;
+		padding-right: 0;
+		background: rgba(248,248,248,1);
+		& > .item:not(:last-child){
+			margin-bottom: 10px;
+		}
+		.item{
+			position: relative;
+			padding: 0 35px;
+			background:rgba(255,255,255,1);
+			& > div:not(:last-child) {
+				border-bottom: 1px solid rgba(238,238,238,1);
+			}
+			& > div{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.left{
+					font-size:16px;
+					font-family:SourceHanSansCN-Regular;
+					color:rgba(20,20,20,1);
+					line-height:40px;
+				}
+				.right{
+					.edit{
+						input{
+							outline: none;
+							border: none;
+							background: rgba(237,237,237,1);
+							border-radius: px2rem(5);
+							padding: px2rem(5);
+							box-sizing: border-box;
+							height: 80%;
+							width: 53%;
+							display: inline-block;
+							font-size:px2rem(30);
+							font-family:SourceHanSansCN-Regular;
+							color:rgba(148,148,148,1);
+							line-height:px2rem(48);
+						}
+						.ensure{
+	
+						}
+						.cancel{
+	
+						}
+					}
+					font-size:16px;
+					font-family:SourceHanSansCN-Regular;
+					color:rgba(148,148,148,1);
+					line-height:40px;
+				}
+			}
+			.photo{
+				height: 140px;
+				.right{
+					img{
+						display: inline-block;
+						height:114px;
+						width: 114px;
+						border-radius: 50%;
+					}
+				}
+			}
+			.normal{
+				height: 40px;
+			}
+			.button{
+				display: none;
 			}
 		}
 	}

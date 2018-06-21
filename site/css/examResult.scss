@@ -40,8 +40,16 @@
             font-size: px2rem(30);
             color:#141414;
             padding-left:px2rem(37);
+            display:flex;
             span{
                 margin-right: px2rem(113);
+                display:flex;
+                align-items: center;
+                img{
+                    width:px2rem(17);
+                    height:px2rem(17);
+                    margin-right: 3px;
+                }
             }
         }
         &-list{

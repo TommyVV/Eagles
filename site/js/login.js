@@ -31,3 +31,4 @@ $('.btn-login').on('click', function (e) {
 
     window.location.href = "./index.html";
 })
+$('#pc-header').load('./head.html')
