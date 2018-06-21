@@ -31,12 +31,12 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_APP_MENU mod;
+            TbAppMenu mod;
 
 
             if (requset.Info.MenuId > 0)
             {
-                mod = new TB_APP_MENU
+                mod = new TbAppMenu
                 {
                     Level = requset.Info.MenuLevel,
                     MenuId = requset.Info.MenuId,
@@ -54,7 +54,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_APP_MENU
+                mod = new TbAppMenu
                 {
                     Level = requset.Info.MenuLevel,
                   //MenuId = requset.Info.MenuId,
@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_APP_MENU detail = dataAccess.GetMenusDetail(requset);
+            TbAppMenu detail = dataAccess.GetMenusDetail(requset);
 
 
             if (detail == null) throw new Exception("无数据");
@@ -125,7 +125,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_APP_MENU> list = dataAccess.GetNewsList(requset) ?? new List<TB_APP_MENU>();
+            List<TbAppMenu> list = dataAccess.GetNewsList(requset) ?? new List<TbAppMenu>();
 
             if (list.Count == 0) throw new Exception("无数据");
 

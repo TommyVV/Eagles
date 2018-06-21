@@ -39,7 +39,7 @@ Address = order.Address, Province = order.Province, City = order.City, District 
 
         public List<ScoreExchange> GetScoreExchangeLs(int userId)
         {
-            dbManager.Query<DomainModel.Product.Product>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
+            dbManager.Query<DomainModel.Product.TbProduct>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
             throw new System.NotImplementedException();
         }
 

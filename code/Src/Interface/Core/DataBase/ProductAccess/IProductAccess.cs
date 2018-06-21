@@ -5,8 +5,8 @@ namespace Eagles.Interface.Core.DataBase.ProductAccess
 {
     public interface IProductAccess : IInterfaceBase
     {
-        List<DomainService.Model.Product.Product> GetProduct();
+        List<DomainService.Model.Product.TbProduct> GetProduct();
 
-        DomainService.Model.Product.Product GetProductDetail(int productId);
+        DomainService.Model.Product.TbProduct GetProductDetail(int productId);
     }
 }

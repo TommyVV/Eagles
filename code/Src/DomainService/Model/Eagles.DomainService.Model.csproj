@@ -59,7 +59,7 @@
     <Compile Include="Org\TbOrgInfo.cs" />
     <Compile Include="Org\TbOrgRelationship.cs" />
     <Compile Include="Org\TbOrgSmsConfig.cs" />
-    <Compile Include="Product\Product.cs" />
+    <Compile Include="Product\TbProduct.cs" />
     <Compile Include="Exercises\TbTestQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exercises\TbQuestion.cs" />

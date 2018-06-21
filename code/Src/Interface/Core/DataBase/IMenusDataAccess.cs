@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.App;
@@ -17,14 +13,14 @@ namespace Eagles.Interface.Core.DataBase
         //int RemoveMenus(RemoveMenusRequset requset);
         //TB_PRODUCT GetMenusDetail(GetMenusDetailRequset requset);
         //List<TB_PRODUCT> GetNewsList(GetMenusRequest requset);
-        int EditNews(TB_APP_MENU mod);
+        int EditNews(TbAppMenu mod);
 
-        int CreateNews(TB_APP_MENU mod);
+        int CreateNews(TbAppMenu mod);
 
         int RemoveMenus(RemoveMenusRequset requset);
 
-        TB_APP_MENU GetMenusDetail(GetMenusDetailRequest requset);
+        TbAppMenu GetMenusDetail(GetMenusDetailRequest requset);
 
-        List<TB_APP_MENU> GetNewsList(GetMenusRequset requset);
+        List<TbAppMenu> GetNewsList(GetMenusRequset requset);
     }
 }

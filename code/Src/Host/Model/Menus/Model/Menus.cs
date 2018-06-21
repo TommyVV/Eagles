@@ -34,7 +34,7 @@ namespace Eagles.Application.Model.Menus.Model
         /// <summary>
         /// 菜单级别 
         /// </summary>
-        public MenuLevel MenuLevel { get; set; }
+        public string MenuLevel { get; set; }
 
         /// <summary>
         /// 父菜单id 新建二级菜单时必须传 

@@ -1,11 +1,12 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.Product
 {
     /// <summary>
     /// TB_PRODUCT
     /// </summary>
-    public class Product
+    public class TbProduct
     {
         public int ProdId { get; set; }
         public int OrgId { get; set; }
@@ -20,7 +21,7 @@ namespace Eagles.DomainService.Model.Product
         public int SaleCount { get; set; }
         public int Score { get; set; }
         public string SmallImageUrl { get; set; }
-        public int Status { get; set; }
+        public GoodsStatus Status { get; set; }
         public int Stock { get; set; }
         public string HtmlDescription { get; set; }
     }

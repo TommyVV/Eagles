@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.App
 {
@@ -7,7 +8,7 @@ namespace Eagles.DomainService.Model.App
     /// </summary>
     public class TbAppMenu
     {
-        public string Level { get; set; }
+        public String Level { get; set; }
         public int MenuId { get; set; }
         public string MenuName { get; set; }
         public int OrgId { get; set; }

@@ -20,7 +20,7 @@ namespace Eagles.DomainService.Core.DataBase
         {
             this.dbManager = dbManager;
         }
-        public int EditGoods(TB_PRODUCT mod)
+        public int EditGoods(TbProduct mod)
         {
             return dbManager.Excuted(@" UPDATE `eagles`.`tb_product`
 SET
@@ -46,7 +46,7 @@ WHERE
  ", mod);
         }
 
-        public int CreateGoods(TB_PRODUCT mod)
+        public int CreateGoods(TbProduct mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_product`
 (`ProdId`,
@@ -95,7 +95,7 @@ WHERE
 ", new { ProdId= requset.GoodsId });
         }
 
-        public TB_PRODUCT GetGoodsDetail(GetGoodsDetailRequset requset)
+        public TbProduct GetGoodsDetail(GetGoodsDetailRequset requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -121,11 +121,11 @@ FROM `eagles`.`tb_product`
  ");
             dynamicParams.Add("ProdId", requset.GoodsId);
 
-            return dbManager.QuerySingle<TB_PRODUCT>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbProduct>(sql.ToString(), dynamicParams);
          
         }
 
-        public List<TB_PRODUCT> GetNewsList(GetGoodsRequest requset)
+        public List<TbProduct> GetNewsList(GetGoodsRequest requset)
         {
 
             var sql = new StringBuilder();
@@ -183,7 +183,7 @@ FROM `eagles`.`tb_product`
   where  1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_PRODUCT>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbProduct>(sql.ToString(), dynamicParams);
         }
     }
 }

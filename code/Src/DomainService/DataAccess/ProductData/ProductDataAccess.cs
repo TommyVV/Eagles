@@ -15,14 +15,14 @@ namespace Ealges.DomianService.DataAccess.ProductData
             this.dbManager = dbManager;
         }
 
-        public List<DomainModel.Product.Product> GetProduct()
+        public List<DomainModel.Product.TbProduct> GetProduct()
         {
-            return dbManager.Query<DomainModel.Product.Product>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
+            return dbManager.Query<DomainModel.Product.TbProduct>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
         }
 
-        public DomainModel.Product.Product GetProductDetail(int productId)
+        public DomainModel.Product.TbProduct GetProductDetail(int productId)
         {
-            var result = dbManager.Query<DomainModel.Product.Product>(
+            var result = dbManager.Query<DomainModel.Product.TbProduct>(
                 "select ProdId,ProdName,Score,ImageUrl,SaleCount,BeginTime,EndTime,HtmlDescription from eagles.tb_product where ProdId = @ProdId ",
                 new {ProdId = productId});
             if (result != null && result.Any())

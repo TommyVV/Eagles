@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Goods.Model;
 using Eagles.Application.Model.Goods.Requset;
@@ -31,12 +28,12 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_PRODUCT mod;
+            TbProduct mod;
 
             var now = DateTime.Now;
             if (requset.Info.GoodsId > 0)
             {
-                mod = new TB_PRODUCT
+                mod = new TbProduct
                 {
                     BeginTime=requset.Info.SellStartTime,
                     EndTime=requset.Info.SellEndTime,
@@ -66,7 +63,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_PRODUCT
+                mod = new TbProduct
                 {
                     BeginTime = requset.Info.SellStartTime,
                     EndTime = requset.Info.SellEndTime,
@@ -122,7 +119,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_PRODUCT detail = dataAccess.GetGoodsDetail(requset);
+            TbProduct detail = dataAccess.GetGoodsDetail(requset);
        
 
             if (detail == null) throw new Exception("无数据");
@@ -154,7 +151,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_PRODUCT> list = dataAccess.GetNewsList(requset) ?? new List<TB_PRODUCT>();
+            List<TbProduct> list = dataAccess.GetNewsList(requset) ?? new List<TbProduct>();
 
             if (list.Count == 0) throw new Exception("无数据");
 

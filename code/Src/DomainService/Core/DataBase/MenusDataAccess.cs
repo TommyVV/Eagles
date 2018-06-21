@@ -20,7 +20,7 @@ namespace Eagles.DomainService.Core.DataBase
         {
             this.dbManager = dbManager;
         }
-        public int EditNews(TB_APP_MENU mod)
+        public int EditNews(TbAppMenu mod)
         {
             return dbManager.Excuted(@" UPDATE `eagles`.`tb_app_menu`
 SET
@@ -34,7 +34,7 @@ WHERE `MenuId` = @MenuId
  ", mod);
         }
 
-        public int CreateNews(TB_APP_MENU mod)
+        public int CreateNews(TbAppMenu mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_app_menu`
 (`OrgId`,
@@ -64,7 +64,7 @@ WHERE
 ", new { requset.MenuId });
         }
 
-        public TB_APP_MENU GetMenusDetail(GetMenusDetailRequest requset)
+        public TbAppMenu GetMenusDetail(GetMenusDetailRequest requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -80,10 +80,10 @@ FROM `eagles`.`tb_app_menu`
  ");
             dynamicParams.Add("ProdId", requset.MenuId);
 
-            return dbManager.QuerySingle<TB_APP_MENU>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbAppMenu>(sql.ToString(), dynamicParams);
         }
 
-        public List<TB_APP_MENU> GetNewsList(GetMenusRequset requset)
+        public List<TbAppMenu> GetNewsList(GetMenusRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -119,7 +119,7 @@ FROM `eagles`.`tb_app_menu`
   where  1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_APP_MENU>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbAppMenu>(sql.ToString(), dynamicParams);
         }
     }
 }

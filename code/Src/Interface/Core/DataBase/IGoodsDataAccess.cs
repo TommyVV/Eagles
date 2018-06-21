@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model.Goods.Requset;
+﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.DomainService.Model.Product;
+using Eagles.Application.Model.Goods.Requset;
 
 namespace Eagles.Interface.Core.DataBase
 {
     public interface IGoodsDataAccess : IInterfaceBase
     {
-        int EditGoods(TB_PRODUCT mod);
-        int CreateGoods(TB_PRODUCT mod);
+        int EditGoods(TbProduct mod);
+        int CreateGoods(TbProduct mod);
         int RemoveGoods(RemoveGoodsRequset requset);
-        TB_PRODUCT GetGoodsDetail(GetGoodsDetailRequset requset);
-        List<TB_PRODUCT> GetNewsList(GetGoodsRequest requset);
+        TbProduct GetGoodsDetail(GetGoodsDetailRequset requset);
+        List<TbProduct> GetNewsList(GetGoodsRequest requset);
     }
 }
