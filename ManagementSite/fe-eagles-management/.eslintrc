@@ -1,0 +1,19 @@
+{
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true,
+      }
+  },
+  "globals": {
+  },
+  "plugins": [
+  ],
+  "extends": "eslint-config-airbnb",
+  "rules": {
+  }
+}

@@ -1,0 +1,152 @@
+/*
+* 机构列表的item ，竖向
+*/
+
+.agency-item-y {
+    display: flex;
+    padding: 15px 16px;
+    position: relative;
+    &:first-child:before {
+        display:none;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 1px;
+        border-top: 1px solid #d9d9d9;
+        color: #d9d9d9;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    .agency-img-div {
+        img {
+           width: 48px;
+           height: 48px;
+           border-radius: 100%;
+        }
+    }
+    .agency-info {
+        margin-left: 8px;
+        width: 100%;
+        flex: 1;
+        min-width: 0;
+        .name {
+            font-size: 16px;
+            color: #333333;
+        }
+    }
+    .detail {
+         display: flex;
+        justify-content: space-between;
+        margin-top: 3px;
+        .laber-str {
+            font-size: 13px;
+            color: #999999;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+        .delete-btn {
+            border: 1px solid #666666;
+            border-radius: 2px;
+            color: #666666;
+            padding: 1px 10px;
+            font-size: 13px;
+        }
+    }
+}
+
+.agency-item-y:active {
+    background-color: #ECECEC;
+}
+
+//关注已关注
+.concern-div {
+    margin-top: 10px;
+    text-align: right;
+    .concern {
+        background: #3D82E1;
+        border-radius: 6px;
+        color: #ffffff;
+        font-size: 13px;
+        width: 58px;
+        height: 28px;
+        text-align: center;
+        display: inline-block;
+        line-height: 26px;
+    }
+    .concerned {
+        border-radius: 6px;
+        color: #3D82E1;
+        font-size: 13px;
+        width: 58px;
+        height: 28px;
+        text-align: center;
+        display: inline-block;
+        line-height: 28px;
+        border: 1px solid #3D82E1;
+    }
+}
+
+/*
+* 机构列表的item ，横向
+*/
+
+.agency-item-x {
+    width: 120px;
+    padding: 12px;
+    margin-right: 12px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #D8D8D8;
+    border-radius: 8px;
+    display: inline-block;
+    .agency-img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+    }
+    .agency-name {
+        font-size: 14px;
+        color: #333333;
+        height: 20px;
+        line-height: 20px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .agency-info {
+        margin-top: 4px;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .concern-agency {
+        border-radius: 8px;
+        margin-bottom: 0;
+        width: 96px;
+        height: 28px;
+        line-height: 28px;
+        margin-top: 8px;
+    }
+    .add-concern {
+        background-color: #3D82E1;
+        color: #ffffff;
+    }
+    .del-concern {
+        background-color: #ffffff;
+        color: #3D82E1;
+        border: 1px solid #3D82E1;
+        line-height: 26px;
+    }
+}
+.agency-item-x:last-child {
+    margin-right: 0;
+}

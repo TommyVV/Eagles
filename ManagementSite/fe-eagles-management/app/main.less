@@ -1,0 +1,28 @@
+@color:  #49A9EE;
+.main {
+    font-size: 16px;
+    text-align: center;
+}
+/*
+* 当前路由样式
+*/
+.active {
+    color: @color;
+    font-size:16px;
+    width:100%;
+
+}
+.active:after{
+    content:'';
+    display: block;
+    width:85%;
+    margin:0 auto;
+    height:2px;
+    background:@color;
+}
+/*
+* 全局样式new
+*/
+body{
+    font-family: PingFangSC-Regular;
+}

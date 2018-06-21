@@ -1,0 +1,55 @@
+
+.comment__item {
+  .am-flexbox-item {
+    width: 100%;
+  }
+}
+.comment__more__box {
+  padding: 0 16px;
+}
+.comment__item--user {
+  align-self: flex-start;
+  
+  &>.am-flexbox {
+    padding: 15px 0;
+    // border-bottom: 1px solid #E7E6EC;
+  }
+
+  .comment__user--avatar.comment__user--avatar {
+    flex : 0 0 32px;
+    margin-right: 8px;
+    align-self: flex-start;
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 100px;
+    }
+  }
+
+  .comment__item--name {
+    font-family: PingFangSC-Regular;
+    height: 32px;
+    line-height: 32px;
+    font-size: 17px;
+    color: #3D82E1;
+    letter-spacing: 0;
+  }
+
+  .comment__item--content {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 0;
+    text-align: justify;
+    line-height: 23px;
+    margin-bottom: 8px;
+  }
+
+  .comment__item--time {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #B8B8B8;
+    letter-spacing: 0;
+  }
+
+}

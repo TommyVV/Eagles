@@ -1,0 +1,42 @@
+.agency__tab {
+    .qtui-navbar {
+        margin: 0;
+    }
+}
+
+.agency-info-wrapper {
+    padding: 0 16px;
+}
+.agency-my-share-wrapper{
+    padding: 0 16px;
+    background: #f8f8f8;
+}
+
+.agency__item {
+    padding-bottom: 24px;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        margin-top: 12px;
+        width: 100%;
+        height: 1px;
+        transform: scaleY(0.5);
+        background: #D8D8D8;
+    }
+    &:last-child::after {
+        height: 0;
+    }
+    .agency__item--title {
+        font-size: 17px;
+        color: #333333;
+        letter-spacing: 0;
+        text-align: justify;
+    }
+    .agency__item--content {
+        font-size: 16px;
+        color: #666666;
+        letter-spacing: 0;
+        text-align: justify;
+    }
+}

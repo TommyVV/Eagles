@@ -1,0 +1,91 @@
+ @font-face {font-family: "iconfont";
+          src: url('../font/iconfont.eot'); /* IE9*/
+          src: url('../font/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+          url('../font/iconfont.woff') format('woff'), /* chrome, firefox */
+          url('../font/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+          url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+  }
+
+.iconfont {
+  font-family:"iconfont" !important;
+  /* font-size:16px; */
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-user:before { content: "\e673"; }
+
+.icon-compasszhinanzhen:before { content: "\e718"; }
+
+.icon-add:before { content: "\e637"; }
+
+.icon-delete-circle:before { content: "\e614"; }
+
+.icon-search-history:before { content: "\e7a1"; }
+
+.icon-activity_fill:before { content: "\e601"; }
+
+.icon-home:before { content: "\e60e"; }
+
+.icon-release-require:before { content: "\e611"; }
+
+.icon-mine:before { content: "\e612"; }
+
+.icon-write:before { content: "\e613"; }
+
+.icon-colloct-empty:before { content: "\e615"; }
+
+.icon-message:before { content: "\e616"; }
+
+.icon-collect:before { content: "\e618"; }
+
+.icon-publisher:before { content: "\e619"; }
+
+.icon-delete:before { content: "\e61a"; }
+
+.icon-authen-enterprise:before { content: "\e61b"; }
+
+.icon-right-arrow:before { content: "\e61c"; }
+
+.icon-FLILEx:before { content: "\e61d"; }
+
+.icon-TXTx:before { content: "\e61e"; }
+
+.icon-DOCx:before { content: "\e61f"; }
+
+.icon-pass:before { content: "\e620"; }
+
+.icon-PDFx:before { content: "\e621"; }
+
+.icon-XLSx:before { content: "\e622"; }
+
+.icon-refuse:before { content: "\e623"; }
+
+.icon-wait:before { content: "\e624"; }
+
+.icon-edit:before { content: "\e625"; }
+
+.icon-unpublished:before { content: "\e617"; }
+
+.icon-bought:before { content: "\e626"; }
+
+.icon-download:before { content: "\e627"; }
+
+.icon-collect-circle:before { content: "\e628"; }
+
+.icon-history:before { content: "\e629"; }
+
+.icon-index_share:before { content: "\e600"; }
+
+.icon-index_agency:before { content: "\e719"; }
+
+.icon-xiangmu:before { content: "\e64a"; }
+
+.icon-tianjia:before { content: "\e603"; }
+
+.icon-fenxiang:before { content: "\e659"; }
+
+.icon-fabuxuqiu:before { content: "\e62a"; }
+
+.icon-nocontent:before { content: "\e6a6"; }
