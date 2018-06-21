@@ -45,16 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityTask\ActivityTaskInfo.cs" />
-    <Compile Include="ActivityTask\ActivityTaskInfoDetails.cs" />
-    <Compile Include="ActivityTask\ActivityTaskRequset.cs" />
-    <Compile Include="ActivityTask\ActivityTaskResponse.cs" />
-    <Compile Include="ActivityTask\AlterActivityTaskInfoRequset.cs" />
-    <Compile Include="ActivityTask\DeleteActivityTaskInfoRequest.cs" />
-    <Compile Include="ActivityTask\GetActivityTaskInfoRequest.cs" />
-    <Compile Include="ActivityTask\GetActivityTaskInfoResponse.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+    <Compile Include="AppModel\GetMenu\AppMenu.cs" />
+    <Compile Include="AppModel\GetMenu\AppSubMenu.cs" />
+    <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
+    <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeResponse.cs" />
     <Compile Include="Audit\AlterAuditInfoRequset.cs" />
     <Compile Include="Audit\AuditInfo.cs" />
     <Compile Include="Audit\AuditRequset.cs" />
@@ -214,6 +210,7 @@
     <Compile Include="Enums\ExamType.cs" />
     <Compile Include="Enums\ExercisesType.cs" />
     <Compile Include="Enums\GoodsStatus.cs" />
+    <Compile Include="Enums\IsRelation.cs" />
     <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\MenuLevel.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
@@ -322,7 +319,7 @@
     <Compile Include="PartyMember\Response\GetUserInfoDetailResponse.cs" />
     <Compile Include="PartyMember\Requset\GetPartyMemberRequest.cs" />
     <Compile Include="PartyMember\Response\GetPartyMemberResponse.cs" />
-    <Compile Include="PartyMember\Model\UserInfo.cs" />
+    <Compile Include="PartyMember\Model\Member.cs" />
     <Compile Include="PartyMember\Model\UserInfoDetails.cs" />
     <Compile Include="PartyMember\Model\UserInfoResult.cs" />
     <Compile Include="RequestBase.cs" />

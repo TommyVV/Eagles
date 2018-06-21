@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityData\ActivityDataAccess.cs" />
+    <Compile Include="AppMenu\MenuDataAccess.cs" />
     <Compile Include="AppModule\AppModuleDA.cs" />
     <Compile Include="NewsDA\NewsDA.cs" />
     <Compile Include="ProductData\ProductDataAccess.cs" />

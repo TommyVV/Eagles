@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Activity.cs" />
+    <Compile Include="Activity\TB_ACTIVITY.cs" />
     <Compile Include="App\AppMenu.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Authority\Authority.cs" />

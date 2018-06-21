@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\IActivityHandler.cs" />
+    <Compile Include="AppMenu\IAppMenuHandler.cs" />
     <Compile Include="AppModule\IAppModuleHanlder.cs" />
     <Compile Include="Common\ITokenHadler.cs" />
     <Compile Include="Curd\ICurdHandler.cs" />
     <Compile Include="DataBase\ActivityAccess\IActivityAccess.cs" />
+    <Compile Include="DataBase\IActivityTaskDataAccess.cs" />
     <Compile Include="DataBase\INewsDataAccess.cs" />
     <Compile Include="DataBase\IColumnDataAccess.cs" />
     <Compile Include="DataBase\IDataAccess.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="DataBase\TaskAccess\ITaskAccess.cs" />
     <Compile Include="DataBase\UserArticle\IArticleDataAccess.cs" />
     <Compile Include="DataBase\UserInfo\IUserInfo.cs" />
+    <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IColumnHandler.cs" />
     <Compile Include="INewsHandler.cs" />
     <Compile Include="IOrganizationHandler.cs" />

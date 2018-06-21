@@ -2,6 +2,7 @@
 using Eagles.Interface.Core.Score;
 using Eagles.Application.Model.AppModel.Score.GetScoreRank;
 using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
+using Eagles.Application.Model.AppModel.Score.AppScoreExchange;
 
 namespace Eagles.Application.Host.Controllers.App
 {
@@ -16,6 +17,16 @@ namespace Eagles.Application.Host.Controllers.App
         public ScoreController(IScoreHandler scoreHandler)
         {
             this.scoreHandler = scoreHandler;
+        }
+
+        /// <summary>
+        /// 积分兑换接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public AppScoreExchangeResponse AppScoreExchange(AppScoreExchangeRequest request)
+        {
+            return scoreHandler.AppScoreExchange(request);
         }
 
         /// <summary>

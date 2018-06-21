@@ -8,8 +8,6 @@ namespace Eagles.Application.Model.AppModel.News.GetNews
     /// </summary>
     public class GetNewsRequest : RequestBase
     {
-        public string Token { get; set; }
-
         /// <summary>
         /// 文章类型 00:文章 01:心得体会 02:会议
         /// </summary>

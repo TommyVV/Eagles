@@ -7,7 +7,7 @@ using Eagles.Application.Model.PartyMember.Model;
 
 namespace Eagles.Application.Model.PartyMember
 {
-    public class UserInfoResult:UserInfo
+    public class UserInfoResult:Member
     {
         /// <summary>
         /// 检查结果

@@ -5,7 +5,7 @@ using Eagles.Interface.DataAccess.Util;
 
 namespace Ealges.DomianService.DataAccess.Util
 {
-    public class Util:IUtil
+    public class Util : IUtil
     {
         private readonly IDbManager dbManager;
 
@@ -28,12 +28,17 @@ namespace Ealges.DomianService.DataAccess.Util
         
         public Eagles.DomainService.Model.User.UserInfo GetUserInfo(int userId)
         {
-            var user = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(@" select IsLeader from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
+            var user = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(@" select IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
             if (user != null && user.Any())
             {
                 return user.FirstOrDefault();
             }
             return null;
+        }
+
+        public int EditUserScore(int userId, int score)
+        {
+            return dbManager.Excuted(@"update eagles.tb_user_info set Score += @Score where UserId = @UserId", new { UserId = userId });
         }
     }
 }

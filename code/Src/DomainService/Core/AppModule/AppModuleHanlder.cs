@@ -3,7 +3,7 @@ using Eagles.Application.Model.AppModel.Module;
 using Eagles.Base;
 using Eagles.Interface.Core.AppModule;
 using Eagles.Interface.DataAccess.AppModule;
-using Eagles.Interface.DataAccess.NewsDA;
+using Eagles.Interface.DataAccess.NewsDa;
 using Module = Eagles.Application.Model.AppModel.Module.Module;
 
 namespace Eagles.DomainService.Core.AppModule
@@ -12,9 +12,9 @@ namespace Eagles.DomainService.Core.AppModule
     {
         private readonly IAppModuleDA appModule;
 
-        private readonly INewsDA newsDa;
+        private readonly INewsDa newsDa;
 
-        public AppModuleHanlder(IAppModuleDA appModule, INewsDA newsDa)
+        public AppModuleHanlder(IAppModuleDA appModule, INewsDa newsDa)
         {
             this.appModule = appModule;
             this.newsDa = newsDa;

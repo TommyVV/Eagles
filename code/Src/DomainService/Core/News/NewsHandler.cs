@@ -6,7 +6,7 @@ using Eagles.Application.Model.News.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Interface.Core.News;
-using Eagles.Interface.DataAccess.NewsDA;
+using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.Util;
 
 namespace Eagles.DomainService.Core.News
@@ -15,11 +15,11 @@ namespace Eagles.DomainService.Core.News
     {
         private readonly IArticleDataAccess articleData;
 
-        private readonly INewsDA newsDa;
+        private readonly INewsDa newsDa;
 
         private readonly IUtil util;
 
-        public NewsHandler(IArticleDataAccess articleData, IUtil util, INewsDA newsDa)
+        public NewsHandler(IArticleDataAccess articleData, IUtil util, INewsDa newsDa)
         {
             this.articleData = articleData;
             this.util = util;
@@ -67,17 +67,16 @@ namespace Eagles.DomainService.Core.News
             {
                 NewsList = news.Select(x => new Application.Model.Common.News
                 {
-                    NewsContent = x.HtmlContent,
-                    NewsDate = x.CreateTime,
+                    CreateTime = x.CreateTime,
                     NewsId = x.NewsId,
-                    NewsTitle = x.Title,
-                    NewsType = x.NewsType
+                    Title = x.Title
                 }).ToList()
             };
         }
 
         public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
         {
+            var response = new GetModuleNewsResponse();
             if (request.AppId < 0)
             {
                 throw new TransactionException("01","appid 非法");
@@ -87,49 +86,65 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "moduleId 非法");
             }
-            var result=newsDa.GetModuleNews(request.ModuleId, request.AppId,request.NewsCount);
-            return new GetModuleNewsResponse()
+            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
+            if (result != null && result.Count > 0)
             {
-                NewsInfos = result.Select(x=>new New
+                response.NewsInfos = result?.Select(x => new Application.Model.Common.News()
                 {
                     NewsId = x.NewsId,
-                    NewsImg = x.ImageUrl,
-                    NewsName = x.Title,
+                    Title = x.Title,
                     CreateTime = x.CreateTime,
-                    Source = x.Source,
-                    UserName = x.Author,
-                }).ToList()
-            };
+                    ImageUrl = x.ImageUrl
+                }).ToList();
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
 
         public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
         {
+            var response = new GetNewsDetailResponse();
             if (request.AppId < 0)
             {
                 throw new TransactionException("01", "appid 非法");
             }
-
             if (request.NewsId < 0)
             {
                 throw new TransactionException("01", "NewsId 非法");
             }
-
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
-            return new GetNewsDetailResponse()
+            if (result != null)
             {
-                NewsDetail = new NewDetail()
-                {
-                    Author = result.Author,
-                    NewsId = result.NewsId,
-                    NewsName = result.Title,
-                    Content = result.HtmlContent,
-                    CreateTime = result.CreateTime,
-                    ModuleId = result.Module,
-                    NewsImg = result.ImageUrl,
-                    TestId = result.TestId,
-                    //todo 
-                }
-            };
+                response.NewsId = result.NewsId;
+                response.Title = result.Title;
+                response.HtmlContent = result.HtmlContent;
+                response.Author = result.Author;
+                response.Source = result.Source;
+                response.Module = result.Module;
+                response.CreateTime = result.CreateTime;
+                response.TestId = result.TestId;
+                response.IsAttach = result.IsAttach;
+                response.Attach1 = result.Attach1;
+                response.Attach2 = result.Attach2;
+                response.Attach3 = result.Attach3;
+                response.Attach4 = result.Attach4;
+                response.ViewCount = result.ViewCount;
+                response.CanStudy = result.CanStudy;
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            return response;
         }
     }
 }
