@@ -35,7 +35,7 @@ namespace Eagles.DomainService.Core
                 mod = new TB_ACTIVITY
                 {
                     ActivityName = requset.Info.ActivityTaskName,
-                    ActivityType = requset.Info.ActivityTaskType,
+                    //ActivityType = requset.Info.ActivityTaskType,
                     Attach1 = requset.Info.Attach1,
                     Attach2 = requset.Info.Attach2,
                     Attach3 = requset.Info.Attach3,
@@ -75,7 +75,7 @@ namespace Eagles.DomainService.Core
                 mod = new TB_ACTIVITY
                 {
                     ActivityName = requset.Info.ActivityTaskName,
-                    ActivityType = requset.Info.ActivityTaskType,
+                    //ActivityType = requset.Info.ActivityTaskType,
                     Attach1 = requset.Info.Attach1,
                     Attach2 = requset.Info.Attach2,
                     Attach3 = requset.Info.Attach3,

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Web.Http;
-using Eagles.Application.Model.AppModel.News;
-using Eagles.Application.Model.AppModel.News.CreateNews;
-using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
+using Eagles.Application.Model.AppModel.News;
 
 namespace Eagles.Application.Host.Controllers.App
 {
@@ -22,7 +20,7 @@ namespace Eagles.Application.Host.Controllers.App
         }
 
         /// <summary>
-        /// 获取模块文章
+        /// 获取新闻模块
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -55,7 +53,7 @@ namespace Eagles.Application.Host.Controllers.App
         }
 
         /// <summary>
-        /// 获取模块文章
+        /// 获取新闻详情
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
