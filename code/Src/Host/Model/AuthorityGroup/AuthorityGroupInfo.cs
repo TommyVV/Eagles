@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model.enums;
 using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.AuthorityGroup
@@ -44,12 +38,6 @@ namespace Eagles.Application.Model.AuthorityGroup
         /// 权限组状态
         /// </summary>
         public Status Status { get; set; }
-
-
-
-      
+        
     }
-
-   
-
 }

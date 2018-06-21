@@ -2,7 +2,9 @@
 using System.Web.Http;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
-using Eagles.Application.Model.AppModel.News;
+using Eagles.Application.Model.AppModel.News.GetModuleNews;
+using Eagles.Application.Model.AppModel.News.GetNewsDetail;
+using Eagles.Application.Model.AppModel.News.GetNewsTest;
 
 namespace Eagles.Application.Host.Controllers.App
 {

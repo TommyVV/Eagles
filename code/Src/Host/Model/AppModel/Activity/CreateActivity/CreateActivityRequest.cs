@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.AppModel.Activity.CreateActivity
@@ -12,7 +13,7 @@ namespace Eagles.Application.Model.AppModel.Activity.CreateActivity
         /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
-        public string ActivityType { get; set; }
+        public ActivityTaskType ActivityType { get; set; }
 
         /// <summary>
         /// 活动名称

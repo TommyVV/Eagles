@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.Common
 {
@@ -20,7 +21,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动类型
         /// </summary>
-        public string ActivityType { get; set; }
+        public ActivityTaskType ActivityType { get; set; }
 
         /// <summary>
         /// 活动内容

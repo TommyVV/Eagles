@@ -29,11 +29,11 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_ACTIVITY mod;
+            TbActivity mod;
 
             if (requset.Info.ActivityTaskId > 0)
             {
-                mod = new TB_ACTIVITY
+                mod = new TbActivity
                 {
                     ActivityName = requset.Info.ActivityTaskName,
                     //ActivityType = requset.Info.ActivityTaskType,
@@ -73,7 +73,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_ACTIVITY
+                mod = new TbActivity
                 {
                     ActivityName = requset.Info.ActivityTaskName,
                     ActivityType = requset.Info.ActivityTaskType,
@@ -149,7 +149,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_ACTIVITY detail = dataAccess.GetActivityDetail(requset);
+            TbActivity detail = dataAccess.GetActivityDetail(requset);
 
             if (detail == null) throw new Exception("无数据");
 
@@ -201,7 +201,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_ACTIVITY> list = dataAccess.GetGetActivityList(requset) ?? new List<TB_ACTIVITY>();
+            List<TbActivity> list = dataAccess.GetGetActivityList(requset) ?? new List<TbActivity>();
 
             if (list.Count == 0) throw new Exception("无数据");
 

@@ -16,7 +16,7 @@ namespace Ealges.DomianService.DataAccess.ScoreData
             this.dbManager = dbManager;
         }
 
-        public bool AppScoreExchange(DomainModel.Order.Order order, int userScore)
+        public bool AppScoreExchange(DomainModel.Order.TbOrder order, int userScore)
         {
 
             var commands = new List<TransactionCommand>()

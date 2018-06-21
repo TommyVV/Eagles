@@ -6,8 +6,8 @@ namespace Eagles.Interface.DataAccess.NewsDa
 {
     public interface INewsDa : IInterfaceBase
     {
-        List<TB_NEWS> GetModuleNews(int moduleId,int appId,int count);
+        List<TbNews> GetModuleNews(int moduleId,int appId,int count);
 
-        TB_NEWS GetNewsDetail(int newsId, int appId);
+        TbNews GetNewsDetail(int newsId, int appId);
     }
 }

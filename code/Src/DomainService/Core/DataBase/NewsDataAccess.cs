@@ -20,7 +20,7 @@ namespace Eagles.DomainService.Core.DataBase
             this.dbManager = dbManager;
         }
 
-        public List<TB_NEWS> GetNewsList(GetNewRequset requset)
+        public List<TbNews> GetNewsList(GetNewRequset requset)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -84,10 +84,10 @@ FROM `eagles`.`tb_news`
   where  1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_NEWS>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbNews>(sql.ToString(), dynamicParams);
         }
 
-        public TB_NEWS GetNewsDetail(GetNewDetailRequset requset)
+        public TbNews GetNewsDetail(GetNewDetailRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -127,7 +127,7 @@ FROM `eagles`.`tb_news`
  ");
             dynamicParams.Add("NewsId", requset.NewsId );
 
-            return dbManager.QuerySingle<TB_NEWS>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbNews>(sql.ToString(), dynamicParams);
 
         }
 
@@ -139,7 +139,7 @@ FROM `eagles`.`tb_news`
 ", new {requset.NewsId});
         }
 
-        public int EditNews(TB_NEWS mod)
+        public int EditNews(TbNews mod)
         {
             return dbManager.Excuted(@" UPDATE `eagles`.`tb_news`
 SET
@@ -176,7 +176,7 @@ WHERE `NewsId` = @NewsId;
  ", mod);
         }
 
-        public int CreateNews(TB_NEWS mod)
+        public int CreateNews(TbNews mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_news`
 (`OrgId`,

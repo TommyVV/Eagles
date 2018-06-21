@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eagles.Application.Model.enums
+namespace Eagles.Application.Model.Enums
 {
     /// <summary>
     /// 

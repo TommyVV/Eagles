@@ -7,7 +7,7 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
 {
     public interface IActivityAccess : IInterfaceBase
     {
-        int CreateActivity(DomainService.Model.Activity.Activity activity);
+        int CreateActivity(DomainService.Model.Activity.TbActivity activity);
 
         int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
 
@@ -19,11 +19,11 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
 
         int EditActivityComment(int orgId, int activityId, int userId, string content);
 
-        List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType);
+        List<Eagles.DomainService.Model.Activity.TbActivity> GetActivity(int activityType);
 
-        DomainService.Model.Activity.Activity GetActivityDetail(int activityId);
+        DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId);
 
-        List<DomainService.Model.User.UserComment> GetActivityComment(int activityId);
+        List<DomainService.Model.User.TbUserComment> GetActivityComment(int activityId);
         
     }
 }

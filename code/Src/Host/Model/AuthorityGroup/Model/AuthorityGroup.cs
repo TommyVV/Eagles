@@ -1,5 +1,5 @@
 ﻿using System;
-using Eagles.Application.Model.enums;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.AuthorityGroup.Model
 {
@@ -40,5 +40,4 @@ namespace Eagles.Application.Model.AuthorityGroup.Model
         public Status Status { get; set; }
 
     }
-
 }

@@ -71,9 +71,9 @@ where userId = @userId");
                 });
         }
 
-        public Eagles.DomainService.Model.User.UserInfo GetUserInfo(int userId)
+        public Eagles.DomainService.Model.User.TbUserInfo GetUserInfo(int userId)
         {
-            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(
+            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.TbUserInfo>(
                 @"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethinc,Birthday,Origin,OriginAddress,Phone,IdNumber,Eduction,
 School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
 PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
@@ -82,9 +82,9 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             return null;
         }
 
-        public Eagles.DomainService.Model.User.UserInfo GetLogin(int userId)
+        public Eagles.DomainService.Model.User.TbUserInfo GetLogin(int userId)
         {
-            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.UserInfo>(
+            var userInfo = dbManager.Query<Eagles.DomainService.Model.User.TbUserInfo>(
                 "select UserId,Password from eagles.tb_user_info where UserId = @UserId ", new {UserId = userId});
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();

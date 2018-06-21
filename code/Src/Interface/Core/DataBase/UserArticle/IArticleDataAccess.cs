@@ -6,6 +6,6 @@ namespace Eagles.Interface.Core.DataBase.UserArticle
 {
     public interface IArticleDataAccess: IInterfaceBase
     {
-        List<UserNews> GetUserNewsList(int userId);
+        List<TbUserNews> GetUserNewsList(int userId);
     }
 }

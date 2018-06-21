@@ -12,12 +12,12 @@ namespace Eagles.Interface.Core.DataBase
 {
     public interface IOrganizationDataAccess : IInterfaceBase
     {
-        List<TB_ORG_INFO> GetOrganizationList(GetOrganizationRequset requset);
-        TB_ORG_INFO GetOrganizationDetail(GetOrganizationDetailRequset requset);
+        List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset);
+        TbOrgInfo GetOrganizationDetail(GetOrganizationDetailRequset requset);
         int RemoveOrganization(RemoveOrganizationRequset requset);
-        int EditOrganization(TB_ORG_INFO mod);
-        int CreateOrganization(TB_ORG_INFO mod);
+        int EditOrganization(TbOrgInfo mod);
+        int CreateOrganization(TbOrgInfo mod);
      //   List<TB_USER_RELATIONSHIP> GetOrganizationList(List<Application.Model.PartyMember.Model.UserInfoDetails> list);
-        List<TB_ORG_INFO> GetOrganizationList(List<int> list);
+        List<TbOrgInfo> GetOrganizationList(List<int> list);
     }
 }

@@ -11,14 +11,14 @@ namespace Eagles.Interface.DataAccess.Util
         /// <param name="token"></param>
         /// <param name="tokenType"></param>
         /// <returns></returns>
-        UserToken GetUserId(string token, int tokenType);
+        TbUserToken GetUserId(string token, int tokenType);
 
         /// <summary>
         /// 判断用户是否存在
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        UserInfo GetUserInfo(int userId);
+        TbUserInfo GetUserInfo(int userId);
 
         /// <summary>
         /// 更新用户积分

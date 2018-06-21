@@ -11,10 +11,10 @@ namespace Eagles.Interface.Core.DataBase
 {
    public interface IActivityTaskDataAccess: IInterfaceBase
     {
-        int EditActivity(TB_ACTIVITY mod);
-        int CreateActivity(TB_ACTIVITY mod);
+        int EditActivity(TbActivity mod);
+        int CreateActivity(TbActivity mod);
         int RemoveActivity(RemoveActivityTaskRequset requset);
-        TB_ACTIVITY GetActivityDetail(GetActivityTaskDetailRequset requset);
-        List<TB_ACTIVITY> GetGetActivityList(GetActivityTaskRequset requset);
+        TbActivity GetActivityDetail(GetActivityTaskDetailRequset requset);
+        List<TbActivity> GetGetActivityList(GetActivityTaskRequset requset);
     }
 }

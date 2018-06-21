@@ -40,56 +40,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\Activity.cs" />
-    <Compile Include="Activity\TB_ACTIVITY.cs" />
-    <Compile Include="App\AppMenu.cs" />
-    <Compile Include="App\AppModule.cs" />
-    <Compile Include="Authority\Authority.cs" />
-    <Compile Include="Column\TB_APP_MODULE.cs" />
+    <Compile Include="Activity\TbActivity.cs" />
+    <Compile Include="App\TbAppMenu.cs" />
+    <Compile Include="App\TbAppModule.cs" />
+    <Compile Include="Authority\TbAuthority.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
-    <Compile Include="News\SystemNews.cs" />
-    <Compile Include="Org\Branch.cs" />
-    <Compile Include="ImportLog\ImportLog.cs" />
-    <Compile Include="Org\TB_ORG_INFO.cs" />
+    <Compile Include="News\TbSystemNews.cs" />
+    <Compile Include="Org\TbBranch.cs" />
+    <Compile Include="ImportLog\TbImportLog.cs" />
     <Compile Include="PartyMember\TB_USER_INFO.cs" />
     <Compile Include="PartyMember\TB_USER_RELATIONSHIP.cs" />
     <Compile Include="Sms\ValidCode.cs" />
-    <Compile Include="User\MeetingUser.cs" />
-    <Compile Include="News\TB_NEWS.cs" />
+    <Compile Include="User\TbMeetingUser.cs" />
+    <Compile Include="News\TbNews.cs" />
     <Compile Include="Oper\Oper.cs" />
     <Compile Include="Oper\OperGroup.cs" />
-    <Compile Include="Order\Order.cs" />
-    <Compile Include="Org\OrgInfo.cs" />
-    <Compile Include="Org\OrgRelationship.cs" />
-    <Compile Include="Org\OrgSmsConfig.cs" />
+    <Compile Include="Order\TbOrder.cs" />
+    <Compile Include="Org\TbOrgInfo.cs" />
+    <Compile Include="Org\TbOrgRelationship.cs" />
+    <Compile Include="Org\TbOrgSmsConfig.cs" />
     <Compile Include="Product\Product.cs" />
-    <Compile Include="Exercises\TB_QUESTION.cs" />
-    <Compile Include="Exercises\TB_QUEST_ANWSER.cs" />
-    <Compile Include="Exercises\TB_TEST_QUESTION.cs" />
+    <Compile Include="Exercises\TbTestQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question\Question.cs" />
-    <Compile Include="Question\QuestAnwser.cs" />
+    <Compile Include="Exercises\TbQuestion.cs" />
+    <Compile Include="Exercises\TbQuestAnwser.cs" />
     <Compile Include="Review\Review.cs" />
-    <Compile Include="RewardScore\RewardScore.cs" />
-    <Compile Include="ScrollImage\ScrollImage.cs" />
+    <Compile Include="RewardScore\TbRewardScore.cs" />
+    <Compile Include="ScrollImage\TbScrollImage.cs" />
     <Compile Include="Config\SmsConfig.cs" />
     <Compile Include="Sms\SmsSendLog.cs" />
-    <Compile Include="Task\Task.cs" />
-    <Compile Include="Exercises\TB_TEST_PAPER.cs" />
+    <Compile Include="Task\TbTask.cs" />
+    <Compile Include="Exercises\TbTestPaper.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="User\UserActivity.cs" />
-    <Compile Include="User\UserComment.cs" />
-    <Compile Include="User\UserInfo.cs" />
-    <Compile Include="User\UserNews.cs" />
-    <Compile Include="User\UserNotice.cs" />
-    <Compile Include="User\UserRelationship.cs" />
-    <Compile Include="User\UserScoreTrace.cs" />
-    <Compile Include="User\UserStudyLog.cs" />
-    <Compile Include="User\UserTask.cs" />
-    <Compile Include="User\UserTaskStep.cs" />
-    <Compile Include="User\UserTest.cs" />
-    <Compile Include="User\UserTestQuestion.cs" />
-    <Compile Include="User\UserToken.cs" />
+    <Compile Include="User\TbUserActivity.cs" />
+    <Compile Include="User\TbUserComment.cs" />
+    <Compile Include="User\TbUserInfo.cs" />
+    <Compile Include="User\TbUserNews.cs" />
+    <Compile Include="User\TbUserNotice.cs" />
+    <Compile Include="User\TbUserRelationship.cs" />
+    <Compile Include="User\TbUserScoreTrace.cs" />
+    <Compile Include="User\TbUserStudyLog.cs" />
+    <Compile Include="User\TbUserTask.cs" />
+    <Compile Include="User\TbUserTaskStep.cs" />
+    <Compile Include="User\TbUserTest.cs" />
+    <Compile Include="User\TbUserTestQuestion.cs" />
+    <Compile Include="User\TbUserToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
@@ -103,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Column\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

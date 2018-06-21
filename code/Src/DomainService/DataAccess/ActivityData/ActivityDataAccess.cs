@@ -18,7 +18,7 @@ namespace Ealges.DomianService.DataAccess.ActivityData
             this.dbManager = dbManager;
         }
 
-        public int CreateActivity(Eagles.DomainService.Model.Activity.Activity reqActivity)
+        public int CreateActivity(Eagles.DomainService.Model.Activity.TbActivity reqActivity)
         {
             return dbManager.Excuted(@"insert into eagles.tb_activity (ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status) 
@@ -163,16 +163,16 @@ where ActivityId = @ActivityId ",
                 });
         }
         
-        public List<Eagles.DomainService.Model.Activity.Activity> GetActivity(int activityType)
+        public List<Eagles.DomainService.Model.Activity.TbActivity> GetActivity(int activityType)
         {
-            return dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(
+            return dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
                 @"select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY where ActivityType = @ActivityType",
                 new {ActivityType = activityType});
         }
 
-        public Eagles.DomainService.Model.Activity.Activity GetActivityDetail(int activityId)
+        public Eagles.DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId)
         {
-            var result = dbManager.Query<Eagles.DomainService.Model.Activity.Activity>(
+            var result = dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
                 @"select ActivityId,ActivityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",
                 new { ActivityId = activityId});
             if (result != null && result.Any())
@@ -182,9 +182,9 @@ where ActivityId = @ActivityId ",
             return null;
         }
 
-        public List<Eagles.DomainService.Model.User.UserComment> GetActivityComment(int activityId)
+        public List<Eagles.DomainService.Model.User.TbUserComment> GetActivityComment(int activityId)
         {
-            return dbManager.Query<Eagles.DomainService.Model.User.UserComment>(
+            return dbManager.Query<Eagles.DomainService.Model.User.TbUserComment>(
                 @"select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id",
                 new {Id = activityId});
         }

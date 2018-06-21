@@ -32,13 +32,13 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_NEWS mod;
+            TbNews mod;
 
          
 
             if (requset.Info.NewsId > 0)
             {
-                mod = new TB_NEWS
+                mod = new TbNews
                 {
                     Attach1 = requset.Info.Attach1,
                     Attach2 = requset.Info.Attach2,
@@ -69,7 +69,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_NEWS
+                mod = new TbNews
                 {
                     Attach1 = requset.Info.Attach1,
                     Attach2 = requset.Info.Attach2,
@@ -127,7 +127,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_NEWS detail = dataAccess.GetNewsDetail(requset);
+            TbNews detail = dataAccess.GetNewsDetail(requset);
             var json = new JsonSerialize();
 
             if (detail == null) throw new Exception("无数据");
@@ -169,7 +169,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_NEWS> list = dataAccess.GetNewsList(requset) ?? new List<TB_NEWS>();
+            List<TbNews> list = dataAccess.GetNewsList(requset) ?? new List<TbNews>();
 
             if (list.Count == 0) throw new Exception("无数据");
 

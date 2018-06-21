@@ -6,6 +6,6 @@ namespace Eagles.Interface.DataAccess.Menu
 {
     public interface IMenuDataAccess : IInterfaceBase
     {
-        List<AppMenu> GetAppMenus(int appId);
+        List<TbAppMenu> GetAppMenus(int appId);
     }
 }

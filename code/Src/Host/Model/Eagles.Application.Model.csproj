@@ -47,10 +47,11 @@
   <ItemGroup>
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewResponse.cs" />
-	<Compile Include="AppModel\News\CompleteTestResponse.cs" />
+    <Compile Include="AppModel\News\CompleteTestResponse.cs" />
     <Compile Include="AppModel\News\CompleteTestRequest.cs" />
-    <Compile Include="AppModel\News\GetNewsTestResponse.cs" />
-    <Compile Include="AppModel\News\GetNewsTestRequest.cs" />
+    <Compile Include="AppModel\News\GetNewsTest\AppAnswer.cs" />
+    <Compile Include="AppModel\News\GetNewsTest\GetNewsTestResponse.cs" />
+    <Compile Include="AppModel\News\GetNewsTest\GetNewsTestRequest.cs" />
     <Compile Include="AppModel\GetMenu\AppMenu.cs" />
     <Compile Include="AppModel\GetMenu\AppSubMenu.cs" />
     <Compile Include="AppModel\Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
@@ -72,11 +73,10 @@
     <Compile Include="Common\BranchRank.cs" />
     <Compile Include="Common\Comment.cs" />
     <Compile Include="Common\DwWork.cs" />
-	<Compile Include="Common\NewsTest.cs" />
-    <Compile Include="Common\PartyInfo.cs" />
+    <Compile Include="AppModel\News\GetNewsTest\AppQuestion.cs" />
     <Compile Include="Common\News.cs" />
+    <Compile Include="Common\PartyInfo.cs" />
     <Compile Include="Common\Attachment.cs" />
-    <Compile Include="Common\Menu.cs" />
     <Compile Include="Common\Product.cs" />
     <Compile Include="Common\Score.cs" />
     <Compile Include="Common\Step.cs" />
@@ -106,10 +106,10 @@
     <Compile Include="AppModel\Module\AppModuleResponse.cs" />
     <Compile Include="AppModel\Module\GetAppModuleRequest.cs" />
     <Compile Include="AppModel\Module\Module.cs" />
-    <Compile Include="AppModel\News\GetModuleNewsRequest.cs" />
-    <Compile Include="AppModel\News\GetModuleNewsResponse.cs" />
-    <Compile Include="AppModel\News\GetNewsDetailRequest.cs" />
-    <Compile Include="AppModel\News\GetNewsDetailResponse.cs" />
+    <Compile Include="AppModel\News\GetModuleNews\GetModuleNewsRequest.cs" />
+    <Compile Include="AppModel\News\GetModuleNews\GetModuleNewsResponse.cs" />
+    <Compile Include="AppModel\News\GetNewsDetail\GetNewsDetailRequest.cs" />
+    <Compile Include="AppModel\News\GetNewsDetail\GetNewsDetailResponse.cs" />
     <Compile Include="AppModel\News\GetNews\GetNewsRequest.cs" />
     <Compile Include="AppModel\News\GetNews\GetNewsResponse.cs" />
     <Compile Include="AppModel\GetNotice\GetNoticRequest.cs" />

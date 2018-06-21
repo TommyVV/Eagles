@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Base.DataBase;
-using Eagles.DomainService.Model.Column;
+using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core.DataBase
@@ -21,7 +19,7 @@ namespace Eagles.DomainService.Core.DataBase
             this.dbManager = dbManager;
         }
 
-        public List<TB_APP_MODULE> GetColumnList(GetColumnRequset requset)
+        public List<TbAppModule> GetColumnList(GetColumnRequset requset)
         {
 
 
@@ -67,10 +65,10 @@ namespace Eagles.DomainService.Core.DataBase
 FROM `eagles`.`tb_app_module`   where 1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_APP_MODULE>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbAppModule>(sql.ToString(), dynamicParams);
         }
 
-        public TB_APP_MODULE GetColumnDetail(GetColumnDetailRequset requset)
+        public TbAppModule GetColumnDetail(GetColumnDetailRequset requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -89,7 +87,7 @@ FROM `eagles`.`tb_app_module`  where ModuleId=@ColumnId;
  ");
             dynamicParams.Add("ColumnId", requset.ColumnId);
 
-            return dbManager.QuerySingle<TB_APP_MODULE>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbAppModule>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveColumn(RemoveColumnRequset requset)
@@ -99,7 +97,7 @@ FROM `eagles`.`tb_app_module`  where ModuleId=@ColumnId;
 ", new { requset.ColumnId });
         }
 
-        public int EditColumn(TB_APP_MODULE mod)
+        public int EditColumn(TbAppModule mod)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_app_module`
 SET
@@ -118,7 +116,7 @@ WHERE `ModuleId` = @ModuleId;
 
         }
 
-        public int CreateColumn(TB_APP_MODULE mod)
+        public int CreateColumn(TbAppModule mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_app_module`
 (`OrgId`,

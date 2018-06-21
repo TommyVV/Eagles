@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Eagles.Application.Model.enums;
 using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.Exercises.Model
@@ -40,9 +38,7 @@ namespace Eagles.Application.Model.Exercises.Model
         ///// 来源
         ///// </summary>
         //public string Source { get; set; }
-
-      
-
+        
         /// <summary>
         /// 是否有积分奖励
         /// </summary>
@@ -67,8 +63,7 @@ namespace Eagles.Application.Model.Exercises.Model
         ///// 随机题目数量
         ///// </summary>
         //public int RandomSubjectSum { get; set; }
-
-   
+        
         /// <summary>
         /// 状态
         /// </summary>

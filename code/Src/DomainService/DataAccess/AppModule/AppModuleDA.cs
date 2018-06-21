@@ -14,9 +14,9 @@ namespace Ealges.DomianService.DataAccess.AppModule
             this.dbManager = dbManager;
         }
 
-        public List<Eagles.DomainService.Model.App.AppModule> GetAppModule(int orgId, int moduleType)
+        public List<Eagles.DomainService.Model.App.TbAppModule> GetAppModule(int orgId, int moduleType)
         {
-            var result=dbManager.Query<Eagles.DomainService.Model.App.AppModule>(@"SELECT OrgId,
+            var result=dbManager.Query<Eagles.DomainService.Model.App.TbAppModule>(@"SELECT OrgId,
     ModuleId,
     ModuleName,
     TragetUrl,

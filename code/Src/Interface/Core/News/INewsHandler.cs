@@ -1,8 +1,9 @@
-﻿using System;
-using Eagles.Application.Model.AppModel.News;
-using Eagles.Base;
+﻿using Eagles.Base;
 using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.AppModel.News.CreateNews;
+using Eagles.Application.Model.AppModel.News.GetModuleNews;
+using Eagles.Application.Model.AppModel.News.GetNewsDetail;
+using Eagles.Application.Model.AppModel.News.GetNewsTest;
 
 namespace Eagles.Interface.Core.News
 {

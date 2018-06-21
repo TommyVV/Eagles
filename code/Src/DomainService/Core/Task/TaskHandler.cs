@@ -49,7 +49,7 @@ namespace Eagles.DomainService.Core.Task
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            var task = new DomainModel.Task.Task();
+            var task = new DomainModel.Task.TbTask();
             task.TaskName = request.TaskName;
             task.BeginTime = request.TaskBeginDate;
             task.EndTime = request.TaskEndDate;

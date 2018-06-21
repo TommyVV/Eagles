@@ -7,7 +7,7 @@ namespace Eagles.Interface.Core.DataBase.TaskAccess
 {
     public interface ITaskAccess : IInterfaceBase
     {
-        int CreateTask(int orgId, int branchId, int toUserId, DomainService.Model.Task.Task task);
+        int CreateTask(int orgId, int branchId, int toUserId, DomainService.Model.Task.TbTask task);
 
         int RemoveTaskStep(int taskId, int stepId);
 
@@ -21,13 +21,13 @@ namespace Eagles.Interface.Core.DataBase.TaskAccess
 
         int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
         
-        List<Eagles.DomainService.Model.Task.Task> GetTask(string userId);
+        List<Eagles.DomainService.Model.Task.TbTask> GetTask(string userId);
 
-        DomainService.Model.Task.Task GetTaskDetail(int taskId);
+        DomainService.Model.Task.TbTask GetTaskDetail(int taskId);
 
-        List<DomainService.Model.User.UserComment> GetTaskComment(int taskId);
+        List<DomainService.Model.User.TbUserComment> GetTaskComment(int taskId);
 
-        List<DomainService.Model.User.UserTaskStep> GetTaskStep(int taskId);
+        List<DomainService.Model.User.TbUserTaskStep> GetTaskStep(int taskId);
         
     }
 }

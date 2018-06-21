@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
-using Eagles.Application.Model.enums;
-using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Exercises;
-using Eagles.DomainService.Model.TB_TEST;
 using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core.DataBase
@@ -19,7 +14,7 @@ namespace Eagles.DomainService.Core.DataBase
     {
         private readonly IDbManager dbManager;
 
-        public List<TB_TEST_PAPER> GetExercisesList(GetExercisesRequset requset, out int totalCount)
+        public List<TbTestPaper> GetExercisesList(GetExercisesRequset requset, out int totalCount)
         {
 
             var sql = new StringBuilder();
@@ -96,12 +91,10 @@ FROM `eagles`.`tb_test_paper`  where 1=1  {0} ;
 FROM `eagles`.`tb_test_paper`  where 1=1  {0} order by CreateTime desc limit  (@pageNum-1)*@pageSize ,@pageNum;
  ", parameter);
 
-            return dbManager.Query<TB_TEST_PAPER>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbTestPaper>(sql.ToString(), dynamicParams);
         }
-
-
-
-        public List<TB_QUESTION> GetSubjectListByQuestionId(List<int> questionId)
+        
+        public List<TbQuestion> GetSubjectListByQuestionId(List<int> questionId)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -117,10 +110,10 @@ FROM `eagles`.`tb_question` where QuestionId  in @QuestionId;
 
             dynamicParams.Add("QuestionId", new {QuestionId = questionId.ToArray()});
 
-            return dbManager.Query<TB_QUESTION>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
         }
 
-        public TB_TEST_PAPER GetExercisesDetail(GetExercisesDetailRequset requset)
+        public TbTestPaper GetExercisesDetail(GetExercisesDetailRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -144,7 +137,7 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
  ");
             dynamicParams.Add("TestId", new { TestId = requset.ExercisesId});
 
-            return dbManager.Query<TB_TEST_PAPER>(sql.ToString(), dynamicParams).FirstOrDefault();
+            return dbManager.Query<TbTestPaper>(sql.ToString(), dynamicParams).FirstOrDefault();
         }
 
         public int RemoveExercises(RemoveExercisesRequset requset)
@@ -154,7 +147,7 @@ WHERE TestId=@TestId;
 ", new {TestId = requset.ExercisesId});
         }
 
-        public int EditExercises(TB_TEST_PAPER info)
+        public int EditExercises(TbTestPaper info)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_test_paper`
             SET
@@ -175,7 +168,7 @@ WHERE TestId=@TestId;
             ", info);
         }
 
-        public int CreateExercises(TB_TEST_PAPER info)
+        public int CreateExercises(TbTestPaper info)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_test_paper`
 (`OrgId`,
@@ -211,7 +204,7 @@ VALUES
 ", info);
         }
 
-        public int EditSubject(TB_QUESTION info)
+        public int EditSubject(TbQuestion info)
         {
 
             return dbManager.Excuted(@" UPDATE `eagles`.`tb_question`
@@ -226,7 +219,7 @@ VALUES
           
         }
 
-        public int CreateSubject(TB_QUESTION info)
+        public int CreateSubject(TbQuestion info)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_question`
 (`OrgId`,
@@ -251,7 +244,7 @@ VALUES
 WHERE QuestionId=@QuestionId;", new { requset.QuestionId });
         }
 
-        public TB_QUESTION GetSubjectDetail(GetSubjectDetailRequset requset)
+        public TbQuestion GetSubjectDetail(GetSubjectDetailRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -267,10 +260,10 @@ FROM `eagles`.`tb_question`  where QuestionId=@QuestionId;
  ");
             dynamicParams.Add("QuestionId", new { requset.QuestionId });
 
-            return dbManager.Query<TB_QUESTION>(sql.ToString(), dynamicParams).FirstOrDefault();
+            return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams).FirstOrDefault();
         }
 
-        public List<TB_QUEST_ANWSER> GetOptionList(List<int> list)
+        public List<TbQuestAnwser> GetOptionList(List<int> list)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -286,7 +279,7 @@ FROM `eagles`.`tb_quest_anwser`  WHERE QuestionId in @QuestionId;
  ");
             dynamicParams.Add("QuestionId", new { QuestionId = list.ToArray() });
 
-            return dbManager.Query<TB_QUEST_ANWSER>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbQuestAnwser>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveOptionByQuestionId(int questionId)
@@ -295,7 +288,7 @@ FROM `eagles`.`tb_quest_anwser`  WHERE QuestionId in @QuestionId;
 WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
         }
 
-        public int CreateOption(List<TB_QUEST_ANWSER> optionList)
+        public int CreateOption(List<TbQuestAnwser> optionList)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_quest_anwser`
 (`OrgId`,
@@ -316,7 +309,7 @@ VALUES
 
         }
 
-        public int EditOption(List<TB_QUEST_ANWSER> optionList)
+        public int EditOption(List<TbQuestAnwser> optionList)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_quest_anwser`
 SET
@@ -329,9 +322,9 @@ SET
 WHERE `AnswerId` = @AnswerId;", optionList);
         }
 
-        public List<TB_TEST_QUESTION> GetTestQuestionRelationshipByTestId(int testId)
+        public List<TbTestQuestion> GetTestQuestionRelationshipByTestId(int testId)
         {
-            return dbManager.Query<TB_TEST_QUESTION>(@"SELECT `tb_test_question`.`OrgId`,
+            return dbManager.Query<TbTestQuestion>(@"SELECT `tb_test_question`.`OrgId`,
     `tb_test_question`.`TestId`,
     `tb_test_question`.`QuestionId`
 FROM `eagles`.`tb_test_question` where TestId=@testId ", new { testId });
@@ -343,7 +336,7 @@ FROM `eagles`.`tb_test_question` where TestId=@testId ", new { testId });
 WHERE TestId=@TestId;", new { TestId = testId });
         }
 
-        public int CreateTestQuestionRelationship(List<TB_TEST_QUESTION> list)
+        public int CreateTestQuestionRelationship(List<TbTestQuestion> list)
         {
             return dbManager.Excuted(@"  INSERT INTO `eagles`.`tb_test_question`
 (`OrgId`,
@@ -361,7 +354,7 @@ VALUES
 WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
         }
 
-        public List<TB_QUESTION> GetRandomSubject(List<int> list, int count)
+        public List<TbQuestion> GetRandomSubject(List<int> list, int count)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -377,7 +370,7 @@ FROM `eagles`.`tb_question`  where QuestionId not IN  @QuestionId   ORDER BY ran
             dynamicParams.Add("QuestionId", new { QuestionId = list.ToArray() });
             dynamicParams.Add("count", count);
 
-            return dbManager.Query<TB_QUESTION>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Exercises;
-using Eagles.DomainService.Model.TB_TEST;
 using Eagles.Interface.Core;
 using Eagles.Interface.Core.DataBase;
 
@@ -39,7 +36,7 @@ namespace Eagles.DomainService.Core
 
             };
 
-            TB_QUESTION result = dataAccess.GetSubjectDetail(requset);
+            TbQuestion result = dataAccess.GetSubjectDetail(requset);
 
             var optionList = dataAccess.GetOptionList(new List<int>() { requset.QuestionId });
 
@@ -107,11 +104,11 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_QUESTION info;
+            TbQuestion info;
 
             if (requset.Info.QuestionId > 0)
             {
-                info = new TB_QUESTION
+                info = new TbQuestion
                 {
                     Answer = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
@@ -122,7 +119,7 @@ namespace Eagles.DomainService.Core
                 };
 
                 //todo 事务修改 批量修改选项信息
-                int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TB_QUEST_ANWSER
+                int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
                 {
                     Answer = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
@@ -141,7 +138,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                info = new TB_QUESTION
+                info = new TbQuestion
                 {
                     Answer = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
@@ -151,7 +148,7 @@ namespace Eagles.DomainService.Core
                 };
 
                 //todo 事务添加 批量新增选项信息
-                int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TB_QUEST_ANWSER
+                int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
                 {
                     Answer = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
@@ -187,12 +184,12 @@ namespace Eagles.DomainService.Core
 
             var now = DateTime.Now;
 
-            TB_TEST_PAPER info;
+            TbTestPaper info;
 
             if (requset.Info.ExercisesId > 0)
             {
 
-                info = new TB_TEST_PAPER
+                info = new TbTestPaper
                 {
                     BranchId = requset.Info.BranchId,
                     EditTime = now,
@@ -222,7 +219,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                info = new TB_TEST_PAPER
+                info = new TbTestPaper
                 {
                     BranchId = requset.Info.BranchId,
                     CreateTime = requset.Info.CreateTime,
@@ -243,7 +240,7 @@ namespace Eagles.DomainService.Core
                 //得到新增的试卷id
                 int result = dataAccess.CreateExercises(info);
 
-                List<TB_TEST_QUESTION> list = requset.Info.SubjectList.Select(x => new TB_TEST_QUESTION
+                List<TbTestQuestion> list = requset.Info.SubjectList.Select(x => new TbTestQuestion
                 {
                     OrgId = requset.Info.OrgId,
                     QuestionId = x.QuestionId,
@@ -296,12 +293,12 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_TEST_PAPER info = dataAccess.GetExercisesDetail(requset);
+            TbTestPaper info = dataAccess.GetExercisesDetail(requset);
 
             if (info == null) throw new Exception("无数据");
 
             //得到试卷 + 习题的关系
-            List<TB_TEST_QUESTION> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
+            List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
 
             //找到所有习题的详细信息
             var subjectList = dataAccess.GetSubjectListByQuestionId(list.Select(x => x.QuestionId).ToList());
@@ -345,7 +342,7 @@ namespace Eagles.DomainService.Core
                 List = new List<Exercises>(),
                 Message = "成功",
             };
-            var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TB_TEST_PAPER>();
+            var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TbTestPaper>();
 
             if (list.Count == 0) throw new Exception("无数据");
 
@@ -393,10 +390,10 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
             //得到试卷 + 习题的关系
-            List<TB_TEST_QUESTION> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
+            List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
 
             //数据库计算 派出已关联的 
-            List<TB_QUESTION> subjectList =
+            List<TbQuestion> subjectList =
                 dataAccess.GetRandomSubject(list.Select(x => x.QuestionId).ToList(), requset.RandomSubjectSum);
 
             response.SubjectList = subjectList.Select(f => new Subject

@@ -22,7 +22,7 @@ namespace Eagles.DomainService.Core.DataBase
             this.dbManager = dbManager;
         }
 
-        public List<TB_ORG_INFO> GetOrganizationList(GetOrganizationRequset requset)
+        public List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -59,10 +59,10 @@ namespace Eagles.DomainService.Core.DataBase
 FROM `eagles`.`tb_org_info`  where 1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_ORG_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbOrgInfo>(sql.ToString(), dynamicParams);
         }
 
-        public TB_ORG_INFO GetOrganizationDetail(GetOrganizationDetailRequset requset)
+        public TbOrgInfo GetOrganizationDetail(GetOrganizationDetailRequset requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -81,7 +81,7 @@ FROM `eagles`.`tb_org_info`  where OrgId=@OrgId;
  ");
             dynamicParams.Add("OrgId", requset.OrgId);
 
-            return dbManager.QuerySingle<TB_ORG_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbOrgInfo>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveOrganization(RemoveOrganizationRequset requset)
@@ -91,7 +91,7 @@ FROM `eagles`.`tb_org_info`  where OrgId=@OrgId;
 ", new {requset.OrgId});
         }
 
-        public int EditOrganization(TB_ORG_INFO mod)
+        public int EditOrganization(TbOrgInfo mod)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_org_info`
 SET
@@ -109,7 +109,7 @@ WHERE `OrgId` = @OrgId;
 ", mod);
         }
 
-        public int CreateOrganization(TB_ORG_INFO mod)
+        public int CreateOrganization(TbOrgInfo mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_org_info`
 (`OrgId`,
@@ -143,7 +143,7 @@ VALUES
 
    
 
-        public List<TB_ORG_INFO> GetOrganizationList(List<int> list)
+        public List<TbOrgInfo> GetOrganizationList(List<int> list)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -162,7 +162,7 @@ FROM `eagles`.`tb_org_info`  where  OrgId  in @OrgId
  ");
             dynamicParams.Add("OrgId", new {OrgId = list.ToArray()});
 
-            return dbManager.Query<TB_ORG_INFO>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbOrgInfo>(sql.ToString(), dynamicParams);
 
         }
     }

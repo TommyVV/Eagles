@@ -1,5 +1,4 @@
-﻿using Eagles.Application.Model.enums;
-using Eagles.Application.Model.Enums;
+﻿using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.Exercises.Requset
 {

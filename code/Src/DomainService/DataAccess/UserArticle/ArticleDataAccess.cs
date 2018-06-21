@@ -14,10 +14,10 @@ namespace Ealges.DomianService.DataAccess.UserArticle
            this.dbManager = dbManager;
         }
 
-        public List<UserNews> GetUserNewsList(int userId)
+        public List<TbUserNews> GetUserNewsList(int userId)
         {
 
-            var userNews = dbManager.Query<UserNews>(@"SELECT 
+            var userNews = dbManager.Query<TbUserNews>(@"SELECT 
             OrgId,
             BranchId,
             NewsId,

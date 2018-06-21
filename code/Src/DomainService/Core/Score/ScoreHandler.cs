@@ -56,7 +56,7 @@ namespace Eagles.DomainService.Core.Score
             var userScore = userInfo.Score; //用户积分
             if(userScore < score)
                 throw new TransactionException("用户积分不足");
-            var order = new DomainModel.Order.Order()
+            var order = new DomainModel.Order.TbOrder()
             {
                 OrgId = tokens.OrgId,
                 ProdId = request.ProductId,

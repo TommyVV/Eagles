@@ -25,11 +25,11 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_ORG_INFO mod;
+            TbOrgInfo mod;
             var now = DateTime.Now;
             if (requset.Info.OrgId > 0)
             {
-                mod = new TB_ORG_INFO
+                mod = new TbOrgInfo
                 {
                     Address = requset.Info.Address,
                     Province = requset.Info.Province,
@@ -51,7 +51,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_ORG_INFO
+                mod = new TbOrgInfo
                 {
                     Address = requset.Info.Address,
                     Province = requset.Info.Province,
@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_ORG_INFO> list = dataAccess.GetOrganizationList(requset) ?? new List<TB_ORG_INFO>();
+            List<TbOrgInfo> list = dataAccess.GetOrganizationList(requset) ?? new List<TbOrgInfo>();
 
             if (list.Count == 0) throw new Exception("无数据");
 
@@ -123,7 +123,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_ORG_INFO detail = dataAccess.GetOrganizationDetail(requset);
+            TbOrgInfo detail = dataAccess.GetOrganizationDetail(requset);
 
             if (detail == null) throw new Exception("无数据");
 

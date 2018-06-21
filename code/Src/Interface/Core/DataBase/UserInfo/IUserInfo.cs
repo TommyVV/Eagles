@@ -6,9 +6,9 @@ namespace Eagles.Interface.Core.DataBase.UserInfo
     {
         int EditUser(Application.Model.Common.UserInfo user);
 
-        DomainService.Model.User.UserInfo GetUserInfo(int userId);
+        DomainService.Model.User.TbUserInfo GetUserInfo(int userId);
 
-        DomainService.Model.User.UserInfo GetLogin(int userId);
+        DomainService.Model.User.TbUserInfo GetLogin(int userId);
 
         string InsertToken(int userId);
     }

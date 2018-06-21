@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
 using Eagles.Application.Model.Enums;
-using Eagles.DomainService.Model.Column;
+using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core;
 using Eagles.Interface.Core.DataBase;
 
@@ -31,11 +29,11 @@ namespace Eagles.DomainService.Core
                 Message = "成功",
             };
 
-            TB_APP_MODULE mod;
+            TbAppModule mod;
 
             if (requset.Info.ColumnId > 0)
             {
-                mod = new TB_APP_MODULE
+                mod = new TbAppModule
                 {
 
                     TragetUrl = requset.Info.ColumnAddress,
@@ -59,7 +57,7 @@ namespace Eagles.DomainService.Core
             }
             else
             {
-                mod = new TB_APP_MODULE
+                mod = new TbAppModule
                 {
                     TragetUrl = requset.Info.ColumnAddress,
                     Priority = requset.Info.OrderBy,
@@ -108,7 +106,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            TB_APP_MODULE detail = dataAccess.GetColumnDetail(requset);
+            TbAppModule detail = dataAccess.GetColumnDetail(requset);
 
             if (detail == null) throw new Exception("无数据");
 
@@ -135,7 +133,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TB_APP_MODULE> list = dataAccess.GetColumnList(requset) ?? new List<TB_APP_MODULE>();
+            List<TbAppModule> list = dataAccess.GetColumnList(requset) ?? new List<TbAppModule>();
 
             if (list.Count == 0) throw new Exception("无数据");
 

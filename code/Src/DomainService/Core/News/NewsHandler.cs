@@ -4,9 +4,11 @@ using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.Core.DataBase.UserArticle;
-using Eagles.Application.Model.AppModel.News;
 using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.AppModel.News.CreateNews;
+using Eagles.Application.Model.AppModel.News.GetModuleNews;
+using Eagles.Application.Model.AppModel.News.GetNewsDetail;
+using Eagles.Application.Model.AppModel.News.GetNewsTest;
 
 namespace Eagles.DomainService.Core.News
 {
@@ -157,7 +159,7 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException("01", "TestId 非法");
             }
 
-
+            
             return response;
         }
     }

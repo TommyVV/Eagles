@@ -19,7 +19,7 @@ namespace Eagles.DomainService.Core.DataBase
         {
             this.dbManager = dbManager;
         }
-        public int EditActivity(TB_ACTIVITY mod)
+        public int EditActivity(TbActivity mod)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_activity`
 SET
@@ -56,7 +56,7 @@ WHERE
 ", mod);
         }
 
-        public int CreateActivity(TB_ACTIVITY mod)
+        public int CreateActivity(TbActivity mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_activity`
 (`OrgId`,
@@ -127,7 +127,7 @@ VALUES
 ", new {ActivityId = requset.ActivityTaskId});
 }
 
-        public TB_ACTIVITY GetActivityDetail(GetActivityTaskDetailRequset requset)
+        public TbActivity GetActivityDetail(GetActivityTaskDetailRequset requset)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -163,10 +163,10 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
             dynamicParams.Add("ColumnId", requset.ActivityTaskId);
 
-            return dbManager.QuerySingle<TB_ACTIVITY>(sql.ToString(), dynamicParams);
+            return dbManager.QuerySingle<TbActivity>(sql.ToString(), dynamicParams);
         }
 
-        public List<TB_ACTIVITY> GetGetActivityList(GetActivityTaskRequset requset)
+        public List<TbActivity> GetGetActivityList(GetActivityTaskRequset requset)
         {
 
             var sql = new StringBuilder();
@@ -228,7 +228,7 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
 FROM `eagles`.`tb_activity`   where 1=1  {0}  
  ", parameter);
 
-            return dbManager.Query<TB_ACTIVITY>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
         }
     }
 }

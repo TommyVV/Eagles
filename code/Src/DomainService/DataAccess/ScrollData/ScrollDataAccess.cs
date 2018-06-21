@@ -13,14 +13,14 @@ namespace Ealges.DomianService.DataAccess.ScrollData
             this.dbManager = dbManager;
         }
 
-        public List<Eagles.DomainService.Model.ScrollImage.ScrollImage> GetScrollImg()
+        public List<Eagles.DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg()
         {
-            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.ScrollImage>("select OrgId,PageType,ImageUrl from eagles.tb_scroll_image ", new { });
+            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.TbScrollImage>("select OrgId,PageType,ImageUrl from eagles.tb_scroll_image ", new { });
         }
 
-        public List<Eagles.DomainService.Model.News.SystemNews> GetScrollNews()
+        public List<Eagles.DomainService.Model.News.TbSystemNews> GetScrollNews()
         {
-            return dbManager.Query<Eagles.DomainService.Model.News.SystemNews>("select OrgId,PageType,ImageUrl from eagles.tb_system_news ", new { });
+            return dbManager.Query<Eagles.DomainService.Model.News.TbSystemNews>("select OrgId,PageType,ImageUrl from eagles.tb_system_news ", new { });
         }
     }
 }

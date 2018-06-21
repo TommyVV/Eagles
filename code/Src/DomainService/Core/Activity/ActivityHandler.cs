@@ -45,7 +45,7 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            var act = new DomainModel.Activity.Activity();
+            var act = new DomainModel.Activity.TbActivity();
             act.ActivityName = request.ActivityName;
             act.ActivityType = request.ActivityType;
             act.BeginTime = request.ActivityBeginDate;

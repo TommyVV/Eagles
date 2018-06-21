@@ -120,7 +120,7 @@ namespace Eagles.DomainService.Core.User
             var code = request.SmsCode;
             var codeResult = dbManager.Query<DomainModel.Sms.ValidCode>("select Phone,ValidCode,ExpireTime FROM eagles.tb_validcode where phone = @phone ", phone);
 
-            var result = dbManager.Query<DomainModel.User.UserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", phone);
+            var result = dbManager.Query<DomainModel.User.TbUserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", phone);
             if (result != null && result.Count > 0)
             {
                 response.ErrorCode = "96";

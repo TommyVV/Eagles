@@ -38,7 +38,7 @@ namespace Eagles.DomainService.Core
 
             if (list.Count == 0) throw new Exception("无数据");
 
-            List<TB_ORG_INFO> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
+            List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
             response.TotalCount = totalCount;
             response.List = list.Select(x => new Member
@@ -65,7 +65,7 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new Exception("无数据");
 
-            List<TB_ORG_INFO> orgList = OrgdataAccess.GetOrganizationList(new List<int> { detail.OrgId });
+            List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(new List<int> { detail.OrgId });
 
             response.Info = new UserInfoDetails
             {
