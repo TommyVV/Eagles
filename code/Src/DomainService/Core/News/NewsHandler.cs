@@ -180,7 +180,7 @@ namespace Eagles.DomainService.Core.News
                 var nowQuestion = questions.Find(y => y.QuestionId == x.QuestionId);
                 if (nowQuestion == null)
                 {
-                    var question = new AppQuestion()
+                    questions.Add(new AppQuestion()
                     {
                         QuestionId = x.QuestionId,
                         Question = x.Question,
@@ -190,8 +190,7 @@ namespace Eagles.DomainService.Core.News
                         {
                             answer
                         }
-                    };
-                    questions.Add(question);
+                    });
                 }
                 else
                 {
