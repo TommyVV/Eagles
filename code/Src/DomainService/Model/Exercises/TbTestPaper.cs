@@ -3,6 +3,9 @@ using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.Exercises
 {
+    /// <summary>
+    /// TB_TEST_PAPER
+    /// </summary>
     public class TbTestPaper
     {
         /// <summary>

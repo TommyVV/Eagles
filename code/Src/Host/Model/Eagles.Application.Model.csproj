@@ -47,8 +47,8 @@
   <ItemGroup>
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="AppModel\Activity\EditActivityReview\EditActivityReviewResponse.cs" />
-    <Compile Include="AppModel\News\CompleteTestResponse.cs" />
-    <Compile Include="AppModel\News\CompleteTestRequest.cs" />
+    <Compile Include="AppModel\News\CompleteTest\CompleteTestResponse.cs" />
+    <Compile Include="AppModel\News\CompleteTest\CompleteTestRequest.cs" />
     <Compile Include="AppModel\News\GetNewsTest\AppAnswer.cs" />
     <Compile Include="AppModel\News\GetNewsTest\GetNewsTestResponse.cs" />
     <Compile Include="AppModel\News\GetNewsTest\GetNewsTestRequest.cs" />

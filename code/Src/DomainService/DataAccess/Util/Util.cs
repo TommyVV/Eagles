@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.Util;
@@ -17,7 +18,7 @@ namespace Ealges.DomianService.DataAccess.Util
         public TbUserToken GetUserId(string token,int tokenType)
         {
             var tokens = dbManager.Query<TbUserToken>(
-                @" SELECT OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token where Token=@Token AND TokenType=@TokenType",
+                @" select OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token where Token=@Token AND TokenType=@TokenType",
                 new {Token = token, TokenType = tokenType});
             if (tokens != null && tokens.Any())
             {
@@ -26,7 +27,7 @@ namespace Ealges.DomianService.DataAccess.Util
             return null;
         }
         
-        public Eagles.DomainService.Model.User.TbUserInfo GetUserInfo(int userId)
+        public TbUserInfo GetUserInfo(int userId)
         {
             var user = dbManager.Query<Eagles.DomainService.Model.User.TbUserInfo>(@" select IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
             if (user != null && user.Any())
@@ -34,6 +35,20 @@ namespace Ealges.DomianService.DataAccess.Util
                 return user.FirstOrDefault();
             }
             return null;
+        }
+
+        public int CreateScoreLs(int userId, int score, string rewardsType, string comment, int oriScore)
+        {
+            return dbManager.Excuted("insert into eagles.tb_user_score_trace(UserId,CreateTime,Score,RewardsType,Comment,OriScore) value (@UserId,@CreateTime,@Score,@RewardsType,@Comment,@OriScore)",
+                new
+                {
+                    UserId = userId,
+                    CreateTime = DateTime.Now,
+                    Score = score,
+                    RewardsType = rewardsType,
+                    Comment = comment,
+                    OriScore = oriScore
+                });
         }
 
         public int EditUserScore(int userId, int score)

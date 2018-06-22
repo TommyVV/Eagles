@@ -8,7 +8,7 @@ namespace Eagles.Application.Model.AppModel.News.GetNewsTest
     public class GetNewsTestResponse : ResponseBase
     {
         /// <summary>
-        /// 
+        /// 试卷List
         /// </summary>
         public List<AppQuestion> TestList { get; set; }
     }

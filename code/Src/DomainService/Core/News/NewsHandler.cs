@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
@@ -8,8 +9,10 @@ using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.AppModel.News.CreateNews;
 using Eagles.Application.Model.AppModel.News.GetNewsTest;
+using Eagles.Application.Model.AppModel.News.CompleteTest;
 using Eagles.Application.Model.AppModel.News.GetModuleNews;
 using Eagles.Application.Model.AppModel.News.GetNewsDetail;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.News
 {
@@ -197,8 +200,74 @@ namespace Eagles.DomainService.Core.News
                     nowQuestion.AnswerList.Add(answer);
                 }
             });
-            
             response.TestList = questions;
+            return response;
+        }
+
+        public CompleteTestResponse CompleteTest(CompleteTestRequest request)
+        {
+            var response = new CompleteTestResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
+            int testScore = 0;
+            //查询TB_TEST_PAPER
+            var testPaper = newsDa.GetTestPaperInfo(request.TestId);
+            var passScore = testPaper.PassScore; //及格分数
+            var questionSocre = testPaper.QuestionSocre; //每题分值
+            var passAwardScore = testPaper.PassAwardScore; //及格奖励积分
+
+            //查询正确答案
+            var rightAnswer = newsDa.GetTestRightAnswer(request.TestId);
+
+            //匹配正确答案
+            request.TestList.ForEach(x =>
+            {
+                var answer = new AppAnswer()
+                {
+                    QuestionId = x.QuestionId,
+                    //AnswerId = x.AnswerId,
+                    //Answer = x.Answer,
+                    //AnswerType = x.AnswerType,
+                    //IsRight = x.IsRight,
+                    //ImageUrl = x.ImageUrl
+                };
+            });
+
+            #region //插入TB_USER_TEST
+            var userTest = new TbUserTest()
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                UserId = tokens.UserId,
+                TestId = request.TestId,
+                Score = testScore,
+                TotalScore = 0,
+                CreateTime = DateTime.Now,
+                UseTime = request.UseTime
+            };
+            newsDa.CreateUserTest(userTest);
+            #endregion
+
+
+            //如果及格
+            if (testScore >= passScore)
+            {
+                //插入TB_REWARD_SCORE
+                util.CreateScoreLs(tokens.UserId, passAwardScore, "50", "完成试卷奖励积分", userInfo.Score);
+                //修改用户积分
+                util.EditUserScore(tokens.UserId, passAwardScore);
+            }
+            
             return response;
         }
     }
