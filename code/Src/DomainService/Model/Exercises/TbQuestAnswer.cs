@@ -9,7 +9,7 @@ namespace Eagles.DomainService.Model.Exercises
         /// <summary>
         /// 答案选项
         /// </summary>
-        public string AnswerOptions { get; set; }
+        public string Answer { get; set; }
         /// <summary>
         /// 选项编号
         /// </summary>

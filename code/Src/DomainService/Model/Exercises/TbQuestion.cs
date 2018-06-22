@@ -9,7 +9,7 @@ namespace Eagles.DomainService.Model.Exercises
         /// <summary>
         /// 答案类型;0:默认:1:自定义
         /// </summary>
-        public int Answer { get; set; }
+        public int AnswerType { get; set; }
         /// <summary>
         /// 是否允许多选;0:否;1:是
         /// </summary>
