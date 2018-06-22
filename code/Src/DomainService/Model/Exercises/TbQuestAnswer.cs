@@ -2,9 +2,9 @@
 namespace Eagles.DomainService.Model.Exercises
 {
     /// <summary>
-    /// TB_QUEST_ANWSER
+    /// TB_QUEST_ANSWER
     /// </summary>
-    public class TbQuestAnwser
+    public class TbQuestAnswer
     {
         /// <summary>
         /// 答案选项

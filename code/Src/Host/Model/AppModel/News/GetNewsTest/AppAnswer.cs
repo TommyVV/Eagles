@@ -7,9 +7,14 @@ namespace Eagles.Application.Model.AppModel.News.GetNewsTest
     public class AppAnswer
     {
         /// <summary>
+        /// 问题编号
+        /// </summary>
+        public int QuestionId { get; set; }
+
+        /// <summary>
         /// 选项编号
         /// </summary>
-        public string AnswerId { get; set; }
+        public int AnswerId { get; set; }
 
         /// <summary>
         /// 选项
@@ -19,12 +24,12 @@ namespace Eagles.Application.Model.AppModel.News.GetNewsTest
         /// <summary>
         /// 答案类型;0:默认 1:自定义
         /// </summary>
-        public string AnswerType { get; set; }
+        public int AnswerType { get; set; }
 
         /// <summary>
         /// 答案是否是正确答案;0;是;1:否
         /// </summary>
-        public string IsRight { get; set; }
+        public int IsRight { get; set; }
 
         /// <summary>
         /// 选项图片

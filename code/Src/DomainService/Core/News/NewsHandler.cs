@@ -6,9 +6,9 @@ using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Application.Model.AppModel.News.GetNews;
 using Eagles.Application.Model.AppModel.News.CreateNews;
+using Eagles.Application.Model.AppModel.News.GetNewsTest;
 using Eagles.Application.Model.AppModel.News.GetModuleNews;
 using Eagles.Application.Model.AppModel.News.GetNewsDetail;
-using Eagles.Application.Model.AppModel.News.GetNewsTest;
 
 namespace Eagles.DomainService.Core.News
 {
@@ -158,55 +158,49 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "TestId 非法");
             }
-            //response.TestList = newsDa.GetNewsTest(request.TestId);
-
-
-
-            //if (menus == null || !menus.Any())
-            //{
-            //    return response;
-            //}
-
-            //var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.AppModel.GetMenu.AppMenu
-            //{
-            //    MenuId = x.MenuId,
-            //    MenuName = x.MenuName,
-            //    TargetUrl = x.TragetUrl,
-            //    SubMenus = new List<AppSubMenu>(),
-            //    HasSubMenu = false
-
-            //}).ToList();
-
-            //var secondMenu = menus.Where(x => x.Level == "2").Select(x =>
-            //    new AppSubMenu()
-            //    {
-            //        MenuId = x.MenuId,
-            //        MenuName = x.MenuName,
-            //        TargetUrl = x.TragetUrl,
-            //        ParentMenuId = x.ParentMenuId,
-            //    }).ToList();
-
-            //// build relations 
-
-            //mainMenu.ForEach(x =>
-            //{
-            //    var sub = secondMenu.FindAll(y => y.ParentMenuId == x.MenuId).ToList();
-            //    if (sub.Any())
-            //    {
-            //        x.SubMenus = sub;
-            //        x.HasSubMenu = true;
-            //    }
-            //});
-
-            //response.AppMenus = mainMenu;
-
-
-
-
-
-
-
-
+            var resultTest = newsDa.GetNewsTest(request.TestId);
+            if (resultTest == null || !resultTest.Any())
+            {
+                return response;
+            }
+            //遍历问题
+            var testQuestion = resultTest.Select(x => new AppQuestion
+            {
+                QuestionId = x.QuestionId,
+                Question = x.Question,
+                Multiple = x.Multiple,
+                MultipleCount=x.MultipleCount
+            }).ToList();
+            if (testQuestion == null || testQuestion.Count < 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "查无数据";
+            }
+            else
+            {
+                response.ErrorCode = "00";
+                response.Message = "查询成功";
+            }
+            //遍历答案
+            var testAnwser = resultTest.Select(x => new AppAnswer()
+            {
+                QuestionId = x.QuestionId,
+                AnswerId = x.AnswerId,
+                Answer = x.Answer,
+                AnswerType = x.AnswerType,
+                IsRight = x.IsRight,
+                ImageUrl = x.ImageUrl
+            }).ToList();
+            //遍历问题匹配答案
+            testQuestion.ForEach(x =>
+            {
+                var sub = testAnwser.FindAll(y => x.QuestionId == y.QuestionId).ToList();
+                if (sub.Any())
+                {
+                    x.AnswerList = sub;
+                }
+            });
+            response.TestList = testQuestion;
             return response;
         }
     }

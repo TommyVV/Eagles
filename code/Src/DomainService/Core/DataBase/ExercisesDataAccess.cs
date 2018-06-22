@@ -263,7 +263,7 @@ FROM `eagles`.`tb_question`  where QuestionId=@QuestionId;
             return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams).FirstOrDefault();
         }
 
-        public List<TbQuestAnwser> GetOptionList(List<int> list)
+        public List<TbQuestAnswer> GetOptionList(List<int> list)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -279,7 +279,7 @@ FROM `eagles`.`tb_quest_anwser`  WHERE QuestionId in @QuestionId;
  ");
             dynamicParams.Add("QuestionId", new { QuestionId = list.ToArray() });
 
-            return dbManager.Query<TbQuestAnwser>(sql.ToString(), dynamicParams);
+            return dbManager.Query<TbQuestAnswer>(sql.ToString(), dynamicParams);
         }
 
         public int RemoveOptionByQuestionId(int questionId)
@@ -288,7 +288,7 @@ FROM `eagles`.`tb_quest_anwser`  WHERE QuestionId in @QuestionId;
 WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
         }
 
-        public int CreateOption(List<TbQuestAnwser> optionList)
+        public int CreateOption(List<TbQuestAnswer> optionList)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_quest_anwser`
 (`OrgId`,
@@ -309,7 +309,7 @@ VALUES
 
         }
 
-        public int EditOption(List<TbQuestAnwser> optionList)
+        public int EditOption(List<TbQuestAnswer> optionList)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_quest_anwser`
 SET

@@ -17,10 +17,10 @@ namespace Eagles.Interface.Core.DataBase
         int CreateSubject(TbQuestion info);
         int RemoveSubject(RemoveSubjectRequset requset);
         TbQuestion GetSubjectDetail(GetSubjectDetailRequset requset);
-        List<TbQuestAnwser> GetOptionList(List<int> ints);
+        List<TbQuestAnswer> GetOptionList(List<int> ints);
         int RemoveOptionByQuestionId(int questionId);
-        int CreateOption(List<TbQuestAnwser> infoOptionList);
-        int EditOption(List<TbQuestAnwser> infoOptionList);
+        int CreateOption(List<TbQuestAnswer> infoOptionList);
+        int EditOption(List<TbQuestAnswer> infoOptionList);
         List<TbTestQuestion> GetTestQuestionRelationshipByTestId(int testId);
         int RemoveTestQuestionRelationshipByTestId(int testId);
         int CreateTestQuestionRelationship(List<TbTestQuestion> list);

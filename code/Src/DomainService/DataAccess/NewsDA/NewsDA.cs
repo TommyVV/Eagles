@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.News;
+using Eagles.DomainService.Model.Exercises;
 using Eagles.Interface.DataAccess.NewsDa;
 
 namespace Ealges.DomianService.DataAccess.NewsDA
@@ -27,9 +28,9 @@ OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,R
 OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrlFROM eagles.tb_news where NewsId=@NewsId And OrgId=@OrgId", new { NewsId = newsId, OrgId = appId });
         }
 
-        public TbNews GetNewsTest(int testId)
+        public List<TbQuestEx> GetNewsTest(int testId)
         {
-            return dbManager.QuerySingle<TbNews>(@"select c.TestId,a.QuestionId,a.Question,a.Multiple,a.MultipleCount,b.AnswerId,b.Answer,b.AnswerType,b.IsRight,b.ImageUrl
+            return dbManager.Query<TbQuestEx>(@"select c.TestId,a.QuestionId,a.Question,a.Multiple,a.MultipleCount,b.AnswerId,b.Answer,b.AnswerType,b.IsRight,b.ImageUrl
 from eagles.tb_question a join eagles.tb_quest_anwser b on a.questionId = b.questionId join eagles.tb_test_question c on a.questionId = c.questionId
 where c.TestId = @TestId ", new {TestId = testId});
         }

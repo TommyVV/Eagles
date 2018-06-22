@@ -62,7 +62,7 @@
     <Compile Include="Exercises\TbTestQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exercises\TbQuestion.cs" />
-    <Compile Include="Exercises\TbQuestAnwser.cs" />
+    <Compile Include="Exercises\TbQuestAnswer.cs" />
     <Compile Include="Review\Review.cs" />
     <Compile Include="RewardScore\TbRewardScore.cs" />
     <Compile Include="ScrollImage\TbScrollImage.cs" />

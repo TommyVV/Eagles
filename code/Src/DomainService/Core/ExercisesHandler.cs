@@ -119,7 +119,7 @@ namespace Eagles.DomainService.Core
                 };
 
                 //todo 事务修改 批量修改选项信息
-                int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
+                int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 {
                     AnswerOptions = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
@@ -148,7 +148,7 @@ namespace Eagles.DomainService.Core
                 };
 
                 //todo 事务添加 批量新增选项信息
-                int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnwser
+                int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 {
                     AnswerOptions = x.OptionName,
                     AnswerType = x.IsCustom ? 1 : 0,
