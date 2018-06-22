@@ -40,7 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBaseConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403fab37-72ef-4bad-b749-05e494dc4b5b}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interface\Configuration\Eagles.Interface.Configuration.csproj">
+      <Project>{b96a3614-0de7-4ceb-a3c2-11ec17c6e1b2}</Project>
+      <Name>Eagles.Interface.Configuration</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
