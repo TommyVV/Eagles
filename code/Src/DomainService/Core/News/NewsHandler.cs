@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
@@ -164,43 +165,41 @@ namespace Eagles.DomainService.Core.News
                 return response;
             }
             //遍历问题
-            var testQuestion = resultTest.Select(x => new AppQuestion
+            var questions = new List<AppQuestion>();
+            resultTest.ForEach(x =>
             {
-                QuestionId = x.QuestionId,
-                Question = x.Question,
-                Multiple = x.Multiple,
-                MultipleCount=x.MultipleCount
-            }).ToList();
-            if (testQuestion == null || testQuestion.Count < 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "查无数据";
-            }
-            else
-            {
-                response.ErrorCode = "00";
-                response.Message = "查询成功";
-            }
-            //遍历答案
-            var testAnwser = resultTest.Select(x => new AppAnswer()
-            {
-                QuestionId = x.QuestionId,
-                AnswerId = x.AnswerId,
-                Answer = x.Answer,
-                AnswerType = x.AnswerType,
-                IsRight = x.IsRight,
-                ImageUrl = x.ImageUrl
-            }).ToList();
-            //遍历问题匹配答案
-            testQuestion.ForEach(x =>
-            {
-                var sub = testAnwser.FindAll(y => x.QuestionId == y.QuestionId).ToList();
-                if (sub.Any())
+                var answer = new AppAnswer()
                 {
-                    x.AnswerList = sub;
+                    QuestionId = x.QuestionId,
+                    AnswerId = x.AnswerId,
+                    Answer = x.Answer,
+                    AnswerType = x.AnswerType,
+                    IsRight = x.IsRight,
+                    ImageUrl = x.ImageUrl
+                };
+                var nowQuestion = questions.Find(y => y.QuestionId == x.QuestionId);
+                if (nowQuestion == null)
+                {
+                    var question = new AppQuestion()
+                    {
+                        QuestionId = x.QuestionId,
+                        Question = x.Question,
+                        Multiple = x.Multiple,
+                        MultipleCount = x.MultipleCount,
+                        AnswerList = new List<AppAnswer>()
+                        {
+                            answer
+                        }
+                    };
+                    questions.Add(question);
+                }
+                else
+                {
+                    nowQuestion.AnswerList.Add(answer);
                 }
             });
-            response.TestList = testQuestion;
+            
+            response.TestList = questions;
             return response;
         }
     }
