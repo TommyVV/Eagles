@@ -4,6 +4,2792 @@
         <name>Eagles.Application.Model</name>
     </assembly>
     <members>
+        <member name="T:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.BeginTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ExamType">
+            <summary>
+            考试类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.MaxPartakePeople">
+            <summary>
+            最大参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.EverybodyPeople">
+            <summary>
+            每人参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsComment">
+            <summary>
+            是否允许评论
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsVote">
+            <summary>
+            是否允许评论 允许投票是习题 选择才能生效
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ExampleId">
+            <summary>
+            习题id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Enclosure">
+            <summary>
+            附件 json格式
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach1">
+            <summary>
+            附件1
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach2">
+            <summary>
+            附件2
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach3">
+            <summary>
+            附件3
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach4">
+            <summary>
+            附件4
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ImageUrl">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.ActivityTaskId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.ActivityTaskName">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.ActivityTaskType">
+            <summary>
+            活动任务类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.UserName">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.ActivityTaskImg">
+            <summary>
+            新闻图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.AuditStatus">
+            <summary>
+            审核状态
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset">
+            <summary>
+            修改/新增 任务活动实体类
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.BranchId">
+            <summary>
+             支部id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.OrgId">
+            <summary>
+             机构id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskDetailRequset">
+            <summary>
+            获取详情 任务/活动
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskDetailRequset.ActivityTaskId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskRequset">
+            <summary>
+            任务 + 活动 请求列表参数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskRequset.UserName">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskRequset.ActivityTaskName">
+            <summary>
+            任务/活动 名字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Requset.RemoveActivityTaskRequset">
+            <summary>
+            删除 活动任务 
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.RemoveActivityTaskRequset.ActivityTaskId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Response.GetActivityTaskDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Response.GetActivityTaskDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ActivityTask.Response.GetActivityTaskResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Response.GetActivityTaskResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Response.GetActivityTaskResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Model.Audit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditName">
+            <summary>
+            审核名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.UserName">
+            <summary>
+            发起人名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.AuditId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.AuditStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Requset.GetAuditRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.AuditName">
+            <summary>
+            审核名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.AuditStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.OperationType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Response.GetAuditResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Response.GetAuditResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Audit.Response.GetAuditResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo.AuthorityName">
+            <summary>
+            权限名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo.AuthorityKey">
+            <summary>
+            权限key
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroupSetUp.Requset.EditAuthorityGroupSetUpRequset">
+            <summary>
+            设置权限组 权限
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Requset.EditAuthorityGroupSetUpRequset.AuthorityId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Requset.EditAuthorityGroupSetUpRequset.AuthorityInfo">
+            <summary>
+            设置的权限list
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroupSetUp.Response.GetAuthorityGroupSetUpResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup">
+            <summary>
+            权限组对象
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.AuthorityGroupId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.AuthorityGroupName">
+            <summary>
+            权限组名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.OrgName">
+            <summary>
+            机构名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Model.AuthorityGroup.Status">
+            <summary>
+            权限组状态
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Requset.EditAuthorityGroupRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Requset.EditAuthorityGroupRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Requset.GetAuthorityGroupDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Requset.GetAuthorityGroupDetailRequset.AuthorityGroupId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Requset.GetAuthorityGroupRequset">
+            <summary>
+            权限组列表请求
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Requset.GetAuthorityGroupRequset.AuthorityName">
+            <summary>
+            权限组名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Requset.RemoveAuthorityGroupInfoRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Requset.RemoveAuthorityGroupInfoRequset.AuthorityGroupId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Response.GetAuthorityGroupDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Response.GetAuthorityGroupDetailResponse.List">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.AuthorityGroup.Response.GetAuthorityGroupResponse">
+            <summary>
+            权限组列表返回
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Response.GetAuthorityGroupResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.AuthorityGroup.Response.GetAuthorityGroupResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Model.ColumnInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.ColumnId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.ColumnName">
+            <summary>
+            栏目名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.ColumnAddress">
+            <summary>
+            栏目地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.AuditStatus">
+            <summary>
+            审核状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.OrderBy">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Model.ColumnInfoDetails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.IsSetTop">
+            <summary>
+            是否置顶
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.OrgId">
+            <summary>
+            所属页面
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.ColumnIcon">
+            <summary>
+            小图
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.ColumnImg">
+            <summary>
+            大图
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.IndexPageCount">
+            <summary>
+            首页显示数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.ModuleType">
+            <summary>
+             '类型;
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Requset.EditColumnRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Requset.EditColumnRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Requset.GetColumnDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Requset.GetColumnDetailRequset.ColumnId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Requset.GetColumnRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Requset.GetColumnRequset.ColumnName">
+            <summary>
+            任务/活动 名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Requset.GetColumnRequset.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Requset.RemoveColumnRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Requset.RemoveColumnRequset.ColumnId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Response.GetColumnDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Response.GetColumnDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Column.Response.GetColumnResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Response.GetColumnResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Column.Response.GetColumnResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Activity">
+            <summary>
+            活动
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.ActivityId">
+            <summary>
+            活动Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.ActivityName">
+            <summary>
+            活动名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.ActivityType">
+            <summary>
+            活动类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.Content">
+            <summary>
+            活动内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.ActivityDate">
+            <summary>
+            活动日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Activity.ImgUrl">
+            <summary>
+            活动图片Url
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Attachment">
+            <summary>
+            附件类
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentType">
+            <summary>
+            附件类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentName">
+            <summary>
+            附件名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentDownloadUrl">
+            <summary>
+            附件Url
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.BranchRank">
+            <summary>
+            支部积分排行榜
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.BranchRank.Rank">
+            <summary>
+            排名
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.BranchRank.Branch">
+            <summary>
+            支部
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.BranchRank.UserCount">
+            <summary>
+            党员数
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.BranchRank.Score">
+            <summary>
+            积分
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Comment">
+            <summary>
+            评论
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Comment.CommentId">
+            <summary>
+            评论Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Comment.CommentContent">
+            <summary>
+            评论内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Comment.CommentUserId">
+            <summary>
+            评论用户
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Comment.CommentTime">
+            <summary>
+            评论时间
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.DwWork">
+            <summary>
+            党务工作
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.ModuleId">
+            <summary>
+            模块Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.ModuleName">
+            <summary>
+            模块名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.TargetUrl">
+            <summary>
+            跳转链接
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.SmallImgUrl">
+            <summary>
+            小图Url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.ImgUrl">
+            <summary>
+            大图Url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.Priority">
+            <summary>
+            优先级
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.IndexPageNo">
+            <summary>
+            首页显示数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.DwWork.IndexDisplay">
+            <summary>
+            是否在首页显示
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.News">
+            <summary>
+            新闻文章类
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.News.NewsId">
+            <summary>
+            新闻文章Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.News.Title">
+            <summary>
+            新闻文章标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.News.CreateTime">
+            <summary>
+            新闻文章内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.News.ImageUrl">
+            <summary>
+            缩略图
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Product">
+            <summary>
+            积分商品
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Product.ProductId">
+            <summary>
+            产品Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Product.ProductName">
+            <summary>
+            产品名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Product.ProductScore">
+            <summary>
+            产品积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Product.ProductImageUrl">
+            <summary>
+            产品图片Url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.ScoreExchange.ProdName">
+            <summary>
+            兑换商品名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.ScoreExchange.Score">
+            <summary>
+            兑换积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.ScoreExchange.ExchangDate">
+            <summary>
+            兑换时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.ScoreExchange.OrderId">
+            <summary>
+            订单Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.ScoreExchange.Address">
+            <summary>
+            商品寄送地址
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Step">
+            <summary>
+            步骤
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Step.StepId">
+            <summary>
+            步骤Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Step.StepName">
+            <summary>
+            步骤名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.Task">
+            <summary>
+            任务
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Task.TaskId">
+            <summary>
+            任务编号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Task.TaskeName">
+            <summary>
+            任务名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Task.TaskDate">
+            <summary>
+            任务日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Task.TaskStatus">
+            <summary>
+            任务日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.Task.TaskFromUser">
+            <summary>
+            任务发起人
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Name">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Gender">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Ethnic">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Birth">
+            <summary>
+            生日
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Provice">
+            <summary>
+            省
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.City">
+            <summary>
+            市
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.District">
+            <summary>
+            区
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Origin">
+            <summary>
+            籍贯
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.CensusAddress">
+            <summary>
+            户籍地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Address">
+            <summary>
+            常住地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Telphone">
+            <summary>
+            联系电话
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.IdCard">
+            <summary>
+            身份证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Education">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.School">
+            <summary>
+            毕业院校
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Employer">
+            <summary>
+            工作单位
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Department">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.PrepPartyDate">
+            <summary>
+            转预备党员日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.FormalPartyDat">
+            <summary>
+            转正式党员日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.PartyType">
+            <summary>
+            人员类别(正式/预备党员)
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.PartyMembershipDues">
+            <summary>
+            党费缴纳情况
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.Branch">
+            <summary>
+            我的支部
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.JoinBranchDate">
+            <summary>
+            入支部日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.MyOrganization">
+            <summary>
+            我的组织
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.JoinOrganizationDate">
+            <summary>
+            入组织日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.MembershipStatus">
+            <summary>
+            党籍状态(正常/除党籍)
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Common.UserInfo.PhotoUrl">
+            <summary>
+            头像Url
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Common.UserRank">
+            <summary>
+            党员积分排行榜
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.UserRank.Rank">
+            <summary>
+            排名
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.UserRank.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.UserRank.BranchName">
+            <summary>
+            支部
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Common.UserRank.Score">
+            <summary>
+            积分
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.OrderId">
+            <summary>
+            订单主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.GoodsName">
+             <summary>
+            商品名
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.PlaceTime">
+             <summary>
+            下单时间
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.DeliverStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.OrderId">
+            <summary>
+            订单主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.DeliverStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsInfoRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsInfoRequest.OrderId">
+            <summary>
+            订单主键
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsRequset.GoodsName">
+            <summary>
+            商品名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsRequset.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsRequset.DeliverStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsInfoResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsInfoResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Enums.ActivityTaskType.SignUp">
+            <summary>
+            报名
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Enums.ActivityTaskType.Vote">
+            <summary>
+            投票
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Enums.ActivityTaskType.Questionnaire">
+            <summary>
+            问卷调查
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Enums.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Enums.Status.有效">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Eagles.Application.Model.Enums.Status.无效">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Enums.UserStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Model.Exercises">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.BranchId">
+            <summary>
+            支部id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.OrgId">
+            <summary>
+            组织id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.ExercisesName">
+            <summary>
+            试卷名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.ExercisesId">
+            <summary>
+            试卷id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.ExercisesType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.IsScoreAward">
+            <summary>
+            是否有积分奖励
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.PassAwardScore">
+            <summary>
+            及格奖励积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.SubjectScore">
+            <summary>
+            题目积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.PassScore">
+            <summary>
+            及格分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.LimitedTime">
+            <summary>
+            分钟
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.HasLimitedTime">
+            <summary>
+            是否限制时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Model.ExercisesDetails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.HtmlDescription">
+            <summary>
+            html 描述
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.SubjectList">
+            <summary>
+            题目列表
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Model.Option">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.OptionId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.OptionName">
+            <summary>
+            选项
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.IsTrue">
+            <summary>
+            是否正确答案
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.IsCustom">
+            <summary>
+            自定义
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.IsImg">
+            <summary>
+            是否有图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Option.Img">
+            <summary>
+            投票时图片
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Model.Subject">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Question">
+            <summary>
+            问题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.QuestionId">
+            <summary>
+            问题id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Model.SubjectDetails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.OptionList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.Answer">
+            <summary>
+            答案类型;0:默认:1:自定义
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.Multiple">
+            <summary>
+            是否允许多选;0:否;1:是
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.MultipleCount">
+            <summary>
+            多选数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.EditExercisesRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditExercisesRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetExercisesDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetExercisesDetailRequset.ExercisesId">
+            <summary>
+            试卷id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetExercisesRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetExercisesRequset.ExercisesType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetExercisesRequset.ExercisesName">
+            <summary>
+            试卷名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetExercisesRequset.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset">
+            <summary>
+            生成习题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset.RandomSubjectSum">
+            <summary>
+            随机题目数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset.ExercisesId">
+            <summary>
+            试卷id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetSubjectDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectDetailRequset.QuestionId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetSubjectRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectRequset.ExercisesId">
+            <summary>
+            试卷id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveExercisesRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveExercisesRequset.ExercisesId">
+            <summary>
+            试卷id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset.QuestionId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetExercisesDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetExercisesDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetExercisesResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetExercisesResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetExercisesResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetRandomSubjectResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetRandomSubjectResponse.SubjectList">
+            <summary>
+            题目列表
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetSubjectDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetSubjectResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Model.Goods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.Goods.Stock">
+            <summary>
+            库存
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.Goods.Score">
+            <summary>
+            积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Model.GoodsDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.Sale">
+            <summary>
+            已售
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.SellStartTime">
+            <summary>
+            销售开始时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.SellEndTime">
+            <summary>
+            销售结束时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.MaxExchangeNum">
+            <summary>
+            每人最大兑换数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.ReferePrice">
+            <summary>
+            参考价格
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.GoodsIcon">
+            <summary>
+            小图
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.GoodsImg">
+            <summary>
+            大图
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Requset.EditGoodsRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Requset.EditGoodsRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Requset.GetGoodsDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Requset.GetGoodsDetailRequset.GoodsId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Requset.GetGoodsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Requset.GetGoodsRequest.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Requset.GetGoodsRequest.GoodsStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Requset.RemoveGoodsRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Requset.RemoveGoodsRequset.GoodsId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Response.GetGoodsDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Response.GetGoodsDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Goods.Response.GetGoodsResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Response.GetGoodsResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Goods.Response.GetGoodsResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Login.Requset.LoginImageRequset">
+            <summary>
+            验证码图片
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Login.Requset.LoginRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.Password">
+            <summary>
+            密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.Account">
+            <summary>
+            账号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.VerificationCode">
+            <summary>
+            验证码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.LoginType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Login.Response.LoginResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Response.LoginResponse.Token">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Model.Meeting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.Meeting.MeetingId">
+            <summary>
+            会议id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.Meeting.MeetingNmae">
+            <summary>
+            会议名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.Meeting.MeetingInitiator">
+            <summary>
+            会议发起人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.Meeting.Participants">
+            <summary>
+            会议参与人
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Model.MeetingDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetingDetail.LaunchStartTime">
+            <summary>
+            发起开始时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetingDetail.LaunchEndTime">
+            <summary>
+            发起结束时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetingDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetingDetail.Enclosure">
+            <summary>
+            附件 json格式
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetingDetail.List">
+            <summary>
+            参与人员
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Model.MeetUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetUser.MeetUserName">
+            <summary>
+            会议参与人姓名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetUser.MeetUserPhone">
+            <summary>
+            会议参与人联系电话
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Model.MeetUserDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetUserDetail.IsSystemUser">
+            <summary>
+            是否为系统人员
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Model.MeetUserResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Model.MeetUserResult.Result">
+            <summary>
+            检查结果
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.CheckMeetUserRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.CheckMeetUserRequset.FileId">
+            <summary>
+            上传文件 上传成功返回fileId  前端轮训调用 得到返回状态为完成 则可以解析list 结果
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.EditMeetingRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.EditMeetingRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.GetMeetingDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.GetMeetingDetailRequset.MeetingId">
+            <summary>
+            会议id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.GetMeetingRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.GetMeetingRequest.MeetingNmae">
+            <summary>
+            会议名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.ImportMeetUserInfoRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.ImportMeetUserInfoRequset.List">
+            <summary>
+            导入会议人员名单
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.ImportMeetUserInfoRequset.MeetingId">
+            <summary>
+            会议id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Requset.RemoveMeetingRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Requset.RemoveMeetingRequset.MeetingId">
+            <summary>
+            会议id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Response.CheckMeetUserInfoResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Response.CheckMeetUserInfoResponse.list">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Response.CheckMeetUserInfoResponse.Result">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Response.GetMeetingInfoResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Response.GetMeetingInfoResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Meeting.Response.GetMeetingResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Response.GetMeetingResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Meeting.Response.GetMeetingResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Model.Menus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.OrgName">
+            <summary>
+            机构名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuId">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuName">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuLink">
+            <summary>
+            级菜单链接
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuLevel">
+            <summary>
+            菜单级别 
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Model.Menus.ParentId">
+            <summary>
+            父菜单id 新建二级菜单时必须传 
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Requset.EditMenusRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Requset.EditMenusRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Requset.GetMenusDetailRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Requset.GetMenusDetailRequest.MenuId">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Requset.GetMenusRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Requset.GetMenusRequset.MenuLevel">
+            <summary>
+            菜单级别 
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Requset.RemoveMenusRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Requset.RemoveMenusRequset.MenuId">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Response.GetMenusDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Response.GetMenusDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Menus.Response.GetMenusResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Response.GetMenusResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Response.GetMenusResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Model.New">
+            <summary>
+            新闻信息
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsName">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.Author">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsImg">
+            <summary>
+            新闻图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.AuditStatus">
+            <summary>
+            审核状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.UserName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Model.NewDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.EndTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.StarTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.TestId">
+            <summary>
+            习题id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ModuleId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Category">
+            <summary>
+            分类
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Attach1">
+            <summary>
+            附件 json格式
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.EditNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.EditNewRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.GetNewDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewDetailRequset.NewsId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.GetNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.UserId">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsName">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsType">
+            <summary>
+            新闻类型
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.RemoveNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.RemoveNewRequset.NewsId">
+            <summary>
+            新闻id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Response.GetNewDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Response.GetNewDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Response.GetNewResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Response.GetNewResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Response.GetNewResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Model.Operator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.Operator.OperId">
+            <summary>
+            操作员编号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.Operator.OperName">
+            <summary>
+            操作员名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.Operator.AuthorityGroupName">
+            <summary>
+            权限组名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.Operator.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Model.OperatorDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.OperatorDetail.Password">
+            <summary>
+            密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.OperatorDetail.Account">
+            <summary>
+            账号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Model.OperatorDetail.AuthorityGroupId">
+            <summary>
+            权限组id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Requset.EditOperatorRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Requset.EditOperatorRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Requset.GetOperatorDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Requset.GetOperatorDetailRequset.OperId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Requset.GetOperatorRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Requset.RemoveOperatorRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Requset.RemoveOperatorRequset.OperId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Response.GetOperatorDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Response.GetOperatorDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Operator.Response.OperatorResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Response.OperatorResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Operator.Response.OperatorResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Model.Organization">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.OrgName">
+            <summary>
+            机构名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.Province">
+            <summary>
+            省id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.City">
+            <summary>
+            市id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.District">
+            <summary>
+            区id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.Organization.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Model.OrganizationDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.OrganizationDetail.EditTime">
+            <summary>
+            '修改时间',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.OrganizationDetail.OperId">
+            <summary>
+            '操作员'
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Model.OrganizationDetail.Logo">
+            <summary>
+            '组织logo',
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Requset.EditOrganizationRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.EditOrganizationRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Requset.GetOrganizationDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.GetOrganizationDetailRequset.OrgId">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Requset.GetOrganizationRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.GetOrganizationRequset.Province">
+            <summary>
+            省id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.GetOrganizationRequset.City">
+            <summary>
+            市id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.GetOrganizationRequset.District">
+            <summary>
+            区id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Requset.RemoveOrganizationRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Requset.RemoveOrganizationRequset.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Response.GetOrganizationDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Response.GetOrganizationDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Organization.Response.GetOrganizationResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Response.GetOrganizationResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Organization.Response.GetOrganizationResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.OrgListRequestBase">
+            <summary>
+            分页用的list
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgListRequestBase.PageNumber">
+            <summary>
+            页码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgListRequestBase.PageSize">
+            <summary>
+            页尺寸
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgListRequestBase.StartTime">
+            <summary>
+            统计时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgListRequestBase.EndTime">
+            <summary>
+            统计结束时间
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.OrgRequestBase">
+            <summary>
+            机构和组织
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgRequestBase.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgRequestBase.BranchId">
+            <summary>
+            支部id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Model.Member">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgId">
+            <summary>
+            机构编号所属
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
+            <summary>
+            所属机构名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.Phone">
+            <summary>
+            联系电话
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Model.UserInfoCheck">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoCheck.IsCheck">
+            <summary>
+            是否选中
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Model.UserInfoDetails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Sex">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Nation">
+            <summary>
+            民族
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Birth">
+            <summary>
+            生日
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.NativePlace">
+            <summary>
+            籍贯
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.FamilyAddress">
+            <summary>
+            户籍地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.DefaultAddress">
+            <summary>
+            常用地址
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.IdCard">
+            <summary>
+            身份证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Education">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.GraduateSchool">
+            <summary>
+            毕业学校
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Company">
+            <summary>
+            公司
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Position">
+            <summary>
+            职位
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.BeforJoinTime">
+            <summary>
+            预备党员日期
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.FormalJoinTime">
+            <summary>
+            转正加入时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.IsMoney">
+            <summary>
+            是否缴纳党费
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.UserStatus">
+            <summary>
+            人员类别
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Picture">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.IsCustomer">
+             <summary>
+             游客;
+             0:是 ;
+            1:否',
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.BranchId">
+            <summary>
+            支部编号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.City">
+            <summary>
+            市
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Dept">
+            <summary>
+            部门
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.District">
+            <summary>
+            区
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.EditTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.MemberStatus">
+            <summary>
+            党员状态;0:正常;1:禁用
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.OperId">
+            <summary>
+            操作员id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Password">
+            <summary>
+             密码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.PhotoUrl">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Provice">
+            <summary>
+            省
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Status">
+            <summary>
+            用户状态;0:正常;1:禁用
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Model.UserInfoResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoResult.Result">
+            <summary>
+            检查结果
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.CheckUserInfoDetailsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.CheckUserInfoDetailsRequest.FileId">
+            <summary>
+            上传文件 上传成功返回fileId  前端轮训调用 得到返回状态为完成 则可以解析list 结果
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp.OrgId">
+            <summary>
+            当前用户userId
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp.UserId">
+            <summary>
+            当前用户userId
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp.UserIds">
+            <summary>
+            下级
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.EditUserInfoDetailsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.EditUserInfoDetailsRequest.Info">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.UserId">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.IsRelation">
+            <summary>
+            是否关联
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.BranchId">
+            <summary>
+            支部编号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.OrgId">
+            <summary>
+            机构编号
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest.UserIdentity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.GetUserInfoDetailRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetUserInfoDetailRequest.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.OrgId">
+            <summary>
+            当前用户userId
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.UserId">
+            <summary>
+            当前用户userId
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.UserIds">
+            <summary>
+            下级
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Requset.RemoveUserInfoDetailsRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveUserInfoDetailsRequest.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Response.CheckUserInfoDetailsResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.CheckUserInfoDetailsResponse.Result">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Response.GetAuthorityUserSetUpResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetAuthorityUserSetUpResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetAuthorityUserSetUpResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Response.GetPartyMemberResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetPartyMemberResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetPartyMemberResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.PartyMember.Response.GetUserInfoDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetUserInfoDetailResponse.Info">
+            <summary>
+            集合
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.RequestBase">
             <summary>
             基本的 凭证
@@ -42,6 +2828,499 @@
         <member name="P:Eagles.Application.Model.ResponseBase.IsSuccess">
             <summary>
             是否成功
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.RollImage.Model.RollImageInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.RollImageId">
+            <summary>
+            滚动图片组ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgName">
+            <summary>
+            机构名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageId">
+            <summary>
+            页面ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageName">
+            <summary>
+            页面名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Img">
+            <summary>
+            滚动图片组
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.RollImage.Requset.EditRollImageInfoRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Requset.EditRollImageInfoRequest.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.RollImageId">
+            <summary>
+            滚动图片组ID
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest.OrgId">
+            <summary>
+            机构号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Requset.DeleteRollImageInfoRequset.RollImageId">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Response.GetRollImageDetailsResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.RollImage.Response.RollImageResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Response.RollImageResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Response.RollImageResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UserId">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UserName">
+            <summary>
+            用户姓名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.Score">
+            <summary>
+            积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UseScore">
+            <summary>
+            用户使用积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UserIdentity">
+            <summary>
+            用户身份
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfoDetails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfoDetails.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfoDetails.ScoreRecord">
+            <summary>
+            积分使用情况
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfoDetails.OperationType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankDetailRequset.UserId">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankRequset.UserName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Response.GetScoreRankDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Response.GetScoreRankDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Score">
+            <summary>
+            积分奖励值
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Keyword">
+            <summary>
+            文章类型 奖励关键字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreCount">
+            <summary>
+            可获取积分次数
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpInfoRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpInfoRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpInfoRequset.ScoreSetUpId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMSOrg.Model.SMSOrg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.VendorId">
+            <summary>
+             '短信提供方ID',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.SendCount">
+            <summary>
+            已发送数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.MaxCount">
+            <summary>
+             最大发送数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.OperId">
+            <summary>
+            最后修改人
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.Priority">
+            <summary>
+            优先级
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMSOrg.Request.EditSMSOrgRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Request.EditSMSOrgRequset.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Request.GetSMSOrgDetailRequset.VendorId">
+            <summary>
+             '短信机构提供方ID',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Request.GetSMSOrgDetailRequset.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMSOrg.Request.GetSMSOrgRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMSOrg.Request.RemoveSMSOrgRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Request.RemoveSMSOrgRequest.VendorId">
+            <summary>
+             '短信提供方ID',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Request.RemoveSMSOrgRequest.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Response.GetSMSOrgDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMSOrg.Response.GetSMSOrgResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Response.GetSMSOrgResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Response.GetSMSOrgResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMS.Model.SMS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.VendorId">
+            <summary>
+             '短信提供方ID',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.VendorName">
+            <summary>
+            短信提供方名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.SendCount">
+            <summary>
+            已发送数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.AppId">
+            <summary>
+            短信方appId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.AppKey">
+            <summary>
+            短信方appKey
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.SginKey">
+            <summary>
+            签名key
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.ServiceUrl">
+            <summary>
+            接口地址
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.MaxCount">
+            <summary>
+            最大发送数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.Priority">
+            <summary>
+            优先级
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Model.SMS.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Request.GetSMSDetailRequset.VendorId">
+            <summary>
+             '短信提供方ID',
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SMS.Request.GetSMSRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Request.GetSMSRequest.VendorName">
+            <summary>
+            短信提供方名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Request.RemoveSMSRequest.VendorId">
+            <summary>
+             '短信提供方ID',
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Response.GetSMSDetailResponse.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Response.GetSMSResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Response.GetSMSResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.SystemMessageName">
+            <summary>
+            系统通知标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.DeleteSystemMessageInfoRequset.SystemMessageId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.EditSystemMessageInfoRequset.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemMessageInfoDetailRequset.SystemMessageId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemMessageRequest.SystemMessageName">
+            <summary>
+            标题 名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageInfoDetailResponse.info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageResponse.List">
+            <summary>
+            集合
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Test.TestRequest.Name">

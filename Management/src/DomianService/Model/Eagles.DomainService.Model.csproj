@@ -40,7 +40,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\TbActivity.cs" />
+    <Compile Include="App\TbAppMenu.cs" />
+    <Compile Include="App\TbAppModule.cs" />
+    <Compile Include="App\TB_APP_MENU.cs" />
+    <Compile Include="Authority\TbAuthority.cs" />
+    <Compile Include="Config\DataBaseConfig.cs" />
+    <Compile Include="Config\SmsConfig.cs" />
+    <Compile Include="Exercises\TbQuestAnswer.cs" />
+    <Compile Include="Exercises\TbQuestEx.cs" />
+    <Compile Include="Exercises\TbQuestion.cs" />
+    <Compile Include="Exercises\TbTestPaper.cs" />
+    <Compile Include="Exercises\TbTestQuestion.cs" />
+    <Compile Include="ImportLog\TbImportLog.cs" />
+    <Compile Include="News\TbNews.cs" />
+    <Compile Include="News\TbSystemNews.cs" />
+    <Compile Include="Oper\TbOper.cs" />
+    <Compile Include="Oper\TbOperGroup.cs" />
+    <Compile Include="Order\TbOrder.cs" />
+    <Compile Include="Org\TbBranch.cs" />
+    <Compile Include="Org\TbOrgInfo.cs" />
+    <Compile Include="Org\TbOrgRelationship.cs" />
+    <Compile Include="Org\TbOrgSmsConfig.cs" />
+    <Compile Include="Product\TbProduct.cs" />
+    <Compile Include="Product\TB_PRODUCT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\TbMeetingUser.cs" />
+    <Compile Include="User\TbUserActivity.cs" />
+    <Compile Include="User\TbUserComment.cs" />
+    <Compile Include="User\TbUserInfo.cs" />
+    <Compile Include="User\TbUserNews.cs" />
+    <Compile Include="User\TbUserNotice.cs" />
+    <Compile Include="User\TbUserRelationship.cs" />
+    <Compile Include="User\TbUserScoreTrace.cs" />
+    <Compile Include="User\TbUserStudyLog.cs" />
+    <Compile Include="User\TbUserTask.cs" />
+    <Compile Include="User\TbUserTaskStep.cs" />
+    <Compile Include="User\TbUserTest.cs" />
+    <Compile Include="User\TbUserTestQuestion.cs" />
+    <Compile Include="User\TbUserToken.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Model\Eagles.Application.Model.csproj">
+      <Project>{08f867e1-26a8-46ac-9ac7-16404f6ded95}</Project>
+      <Name>Eagles.Application.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403fab37-72ef-4bad-b749-05e494dc4b5b}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Column\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
