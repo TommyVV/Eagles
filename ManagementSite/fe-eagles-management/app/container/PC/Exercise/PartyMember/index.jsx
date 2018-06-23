@@ -47,18 +47,6 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch}
       >
         <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="选中党员">
-              {getFieldDecorator(`memId`)(<span>李某</span>)}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="党员名称">
-              {getFieldDecorator(`name`)(<Input />)}
-            </FormItem>
-          </Col>
           <Col span={6} key={1}>
             <FormItem label="党员级别">
               {getFieldDecorator("type")(
@@ -68,6 +56,16 @@ class SearchForm extends Component {
                   <Option value="2">小组</Option>
                 </Select>
               )}
+            </FormItem>
+          </Col>
+          <Col span={6} key={2}>
+            <FormItem label="党员名称">
+              {getFieldDecorator(`name`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col span={6} key={3}>
+            <FormItem label="机构名称">
+              {getFieldDecorator(`orgName`)(<Input />)}
             </FormItem>
           </Col>
           <Col
@@ -105,7 +103,7 @@ const WrapperSearchForm = Form.create({
   }
 })(SearchForm);
 
-class SetNextPartyMember extends React.Component {
+class PartyMemberList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -119,22 +117,61 @@ class SetNextPartyMember extends React.Component {
       {
         title: "党员名称",
         dataIndex: "name",
-        width: "25%"
+        width: "20%"
       },
       {
         title: "所属支部",
         dataIndex: "branch",
-        width: "25%"
+        width: "20%"
       },
       {
         title: "联系电话",
         dataIndex: "phone",
-        width: "25%",
+        width: "20%",
+        render: text => (
+          <span>{text}</span>
+        )
       },
       {
         title: "党员类型",
         dataIndex: "type",
         width: "20%",
+        render: text => (
+          <span>{text}</span>
+        )
+      },
+      {
+        title: "操作",
+        width: "20%",
+        render: (text, record) => {
+          return (
+            <div>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                }
+              >
+                编辑
+              </a>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                }
+                style={{ paddingLeft: "24px" }}
+              >
+                删除
+              </a>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/partymember/setnext/${1}/${"李某"}`)
+                }
+                style={{ paddingLeft: "24px" }}
+              >
+                设置数据权限
+              </a>
+            </div>
+          );
+        }
       }
     ];
     this.data = [
@@ -335,4 +372,4 @@ class SetNextPartyMember extends React.Component {
   }
 }
 
-export default SetNextPartyMember;
+export default PartyMemberList;

@@ -9,7 +9,9 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
+  DatePicker,
+  Upload,
+  Icon
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -26,86 +28,7 @@ import "./style.less";
 
 const confirm = Modal.confirm;
 
-class SearchForm extends Component {
-  handleSearch = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      console.log("Received values of form: ", values);
-    });
-  };
-
-  handleReset = () => {
-    this.props.form.resetFields();
-  };
-
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form
-        className="ant-advanced-search-form"
-        layout="inline"
-        onSubmit={this.handleSearch}
-      >
-        <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="选中党员">
-              {getFieldDecorator(`memId`)(<span>李某</span>)}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="党员名称">
-              {getFieldDecorator(`name`)(<Input />)}
-            </FormItem>
-          </Col>
-          <Col span={6} key={1}>
-            <FormItem label="党员级别">
-              {getFieldDecorator("type")(
-                <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">支部</Option>
-                  <Option value="2">小组</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col
-            span={6}
-            style={{
-              textAlign: "cnter",
-              paddingLeft: "7px",
-              paddingTop: "3px"
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              搜索
-            </Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-              清空
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
-}
-
-const WrapperSearchForm = Form.create({
-  mapPropsToFields: props => {
-    // const project = props.project;
-    return {
-      exType: Form.createFormField({
-        value: "0"
-      }),
-      state: Form.createFormField({
-        value: "0"
-      })
-    };
-  }
-})(SearchForm);
-
-class SetNextPartyMember extends React.Component {
+class ImportMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -129,12 +52,12 @@ class SetNextPartyMember extends React.Component {
       {
         title: "联系电话",
         dataIndex: "phone",
-        width: "25%",
+        width: "25%"
       },
       {
         title: "党员类型",
         dataIndex: "type",
-        width: "20%",
+        width: "20%"
       }
     ];
     this.data = [
@@ -286,15 +209,59 @@ class SetNextPartyMember extends React.Component {
       throw new Error(e);
     }
   };
+
   render() {
     const { selectedRowKeys, pageConfig, projectList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
+    const props = {
+      name: "file",
+      action: "//jsonplaceholder.typicode.com/posts/",
+      headers: {
+        authorization: "authorization-text"
+      },
+      onChange(info) {
+        if (info.file.status !== "uploading") {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === "done") {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === "error") {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      }
+    };
+
     return (
       <Nav>
-        <WrapperSearchForm />
+        <Row gutter={24}>
+          <Col span={2} key={1}>
+            <FormItem label="选择导入文件" />
+          </Col>
+          <Col span={3} key={2}>
+            <Upload {...props}>
+              <Button>
+                <Icon type="upload" />上传
+              </Button>
+            </Upload>
+          </Col>
+          <Col span={3} key={3}>
+            <Button>预览</Button>
+          </Col>
+        </Row>
+        <Row gutter={24} >
+          <Col span={2} key={4}>
+            <FormItem label="规则说明" />
+          </Col>
+          <Col span={8} key={5} className="upload-tip">
+            <span >支持txt文件.csv文件, 格式为XXXXX请注意区分中英文符号</span>
+          </Col>
+          <Col span={3} key={6}>
+            <Button>下载模板</Button>
+          </Col>
+        </Row>
         <Table
           dataSource={this.data}
           columns={this.columns}
@@ -308,7 +275,6 @@ class SetNextPartyMember extends React.Component {
           type="flex"
           justify="center"
           gutter={24}
-          className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button onClick={this.handleDelete} className="btn">
@@ -316,16 +282,16 @@ class SetNextPartyMember extends React.Component {
             </Button>
           </Col>
           <Col>
-            <Button className="btn ">
+            <Button type="primary" className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
-                新增
+              确认导入
               </a>
             </Button>
           </Col>
           <Col>
             <Button className="btn ">
               <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                导入
+                取消导入
               </a>
             </Button>
           </Col>
@@ -335,4 +301,4 @@ class SetNextPartyMember extends React.Component {
   }
 }
 
-export default SetNextPartyMember;
+export default ImportMember;

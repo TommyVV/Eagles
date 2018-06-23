@@ -105,21 +105,56 @@ export default class App extends React.Component {
               >
                 党员详情
               </Menu.Item>
-              <Menu.Item key="5">党员导入</Menu.Item>
+              <Menu.Item
+                key="5"
+                onClick={e => hashHistory.replace("/partymember/import")}
+              >
+                党员导入
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub3"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>积分信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="6"
+                onClick={e => hashHistory.replace("/intergrallist")}
+              >
+                积分配置列表
+              </Menu.Item>
+              <Menu.Item
+                key="7"
+                onClick={e => hashHistory.replace("/intergral/detail")}
+              >
+                积分配置详情
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub4"
               title={
                 <span>
                   <Icon type="setting" />
-                  <span>Navigation Three</span>
+                  <span>商品信息</span>
                 </span>
               }
             >
-              <Menu.Item key="9">Option 9</Menu.Item>
-              <Menu.Item key="10">Option 10</Menu.Item>
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
+              <Menu.Item
+                key="8"
+                onClick={e => hashHistory.replace("/goodslist")}
+              >
+                商品列表
+              </Menu.Item>
+              <Menu.Item
+                key="9"
+                onClick={e => hashHistory.replace("/goods/detail")}
+              >
+                商品详情
+              </Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>

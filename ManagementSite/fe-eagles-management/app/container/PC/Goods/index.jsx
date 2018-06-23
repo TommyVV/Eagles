@@ -26,86 +26,7 @@ import "./style.less";
 
 const confirm = Modal.confirm;
 
-class SearchForm extends Component {
-  handleSearch = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      console.log("Received values of form: ", values);
-    });
-  };
-
-  handleReset = () => {
-    this.props.form.resetFields();
-  };
-
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form
-        className="ant-advanced-search-form"
-        layout="inline"
-        onSubmit={this.handleSearch}
-      >
-        <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="选中党员">
-              {getFieldDecorator(`memId`)(<span>李某</span>)}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="党员名称">
-              {getFieldDecorator(`name`)(<Input />)}
-            </FormItem>
-          </Col>
-          <Col span={6} key={1}>
-            <FormItem label="党员级别">
-              {getFieldDecorator("type")(
-                <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">支部</Option>
-                  <Option value="2">小组</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col
-            span={6}
-            style={{
-              textAlign: "cnter",
-              paddingLeft: "7px",
-              paddingTop: "3px"
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              搜索
-            </Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-              清空
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
-}
-
-const WrapperSearchForm = Form.create({
-  mapPropsToFields: props => {
-    // const project = props.project;
-    return {
-      exType: Form.createFormField({
-        value: "0"
-      }),
-      state: Form.createFormField({
-        value: "0"
-      })
-    };
-  }
-})(SearchForm);
-
-class SetNextPartyMember extends React.Component {
+class GoodsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -117,47 +38,76 @@ class SetNextPartyMember extends React.Component {
     };
     this.columns = [
       {
-        title: "党员名称",
+        title: "商品名称",
         dataIndex: "name",
-        width: "25%"
+        width: "20%"
       },
       {
-        title: "所属支部",
-        dataIndex: "branch",
-        width: "25%"
+        title: "库存",
+        dataIndex: "stock",
+        width: "20%"
       },
       {
-        title: "联系电话",
-        dataIndex: "phone",
-        width: "25%",
+        title: "所需积分",
+        dataIndex: "intergral",
+        width: "20%"
       },
       {
-        title: "党员类型",
-        dataIndex: "type",
+        title: "状态",
+        dataIndex: "state",
+        width: "20%"
+      },
+      {
+        title: "操作",
         width: "20%",
+        dataIndex: "added",
+        render: (added, record) => {
+          return (
+            <div>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                }
+              >
+                编辑
+              </a>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                }
+                style={{ paddingLeft: "24px" }}
+              >
+                {added ? "下架" : "上架"}
+              </a>
+            </div>
+          );
+        }
       }
     ];
     this.data = [
       {
         key: "1",
-        name: "张三",
-        branch: "第一支部",
-        phone: "18512144992",
-        type: "党员"
+        name: "三色冰激凌",
+        stock: "3",
+        intergral: "10",
+        state: "下架",
+        added: false
       },
       {
         key: "2",
-        name: "张四",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员"
+        name: "世界杯足球",
+        stock: "3",
+        intergral: "100",
+        state: "上架",
+        added: true
       },
       {
         key: "3",
-        name: "张五",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员"
+        name: "耐克足球鞋",
+        stock: "10",
+        intergral: "50",
+        state: "上架",
+        added: true
       }
     ];
     this.getListConfig = {
@@ -292,9 +242,31 @@ class SetNextPartyMember extends React.Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
+    const formItemLayout = {
+      labelCol: {
+        xl: { span: 3 }
+      },
+      wrapperCol: {
+        xl: { span: 8 }
+      }
+    };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <Row gutter={24}>
+          <Col span={12}>
+            <Form>
+              <FormItem {...formItemLayout} label="积分类型">
+                <Select>
+                  <Option value="0" selected>
+                    在线考试
+                  </Option>
+                  <Option value="1">新闻习题</Option>
+                  <Option value="2">随机试卷</Option>
+                </Select>
+              </FormItem>
+            </Form>
+          </Col>
+        </Row>
         <Table
           dataSource={this.data}
           columns={this.columns}
@@ -312,20 +284,13 @@ class SetNextPartyMember extends React.Component {
         >
           <Col>
             <Button onClick={this.handleDelete} className="btn">
-              批量删除
+              批量下架
             </Button>
           </Col>
           <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
+            <Button className="btn btn--primary">
+              <a onClick={() => hashHistory.replace(`/goods/detail`)}>
                 新增
-              </a>
-            </Button>
-          </Col>
-          <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                导入
               </a>
             </Button>
           </Col>
@@ -335,4 +300,4 @@ class SetNextPartyMember extends React.Component {
   }
 }
 
-export default SetNextPartyMember;
+export default GoodsList;

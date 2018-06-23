@@ -33,5 +33,30 @@ const navMap = [
     key: "4",
     sub: "sub2"
   },
+  {
+    pathname: "#/partymember/import",
+    key: "5",
+    sub: "sub2"
+  },
+  {
+    pathname: "#/intergrallist",
+    key: "6",
+    sub: "sub3"
+  },
+  {
+    pathname: "#/intergral/detail",
+    key: "7",
+    sub: "sub3"
+  },
+  {
+    pathname: "#/goodslist",
+    key: "8",
+    sub: "sub4"
+  },
+  {
+    pathname: "#/goods/detail",
+    key: "9",
+    sub: "sub4"
+  },
 ];
 export default navMap;
