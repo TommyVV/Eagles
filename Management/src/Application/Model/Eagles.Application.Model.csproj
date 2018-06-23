@@ -84,12 +84,13 @@
     <Compile Include="Common\Task.cs" />
     <Compile Include="Common\UserInfo.cs" />
     <Compile Include="Common\UserRank.cs" />
+    <Compile Include="DeliverGoods\Model\AddressInfo.cs" />
     <Compile Include="DeliverGoods\Model\DeliverGoods.cs" />
     <Compile Include="DeliverGoods\Requset\EditDeliverGoodsRequest.cs" />
-    <Compile Include="DeliverGoods\Requset\GetDeliverGoodsDetailRequest.cs" />
+    <Compile Include="DeliverGoods\Requset\GetDeliverGoodsDetailRequset.cs" />
     <Compile Include="DeliverGoods\Requset\GetDeliverGoodsRequset.cs" />
     <Compile Include="DeliverGoods\Response\GetDeliverGoodsDetailResponse.cs" />
-    <Compile Include="DeliverGoods\Response\GetDeliverGoodsInfoResponse.cs" />
+    <Compile Include="DeliverGoods\Response\GetDeliverGoodsResponse.cs" />
     <Compile Include="Enums\ActivityTaskType.cs" />
     <Compile Include="Enums\AuditStatus.cs" />
     <Compile Include="Enums\CheckResult.cs" />

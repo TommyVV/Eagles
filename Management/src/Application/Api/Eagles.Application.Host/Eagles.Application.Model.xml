@@ -1002,6 +1002,26 @@
             积分
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Model.AddressInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.AddressInfo.OrderId">
+            <summary>
+            订单主键
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.AddressInfo.ExpressId">
+            <summary>
+            快递id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.AddressInfo.Address">
+            <summary>
+            收货地址
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods">
             <summary>
             
@@ -1047,14 +1067,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.OrderId">
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.OrderInfo">
             <summary>
             订单主键
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.DeliverStatus">
-            <summary>
-            
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.DeliverGoods.Requset.EditDeliverGoodsRequest.Remark">
@@ -1062,12 +1077,12 @@
             备注
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsInfoRequest">
+        <member name="T:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsDetailRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsInfoRequest.OrderId">
+        <member name="P:Eagles.Application.Model.DeliverGoods.Requset.GetDeliverGoodsDetailRequset.OrderId">
             <summary>
             订单主键
             </summary>
@@ -1097,24 +1112,24 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse.TotalCount">
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsResponse.TotalCount">
             <summary>
             总条数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsDetailResponse.List">
+        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsResponse.List">
             <summary>
             集合
-            </summary>
-        </member>
-        <member name="T:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsInfoResponse">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Response.GetDeliverGoodsInfoResponse.Info">
-            <summary>
-            
             </summary>
         </member>
         <member name="F:Eagles.Application.Model.Enums.ActivityTaskType.SignUp">

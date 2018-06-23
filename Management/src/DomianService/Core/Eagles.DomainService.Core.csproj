@@ -47,6 +47,7 @@
     <Compile Include="AuditHandler.cs" />
     <Compile Include="MenusHandler.cs" />
     <Compile Include="NewsHandler.cs" />
+    <Compile Include="OrderHandler.cs" />
     <Compile Include="OrganizationHandler.cs" />
     <Compile Include="PartyMemberHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

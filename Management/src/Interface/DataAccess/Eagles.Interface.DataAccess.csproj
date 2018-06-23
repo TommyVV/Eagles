@@ -42,12 +42,12 @@
   <ItemGroup>
     <Compile Include="IActivityTaskDataAccess.cs" />
     <Compile Include="IColumnDataAccess.cs" />
-    <Compile Include="IDataAccess.cs" />
     <Compile Include="IExercisesDataAccess.cs" />
     <Compile Include="IAuditDataAccess.cs" />
     <Compile Include="IGoodsDataAccess.cs" />
     <Compile Include="IMenusDataAccess.cs" />
     <Compile Include="INewsDataAccess.cs" />
+    <Compile Include="IOrderDataAccess.cs" />
     <Compile Include="IOrganizationDataAccess.cs" />
     <Compile Include="IPartyMemberDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

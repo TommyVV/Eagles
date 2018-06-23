@@ -47,6 +47,7 @@
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />
     <Compile Include="INewsHandler.cs" />
+    <Compile Include="IOrderHandler.cs" />
     <Compile Include="IOrganizationHandler.cs" />
     <Compile Include="IPartyMemberHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

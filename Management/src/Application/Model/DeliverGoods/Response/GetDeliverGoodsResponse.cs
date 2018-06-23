@@ -6,13 +6,15 @@ namespace Eagles.Application.Model.DeliverGoods.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetDeliverGoodsDetailResponse : ResponseBase
+    public class GetDeliverGoodsResponse : ResponseBase
     {
-
         /// <summary>
-        /// 
+        /// 总条数
         /// </summary>
-        public Model.DeliverGoods Info { get; set; }
-      
+        public int TotalCount { get; set; }
+        /// <summary>
+        /// 集合
+        /// </summary>
+        public List<Model.DeliverGoods> List { get; set; }
     }
 }

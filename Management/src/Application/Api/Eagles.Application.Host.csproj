@@ -264,6 +264,7 @@
     <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\NewController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\PartyMemberController.cs" />
     <Compile Include="Global.asax.cs">
