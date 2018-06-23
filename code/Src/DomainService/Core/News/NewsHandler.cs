@@ -219,7 +219,7 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            int testScore = 0;
+            int testScore = 0; //答题分数
             //查询TB_TEST_PAPER
             var testPaper = newsDa.GetTestPaperInfo(request.TestId);
             var passScore = testPaper.PassScore; //及格分数
@@ -257,8 +257,7 @@ namespace Eagles.DomainService.Core.News
             };
             newsDa.CreateUserTest(userTest);
             #endregion
-
-
+            
             //如果及格
             if (testScore >= passScore)
             {

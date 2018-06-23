@@ -9,5 +9,10 @@
         /// 加密用户编号
         /// </summary>
         public string EncryptUserid { get; set; }
+
+        /// <summary>
+        /// 任务状态
+        /// </summary>
+        public int Status { get; set; }
     }
 }

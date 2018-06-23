@@ -51,6 +51,11 @@ namespace Eagles.Application.Model.Activity.CreateActivity
         public int CanComment { get; set; }
 
         /// <summary>
+        /// 试卷编号
+        /// </summary>
+        public int TestId { get; set; }
+
+        /// <summary>
         /// 是否公开
         /// </summary>
         public int IsPublic { get; set; }
