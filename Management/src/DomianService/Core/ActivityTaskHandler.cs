@@ -32,36 +32,36 @@ namespace Eagles.DomainService.Core
 
             TbActivity mod;
 
-            if (requset.Info.ActivityTaskId > 0)
+            if (requset.DetailInfo.ActivityTaskId > 0)
             {
                 mod = new TbActivity
                 {
-                    ActivityName = requset.Info.ActivityTaskName,
-                    //ActivityType = requset.Info.ActivityTaskType,
-                    Attach1 = requset.Info.Attach1,
-                    Attach2 = requset.Info.Attach2,
-                    Attach3 = requset.Info.Attach3,
-                    Attach4 = requset.Info.Attach4,
+                    ActivityName = requset.DetailInfo.ActivityTaskName,
+                    //ActivityType = requset.DetailInfo.ActivityTaskType,
+                    Attach1 = requset.DetailInfo.Attach1,
+                    Attach2 = requset.DetailInfo.Attach2,
+                    Attach3 = requset.DetailInfo.Attach3,
+                    Attach4 = requset.DetailInfo.Attach4,
                     AttachType1 = "",
                     AttachType2 = "",
                     AttachType3 = "",
                     AttachType4 = "",
-                    BeginTime = requset.Info.BeginTime,
-                    ActivityId = requset.Info.ActivityTaskId,
+                    BeginTime = requset.DetailInfo.BeginTime,
+                    ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
                     BranchReview = "",
-                    CanComment = requset.Info.IsComment,
-                    EndTime = requset.Info.EndTime,
+                    CanComment = requset.DetailInfo.IsComment,
+                    EndTime = requset.DetailInfo.EndTime,
                     FromUser = 0,
-                    HtmlContent = requset.Info.Content,
-                    ImageUrl = requset.Info.ImageUrl,
-                    IsPublic = requset.Info.IsPublic,
-                    MaxCount = requset.Info.MaxPartakePeople,
-                    MaxUser = requset.Info.MaxPartakePeople,
+                    HtmlContent = requset.DetailInfo.Content,
+                    ImageUrl = requset.DetailInfo.ImageUrl,
+                    IsPublic = requset.DetailInfo.IsPublic,
+                    MaxCount = requset.DetailInfo.MaxPartakePeople,
+                    MaxUser = requset.DetailInfo.MaxPartakePeople,
                     OrgId = requset.OrgId,
                     OrgReview = "",
                     Status = 0,
-                    TestId = requset.Info.ExampleId,
+                    TestId = requset.DetailInfo.ExampleId,
                     ToUserId = 0
                 };
 
@@ -76,43 +76,43 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TbActivity
                 {
-                    ActivityName = requset.Info.ActivityTaskName,
-                    ActivityType = requset.Info.ActivityTaskType,
-                    Attach1 = requset.Info.Attach1,
-                    Attach2 = requset.Info.Attach2,
-                    Attach3 = requset.Info.Attach3,
-                    Attach4 = requset.Info.Attach4,
+                    ActivityName = requset.DetailInfo.ActivityTaskName,
+                    ActivityType = requset.DetailInfo.ActivityTaskType,
+                    Attach1 = requset.DetailInfo.Attach1,
+                    Attach2 = requset.DetailInfo.Attach2,
+                    Attach3 = requset.DetailInfo.Attach3,
+                    Attach4 = requset.DetailInfo.Attach4,
                     AttachType1 = "",
                     AttachType2 = "",
                     AttachType3 = "",
                     AttachType4 = "",
-                    BeginTime = requset.Info.BeginTime,
-                    ActivityId = requset.Info.ActivityTaskId,
+                    BeginTime = requset.DetailInfo.BeginTime,
+                    ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
                     BranchReview = "",
-                    CanComment = requset.Info.IsComment,
-                    EndTime = requset.Info.EndTime,
+                    CanComment = requset.DetailInfo.IsComment,
+                    EndTime = requset.DetailInfo.EndTime,
                     FromUser = 0,
-                    HtmlContent = requset.Info.Content,
-                    ImageUrl = requset.Info.ImageUrl,
-                    IsPublic = requset.Info.IsPublic,
-                    MaxCount = requset.Info.EverybodyPeople,
-                    MaxUser = requset.Info.MaxPartakePeople,
+                    HtmlContent = requset.DetailInfo.Content,
+                    ImageUrl = requset.DetailInfo.ImageUrl,
+                    IsPublic = requset.DetailInfo.IsPublic,
+                    MaxCount = requset.DetailInfo.EverybodyPeople,
+                    MaxUser = requset.DetailInfo.MaxPartakePeople,
                     OrgId = requset.OrgId,
                     OrgReview = "",
                     Status = 0,
-                    TestId = requset.Info.ExampleId,
+                    TestId = requset.DetailInfo.ExampleId,
                     ToUserId = 0
 
-                    //TragetUrl = requset.Info.ColumnAddress,
-                    //Priority = requset.Info.OrderBy,
-                    //SmallImageUrl = requset.Info.ColumnIcon,
-                    //ImageUrl = requset.Info.ColumnImg,
-                    //IndexDisplay = requset.Info.IsSetTop,
-                    //ModuleType = requset.Info.ModuleType,
-                    //OrgId = requset.Info.OrgId,
-                    //ModuleName = requset.Info.ColumnName,
-                    //IndexPageCount = requset.Info.IndexPageCount
+                    //TragetUrl = requset.DetailInfo.ColumnAddress,
+                    //Priority = requset.DetailInfo.OrderBy,
+                    //SmallImageUrl = requset.DetailInfo.ColumnIcon,
+                    //ImageUrl = requset.DetailInfo.ColumnImg,
+                    //IndexDisplay = requset.DetailInfo.IsSetTop,
+                    //ModuleType = requset.DetailInfo.ModuleType,
+                    //OrgId = requset.DetailInfo.OrgId,
+                    //ModuleName = requset.DetailInfo.ColumnName,
+                    //IndexPageCount = requset.DetailInfo.IndexPageCount
                 };
 
                 int result = dataAccess.CreateActivity(mod);
@@ -154,7 +154,7 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new Exception("无数据");
 
-            response.Info = new ActivityTaskDetailModel
+            response.Info = new ActivityDetailInfo
             {
                 ActivityTaskName = detail.ActivityName,
                 ActivityTaskType = detail.ActivityType,

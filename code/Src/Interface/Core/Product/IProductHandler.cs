@@ -1,7 +1,7 @@
 ﻿using System;
 using Eagles.Base;
-using Eagles.Application.Model.AppModel.Product.GetProduct;
-using Eagles.Application.Model.AppModel.Product.GetProductDetail;
+using Eagles.Application.Model.Product.GetProduct;
+using Eagles.Application.Model.Product.GetProductDetail;
 
 namespace Eagles.Interface.Core.Product
 {

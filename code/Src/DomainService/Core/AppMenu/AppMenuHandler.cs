@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Eagles.Application.Model.AppModel.GetMenu;
+using Eagles.Application.Model.GetMenu;
 using Eagles.Interface.Core.AppMenu;
 using Eagles.Interface.DataAccess.Menu;
 using Eagles.Interface.DataAccess.Util;
@@ -37,7 +37,7 @@ namespace Eagles.DomainService.Core.AppMenu
                 return response;
             }
 
-            var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.AppModel.GetMenu.AppMenu
+            var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.GetMenu.AppMenu
             {
                 MenuId = x.MenuId,
                 MenuName = x.MenuName,

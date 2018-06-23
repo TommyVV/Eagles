@@ -32,7 +32,7 @@ namespace Eagles.Application.Host
                     //
                     //c.Schemes(new[] { "http", "https" });
 
-                    // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "Info" object to
+                    // Use "SingleApiVersion" to describe a single version API. Swagger 2.0 includes an "DetailInfo" object to
                     // hold additional metadata for an API. Version and title are required but you can also provide
                     // additional fields by chaining methods off SingleApiVersion.
                     //
@@ -45,7 +45,7 @@ namespace Eagles.Application.Host
                     // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                     // In this case, you must provide a lambda that tells Swashbuckle which actions should be
                     // included in the docs for a given API version. Like "SingleApiVersion", each call to "Version"
-                    // returns an "Info" builder so you can provide additional metadata per API version.
+                    // returns an "DetailInfo" builder so you can provide additional metadata per API version.
                     //
                     //c.MultipleApiVersions(
                     //    (apiDesc, targetApiVersion) => ResolveVersionSupportByRouteConstraint(apiDesc, targetApiVersion),

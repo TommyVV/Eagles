@@ -57,7 +57,7 @@ namespace Eagles.DomainService.Core
                 mod = new TbAppMenu
                 {
                     Level = requset.Info.MenuLevel,
-                  //MenuId = requset.Info.MenuId,
+                  //MenuId = requset.DetailInfo.MenuId,
                     MenuName = requset.Info.MenuName,
                     OrgId = requset.Info.OrgId,
                     ParentMenuId = requset.Info.ParentId,

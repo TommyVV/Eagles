@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.Enum;
+using Eagles.Application.Model.Enums;
 using Eagles.Interface.Core.DataBase.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 

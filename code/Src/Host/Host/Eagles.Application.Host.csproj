@@ -256,24 +256,15 @@
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\ValidServiceToken.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\App\ActivityController.cs" />
-    <Compile Include="Controllers\App\AppMenuController.cs" />
-    <Compile Include="Controllers\App\AppModuleController.cs" />
-    <Compile Include="Controllers\ActivityTaskController.cs" />
-    <Compile Include="Controllers\MenusController.cs" />
-    <Compile Include="Controllers\GoodsController.cs" />
-    <Compile Include="Controllers\OrganizationController.cs" />
-    <Compile Include="Controllers\PartyMemberController.cs" />
-    <Compile Include="Controllers\NewController.cs" />
-    <Compile Include="Controllers\ColumnController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\ExercisesController.cs" />
-    <Compile Include="Controllers\App\NewsController.cs" />
-    <Compile Include="Controllers\App\ProductController.cs" />
-    <Compile Include="Controllers\App\ScoreController.cs" />
-    <Compile Include="Controllers\App\ScrollController.cs" />
-    <Compile Include="Controllers\App\TaskController.cs" />
-    <Compile Include="Controllers\App\UserController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\AppMenuController.cs" />
+    <Compile Include="Controllers\AppModuleController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ScoreController.cs" />
+    <Compile Include="Controllers\ScrollController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -2,7 +2,7 @@
 using Eagles.Base;
 using Eagles.DomainService.Model.News;
 using Eagles.DomainService.Model.User;
-using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.Question;
 
 namespace Eagles.Interface.DataAccess.NewsDa
 {

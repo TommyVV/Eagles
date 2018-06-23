@@ -4,11 +4,11 @@ using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.ScoreAccess;
 using Eagles.Interface.Core.DataBase.ProductAccess;
-using Eagles.Application.Model.AppModel.Score.GetScoreRank;
-using Eagles.Application.Model.AppModel.Score.AppScoreExchange;
-using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
 using DomainModel = Eagles.DomainService.Model;
 using System;
+using Eagles.Application.Model.Score.AppScoreExchange;
+using Eagles.Application.Model.Score.GetScoreExchangeLs;
+using Eagles.Application.Model.Score.GetScoreRank;
 
 namespace Eagles.DomainService.Core.Score
 {

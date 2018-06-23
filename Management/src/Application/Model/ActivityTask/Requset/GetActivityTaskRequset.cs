@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.ActivityTask.Requset
         /// <summary>
         /// 任务/活动 名字
         /// </summary>
-        public string ActivityTaskName { get; set; }
+        public string ActivityName { get; set; }
 
 
     }

@@ -81,7 +81,7 @@ namespace Eagles.DomainService.Core
                     HtmlContent = requset.Info.Content,
                     CreateTime = requset.Info.CreateTime,
                     Module = requset.Info.ModuleId,
-                //    NewsId = requset.Info.NewsId,
+                //    NewsId = requset.DetailInfo.NewsId,
                     ImageUrl = requset.Info.NewsImg,
                     Title = requset.Info.NewsName,
                     // NewsType=NewsType.

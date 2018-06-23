@@ -124,7 +124,7 @@ VALUES
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_activity`
   where
                 `ActivityId` = @ActivityId;
-", new {ActivityId = requset.ActivityTaskId});
+", new {ActivityId = requset.ActivityId});
 }
 
         public TbActivity GetActivityDetail(GetActivityTaskDetailRequset requset)
@@ -161,7 +161,7 @@ VALUES
     `tb_activity`.`Status`
 FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
-            dynamicParams.Add("ColumnId", requset.ActivityTaskId);
+            dynamicParams.Add("ColumnId", requset.ActivityId);
 
             return dbManager.QuerySingle<TbActivity>(sql.ToString(), dynamicParams);
         }
@@ -185,10 +185,10 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
                 dynamicParams.Add("BranchId", requset.BranchId);
             }
 
-            if (!string.IsNullOrWhiteSpace(requset.ActivityTaskName))
+            if (!string.IsNullOrWhiteSpace(requset.ActivityName))
             {
                 parameter.Append(" and ActivityName = @ActivityName ");
-                dynamicParams.Add("ActivityName", requset.ActivityTaskName);
+                dynamicParams.Add("ActivityName", requset.ActivityName);
             }
 
             if (requset.UserName > 0)

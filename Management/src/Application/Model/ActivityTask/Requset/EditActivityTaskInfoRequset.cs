@@ -1,4 +1,6 @@
-﻿namespace Eagles.Application.Model.ActivityTask.Requset
+﻿using Eagles.Application.Model.ActivityTask.Model;
+
+namespace Eagles.Application.Model.ActivityTask.Requset
 {
     /// <summary>
     /// 修改/新增 任务活动实体类
@@ -8,7 +10,7 @@
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增
         /// </summary>
-        public Model.ActivityTaskDetailModel Info { get; set; }
+        public ActivityDetailInfo DetailInfo { get; set; }
 
         /// <summary>
         ///  支部id

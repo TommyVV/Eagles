@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.Enum;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.Interface.Core.DataBase.ActivityAccess
 {

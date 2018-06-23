@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model.Activity.CreateActivity;
+using Eagles.Application.Model.Activity.EditActivityComment;
+using Eagles.Application.Model.Activity.EditActivityComplete;
+using Eagles.Application.Model.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.Activity.EditActivityJoin;
+using Eagles.Application.Model.Activity.EditActivityReview;
+using Eagles.Application.Model.Activity.GetActivity;
+using Eagles.Application.Model.Activity.GetActivityComment;
+using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Base;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.Activity.CreateActivity;
-using Eagles.Application.Model.AppModel.Activity.EditActivityJoin;
-using Eagles.Application.Model.AppModel.Activity.EditActivityReview;
-using Eagles.Application.Model.AppModel.Activity.EditActivityComplete;
-using Eagles.Application.Model.AppModel.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
-using Eagles.Application.Model.AppModel.Activity.GetActivity;
-using Eagles.Application.Model.AppModel.Activity.GetActivityDetail;
-using Eagles.Application.Model.AppModel.Activity.GetActivityComment;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity

@@ -58,31 +58,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityTaskHandler.cs" />
     <Compile Include="AppMenu\AppMenuHandler.cs" />
     <Compile Include="AppModule\AppModuleHanlder.cs" />
-    <Compile Include="ColumnHandler.cs" />
-    <Compile Include="DataBase\ActivityTaskDataAccess.cs" />
-    <Compile Include="DataBase\ColumnDataAccess.cs" />
-    <Compile Include="DataBase\GoodsDataAccess.cs" />
-    <Compile Include="DataBase\MenusDataAccess.cs" />
-    <Compile Include="DataBase\NewsDataAccess.cs" />
-    <Compile Include="DataBase\OrganizationDataAccess.cs" />
-    <Compile Include="DataBase\PartyMemberDataAccess.cs" />
-    <Compile Include="GoodsHandler.cs" />
-    <Compile Include="MenusHandler.cs" />
-    <Compile Include="NewsHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
-    <Compile Include="OrganizationHandler.cs" />
-    <Compile Include="PartyMemberHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />
     <Compile Include="Scroll\ScrollHandler.cs" />
     <Compile Include="Task\TaskHandler.cs" />
     <Compile Include="Activity\ActivityHandler.cs" />
-    <Compile Include="DataBase\DataAccess.cs" />
-    <Compile Include="DataBase\ExercisesDataAccess.cs" />
-    <Compile Include="ExercisesHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestHandler.cs" />
     <Compile Include="User\UserHandler.cs" />
@@ -113,8 +96,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exercises\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

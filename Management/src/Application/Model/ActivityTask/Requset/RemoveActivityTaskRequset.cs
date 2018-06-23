@@ -8,7 +8,7 @@
         /// <summary>
         /// 主键
         /// </summary>
-        public string ActivityTaskId { get; set; }
+        public string ActivityId { get; set; }
 
     }
 }

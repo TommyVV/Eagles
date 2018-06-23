@@ -45,11 +45,11 @@
     <Compile Include="App\TbAppModule.cs" />
     <Compile Include="Authority\TbAuthority.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
-    <Compile Include="Exercises\TbQuestEx.cs" />
+    <Compile Include="Question\TbQuestEx.cs" />
     <Compile Include="News\TbSystemNews.cs" />
     <Compile Include="Org\TbBranch.cs" />
     <Compile Include="ImportLog\TbImportLog.cs" />
-    <Compile Include="Sms\ValidCode.cs" />
+    <Compile Include="Sms\TbValidCode.cs" />
     <Compile Include="User\TbMeetingUser.cs" />
     <Compile Include="News\TbNews.cs" />
     <Compile Include="Oper\TbOper.cs" />
@@ -59,17 +59,17 @@
     <Compile Include="Org\TbOrgRelationship.cs" />
     <Compile Include="Org\TbOrgSmsConfig.cs" />
     <Compile Include="Product\TbProduct.cs" />
-    <Compile Include="Exercises\TbTestQuestion.cs" />
+    <Compile Include="Question\TbTestQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Exercises\TbQuestion.cs" />
-    <Compile Include="Exercises\TbQuestAnswer.cs" />
-    <Compile Include="Review\Review.cs" />
+    <Compile Include="Question\TbQuestion.cs" />
+    <Compile Include="Question\TbQuestAnswer.cs" />
+    <Compile Include="Review\TbReview.cs" />
     <Compile Include="RewardScore\TbRewardScore.cs" />
     <Compile Include="ScrollImage\TbScrollImage.cs" />
     <Compile Include="Config\SmsConfig.cs" />
-    <Compile Include="Sms\SmsSendLog.cs" />
+    <Compile Include="Sms\TbSmsSendLog.cs" />
     <Compile Include="Task\TbTask.cs" />
-    <Compile Include="Exercises\TbTestPaper.cs" />
+    <Compile Include="Question\TbTestPaper.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="User\TbUserActivity.cs" />
     <Compile Include="User\TbUserComment.cs" />
@@ -98,8 +98,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Column\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

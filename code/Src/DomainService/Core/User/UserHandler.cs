@@ -4,10 +4,10 @@ using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.DataBase.UserInfo;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.User.Login;
-using Eagles.Application.Model.AppModel.User.Register;
-using Eagles.Application.Model.AppModel.User.EditUser;
-using Eagles.Application.Model.AppModel.User.GetUserInfo;
+using Eagles.Application.Model.User.EditUser;
+using Eagles.Application.Model.User.GetUserInfo;
+using Eagles.Application.Model.User.Login;
+using Eagles.Application.Model.User.Register;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.User
@@ -118,7 +118,7 @@ namespace Eagles.DomainService.Core.User
             var response = new RegisterResponse();
             var phone = request.Phone;
             var code = request.SmsCode;
-            var codeResult = dbManager.Query<DomainModel.Sms.ValidCode>("select Phone,ValidCode,ExpireTime FROM eagles.tb_validcode where phone = @phone ", phone);
+            var codeResult = dbManager.Query<DomainModel.Sms.TbValidCode>("select Phone,TbValidCode,ExpireTime FROM eagles.tb_validcode where phone = @phone ", phone);
 
             var result = dbManager.Query<DomainModel.User.TbUserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", phone);
             if (result != null && result.Count > 0)

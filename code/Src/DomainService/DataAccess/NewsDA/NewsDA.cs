@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.News;
-using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.Question;
 using Eagles.DomainService.Model.RewardScore;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.NewsDa;
