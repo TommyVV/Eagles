@@ -10,7 +10,6 @@ using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
 using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core

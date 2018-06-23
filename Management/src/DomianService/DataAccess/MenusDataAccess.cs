@@ -4,7 +4,7 @@ using Dapper;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.App;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {

@@ -44,6 +44,7 @@
     <Compile Include="IColumnDataAccess.cs" />
     <Compile Include="IDataAccess.cs" />
     <Compile Include="IExercisesDataAccess.cs" />
+    <Compile Include="IAuditDataAccess.cs" />
     <Compile Include="IGoodsDataAccess.cs" />
     <Compile Include="IMenusDataAccess.cs" />
     <Compile Include="INewsDataAccess.cs" />

@@ -9,7 +9,6 @@ using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
 using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
 using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core

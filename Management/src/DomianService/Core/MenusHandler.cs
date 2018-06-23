@@ -9,7 +9,7 @@ using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
 using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {

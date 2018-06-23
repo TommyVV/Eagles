@@ -8,7 +8,7 @@ using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Exercises;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {

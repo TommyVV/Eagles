@@ -8,7 +8,7 @@ namespace Eagles.Interface.DataAccess
 {
     public interface IPartyMemberDataAccess : IInterfaceBase
     {
-        //  List<TbUserInfo> GetUserInfoList(GetPartyMemberRequest requset, out int totalCount);
+
         TbUserInfo GetUserInfoDetail(GetUserInfoDetailRequest requset);
         int RemoveUserInfo(RemoveUserInfoDetailsRequest requset);
         int EditUserInfo(TbUserInfo info);

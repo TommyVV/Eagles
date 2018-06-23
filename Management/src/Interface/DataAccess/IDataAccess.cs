@@ -1,6 +1,6 @@
 ﻿using Eagles.Base;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface IDataAccess:IInterfaceBase
     {

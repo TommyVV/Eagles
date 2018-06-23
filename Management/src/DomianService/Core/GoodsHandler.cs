@@ -7,7 +7,7 @@ using Eagles.Application.Model.Goods.Requset;
 using Eagles.Application.Model.Goods.Response;
 using Eagles.DomainService.Model.Product;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {

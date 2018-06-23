@@ -50,8 +50,8 @@
     <Compile Include="ActivityTask\Response\GetActivityTaskDetailResponse.cs" />
     <Compile Include="ActivityTask\Response\GetActivityTaskResponse.cs" />
     <Compile Include="Audit\Model\Audit.cs" />
-    <Compile Include="Audit\Requset\EditAuditInfoRequset.cs" />
-    <Compile Include="Audit\Requset\GetAuditRequset.cs" />
+    <Compile Include="Audit\Requset\CreateAuditRequset.cs" />
+    <Compile Include="Audit\Requset\GetAuditRequest.cs" />
     <Compile Include="Audit\Response\GetAuditResponse.cs" />
     <Compile Include="AuthorityGroupSetUp\Model\AuthorityInfo.cs" />
     <Compile Include="AuthorityGroupSetUp\Requset\EditAuthorityGroupSetUpRequset.cs" />
@@ -101,7 +101,6 @@
     <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\MenuLevel.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
-    <Compile Include="Enums\NewsType.cs" />
     <Compile Include="Enums\OperationType.cs" />
     <Compile Include="Enums\Sex.cs" />
     <Compile Include="Enums\Status.cs" />

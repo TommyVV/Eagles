@@ -43,6 +43,7 @@
     <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IColumnHandler.cs" />
     <Compile Include="IExercisesHandler.cs" />
+    <Compile Include="IAuditHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />
     <Compile Include="INewsHandler.cs" />

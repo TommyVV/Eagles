@@ -11,7 +11,7 @@ using Eagles.Application.Model.News.Response;
 using Eagles.Base.Json.Implement;
 using Eagles.DomainService.Model.News;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {

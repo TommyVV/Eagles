@@ -224,7 +224,7 @@
             审核名称
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Model.Audit.UserName">
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.UserId">
             <summary>
             发起人名字
             </summary>
@@ -239,42 +239,45 @@
             
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset">
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.AuditId">
+        <member name="P:Eagles.Application.Model.Audit.Model.Audit.NewsType">
+             <summary>
+             审核类型
+            00:文章
+            10:任务
+            20:活动
+             </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Requset.CreateAuditRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.AuditStatus">
+        <member name="P:Eagles.Application.Model.Audit.Requset.CreateAuditRequset.Info">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.EditAuditInfoRequset.Content">
-            <summary>
-            内容 json格式 图片 文字
-            </summary>
-        </member>
-        <member name="T:Eagles.Application.Model.Audit.Requset.GetAuditRequset">
+        <member name="T:Eagles.Application.Model.Audit.Requset.GetAuditRequest">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.AuditName">
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequest.AuditName">
             <summary>
             审核名字
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.AuditStatus">
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequest.AuditStatus">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequset.OperationType">
+        <member name="P:Eagles.Application.Model.Audit.Requset.GetAuditRequest.OperationType">
             <summary>
             
             </summary>
