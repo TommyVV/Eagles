@@ -7,10 +7,11 @@ import PcApp from '../container/PC/App';
 // -------------------------------------------------  pc端路由  -------------------------------------------------
 import Login from '../container/PC/Login/';
 
-import Exercise from '../container/PC/Exercise/'; // 需求发布
-import ExerciseCreate from "../container/PC/Exercise/Create";  // 新建项目
+import Exercise from '../container/PC/Exercise/'; // 习题问卷列表
+import ExerciseDetail from "../container/PC/Exercise/ExDetail";  // 习题问卷详情
+import QuestionDetail from "../container/PC/Exercise/QuDetail";  // 习题详情
 // //  ---------------------  分享  ---------------------
-// import SharePublished from '../container/PC/Share/Published/';  // 已发布
+import SharePublished from '../container/PC/Share/Published/';  // 已发布
 // import ShareUnpublished from '../container/PC/Share/Unpublished/';  // 未发布
 // import ShareAudit from '../container/PC/Share/Audit/';  // 审核中
 // import ShareUnAudit from '../container/PC/Share/UnAudit/';  // 未审核
@@ -31,6 +32,7 @@ import ExerciseCreate from "../container/PC/Exercise/Create";  // 新建项目
 // import ExerciseCreate from "../container/PC/Exercise/ExerciseCreate";  // 新建项目
 //  ---------------------  第三方页面  ---------------------
 import OtherPage from "../container/PC/Other";  // 新建项目
+import HomePage from '../container/PC/Home';
 
 
 class RouteMap extends Component {
@@ -39,14 +41,17 @@ class RouteMap extends Component {
       <Router history={hashHistory}>
         {/*pc端*/}
         <Route path="/" component={PcApp}>
-          <route path="/login" component={Login} />
-
+          <IndexRoute  component={Login} />
+          {/* 首页 */}
+          <route path="/home" component={HomePage} />
           {/* 习题 */}
-          <route path="/exercise" component={Exercise} />
-          <route path="/exercise/create(/:id)" component={ExerciseCreate} />
+          <route path="/questionlist" component={Exercise} />
+          <route path="/question/detail(/:id)" component={QuestionDetail} />
+          <route path="/exercise/detail(/:id)" component={ExerciseDetail} />
           
 
           {/*分享*/}
+          {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />
           <route path="/sharemanage/unpublished" component={ShareUnpublished} />
           <route path="/sharemanage/audit" component={ShareAudit} />

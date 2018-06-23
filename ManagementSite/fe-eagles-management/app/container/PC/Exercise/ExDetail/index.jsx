@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Button, Input, Form, message, Row, Col,Select, Avatar, Icon } from "antd";
+import {
+  Button,
+  Input,
+  Form,
+  message,
+  Row,
+  Col,
+  Select,
+  Avatar,
+  Icon
+} from "antd";
 import { connect } from "react-redux";
 import DemandList from "../DemandList";
 import MemberList from "../../../../components/PC/MemberList";
@@ -18,6 +28,7 @@ import {
   removeDemandFn
 } from "../../../../actions/PC/projectAction";
 import "./style.less";
+import WrappedDynamicFieldSet from "../../../../components/Common/AddField";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -104,7 +115,7 @@ class Base extends Component {
         xl: { span: 2 }
       },
       wrapperCol: {
-        xl: { span: 18 }
+        xl: { span: 12 }
       }
     };
     const tailFormItemLayout = {
@@ -132,17 +143,24 @@ class Base extends Component {
               ]
             })(<Input placeholder="必填，20字以内" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="Select" hasFeedback>
-            {getFieldDecorator("类型", {
-              rules: [
-                { required: true, message: "请选择类型" }
-              ]
-            })(
-              <Select placeholder="Please select a country">
-                <Option value="china">单选</Option>
-                <Option value="use">复选</Option>
+          <FormItem {...formItemLayout} label="类型">
+            {getFieldDecorator("exType")(
+              <Select>
+                <Option value="0">单选</Option>
+                <Option value="1">复选</Option>
               </Select>
             )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="">
+            {getFieldDecorator("projectName", {
+              rules: [
+                {
+                  required: true,
+                  message: "必填，20字以内!",
+                  pattern: /^(?!.{21}|\s*$)/g
+                }
+              ]
+            })(<WrappedDynamicFieldSet />)}
           </FormItem>
           <FormItem>
             <Row type="flex" justify="center" className="edit" gutter={24}>
@@ -179,6 +197,9 @@ const FormMap = Form.create({
       projectId: Form.createFormField({
         value: project.basicData ? project.basicData.id : ""
       }),
+      exType: Form.createFormField({
+        value: 0
+      }),
       projectName: Form.createFormField({
         value: project.basicData ? project.basicData.projectName : ""
       })
@@ -194,7 +215,7 @@ const FormMap = Form.create({
   },
   { saveProjectInfo, clearProjectInfo }
 )
-class ExerciseCreate extends Component {
+class QuestionDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -257,4 +278,5 @@ class ExerciseCreate extends Component {
   }
 }
 
-export default ExerciseCreate;
+export default QuestionDetail;
+

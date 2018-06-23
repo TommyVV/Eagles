@@ -337,6 +337,7 @@ class Exercise extends React.Component {
           rowSelection={rowSelection}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
+          bordered
         />
 
         <Row

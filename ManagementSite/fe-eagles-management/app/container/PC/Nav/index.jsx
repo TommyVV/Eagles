@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Avatar, Row, Col } from "antd";
+import { Layout, Menu, Avatar, Row, Col, Icon } from "antd";
 import { connect } from "react-redux";
 import { hashHistory } from "react-router";
 import navMap from "./navMap.js";
@@ -23,21 +23,30 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 1
+      current: ""
     };
   }
   componentWillMount() {
-    // let { hash } = window.location;
-    // let index = hash.indexOf("?");
-    // hash = hash.slice(0, index);
-    // let arr = hash.split("/");
-    // let current = arr[1];
-    // let key = navMap.find(item => item.pathname === current).key;
-    // this.setState({ key });
+    let { hash } = window.location;
+    let index = hash.indexOf("?");
+    const current = hash.slice(0, index);
+    const obj = navMap.find(item => current.indexOf(item.pathname) > -1);
+    this.setState({
+      current: obj.key,
+      sub: obj.sub
+    });
   }
+  handleClick = e => {
+    console.log("click ", e);
+    this.setState({
+      current: e.key,
+      sub: ""
+    });
+  };
   render() {
     const { fetchList, search } = this.props;
-    let { key } = this.state;
+    let { current, sub } = this.state;
+    console.log(this.state.current);
     return (
       <Layout>
         <Sider className="pc_nav">
@@ -47,92 +56,64 @@ export default class App extends React.Component {
           </div>
           <Menu
             theme="dark"
+            // onClick={this.handleClick}
+            style={{ width: 256 }}
+            defaultOpenKeys={[sub]}
+            selectedKeys={[current]}
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
           >
             <SubMenu
               key="sub1"
               title={
                 <span>
+                  <Icon type="mail" />
                   <span>习题问卷</span>
                 </span>
               }
             >
-              <Menu.Item key="1" onClick={() => hashHistory.replace('/exercise')}>
+              <Menu.Item
+                key="1"
+                onClick={e => hashHistory.replace("/questionlist")}
+              >
                 习题问卷列表
               </Menu.Item>
-              <Menu.Item key="2" onClick={() => hashHistory.replace('/exercise/create')}>习题问卷详情</Menu.Item>
+              <Menu.Item
+                key="2"
+                onClick={e => hashHistory.replace("/question/detail")}
+              >
+                习题问卷详情
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub2"
               title={
                 <span>
-                  <span>党员信息</span>
+                  <Icon type="appstore" />
+                  <span>Navigtion Two</span>
                 </span>
               }
             >
-              <Menu.Item key="3">
-                党员列表
-              </Menu.Item>
-              <Menu.Item key="4">党员详情</Menu.Item>
+              <Menu.Item key="5">Option 5</Menu.Item>
+              <Menu.Item key="6">Option 6</Menu.Item>
+              <SubMenu key="sub3" title="Submenu">
+                <Menu.Item key="7">Option 7</Menu.Item>
+                <Menu.Item key="8">Option 8</Menu.Item>
+              </SubMenu>
             </SubMenu>
-            {/* <MenuItemGroup key="g1" title="习题问卷">
-              <Menu.Item key="1">
-                <a onClick={() => hashHistory.replace('/sharemanage/published')}>
-                  <i className="iconfont icon-fenxiang"></i>
-                  习题问卷列表
-                </a>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <a onClick={() => hashHistory.replace('/sharepublished')}>
-                  <i className="iconfont icon-tianjia"></i>
-                  习题问卷详情
-                </a>
-              </Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup key="g2" title="党员信息">
-            <Menu.Item key="3">
-                <a onClick={() => hashHistory.replace('/sharemanage/published')}>
-                  <i className="iconfont icon-fenxiang"></i>
-                  党员列表
-                </a>
-              </Menu.Item>
-              <Menu.Item key="4">
-                <a onClick={() => hashHistory.replace('/agency')}>
-                  <i className="iconfont icon-tianjia"></i>
-                  党员详情
-                </a>
-              </Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup key="g3" title="积分信息">
-              <Menu.Item key="5">
-                <a onClick={() => hashHistory.replace('/demandmanage/published')}>
-                  <i className="iconfont icon-fabuxuqiu"></i>
-                  积分配置
-                </a>
-              </Menu.Item>
-              <Menu.Item key="6">
-                <a onClick={() => hashHistory.replace('/demand')}>
-                  <i className="iconfont icon-tianjia"></i>
-                  积分详情
-              </a>
-              </Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup key="g4" title="商品信息">
-              <Menu.Item key="7">
-                <a onClick={() => hashHistory.replace('/project')}>
-                  <i className="iconfont icon-xiangmu"></i>
-                  商品维护
-                </a>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <a onClick={() => hashHistory.replace('/demand')}>
-                  <i className="iconfont icon-tianjia"></i>
-                  商品详情
-              </a>
-              </Menu.Item>
-            </MenuItemGroup> */}
+            <SubMenu
+              key="sub4"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>Navigation Three</span>
+                </span>
+              }
+            >
+              <Menu.Item key="9">Option 9</Menu.Item>
+              <Menu.Item key="10">Option 10</Menu.Item>
+              <Menu.Item key="11">Option 11</Menu.Item>
+              <Menu.Item key="12">Option 12</Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 260, minHeight: "100vh" }}>

@@ -20,7 +20,7 @@ class LoginForm extends React.Component {
         let mobile = getFieldValue("mobile").substr(0, 11);
         let password = getFieldValue("password");
 		console.log(mobile, password);
-		hashHistory.replace('/exercise');
+		hashHistory.replace('/home');
       }
     });
   };
