@@ -2,14 +2,6 @@ import React, { Component } from 'react';
 import { Route, IndexRoute, hashHistory, Router } from 'react-router';
 
 
-import PcApp from '../container/PC/App';
-
-// -------------------------------------------------  pc端路由  -------------------------------------------------
-import Login from '../container/PC/Login/';
-
-import Exercise from '../container/PC/Exercise/'; // 习题问卷列表
-import ExerciseDetail from "../container/PC/Exercise/ExDetail";  // 习题问卷详情
-import QuestionDetail from "../container/PC/Exercise/QuDetail";  // 习题详情
 // //  ---------------------  分享  ---------------------
 import SharePublished from '../container/PC/Share/Published/';  // 已发布
 // import ShareUnpublished from '../container/PC/Share/Unpublished/';  // 未发布
@@ -31,8 +23,20 @@ import SharePublished from '../container/PC/Share/Published/';  // 已发布
 // import Detail from "../container/PC/Project/Detail";  // 项目详情
 // import ExerciseCreate from "../container/PC/Exercise/ExerciseCreate";  // 新建项目
 //  ---------------------  第三方页面  ---------------------
-import OtherPage from "../container/PC/Other";  // 新建项目
+
+
+
+// -------------------------------------------------  pc端路由  -------------------------------------------------
+import PcApp from '../container/PC/App';
+import Login from '../container/PC/Login/';
+
+import Exercise from '../container/PC/Exercise/'; // 习题问卷列表
+import ExerciseDetail from "../container/PC/Exercise/ExDetail";  // 习题问卷详情
+import QuestionDetail from "../container/PC/Exercise/QuDetail";  // 习题详情
 import HomePage from '../container/PC/Home';
+import PartyMemberList from '../container/PC/PartyMember';
+import PartyMemberDetail from '../container/PC/PartyMember/Detail';
+import SetNextPartyMember from '../container/PC/PartyMember/Next';
 
 
 class RouteMap extends Component {
@@ -48,6 +52,10 @@ class RouteMap extends Component {
           <route path="/questionlist" component={Exercise} />
           <route path="/question/detail(/:id)" component={QuestionDetail} />
           <route path="/exercise/detail(/:id)" component={ExerciseDetail} />
+          {/* 党员 */}
+          <route path="/partymemberlist" component={PartyMemberList} />
+          <route path="/partymember/detail(/:id)" component={PartyMemberDetail} />
+          <route path="/partymember/setnext/:id/:name" component={SetNextPartyMember} />
           
 
           {/*分享*/}

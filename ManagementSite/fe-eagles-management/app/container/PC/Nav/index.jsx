@@ -89,16 +89,23 @@ export default class App extends React.Component {
               title={
                 <span>
                   <Icon type="appstore" />
-                  <span>Navigtion Two</span>
+                  <span>党员信息</span>
                 </span>
               }
             >
-              <Menu.Item key="5">Option 5</Menu.Item>
-              <Menu.Item key="6">Option 6</Menu.Item>
-              <SubMenu key="sub3" title="Submenu">
-                <Menu.Item key="7">Option 7</Menu.Item>
-                <Menu.Item key="8">Option 8</Menu.Item>
-              </SubMenu>
+              <Menu.Item
+                key="3"
+                onClick={e => hashHistory.replace("/partymemberlist")}
+              >
+                党员列表
+              </Menu.Item>
+              <Menu.Item
+                key="4"
+                onClick={e => hashHistory.replace("/partymember/detail")}
+              >
+                党员详情
+              </Menu.Item>
+              <Menu.Item key="5">党员导入</Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub4"

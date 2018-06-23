@@ -47,66 +47,37 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch}
       >
         <Row gutter={24}>
-          <Col span={5} key={1}>
-            <FormItem label="习题类型">
-              {getFieldDecorator("exType")(
-                <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">在线考试习题</Option>
-                  <Option value="2">新闻习题</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={5} key={2}>
-            <FormItem label="标题">
-              {getFieldDecorator(`title`)(<Input />)}
-            </FormItem>
-          </Col>
-          <Col span={8} key={3}>
-            <FormItem label="发布时间">
-              <Col span={11}>
-                <FormItem>
-                  {getFieldDecorator("startTime")(
-                    <DatePicker placeholder="开始时间" />
-                  )}
-                </FormItem>
-              </Col>
-              <Col span={2}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    textAlign: "center"
-                  }}
-                >
-                  -
-                </span>
-              </Col>
-              <Col span={11}>
-                <FormItem>
-                  {getFieldDecorator("endTime")(
-                    <DatePicker placeholder="结束时间" />
-                  )}
-                </FormItem>
-              </Col>
-            </FormItem>
-          </Col>
-          <Col span={5} key={4}>
-            <FormItem label="状态">
-              {getFieldDecorator("state")(
-                <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">待审核</Option>
-                  <Option value="2">审核通过</Option>
-                  <Option value="3">审核不通过</Option>
-                </Select>
-              )}
+          <Col span={6} key={2}>
+            <FormItem label="选中党员">
+              {getFieldDecorator(`memId`)(<span>李某</span>)}
             </FormItem>
           </Col>
         </Row>
-        <Row>
-          <Col span={23} style={{ textAlign: "right", paddingRight: "16px" }}>
+        <Row gutter={24}>
+          <Col span={6} key={2}>
+            <FormItem label="党员名称">
+              {getFieldDecorator(`name`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col span={6} key={1}>
+            <FormItem label="党员级别">
+              {getFieldDecorator("type")(
+                <Select>
+                  <Option value="0">全部</Option>
+                  <Option value="1">支部</Option>
+                  <Option value="2">小组</Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
             <Button type="primary" htmlType="submit">
               搜索
             </Button>
@@ -134,7 +105,7 @@ const WrapperSearchForm = Form.create({
   }
 })(SearchForm);
 
-class Exercise extends React.Component {
+class SetNextPartyMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -146,76 +117,53 @@ class Exercise extends React.Component {
     };
     this.columns = [
       {
-        title: "问卷名称",
-        dataIndex: "questionName",
+        title: "党员名称",
+        dataIndex: "name",
         width: "20%"
       },
       {
-        title: "习题类型",
-        dataIndex: "quType",
+        title: "所属支部",
+        dataIndex: "branch",
         width: "20%"
       },
       {
-        title: "状态",
-        dataIndex: "state",
-        width: "20%",
-        render: text => <span>{text}</span>
-      },
-      {
-        title: "发布时间",
-        dataIndex: "createTime",
+        title: "联系电话",
+        dataIndex: "phone",
         width: "20%",
         render: text => (
           <span>{util.timeStampConvent(text, "yyyy-MM-dd hh:mm:ss")}</span>
         )
       },
       {
-        title: "操作",
+        title: "党员类型",
+        dataIndex: "type",
         width: "20%",
-        render: (text, record) => {
-          return (
-            <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
-              >
-                编辑
-              </a>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
-                style={{ paddingLeft: "24px" }}
-              >
-                删除
-              </a>
-            </div>
-          );
-        }
+        render: text => (
+          <span>{util.timeStampConvent(text, "yyyy-MM-dd hh:mm:ss")}</span>
+        )
       }
     ];
     this.data = [
       {
         key: "1",
-        questionName: "关于党的发展",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
+        name: "张三",
+        branch: "第一支部",
+        phone: "18512144992",
+        type: "党员"
       },
       {
         key: "2",
-        questionName: "小红的考卷",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
+        name: "张四",
+        branch: "第二支部",
+        phone: "18512144992",
+        type: "预备党员"
       },
       {
         key: "3",
-        questionName: "考卷B",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
+        name: "张五",
+        branch: "第二支部",
+        phone: "18512144992",
+        type: "预备党员"
       }
     ];
     this.getListConfig = {
@@ -369,15 +317,22 @@ class Exercise extends React.Component {
           className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button type="primary" className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                新增问卷
+            <Button onClick={this.handleDelete} className="btn">
+              批量删除
+            </Button>
+          </Col>
+          <Col>
+            <Button className="btn ">
+              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
+                新增
               </a>
             </Button>
           </Col>
           <Col>
-            <Button onClick={this.handleDelete} className="btn">
-              批量删除
+            <Button className="btn ">
+              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
+                导入
+              </a>
             </Button>
           </Col>
         </Row>
@@ -386,4 +341,4 @@ class Exercise extends React.Component {
   }
 }
 
-export default Exercise;
+export default SetNextPartyMember;

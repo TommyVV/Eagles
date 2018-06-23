@@ -6,33 +6,32 @@ const navMap = [
   {
     pathname: "#/questionlist",
     key: "1",
-    sub:"sub1"
+    sub: "sub1"
   },
   {
     pathname: "#/question/detail",
     key: "2",
-    sub:"sub1"
+    sub: "sub1"
   },
   {
     pathname: "#/exercise/detail",
     key: "2",
-    sub:"sub1"
+    sub: "sub1"
   },
   {
-    pathname: "agency",
-    key: "3"
+    pathname: "#/partymemberlist",
+    key: "3",
+    sub: "sub2"
   },
   {
-    pathname: "demandmanage",
-    key: "4"
+    pathname: "#/partymember/detail",
+    key: "4",
+    sub: "sub2"
   },
   {
-    pathname: "demand",
-    key: "5"
+    pathname: "#/partymember/setnext",
+    key: "4",
+    sub: "sub2"
   },
-  {
-    pathname: "project",
-    key: "6"
-  }
 ];
 export default navMap;
