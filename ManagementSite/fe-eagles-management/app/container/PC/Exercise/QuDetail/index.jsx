@@ -268,7 +268,7 @@ class QuestionForm extends Component {
                   style={{ display: isShowInput ? "block" : "none" }}
                 >
                   <Button
-                    className="btn"
+                    className="btn btn--primary"
                     type="primary"
                     onClick={() => hashHistory.replace("/project")}
                   >
