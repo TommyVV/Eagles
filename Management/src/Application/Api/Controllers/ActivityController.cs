@@ -7,13 +7,13 @@ using Eagles.Interface.Core;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// 
+    /// ActivityTask
     /// </summary>
-    public class ActivityTaskController : ApiController
+    public class ActivityController : ApiController
     {
         private readonly IActivityTaskHandler _ActivityTaskHandler;
 
-        public ActivityTaskController(IActivityTaskHandler testHandler)
+        public ActivityController(IActivityTaskHandler testHandler)
         {
             this._ActivityTaskHandler = testHandler;
         }
@@ -24,7 +24,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditActivityTask")]
         [HttpPost]
         public ResponseBase EditActivityTask(EditActivityTaskInfoRequset requset)
         {
@@ -36,7 +35,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveActivityTask")]
         [HttpPost]
         public ResponseBase RemoveActivityTask(RemoveActivityTaskRequset requset)
         {
@@ -48,7 +46,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetActivityTaskDetail")]
         [HttpPost]
         public GetActivityTaskDetailResponse GetActivityTaskDetail(GetActivityTaskDetailRequset requset)
         {
@@ -60,7 +57,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetActivityTask")]
         [HttpPost]
         public GetActivityTaskResponse GetActivityTask(GetActivityTaskRequset requset)
         {

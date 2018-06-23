@@ -9,11 +9,11 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class PartyMemberController : ApiController
+    public class UserController : ApiController
     {
-        private readonly IPartyMemberHandler _partyMemberHandler;
+        private readonly IUserHandler _partyMemberHandler;
 
-        public PartyMemberController(IPartyMemberHandler testHandler)
+        public UserController(IUserHandler testHandler)
         {
             this._partyMemberHandler = testHandler;
         }
@@ -25,7 +25,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditUserInfo")]
         [HttpPost]
         public ResponseBase EditPartyMember(EditUserInfoDetailsRequest requset)
         {
@@ -37,7 +36,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveUserInfo")]
         [HttpPost]
         public ResponseBase RemovePartyMember(RemoveUserInfoDetailsRequest requset)
         {
@@ -49,7 +47,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetUserInfoDetail")]
         [HttpPost]
         public GetUserInfoDetailResponse GetPartyMemberDetail(GetUserInfoDetailRequest requset)
         {
@@ -61,7 +58,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetUserInfoList")]
         [HttpPost]
         public GetPartyMemberResponse GetPartyMember(GetPartyMemberRequest requset)
         {
@@ -73,8 +69,7 @@ namespace Eagles.Application.Host.Controllers
         /// 权限 删除
         /// </summary>
         /// <param name="requset"></param>
-        /// <returns></returns>
-        [Route("api/RemoveAuthorityUserSetUp")]
+        /// <returns></returns>]
         [HttpPost]
         public ResponseBase RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
         {
@@ -87,7 +82,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetAuthorityUserSetUpList")]
         [HttpPost]
         public GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)
         {
@@ -100,7 +94,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/CreateAuthorityUserSetUp")]
         [HttpPost]
         public ResponseBase CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
         {

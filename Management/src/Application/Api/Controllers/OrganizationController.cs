@@ -25,7 +25,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditOrganization")]
         [HttpPost]
         public ResponseBase EditOrganization(EditOrganizationRequset requset)
         {
@@ -37,7 +36,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveOrganization")]
         [HttpPost]
         public ResponseBase RemoveOrganization(RemoveOrganizationRequset requset)
         {
@@ -49,7 +47,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetOrganizationDetail")]
         [HttpPost]
         public GetOrganizationDetailResponse GetOrganizationDetail(GetOrganizationDetailRequset requset)
         {
@@ -61,7 +58,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetOrganization")]
         [HttpPost]
         public GetOrganizationResponse GetOrganization(GetOrganizationRequset requset)
         {

@@ -5,7 +5,7 @@ using Eagles.Application.Model.Exercises.Requset;
 
 namespace Eagles.Interface.Core.DataBase
 {
-    public interface IExercisesDataAccess : IInterfaceBase
+    public interface ITestPaperDataAccess : IInterfaceBase
     {
         List<TbTestPaper> GetExercisesList(GetExercisesRequset requset,out int totalCount);
         List<TbQuestion> GetSubjectListByQuestionId(List<int> questionId);

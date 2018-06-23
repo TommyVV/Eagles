@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
+﻿using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
 using Eagles.Base;
 
 namespace Eagles.Interface.Core
 {
-     public interface IColumnHandler : IInterfaceBase
+     public interface IModuleHandler : IInterfaceBase
     {
 
         /// <summary>

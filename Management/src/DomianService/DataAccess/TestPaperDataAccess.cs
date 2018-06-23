@@ -10,7 +10,7 @@ using Eagles.Interface.Core.DataBase;
 namespace Ealges.DomianService.DataAccess
 {
 
-    public class ExercisesDataAccess : IExercisesDataAccess
+    public class TestPaperDataAccess : ITestPaperDataAccess
     {
         private readonly IDbManager dbManager;
 

@@ -6,9 +6,7 @@ using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
 {
-    /// <summary>
-    /// 
-    /// </summary>
+   
     public class ActivityTaskController : ApiController
     {
         private readonly IActivityTaskHandler _ActivityTaskHandler;

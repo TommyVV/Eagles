@@ -9,11 +9,11 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class NewController : ApiController
+    public class NewsController : ApiController
     {
         private readonly INewsHandler testHandler;
 
-        public NewController(INewsHandler testHandler)
+        public NewsController(INewsHandler testHandler)
         {
             this.testHandler = testHandler;
         }
@@ -23,7 +23,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditNew")]
         [HttpPost]
         public ResponseBase EditNews(EditNewRequset requset)
         {
@@ -35,7 +34,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveNew")]
         [HttpPost]
         public ResponseBase RemoveNews(RemoveNewRequset requset)
         {
@@ -47,7 +45,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetNew")]
         [HttpPost]
         public GetNewResponse GetNews(GetNewRequset requset)
         {
@@ -59,7 +56,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetNewDetail")]
         [HttpPost]
         public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {

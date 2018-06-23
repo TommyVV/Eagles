@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
+﻿using Eagles.Application.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
 using Eagles.Base;
 
 namespace Eagles.Interface.Core
 {
-    public interface IPartyMemberHandler : IInterfaceBase
+    public interface IUserHandler : IInterfaceBase
     {
         GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request);
         GetUserInfoDetailResponse GetUserInfoDetail(GetUserInfoDetailRequest request);

@@ -5,7 +5,7 @@ using Eagles.Base;
 
 namespace Eagles.Interface.Core
 {
-    public interface IExercisesHandler : IInterfaceBase
+    public interface ITestPaperHandler : IInterfaceBase
     {
 
         #region 试卷

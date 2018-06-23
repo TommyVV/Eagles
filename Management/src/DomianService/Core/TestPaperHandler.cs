@@ -12,13 +12,11 @@ using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core
 {
-    public class ExercisesHandler : IExercisesHandler
+    public class TestPaperHandler : ITestPaperHandler
     {
 
 
-        private readonly IExercisesDataAccess dataAccess;
-
-        private readonly IConfigurationManager configurationManager;
+        private readonly ITestPaperDataAccess dataAccess;
 
 
         /// <summary>

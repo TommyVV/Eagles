@@ -15,7 +15,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-    public class PartyMemberHandler : IPartyMemberHandler
+    public class UserHandler : IUserHandler
     {
         private readonly IPartyMemberDataAccess dataAccess;
 

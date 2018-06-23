@@ -9,11 +9,11 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class GoodsController : ApiController
+    public class ProductController : ApiController
     {
         private readonly IGoodsHandler testHandler;
 
-        public GoodsController(IGoodsHandler testHandler)
+        public ProductController(IGoodsHandler testHandler)
         {
             this.testHandler = testHandler;
         }
@@ -23,7 +23,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditGoods")]
         [HttpPost]
         public ResponseBase EditGoods(EditGoodsRequset requset)
         {
@@ -35,7 +34,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveGoods")]
         [HttpPost]
         public ResponseBase RemoveGoods(RemoveGoodsRequset requset)
         {
@@ -47,7 +45,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetGoods")]
         [HttpPost]
         public GetGoodsResponse GetGoods(GetGoodsRequest requset)
         {
@@ -59,7 +56,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetGoodsDetail")]
         [HttpPost]
         public GetGoodsDetailResponse GetGoodsDetail(GetGoodsDetailRequset requset)
         {

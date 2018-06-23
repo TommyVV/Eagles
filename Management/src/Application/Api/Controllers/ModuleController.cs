@@ -9,13 +9,13 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class ColumnController : ApiController
+    public class ModuleController : ApiController
     {
-        private readonly IColumnHandler _columnHandler;
+        private readonly IModuleHandler _moduleHandler;
 
-        public ColumnController(IColumnHandler testHandler)
+        public ModuleController(IModuleHandler moduleHandler)
         {
-            this._columnHandler = testHandler;
+            this._moduleHandler = moduleHandler;
         }
 
 
@@ -25,11 +25,10 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditColumn")]
         [HttpPost]
         public ResponseBase EditColumn(EditColumnRequset requset)
         {
-            return _columnHandler.EditColumn(requset);
+            return _moduleHandler.EditColumn(requset);
         }
 
         /// <summary>
@@ -37,11 +36,10 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveColumn")]
         [HttpPost]
         public ResponseBase RemoveColumn(RemoveColumnRequset requset)
         {
-            return _columnHandler.RemoveColumn(requset);
+            return _moduleHandler.RemoveColumn(requset);
         }
 
         /// <summary>
@@ -49,11 +47,10 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetColumnDetail")]
         [HttpPost]
         public GetColumnDetailResponse GetColumnDetail(GetColumnDetailRequset requset)
         {
-            return _columnHandler.GetColumnDetail(requset);
+            return _moduleHandler.GetColumnDetail(requset);
         }
 
         /// <summary>
@@ -61,11 +58,10 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetColumn")]
         [HttpPost]
         public GetColumnResponse GetColumn(GetColumnRequset requset)
         {
-            return _columnHandler.GetColumn(requset);
+            return _moduleHandler.GetColumn(requset);
         }
     }
 }

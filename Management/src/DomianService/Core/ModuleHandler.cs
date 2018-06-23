@@ -12,11 +12,11 @@ using Eagles.Interface.Core.DataBase;
 
 namespace Eagles.DomainService.Core
 {
-    public class ColumnHandler : IColumnHandler
+    public class ModuleHandler : IModuleHandler
     {
         private readonly IColumnDataAccess dataAccess;
 
-        public ColumnHandler(IColumnDataAccess dataAccess)
+        public ModuleHandler(IColumnDataAccess dataAccess)
         {
             this.dataAccess = dataAccess;
         }
