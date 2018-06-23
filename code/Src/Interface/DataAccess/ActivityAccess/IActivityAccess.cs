@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Eagles.Base;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
+using Eagles.Base;
 
-namespace Eagles.Interface.Core.DataBase.ActivityAccess
+namespace Eagles.Interface.DataAccess.ActivityAccess
 {
     public interface IActivityAccess : IInterfaceBase
     {
@@ -19,7 +19,7 @@ namespace Eagles.Interface.Core.DataBase.ActivityAccess
 
         int EditActivityComment(int orgId, int activityId, int userId, string content);
 
-        List<Eagles.DomainService.Model.Activity.TbActivity> GetActivity(int activityType);
+        List<DomainService.Model.Activity.TbActivity> GetActivity(int activityType);
 
         DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId);
 

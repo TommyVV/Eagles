@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.User;
-using Eagles.Interface.Core.DataBase.UserArticle;
+using Eagles.Interface.DataAccess.UserArticle;
 
 namespace Ealges.DomianService.DataAccess.UserArticle
 {

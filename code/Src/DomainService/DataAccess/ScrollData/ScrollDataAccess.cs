@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
-using Eagles.Interface.Core.DataBase.ScrollAccess;
+using Eagles.Interface.DataAccess.ScrollAccess;
 
 namespace Ealges.DomianService.DataAccess.ScrollData
 {

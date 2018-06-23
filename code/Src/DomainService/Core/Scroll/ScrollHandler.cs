@@ -2,7 +2,7 @@
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Application.Model.Scroll.GetScrollImg;
 using Eagles.Application.Model.Scroll.GetScrollNew;
-using Eagles.Interface.Core.DataBase.ScrollAccess;
+using Eagles.Interface.DataAccess.ScrollAccess;
 
 namespace Eagles.DomainService.Core.Scroll
 {

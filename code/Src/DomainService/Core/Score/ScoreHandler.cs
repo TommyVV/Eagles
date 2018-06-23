@@ -2,13 +2,13 @@
 using System.Transactions;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.ScoreAccess;
-using Eagles.Interface.Core.DataBase.ProductAccess;
 using DomainModel = Eagles.DomainService.Model;
 using System;
 using Eagles.Application.Model.Score.AppScoreExchange;
 using Eagles.Application.Model.Score.GetScoreExchangeLs;
 using Eagles.Application.Model.Score.GetScoreRank;
+using Eagles.Interface.DataAccess.ProductAccess;
+using Eagles.Interface.DataAccess.ScoreAccess;
 
 namespace Eagles.DomainService.Core.Score
 {

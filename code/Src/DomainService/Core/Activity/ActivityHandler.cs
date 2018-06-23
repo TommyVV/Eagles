@@ -13,8 +13,8 @@ using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Base;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Application.Model.Common;
+using Eagles.Interface.DataAccess.ActivityAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity

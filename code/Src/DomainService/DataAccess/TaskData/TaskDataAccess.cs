@@ -5,7 +5,7 @@ using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
-using Eagles.Interface.Core.DataBase.TaskAccess;
+using Eagles.Interface.DataAccess.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Ealges.DomianService.DataAccess.TaskData

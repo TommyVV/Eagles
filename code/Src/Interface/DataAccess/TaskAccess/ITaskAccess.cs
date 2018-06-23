@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Eagles.Base;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
+using Eagles.Base;
 
-namespace Eagles.Interface.Core.DataBase.TaskAccess
+namespace Eagles.Interface.DataAccess.TaskAccess
 {
     public interface ITaskAccess : IInterfaceBase
     {

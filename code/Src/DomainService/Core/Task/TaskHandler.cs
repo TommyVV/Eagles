@@ -4,7 +4,6 @@ using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.TaskAccess;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Task.CreateTask;
 using Eagles.Application.Model.Task.EditTaskAccept;
@@ -17,6 +16,7 @@ using Eagles.Application.Model.Task.GetTaskComment;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
 using Eagles.Application.Model.Task.RemoveTaskStep;
+using Eagles.Interface.DataAccess.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task

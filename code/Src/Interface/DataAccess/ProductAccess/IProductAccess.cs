@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 
-namespace Eagles.Interface.Core.DataBase.ProductAccess
+namespace Eagles.Interface.DataAccess.ProductAccess
 {
     public interface IProductAccess : IInterfaceBase
     {

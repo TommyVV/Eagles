@@ -5,7 +5,7 @@ using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
+using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
 {

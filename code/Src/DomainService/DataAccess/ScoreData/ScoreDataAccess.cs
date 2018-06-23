@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Application.Model.Common;
-using Eagles.Interface.Core.DataBase.ScoreAccess;
 using DomainModel = Eagles.DomainService.Model;
 using Eagles.Base.DataBase.Modle;
+using Eagles.Interface.DataAccess.ScoreAccess;
 
 namespace Ealges.DomianService.DataAccess.ScoreData
 {

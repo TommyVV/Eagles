@@ -1,6 +1,6 @@
 ﻿using Eagles.Base;
 
-namespace Eagles.Interface.Core.DataBase.UserInfo
+namespace Eagles.Interface.DataAccess.UserInfo
 {
     public interface IUserInfoAccess : IInterfaceBase
     {

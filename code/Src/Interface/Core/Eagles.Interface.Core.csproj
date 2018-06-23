@@ -45,13 +45,6 @@
     <Compile Include="AppMenu\IAppMenuHandler.cs" />
     <Compile Include="AppModule\IAppModuleHanlder.cs" />
     <Compile Include="Common\ITokenHadler.cs" />
-    <Compile Include="DataBase\ActivityAccess\IActivityAccess.cs" />
-    <Compile Include="DataBase\ScoreAccess\IScoreAccess.cs" />
-    <Compile Include="DataBase\ScrollAccess\IScrollAccess.cs" />
-    <Compile Include="DataBase\ProductAccess\IProductAccess.cs" />
-    <Compile Include="DataBase\TaskAccess\ITaskAccess.cs" />
-    <Compile Include="DataBase\UserArticle\IArticleDataAccess.cs" />
-    <Compile Include="DataBase\UserInfo\IUserInfo.cs" />
     <Compile Include="News\INewsHandler.cs" />
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />

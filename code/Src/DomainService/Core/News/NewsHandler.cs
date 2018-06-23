@@ -5,7 +5,6 @@ using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
-using Eagles.Interface.Core.DataBase.UserArticle;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -13,6 +12,7 @@ using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetNewsDetail;
 using Eagles.Application.Model.News.GetNewsTest;
 using Eagles.DomainService.Model.User;
+using Eagles.Interface.DataAccess.UserArticle;
 
 namespace Eagles.DomainService.Core.News
 {

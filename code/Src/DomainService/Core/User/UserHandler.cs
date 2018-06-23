@@ -2,12 +2,12 @@
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.UserInfo;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
+using Eagles.Interface.DataAccess.UserInfo;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.User
