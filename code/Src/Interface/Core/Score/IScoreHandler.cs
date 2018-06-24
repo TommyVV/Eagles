@@ -1,7 +1,7 @@
 ﻿using Eagles.Base;
-using Eagles.Application.Model.AppModel.Score.GetScoreRank;
-using Eagles.Application.Model.AppModel.Score.AppScoreExchange;
-using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
+using Eagles.Application.Model.Score.AppScoreExchange;
+using Eagles.Application.Model.Score.GetScoreExchangeLs;
+using Eagles.Application.Model.Score.GetScoreRank;
 
 namespace Eagles.Interface.Core.Score
 {

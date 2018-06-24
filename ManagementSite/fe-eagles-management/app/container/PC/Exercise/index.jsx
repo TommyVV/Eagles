@@ -147,21 +147,19 @@ class Exercise extends React.Component {
     this.columns = [
       {
         title: "问卷名称",
-        dataIndex: "projectName",
+        dataIndex: "questionName",
         width: "20%"
       },
       {
         title: "习题类型",
-        dataIndex: "creatorName",
+        dataIndex: "quType",
         width: "20%"
       },
       {
         title: "状态",
         dataIndex: "state",
         width: "20%",
-        render: text => (
-          <span>{util.timeStampConvent(text, "yyyy-MM-dd hh:mm:ss")}</span>
-        )
+        render: text => <span>{text}</span>
       },
       {
         title: "发布时间",
@@ -188,12 +186,36 @@ class Exercise extends React.Component {
                 onClick={() =>
                   hashHistory.replace(`/project/detail/${record.projectId}`)
                 }
+                style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
             </div>
           );
         }
+      }
+    ];
+    this.data = [
+      {
+        key: "1",
+        questionName: "关于党的发展",
+        quType: "新闻习题",
+        state: "待审核",
+        createTime: "2018-5-12 10:16"
+      },
+      {
+        key: "2",
+        questionName: "小红的考卷",
+        quType: "新闻习题",
+        state: "待审核",
+        createTime: "2018-5-12 10:16"
+      },
+      {
+        key: "3",
+        questionName: "考卷B",
+        quType: "新闻习题",
+        state: "待审核",
+        createTime: "2018-5-12 10:16"
       }
     ];
     this.getListConfig = {
@@ -332,11 +354,12 @@ class Exercise extends React.Component {
       <Nav>
         <WrapperSearchForm />
         <Table
-          dataSource={projectList}
+          dataSource={this.data}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
+          bordered
         />
 
         <Row

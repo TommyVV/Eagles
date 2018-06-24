@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
-using Eagles.Interface.Core.DataBase.ProductAccess;
+using Eagles.Interface.DataAccess.ProductAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Ealges.DomianService.DataAccess.ProductData

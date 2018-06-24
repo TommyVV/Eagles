@@ -23,7 +23,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditMenus")]
         [HttpPost]
         public ResponseBase EditMenus(EditMenusRequset requset)
         {
@@ -35,7 +34,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/RemoveMenus")]
         [HttpPost]
         public ResponseBase RemoveMenus(RemoveMenusRequset requset)
         {
@@ -47,7 +45,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetMenus")]
         [HttpPost]
         public GetMenusResponse GetMenus(GetMenusRequset requset)
         {
@@ -59,7 +56,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetMenusDetail")]
         [HttpPost]
         public GetMenusDetailResponse GetMenusDetail(GetMenusDetailRequest requset)
         {

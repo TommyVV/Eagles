@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityTask\Model\ActivityTaskDetailModel.cs" />
+    <Compile Include="ActivityTask\Model\ActivityDetailInfo.cs" />
     <Compile Include="ActivityTask\Model\ActivityTaskModel.cs" />
     <Compile Include="ActivityTask\Requset\EditActivityTaskInfoRequset.cs" />
     <Compile Include="ActivityTask\Requset\GetActivityTaskDetailRequset.cs" />

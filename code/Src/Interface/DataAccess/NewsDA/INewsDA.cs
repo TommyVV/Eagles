@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.DomainService.Model.News;
-using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.Question;
 
 namespace Eagles.Interface.DataAccess.NewsDa
 {
@@ -12,5 +13,11 @@ namespace Eagles.Interface.DataAccess.NewsDa
         TbNews GetNewsDetail(int newsId, int appId);
 
         List<TbQuestEx> GetNewsTest(int testId);
+
+        TbTestPaper GetTestPaperInfo(int testId);
+
+        List<TbQuestEx> GetTestRightAnswer(int testId);
+
+        int CreateUserTest(TbUserTest userTest);
     }
 }

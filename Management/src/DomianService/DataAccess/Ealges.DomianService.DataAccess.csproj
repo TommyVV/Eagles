@@ -46,8 +46,7 @@
     <Compile Include="ActivityTaskDataAccess.cs" />
     <Compile Include="AuditDataAccess.cs" />
     <Compile Include="ColumnDataAccess.cs" />
-    <Compile Include="DataBase\DataAccess.cs" />
-    <Compile Include="ExercisesDataAccess.cs" />
+    <Compile Include="TestPaperDataAccess.cs" />
     <Compile Include="GoodsDataAccess.cs" />
     <Compile Include="MenusDataAccess.cs" />
     <Compile Include="NewsDataAccess.cs" />

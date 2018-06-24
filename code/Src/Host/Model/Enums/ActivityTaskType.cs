@@ -2,6 +2,9 @@
 
 namespace Eagles.Application.Model.Enums
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum ActivityTaskType
     {
         /// <summary>

@@ -7,6 +7,9 @@ namespace Eagles.Application.Model
     /// </summary>
     public class ResponseBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ResponseBase()
         {
             IsSuccess = true;

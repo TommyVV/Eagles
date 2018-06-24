@@ -14,13 +14,13 @@ export default class ContentManage extends React.Component {
 		}
 	}
 	componentWillMount() {
-		let { hash } = window.location;
-		let index = hash.indexOf('?');
-		hash = hash.slice(0, index);
-		let arr = hash.split('/');
-		let current = arr[2];
-		let key = shareMap.find(item => item.pathname === current).key;
-		this.setState({ key })
+		// let { hash } = window.location;
+		// let index = hash.indexOf('?');
+		// hash = hash.slice(0, index);
+		// let arr = hash.split('/');
+		// let current = arr[2];
+		// let key = shareMap.find(item => item.pathname === current).key;
+		// this.setState({ key })
 	}
 
 	render() {

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Eagles.Interface.Core.Product;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.ProductAccess;
-using Eagles.Application.Model.AppModel.Product.GetProduct;
-using Eagles.Application.Model.AppModel.Product.GetProductDetail;
+using Eagles.Interface.DataAccess.ProductAccess;
+using Eagles.Application.Model.Product.GetProduct;
+using Eagles.Application.Model.Product.GetProductDetail;
 
 namespace Eagles.DomainService.Core.Product
 {

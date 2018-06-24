@@ -54,7 +54,7 @@ export default class Published extends React.Component {
 
 
 	componentWillMount() {
-		this.getCurrentList(this.getListConfig)
+		// this.getCurrentList(this.getListConfig)
 	}
 
 	// 选择分享时触发的改变

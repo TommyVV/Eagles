@@ -1,26 +1,27 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Transactions;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.ScoreAccess;
-using Eagles.Interface.Core.DataBase.ProductAccess;
-using Eagles.Application.Model.AppModel.Score.GetScoreRank;
-using Eagles.Application.Model.AppModel.Score.AppScoreExchange;
-using Eagles.Application.Model.AppModel.Score.GetScoreExchangeLs;
+using Eagles.Interface.DataAccess.ScoreAccess;
+using Eagles.Interface.DataAccess.ProductAccess;
+using Eagles.Application.Model.Score.GetScoreRank;
+using Eagles.Application.Model.Score.AppScoreExchange;
+using Eagles.Application.Model.Score.GetScoreExchangeLs;
 using DomainModel = Eagles.DomainService.Model;
-using System;
 
 namespace Eagles.DomainService.Core.Score
 {
     public class ScoreHandler : IScoreHandler
     {
         private readonly IScoreAccess iScoreAccess;
-        private readonly IProductAccess productAccess;
+        private readonly IProductAccess iproductAccess;
         private readonly IUtil util;
 
-        public ScoreHandler(IScoreAccess iScoreAccess, IUtil util)
+        public ScoreHandler(IScoreAccess iScoreAccess, IProductAccess iproductAccess, IUtil util)
         {
             this.iScoreAccess = iScoreAccess;
+            this.iproductAccess = iproductAccess;
             this.util = util;
         }
 
@@ -45,11 +46,12 @@ namespace Eagles.DomainService.Core.Score
                 throw new TransactionException("用户不存在");
             }
             //查询商品
-            var productInfo = productAccess.GetProductDetail(request.ProductId);
+            var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if(productInfo == null)
             {
                 response.ErrorCode = "96";
                 response.Message = "商品信息不存在";
+                return response;
             }
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分

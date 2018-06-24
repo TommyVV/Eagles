@@ -41,17 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityTaskHandler.cs" />
-    <Compile Include="ColumnHandler.cs" />
-    <Compile Include="ExercisesHandler.cs" />
+    <Compile Include="ModuleHandler.cs" />
+    <Compile Include="TestPaperHandler.cs" />
     <Compile Include="GoodsHandler.cs" />
     <Compile Include="AuditHandler.cs" />
     <Compile Include="MenusHandler.cs" />
     <Compile Include="NewsHandler.cs" />
     <Compile Include="OrderHandler.cs" />
     <Compile Include="OrganizationHandler.cs" />
-    <Compile Include="PartyMemberHandler.cs" />
+    <Compile Include="UserHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\TestHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Model\Eagles.Application.Model.csproj">

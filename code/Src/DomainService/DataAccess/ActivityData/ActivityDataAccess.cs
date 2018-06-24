@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.Enum;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
+using Eagles.Application.Model.Enums;
+using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
 {
@@ -20,12 +20,14 @@ namespace Ealges.DomianService.DataAccess.ActivityData
 
         public int CreateActivity(Eagles.DomainService.Model.Activity.TbActivity reqActivity)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_activity (ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
+            return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status) 
-value (@ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
+value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
 @AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status)",
                 new
                 {
+                    OrgId = reqActivity.OrgId,
+                    BranchId = reqActivity.BranchId,
                     ActivityName = reqActivity.ActivityName,
                     HtmlContent = reqActivity.HtmlContent,
                     BeginTime = reqActivity.BeginTime,

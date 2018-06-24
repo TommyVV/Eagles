@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model.Activity.CreateActivity;
+using Eagles.Application.Model.Activity.EditActivityComment;
+using Eagles.Application.Model.Activity.EditActivityComplete;
+using Eagles.Application.Model.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.Activity.EditActivityJoin;
+using Eagles.Application.Model.Activity.EditActivityReview;
+using Eagles.Application.Model.Activity.GetActivity;
+using Eagles.Application.Model.Activity.GetActivityComment;
+using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Base;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
-using Eagles.Interface.Core.DataBase.ActivityAccess;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.AppModel.Activity.CreateActivity;
-using Eagles.Application.Model.AppModel.Activity.EditActivityJoin;
-using Eagles.Application.Model.AppModel.Activity.EditActivityReview;
-using Eagles.Application.Model.AppModel.Activity.EditActivityComplete;
-using Eagles.Application.Model.AppModel.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.AppModel.Activity.EditActivityComment;
-using Eagles.Application.Model.AppModel.Activity.GetActivity;
-using Eagles.Application.Model.AppModel.Activity.GetActivityDetail;
-using Eagles.Application.Model.AppModel.Activity.GetActivityComment;
+using Eagles.Interface.DataAccess.ActivityAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Activity
@@ -46,6 +46,8 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "用户不存在");
             }
             var act = new DomainModel.Activity.TbActivity();
+            act.OrgId = tokens.OrgId;
+            act.BranchId = tokens.BranchId;
             act.ActivityName = request.ActivityName;
             act.ActivityType = request.ActivityType;
             act.BeginTime = request.ActivityBeginDate;
@@ -55,11 +57,11 @@ namespace Eagles.DomainService.Core.Activity
             act.ToUserId = request.ActivityToUserId; //活动负责人
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
+            act.TestId = request.TestId;
             act.MaxCount = 0;
-            act.TestId = 0;
             act.MaxUser = 99;
             act.ImageUrl = "";
-            if (0 == userInfo.IsLeader)
+            if (1 == userInfo.IsLeader)
                 act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
             else
                 act.Status = -1; //2:下级发起任务;上级审核任务是否允许开始

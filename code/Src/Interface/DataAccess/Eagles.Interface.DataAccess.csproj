@@ -40,10 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityAccess\IActivityAccess.cs" />
     <Compile Include="AppModule\IAppModuleDA.cs" />
     <Compile Include="Menu\IMenuDataAccess.cs" />
     <Compile Include="NewsDa\INewsDa.cs" />
+    <Compile Include="ProductAccess\IProductAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreAccess\IScoreAccess.cs" />
+    <Compile Include="ScrollAccess\IScrollAccess.cs" />
+    <Compile Include="TaskAccess\ITaskAccess.cs" />
+    <Compile Include="UserArticle\IArticleDataAccess.cs" />
+    <Compile Include="UserInfo\IUserInfo.cs" />
     <Compile Include="Util\IUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +61,10 @@
     <ProjectReference Include="..\..\DomainService\Model\Eagles.DomainService.Model.csproj">
       <Project>{843F8547-B8A7-4FB7-8B57-27937BC3CBEE}</Project>
       <Name>Eagles.DomainService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Host\Model\Eagles.Application.Model.csproj">
+      <Project>{3DE06D44-2860-4A92-9FDD-1529093CC970}</Project>
+      <Name>Eagles.Application.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

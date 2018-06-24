@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using Eagles.Base.DataBase;
-using Eagles.Interface.Core.DataBase.UserInfo;
+using Eagles.Interface.DataAccess.UserInfo;
 
 namespace Ealges.DomianService.DataAccess.UserInfo
 {
