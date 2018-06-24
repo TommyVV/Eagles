@@ -263,6 +263,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\ScrollController.cs" />
+    <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TestPaperController.cs" />
     <Compile Include="Controllers\UserCommentController.cs" />

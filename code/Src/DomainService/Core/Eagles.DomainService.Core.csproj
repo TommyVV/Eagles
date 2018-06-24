@@ -64,6 +64,7 @@
     <Compile Include="Product\ProductHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />
     <Compile Include="Scroll\ScrollHandler.cs" />
+    <Compile Include="Study\StudyHandler.cs" />
     <Compile Include="Task\TaskHandler.cs" />
     <Compile Include="Activity\ActivityHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

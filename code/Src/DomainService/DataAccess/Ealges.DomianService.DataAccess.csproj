@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreData\ScoreDataAccess.cs" />
     <Compile Include="ScrollData\ScrollDataAccess.cs" />
+    <Compile Include="Study\StudyDataAccess.cs" />
     <Compile Include="TaskData\TaskDataAccess.cs" />
     <Compile Include="UserArticle\ArticleDataAccess.cs" />
     <Compile Include="UserInfo\UserDataAccess.cs" />

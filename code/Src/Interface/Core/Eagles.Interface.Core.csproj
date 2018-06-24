@@ -49,6 +49,7 @@
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />
     <Compile Include="Scroll\IScrollHandler.cs" />
+    <Compile Include="Study\IStudyHandler.cs" />
     <Compile Include="Task\ITaskHandler.cs" />
     <Compile Include="ITestDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
