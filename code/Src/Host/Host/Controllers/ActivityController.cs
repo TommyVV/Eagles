@@ -1,12 +1,10 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Activity.CreateActivity;
-using Eagles.Application.Model.Activity.EditActivityComment;
 using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.GetActivity;
-using Eagles.Application.Model.Activity.GetActivityComment;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Interface.Core.Activity;
 
