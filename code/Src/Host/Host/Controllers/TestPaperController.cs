@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Http;
-using Eagles.Application.Model.News.GetModuleNews;
-using Eagles.Application.Model.News.GetNewsDetail;
+using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetNewsTest;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
@@ -9,69 +8,34 @@ using Eagles.Interface.Core.News;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// NewsController
+    /// TestPaperController
     /// </summary>
-    [ValidServiceToken]
-    public class NewsController : ApiController
+    public class TestPaperController: ApiController
     {
         private INewsHandler newsHandler;
 
-        /// <summary>
-        /// NewsController
-        /// </summary>
-        /// <param name="newsHandler"></param>
-        public NewsController(INewsHandler newsHandler)
+        public TestPaperController(INewsHandler newsHandler)
         {
             this.newsHandler = newsHandler;
         }
 
-        /// <summary>
-        /// 获取模块内的新闻列表
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
-        {
-            try
-            {
-                return newsHandler.GetModuleNews(request);
-            }
-            catch (TransactionException e)
-            {
-                return new GetModuleNewsResponse()
-                {
-                    ErrorCode = e.ErrorCode,
-                    Message = e.Message
-                };
-                
-            }
-            catch (Exception e)
-            {
-                return new GetModuleNewsResponse()
-                {
-                    ErrorCode = "99",
-                    Message = "系统错误"
-                };
-            }
-            
-        }
+
 
         /// <summary>
-        /// 新闻详情查询
+        /// 获取新闻试卷
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
+        public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
         {
             try
             {
-                return newsHandler.GetNewsDetail(request);
+                return newsHandler.GetNewsTest(request);
             }
             catch (TransactionException e)
             {
-                return new GetNewsDetailResponse()
+                return new GetNewsTestResponse()
                 {
                     ErrorCode = e.ErrorCode,
                     Message = e.Message
@@ -80,7 +44,7 @@ namespace Eagles.Application.Host.Controllers
             }
             catch (Exception e)
             {
-                return new GetNewsDetailResponse()
+                return new GetNewsTestResponse()
                 {
                     ErrorCode = "99",
                     Message = "系统错误"
@@ -89,6 +53,36 @@ namespace Eagles.Application.Host.Controllers
 
         }
 
-       
+        /// <summary>
+        /// 用户试卷回答接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public CompleteTestResponse TestAnswer(CompleteTestRequest request)
+        {
+            try
+            {
+                return newsHandler.CompleteTest(request);
+            }
+            catch (TransactionException e)
+            {
+                return new CompleteTestResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+
+            }
+            catch (Exception e)
+            {
+                return new CompleteTestResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
+
+        }
     }
 }

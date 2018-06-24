@@ -51,16 +51,7 @@ namespace Eagles.Application.Host.Controllers
             return activityHandler.GetActivityDetail(request);
         }
 
-        /// <summary>
-        /// 活动回复查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
-        {
-            return activityHandler.GetActivityComment(request);
-        }
+        
 
         /// <summary>
         /// 活动发布
@@ -73,16 +64,7 @@ namespace Eagles.Application.Host.Controllers
             return activityHandler.CreateActivity(request);
         }
 
-        /// <summary>
-        /// 活动评论接口
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
-        {
-            return activityHandler.EditActivityComment(request);
-        }
+        
 
         /// <summary>
         /// 活动完成接口
