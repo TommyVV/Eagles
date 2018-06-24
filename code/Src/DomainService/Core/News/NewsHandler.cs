@@ -228,20 +228,19 @@ namespace Eagles.DomainService.Core.News
 
             //查询正确答案
             var rightAnswer = newsDa.GetTestRightAnswer(request.TestId);
-
             //匹配正确答案
-            request.TestList.ForEach(x =>
-            {
-                var answer = new AppAnswer()
+
+            var answerList = request.TestList;
+            
+            int i = 0;
+            answerList.ForEach(x =>
                 {
-                    QuestionId = x.QuestionId,
-                    //AnswerId = x.AnswerId,
-                    //Answer = x.Answer,
-                    //AnswerType = x.AnswerType,
-                    //IsRight = x.IsRight,
-                    //ImageUrl = x.ImageUrl
-                };
-            });
+                    var score = rightAnswer.Find(y => x.AnswerId == y.AnswerId);
+                    if (score != null && 1 == score.IsRight)
+                        i++;
+                }
+            );
+            testScore = questionSocre * i; //每题分数*答对数量=答题分数
 
             #region //插入TB_USER_TEST
             var userTest = new TbUserTest()
@@ -257,16 +256,24 @@ namespace Eagles.DomainService.Core.News
             };
             newsDa.CreateUserTest(userTest);
             #endregion
-            
+
             //如果及格
             if (testScore >= passScore)
             {
-                //插入TB_REWARD_SCORE
-                util.CreateScoreLs(tokens.UserId, passAwardScore, "50", "完成试卷奖励积分", userInfo.Score);
+
+                //插入user_score_trace
+                var userScoreTrace = new TbUserScoreTrace();
+                userScoreTrace.UserId = tokens.UserId;
+                userScoreTrace.CreateTime = DateTime.Now;
+                userScoreTrace.Score = passAwardScore;
+                userScoreTrace.RewardsType = "50";
+                userScoreTrace.Comment = "完成试卷奖励积分";
+                userScoreTrace.OriScore = userInfo.Score;
+                util.CreateScoreLs(userScoreTrace);
                 //修改用户积分
                 util.EditUserScore(tokens.UserId, passAwardScore);
             }
-            
+
             return response;
         }
     }
