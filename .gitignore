@@ -48,7 +48,7 @@ ReleasedUnitTestAssemblies/
 *.pidb
 *.log
 *.scc
-
+*.dll
 # Visual C++ cache files
 ipch/
 *.aps
