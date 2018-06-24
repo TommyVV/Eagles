@@ -51,6 +51,7 @@
     <Compile Include="Study\StudyDataAccess.cs" />
     <Compile Include="TaskData\TaskDataAccess.cs" />
     <Compile Include="UserArticle\ArticleDataAccess.cs" />
+    <Compile Include="UserCommentData\UserCommentDataAccess.cs" />
     <Compile Include="UserInfo\UserDataAccess.cs" />
     <Compile Include="UserMessage\UserMessageDataAccess.cs" />
     <Compile Include="Util\Util.cs" />

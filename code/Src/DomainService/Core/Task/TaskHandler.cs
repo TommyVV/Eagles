@@ -7,12 +7,10 @@ using Eagles.Interface.DataAccess.Util;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Task.CreateTask;
 using Eagles.Application.Model.Task.EditTaskAccept;
-using Eagles.Application.Model.Task.EditTaskComment;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.GetTask;
-using Eagles.Application.Model.Task.GetTaskComment;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
 using Eagles.Application.Model.Task.RemoveTaskStep;
@@ -170,31 +168,7 @@ namespace Eagles.DomainService.Core.Task
             }
             return response;
         }
-
-        public EditTaskCommentResponse EditTaskComment(EditTaskCommentRequest request)
-        {
-            var response = new EditTaskCommentResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-            var result = iTaskAccess.EditTaskComment(tokens.OrgId, request.TaskId, request.CommentUserId, request.Comment);
-            if (result > 0)
-            {
-                response.ErrorCode = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.ErrorCode = "96";
-                response.Message = "失败";
-            }
-            return response;
-        }
-
+        
         public EditTaskStepResponse EditTaskStep(EditTaskStepRequest request)
         {
             var response = new EditTaskStepResponse();
@@ -301,30 +275,6 @@ namespace Eagles.DomainService.Core.Task
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
-                response.ErrorCode = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.ErrorCode = "96";
-                response.Message = "查无数据";
-            }
-            return response;
-        }
-
-        public GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request)
-        {
-            var response = new GetTaskCommentResponse();
-            var result = iTaskAccess.GetTaskComment(request.TaskId);
-            response.TaskCommentList = result?.Select(x => new Comment
-            {
-                CommentId = x.MessageId,
-                CommentTime = x.ReviewTime,
-                CommentUserId = x.UserId,
-                CommentContent = x.Content
-            }).ToList();
-            if (result != null && result.Count > 0)
-            {
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

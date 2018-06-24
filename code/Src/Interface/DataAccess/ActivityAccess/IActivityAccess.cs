@@ -16,14 +16,10 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         bool EditActivityComplete(int activityId);
         
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
-
-        int EditActivityComment(int orgId, int activityId, int userId, string content);
-
+        
         List<DomainService.Model.Activity.TbActivity> GetActivity(int activityType);
 
         DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId);
-
-        List<DomainService.Model.User.TbUserComment> GetActivityComment(int activityId);
         
     }
 }

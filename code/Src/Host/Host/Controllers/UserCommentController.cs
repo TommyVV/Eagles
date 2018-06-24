@@ -1,17 +1,21 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model.Activity.EditActivityComment;
-using Eagles.Application.Model.Activity.GetActivityComment;
-using Eagles.Interface.Core.Activity;
+using Eagles.Application.Model.UserComment.AuditUserComment;
+using Eagles.Interface.Core.UserComment;
+using Eagles.Application.Model.UserComment.EditUserComment;
+using Eagles.Application.Model.UserComment.GetUserComment;
 
 namespace Eagles.Application.Host.Controllers
 {
+    /// <summary>
+    /// 评论接口
+    /// </summary>
     public class UserCommentController: ApiController
     {
-        private IActivityHandler activityHandler;
-
-        public UserCommentController(IActivityHandler activityHandler)
+        private IUserCommentHandler userCommentHandler;
+        
+        public UserCommentController(IUserCommentHandler userCommentHandler)
         {
-            this.activityHandler = activityHandler;
+            this.userCommentHandler = userCommentHandler;
         }
 
         /// <summary>
@@ -20,9 +24,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
+        public GetUserCommentResponse GetUserComment(GetUserCommentRequest request)
         {
-            return activityHandler.GetActivityComment(request);
+            return userCommentHandler.GetUserComment(request);
         }
 
         /// <summary>
@@ -31,9 +35,20 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
+        public EditUserCommentResponse EditActivityComment(EditUserCommentRequest request)
         {
-            return activityHandler.EditActivityComment(request);
+            return userCommentHandler.EditUserComment(request);
+        }
+
+        /// <summary>
+        /// 评论审核接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public AuditUserCommentResponse AuditUserComment(AuditUserCommentRequest request)
+        {
+            return userCommentHandler.AuditUserComment(request);
         }
     }
 }

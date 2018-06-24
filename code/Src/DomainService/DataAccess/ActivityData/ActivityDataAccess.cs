@@ -105,20 +105,6 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             };
             return dbManager.ExcutedByTransaction(commands);
         }
-
-        public int EditActivityComment(int orgId, int activityId, int userId, string content)
-        {
-            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,ReviewStatus) value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
-                new
-                {
-                    OrgId = orgId,
-                    Id = activityId,
-                    Content = content,
-                    Createtime = DateTime.Now,
-                    UserId = userId,
-                    ReviewStatus = "-1"
-                });
-        }
         
         public int EditActivityFeedBack(int activityId, string content, List<Attachment> attachList)
         {
@@ -182,13 +168,6 @@ where ActivityId = @ActivityId ",
                 return result.FirstOrDefault();
             }
             return null;
-        }
-
-        public List<Eagles.DomainService.Model.User.TbUserComment> GetActivityComment(int activityId)
-        {
-            return dbManager.Query<Eagles.DomainService.Model.User.TbUserComment>(
-                @"select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id",
-                new {Id = activityId});
         }
     }
 }

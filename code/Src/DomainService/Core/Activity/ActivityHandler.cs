@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Eagles.Application.Model.Activity.CreateActivity;
-using Eagles.Application.Model.Activity.EditActivityComment;
-using Eagles.Application.Model.Activity.EditActivityComplete;
-using Eagles.Application.Model.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.Activity.EditActivityJoin;
-using Eagles.Application.Model.Activity.EditActivityReview;
-using Eagles.Application.Model.Activity.GetActivity;
-using Eagles.Application.Model.Activity.GetActivityComment;
-using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Base;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Application.Model.Common;
 using Eagles.Interface.DataAccess.ActivityAccess;
-using DomainModel = Eagles.DomainService.Model;
+using Eagles.Application.Model.Activity.CreateActivity;
+using Eagles.Application.Model.Activity.EditActivityComplete;
+using Eagles.Application.Model.Activity.EditActivityFeedBack;
+using Eagles.Application.Model.Activity.EditActivityJoin;
+using Eagles.Application.Model.Activity.EditActivityReview;
+using Eagles.Application.Model.Activity.GetActivity;
+using Eagles.Application.Model.Activity.GetActivityDetail;
+using Eagles.DomainService.Model.Activity;
 
 namespace Eagles.DomainService.Core.Activity
 {
@@ -45,7 +43,7 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            var act = new DomainModel.Activity.TbActivity();
+            var act = new TbActivity();
             act.OrgId = tokens.OrgId;
             act.BranchId = tokens.BranchId;
             act.ActivityName = request.ActivityName;
@@ -195,30 +193,6 @@ namespace Eagles.DomainService.Core.Activity
             return response;
         }
 
-        public EditActivityCommentResponse EditActivityComment(EditActivityCommentRequest request)
-        {
-            var response = new EditActivityCommentResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-            var result = iActivityAccess.EditActivityComment(tokens.OrgId, request.ActivityId, request.CommentUserId, request.Comment);
-            if (result > 0)
-            {
-                response.ErrorCode = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.ErrorCode = "96";
-                response.Message = "失败";
-            }
-            return response;
-        }
-
         public GetActivityResponse GetActivity(GetActivityRequest request)
         {
             var response = new GetActivityResponse();
@@ -267,30 +241,6 @@ namespace Eagles.DomainService.Core.Activity
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
-                response.ErrorCode = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.ErrorCode = "96";
-                response.Message = "查无数据";
-            }
-            return response;
-        }
-
-        public GetActivityCommentResponse GetActivityComment(GetActivityCommentRequest request)
-        {
-            var response = new GetActivityCommentResponse();
-            var result = iActivityAccess.GetActivityComment(request.ActivityId);
-            response.ActivityCommentList = result?.Select(x => new Comment
-            {
-                CommentId = x.MessageId,
-                CommentTime = x.ReviewTime,
-                CommentUserId = x.UserId,
-                CommentContent = x.Content
-            }).ToList();
-            if (result != null && result.Count > 0)
-            {
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

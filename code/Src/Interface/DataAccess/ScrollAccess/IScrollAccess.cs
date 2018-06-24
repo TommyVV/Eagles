@@ -5,7 +5,7 @@ namespace Eagles.Interface.DataAccess.ScrollAccess
 {
     public interface IScrollAccess : IInterfaceBase
     {
-        List<DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg();
+        List<DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg(string pageType);
 
         List<DomainService.Model.News.TbSystemNews> GetScrollNews();
     }

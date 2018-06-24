@@ -3,6 +3,7 @@ using Eagles.Interface.DataAccess.Util;
 using Eagles.Application.Model.Scroll.GetScrollImg;
 using Eagles.Application.Model.Scroll.GetScrollNew;
 using Eagles.Interface.DataAccess.ScrollAccess;
+using System.Linq;
 
 namespace Eagles.DomainService.Core.Scroll
 {
@@ -27,11 +28,10 @@ namespace Eagles.DomainService.Core.Scroll
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iScrollAccess.GetScrollImg();
+            var result = iScrollAccess.GetScrollImg(request.PageType);
             if (result != null && result.Count > 0)
             {
-                foreach (var image in result)
-                    response.RollImgUrl.Add(image.ImageUrl);
+                response.RollImgUrl = result?.Select(x => x.ImageUrl).ToList();
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

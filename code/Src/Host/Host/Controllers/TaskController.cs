@@ -1,12 +1,10 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model.Task.CreateTask;
 using Eagles.Application.Model.Task.EditTaskAccept;
-using Eagles.Application.Model.Task.EditTaskComment;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.GetTask;
-using Eagles.Application.Model.Task.GetTaskComment;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
 using Eagles.Application.Model.Task.RemoveTaskStep;
@@ -96,17 +94,6 @@ namespace Eagles.Application.Host.Controllers
         {
             return taskHandler.EditTaskFeedBack(request);
         }
-
-        /// <summary>
-        /// 任务评论接口
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public EditTaskCommentResponse EditTaskComment(EditTaskCommentRequest request)
-        {
-            return taskHandler.EditTaskComment(request);
-        }
         
         /// <summary>
         /// 任务查询
@@ -139,17 +126,6 @@ namespace Eagles.Application.Host.Controllers
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
             return taskHandler.GetTaskStep(request);
-        }
-
-        /// <summary>
-        /// 任务评论查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetTaskCommentResponse GetTaskComment(GetTaskCommentRequest request)
-        {
-            return taskHandler.GetTaskComment(request);
         }
     }
 }

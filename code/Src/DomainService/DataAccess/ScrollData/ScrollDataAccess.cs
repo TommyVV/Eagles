@@ -13,9 +13,9 @@ namespace Ealges.DomianService.DataAccess.ScrollData
             this.dbManager = dbManager;
         }
 
-        public List<Eagles.DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg()
+        public List<Eagles.DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg(string pageType)
         {
-            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.TbScrollImage>("select OrgId,PageType,ImageUrl from eagles.tb_scroll_image ", new { });
+            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.TbScrollImage>("select OrgId,PageType,ImageUrl from eagles.tb_scroll_image where PageType = @PageType", new {PageType = pageType});
         }
 
         public List<Eagles.DomainService.Model.News.TbSystemNews> GetScrollNews()
