@@ -135,7 +135,13 @@ namespace Eagles.DomainService.Model.User
         /// 用户id
         /// </summary>
         public int UserId { get; set; }
+        /// <summary>
+        /// 是否上级
+        /// </summary>
         public int IsLeader { get; set; }
+        /// <summary>
+        /// 用户积分
+        /// </summary>
         public int Score { get; set; }
     }
 }

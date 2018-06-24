@@ -1,15 +1,18 @@
 ﻿using Eagles.Base;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.UserInfo
 {
     public interface IUserInfoAccess : IInterfaceBase
     {
-        int EditUser(Application.Model.Common.UserInfo user);
+        int CreateUser(TbUserInfo userInfo);
 
-        DomainService.Model.User.TbUserInfo GetUserInfo(int userId);
+        int EditUser(TbUserInfo userInfo);
 
-        DomainService.Model.User.TbUserInfo GetLogin(int userId);
+        TbUserInfo GetUserInfo(int userId);
 
-        string InsertToken(int userId);
+        TbUserInfo GetLogin(int userId);
+
+        string InsertToken(TbUserToken userToken);
     }
 }

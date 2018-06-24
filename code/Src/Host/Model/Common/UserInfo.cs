@@ -141,5 +141,10 @@ namespace Eagles.Application.Model.Common
         /// 头像Url
         /// </summary>
         public string PhotoUrl { get; set; }
+
+        /// <summary>
+        /// 是否上级
+        /// </summary>
+        public int IsLeader { get; set; }
     }
 }

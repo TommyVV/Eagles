@@ -1,4 +1,4 @@
-﻿using Eagles.Base.DataBase;
+﻿using System;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
@@ -7,15 +7,14 @@ using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.UserInfo;
-using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.User
 {
     public class UserHandler : IUserHandler
     {
         private readonly IUtil util;
-        private readonly IDbManager dbManager;
         private readonly IDesEncrypt desEncrypt;
         private readonly IUserInfoAccess userInfoAccess;
 
@@ -30,7 +29,32 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new EditUserResponse();
             var reqUserInfo = request.RequestUserInfo;
-            var result = userInfoAccess.EditUser(reqUserInfo);
+            var userInfo = new TbUserInfo()
+            {
+                UserId = reqUserInfo.UserId,
+                Name = reqUserInfo.Name,
+                Sex = reqUserInfo.Gender,
+                Birthday = reqUserInfo.Birth,
+                Phone = reqUserInfo.Telphone,
+                Address = reqUserInfo.Address,
+                OriginAddress = reqUserInfo.CensusAddress,
+                Ethnic = reqUserInfo.Ethnic,
+                BranchId = reqUserInfo.Branch,
+                Dept = reqUserInfo.Department,
+                Education = reqUserInfo.Education,
+                School = reqUserInfo.School,
+                IdNumber = reqUserInfo.IdCard,
+                Company = reqUserInfo.Employer,
+                Origin = reqUserInfo.Origin,
+                PreMemberTime = reqUserInfo.PrepPartyDate,
+                MemberTime = reqUserInfo.FormalPartyDat,
+                MemberType = reqUserInfo.PartyType,
+                Provice = reqUserInfo.Provice,
+                City = reqUserInfo.City,
+                District = reqUserInfo.District,
+                PhotoUrl = reqUserInfo.PhotoUrl
+            };
+            var result = userInfoAccess.EditUser(userInfo);
             if (result > 0)
             {
                 response.ErrorCode = "00";
@@ -99,7 +123,15 @@ namespace Eagles.DomainService.Core.User
                     return response;
                 }
                 //登录新增Token
-                response.Token = userInfoAccess.InsertToken(userId);
+                var userToken = new TbUserToken()
+                {
+                    UserId = userId,
+                    Token = Guid.NewGuid().ToString(),
+                    CreateTime = DateTime.Now,
+                    ExpireTime = DateTime.Now.AddMinutes(30),
+                    TokenType = 0
+                };
+                response.Token = userInfoAccess.InsertToken(userToken);
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
                 response.ErrorCode = "00";
@@ -116,25 +148,10 @@ namespace Eagles.DomainService.Core.User
         public RegisterResponse Register(RegisterRequest request)
         {
             var response = new RegisterResponse();
+            var userInfo = new TbUserInfo();
             var phone = request.Phone;
             var code = request.SmsCode;
-            var codeResult = dbManager.Query<DomainModel.Sms.TbValidCode>("select Phone,TbValidCode,ExpireTime FROM eagles.tb_validcode where phone = @phone ", phone);
-
-            var result = dbManager.Query<DomainModel.User.TbUserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", phone);
-            if (result != null && result.Count > 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "账号已存在";
-            }
-            else
-            {
-                var expireTime = codeResult[0].ExpireTime;
-                if (code != codeResult[0].Code)
-                {
-                    
-                }
-                
-            }
+            var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
         
