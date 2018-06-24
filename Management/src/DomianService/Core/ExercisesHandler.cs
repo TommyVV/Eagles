@@ -20,6 +20,12 @@ namespace Eagles.DomainService.Core
 
         private readonly IConfigurationManager configurationManager;
 
+        public ExercisesHandler(IExercisesDataAccess dataAccess, IConfigurationManager configurationManager)
+        {
+            this.dataAccess = dataAccess;
+            this.configurationManager = configurationManager;
+        }
+
 
         /// <summary>
         /// 得到 题目详细信息。 包含所以选项信息id

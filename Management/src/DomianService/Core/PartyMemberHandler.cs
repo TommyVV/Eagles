@@ -22,6 +22,13 @@ namespace Eagles.DomainService.Core
 
         private readonly IConfigurationManager configurationManager;
 
+        public PartyMemberHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager)
+        {
+            this.dataAccess = dataAccess;
+            OrgdataAccess = orgdataAccess;
+            this.configurationManager = configurationManager;
+        }
+
         public GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request)
         {
 

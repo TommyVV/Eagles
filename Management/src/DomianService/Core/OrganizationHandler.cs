@@ -17,6 +17,11 @@ namespace Eagles.DomainService.Core
     {
         private readonly IOrganizationDataAccess dataAccess;
 
+        public OrganizationHandler(IOrganizationDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess;
+        }
+
         public ResponseBase EditOrganization(EditOrganizationRequset requset)
         {
             var response = new ResponseBase
