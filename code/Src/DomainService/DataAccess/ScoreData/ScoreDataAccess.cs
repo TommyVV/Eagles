@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
-using Eagles.Application.Model.Common;
-using DomainModel = Eagles.DomainService.Model;
 using Eagles.Base.DataBase.Modle;
+using Eagles.DomainService.Model.Order;
+using Eagles.DomainService.Model.User;
+using Eagles.Application.Model.Common;
 using Eagles.Interface.DataAccess.ScoreAccess;
 
 namespace Ealges.DomianService.DataAccess.ScoreData
@@ -16,9 +17,8 @@ namespace Ealges.DomianService.DataAccess.ScoreData
             this.dbManager = dbManager;
         }
 
-        public bool AppScoreExchange(DomainModel.Order.TbOrder order, int userScore)
+        public bool AppScoreExchange(TbOrder order, int userScore)
         {
-
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
@@ -37,10 +37,9 @@ Address = order.Address, Province = order.Province, City = order.City, District 
             return dbManager.ExcutedByTransaction(commands);
         }
 
-        public List<ScoreExchange> GetScoreExchangeLs(int userId)
+        public List<TbUserScoreTrace> GetScoreExchangeLs(int userId)
         {
-            dbManager.Query<DomainModel.Product.TbProduct>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
-            throw new System.NotImplementedException();
+            return dbManager.Query<TbUserScoreTrace>("select OrgId, UserId, TraceId, CreateTime, Score, RewardsType, Comment, OriScore from eagles.tb_user_score_trace where UserId = @UserId ", new { UserId =userId});
         }
 
         public List<UserRank> GetUserRank()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 using Eagles.Base;
+using Eagles.DomainService.Model.User;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.Interface.DataAccess.ScoreAccess
@@ -9,7 +10,7 @@ namespace Eagles.Interface.DataAccess.ScoreAccess
     {
         bool AppScoreExchange(DomainModel.Order.TbOrder order, int userScore);
 
-        List<ScoreExchange> GetScoreExchangeLs(int userId);
+        List<TbUserScoreTrace> GetScoreExchangeLs(int userId);
 
         List<UserRank> GetUserRank();
 

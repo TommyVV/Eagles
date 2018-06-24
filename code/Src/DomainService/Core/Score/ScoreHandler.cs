@@ -104,11 +104,11 @@ namespace Eagles.DomainService.Core.Score
             {
                 response.ScoreList = result?.Select(x => new Application.Model.Common.ScoreExchange()
                 {
-                    ProdName = x.ProdName,
-                    Score = x.ProdName,
-                    ExchangDate = x.ExchangDate,
-                    OrderId = x.OrderId,
-                    Address = x.Address
+                    Score = x.Score,
+                    CreateTime = x.CreateTime,
+                    RewardsType = x.RewardsType,
+                    Comment = x.Comment,
+                    OriScore = x.OriScore
                 }).ToList();
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
