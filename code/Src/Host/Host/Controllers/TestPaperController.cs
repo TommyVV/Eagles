@@ -59,7 +59,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompleteTestResponse TestAnswer(CompleteTestRequest request)
+        public CompleteTestResponse TestPaperAnswer(CompleteTestRequest request)
         {
             try
             {

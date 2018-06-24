@@ -90,36 +90,6 @@ namespace Eagles.Application.Host.Controllers
 
         }
 
-        /// <summary>
-        /// 获取新闻试卷
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
-        {
-            try
-            {
-                return newsHandler.GetNewsTest(request);
-            }
-            catch (TransactionException e)
-            {
-                return new GetNewsTestResponse()
-                {
-                    ErrorCode = e.ErrorCode,
-                    Message = e.Message
-                };
-
-            }
-            catch (Exception e)
-            {
-                return new GetNewsTestResponse()
-                {
-                    ErrorCode = "99",
-                    Message = "系统错误"
-                };
-            }
-
-        }
+       
     }
 }
