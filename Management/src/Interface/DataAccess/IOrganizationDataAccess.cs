@@ -3,7 +3,7 @@ using Eagles.Application.Model.Organization.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.Org;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface IOrganizationDataAccess : IInterfaceBase
     {
@@ -12,7 +12,6 @@ namespace Eagles.Interface.Core.DataBase
         int RemoveOrganization(RemoveOrganizationRequset requset);
         int EditOrganization(TbOrgInfo mod);
         int CreateOrganization(TbOrgInfo mod);
-     //   List<TB_USER_RELATIONSHIP> GetOrganizationList(List<Application.Model.PartyMember.Model.UserInfoDetails> list);
         List<TbOrgInfo> GetOrganizationList(List<int> list);
     }
 }

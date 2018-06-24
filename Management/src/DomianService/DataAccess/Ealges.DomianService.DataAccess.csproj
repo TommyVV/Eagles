@@ -44,11 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityTaskDataAccess.cs" />
+    <Compile Include="AuditDataAccess.cs" />
     <Compile Include="ColumnDataAccess.cs" />
     <Compile Include="TestPaperDataAccess.cs" />
     <Compile Include="GoodsDataAccess.cs" />
     <Compile Include="MenusDataAccess.cs" />
     <Compile Include="NewsDataAccess.cs" />
+    <Compile Include="OrderDataAccess.cs" />
     <Compile Include="OrganizationDataAccess.cs" />
     <Compile Include="PartyMemberDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

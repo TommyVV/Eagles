@@ -21,7 +21,7 @@ namespace Eagles.Application.Model.Audit.Model
         /// <summary>
         /// 发起人名字
         /// </summary>
-        public int UserName { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -33,5 +33,18 @@ namespace Eagles.Application.Model.Audit.Model
         /// 
         /// </summary>
         public AuditStatus AuditStatus { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 审核类型
+        ///00:文章
+        ///10:任务
+        ///20:活动
+        /// </summary>
+        public string NewsType { get; set; }
     }
 }

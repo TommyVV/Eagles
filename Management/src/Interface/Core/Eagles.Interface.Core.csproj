@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IActivityTaskHandler.cs" />
+    <Compile Include="IAuditHandler.cs" />
     <Compile Include="IModuleHandler.cs" />
     <Compile Include="ITestPaperHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />
     <Compile Include="INewsHandler.cs" />
+    <Compile Include="IOrderHandler.cs" />
     <Compile Include="IOrganizationHandler.cs" />
     <Compile Include="IUserHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

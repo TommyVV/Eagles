@@ -20,6 +20,6 @@ namespace Eagles.Application.Model.News.Requset
         /// <summary>
         /// 新闻类型
         /// </summary>
-        public NewsType NewsType { get; set; }
+        public int NewsType { get; set; }
     }
 }

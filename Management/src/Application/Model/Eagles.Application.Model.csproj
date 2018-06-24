@@ -50,8 +50,8 @@
     <Compile Include="ActivityTask\Response\GetActivityTaskDetailResponse.cs" />
     <Compile Include="ActivityTask\Response\GetActivityTaskResponse.cs" />
     <Compile Include="Audit\Model\Audit.cs" />
-    <Compile Include="Audit\Requset\EditAuditInfoRequset.cs" />
-    <Compile Include="Audit\Requset\GetAuditRequset.cs" />
+    <Compile Include="Audit\Requset\CreateAuditRequset.cs" />
+    <Compile Include="Audit\Requset\GetAuditRequest.cs" />
     <Compile Include="Audit\Response\GetAuditResponse.cs" />
     <Compile Include="AuthorityGroupSetUp\Model\AuthorityInfo.cs" />
     <Compile Include="AuthorityGroupSetUp\Requset\EditAuthorityGroupSetUpRequset.cs" />
@@ -84,12 +84,13 @@
     <Compile Include="Common\Task.cs" />
     <Compile Include="Common\UserInfo.cs" />
     <Compile Include="Common\UserRank.cs" />
+    <Compile Include="DeliverGoods\Model\AddressInfo.cs" />
     <Compile Include="DeliverGoods\Model\DeliverGoods.cs" />
     <Compile Include="DeliverGoods\Requset\EditDeliverGoodsRequest.cs" />
-    <Compile Include="DeliverGoods\Requset\GetDeliverGoodsDetailRequest.cs" />
+    <Compile Include="DeliverGoods\Requset\GetDeliverGoodsDetailRequset.cs" />
     <Compile Include="DeliverGoods\Requset\GetDeliverGoodsRequset.cs" />
     <Compile Include="DeliverGoods\Response\GetDeliverGoodsDetailResponse.cs" />
-    <Compile Include="DeliverGoods\Response\GetDeliverGoodsInfoResponse.cs" />
+    <Compile Include="DeliverGoods\Response\GetDeliverGoodsResponse.cs" />
     <Compile Include="Enums\ActivityTaskType.cs" />
     <Compile Include="Enums\AuditStatus.cs" />
     <Compile Include="Enums\CheckResult.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\MenuLevel.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
-    <Compile Include="Enums\NewsType.cs" />
     <Compile Include="Enums\OperationType.cs" />
     <Compile Include="Enums\Sex.cs" />
     <Compile Include="Enums\Status.cs" />

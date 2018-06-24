@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.DomainService.Model
+namespace Eagles.DomainService.Model.Org
 {
     /// <summary>
     /// TB_BRANCH

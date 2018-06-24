@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using Eagles.Application.Model.Goods.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.Product;
-using Eagles.Application.Model.Goods.Requset;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface IGoodsDataAccess : IInterfaceBase
     {

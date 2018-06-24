@@ -10,12 +10,9 @@ namespace Eagles.Application.Model.DeliverGoods.Response
     {
 
         /// <summary>
-        /// 总条数
+        /// 
         /// </summary>
-        public int TotalCount { get; set; }
-        /// <summary>
-        /// 集合
-        /// </summary>
-        public List<Model.DeliverGoods> List { get; set; }
+        public Model.DeliverGoods Info { get; set; }
+      
     }
 }

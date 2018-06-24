@@ -257,7 +257,9 @@
     <Compile Include="App_Start\ValidServiceToken.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\TestPaperController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
@@ -363,7 +365,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54671</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54671/</IISUrl>
+          <IISUrl>http://localhost:54671/swagger</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.Exercises;
-using Eagles.Application.Model.Exercises.Requset;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface ITestPaperDataAccess : IInterfaceBase
     {

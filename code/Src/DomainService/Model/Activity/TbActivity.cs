@@ -19,7 +19,7 @@ namespace Eagles.DomainService.Model.Activity
         /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
-        public ActivityTaskType ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
         /// <summary>
         /// 附件1
         /// </summary>

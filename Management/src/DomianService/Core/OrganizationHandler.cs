@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Organization.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
 using Eagles.DomainService.Model.Org;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
    public  class OrganizationHandler : IOrganizationHandler
     {
         private readonly IOrganizationDataAccess dataAccess;
+
+        public OrganizationHandler(IOrganizationDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess;
+        }
 
         public ResponseBase EditOrganization(EditOrganizationRequset requset)
         {

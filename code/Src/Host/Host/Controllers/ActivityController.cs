@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Activity.CreateActivity;
 using Eagles.Application.Model.Activity.EditActivityComment;
 using Eagles.Application.Model.Activity.EditActivityComplete;
@@ -89,7 +90,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditActivityCompleteResponse EditActivityComplete(EditActivityCompleteRequest request)
+        public ResponseBase EditActivityComplete(EditActivityCompleteRequest request)
         {
             return activityHandler.EditActivityComplete(request);
         }
@@ -100,7 +101,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditActivityFeedBackResponse EditActivityFeedBack(EditActivityFeedBackRequest request)
+        public ResponseBase EditActivityFeedBack(EditActivityFeedBackRequest request)
         {
             return activityHandler.EditActivityFeedBack(request);
         }

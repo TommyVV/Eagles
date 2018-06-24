@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetDeliverGoodsInfoRequest:RequestBase
+    public class GetDeliverGoodsDetailRequset : RequestBase
     {
         /// <summary>
         /// 订单主键

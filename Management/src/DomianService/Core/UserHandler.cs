@@ -10,7 +10,6 @@ using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
 using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
@@ -22,6 +21,13 @@ namespace Eagles.DomainService.Core
         private readonly IOrganizationDataAccess OrgdataAccess;
 
         private readonly IConfigurationManager configurationManager;
+
+        public UserHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager)
+        {
+            this.dataAccess = dataAccess;
+            OrgdataAccess = orgdataAccess;
+            this.configurationManager = configurationManager;
+        }
 
         public GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request)
         {

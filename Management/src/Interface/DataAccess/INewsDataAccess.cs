@@ -3,7 +3,7 @@ using Eagles.Application.Model.News.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.News;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface INewsDataAccess : IInterfaceBase
     {

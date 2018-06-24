@@ -8,7 +8,7 @@ using Eagles.Application.Model.Column.Response;
 using Eagles.Application.Model.Enums;
 using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {

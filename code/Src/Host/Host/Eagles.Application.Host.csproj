@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ScrollController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -272,7 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\DataBase.config" />
-    <Content Include="Configuration\Test.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />

@@ -27,7 +27,7 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         /// <summary>
         ///商品名
         /// </summary>
-        public List<string> GoodsName { get; set; }
+        public string GoodsName { get; set; }
 
         /// <summary>
         ///下单时间

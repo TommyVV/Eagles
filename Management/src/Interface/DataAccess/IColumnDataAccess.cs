@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.App;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface IColumnDataAccess: IInterfaceBase
     {

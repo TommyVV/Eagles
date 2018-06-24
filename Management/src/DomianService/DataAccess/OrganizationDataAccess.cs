@@ -4,7 +4,7 @@ using Dapper;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Org;
-using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {
@@ -107,8 +107,7 @@ WHERE `OrgId` = @OrgId;
         public int CreateOrganization(TbOrgInfo mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_org_info`
-(`OrgId`,
-`OrgName`,
+(`OrgName`,
 `Province`,
 `City`,
 `District`,
@@ -118,8 +117,7 @@ WHERE `OrgId` = @OrgId;
 `OperId`,
 `Logo`)
 VALUES
-(@OrgId,
-@OrgName,
+(@OrgName,
 @Province,
 @City,
 @District,
