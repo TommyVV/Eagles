@@ -4,87 +4,87 @@
         <name>Eagles.Application.Model</name>
     </assembly>
     <members>
-        <member name="T:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel">
+        <member name="T:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.EndTime">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.EndTime">
             <summary>
             结束时间
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.BeginTime">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.BeginTime">
             <summary>
             开始时间
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Content">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Content">
             <summary>
             内容 json格式 图片 文字
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ExamType">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.ExamType">
             <summary>
             考试类型
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.MaxPartakePeople">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.MaxPartakePeople">
             <summary>
             最大参与人数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.EverybodyPeople">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.EverybodyPeople">
             <summary>
             每人参与人数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsComment">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.IsComment">
             <summary>
             是否允许评论
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsVote">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.IsVote">
             <summary>
             是否允许评论 允许投票是习题 选择才能生效
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ExampleId">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.ExampleId">
             <summary>
             习题id
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Enclosure">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Enclosure">
             <summary>
             附件 json格式
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach1">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Attach1">
             <summary>
             附件1
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach2">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Attach2">
             <summary>
             附件2
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach3">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Attach3">
             <summary>
             附件3
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.Attach4">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Attach4">
             <summary>
             附件4
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.ImageUrl">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.ImageUrl">
             <summary>
             图片
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskDetailModel.IsPublic">
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.IsPublic">
             <summary>
             是否公开
             </summary>
@@ -134,7 +134,7 @@
             修改/新增 任务活动实体类
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.Info">
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.DetailInfo">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
             </summary>
@@ -154,7 +154,7 @@
             获取详情 任务/活动
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskDetailRequset.ActivityTaskId">
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskDetailRequset.ActivityId">
             <summary>
             主键
             </summary>
@@ -169,7 +169,7 @@
             作者id
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskRequset.ActivityTaskName">
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.GetActivityTaskRequset.ActivityName">
             <summary>
             任务/活动 名字
             </summary>
@@ -179,7 +179,7 @@
             删除 活动任务 
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ActivityTask.Requset.RemoveActivityTaskRequset.ActivityTaskId">
+        <member name="P:Eagles.Application.Model.ActivityTask.Requset.RemoveActivityTaskRequset.ActivityId">
             <summary>
             主键
             </summary>

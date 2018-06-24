@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IActivityTaskHandler.cs" />
+    <Compile Include="IAuditHandler.cs" />
     <Compile Include="IModuleHandler.cs" />
     <Compile Include="ITestPaperHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
