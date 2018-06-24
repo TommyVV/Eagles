@@ -387,7 +387,7 @@ const FormMap = Form.create({
   }
 })(Base);
 
-class GoodsDetail extends Component {
+class SendDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -450,4 +450,4 @@ class GoodsDetail extends Component {
   }
 }
 
-export default GoodsDetail;
+export default SendDetail;

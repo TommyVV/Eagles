@@ -39,6 +39,8 @@ import IntergralList from "../container/PC/Intergral";
 import IntergralDetail from "../container/PC/Intergral/Detail";
 import GoodsList from "../container/PC/Goods";
 import GoodsDetail from "../container/PC/Goods/Detail";
+import SendList from "../container/PC/Send";
+import SendDetail from "../container/PC/Send/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -70,6 +72,9 @@ class RouteMap extends Component {
           {/* 商品 */}
           <route path="/goodslist" component={GoodsList} />
           <route path="/goods/detail(/:id)" component={GoodsDetail} />
+          {/* 发货 */}
+          <route path="/sendlist" component={SendList} />
+          <route path="/send/detail(/:id)" component={SendDetail} />
 
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}

@@ -58,5 +58,15 @@ const navMap = [
     key: "9",
     sub: "sub4"
   },
+  {
+    pathname: "#/sendlist",
+    key: "10",
+    sub: "sub5"
+  },
+  {
+    pathname: "#/send/detail",
+    key: "11",
+    sub: "sub5"
+  },
 ];
 export default navMap;

@@ -156,6 +156,28 @@ export default class App extends React.Component {
                 商品详情
               </Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub5"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>商品发货信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="10"
+                onClick={e => hashHistory.replace("/sendlist")}
+              >
+                商品发货列表
+              </Menu.Item>
+              <Menu.Item
+                key="11"
+                onClick={e => hashHistory.replace("/goods/detail")}
+              >
+                商品发货详情
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 260, minHeight: "100vh" }}>
