@@ -64,7 +64,6 @@
     <Compile Include="Activity\EditActivityJoin\EditActivityJoinRequest.cs" />
     <Compile Include="Activity\EditActivityJoin\EditActivityJoinResponse.cs" />
     <Compile Include="Enums\ActionEnum.cs" />
-    <Compile Include="Enums\ActivityEnum.cs" />
     <Compile Include="Activity\GetActivityDetail\GetActivityDetailRequest.cs" />
     <Compile Include="Activity\GetActivityDetail\GetActivityDetailResponse.cs" />
     <Compile Include="Activity\GetActivity\GetActivityRequest.cs" />
@@ -149,7 +148,7 @@
     <Compile Include="Common\Task.cs" />
     <Compile Include="Common\UserInfo.cs" />
     <Compile Include="Common\UserRank.cs" />
-    <Compile Include="Enums\ActivityTaskType.cs" />
+    <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\AuditStatus.cs" />
     <Compile Include="Enums\ExercisesType.cs" />
     <Compile Include="Enums\GoodsStatus.cs" />

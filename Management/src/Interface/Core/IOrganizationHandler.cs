@@ -10,7 +10,7 @@ using Eagles.Base;
 
 namespace Eagles.Interface.Core
 {
-    public interface IOrganizationHandler : IInterfaceBase
+    public interface IOrganizationHandler:IInterfaceBase
     {
         ResponseBase EditOrganization(EditOrganizationRequset requset);
 

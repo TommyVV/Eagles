@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Enums
     /// <summary>
     /// 
     /// </summary>
-    public enum ActivityTaskType
+    public enum ActivityType
     {
         /// <summary>
         /// 报名

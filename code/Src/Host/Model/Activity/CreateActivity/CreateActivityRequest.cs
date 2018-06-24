@@ -13,7 +13,7 @@ namespace Eagles.Application.Model.Activity.CreateActivity
         /// <summary>
         /// 活动类型;0:报名;1:投票;2:问卷调查
         /// </summary>
-        public ActivityTaskType ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
 
         /// <summary>
         /// 活动名称

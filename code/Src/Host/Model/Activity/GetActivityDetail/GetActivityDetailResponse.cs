@@ -36,12 +36,12 @@ namespace Eagles.Application.Model.Activity.GetActivityDetail
         /// <summary>
         /// 发起用户编号
         /// </summary>
-        public string InitiateEncryptUserid { get; set; }
+        public string InitiateEncryptUserId { get; set; }
 
         /// <summary>
         /// 接受用户编号
         /// </summary>
-        public string AcceptEncryptUserid { get; set; }
+        public string AcceptEncryptUserId { get; set; }
 
         /// <summary>
         /// 附件集合

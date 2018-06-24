@@ -21,7 +21,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动类型
         /// </summary>
-        public ActivityTaskType ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
 
         /// <summary>
         /// 活动内容
