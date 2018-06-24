@@ -17,7 +17,7 @@ namespace Eagles.Application.Model.Task.CreateTask
         /// <summary>
         /// 任务发起人
         /// </summary>
-        public int TaskFromUser { get; set; }
+        public string TaskFromUser { get; set; }
         
         /// <summary>
         /// 任务负责人

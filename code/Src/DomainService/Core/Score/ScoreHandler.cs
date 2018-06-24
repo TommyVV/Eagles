@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Transactions;
+using Eagles.Base;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ScoreAccess;
@@ -99,6 +100,10 @@ namespace Eagles.DomainService.Core.Score
                 response.Message = "获取Token失败";
                 return response;
             }
+            if (util.CheckAppId(request.AppId))
+                throw new Base.TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new Base.TransactionException("01", "appId 不允许为空");
             var result = iScoreAccess.GetScoreExchangeLs(tokens.UserId);
             if (result != null && result.Count > 0)
             {
@@ -124,13 +129,10 @@ namespace Eagles.DomainService.Core.Score
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
         {
             var response = new GetScoreRankResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new Base.TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new Base.TransactionException("01", "appId 不允许为空");
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)
             {

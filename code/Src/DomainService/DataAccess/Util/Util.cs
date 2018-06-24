@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Eagles.Base.DataBase;
+using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.Util;
 
@@ -17,9 +17,8 @@ namespace Ealges.DomianService.DataAccess.Util
 
         public TbUserToken GetUserId(string token,int tokenType)
         {
-            var tokens = dbManager.Query<TbUserToken>(
-                @" select OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token where Token=@Token AND TokenType=@TokenType",
-                new {Token = token, TokenType = tokenType});
+            var tokens = dbManager.Query<TbUserToken>(@" select OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token 
+where Token=@Token AND TokenType=@TokenType", new {Token = token, TokenType = tokenType});
             if (tokens != null && tokens.Any())
             {
                 return tokens.FirstOrDefault();
@@ -29,7 +28,7 @@ namespace Ealges.DomianService.DataAccess.Util
         
         public TbUserInfo GetUserInfo(int userId)
         {
-            var user = dbManager.Query<Eagles.DomainService.Model.User.TbUserInfo>(@" select IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
+            var user = dbManager.Query<TbUserInfo>(@" select IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
             if (user != null && user.Any())
             {
                 return user.FirstOrDefault();
@@ -46,6 +45,17 @@ value (@UserId,@CreateTime,@Score,@RewardsType,@Comment,@OriScore)", userScoreTr
         public int EditUserScore(int userId, int score)
         {
             return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score + @Score where UserId = @UserId", new {UserId = userId, Score = score});
+        }
+
+        public bool CheckAppId(int appId)
+        {
+            var user = dbManager.Query<TbOrgInfo>(@" select OrgId, OrgName, Province, City, District, Address, CreateTime, EditTime, OperId, Logo from eagles.tb_user_info 
+where OrgId = @OrgId", new { OrgId = appId });
+            if (user != null && user.Any())
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

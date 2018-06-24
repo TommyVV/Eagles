@@ -1,4 +1,5 @@
 ﻿using Eagles.Base;
+using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.Util
@@ -34,5 +35,12 @@ namespace Eagles.Interface.DataAccess.Util
         /// <param name="score"></param>
         /// <returns></returns>
         int EditUserScore(int userId, int score);
+
+        /// <summary>
+        /// 校验AppId是否存在
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        bool CheckAppId(int appId);
     }
 }

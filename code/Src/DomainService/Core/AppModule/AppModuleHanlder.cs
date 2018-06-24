@@ -4,6 +4,7 @@ using Eagles.Base;
 using Eagles.Interface.Core.AppModule;
 using Eagles.Interface.DataAccess.AppModule;
 using Eagles.Interface.DataAccess.NewsDa;
+using Eagles.Interface.DataAccess.Util;
 using Module = Eagles.Application.Model.Module.Module;
 
 namespace Eagles.DomainService.Core.AppModule
@@ -11,22 +12,22 @@ namespace Eagles.DomainService.Core.AppModule
     public class AppModuleHanlder: IAppModuleHanlder
     {
         private readonly IAppModuleDA appModule;
-
+        private readonly IUtil util;
         private readonly INewsDa newsDa;
 
-        public AppModuleHanlder(IAppModuleDA appModule, INewsDa newsDa)
+        public AppModuleHanlder(IAppModuleDA appModule, IUtil util, INewsDa newsDa)
         {
             this.appModule = appModule;
+            this.util = util;
             this.newsDa = newsDa;
         }
 
         public AppModuleResponse Process(GetAppModuleRequest request)
         {
-            if (request.AppId<=0)
-            {
-                throw new TransactionException("01","appId 不允许为空");
-            }
-
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             if (request.ModuleType<0)
             {
                 throw new TransactionException("01", "module Type不允许为空");

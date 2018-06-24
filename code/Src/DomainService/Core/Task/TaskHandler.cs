@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
@@ -52,7 +53,7 @@ namespace Eagles.DomainService.Core.Task
             task.BeginTime = request.TaskBeginDate;
             task.EndTime = request.TaskEndDate;
             task.TaskContent = request.TaskContent;
-            task.FromUser = request.TaskFromUser;
+            task.FromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //解密任务发起人
             task.CanComment = request.CanComment;
             task.IsPublic = request.IsPublic;
             if (0 == userInfo.IsLeader)
@@ -221,13 +222,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskResponse GetTask(GetTaskRequest request)
         {
             var response = new GetTaskResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var userId = desEncrypt.Decrypt(request.EncryptUserid);
             var result = iTaskAccess.GetTask(userId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
@@ -254,13 +250,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
         {
             var response = new GetTaskDetailResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var result = iTaskAccess.GetTaskDetail(request.TaskId);
             if (result != null)
             {
@@ -269,7 +260,7 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = result.FromUser;
+                response.TaskFounder = desEncrypt.Encrypt(result.FromUser.ToString()); //加密返回前端
                 response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
@@ -289,6 +280,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
             var response = new GetTaskStepResponse();
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var result = iTaskAccess.GetTaskStep(request.TaskId);
             response.StepList = result?.Select(x => new Step
             {

@@ -23,12 +23,12 @@ namespace Eagles.Application.Model.Activity.CreateActivity
         /// <summary>
         /// 活动发起人
         /// </summary>
-        public int ActivityFromUser { get; set; }
+        public string ActivityFromUser { get; set; }
 
         /// <summary>
         /// 活动负责人
         /// </summary>
-        public int ActivityToUserId { get; set; }
+        public string ActivityToUserId { get; set; }
 
         /// <summary>
         /// 活动起始日期

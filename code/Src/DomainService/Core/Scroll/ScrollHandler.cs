@@ -1,9 +1,10 @@
-﻿using Eagles.Interface.Core.Scroll;
+﻿using System.Linq;
+using Eagles.Base;
+using Eagles.Interface.Core.Scroll;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.DataAccess.ScrollAccess;
 using Eagles.Application.Model.Scroll.GetScrollImg;
 using Eagles.Application.Model.Scroll.GetScrollNew;
-using Eagles.Interface.DataAccess.ScrollAccess;
-using System.Linq;
 
 namespace Eagles.DomainService.Core.Scroll
 {
@@ -21,13 +22,10 @@ namespace Eagles.DomainService.Core.Scroll
         public GetScrollImgResponse GetScrollImg(GetScrollImgRequest request)
         {
             var response = new GetScrollImgResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var result = iScrollAccess.GetScrollImg(request.PageType);
             if (result != null && result.Count > 0)
             {
@@ -46,13 +44,10 @@ namespace Eagles.DomainService.Core.Scroll
         public GetScrollNewsResponse GetScrollNews(GetScrollNewsRequest request)
         {
             var response = new GetScrollNewsResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var result = iScrollAccess.GetScrollNews();
             if (result != null && result.Count > 0)
             {

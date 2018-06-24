@@ -22,7 +22,7 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
         /// <summary>
         /// 任务创建者
         /// </summary>
-        public int TaskFounder { get; set; }
+        public string TaskFounder { get; set; }
         
         /// <summary>
         /// 任务内容

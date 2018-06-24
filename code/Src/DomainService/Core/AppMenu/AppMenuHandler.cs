@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Eagles.Application.Model.GetMenu;
+using Eagles.Base;
 using Eagles.Interface.Core.AppMenu;
 using Eagles.Interface.DataAccess.Menu;
 using Eagles.Interface.DataAccess.Util;
@@ -22,21 +23,16 @@ namespace Eagles.DomainService.Core.AppMenu
         public GetMenuResponse Process(GetMenuRequest request)
         {
             var response = new GetMenuResponse();
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             if (request.AppId <= 0)
-            {
-                response.ErrorCode = "99";
-                response.Message = "appId 不合法";
-            }
-
-            //todo valid appId
-
+                throw new TransactionException("01", "appId 不允许为空");
             var menus = menuDataAccess.GetAppMenus(request.AppId);
 
             if (menus == null || !menus.Any())
             {
                 return response;
             }
-
             var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.GetMenu.AppMenu
             {
                 MenuId = x.MenuId,

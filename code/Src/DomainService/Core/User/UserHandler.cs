@@ -7,6 +7,7 @@ using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
+using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.UserInfo;
 
@@ -28,6 +29,13 @@ namespace Eagles.DomainService.Core.User
         public EditUserResponse EditUser(EditUserRequest request)
         {
             var response = new EditUserResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.ErrorCode = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
             var reqUserInfo = request.RequestUserInfo;
             var userInfo = new TbUserInfo()
             {
@@ -78,6 +86,10 @@ namespace Eagles.DomainService.Core.User
                 response.Message = "获取Token失败";
                 return response;
             }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             var userInfo = new UserInfo();
             userInfo.Name = result.Name;

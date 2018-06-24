@@ -55,11 +55,10 @@ namespace Eagles.DomainService.Core.News
 
         public GetNewsResponse GetUserArticle(GetNewsRequest request)
         {
-            //check token 
-            if (string.IsNullOrEmpty(request.Token))
-            {
-                //to do error 
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -82,14 +81,12 @@ namespace Eagles.DomainService.Core.News
         public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
         {
             var response = new GetModuleNewsResponse();
-            if (request.AppId < 0)
-            {
-                throw new TransactionException("01","appid 非法");
-            }
             if (request.ModuleId < 0)
-            {
                 throw new TransactionException("01", "moduleId 非法");
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
             if (result != null && result.Count > 0)
             {
@@ -114,14 +111,12 @@ namespace Eagles.DomainService.Core.News
         public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
         {
             var response = new GetNewsDetailResponse();
-            if (request.AppId < 0)
-            {
-                throw new TransactionException("01", "appid 非法");
-            }
             if (request.NewsId < 0)
-            {
                 throw new TransactionException("01", "NewsId 非法");
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             if (result != null)
             {
@@ -154,14 +149,12 @@ namespace Eagles.DomainService.Core.News
         public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
         {
             var response = new GetNewsTestResponse();
-            if (request.AppId < 0)
-            {
-                throw new TransactionException("01", "appid 非法");
-            }
             if (request.TestId < 0)
-            {
                 throw new TransactionException("01", "TestId 非法");
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "appId 不允许为空");
             var resultTest = newsDa.GetNewsTest(request.TestId);
             if (resultTest == null || !resultTest.Any())
             {

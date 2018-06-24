@@ -13,6 +13,7 @@ using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
+using Eagles.Base.DesEncrypt;
 using Eagles.DomainService.Model.Activity;
 
 namespace Eagles.DomainService.Core.Activity
@@ -20,11 +21,13 @@ namespace Eagles.DomainService.Core.Activity
     public class ActivityHandler : IActivityHandler
     {
         private readonly IActivityAccess iActivityAccess;
+        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public ActivityHandler(IActivityAccess iActivityAccess, IUtil util)
+        public ActivityHandler(IActivityAccess iActivityAccess, IDesEncrypt desEncrypt, IUtil util)
         {
             this.iActivityAccess = iActivityAccess;
+            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -51,8 +54,8 @@ namespace Eagles.DomainService.Core.Activity
             act.BeginTime = request.ActivityBeginDate;
             act.EndTime = request.ActivityEndDate;
             act.HtmlContent = request.ActivityContent;
-            act.FromUser = request.ActivityFromUser; //活动发起人
-            act.ToUserId = request.ActivityToUserId; //活动负责人
+            act.FromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //解密活动发起人
+            act.ToUserId = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //解密活动负责人
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
             act.TestId = request.TestId;
@@ -196,13 +199,8 @@ namespace Eagles.DomainService.Core.Activity
         public GetActivityResponse GetActivity(GetActivityRequest request)
         {
             var response = new GetActivityResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.ErrorCode = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var result = iActivityAccess.GetActivity(Convert.ToInt32(request.ActivityType));
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
@@ -229,6 +227,8 @@ namespace Eagles.DomainService.Core.Activity
         public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
         {
             var response = new GetActivityDetailResponse();
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var result = iActivityAccess.GetActivityDetail(request.ActivityId);
             if (result != null)
             {

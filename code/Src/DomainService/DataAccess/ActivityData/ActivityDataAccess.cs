@@ -57,7 +57,6 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
         
         public int EditActivityJoin(int orgId, int branchId, int activityId, int userId)
         {
-
             return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)",
                 new
                 {
@@ -76,11 +75,11 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             {
                 case ActivityTypeEnum.Audit:
                     //上级审核任务
-                    result = dbManager.Excuted("update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId ", new { ActivityId = activityId }); //3-审核通过
+                    result = dbManager.Excuted("update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = -1 ", new { ActivityId = activityId }); //3-审核通过
                     break;                
                 case ActivityTypeEnum.Apply:
                     //下级申请完成任务
-                    result = dbManager.Excuted("update eagles.tb_activity set Status = 1 where ActivityId = @ActivityId ", new { ActivityId = activityId }); //2-完成任务待审核
+                    result = dbManager.Excuted("update eagles.tb_activity set Status = 1 where ActivityId = @ActivityId and Status = 0 ", new { ActivityId = activityId }); //2-完成任务待审核
                     break;
             }
             return result;
@@ -94,7 +93,7 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             {
                 new TransactionCommand()
                 {
-                    CommandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId ",
+                    CommandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1 ",
                     Parameter =   new { ActivityId = activityId }
                 },
                 new TransactionCommand()
@@ -133,9 +132,8 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
                     attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            return dbManager.Excuted(@"update eagles.tb_user_activity set UserFeedBack = @UserFeedBack, 
-AttachType1 = @AttachType1, AttachType2 = @AttachType2, AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4
-where ActivityId = @ActivityId ",
+            return dbManager.Excuted(@"update eagles.tb_user_activity set UserFeedBack = @UserFeedBack, AttachType1 = @AttachType1, AttachType2 = @AttachType2, 
+AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4 where ActivityId = @ActivityId ",
                 new
                 {
                     UserFeedBack = content,

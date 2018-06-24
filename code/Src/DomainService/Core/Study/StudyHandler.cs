@@ -75,10 +75,10 @@ namespace Eagles.DomainService.Core.Study
                 response.Message = "获取Token失败";
                 return response;
             }
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             if (request.AppId <= 0)
-            {
                 throw new TransactionException("01", "appId 不允许为空");
-            }
             var result = iStudyAccess.GetStudyTime(tokens.UserId, request.NewsId, request.ModuleId);
             if (result != null)
             {
