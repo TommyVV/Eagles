@@ -23,13 +23,9 @@ namespace Eagles.Interface.DataAccess.Util
         /// <summary>
         /// 用户积分流水
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="score"></param>
-        /// <param name="rewardsType"></param>
-        /// <param name="comment"></param>
-        /// <param name="oriScore"></param>
+        /// <param name="userScoreTrace"></param>
         /// <returns></returns>
-        int CreateScoreLs(int userId, int score, string rewardsType, string comment, int oriScore);
+        int CreateScoreLs(TbUserScoreTrace userScoreTrace);
 
         /// <summary>
         /// 更新用户积分

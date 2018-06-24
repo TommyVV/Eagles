@@ -16,7 +16,7 @@ namespace Eagles.Interface.DataAccess.NewsDa
 
         TbTestPaper GetTestPaperInfo(int testId);
 
-        List<TbQuestEx> GetTestRightAnswer(int testId);
+        List<TbQuestAnswer> GetTestRightAnswer(int testId);
 
         int CreateUserTest(TbUserTest userTest);
     }

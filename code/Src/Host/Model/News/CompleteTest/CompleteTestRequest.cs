@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.News.GetNewsTest;
+using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.News.CompleteTest
 {
@@ -19,8 +19,8 @@ namespace Eagles.Application.Model.News.CompleteTest
         public int UseTime { get; set; }
 
         /// <summary>
-        /// 试卷List
+        /// 答案List
         /// </summary>
-        public List<AppQuestion> TestList { get; set; }
+        public List<AnswerClass> TestList { get; set; }
     }
 }

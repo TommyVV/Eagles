@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNewsDetail;
 using Eagles.Application.Model.News.GetNewsTest;
@@ -118,7 +119,37 @@ namespace Eagles.Application.Host.Controllers
                     Message = "系统错误"
                 };
             }
+        }
 
+        /// <summary>
+        /// 获取新闻试卷
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public CompleteTestResponse CompleteTest(CompleteTestRequest request)
+        {
+            try
+            {
+                return newsHandler.CompleteTest(request);
+            }
+            catch (TransactionException e)
+            {
+                return new CompleteTestResponse()
+                {
+                    ErrorCode = e.ErrorCode,
+                    Message = e.Message
+                };
+
+            }
+            catch (Exception e)
+            {
+                return new CompleteTestResponse()
+                {
+                    ErrorCode = "99",
+                    Message = "系统错误"
+                };
+            }
         }
     }
 }

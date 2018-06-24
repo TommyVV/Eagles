@@ -37,18 +37,10 @@ namespace Ealges.DomianService.DataAccess.Util
             return null;
         }
 
-        public int CreateScoreLs(int userId, int score, string rewardsType, string comment, int oriScore)
+        public int CreateScoreLs(TbUserScoreTrace userScoreTrace)
         {
-            return dbManager.Excuted("insert into eagles.tb_user_score_trace(UserId,CreateTime,Score,RewardsType,Comment,OriScore) value (@UserId,@CreateTime,@Score,@RewardsType,@Comment,@OriScore)",
-                new
-                {
-                    UserId = userId,
-                    CreateTime = DateTime.Now,
-                    Score = score,
-                    RewardsType = rewardsType,
-                    Comment = comment,
-                    OriScore = oriScore
-                });
+            return dbManager.Excuted(@"insert into eagles.tb_user_score_trace(UserId,CreateTime,Score,RewardsType,Comment,OriScore) 
+value (@UserId,@CreateTime,@Score,@RewardsType,@Comment,@OriScore)", userScoreTrace);
         }
 
         public int EditUserScore(int userId, int score)
