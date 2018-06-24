@@ -68,6 +68,7 @@
     <Compile Include="Activity\ActivityHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestHandler.cs" />
+    <Compile Include="UserMessage\UserMessageHandler.cs" />
     <Compile Include="User\UserHandler.cs" />
   </ItemGroup>
   <ItemGroup>

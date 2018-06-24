@@ -98,6 +98,7 @@
     <Compile Include="Product\GetProduct\GetProductResponse.cs" />
     <Compile Include="Score\GetScoreRank\GetScoreRankRequest.cs" />
     <Compile Include="Score\GetScoreRank\GetScoreRankResponse.cs" />
+    <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
     <Compile Include="User\Login\LoginRequest.cs" />
     <Compile Include="User\Login\LoginResponse.cs" />
     <Compile Include="GetMenu\GetMenuRequest.cs" />
