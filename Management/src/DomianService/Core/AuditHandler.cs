@@ -69,7 +69,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-            List<TbReview> list = dataAccess.GetAuditList(requset) ?? new List<TbReview>();
+            List<TbReview> list = dataAccess.GetAuditList(requset);
 
             if (list.Count == 0) throw new Exception("无数据");
 

@@ -18,10 +18,9 @@ namespace Eagles.DomainService.Core
 
         private readonly ITestPaperDataAccess dataAccess;
 
-        public ExercisesHandler(IExercisesDataAccess dataAccess, IConfigurationManager configurationManager)
+        public TestPaperHandler(ITestPaperDataAccess dataAccess)
         {
             this.dataAccess = dataAccess;
-            this.configurationManager = configurationManager;
         }
 
 
