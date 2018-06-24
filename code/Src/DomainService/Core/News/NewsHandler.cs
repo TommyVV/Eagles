@@ -5,6 +5,7 @@ using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
+using Eagles.Interface.DataAccess.UserArticle;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -12,7 +13,6 @@ using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetNewsDetail;
 using Eagles.Application.Model.News.GetNewsTest;
 using Eagles.DomainService.Model.User;
-using Eagles.Interface.DataAccess.UserArticle;
 
 namespace Eagles.DomainService.Core.News
 {
@@ -228,10 +228,8 @@ namespace Eagles.DomainService.Core.News
 
             //查询正确答案
             var rightAnswer = newsDa.GetTestRightAnswer(request.TestId);
-            //匹配正确答案
-
             var answerList = request.TestList;
-            
+            //匹配正确答案
             int i = 0;
             answerList.ForEach(x =>
                 {
@@ -242,7 +240,7 @@ namespace Eagles.DomainService.Core.News
             );
             testScore = questionSocre * i; //每题分数*答对数量=答题分数
 
-            #region //插入TB_USER_TEST
+            //插入tb_user_test
             var userTest = new TbUserTest()
             {
                 OrgId = tokens.OrgId,
@@ -255,25 +253,32 @@ namespace Eagles.DomainService.Core.News
                 UseTime = request.UseTime
             };
             newsDa.CreateUserTest(userTest);
-            #endregion
-
-            //如果及格
+            
+            //如果及格,给用户奖励积分
             if (testScore >= passScore)
             {
 
                 //插入user_score_trace
-                var userScoreTrace = new TbUserScoreTrace();
-                userScoreTrace.UserId = tokens.UserId;
-                userScoreTrace.CreateTime = DateTime.Now;
-                userScoreTrace.Score = passAwardScore;
-                userScoreTrace.RewardsType = "50";
-                userScoreTrace.Comment = "完成试卷奖励积分";
-                userScoreTrace.OriScore = userInfo.Score;
+                var userScoreTrace = new TbUserScoreTrace()
+                {
+                    UserId = tokens.UserId,
+                    CreateTime = DateTime.Now,
+                    Score = passAwardScore,
+                    RewardsType = "50",
+                    Comment = "完成试卷奖励积分",
+                    OriScore = userInfo.Score,
+                };
                 util.CreateScoreLs(userScoreTrace);
                 //修改用户积分
                 util.EditUserScore(tokens.UserId, passAwardScore);
             }
-
+            else
+            {
+                response.ErrorCode = "00";
+                response.Message = "答题成功但未及格";
+            }
+            response.ErrorCode = "00";
+            response.Message = "答题成功并奖励积分";
             return response;
         }
     }

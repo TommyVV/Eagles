@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.News;
@@ -51,18 +50,6 @@ where b.TestId = @TestId and a.IsRight = 1; ", new { TestId = testId });
 
         public int CreateUserTest(TbUserTest userTest)
         {
-            //return dbManager.Excuted(@"insert into eagles.tb_user_test (OrgId,BranchId,UserId,TestId,Score,TotalScore,CreateTime,UseTime) value (@OrgId,@BranchId,@UserId,@TestId,@Score,@TotalScore,@CreateTime,@UseTime) ",
-            //    new
-            //    {
-            //        OrgId = userTest.OrgId,
-            //        BranchId = userTest.BranchId,
-            //        UserId = userTest.UserId,
-            //        TestId = userTest.TestId,
-            //        Score = userTest.Score,
-            //        TotalScore = userTest.TotalScore,
-            //        CreateTime = DateTime.Now,
-            //        UseTime = userTest.UseTime
-            //    });
             return dbManager.Excuted(@"insert into eagles.tb_user_test (OrgId,BranchId,UserId,TestId,Score,TotalScore,CreateTime,UseTime) 
 value (@OrgId,@BranchId,@UserId,@TestId,@Score,@TotalScore,@CreateTime,@UseTime) ", userTest);
         }
