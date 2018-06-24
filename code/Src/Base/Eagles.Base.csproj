@@ -101,6 +101,8 @@
     <Compile Include="IInterfaceBase.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\Implement\Logger.cs" />
+    <Compile Include="Md5Helper\IMd5Helper.cs" />
+    <Compile Include="Md5Helper\Implement\Md5Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Json\IJsonSerialize.cs" />
     <Compile Include="Json\Implement\JsonSerialize.cs" />

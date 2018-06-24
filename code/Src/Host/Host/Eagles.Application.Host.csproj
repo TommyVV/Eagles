@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ScrollController.cs" />
     <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestPaperController.cs" />
     <Compile Include="Controllers\UserCommentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
