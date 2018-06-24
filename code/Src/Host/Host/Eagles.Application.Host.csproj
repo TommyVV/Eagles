@@ -272,7 +272,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\DataBase.config" />
-    <Content Include="Configuration\Test.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />

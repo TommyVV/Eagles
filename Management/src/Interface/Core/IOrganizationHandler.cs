@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
+using Eagles.Base;
 
 namespace Eagles.Interface.Core
 {
-    public interface IOrganizationHandler
+    public interface IOrganizationHandler:IInterfaceBase
     {
         ResponseBase EditOrganization(EditOrganizationRequset requset);
 

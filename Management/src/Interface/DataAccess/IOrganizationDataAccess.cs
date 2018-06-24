@@ -3,7 +3,7 @@ using Eagles.Application.Model.Organization.Requset;
 using Eagles.Base;
 using Eagles.DomainService.Model.Org;
 
-namespace Eagles.Interface.Core.DataBase
+namespace Eagles.Interface.DataAccess
 {
     public interface IOrganizationDataAccess : IInterfaceBase
     {

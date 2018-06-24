@@ -10,12 +10,18 @@ using Eagles.Application.Model.Organization.Response;
 using Eagles.DomainService.Model.Org;
 using Eagles.Interface.Core;
 using Eagles.Interface.Core.DataBase;
+using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
    public  class OrganizationHandler : IOrganizationHandler
     {
         private readonly IOrganizationDataAccess dataAccess;
+
+        public OrganizationHandler(IOrganizationDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess;
+        }
 
         public ResponseBase EditOrganization(EditOrganizationRequset requset)
         {
