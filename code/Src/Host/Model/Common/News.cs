@@ -18,14 +18,30 @@ namespace Eagles.Application.Model.Common
         public string Title { get; set; }
 
         /// <summary>
-        /// 新闻文章内容
+        /// 文章时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 文章内容
+        /// </summary>
+        public string NewsContent { get; set; }
         
         /// <summary>
         /// 缩略图
         /// </summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 是否是外部链接
+        /// </summary>
+        public bool IsExternal { get; set; }
+
+        /// <summary>
+        /// 外部链接地址
+        /// </summary>
+        public string ExternalUrl { get; set; }
+
         
     }
 }

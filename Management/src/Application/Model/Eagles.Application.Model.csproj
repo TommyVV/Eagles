@@ -205,10 +205,10 @@
     <Compile Include="RequestBase.cs" />
     <Compile Include="ResponseBase.cs" />
     <Compile Include="RollImage\Model\RollImageInfo.cs" />
-    <Compile Include="RollImage\Requset\EditRollImageInfoRequest.cs" />
+    <Compile Include="RollImage\Requset\EditRollImageRequest.cs" />
     <Compile Include="RollImage\Requset\GetRollImageDetailRequset.cs" />
     <Compile Include="RollImage\Requset\GetRollImageRequest.cs" />
-    <Compile Include="RollImage\Requset\RemoveRollImageInfoRequset.cs" />
+    <Compile Include="RollImage\Requset\RemoveRollImageRequset.cs" />
     <Compile Include="RollImage\Response\GetRollImageDetailResponse.cs" />
     <Compile Include="RollImage\Response\GetRollImageResponse.cs" />
     <Compile Include="ScoreRank\Model\ScoreRankInfo.cs" />

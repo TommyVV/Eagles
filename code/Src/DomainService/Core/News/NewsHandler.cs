@@ -95,7 +95,9 @@ namespace Eagles.DomainService.Core.News
                     NewsId = x.NewsId,
                     Title = x.Title,
                     CreateTime = x.CreateTime,
-                    ImageUrl = x.ImageUrl
+                    ImageUrl = x.ImageUrl,
+                    ExternalUrl = x.ExternalUrl,
+                    IsExternal = x.IsExternal==1
                 }).ToList();
                 response.Code = "00";
                 response.Message = "查询成功";

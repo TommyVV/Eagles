@@ -32,7 +32,7 @@ namespace Ealges.DomianService.DataAccess.UserArticle
             ReviewId,
             OrgReview,
             BranchReview
-                FROM eagles.tb_user_news where userId=@userId", new { userId = new[] { userId } });
+                FROM eagles.tb_user_news where userId=@userId", new { userId =  userId  });
             return userNews;
 
         }

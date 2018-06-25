@@ -8,6 +8,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public Model.AuthorityGroup List { get; set; }
+        public Model.AuthorityGroup Info { get; set; }
     }
 }
