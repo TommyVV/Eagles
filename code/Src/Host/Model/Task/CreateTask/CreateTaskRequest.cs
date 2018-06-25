@@ -22,7 +22,7 @@ namespace Eagles.Application.Model.Task.CreateTask
         /// <summary>
         /// 任务负责人
         /// </summary>
-        public int TaskToUserId { get; set; }
+        public string TaskToUserId { get; set; }
 
         /// <summary>
         /// 任务开始时间

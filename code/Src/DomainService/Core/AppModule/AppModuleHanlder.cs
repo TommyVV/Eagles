@@ -22,10 +22,10 @@ namespace Eagles.DomainService.Core.AppModule
 
         public AppModuleResponse Process(GetAppModuleRequest request)
         {
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             if (request.ModuleType<0)
             {
                 throw new TransactionException("01", "module Type不允许为空");

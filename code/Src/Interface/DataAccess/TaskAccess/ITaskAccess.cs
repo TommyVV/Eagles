@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Enums;
 using Eagles.Base;
+using Eagles.Application.Model.Enums;
+using Eagles.Application.Model.Common;
+using Eagles.DomainService.Model.Task;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.TaskAccess
 {
     public interface ITaskAccess : IInterfaceBase
     {
-        int CreateTask(int orgId, int branchId, int toUserId, DomainService.Model.Task.TbTask task);
+        int CreateTask(int orgId, int branchId, int toUserId, TbTask task);
 
         int RemoveTaskStep(int taskId, int stepId);
 
@@ -21,13 +23,15 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
         
-        List<Eagles.DomainService.Model.Task.TbTask> GetTask(string userId);
+        List<TbTask> GetTask(string userId);
 
-        DomainService.Model.Task.TbTask GetTaskDetail(int taskId);
+        TbTask GetTaskDetail(int taskId);
 
-        List<DomainService.Model.User.TbUserComment> GetTaskComment(int taskId);
+        List<TbUserComment> GetTaskComment(int taskId);
 
-        List<DomainService.Model.User.TbUserTaskStep> GetTaskStep(int taskId);
+        List<TbUserTaskStep> GetTaskStep(int taskId);
+
+        TbUserTask GetUserTask(int taskId);
         
     }
 }

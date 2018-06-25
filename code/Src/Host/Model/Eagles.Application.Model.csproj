@@ -48,6 +48,7 @@
     <Compile Include="Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="Activity\EditActivityReview\EditActivityReviewResponse.cs" />
     <Compile Include="Common\AnswerClass.cs" />
+    <Compile Include="Common\UserRelationship.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
     <Compile Include="News\GetNewsTest\AppAnswer.cs" />
@@ -106,6 +107,8 @@
     <Compile Include="UserComment\EditUserComment\EditUserCommentRequest.cs" />
     <Compile Include="UserComment\EditUserComment\EditUserCommentResponse.cs" />
     <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
+    <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />
+    <Compile Include="User\GetUserRelationship\GetUserRelationshipResponse.cs" />
     <Compile Include="User\Login\LoginRequest.cs" />
     <Compile Include="User\Login\LoginResponse.cs" />
     <Compile Include="GetMenu\GetMenuRequest.cs" />

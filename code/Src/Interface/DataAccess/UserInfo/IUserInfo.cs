@@ -13,6 +13,6 @@ namespace Eagles.Interface.DataAccess.UserInfo
 
         TbUserInfo GetLogin(int userId);
 
-        string InsertToken(TbUserToken userToken);
+        int InsertToken(TbUserToken userToken);
     }
 }

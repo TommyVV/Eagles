@@ -48,10 +48,10 @@ namespace Eagles.DomainService.Core.UserComment
         public GetUserCommentResponse GetUserComment(GetUserCommentRequest request)
         {
             var response = new GetUserCommentResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             var result = userCommentAccess.GetUserComment(request.Id);
             response.CommentList = result?.Select(x => new Comment
             {

@@ -86,10 +86,10 @@ namespace Eagles.DomainService.Core.User
                 response.Message = "获取Token失败";
                 return response;
             }
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             var userInfo = new UserInfo();
             userInfo.Name = result.Name;
@@ -120,6 +120,7 @@ namespace Eagles.DomainService.Core.User
         public LoginResponse Login(LoginRequest request)
         {
             var response = new LoginResponse();
+            var guit = Guid.NewGuid().ToString();
             var userId = request.UserId;
             var pwd = request.UserPwd;
             var result = userInfoAccess.GetLogin(request.UserId);
@@ -138,12 +139,22 @@ namespace Eagles.DomainService.Core.User
                 var userToken = new TbUserToken()
                 {
                     UserId = userId,
-                    Token = Guid.NewGuid().ToString(),
+                    Token = guit,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
                 };
-                response.Token = userInfoAccess.InsertToken(userToken);
+                var tokenInfo = userInfoAccess.InsertToken(userToken);
+                if (tokenInfo > 0)
+                {
+                    response.Token = guit;
+                }
+                else
+                {
+                    response.Code = "96";
+                    response.Message = "登录失败";
+                    return response;
+                }
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
                 response.Code = "00";

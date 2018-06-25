@@ -22,10 +22,10 @@ namespace Eagles.DomainService.Core.Product
         public GetProductResponse GetProduct(GetProductRequest request)
         {
             var response = new GetProductResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             var result = iProductAccess.GetProduct();
             if (result != null && result.Count > 0)
             {
@@ -49,10 +49,10 @@ namespace Eagles.DomainService.Core.Product
         public GetProductDetailResponse GetProductDetail(GetProductDetailRequest request)
         {
             var response = new GetProductDetailResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             var result = iProductAccess.GetProductDetail(request.ProductId);
             if (result != null)
             {

@@ -23,10 +23,10 @@ namespace Eagles.DomainService.Core.Scroll
         public GetScrollImgResponse GetScrollImg(GetScrollImgRequest request)
         {
             var response = new GetScrollImgResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
             var result = iScrollAccess.GetScrollImg(request.PageType);
             if (result != null && result.Count > 0)
             {
@@ -45,10 +45,10 @@ namespace Eagles.DomainService.Core.Scroll
         public GetScrollNewsResponse GetScrollNews(GetScrollNewsRequest request)
         {
             var response = new GetScrollNewsResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "appId 不允许为空");
 
             var nowDate = DateTime.Now.ToString("yyyyMMdd");
             var date = DateTime.Now.ToString("MMdd");

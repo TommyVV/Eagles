@@ -99,10 +99,10 @@ namespace Eagles.DomainService.Core.Score
                 response.Message = "获取Token失败";
                 return response;
             }
-            if (util.CheckAppId(request.AppId))
-                throw new Base.TransactionException("01", "AppId不存在");
             if (request.AppId <= 0)
-                throw new Base.TransactionException("01", "appId 不允许为空");
+                throw new TransactionException("01", "AppId不允许为空");
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
             var result = iScoreAccess.GetScoreExchangeLs(tokens.UserId);
             if (result != null && result.Count > 0)
             {
@@ -128,10 +128,10 @@ namespace Eagles.DomainService.Core.Score
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
         {
             var response = new GetScoreRankResponse();
+            if (request.AppId <= 0)
+                throw new Base.TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new Base.TransactionException("01", "AppId不存在");
-            if (request.AppId <= 0)
-                throw new Base.TransactionException("01", "appId 不允许为空");
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)
             {

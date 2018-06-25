@@ -5,8 +5,11 @@ using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.DataAccess.TaskAccess;
+using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Task.CreateTask;
+using Eagles.Application.Model.Task.RemoveTaskStep;
 using Eagles.Application.Model.Task.EditTaskAccept;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
@@ -14,8 +17,6 @@ using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
-using Eagles.Application.Model.Task.RemoveTaskStep;
-using Eagles.Interface.DataAccess.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
@@ -48,12 +49,14 @@ namespace Eagles.DomainService.Core.Task
             {
                 throw new TransactionException("01", "用户不存在");
             }
+            var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
+            var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
             var task = new DomainModel.Task.TbTask();
             task.TaskName = request.TaskName;
             task.BeginTime = request.TaskBeginDate;
             task.EndTime = request.TaskEndDate;
             task.TaskContent = request.TaskContent;
-            task.FromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //解密任务发起人
+            task.FromUser = fromUser;
             task.CanComment = request.CanComment;
             task.IsPublic = request.IsPublic;
             if (1 == userInfo.IsLeader)
@@ -84,7 +87,7 @@ namespace Eagles.DomainService.Core.Task
                     task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, task);
+            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, toUser, task);
             if (result > 0)
             {
                 response.Code = "00";
@@ -131,6 +134,39 @@ namespace Eagles.DomainService.Core.Task
                 response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
+            }
+            
+            var taskInfo = iTaskAccess.GetUserTask(request.TaskId);
+            if (taskInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "任务不存在";
+                return response;
+            }
+            switch (request.Type)
+            {
+                case TaskTypeEnum.Audit:
+                    //上级审核任务
+                    //TODO:是否是上级
+                    break;
+                case TaskTypeEnum.Accept:
+                    //下级接受任务
+                    if (taskInfo.UserId != tokens.UserId)
+                    {
+                        response.Code = "96";
+                        response.Message = "必须负责人申请完成任务";
+                        return response;
+                    }
+                    break;
+                case TaskTypeEnum.Apply:
+                    //下级申请完成任务
+                    if (taskInfo.UserId != tokens.UserId)
+                    {
+                        response.Code = "96";
+                        response.Message = "必须负责人申请完成任务";
+                        return response;
+                    }
+                    break;
             }
             var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId);
             if (result > 0)
@@ -223,6 +259,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskResponse GetTask(GetTaskRequest request)
         {
             var response = new GetTaskResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var userId = desEncrypt.Decrypt(request.EncryptUserid);
@@ -251,6 +289,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
         {
             var response = new GetTaskDetailResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var result = iTaskAccess.GetTaskDetail(request.TaskId);
@@ -281,6 +321,8 @@ namespace Eagles.DomainService.Core.Task
         public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
         {
             var response = new GetTaskStepResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var result = iTaskAccess.GetTaskStep(request.TaskId);

@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
+using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 using Eagles.Interface.DataAccess.ActivityAccess;
 using Eagles.Application.Model.Activity.CreateActivity;
@@ -13,7 +15,6 @@ using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
-using Eagles.Base.DesEncrypt;
 using Eagles.DomainService.Model.Activity;
 
 namespace Eagles.DomainService.Core.Activity
@@ -46,6 +47,8 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException("01", "用户不存在");
             }
+            var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //活动发起人
+            var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
             var act = new TbActivity();
             act.OrgId = tokens.OrgId;
             act.BranchId = tokens.BranchId;
@@ -54,8 +57,8 @@ namespace Eagles.DomainService.Core.Activity
             act.BeginTime = request.ActivityBeginDate;
             act.EndTime = request.ActivityEndDate;
             act.HtmlContent = request.ActivityContent;
-            act.FromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //解密活动发起人
-            act.ToUserId = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //解密活动负责人
+            act.FromUser = fromUser;
+            act.ToUserId = toUser;
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
             act.TestId = request.TestId;
@@ -138,6 +141,29 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId);
+            if (activityInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "活动不存在";
+                return response;
+            }
+            switch (request.Type)
+            {
+                case ActivityTypeEnum.Audit:
+                    //上级审核任务
+                    //TODO:是否是上级
+                    break;
+                case ActivityTypeEnum.Apply:
+                    //下级申请完成任务
+                    if(activityInfo.ToUserId != tokens.UserId)
+                    {
+                        response.Code = "96";
+                        response.Message = "必须负责人申请完成任务";
+                        return response;
+                    }
+                    break;
+            }
             var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
             if (result > 0)
             {
@@ -199,6 +225,8 @@ namespace Eagles.DomainService.Core.Activity
         public GetActivityResponse GetActivity(GetActivityRequest request)
         {
             var response = new GetActivityResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var result = iActivityAccess.GetActivity(Convert.ToInt32(request.ActivityType));
@@ -227,6 +255,8 @@ namespace Eagles.DomainService.Core.Activity
         public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
         {
             var response = new GetActivityDetailResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var result = iActivityAccess.GetActivityDetail(request.ActivityId);

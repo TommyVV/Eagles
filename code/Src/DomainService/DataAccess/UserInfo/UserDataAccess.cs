@@ -52,11 +52,9 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             return null;
         }
 
-        public string InsertToken(TbUserToken userToken)
+        public int InsertToken(TbUserToken userToken)
         {
-            var token = Guid.NewGuid().ToString();
-            dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)",userToken);
-            return token;
+           return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)",userToken);
         }
     }
 }

@@ -249,5 +249,15 @@ a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime from eagles.tb_task a join 
         {
             return dbManager.Query<DomainModel.User.TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
         }
+
+        public DomainModel.User.TbUserTask GetUserTask(int taskId)
+        {
+            var result = dbManager.Query<DomainModel.User.TbUserTask>(@"select UserId eagles.tb_user_task b where TaskId = @TaskId", new { TaskId = taskId });
+            if (result != null && result.Any())
+            {
+                return result.FirstOrDefault();
+            }
+            return null;
+        }
     }
 }
