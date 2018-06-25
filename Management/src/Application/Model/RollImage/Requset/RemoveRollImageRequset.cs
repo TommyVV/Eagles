@@ -1,9 +1,6 @@
 ﻿namespace Eagles.Application.Model.RollImage.Requset
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class GetRollImageRequest : RequestBase
+    public class RemoveRollImageRequset : RequestBase
     {
         /// <summary>
         /// 页面ID
@@ -14,6 +11,5 @@
         /// 机构号
         /// </summary>
         public int OrgId { get; set; }
-
     }
 }

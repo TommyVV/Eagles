@@ -8,13 +8,15 @@ namespace Eagles.Application.Model.AuthorityGroupSetUp.Requset
     /// </summary>
     public class EditAuthorityGroupSetUpRequset:OrgRequestBase
     {
-       
 
         /// <summary>
-        /// 主键
+        /// 权限组编号
         /// </summary>
-        public int AuthorityId { get; set; }
-
+        public int GroupId { get; set; }
+        /// <summary>
+        /// 修改用户
+        /// </summary>
+        public int OperId { get; set; }
         /// <summary>
         /// 设置的权限list
         /// </summary>

@@ -66,6 +66,7 @@
     <Compile Include="Product\TbProduct.cs" />
     <Compile Include="Product\TB_PRODUCT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScrollImage\TbScrollImage.cs" />
     <Compile Include="User\TbMeetingUser.cs" />
     <Compile Include="User\TbUserActivity.cs" />
     <Compile Include="User\TbUserComment.cs" />

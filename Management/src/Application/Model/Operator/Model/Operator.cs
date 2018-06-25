@@ -15,12 +15,12 @@ namespace Eagles.Application.Model.Operator.Model
         /// <summary>
         /// 操作员名称
         /// </summary>
-        public int OperName { get; set; }
+        public string OperName { get; set; }
 
         /// <summary>
         /// 权限组名称
         /// </summary>
-        public int AuthorityGroupName { get; set; }
+        public string AuthorityGroupName { get; set; }
 
         /// <summary>
         /// 创建时间

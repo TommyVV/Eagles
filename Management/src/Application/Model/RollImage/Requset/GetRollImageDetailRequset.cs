@@ -6,10 +6,13 @@
    public  class GetRollImageDetailRequset:RequestBase
     {
         /// <summary>
-        /// 滚动图片组ID
+        /// 页面ID
         /// </summary>
-        public int RollImageId { get; set; }
+        public string PageId { get; set; }
 
-    
+        /// <summary>
+        /// 机构号
+        /// </summary>
+        public int OrgId { get; set; }
     }
 }

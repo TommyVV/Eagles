@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.RollImage.Response
     /// <summary>
     /// 
     /// </summary>
-    public class RollImageResponse:ResponseBase
+    public class GetRollImageResponse : ResponseBase
     {
         /// <summary>
         /// 总条数
