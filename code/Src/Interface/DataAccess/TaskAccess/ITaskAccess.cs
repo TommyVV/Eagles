@@ -13,7 +13,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int EditTaskAccept(TaskTypeEnum type, int taskId);
 
-        bool EditTaskComplete(int taskId, int isPublic);
+        bool EditTaskComplete(int taskId, int isPublic, int score);
 
         int EditTaskComment(int orgId, int taskId, int userId, string content);
         

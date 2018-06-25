@@ -43,6 +43,8 @@
     <Compile Include="IActivityTaskDataAccess.cs" />
     <Compile Include="IAuditDataAccess.cs" />
     <Compile Include="IColumnDataAccess.cs" />
+    <Compile Include="IOperGroupDataAccess.cs" />
+    <Compile Include="IScrollImageDataAccess.cs" />
     <Compile Include="ITestPaperDataAccess.cs" />
     <Compile Include="IGoodsDataAccess.cs" />
     <Compile Include="IMenusDataAccess.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="IOrderDataAccess.cs" />
     <Compile Include="IOrganizationDataAccess.cs" />
     <Compile Include="IPartyMemberDataAccess.cs" />
+    <Compile Include="IOperDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\IDataAccess.cs" />
   </ItemGroup>

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.AuthorityGroupSetUp.Requset
 {
-    class GetAuthorityGroupSetUpRequest
+    public class GetAuthorityGroupSetUpRequest : OrgRequestBase
     {
+        /// <summary>
+        /// 权限组编号
+        /// </summary>
+        public int GroupId { get; set; }
     }
 }

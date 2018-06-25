@@ -37,7 +37,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new GetNewsTestResponse()
                 {
-                    ErrorCode = e.ErrorCode,
+                    Code = e.ErrorCode,
                     Message = e.Message
                 };
 
@@ -46,7 +46,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new GetNewsTestResponse()
                 {
-                    ErrorCode = "99",
+                    Code = "99",
                     Message = "系统错误"
                 };
             }
@@ -69,7 +69,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new CompleteTestResponse()
                 {
-                    ErrorCode = e.ErrorCode,
+                    Code = e.ErrorCode,
                     Message = e.Message
                 };
 
@@ -78,7 +78,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new CompleteTestResponse()
                 {
-                    ErrorCode = "99",
+                    Code = "99",
                     Message = "系统错误"
                 };
             }

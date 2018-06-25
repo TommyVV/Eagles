@@ -21,5 +21,10 @@
         /// 权限组id
         /// </summary>
         public int AuthorityGroupId { get; set; }
+
+        /// <summary>
+        /// 状态;0:正常;1:禁用
+        /// </summary>
+        public int Status { get; set; }
     }
 }

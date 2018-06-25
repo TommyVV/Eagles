@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Operator.Response
     /// <summary>
     /// 
     /// </summary>
-    public class OperatorResponse:ResponseBase
+    public class GetOperatorResponse : ResponseBase
     {
         /// <summary>
         /// 总条数

@@ -32,7 +32,7 @@ namespace Eagles.DomainService.Core.User
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -65,12 +65,12 @@ namespace Eagles.DomainService.Core.User
             var result = userInfoAccess.EditUser(userInfo);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "修改成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -82,7 +82,7 @@ namespace Eagles.DomainService.Core.User
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -130,7 +130,7 @@ namespace Eagles.DomainService.Core.User
 
                 if (!password1.Equals(password2))
                 {
-                    response.ErrorCode = "96";
+                    response.Code = "96";
                     response.Message = "账户密码错误";
                     return response;
                 }
@@ -146,12 +146,12 @@ namespace Eagles.DomainService.Core.User
                 response.Token = userInfoAccess.InsertToken(userToken);
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "登录成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无此账号";
             }
             return response;

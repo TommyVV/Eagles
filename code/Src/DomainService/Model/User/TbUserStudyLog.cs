@@ -13,7 +13,7 @@ namespace Eagles.DomainService.Model.User
         public int NewsId { get; set; }
         public int OrgId { get; set; }
         public int Score { get; set; }
-        public int StudyId { get; set; }
+        public int StudyTime { get; set; }
         public int TraceId { get; set; }
         public int UserId { get; set; }
     }

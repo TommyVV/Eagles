@@ -15,6 +15,7 @@ namespace Eagles.DomainService.Core
     {
         private readonly IOrganizationDataAccess dataAccess;
 
+
         public OrganizationHandler(IOrganizationDataAccess dataAccess)
         {
             this.dataAccess = dataAccess;
@@ -84,6 +85,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
+       
             int result = dataAccess.RemoveOrganization(requset);
 
             if (result > 0)

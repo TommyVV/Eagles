@@ -125,5 +125,15 @@ namespace Eagles.DomainService.Model.News
         /// 阅读数量
         /// </summary>
         public int ViewCount { get; set; }
+
+        /// <summary>
+        /// 外部链接Url
+        /// </summary>
+        public string ExternalUrl { get; set; }
+
+        /// <summary>
+        /// 是否是外部链接
+        /// </summary>
+        public int IsExternal { get; set; }
     }
 }

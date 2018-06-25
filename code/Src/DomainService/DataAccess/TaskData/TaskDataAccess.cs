@@ -100,29 +100,27 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             {
                 case TaskTypeEnum.Audit:
                     //上级审核任务
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId ", new { TaskId = taskId }); //3-审核通过
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
                     break;
                 case TaskTypeEnum.Accept:
                     //下级接受任务
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId ", new { TaskId = taskId }); //0-任务已接受
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId and Status = -2 ", new { TaskId = taskId }); //0-任务已接受
                     break;
                 case TaskTypeEnum.Apply:
                     //下级申请完成任务
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 2 where TaskId = @TaskId ", new { TaskId = taskId }); //2-完成任务待审核
+                    result = dbManager.Excuted("update eagles.tb_task set Status = 2 where TaskId = @TaskId and Status = 0 ", new { TaskId = taskId }); //2-完成任务待审核
                     break;
             }
             return result;
         }
 
-        public bool EditTaskComplete(int taskId, int isPublic)
+        public bool EditTaskComplete(int taskId, int isPublic, int score)
         {
-            //查询任务奖励积分
-            var score = dbManager.ExecuteScalar<int>("select Score from eagles.TB_REWARD_SCORE where RewardType = 0", new { });
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = "update eagles.tb_task set Status = 4, IsPublic = @IsPublic where TaskId = @TaskId",
+                    CommandString = "update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 ",
                     Parameter =  new {IsPublic = isPublic, TaskId = taskId}
                 },
                 new TransactionCommand()

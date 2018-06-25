@@ -38,7 +38,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new AppModuleResponse()
                 {
-                    ErrorCode = e.ErrorCode,
+                    Code = e.ErrorCode,
                     Message = e.ErrorMessage
                 };
             }
@@ -46,7 +46,7 @@ namespace Eagles.Application.Host.Controllers
             {
                 return new AppModuleResponse()
                 {
-                    ErrorCode = "99",
+                    Code = "99",
                     Message = "系统错误"
                 };
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Transactions;
 using Eagles.Base;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
@@ -37,20 +36,20 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
-                throw new TransactionException("用户不存在");
+                throw new TransactionException("01", "用户不存在");
             }
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if(productInfo == null)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "商品信息不存在";
                 return response;
             }
@@ -58,7 +57,7 @@ namespace Eagles.DomainService.Core.Score
             var score = productInfo.Score; //商品积分
             var userScore = userInfo.Score; //用户积分
             if(userScore < score)
-                throw new TransactionException("用户积分不足");
+                throw new TransactionException("01","用户积分不足");
             var order = new DomainModel.Order.TbOrder()
             {
                 OrgId = tokens.OrgId,
@@ -79,12 +78,12 @@ namespace Eagles.DomainService.Core.Score
             util.EditUserScore(tokens.UserId, score * -1);
             if (result)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "兑换成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "兑换失败";
             }
             return response;
@@ -96,7 +95,7 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -115,12 +114,12 @@ namespace Eagles.DomainService.Core.Score
                     Comment = x.Comment,
                     OriScore = x.OriScore
                 }).ToList();
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -155,7 +154,7 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

@@ -27,19 +27,19 @@ namespace Eagles.DomainService.Core.UserComment
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = userCommentAccess.EditUserComment(tokens.OrgId, request.Id, request.CommentUserId, request.Comment);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -62,12 +62,12 @@ namespace Eagles.DomainService.Core.UserComment
             }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -79,19 +79,19 @@ namespace Eagles.DomainService.Core.UserComment
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = userCommentAccess.AuditUserComment(request.Id);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "审核成功";
             }
             else
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "审核失败";
             }
             return response;

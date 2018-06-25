@@ -42,12 +42,12 @@ namespace Eagles.DomainService.Core.News
             //var result = dbManager.Excuted(@"insert into eagles.tb_user_news (UserId,Title,HtmlContent,NewsType,Status,CreateTime,OrgReview,BranchReview)", new object[] { "", newsTitle, content, newsType, "-1", DateTime.Now, isPublic });
             //if (result > 0)
             //{
-            //    response.ErrorCode = "00";
+            //    response.Code = "00";
             //    response.Message = "成功";
             //}
             //else
             //{
-            //    response.ErrorCode = "96";
+            //    response.Code = "96";
             //    response.Message = "失败";
             //}
             return response;
@@ -95,14 +95,16 @@ namespace Eagles.DomainService.Core.News
                     NewsId = x.NewsId,
                     Title = x.Title,
                     CreateTime = x.CreateTime,
-                    ImageUrl = x.ImageUrl
+                    ImageUrl = x.ImageUrl,
+                    ExternalUrl = x.ExternalUrl,
+                    IsExternal = x.IsExternal==1
                 }).ToList();
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -135,12 +137,12 @@ namespace Eagles.DomainService.Core.News
                 response.Attach4 = result.Attach4;
                 response.ViewCount = result.ViewCount;
                 response.CanStudy = result.CanStudy;
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -203,7 +205,7 @@ namespace Eagles.DomainService.Core.News
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -267,10 +269,10 @@ namespace Eagles.DomainService.Core.News
             }
             else
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "答题成功但未及格";
             }
-            response.ErrorCode = "00";
+            response.Code = "00";
             response.Message = "答题成功并奖励积分";
             return response;
         }

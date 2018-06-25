@@ -1,6 +1,6 @@
 ﻿using Eagles.Base;
-using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.RewardScore;
 
 namespace Eagles.Interface.DataAccess.Util
 {
@@ -42,5 +42,12 @@ namespace Eagles.Interface.DataAccess.Util
         /// <param name="appId"></param>
         /// <returns></returns>
         bool CheckAppId(int appId);
+
+        /// <summary>
+        /// 查询积分配置
+        /// </summary>
+        /// <param name="rewardType"></param>
+        /// <returns></returns>
+        TbRewardScore RewardScore(string rewardType);
     }
 }

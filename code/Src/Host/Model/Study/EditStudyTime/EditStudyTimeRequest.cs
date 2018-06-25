@@ -8,9 +8,9 @@ namespace Eagles.Application.Model.Study.EditStudyTime
     public class EditStudyTimeRequest : RequestBase
     {
         /// <summary>
-        /// 学习时间
+        /// 学习时间(单位分钟)
         /// </summary>
-        public int StudyId { get; set; }
+        public int StudyTime { get; set; }
 
         /// <summary>
         /// 新闻id
