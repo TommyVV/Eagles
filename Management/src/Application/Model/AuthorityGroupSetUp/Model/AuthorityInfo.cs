@@ -1,4 +1,6 @@
-﻿namespace Eagles.Application.Model.AuthorityGroupSetUp.Model
+﻿using System;
+
+namespace Eagles.Application.Model.AuthorityGroupSetUp.Model
 {
     /// <summary>
     /// 权限信息
@@ -7,14 +9,18 @@
     {
 
         /// <summary>
-        /// 权限名
+        /// 创建时间
         /// </summary>
-        public string AuthorityName { get; set; }
-
+        public DateTime CreateTime { get; set; }
         /// <summary>
-        /// 权限key
+        /// 修改时间
         /// </summary>
-        public string AuthorityKey { get; set; }
+        public DateTime EditTime { get; set; }
+        /// <summary>
+        /// 功能id
+        /// </summary>
+        public string FunCode { get; set; }
+     
 
 
     }

@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="ActivityTaskHandler.cs" />
     <Compile Include="ModuleHandler.cs" />
+    <Compile Include="OperGroupHandler.cs" />
+    <Compile Include="OperHandler.cs" />
+    <Compile Include="ScrollImageHandler.cs" />
     <Compile Include="TestPaperHandler.cs" />
     <Compile Include="GoodsHandler.cs" />
     <Compile Include="AuditHandler.cs" />

@@ -43,6 +43,8 @@
     <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IAuditHandler.cs" />
     <Compile Include="IModuleHandler.cs" />
+    <Compile Include="IOperGroupHandler.cs" />
+    <Compile Include="IOperHandler.cs" />
     <Compile Include="ITestPaperHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="IOrganizationHandler.cs" />
     <Compile Include="IUserHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IScrollImageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Model\Eagles.Application.Model.csproj">
