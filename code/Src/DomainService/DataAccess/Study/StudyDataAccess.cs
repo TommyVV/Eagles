@@ -17,19 +17,19 @@ namespace Ealges.DomianService.DataAccess.Study
         {
             if (exists)
             {
-                return dbManager.Excuted(@"update eagles.tb_user_study_log set StudyId = StudyId + @StudyId where UserId = @UserId ", userStudy);
+                return dbManager.Excuted(@"update eagles.tb_user_study_log set StudyTime = StudyTime + @StudyTime where UserId = @UserId ", userStudy);
             }
             else
             {
-                return dbManager.Excuted(@"insert into eagles.tb_user_study_log (OrgId,BranchId,TraceId,UserId,NewsId,ModuleId,StudyId,CreateTime) values 
-(@OrgId,@BranchId,@UserId,@NewsId,@ModuleId,@StudyId,@CreateTime)", userStudy);
+                return dbManager.Excuted(@"insert into eagles.tb_user_study_log (OrgId,BranchId,TraceId,UserId,NewsId,ModuleId,StudyTime,CreateTime) values 
+(@OrgId,@BranchId,@UserId,@NewsId,@ModuleId,@StudyTime,@CreateTime)", userStudy);
             }
         }
 
         public TbUserStudyLog GetStudyTime(int userId, int newsId, int moduleId)
         {
             return dbManager.QuerySingle<TbUserStudyLog>(
-                @"select StudyId from eagles.tb_user_study_log where UserId = @UserId and NewsId = @NewsId and ModuleId = @ModuleId ",
+                @"select StudyTime from eagles.tb_user_study_log where UserId = @UserId and NewsId = @NewsId and ModuleId = @ModuleId ",
                 new {UserId = userId, NewsId = newsId, ModuleId = moduleId});
         }
     }

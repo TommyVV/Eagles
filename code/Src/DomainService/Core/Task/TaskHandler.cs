@@ -56,7 +56,7 @@ namespace Eagles.DomainService.Core.Task
             task.FromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //解密任务发起人
             task.CanComment = request.CanComment;
             task.IsPublic = request.IsPublic;
-            if (0 == userInfo.IsLeader)
+            if (1 == userInfo.IsLeader)
                 task.Status = -2; // -2:上级发起(待接受)
             else
                 task.Status = -1; // -1:下级申请上级待审核状态
@@ -156,7 +156,8 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic);
+            var score = util.RewardScore("0"); //任务奖励积分
+            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, score.Score);
             if (result)
             {
                 response.Code = "00";
