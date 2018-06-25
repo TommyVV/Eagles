@@ -31,12 +31,12 @@ namespace Eagles.DomainService.Core.Scroll
             if (result != null && result.Count > 0)
             {
                 response.RollImgUrl = result?.Select(x => x.ImageUrl).ToList();
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -65,7 +65,7 @@ namespace Eagles.DomainService.Core.Scroll
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

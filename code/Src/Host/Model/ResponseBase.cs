@@ -13,6 +13,7 @@ namespace Eagles.Application.Model
         public ResponseBase()
         {
             IsSuccess = true;
+            Code = "00";
         }
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace Eagles.Application.Model
         /// <summary>
         /// 返回码
         /// </summary>
-        public string ErrorCode { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// 描述

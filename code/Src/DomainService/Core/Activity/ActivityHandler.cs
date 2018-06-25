@@ -37,7 +37,7 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -93,12 +93,12 @@ namespace Eagles.DomainService.Core.Activity
             var result = iActivityAccess.CreateActivity(act);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -110,19 +110,19 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, request.JoinUserid);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -134,19 +134,19 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -158,19 +158,19 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (result)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -185,12 +185,12 @@ namespace Eagles.DomainService.Core.Activity
             var result = iActivityAccess.EditActivityFeedBack(activityId, content, attachList);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -213,12 +213,12 @@ namespace Eagles.DomainService.Core.Activity
             }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -241,12 +241,12 @@ namespace Eagles.DomainService.Core.Activity
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

@@ -39,7 +39,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -87,12 +87,12 @@ namespace Eagles.DomainService.Core.Task
             var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, request.TaskToUserId, task);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -104,19 +104,19 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -128,19 +128,19 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -152,19 +152,19 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic);
             if (result)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -176,7 +176,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -184,12 +184,12 @@ namespace Eagles.DomainService.Core.Task
                 request.StepContent, request.TaskId.ToString(), request.StepId.ToString());
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -201,19 +201,19 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
             var result = iTaskAccess.EditTaskFeedBack(request.TaskId, request.Content, request.AttachList);
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "失败";
             }
             return response;
@@ -236,12 +236,12 @@ namespace Eagles.DomainService.Core.Task
             }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -266,12 +266,12 @@ namespace Eagles.DomainService.Core.Task
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -290,12 +290,12 @@ namespace Eagles.DomainService.Core.Task
             }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

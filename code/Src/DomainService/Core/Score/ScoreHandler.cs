@@ -36,7 +36,7 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -49,7 +49,7 @@ namespace Eagles.DomainService.Core.Score
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if(productInfo == null)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "商品信息不存在";
                 return response;
             }
@@ -78,12 +78,12 @@ namespace Eagles.DomainService.Core.Score
             util.EditUserScore(tokens.UserId, score * -1);
             if (result)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "兑换成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "兑换失败";
             }
             return response;
@@ -95,7 +95,7 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -114,12 +114,12 @@ namespace Eagles.DomainService.Core.Score
                     Comment = x.Comment,
                     OriScore = x.OriScore
                 }).ToList();
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -154,7 +154,7 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

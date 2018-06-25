@@ -13,13 +13,11 @@ namespace Eagles.DomainService.Core.AppModule
     {
         private readonly IAppModuleDA appModule;
         private readonly IUtil util;
-        private readonly INewsDa newsDa;
 
-        public AppModuleHanlder(IAppModuleDA appModule, IUtil util, INewsDa newsDa)
+        public AppModuleHanlder(IAppModuleDA appModule, IUtil util)
         {
             this.appModule = appModule;
             this.util = util;
-            this.newsDa = newsDa;
         }
 
         public AppModuleResponse Process(GetAppModuleRequest request)
@@ -33,7 +31,11 @@ namespace Eagles.DomainService.Core.AppModule
                 throw new TransactionException("01", "module Type不允许为空");
             }
             //查询数据库
-            var modules = appModule.GetAppModule(request.AppId,request.ModuleType);
+            var modules = appModule.GetAppModule(request.AppId,(int)request.ModuleType);
+            if (request.ModuleType == 0)
+            {
+                modules = modules.Where(x => x.IndexDisplay == 1).ToList();
+            }
             var response=new AppModuleResponse()
             {
                 Modules = modules.Select(x => new Module()
@@ -48,19 +50,6 @@ namespace Eagles.DomainService.Core.AppModule
                     TragetUrl = x.TragetUrl
                 }).ToList()
             };
-            //foreach (var module in response.Modules)
-            //{
-            //    var news = newsDa.GetModuleNews(module.ModuleId);
-            //    module.News = news.Select(x => new NewsInfo()
-            //    {
-            //        NewsId = x.NewsId,
-            //        NewsImg = x.ImageUrl,
-            //        NewsName = x.Title,
-            //        CreateTime = x.CreateTime,
-            //        Source = x.Source,
-            //        Author = x.Author,
-            //    }).ToList();
-            //}
             return response;
         }
     }

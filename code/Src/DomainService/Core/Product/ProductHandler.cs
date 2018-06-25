@@ -35,12 +35,12 @@ namespace Eagles.DomainService.Core.Product
                     ProductName = x.ProdName,
                     ProductImageUrl = x.ImageUrl
                 }).ToList();
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;
@@ -67,12 +67,12 @@ namespace Eagles.DomainService.Core.Product
                 response.Price = result.Price;
                 response.Inventory = result.Stock;
                 response.LimitedCount = result.MaxBuyCount;
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查无数据";
             }
             return response;

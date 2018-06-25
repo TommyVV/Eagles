@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Eagles.Base.DataBase;
+using Eagles.DomainService.Model.App;
 using Eagles.Interface.DataAccess.AppModule;
 
 namespace Ealges.DomianService.DataAccess.AppModule
@@ -14,9 +16,10 @@ namespace Ealges.DomianService.DataAccess.AppModule
             this.dbManager = dbManager;
         }
 
-        public List<Eagles.DomainService.Model.App.TbAppModule> GetAppModule(int orgId, int moduleType)
+        public List<TbAppModule> GetAppModule(int orgId, int moduleType)
         {
-            var result=dbManager.Query<Eagles.DomainService.Model.App.TbAppModule>(@"SELECT OrgId,
+            var sql = new StringBuilder();
+            sql .Append(@"SELECT OrgId,
     ModuleId,
     ModuleName,
     TragetUrl,
@@ -26,7 +29,14 @@ namespace Ealges.DomianService.DataAccess.AppModule
     Priority,
     IndexPageCount,
     IndexDisplay
-FROM eagles.tb_app_module where OrgId=@OrgId And ModuleType=@ModuleType order by Priority desc ", new {OrgId = orgId, ModuleType =moduleType});
+FROM eagles.tb_app_module where OrgId=@OrgId");
+            if (moduleType > 0)
+            {
+                sql.Append(" And ModuleType=@ModuleType ");
+            }
+
+            sql.Append(" order by Priority desc ");
+            var result=dbManager.Query<TbAppModule>(sql.ToString(), new {OrgId = orgId, ModuleType =moduleType});
             return result;
         }
     }

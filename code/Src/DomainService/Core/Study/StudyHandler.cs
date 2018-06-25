@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Core.Study
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -54,12 +54,12 @@ namespace Eagles.DomainService.Core.Study
             }
             if (result > 0)
             {
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "学习时间记录成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "学习时间记录失败";
             }
             return response;
@@ -71,7 +71,7 @@ namespace Eagles.DomainService.Core.Study
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
             }
@@ -83,12 +83,12 @@ namespace Eagles.DomainService.Core.Study
             if (result != null)
             {
                 response.StudyTime = result.StudyTime;
-                response.ErrorCode = "00";
+                response.Code = "00";
                 response.Message = "查询成功";
             }
             else
             {
-                response.ErrorCode = "96";
+                response.Code = "96";
                 response.Message = "查询失败";
             }
             return response;

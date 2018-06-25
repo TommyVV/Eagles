@@ -30,7 +30,7 @@ namespace Eagles.DomainService.Core.UserMessage
             return new GetUserUnreadMessage()
             {
                 IsSuccess = true,
-                ErrorCode = "00",
+                Code = "00",
                 Message = "成功",
                 DateTime = DateTime.Now,
                 UnreadMessageCount = count
