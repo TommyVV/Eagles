@@ -68,5 +68,10 @@ const navMap = [
     key: "11",
     sub: "sub5"
   },
+  {
+    pathname: "#/checkList",
+    key: "12",
+    sub: "sub6"
+  },
 ];
 export default navMap;
