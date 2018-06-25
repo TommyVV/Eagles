@@ -41,7 +41,7 @@ namespace Eagles.DomainService.Core.Study
                 studyInfo.UserId = tokens.UserId;
                 studyInfo.NewsId = request.NewsId;
                 studyInfo.ModuleId = request.ModuleId;
-                studyInfo.StudyId = request.StudyId;
+                studyInfo.StudyTime = request.StudyTime;
                 studyInfo.CreateTime = DateTime.Now;
                 result = iStudyAccess.EditStudyTime(false, studyInfo);
             }
@@ -49,7 +49,7 @@ namespace Eagles.DomainService.Core.Study
             {
                 //update
                 studyInfo.UserId = tokens.UserId;
-                studyInfo.StudyId = request.StudyId;
+                studyInfo.StudyTime = request.StudyTime;
                 result = iStudyAccess.EditStudyTime(true, studyInfo);
             }
             if (result > 0)
@@ -82,7 +82,7 @@ namespace Eagles.DomainService.Core.Study
             var result = iStudyAccess.GetStudyTime(tokens.UserId, request.NewsId, request.ModuleId);
             if (result != null)
             {
-                response.StudyTime = result.StudyId;
+                response.StudyTime = result.StudyTime;
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

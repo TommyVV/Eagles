@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Transactions;
 using Eagles.Base;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
@@ -44,7 +43,7 @@ namespace Eagles.DomainService.Core.Score
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
-                throw new TransactionException("用户不存在");
+                throw new TransactionException("01", "用户不存在");
             }
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
@@ -58,7 +57,7 @@ namespace Eagles.DomainService.Core.Score
             var score = productInfo.Score; //商品积分
             var userScore = userInfo.Score; //用户积分
             if(userScore < score)
-                throw new TransactionException("用户积分不足");
+                throw new TransactionException("01","用户积分不足");
             var order = new DomainModel.Order.TbOrder()
             {
                 OrgId = tokens.OrgId,

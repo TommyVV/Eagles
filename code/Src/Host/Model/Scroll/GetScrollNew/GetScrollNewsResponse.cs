@@ -1,10 +1,18 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Eagles.Application.Model.Scroll.GetScrollNew
 {
     /// <summary>
     /// 滚动消息查询
     /// </summary>
     public class GetScrollNewsResponse : ResponseBase
+    {
+       public List<SystemNews> SystemNewsList { get; set; }
+
+    }
+
+    public class SystemNews
     {
         /// <summary>
         /// 消息Id

@@ -64,6 +64,9 @@ namespace Eagles.DomainService.Core.Product
                 response.ProductScore = result.Score;
                 response.ProductImgUrl = result.ImageUrl;
                 response.ProductDescrption = result.HtmlDescription;
+                response.Price = result.Price;
+                response.Inventory = result.Stock;
+                response.LimitedCount = result.MaxBuyCount;
                 response.ErrorCode = "00";
                 response.Message = "查询成功";
             }

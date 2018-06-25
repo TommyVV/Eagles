@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Eagles.Base;
 using Eagles.Interface.Core.Scroll;
 using Eagles.Interface.DataAccess.Util;
@@ -48,14 +49,19 @@ namespace Eagles.DomainService.Core.Scroll
                 throw new TransactionException("01", "AppId不存在");
             if (request.AppId <= 0)
                 throw new TransactionException("01", "appId 不允许为空");
-            var result = iScrollAccess.GetScrollNews();
-            if (result != null && result.Count > 0)
+
+            var nowDate = DateTime.Now.ToString("yyyyMMdd");
+            var date = DateTime.Now.ToString("MMdd");
+            var result = iScrollAccess.GetScrollNews(nowDate,date);
+
+            if (result != null && result.Any() )
             {
-                response.NewsId = result[0].NewsId;
-                response.NewsName = result[0].NewsName;
-                response.NewsContent = result[0].NewsContent;
-                response.ErrorCode = "00";
-                response.Message = "查询成功";
+                response.SystemNewsList = result.Select(x => new SystemNews()
+                {
+                    NewsId = x.NewsId,
+                    NewsName = x.NewsName,
+                    NewsContent = x.NewsContent
+                }).ToList();
             }
             else
             {

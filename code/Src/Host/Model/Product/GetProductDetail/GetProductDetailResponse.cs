@@ -46,6 +46,26 @@ namespace Eagles.Application.Model.Product.GetProductDetail
         /// 兑换人数
         /// </summary>
         public int PeopleCount { get; set; }
+
+        /// <summary>
+        /// 产品库存
+        /// </summary>
+        public int Inventory { get; set; }
+
+        /// <summary>
+        /// 销售数量
+        /// </summary>
+        public int SalesCount { get; set; }
+
+        /// <summary>
+        /// 产品价值
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// 限购数量
+        /// </summary>
+        public int LimitedCount { get; set; }
         
     }
 }

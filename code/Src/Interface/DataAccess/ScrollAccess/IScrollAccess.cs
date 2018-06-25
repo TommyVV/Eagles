@@ -7,6 +7,6 @@ namespace Eagles.Interface.DataAccess.ScrollAccess
     {
         List<DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg(string pageType);
 
-        List<DomainService.Model.News.TbSystemNews> GetScrollNews();
+        List<DomainService.Model.News.TbSystemNews> GetScrollNews(string nowDate, string date);
     }
 }
