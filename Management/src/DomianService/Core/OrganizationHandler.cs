@@ -85,9 +85,7 @@ namespace Eagles.DomainService.Core
                 ErrorCode = "00",
                 Message = "成功",
             };
-
-          
-
+       
             int result = dataAccess.RemoveOrganization(requset);
 
             if (result > 0)

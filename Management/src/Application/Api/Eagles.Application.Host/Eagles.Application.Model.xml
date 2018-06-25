@@ -2878,14 +2878,24 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageName">
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
             <summary>
-            页面名称
+            机构ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Id">
+            <summary>
+            id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageId">
+            <summary>
+            页面id
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Img">
             <summary>
-            滚动图片组
+            滚动图片url
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.EditRollImageRequest">
@@ -2908,14 +2918,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.PageId">
+        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.Id">
             <summary>
-            页面ID
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.OrgId">
-            <summary>
-            机构号
+            zhuj
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest">
@@ -2928,19 +2933,9 @@
             页面ID
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest.OrgId">
-            <summary>
-            机构号
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.RemoveRollImageRequset.PageId">
+        <member name="P:Eagles.Application.Model.RollImage.Requset.RemoveRollImageRequset.Id">
             <summary>
             页面ID
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.RemoveRollImageRequset.OrgId">
-            <summary>
-            机构号
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Response.GetRollImageDetailsResponse.Info">

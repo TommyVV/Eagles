@@ -3,17 +3,14 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetRollImageRequest : RequestBase
+    public class GetRollImageRequest : OrgRequestBase
     {
         /// <summary>
         /// 页面ID
         /// </summary>
         public string PageId { get; set; }
 
-        /// <summary>
-        /// 机构号
-        /// </summary>
-        public int OrgId { get; set; }
+
 
     }
 }

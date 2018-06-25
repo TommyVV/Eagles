@@ -2,6 +2,7 @@
 {
     public class TbScrollImage
     {
+        public int Id { get; set; }
         /// <summary>
         /// 图片地址
         /// </summary>

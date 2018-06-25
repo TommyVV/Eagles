@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.RollImage.Requset
         /// <summary>
         /// 页面ID
         /// </summary>
-        public int PageId { get; set; }
+        public string PageId { get; set; }
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增
         /// </summary>

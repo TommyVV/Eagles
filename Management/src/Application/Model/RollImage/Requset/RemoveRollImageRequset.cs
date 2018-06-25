@@ -5,11 +5,8 @@
         /// <summary>
         /// 页面ID
         /// </summary>
-        public string PageId { get; set; }
+        public int Id { get; set; }
 
-        /// <summary>
-        /// 机构号
-        /// </summary>
-        public int OrgId { get; set; }
+       
     }
 }
