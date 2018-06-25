@@ -41,6 +41,7 @@ import GoodsList from "../container/PC/Goods";
 import GoodsDetail from "../container/PC/Goods/Detail";
 import SendList from "../container/PC/Send";
 import SendDetail from "../container/PC/Send/Detail";
+import CheckList from "../container/PC/Check";
 
 class RouteMap extends Component {
   render() {
@@ -75,7 +76,8 @@ class RouteMap extends Component {
           {/* 发货 */}
           <route path="/sendlist" component={SendList} />
           <route path="/send/detail(/:id)" component={SendDetail} />
-
+          {/* 审核 */}
+          <route path="/checkList" component={CheckList} />
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />

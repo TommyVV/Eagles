@@ -173,9 +173,25 @@ export default class App extends React.Component {
               </Menu.Item>
               <Menu.Item
                 key="11"
-                onClick={e => hashHistory.replace("/goods/detail")}
+                onClick={e => hashHistory.replace("/send/detail")}
               >
                 商品发货详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub6"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>审核信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="12"
+                onClick={e => hashHistory.replace("/checkList")}
+              >
+                审核列表
               </Menu.Item>
             </SubMenu>
           </Menu>

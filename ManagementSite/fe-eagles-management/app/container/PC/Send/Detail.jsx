@@ -173,8 +173,8 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("intergralId")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="商品名称">
-          {getFieldDecorator("name", {
+        <FormItem {...formItemLayout} label="用户">
+          {getFieldDecorator("user", {
             rules: [
               {
                 required: true,
@@ -184,16 +184,8 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，20字以内" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
-            <Select>
-              <Option value="0">上架</Option>
-              <Option value="1">下架</Option>
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="所需积分">
-          {getFieldDecorator("intergral", {
+        <FormItem {...formItemLayout} label="兑换商品">
+          {getFieldDecorator("price", {
             rules: [
               {
                 required: true,
@@ -201,28 +193,9 @@ class Base extends Component {
                 pattern: /^(?!.{21}|\s*$)/g
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<TextArea rows={4} />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
-            <Select>
-              <Option value="0">可用</Option>
-              <Option value="1">不可用</Option>
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="已售">
-          {getFieldDecorator("sold", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem label="销售时间" {...formItemLayoutDate}>
+        <FormItem label="下单时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
               {getFieldDecorator("startTime", {
@@ -261,8 +234,8 @@ class Base extends Component {
             </FormItem>
           </Col>
         </FormItem>
-        <FormItem {...formItemLayout} label="每人允许兑换的最大数量">
-          {getFieldDecorator("max", {
+        <FormItem {...formItemLayout} label="用户下单地址">
+          {getFieldDecorator("address", {
             rules: [
               {
                 required: true,
@@ -272,19 +245,8 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，20字以内" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="商品参考价格">
-          {getFieldDecorator("price", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("price", {
+        <FormItem {...formItemLayout} label="快递信息备注">
+          {getFieldDecorator("address", {
             rules: [
               {
                 required: true,
@@ -293,51 +255,6 @@ class Base extends Component {
               }
             ]
           })(<TextArea rows={4} />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="库存">
-          {getFieldDecorator("stock", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="产品缩略图">
-          {getFieldDecorator("view")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
-              </div>
-            </span>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="产品详情图">
-          {getFieldDecorator("detailImg")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
-              </div>
-            </span>
-          )}
         </FormItem>
         <FormItem>
           <Row gutter={24}>
