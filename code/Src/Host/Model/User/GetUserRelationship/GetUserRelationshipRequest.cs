@@ -5,6 +5,9 @@
     /// </summary>
     public class GetUserRelationshipRequest : RequestBase
     {
-
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        public string UserId { get; set; }
     }
 }

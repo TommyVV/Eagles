@@ -152,14 +152,19 @@ namespace Eagles.DomainService.Core.Activity
             {
                 case ActivityTypeEnum.Audit:
                     //上级审核任务
-                    //TODO:是否是上级
+                    if (activityInfo.FromUser != tokens.UserId)
+                    {
+                        response.Code = "96";
+                        response.Message = "必须发起人审核";
+                        return response;
+                    }
                     break;
                 case ActivityTypeEnum.Apply:
                     //下级申请完成任务
                     if(activityInfo.ToUserId != tokens.UserId)
                     {
                         response.Code = "96";
-                        response.Message = "必须负责人申请完成任务";
+                        response.Message = "必须负责人申请完成活动";
                         return response;
                     }
                     break;

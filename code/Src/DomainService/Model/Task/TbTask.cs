@@ -22,6 +22,7 @@ namespace Eagles.DomainService.Model.Task
         public DateTime CreateTime { get; set; }
         public DateTime EndTime { get; set; }
         public int FromUser { get; set; }
+        public int ToUserId { get; set; }
         public int IsPublic { get; set; }
         public int OrgId { get; set; }
         public string OrgReview { get; set; }

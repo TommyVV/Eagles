@@ -1,4 +1,5 @@
-﻿using Eagles.Base;
+﻿using System.Collections.Generic;
+using Eagles.Base;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.UserInfo
@@ -14,5 +15,7 @@ namespace Eagles.Interface.DataAccess.UserInfo
         TbUserInfo GetLogin(int userId);
 
         int InsertToken(TbUserToken userToken);
+
+        List<TbUserRelationship> GetRelationship(int userId);
     }
 }

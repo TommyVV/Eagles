@@ -134,9 +134,8 @@ namespace Eagles.DomainService.Core.Task
                 response.Code = "96";
                 response.Message = "获取Token失败";
                 return response;
-            }
-            
-            var taskInfo = iTaskAccess.GetUserTask(request.TaskId);
+            }            
+            var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId);
             if (taskInfo == null)
             {
                 response.Code = "96";
@@ -147,20 +146,25 @@ namespace Eagles.DomainService.Core.Task
             {
                 case TaskTypeEnum.Audit:
                     //上级审核任务
-                    //TODO:是否是上级
+                    if (taskInfo.FromUser != tokens.UserId)
+                    {
+                        response.Code = "96";
+                        response.Message = "必须发起人审核";
+                        return response;
+                    }
                     break;
                 case TaskTypeEnum.Accept:
                     //下级接受任务
-                    if (taskInfo.UserId != tokens.UserId)
+                    if (taskInfo.ToUserId != tokens.UserId)
                     {
                         response.Code = "96";
-                        response.Message = "必须负责人申请完成任务";
+                        response.Message = "必须负责人接受任务";
                         return response;
                     }
                     break;
                 case TaskTypeEnum.Apply:
                     //下级申请完成任务
-                    if (taskInfo.UserId != tokens.UserId)
+                    if (taskInfo.ToUserId != tokens.UserId)
                     {
                         response.Code = "96";
                         response.Message = "必须负责人申请完成任务";
@@ -192,6 +196,19 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
+            var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId);
+            if (taskInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "任务不存在";
+                return response;
+            }
+            if(taskInfo.Status != 0)
+            {
+                response.Code = "96";
+                response.Message = "任务状态不正确";
+                return response;
+            }
             var score = util.RewardScore("0"); //任务奖励积分
             var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, score.Score);
             if (result)
@@ -217,6 +234,19 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "获取Token失败";
                 return response;
             }
+            var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId);
+            if (taskInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "任务不存在";
+                return response;
+            }
+            if (taskInfo.Status != 0)
+            {
+                response.Code = "96";
+                response.Message = "任务状态不正确";
+                return response;
+            }
             var result = iTaskAccess.EditTaskStep(request.Action, tokens.OrgId, tokens.BranchId, tokens.UserId,
                 request.StepContent, request.TaskId.ToString(), request.StepId.ToString());
             if (result > 0)
@@ -240,6 +270,19 @@ namespace Eagles.DomainService.Core.Task
             {
                 response.Code = "96";
                 response.Message = "获取Token失败";
+                return response;
+            }
+            var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId);
+            if (taskInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "任务不存在";
+                return response;
+            }
+            if (taskInfo.Status != 0)
+            {
+                response.Code = "96";
+                response.Message = "任务状态不正确";
                 return response;
             }
             var result = iTaskAccess.EditTaskFeedBack(request.TaskId, request.Content, request.AttachList);

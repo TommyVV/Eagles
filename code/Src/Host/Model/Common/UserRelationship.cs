@@ -7,8 +7,14 @@ namespace Eagles.Application.Model.Common
     /// </summary>
     public class UserRelationship
     {
-        string UserId { get; set; }
+        /// <summary>
+        /// 领导id
+        /// </summary>
+        public int UserId { get; set; }
 
-        string SubUserId { get; set; }
+        /// <summary>
+        /// 下级id
+        /// </summary>
+        public int SubUserId { get; set; }
     }
 }

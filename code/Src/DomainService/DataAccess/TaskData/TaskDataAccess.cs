@@ -232,7 +232,7 @@ join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", ne
         public DomainModel.Task.TbTask GetTaskDetail(int taskId)
         {
             var result = dbManager.Query<DomainModel.Task.TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,
-a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId", new {TaskId = taskId});
+a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,b.ToUserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId", new {TaskId = taskId});
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
@@ -250,14 +250,5 @@ a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime from eagles.tb_task a join 
             return dbManager.Query<DomainModel.User.TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
         }
 
-        public DomainModel.User.TbUserTask GetUserTask(int taskId)
-        {
-            var result = dbManager.Query<DomainModel.User.TbUserTask>(@"select UserId eagles.tb_user_task b where TaskId = @TaskId", new { TaskId = taskId });
-            if (result != null && result.Any())
-            {
-                return result.FirstOrDefault();
-            }
-            return null;
-        }
     }
 }

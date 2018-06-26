@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Linq;
+using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.DataAccess.UserInfo;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.User.EditUser;
-using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
-using Eagles.Base;
+using Eagles.Application.Model.User.EditUser;
+using Eagles.Application.Model.User.GetUserInfo;
+using Eagles.Application.Model.User.GetUserRelationship;
 using Eagles.DomainService.Model.User;
-using Eagles.Interface.DataAccess.UserInfo;
 
 namespace Eagles.DomainService.Core.User
 {
@@ -178,5 +180,18 @@ namespace Eagles.DomainService.Core.User
             return response;
         }
         
+        public GetUserRelationshipResponse GetUserRelationship (GetUserRelationshipRequest request)
+        {
+            var response = new GetUserRelationshipResponse();
+            var userId = Convert.ToInt32(desEncrypt.Decrypt(request.UserId));
+            var result = userInfoAccess.GetRelationship(userId);
+            response.UserRelationshipList = result?.Select(x => 
+            new UserRelationship
+            {
+                UserId = x.UserId,
+                SubUserId = x.SubUserId
+            }).ToList();
+            return null;
+        }
     }
 }

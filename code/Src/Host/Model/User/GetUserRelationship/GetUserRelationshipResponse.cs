@@ -1,4 +1,5 @@
-﻿using Eagles.Application.Model.Common;
+﻿using System.Collections.Generic;
+using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.User.GetUserRelationship
 {
@@ -10,6 +11,6 @@ namespace Eagles.Application.Model.User.GetUserRelationship
         /// <summary>
         /// 用户编号
         /// </summary>
-        public string userId { get; set; }
+        public List<UserRelationship> UserRelationshipList { get; set; }
     }
 }

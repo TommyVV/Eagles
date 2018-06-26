@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.Sms;
@@ -49,6 +49,14 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
                 "select UserId,Password from eagles.tb_user_info where UserId = @UserId ", new {UserId = userId});
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
+            return null;
+        }
+
+        public List<TbUserRelationship> GetRelationship(int userId)
+        {
+            var userInfo = dbManager.Query<TbUserRelationship>("select UserId,SubUserId from eagles.tb_user_relationship where UserId = @UserId ", new { UserId = userId });
+            if (userInfo != null && userInfo.Any())
+                return userInfo;
             return null;
         }
 
