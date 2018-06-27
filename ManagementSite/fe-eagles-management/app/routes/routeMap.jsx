@@ -42,6 +42,16 @@ import GoodsDetail from "../container/PC/Goods/Detail";
 import SendList from "../container/PC/Send";
 import SendDetail from "../container/PC/Send/Detail";
 import CheckList from "../container/PC/Check";
+import SystemList from "../container/PC/System";
+import SystemDetail from "../container/PC/System/Detail";
+import RankList from "../container/PC/Rank";
+import RankDetail from "../container/PC/Rank/Detail";
+import OperatorList from "../container/PC/Operator";
+import OperatorDetail from "../container/PC/Operator/Detail";
+import OrgList from "../container/PC/Org";
+import OrgDetail from "../container/PC/Org/Detail";
+import ImageList from "../container/PC/Image";
+import ImageDetail from "../container/PC/Image/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -77,7 +87,22 @@ class RouteMap extends Component {
           <route path="/sendlist" component={SendList} />
           <route path="/send/detail(/:id)" component={SendDetail} />
           {/* 审核 */}
-          <route path="/checkList" component={CheckList} />
+          <route path="/checklist" component={CheckList} />
+          {/* 系统消息 */}
+          <route path="/systemlist" component={SystemList} />
+          <route path="/system/detail(/:id)" component={SystemDetail} />
+          {/* 积分排行 */}
+          <route path="/ranklist" component={RankList} />
+          <route path="/rank/detail(/:id)" component={RankDetail} />
+          {/* 操作员 */}
+          <route path="/operatorlist" component={OperatorList} />
+          <route path="/operator/detail(/:id)" component={OperatorDetail} />
+          {/* 机构管理 */}
+          <route path="/orglist" component={OrgList} />
+          <route path="/org/detail(/:id)" component={OrgDetail} />
+          {/* 滚动图片管理 */}
+          <route path="/imagelist" component={ImageList} />
+          <route path="/image/detail(/:id)" component={ImageDetail} />
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />

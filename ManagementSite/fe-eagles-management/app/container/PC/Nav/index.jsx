@@ -31,10 +31,12 @@ export default class App extends React.Component {
     let index = hash.indexOf("?");
     const current = hash.slice(0, index);
     const obj = navMap.find(item => current.indexOf(item.pathname) > -1);
-    this.setState({
-      current: obj.key,
-      sub: obj.sub
-    });
+    if (obj) {
+      this.setState({
+        current: obj.key,
+        sub: obj.sub
+      });
+    }
   }
   handleClick = e => {
     console.log("click ", e);
@@ -189,9 +191,113 @@ export default class App extends React.Component {
             >
               <Menu.Item
                 key="12"
-                onClick={e => hashHistory.replace("/checkList")}
+                onClick={e => hashHistory.replace("/checklist")}
               >
                 审核列表
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub7"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>系统信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="13"
+                onClick={e => hashHistory.replace("/systemlist")}
+              >
+                系统信息列表
+              </Menu.Item>
+              <Menu.Item
+                key="14"
+                onClick={e => hashHistory.replace("/system/detail")}
+              >
+                系统信息详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub8"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>积分排行信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="15"
+                onClick={e => hashHistory.replace("/ranklist")}
+              >
+                积分排行列表
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub9"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>操作员信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="16"
+                onClick={e => hashHistory.replace("/operatorlist")}
+              >
+                操作员列表
+              </Menu.Item>
+              <Menu.Item
+                key="17"
+                onClick={e => hashHistory.replace("/operator/detail")}
+              >
+                操作员详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub10"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>机构信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="18"
+                onClick={e => hashHistory.replace("/orglist")}
+              >
+                机构列表
+              </Menu.Item>
+              <Menu.Item
+                key="19"
+                onClick={e => hashHistory.replace("/org/detail")}
+              >
+                机构详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub11"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>滚动图片信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="20"
+                onClick={e => hashHistory.replace("/imagelist")}
+              >
+                滚动图片列表
+              </Menu.Item>
+              <Menu.Item
+                key="21"
+                onClick={e => hashHistory.replace("/image/detail")}
+              >
+                滚动图片详情
               </Menu.Item>
             </SubMenu>
           </Menu>

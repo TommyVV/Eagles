@@ -69,9 +69,59 @@ const navMap = [
     sub: "sub5"
   },
   {
-    pathname: "#/checkList",
+    pathname: "#/checklist",
     key: "12",
     sub: "sub6"
   },
+  {
+    pathname: "#/systemlist",
+    key: "13",
+    sub: "sub7"
+  },
+  {
+    pathname: "#/system/detail",
+    key: "14",
+    sub: "sub7"
+  },
+  {
+    pathname: "#/ranklist",
+    key: "15",
+    sub: "sub8"
+  },
+  {
+    pathname: "#/rank/detail",
+    key: "15",
+    sub: "sub8"
+  },
+  {
+    pathname: "#/operatorlist",
+    key: "16",
+    sub: "sub9"
+  },
+  {
+    pathname: "#/operator/detail",
+    key: "17",
+    sub: "sub9"
+  },
+  {
+    pathname: "#/orglist",
+    key: "18",
+    sub: "sub10"
+  },
+  {
+    pathname: "#/org/detail",
+    key: "19",
+    sub: "sub10"
+  },
+  {
+    pathname: "#/imagelist",
+    key: "20",
+    sub: "sub11"
+  },
+  {
+    pathname: "#/image/detail",
+    key: "21",
+    sub: "sub11"
+  }
 ];
 export default navMap;

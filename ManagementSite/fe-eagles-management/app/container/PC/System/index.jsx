@@ -13,7 +13,6 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
-const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import {
   getProjectInfoById,
@@ -48,41 +47,51 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch}
       >
         <Row gutter={24}>
-          <Col span={6} key={2}>
-            <FormItem label="商品名称">
-              {getFieldDecorator(`name`)(<Input />)}
+          <Col span={5} key={2}>
+            <FormItem label="标题">
+              {getFieldDecorator(`title`)(<Input />)}
             </FormItem>
           </Col>
-          <Col span={6} key={1}>
+          <Col span={5} key={4}>
             <FormItem label="状态">
               {getFieldDecorator("state")(
                 <Select>
-                  <Option value="0">待审核</Option>
-                  <Option value="1">审核通过</Option>
-                  <Option value="2">审核不通过</Option>
+                  <Option value="0">可用</Option>
+                  <Option value="1">不可用</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
-          <Col span={6} key={3}>
-            <FormItem label="类型筛选">
-              {getFieldDecorator("type")(
-                <Select>
-                  <Option value="0">文章</Option>
-                  <Option value="1">积分</Option>
-                  <Option value="2">其他</Option>
-                </Select>
-              )}
+          <Col span={8} key={3}>
+            <FormItem label="时间">
+              <Col span={11}>
+                <FormItem>
+                  {getFieldDecorator("startTime")(
+                    <DatePicker placeholder="开始时间" />
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={2}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center"
+                  }}
+                >
+                  -
+                </span>
+              </Col>
+              <Col span={11}>
+                <FormItem>
+                  {getFieldDecorator("endTime")(
+                    <DatePicker placeholder="结束时间" />
+                  )}
+                </FormItem>
+              </Col>
             </FormItem>
           </Col>
-          <Col
-            span={6}
-            style={{
-              textAlign: "cnter",
-              paddingLeft: "7px",
-              paddingTop: "3px"
-            }}
-          >
+          <Col span={6} style={{ textAlign: "left", paddingTop: "3px" }}>
             <Button type="primary" htmlType="submit">
               搜索
             </Button>
@@ -100,9 +109,6 @@ const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     // const project = props.project;
     return {
-      type: Form.createFormField({
-        value: "0"
-      }),
       state: Form.createFormField({
         value: "0"
       })
@@ -110,7 +116,7 @@ const WrapperSearchForm = Form.create({
   }
 })(SearchForm);
 
-class CheckList extends React.Component {
+class SystemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,55 +124,39 @@ class CheckList extends React.Component {
       projectList: [], // 项目列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
-      pageConfig: {}, // 当前页配置
-      visible: false
+      pageConfig: {} // 当前页配置
     };
     this.columns = [
       {
-        title: "名称",
-        dataIndex: "name",
-        width: "20%"
+        title: "标题",
+        dataIndex: "title"
       },
       {
-        title: "上传用户",
-        dataIndex: "user",
-        width: "20%"
+        title: "有效时间",
+        dataIndex: "date"
       },
       {
-        title: "新增时间",
-        dataIndex: "time",
-        width: "20%",
-        render: text => <span>{text}</span>
+        title: "内容",
+        dataIndex: "content"
       },
       {
         title: "状态",
-        dataIndex: "state",
-        width: "20%",
-        render: text => <span>{text}</span>
+        dataIndex: "state"
       },
       {
         title: "操作",
-        width: "20%",
-        render: (text, record) => {
+        systemId: "1",
+        render: obj => {
           return (
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                  hashHistory.replace(`/system/detail/${obj.systemId}`)
                 }
               >
-                详情
+                编辑
               </a>
-              <a
-                onClick={() =>
-                  this.setState({
-                    visible: true
-                  })
-                }
-                style={{ paddingLeft: "24px" }}
-              >
-                审核通过
-              </a>
+              <a style={{ paddingLeft: "24px" }}>删除</a>
             </div>
           );
         }
@@ -175,24 +165,24 @@ class CheckList extends React.Component {
     this.data = [
       {
         key: "1",
-        name: "领导人生日",
-        user: "张三",
-        time: "2018-5-12 18:00",
-        state: "待审核"
+        title: "张三的生日1",
+        state: "可用",
+        date: "2018-5-12 10:16",
+        systemId: "1"
       },
       {
         key: "2",
-        name: "领导人生日",
-        user: "张三",
-        time: "2018-5-12 18:00",
-        state: "审核通过"
+        title: "张三的生日2",
+        state: "不可用",
+        date: "2018-5-12 10:16",
+        systemId: "2"
       },
       {
         key: "3",
-        name: "领导人生日",
-        user: "张三",
-        time: "2018-5-12 18:00",
-        state: "审核不通过"
+        title: "张三的生日3",
+        state: "可用",
+        date: "2018-5-12 10:16",
+        systemId: "3"
       }
     ];
     this.getListConfig = {
@@ -321,33 +311,11 @@ class CheckList extends React.Component {
       throw new Error(e);
     }
   };
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
   render() {
     const { selectedRowKeys, pageConfig, projectList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
-    };
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 17 }
-      }
     };
     return (
       <Nav>
@@ -363,40 +331,24 @@ class CheckList extends React.Component {
 
         <Row
           type="flex"
-          justify="center"
+          // justify="center"
           gutter={24}
-          className={projectList.length === 0 ? "init" : ""}
+          // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button onClick={this.handleDelete} className="btn">
-              批量审核
+              批量删除
+            </Button>
+          </Col>
+          <Col>
+            <Button className="btn btn--primary">
+              <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>
             </Button>
           </Col>
         </Row>
-        <Modal
-          title="审核信息"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          width="420px"
-          okText="确定"
-          cancelText="取消"
-        >
-          <Form>
-            <FormItem {...formItemLayout} label="状态">
-              <Select>
-                <Option value="0">s审核通过</Option>
-                <Option value="1">审核不通过</Option>
-              </Select>
-            </FormItem>
-            <FormItem {...formItemLayout} label="原因">
-              <TextArea rows={4} />
-            </FormItem>
-          </Form>
-        </Modal>
       </Nav>
     );
   }
 }
 
-export default CheckList;
+export default SystemList;
