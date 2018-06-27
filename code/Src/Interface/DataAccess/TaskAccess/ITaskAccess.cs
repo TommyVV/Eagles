@@ -19,7 +19,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int EditTaskComment(int orgId, int taskId, int userId, string content);
         
-        int EditTaskStep(ActionEnum action, int orgId, int branchId, int userId, string content, string taskId = null, string stepId = null);
+        int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 
         int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
         

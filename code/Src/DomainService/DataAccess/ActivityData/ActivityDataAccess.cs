@@ -159,7 +159,7 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
         public Eagles.DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId)
         {
             var result = dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
-                @"select ActivityId,ActivityName,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",
+                @"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",
                 new { ActivityId = activityId});
             if (result != null && result.Any())
             {

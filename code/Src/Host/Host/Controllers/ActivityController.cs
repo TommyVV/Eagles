@@ -1,12 +1,13 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model;
+using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Activity.CreateActivity;
+using Eagles.Application.Model.Activity.EditActivityJoin;
+using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
-using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
-using Eagles.Interface.Core.Activity;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -48,9 +49,7 @@ namespace Eagles.Application.Host.Controllers
         {
             return activityHandler.GetActivityDetail(request);
         }
-
         
-
         /// <summary>
         /// 活动发布
         /// </summary>
@@ -62,7 +61,16 @@ namespace Eagles.Application.Host.Controllers
             return activityHandler.CreateActivity(request);
         }
 
-        
+        /// <summary>
+        /// 活动审核接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public EditActivityReviewResponse EditActivityReview(EditActivityReviewRequest request)
+        {
+            return activityHandler.EditActivityReview(request);
+        }
 
         /// <summary>
         /// 活动完成接口

@@ -28,16 +28,15 @@ namespace Ealges.DomianService.DataAccess.UserCommentData
                 });
         }
 
-        public List<Eagles.DomainService.Model.User.TbUserComment> GetUserComment(int id)
+        public List<Eagles.DomainService.Model.User.TbUserComment> GetUserComment(string commentType, int id, int userId)
         {
-            return dbManager.Query<Eagles.DomainService.Model.User.TbUserComment>(
-                @"select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id",
-                new { Id = id });
+            return dbManager.Query<Eagles.DomainService.Model.User.TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment 
+where CommentType = @CommentType and Id = @Id and (ReviewStatus = 0 or UserId = @UserId) ", new { CommentType = commentType, Id = id, UserId = userId });
         }
 
-        public int AuditUserComment(int id)
+        public int AuditUserComment(int messageId)
         {
-            return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = 0 where Id = @Id and ReviewStatus = -1 ", new {Id = id});
+            return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = 0 where MessageId = @MessageId and ReviewStatus = -1 ", new { MessageId = messageId });
         }
     }
 }

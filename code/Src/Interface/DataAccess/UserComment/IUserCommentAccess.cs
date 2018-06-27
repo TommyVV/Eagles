@@ -8,7 +8,7 @@ namespace Eagles.Interface.DataAccess.UserComment
     {
         int EditUserComment(int orgId, int activityId, int userId, string content);
 
-        List<TbUserComment> GetUserComment(int id);
+        List<TbUserComment> GetUserComment(string commentType, int id, int userId);
 
         int AuditUserComment(int id);
     }

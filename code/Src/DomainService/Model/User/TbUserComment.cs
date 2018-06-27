@@ -7,6 +7,7 @@ namespace Eagles.DomainService.Model.User
     /// </summary>
     public class TbUserComment
     {
+        public string CommentType { get; set; }
         public string Content { get; set; }
         public DateTime CreateTime { get; set; }
         public int MessageId { get; set; }

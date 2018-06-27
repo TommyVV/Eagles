@@ -15,9 +15,5 @@
         /// </summary>
         public int IsPublic { get; set; }
         
-        /// <summary>
-        /// 任务评分
-        /// </summary>
-        public string TaskSorce { get; set; }
     }
 }

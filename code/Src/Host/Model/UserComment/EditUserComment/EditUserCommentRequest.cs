@@ -6,6 +6,11 @@
     public class EditUserCommentRequest : RequestBase
     {
         /// <summary>
+        /// 评论类型 0-任务 1-任务 2-
+        /// </summary>
+        public int CommentType { get; set; }
+
+        /// <summary>
         /// 活动/任务Id
         /// </summary>
         public int Id { get; set; }

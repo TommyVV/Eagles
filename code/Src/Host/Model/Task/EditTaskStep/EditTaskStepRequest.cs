@@ -26,7 +26,7 @@ namespace Eagles.Application.Model.Task.EditTaskStep
         /// 计划Id
         /// </summary>
         public int StepId { get; set; }
-
+        
         /// <summary>
         /// 步骤内容
         /// </summary>

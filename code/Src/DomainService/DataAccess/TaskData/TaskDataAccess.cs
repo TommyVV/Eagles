@@ -5,6 +5,7 @@ using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.TaskAccess;
 using DomainModel = Eagles.DomainService.Model;
 
@@ -146,32 +147,16 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                 });
         }
 
-        public int EditTaskStep(ActionEnum action, int orgId, int branchId, int userId, string content, string taskId = null, string stepId = null)
+        public int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep)
         {
             int result = 0;
             switch (action)
             {
                 case ActionEnum.Create:
-                    result = dbManager.Excuted(@"insert into eagles.tb_user_task_step (OrgId,BranchId,TaskId,UserId,StepName,CreateTime) 
-value (@OrgId,@BranchId,@TaskId,@UserId,@StepName,@CreateTime) ",
-                        new
-                        {
-                            OrgId = orgId,
-                            BranchId = branchId,
-                            TaskId = taskId,
-                            UserId = userId,
-                            StepName = content,
-                            CreateTime = DateTime.Now
-                        });
+                    result = dbManager.Excuted(@"insert into eagles.tb_user_task_step (OrgId,BranchId,TaskId,UserId,StepName,Content,CreateTime) value (@OrgId,@BranchId,@TaskId,@UserId,@StepName,@CreateTime) ", taslStep);
                     break;
                 case ActionEnum.Modify:
-                    result = dbManager.Excuted("update eagles.tb_user_task_step set StepName = @StepName where TaskId = @TaskId and StepId = @StepId",
-                        new
-                        {
-                            StepName = content,
-                            TaskId = taskId,
-                            StepId = stepId
-                        });
+                    result = dbManager.Excuted("update eagles.tb_user_task_step set StepName = @StepName where TaskId = @TaskId and StepId = @StepId", taslStep);
                     break;
             }
             return result;

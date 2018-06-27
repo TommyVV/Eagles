@@ -17,6 +17,7 @@ using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
+using Eagles.DomainService.Model.User;
 using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
@@ -247,8 +248,23 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "任务状态不正确";
                 return response;
             }
-            var result = iTaskAccess.EditTaskStep(request.Action, tokens.OrgId, tokens.BranchId, tokens.UserId,
-                request.StepContent, request.TaskId.ToString(), request.StepId.ToString());
+            if (taskInfo.ToUserId != tokens.UserId)
+            {
+                response.Code = "96";
+                response.Message = "必须负责人编辑计划";
+                return response;
+            }
+            iTaskAccess.GetTaskStep(request.TaskId);
+            var taskStep = new TbUserTaskStep(){
+                StepId = request.StepId,
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                TaskId = request.TaskId,
+                UserId = tokens.UserId,
+                Content = request.StepContent,
+                CreateTime = DateTime.Now
+            };
+            var result = iTaskAccess.EditTaskStep(request.Action, taskStep);
             if (result > 0)
             {
                 response.Code = "00";

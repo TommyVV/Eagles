@@ -49,6 +49,10 @@ namespace Eagles.DomainService.Core.Activity
             }
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //活动发起人
             var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
+            if (fromUser == toUser)
+            {
+                
+            }
             var act = new TbActivity();
             act.OrgId = tokens.OrgId;
             act.BranchId = tokens.BranchId;
@@ -62,8 +66,8 @@ namespace Eagles.DomainService.Core.Activity
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
             act.TestId = request.TestId;
-            act.MaxCount = 0;
-            act.MaxUser = 99;
+            act.MaxCount = request.MaxCount;
+            act.MaxUser = request.MaxUser;
             act.ImageUrl = "";
             if (1 == userInfo.IsLeader)
                 act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
@@ -117,7 +121,8 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, request.JoinUserid);
+            var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
+            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result > 0)
             {
                 response.Code = "00";
@@ -210,10 +215,27 @@ namespace Eagles.DomainService.Core.Activity
         public EditActivityFeedBackResponse EditActivityFeedBack(EditActivityFeedBackRequest request)
         {
             var response = new EditActivityFeedBackResponse();
-            var activityId = request.ActivityId;
-            var content = request.Content;
-            var attachList = request.AttachList;
-            var result = iActivityAccess.EditActivityFeedBack(activityId, content, attachList);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.Code = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var taskInfo = iActivityAccess.GetActivityDetail(request.ActivityId);
+            if (taskInfo == null)
+            {
+                response.Code = "96";
+                response.Message = "活动不存在";
+                return response;
+            }
+            if (taskInfo.Status != 0)
+            {
+                response.Code = "96";
+                response.Message = "活动状态不正确";
+                return response;
+            }
+            var result = iActivityAccess.EditActivityFeedBack(request.ActivityId, request.Content, request.AttachList);
             if (result > 0)
             {
                 response.Code = "00";
