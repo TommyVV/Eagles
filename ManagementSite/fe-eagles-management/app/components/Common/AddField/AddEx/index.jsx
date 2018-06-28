@@ -2,7 +2,7 @@ import { Form, Input, Icon, Button, Checkbox  } from "antd";
 import React, { Component } from "react";
 const FormItem = Form.Item;
 import "./style.less";
-import AddImage from "./AddImage";
+import AddImage from "../AddImage";
 
 let uuid = 0;
 class DynamicFieldSet extends React.Component {

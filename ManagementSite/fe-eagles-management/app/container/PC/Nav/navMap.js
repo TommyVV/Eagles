@@ -122,6 +122,21 @@ const navMap = [
     pathname: "#/image/detail",
     key: "21",
     sub: "sub11"
-  }
+  },
+  {
+    pathname: "#/menulist",
+    key: "22",
+    sub: "sub12"
+  },
+  {
+    pathname: "#/menuone/detail",
+    key: "23",
+    sub: "sub12"
+  },
+  {
+    pathname: "#/menutwo/detail",
+    key: "24",
+    sub: "sub12"
+  },
 ];
 export default navMap;

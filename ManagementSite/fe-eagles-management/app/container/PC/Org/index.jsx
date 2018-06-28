@@ -236,13 +236,13 @@ class OrgList extends React.Component {
         xl: { span: 4 }
       },
       wrapperCol: {
-        xl: { span: 8 }
+        xl: { span: 10 }
       }
     };
     return (
       <Nav>
         <Row gutter={24}>
-          <Col span={8}>
+          <Col span={12}>
             <Form>
               <FormItem {...formItemLayout} label="选择组织">
                 <Select>

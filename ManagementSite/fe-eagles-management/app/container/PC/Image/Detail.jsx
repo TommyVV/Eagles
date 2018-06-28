@@ -9,8 +9,9 @@ import {
   Select,
   Avatar,
   Icon,
-  DatePicker
+  Upload
 } from "antd";
+const Dragger = Upload.Dragger;
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import {
@@ -18,7 +19,6 @@ import {
   getProjectInfoById,
   getFileList
 } from "../../../services/projectService";
-import Crop from "../../../components/PC/Crop";
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -148,6 +148,22 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
+    const props = {
+      name: "file",
+      multiple: true,
+      action: "//jsonplaceholder.typicode.com/posts/",
+      onChange(info) {
+        const status = info.file.status;
+        if (status !== "uploading") {
+          console.log(info.file, info.fileList);
+        }
+        if (status === "done") {
+          message.success(`${info.file.name} file uploaded successfully.`);
+        } else if (status === "error") {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      }
+    };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -169,6 +185,15 @@ class Base extends Component {
               <Option value="2">党务工作</Option>
             </Select>
           )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="页面类型">
+          <Dragger {...props}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">点击或拖拽图片上传</p>
+            <p className="ant-upload-hint">支持单张和多张图片上传 </p>
+          </Dragger>
         </FormItem>
         <FormItem>
           <Row gutter={24}>
@@ -209,7 +234,7 @@ const FormMap = Form.create({
       }),
       type: Form.createFormField({
         pageType: "0"
-      }),
+      })
     };
   }
 })(Base);

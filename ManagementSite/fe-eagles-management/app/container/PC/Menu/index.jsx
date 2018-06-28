@@ -26,7 +26,7 @@ import "./style.less";
 
 const confirm = Modal.confirm;
 
-class OperatorList extends React.Component {
+class MenuList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,20 +38,29 @@ class OperatorList extends React.Component {
     };
     this.columns = [
       {
-        title: "操作员编号",
+        title: "机构编号",
         dataIndex: "num"
       },
       {
-        title: "操作员名称",
+        title: "机构名称",
         dataIndex: "name"
       },
       {
-        title: "所属权限组",
-        dataIndex: "permission"
-      },
-      {
-        title: "添加时间",
-        dataIndex: "date"
+        title: "二级菜单",
+        dataIndex: "id",
+        render: id => {
+          return (
+            <div>
+              <a
+                onClick={() => {
+                  hashHistory.replace(`/menutwo/detail/${id}`);
+                }}
+              >
+                去维护
+              </a>
+            </div>
+          );
+        }
       },
       {
         title: "操作",
@@ -60,9 +69,9 @@ class OperatorList extends React.Component {
           return (
             <div>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/operator/detail/${obj.systemId}`)
-                }
+                onClick={() => {
+                  hashHistory.replace(`/menuone/detail/${obj.id}`);
+                }}
               >
                 编辑
               </a>
@@ -84,27 +93,20 @@ class OperatorList extends React.Component {
         key: "1",
         num: "oper01",
         name: "管理员",
-        permission: "管理员组",
-        date: "2018-5-12 10:16",
         id: "1"
       },
       {
         key: "2",
         num: "oper02",
         name: "管理员",
-        permission: "管理员组",
-        date: "2018-5-12 10:16",
         id: "2"
       },
       {
         key: "3",
         num: "oper03",
         name: "管理员",
-        permission: "管理员组",
-        date: "2018-5-12 10:16",
         id: "3"
-      },
-      
+      }
     ];
     this.getListConfig = {
       requestPage: 1,
@@ -284,4 +286,4 @@ class OperatorList extends React.Component {
   }
 }
 
-export default OperatorList;
+export default MenuList;
