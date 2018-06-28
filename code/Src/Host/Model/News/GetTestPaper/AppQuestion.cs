@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Eagles.Application.Model.News.GetNewsTest
+namespace Eagles.Application.Model.News.GetTestPaper
 {
     /// <summary>
     /// 试卷

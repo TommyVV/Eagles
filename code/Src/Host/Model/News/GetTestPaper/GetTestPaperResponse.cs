@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Eagles.Application.Model.News.GetNewsTest
+namespace Eagles.Application.Model.News.GetTestPaper
 {
     /// <summary>
     /// 新闻试卷查询
     /// </summary>
-    public class GetNewsTestResponse : ResponseBase
+    public class GetTestPaperResponse : ResponseBase
     {
         /// <summary>
         /// 试卷List

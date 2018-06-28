@@ -12,7 +12,7 @@ namespace Eagles.Interface.DataAccess.NewsDa
 
         TbNews GetNewsDetail(int newsId, int appId);
 
-        List<TbQuestEx> GetNewsTest(int testId);
+        List<TbQuestEx> GetTestPaper(int testId);
 
         TbTestPaper GetTestPaperInfo(int testId);
 

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Enums;
 using Eagles.Base;
+using Eagles.Application.Model.Enums;
+using Eagles.Application.Model.Common;
+using Eagles.DomainService.Model.Activity;
 
 namespace Eagles.Interface.DataAccess.ActivityAccess
 {
@@ -17,9 +18,9 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
         
-        List<DomainService.Model.Activity.TbActivity> GetActivity(int activityType);
+        List<TbActivity> GetActivity(ActivityType activityType, ActivityPage activityPage, string userId = null);
 
-        DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId);
+        TbActivity GetActivityDetail(int activityId);
         
     }
 }

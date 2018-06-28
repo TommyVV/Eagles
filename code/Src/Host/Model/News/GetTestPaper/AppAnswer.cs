@@ -1,5 +1,5 @@
 ﻿
-namespace Eagles.Application.Model.News.GetNewsTest
+namespace Eagles.Application.Model.News.GetTestPaper
 {
     /// <summary>
     /// 答案

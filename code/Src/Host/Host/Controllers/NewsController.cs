@@ -3,7 +3,7 @@ using System.Web.Http;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNewsDetail;
-using Eagles.Application.Model.News.GetNewsTest;
+using Eagles.Application.Model.News.GetTestPaper;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 

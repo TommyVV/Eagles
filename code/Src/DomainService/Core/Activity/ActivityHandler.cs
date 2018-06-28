@@ -256,7 +256,19 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            var result = iActivityAccess.GetActivity(Convert.ToInt32(request.ActivityType));
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.Code = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
+            var result = iActivityAccess.GetActivity(request.ActivityType, request.ActivityPage, tokens.UserId.ToString());
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,

@@ -41,13 +41,12 @@ namespace Eagles.DomainService.Core.AppModule
                 Modules = modules.Select(x => new Module()
                 {
                     ImageUrl = x.ImageUrl,
-                    IndexDisplay = x.IndexDisplay == 1,
                     IndexPageCount = x.IndexPageCount,
                     ModuleId = x.ModuleId,
                     ModuleName = x.ModuleName,
                     Priority = x.Priority,
                     SmallImageUrl = x.SmallImageUrl,
-                    TragetUrl = x.TragetUrl
+                    TargetUrl = x.TargetUrl
                 }).ToList()
             };
             return response;

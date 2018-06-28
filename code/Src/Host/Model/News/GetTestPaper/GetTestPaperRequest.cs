@@ -1,9 +1,9 @@
-﻿namespace Eagles.Application.Model.News.GetNewsTest
+﻿namespace Eagles.Application.Model.News.GetTestPaper
 {
     /// <summary>
     /// 新闻试卷查询
     /// </summary>
-    public class GetNewsTestRequest : RequestBase
+    public class GetTestPaperRequest : RequestBase
     {
         /// <summary>
         /// 试题编号

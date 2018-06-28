@@ -44,11 +44,13 @@ Address = order.Address, Province = order.Province, City = order.City, District 
 
         public List<UserRank> GetUserRank()
         {
+            var sql = @"select a.Name, b.OrgName,a.Score from tb_user_info a join tb_org_info b on a.OrgId = b.OrgId order by a.Score desc limit 10 ";
             throw new System.NotImplementedException();
         }
 
         public List<BranchRank> GetBranchRank()
         {
+            var sql = @"select sum(score) as ss from tb_user_info group by orgId order by ss desc limit 10 ";
             throw new System.NotImplementedException();
         }
     }

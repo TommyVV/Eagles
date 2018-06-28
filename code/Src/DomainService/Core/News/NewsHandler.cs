@@ -11,7 +11,7 @@ using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetNewsDetail;
-using Eagles.Application.Model.News.GetNewsTest;
+using Eagles.Application.Model.News.GetTestPaper;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.News
@@ -152,16 +152,16 @@ namespace Eagles.DomainService.Core.News
             return response;
         }
 
-        public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
+        public GetTestPaperResponse GetTestPaper(GetTestPaperRequest request)
         {
-            var response = new GetNewsTestResponse();
+            var response = new GetTestPaperResponse();
             if (request.TestId < 0)
                 throw new TransactionException("01", "TestId 非法");
             if (request.AppId <= 0)
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            var resultTest = newsDa.GetNewsTest(request.TestId);
+            var resultTest = newsDa.GetTestPaper(request.TestId);
             if (resultTest == null || !resultTest.Any())
             {
                 return response;

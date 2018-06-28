@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Eagles.Application.Model.News.CompleteTest;
-using Eagles.Application.Model.News.GetNewsTest;
+using Eagles.Application.Model.News.GetTestPaper;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 
@@ -27,15 +27,15 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewsTestResponse GetNewsTest(GetNewsTestRequest request)
+        public GetTestPaperResponse GetTestPaper(GetTestPaperRequest request)
         {
             try
             {
-                return newsHandler.GetNewsTest(request);
+                return newsHandler.GetTestPaper(request);
             }
             catch (TransactionException e)
             {
-                return new GetNewsTestResponse()
+                return new GetTestPaperResponse()
                 {
                     Code = e.ErrorCode,
                     Message = e.Message
@@ -44,7 +44,7 @@ namespace Eagles.Application.Host.Controllers
             }
             catch (Exception e)
             {
-                return new GetNewsTestResponse()
+                return new GetTestPaperResponse()
                 {
                     Code = "99",
                     Message = "系统错误"

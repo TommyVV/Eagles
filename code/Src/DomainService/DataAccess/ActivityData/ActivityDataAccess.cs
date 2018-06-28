@@ -3,8 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
-using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
+using Eagles.Application.Model.Common;
+using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
@@ -149,14 +150,26 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
                 });
         }
         
-        public List<Eagles.DomainService.Model.Activity.TbActivity> GetActivity(int activityType)
+        public List<TbActivity> GetActivity(ActivityType activityType, ActivityPage activityPage, string userId = null)
         {
-            return dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
-                @"select activityId,activityName,ImageUrl,HtmlContent from eagles.TB_ACTIVITY where ActivityType = @ActivityType",
-                new {ActivityType = activityType});
+            switch (activityPage)
+            {
+                case ActivityPage.All:
+                    return dbManager.Query<TbActivity>(
+                        @"select activityId,activityName,ImageUrl,HtmlContent from eagles.tb_activity where ActivityType = @ActivityType", new { ActivityType = (int)activityType });
+                case ActivityPage.Mine:
+                    return dbManager.Query<TbActivity>(
+                        @"select a.activityId,a.activityName,a.ImageUrl,a.HtmlContent from eagles.tb_activity a 
+join eagles.tb_user_activity b on a.ActivityId = b.ActivityId where a.ActivityType = @ActivityType and b.UserId = @UserId  ", new { ActivityType = (int)activityType, UserId = userId });
+                case ActivityPage.Other:
+                    return dbManager.Query<TbActivity>(
+                        @"select a.activityId,a.activityName,a.ImageUrl,a.HtmlContent from eagles.tb_activity a 
+join eagles.tb_user_activity b on a.ActivityId = b.ActivityId where a.ActivityType = @ActivityType and b.UserId <> @UserId  ", new { ActivityType = (int)activityType, UserId = userId });
+                default: return null;
+            }
         }
 
-        public Eagles.DomainService.Model.Activity.TbActivity GetActivityDetail(int activityId)
+        public TbActivity GetActivityDetail(int activityId)
         {
             var result = dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
                 @"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",

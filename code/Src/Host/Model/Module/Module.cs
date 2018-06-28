@@ -15,18 +15,13 @@
         /// <summary>
         /// 跳转链接,如果为空,跳转到通用列表页
         /// </summary>
-        public string TragetUrl { get; set; }
+        public string TargetUrl { get; set; }
 
         /// <summary>
         /// 首页显示条数
         /// </summary>
         public int IndexPageCount { get; set; }
-
-        /// <summary>
-        /// 是否在首页显示
-        /// </summary>
-        public bool IndexDisplay { get; set; }
-
+        
         /// <summary>
         /// 小图
         /// </summary>

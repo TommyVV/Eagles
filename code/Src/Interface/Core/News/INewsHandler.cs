@@ -4,7 +4,7 @@ using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetNewsDetail;
-using Eagles.Application.Model.News.GetNewsTest;
+using Eagles.Application.Model.News.GetTestPaper;
 
 namespace Eagles.Interface.Core.News
 {
@@ -18,7 +18,7 @@ namespace Eagles.Interface.Core.News
 
         GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request);
 
-        GetNewsTestResponse GetNewsTest(GetNewsTestRequest request);
+        GetTestPaperResponse GetTestPaper(GetTestPaperRequest request);
 
         CompleteTestResponse CompleteTest(CompleteTestRequest request);
     }
