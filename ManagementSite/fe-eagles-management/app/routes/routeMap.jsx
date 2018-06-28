@@ -52,6 +52,9 @@ import OrgList from "../container/PC/Org";
 import OrgDetail from "../container/PC/Org/Detail";
 import ImageList from "../container/PC/Image";
 import ImageDetail from "../container/PC/Image/Detail";
+import MenuList from "../container/PC/Menu";
+import MenuDetailOne from "../container/PC/Menu/DetailOne";
+import MenuDetailTwo from "../container/PC/Menu/DetailTwo";
 
 class RouteMap extends Component {
   render() {
@@ -103,6 +106,10 @@ class RouteMap extends Component {
           {/* 滚动图片管理 */}
           <route path="/imagelist" component={ImageList} />
           <route path="/image/detail(/:id)" component={ImageDetail} />
+          {/* 菜单设置 */}
+          <route path="/menulist" component={MenuList} />
+          <route path="/menuone/detail(/:id)" component={MenuDetailOne} />
+          <route path="/menutwo/detail(/:id)" component={MenuDetailTwo} />
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />

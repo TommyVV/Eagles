@@ -28,7 +28,7 @@ import {
   removeDemandFn
 } from "../../../../actions/PC/projectAction";
 import "./style.less";
-import WrappedDynamicFieldSet from "../../../../components/Common/AddField";
+import WrappedDynamicFieldSet from "../../../../components/Common/AddField/AddEx";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -279,4 +279,3 @@ class QuestionDetail extends Component {
 }
 
 export default QuestionDetail;
-

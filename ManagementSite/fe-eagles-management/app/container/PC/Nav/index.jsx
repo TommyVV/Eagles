@@ -51,7 +51,7 @@ export default class App extends React.Component {
     console.log(this.state.current);
     return (
       <Layout>
-        <Sider className="pc_nav">
+        <Sider className="pc_nav" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
           <div className="nav__logo">
             睿穗党建云
             <img src={baixian} alt="" className="baixian" />
@@ -59,7 +59,7 @@ export default class App extends React.Component {
           <Menu
             theme="dark"
             // onClick={this.handleClick}
-            style={{ width: 256 }}
+            style={{ minWidth: 224 }}
             defaultOpenKeys={[sub]}
             selectedKeys={[current]}
             mode="inline"
@@ -298,6 +298,34 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/image/detail")}
               >
                 滚动图片详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub12"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>菜单配置</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="22"
+                onClick={e => hashHistory.replace("/menulist")}
+              >
+                菜单列表
+              </Menu.Item>
+              <Menu.Item
+                key="23"
+                onClick={e => hashHistory.replace("/menuone/detail")}
+              >
+                一级菜单维护
+              </Menu.Item>
+              <Menu.Item
+                key="24"
+                onClick={e => hashHistory.replace("/menutwo/detail")}
+              >
+                二级菜单维护
               </Menu.Item>
             </SubMenu>
           </Menu>

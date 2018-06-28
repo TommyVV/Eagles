@@ -29,7 +29,6 @@ import {
   removeDemandFn
 } from "../../../../actions/PC/projectAction";
 import "./style.less";
-import WrappedDynamicFieldSet from "../../../../components/Common/AddField";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
