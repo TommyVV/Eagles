@@ -35,6 +35,7 @@ namespace Eagles.DomainService.Core.Activity
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
             var response = new CreateActivityResponse();
+            var toUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
@@ -48,10 +49,11 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "用户不存在");
             }
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //活动发起人
-            var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
+            if(!string.IsNullOrEmpty(request.ActivityToUserId))
+                toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
             if (fromUser == toUser)
             {
-                
+                throw new TransactionException("01", "负责人不能和发起人一致");
             }
             var act = new TbActivity();
             act.OrgId = tokens.OrgId;

@@ -19,7 +19,7 @@ namespace Ealges.DomianService.DataAccess.ActivityData
             this.dbManager = dbManager;
         }
 
-        public int CreateActivity(Eagles.DomainService.Model.Activity.TbActivity reqActivity)
+        public int CreateActivity(TbActivity reqActivity)
         {
             return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status) 

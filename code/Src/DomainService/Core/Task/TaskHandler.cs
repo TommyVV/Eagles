@@ -52,6 +52,10 @@ namespace Eagles.DomainService.Core.Task
             }
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
             var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
+            if (fromUser == toUser)
+            {
+                throw new TransactionException("01", "负责人不能和发起人一致");
+            }
             var task = new DomainModel.Task.TbTask();
             task.TaskName = request.TaskName;
             task.BeginTime = request.TaskBeginDate;
