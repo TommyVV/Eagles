@@ -7,6 +7,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [ValidServiceToken]
     public class AppMenuController: ApiController
     {
         private readonly IAppMenuHandler appMenu;

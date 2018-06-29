@@ -18,23 +18,20 @@ namespace Ealges.DomianService.DataAccess.NewsDA
 
         public List<TbNews> GetModuleNews(int moduleId,int appId,int count)
         {
-            return dbManager.Query<TbNews>(@"SELECT OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
-OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl from eagles.tb_news where Module=@Module And OrgId=@OrgId limit @Count",new {Module = moduleId, OrgId = appId, Count = count});
+            return dbManager.Query<TbNews>(@"select OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
+OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl from eagles.tb_news where Module=@Module And OrgId=@OrgId limit @Count", new {Module = moduleId, OrgId = appId, Count = count});
         }
 
         public TbNews GetNewsDetail(int newsId, int appId)
         {
-            return dbManager.QuerySingle<TbNews>(@"SELECT OrgId,NewsId,ShortDesc,Title,HtmlContent,Author
-,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
-OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy
-,ImageUrl from eagles.tb_news where NewsId=@NewsId And OrgId=@OrgId", new { NewsId = newsId, OrgId = appId });
+            return dbManager.QuerySingle<TbNews>(@"select OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
+OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl from eagles.tb_news where NewsId=@NewsId And OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
         }
 
         public List<TbQuestEx> GetTestPaper(int testId)
         {
             return dbManager.Query<TbQuestEx>(@"select c.TestId,a.QuestionId,a.Question,a.Multiple,a.MultipleCount,b.AnswerId,b.Answer,b.AnswerType,b.IsRight,b.ImageUrl
-from eagles.tb_question a join eagles.tb_quest_anwser b on a.questionId = b.questionId join eagles.tb_test_question c on a.questionId = c.questionId
-where c.TestId = @TestId ", new {TestId = testId});
+from eagles.tb_question a join eagles.tb_quest_anwser b on a.questionId = b.questionId join eagles.tb_test_question c on a.questionId = c.questionId where c.TestId = @TestId ", new {TestId = testId});
         }
 
         public TbTestPaper GetTestPaperInfo(int testId)

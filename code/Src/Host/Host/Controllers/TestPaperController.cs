@@ -10,6 +10,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// TestPaperController
     /// </summary>
+    [ValidServiceToken]
     public class TestPaperController: ApiController
     {
         private INewsHandler newsHandler;

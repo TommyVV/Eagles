@@ -33,6 +33,7 @@ namespace Eagles.DomainService.Core.Product
                 {
                     ProductId = x.ProdId,
                     ProductName = x.ProdName,
+                    ProductScore = x.Score,
                     ProductImageUrl = x.ImageUrl
                 }).ToList();
                 response.Code = "00";

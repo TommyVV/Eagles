@@ -8,6 +8,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 学习控制器
     /// </summary>
+    [ValidServiceToken]
     public class StudyController : ApiController
     {
         private IStudyHandler iStudyHandler;

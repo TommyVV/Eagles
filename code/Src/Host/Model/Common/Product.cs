@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 产品积分
         /// </summary>
-        public string ProductScore { get; set; }
+        public int ProductScore { get; set; }
 
         /// <summary>
         /// 产品图片Url

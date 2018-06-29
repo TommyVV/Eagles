@@ -307,6 +307,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityName = result.ActivityName;
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
+                response.ActivityStatus = result.Status;
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });

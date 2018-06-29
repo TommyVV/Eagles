@@ -6,10 +6,11 @@ namespace Eagles.Interface.DataAccess.UserComment
 {
     public interface IUserCommentAccess : IInterfaceBase
     {
-        int EditUserComment(int orgId, int activityId, int userId, string content);
+        int EditUserComment(TbUserComment userComment);
+
+        int AuditUserComment(int commentId, int reviewStatus);
 
         List<TbUserComment> GetUserComment(string commentType, int id, int userId);
 
-        int AuditUserComment(int id);
     }
 }

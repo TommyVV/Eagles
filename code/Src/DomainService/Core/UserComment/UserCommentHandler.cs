@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Eagles.Base;
+using Eagles.Base.DesEncrypt;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.UserComment;
 using Eagles.Interface.DataAccess.UserComment;
@@ -13,11 +16,13 @@ namespace Eagles.DomainService.Core.UserComment
     public class UserCommentHandler :IUserCommentHandler
     {
         private readonly IUserCommentAccess userCommentAccess;
+        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public UserCommentHandler(IUserCommentAccess userCommentAccess, IUtil util)
+        public UserCommentHandler(IUserCommentAccess userCommentAccess, IDesEncrypt desEncrypt, IUtil util)
         {
             this.userCommentAccess = userCommentAccess;
+            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -31,7 +36,18 @@ namespace Eagles.DomainService.Core.UserComment
                 response.Message = "获取Token失败";
                 return response;
             }
-            var result = userCommentAccess.EditUserComment(tokens.OrgId, request.Id, request.CommentUserId, request.Comment);
+            var userId = Convert.ToInt32(desEncrypt.Decrypt(request.CommentUserId)); //评论人
+            var tbUserComment = new TbUserComment()
+            {
+                OrgId = tokens.OrgId,
+                CommentType = request.CommentType,
+                Id = request.Id,
+                Content = request.Comment,
+                CreateTime = DateTime.Now,
+                UserId = userId,
+                ReviewStatus = -1
+            };
+            var result = userCommentAccess.EditUserComment(tbUserComment);
             if (result > 0)
             {
                 response.Code = "00";
@@ -41,6 +57,30 @@ namespace Eagles.DomainService.Core.UserComment
             {
                 response.Code = "96";
                 response.Message = "失败";
+            }
+            return response;
+        }
+
+        public AuditUserCommentResponse AuditUserComment(AuditUserCommentRequest request)
+        {
+            var response = new AuditUserCommentResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.Code = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var result = userCommentAccess.AuditUserComment(request.CommentId, request.ReviewStatus);
+            if (result > 0)
+            {
+                response.Code = "00";
+                response.Message = "审核成功";
+            }
+            else
+            {
+                response.Code = "00";
+                response.Message = "审核失败";
             }
             return response;
         }
@@ -63,6 +103,7 @@ namespace Eagles.DomainService.Core.UserComment
             response.CommentList = result?.Select(x => new Comment
             {
                 CommentId = x.MessageId,
+                Id = x.Id,
                 CommentTime = x.ReviewTime,
                 CommentUserId = x.UserId,
                 CommentContent = x.Content
@@ -80,28 +121,5 @@ namespace Eagles.DomainService.Core.UserComment
             return response;
         }
 
-        public AuditUserCommentResponse AuditUserComment(AuditUserCommentRequest request)
-        {
-            var response = new AuditUserCommentResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-            var result = userCommentAccess.AuditUserComment(request.Id);
-            if (result > 0)
-            {
-                response.Code = "00";
-                response.Message = "审核成功";
-            }
-            else
-            {
-                response.Code = "00";
-                response.Message = "审核失败";
-            }
-            return response;
-        }
     }
 }

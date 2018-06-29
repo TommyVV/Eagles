@@ -13,6 +13,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 用户Controller
     /// </summary>
+    [ValidServiceToken]
     public class UserController : ApiController
     {
         private IUserHandler userHandler;

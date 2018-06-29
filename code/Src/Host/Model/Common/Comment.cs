@@ -13,6 +13,11 @@ namespace Eagles.Application.Model.Common
         public int CommentId { get; set; }
 
         /// <summary>
+        /// 活动/任务Id
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// 评论内容
         /// </summary>
         public string CommentContent { get; set; }

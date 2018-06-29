@@ -9,6 +9,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// AppModuleController
     /// </summary>
+    [ValidServiceToken]
     public class AppModuleController : ApiController
     {
         private readonly IAppModuleHanlder appModule;

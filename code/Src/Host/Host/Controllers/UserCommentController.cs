@@ -9,6 +9,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// 评论接口
     /// </summary>
+    [ValidServiceToken]
     public class UserCommentController: ApiController
     {
         private IUserCommentHandler userCommentHandler;
@@ -35,7 +36,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditUserCommentResponse EditActivityComment(EditUserCommentRequest request)
+        public EditUserCommentResponse EditUserComment(EditUserCommentRequest request)
         {
             return userCommentHandler.EditUserComment(request);
         }

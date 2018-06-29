@@ -37,7 +37,7 @@ namespace Eagles.DomainService.Core.AppMenu
             {
                 MenuId = x.MenuId,
                 MenuName = x.MenuName,
-                TargetUrl = x.TragetUrl,
+                TargetUrl = x.TargetUrl,
                 SubMenus = new List<AppSubMenu>(),
                 HasSubMenu = false
 
@@ -48,7 +48,7 @@ namespace Eagles.DomainService.Core.AppMenu
                 {
                     MenuId = x.MenuId,
                     MenuName = x.MenuName,
-                    TargetUrl = x.TragetUrl,
+                    TargetUrl = x.TargetUrl,
                     ParentMenuId = x.ParentMenuId,
                 }).ToList();
 

@@ -8,7 +8,7 @@
         /// <summary>
         /// 评论类型 0-任务 1-任务 2-
         /// </summary>
-        public int CommentType { get; set; }
+        public string CommentType { get; set; }
 
         /// <summary>
         /// 活动/任务Id
@@ -19,11 +19,12 @@
         /// 评论用户Id
         /// </summary>
 
-        public int CommentUserId { get; set; }
+        public string CommentUserId { get; set; }
 
         /// <summary>
         /// 评论内容
         /// </summary>
         public string Comment { get; set; }
+        
     }
 }
