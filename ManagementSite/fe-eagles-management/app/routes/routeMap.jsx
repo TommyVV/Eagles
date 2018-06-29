@@ -55,6 +55,9 @@ import ImageDetail from "../container/PC/Image/Detail";
 import MenuList from "../container/PC/Menu";
 import MenuDetailOne from "../container/PC/Menu/DetailOne";
 import MenuDetailTwo from "../container/PC/Menu/DetailTwo";
+import MeetList from "../container/PC/Meet";
+import MeetDetail from "../container/PC/Meet/Detail";
+import ImportMeetMember from "../container/PC/Meet/ImportMeetMember";
 
 class RouteMap extends Component {
   render() {
@@ -110,6 +113,10 @@ class RouteMap extends Component {
           <route path="/menulist" component={MenuList} />
           <route path="/menuone/detail(/:id)" component={MenuDetailOne} />
           <route path="/menutwo/detail(/:id)" component={MenuDetailTwo} />
+          {/* 菜单设置 */}
+          <route path="/meetlist" component={MeetList} />
+          <route path="/importmember/:id" component={ImportMeetMember} />
+          <route path="/meet/detail(/:id)" component={MeetDetail} />
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />

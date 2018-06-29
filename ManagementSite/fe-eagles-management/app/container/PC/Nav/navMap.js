@@ -138,5 +138,20 @@ const navMap = [
     key: "24",
     sub: "sub12"
   },
+  {
+    pathname: "#/meetlist",
+    key: "25",
+    sub: "sub13"
+  },
+  {
+    pathname: "#/importmember",
+    key: "25",
+    sub: "sub13"
+  },
+  {
+    pathname: "#/meet/detail",
+    key: "26",
+    sub: "sub13"
+  },
 ];
 export default navMap;

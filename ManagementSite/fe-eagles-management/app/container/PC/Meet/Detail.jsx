@@ -9,7 +9,8 @@ import {
   Select,
   Upload,
   Icon,
-  DatePicker
+  DatePicker,
+  Table
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
@@ -29,10 +30,69 @@ class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false //裁剪图片
+      selectedRowKeys: []
+    };
+
+    this.columns = [
+      {
+        title: "参与人员姓名",
+        dataIndex: "name"
+      },
+      {
+        title: "联系电话",
+        dataIndex: "phone"
+      },
+      {
+        title: "是否为系统人员",
+        dataIndex: "member"
+      },
+      {
+        title: "操作",
+        id: "1",
+        render: obj => {
+          return (
+            <div>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                }
+              >
+                删除
+              </a>
+            </div>
+          );
+        }
+      }
+    ];
+    this.data = [
+      {
+        key: "1",
+        name: "张三",
+        phone: "15555555555",
+        member: "是",
+        id: "1"
+      },
+      {
+        key: "2",
+        name: "张三",
+        phone: "15555555555",
+        member: "是",
+        id: "2"
+      },
+      {
+        key: "3",
+        name: "张三",
+        phone: "15555555555",
+        member: "否",
+        id: "3"
+      }
+    ];
+    this.getListConfig = {
+      requestPage: 1,
+      pageSize: 6,
+      keyword: ""
     };
   }
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
@@ -138,16 +198,24 @@ class Base extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { showCrop } = this.state;
-    console.log("members - ", this.props);
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xl: { span: 4 }
-    //   },
-    //   wrapperCol: {
-    //     xl: { span: 6 }
-    //   }
-    // };
+    const props = {
+      name: "file",
+      action: "//jsonplaceholder.typicode.com/posts/",
+      headers: {
+        authorization: "authorization-text"
+      },
+      onChange(info) {
+        if (info.file.status !== "uploading") {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === "done") {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === "error") {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      }
+    };
+    const { selectedRowKeys, pageConfig, projectList } = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -168,13 +236,23 @@ class Base extends Component {
         sm: { span: 11 }
       }
     };
+    const formItemLayoutTable = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("intergralId")(<Input />)}
+          {getFieldDecorator("systemId")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="商品名称">
-          {getFieldDecorator("name", {
+        <FormItem {...formItemLayout} label="会议名称">
+          {getFieldDecorator("num", {
             rules: [
               {
                 required: true,
@@ -184,16 +262,8 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，20字以内" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
-            <Select>
-              <Option value="0">上架</Option>
-              <Option value="1">下架</Option>
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="所需积分">
-          {getFieldDecorator("intergral", {
+        <FormItem {...formItemLayout} label="发起人">
+          {getFieldDecorator("password", {
             rules: [
               {
                 required: true,
@@ -203,26 +273,7 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，20字以内" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
-            <Select>
-              <Option value="0">可用</Option>
-              <Option value="1">不可用</Option>
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="已售">
-          {getFieldDecorator("sold", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem label="销售时间" {...formItemLayoutDate}>
+        <FormItem label="发起时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
               {getFieldDecorator("startTime", {
@@ -261,28 +312,6 @@ class Base extends Component {
             </FormItem>
           </Col>
         </FormItem>
-        <FormItem {...formItemLayout} label="每人允许兑换的最大数量">
-          {getFieldDecorator("max", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="商品参考价格">
-          {getFieldDecorator("price", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
         <FormItem {...formItemLayout} label="内容">
           {getFieldDecorator("price", {
             rules: [
@@ -294,50 +323,23 @@ class Base extends Component {
             ]
           })(<TextArea rows={4} />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="库存">
-          {getFieldDecorator("stock", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="产品缩略图">
+        <FormItem {...formItemLayout} label="附件">
           {getFieldDecorator("view")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
-              </div>
-            </span>
+            <Upload {...props}>
+              <Button>
+                <Icon type="upload" /> 点击上传
+              </Button>
+            </Upload>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="产品详情图">
-          {getFieldDecorator("detailImg")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
-              </div>
-            </span>
-          )}
+        <FormItem {...formItemLayoutTable} label="参会人员">
+          <Table
+            dataSource={this.data}
+            columns={this.columns}
+            pagination={pageConfig}
+            locale={{ emptyText: "暂无数据" }}
+            bordered
+          />
         </FormItem>
         <FormItem>
           <Row gutter={24}>
@@ -360,16 +362,6 @@ class Base extends Component {
             </Col>
           </Row>
         </FormItem>
-        {showCrop ? (
-          <Crop
-            handleFile={() => this.handleFile("avatar")}
-            onCancel={() =>
-              this.setState({
-                ["showCrop"]: false
-              })
-            }
-          />
-        ) : null}
       </Form>
     );
   }
@@ -380,14 +372,17 @@ const FormMap = Form.create({
     console.log("项目详情数据回显 - ", props);
     const project = props.project;
     return {
-      // intergralId: Form.createFormField({ value: "" }),
-      // type: Form.createFormField({ value: "0" }),
-      // state: Form.createFormField({ value: "0" })
+      intergralId: Form.createFormField({
+        value: ""
+      }),
+      type: Form.createFormField({
+        org: "0"
+      })
     };
   }
 })(Base);
 
-class GoodsDetail extends Component {
+class MeetDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -396,7 +391,8 @@ class GoodsDetail extends Component {
   }
 
   componentWillMount() {
-    // let { projectId } = this.props.params;
+    let { id } = this.props.params;
+    console.log(id);
     // let author = {
     //   name: this.props.user.userName,
     //   user_id: this.props.user.userId,
@@ -450,4 +446,4 @@ class GoodsDetail extends Component {
   }
 }
 
-export default GoodsDetail;
+export default MeetDetail;
