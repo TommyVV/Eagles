@@ -31,29 +31,51 @@ namespace Eagles.DomainService.Core.News
             this.newsDa = newsDa;
         }
 
-        public CreateNewsResponse CreateNews(CreateNewsRequest request)
+        public CreateArticleResponse CreateArticle(CreateArticleRequest request)
         {
+            var response = new CreateArticleResponse();
             if (request.AppId <= 0)
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            var response = new CreateNewsResponse();
-            var token = request.Token;
-            var newsType = request.NewsType;
-            var newsTitle = request.NewsTitle;
-            var content = request.NewsContent;
-            var isPublic = request.IsPublic;
-            //var result = dbManager.Excuted(@"insert into eagles.tb_user_news (UserId,Title,HtmlContent,NewsType,Status,CreateTime,OrgReview,BranchReview)", new object[] { "", newsTitle, content, newsType, "-1", DateTime.Now, isPublic });
-            //if (result > 0)
-            //{
-            //    response.Code = "00";
-            //    response.Message = "成功";
-            //}
-            //else
-            //{
-            //    response.Code = "96";
-            //    response.Message = "失败";
-            //}
+
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.Code = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
+            var newsInfo = new TbUserNews()
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                UserId = tokens.UserId,
+                Title = request.NewsTitle,
+                HtmlContent = request.NewsContent,
+                NewsType = request.NewsType,
+                Status = "-1",
+                CreateTime = DateTime.Now,
+                RewardsScore = request.RewardsScore,
+                OrgReview = "-1",
+                BranchReview = "-1"
+            };
+            var result = articleData.CreateArticle(newsInfo);
+            if (result > 0)
+            {
+                response.Code = "00";
+                response.Message = "成功";
+            }
+            else
+            {
+                response.Code = "96";
+                response.Message = "失败";
+            }
             return response;
         }
 

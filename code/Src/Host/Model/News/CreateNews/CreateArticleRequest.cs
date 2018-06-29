@@ -3,9 +3,9 @@
 namespace Eagles.Application.Model.News.CreateNews
 {
     /// <summary>
-    /// 新闻文章发布
+    /// 文章发布
     /// </summary>
-    public class CreateNewsRequest : RequestBase
+    public class CreateArticleRequest : RequestBase
     {
         /// <summary>
         /// 新闻文章标题
@@ -23,8 +23,8 @@ namespace Eagles.Application.Model.News.CreateNews
         public string NewsContent { get; set; }
 
         /// <summary>
-        /// 是否公开
+        /// 文章积分
         /// </summary>
-        public string IsPublic { get; set; }
+        public int RewardsScore { get; set; }
     }
 }

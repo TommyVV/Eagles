@@ -75,7 +75,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CreateNewsResponse CreateNews(CreateNewsRequest request)
+        public CreateArticleResponse CreateNews(CreateNewsRequest request)
         {
             return newsHandler.CreateNews(request);
         }

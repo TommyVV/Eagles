@@ -14,6 +14,12 @@ namespace Ealges.DomianService.DataAccess.UserArticle
            this.dbManager = dbManager;
         }
 
+        public int CreateArticle(TbUserNews userNews)
+        {
+
+            return 1;
+        }
+
         public List<TbUserNews> GetUserNewsList(int userId)
         {
 

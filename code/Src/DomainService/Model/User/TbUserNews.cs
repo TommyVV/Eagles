@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.User
 {
@@ -12,7 +13,7 @@ namespace Eagles.DomainService.Model.User
         public DateTime CreateTime { get; set; }
         public string HtmlContent { get; set; }
         public int NewsId { get; set; }
-        public string NewsType { get; set; }
+        public NewsEnum NewsType { get; set; }
         public int OrgId { get; set; }
         public string OrgReview { get; set; }
         public int ReviewId { get; set; }

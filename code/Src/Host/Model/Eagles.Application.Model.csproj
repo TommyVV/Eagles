@@ -90,8 +90,8 @@
     <Compile Include="GetNotice\GetNoticResponse.cs" />
     <Compile Include="Scroll\GetScrollNew\GetScrollNewsRequest.cs" />
     <Compile Include="Scroll\GetScrollNew\GetScrollNewsResponse.cs" />
-    <Compile Include="News\CreateNews\CreateNewsRequest.cs" />
-    <Compile Include="News\CreateNews\CreateNewsResponse.cs" />
+    <Compile Include="News\CreateNews\CreateArticleRequest.cs" />
+    <Compile Include="News\CreateNews\CreateArticleResponse.cs" />
     <Compile Include="Score\GetScoreExchangeLs\GetScoreExchangeLsRequest.cs" />
     <Compile Include="Score\GetScoreExchangeLs\GetScoreExchangeLsResponse.cs" />
     <Compile Include="Product\GetProductDetail\GetProductDetailRequest.cs" />
