@@ -328,6 +328,28 @@ export default class App extends React.Component {
                 二级菜单维护
               </Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub13"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>会议信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="25"
+                onClick={e => hashHistory.replace("/meetlist")}
+              >
+                会议列表
+              </Menu.Item>
+              <Menu.Item
+                key="26"
+                onClick={e => hashHistory.replace("/meet/detail")}
+              >
+                会议信息
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 260, minHeight: "100vh" }}>
