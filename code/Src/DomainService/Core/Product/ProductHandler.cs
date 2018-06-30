@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Core.Product
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            var result = iProductAccess.GetProduct();
+            var result = iProductAccess.GetProduct(request);
             if (result != null && result.Count > 0)
             {
                 response.ProductList = result?.Select(x => new Application.Model.Common.Product
@@ -36,13 +36,11 @@ namespace Eagles.DomainService.Core.Product
                     ProductScore = x.Score,
                     ProductImageUrl = x.ImageUrl
                 }).ToList();
-                response.Code = "00";
-                response.Message = "查询成功";
+              
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
             }
             return response;
         }
@@ -63,18 +61,15 @@ namespace Eagles.DomainService.Core.Product
                 response.ProductBeginTime = result.BeginTime;
                 response.ProductEndTime = result.EndTime;
                 response.ProductScore = result.Score;
-                response.ProductImgUrl = result.ImageUrl;
+                response.ProductImgUrl = result.SmallImageUrl;
                 response.ProductDescrption = result.HtmlDescription;
                 response.Price = result.Price;
                 response.Inventory = result.Stock;
                 response.LimitedCount = result.MaxBuyCount;
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
             }
             return response;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
@@ -43,11 +44,13 @@ namespace Eagles.DomainService.Core.News
                 response.Message = "获取Token失败";
                 return response;
             }
+
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
                 throw new TransactionException("01", "用户不存在");
             }
+
             var newsInfo = new TbUserNews()
             {
                 OrgId = tokens.OrgId,
@@ -63,16 +66,11 @@ namespace Eagles.DomainService.Core.News
                 BranchReview = "-1"
             };
             var result = articleData.CreateArticle(newsInfo);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
+                throw new TransactionException("96", "查无数据");
             }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
-            }
+
             return response;
         }
 
@@ -120,15 +118,13 @@ namespace Eagles.DomainService.Core.News
                     CreateTime = x.CreateTime,
                     ImageUrl = x.ImageUrl,
                     ExternalUrl = x.ExternalUrl,
-                    IsExternal = x.IsExternal==1
+                    IsExternal = x.IsExternal==1,
+                    NewsContent=x.ShortDesc
                 }).ToList();
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
             }
             return response;
         }
@@ -154,19 +150,23 @@ namespace Eagles.DomainService.Core.News
                 response.CreateTime = result.CreateTime;
                 response.TestId = result.TestId;
                 response.IsAttach = result.IsAttach;
-                response.Attach1 = result.Attach1;
-                response.Attach2 = result.Attach2;
-                response.Attach3 = result.Attach3;
-                response.Attach4 = result.Attach4;
+                response.Attach = new List<string>
+                {
+                    result.Attach1,
+                    result.Attach2,
+                    result.Attach3,
+                    result.Attach4
+                };
+                //response.Attach1 = result.Attach1;
+                //response.Attach2 = result.Attach2;
+                //response.Attach3 = result.Attach3;
+                //response.Attach4 = result.Attach4;
                 response.ViewCount = result.ViewCount;
                 response.CanStudy = result.CanStudy;
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
             }
             return response;
         }

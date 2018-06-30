@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Eagles.Application.Model.News.GetNewsDetail
 {
@@ -51,26 +52,30 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// 是否有附件
         /// </summary>
         public int IsAttach { get; set; }
-        
-        /// <summary>
-        /// 附件1
-        /// </summary>
-        public string Attach1 { get; set; }
 
         /// <summary>
-        /// 附件2
+        /// 附件
         /// </summary>
-        public string Attach2 { get; set; }
+        public List<string> Attach { get; set; }
+        ///// <summary>
+        ///// 附件1
+        ///// </summary>
+        //public string Attach1 { get; set; }
 
-        /// <summary>
-        /// 附件3
-        /// </summary>
-        public string Attach3 { get; set; }
+        ///// <summary>
+        ///// 附件2
+        ///// </summary>
+        //public string Attach2 { get; set; }
 
-        /// <summary>
-        /// 附件4
-        /// </summary>
-        public string Attach4 { get; set; }
+        ///// <summary>
+        ///// 附件3
+        ///// </summary>
+        //public string Attach3 { get; set; }
+
+        ///// <summary>
+        ///// 附件4
+        ///// </summary>
+        //public string Attach4 { get; set; }
 
         /// <summary>
         /// 阅读数量

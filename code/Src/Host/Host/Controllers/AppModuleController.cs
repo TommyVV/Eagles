@@ -7,7 +7,7 @@ using Eagles.Interface.Core.AppModule;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// AppModuleController
+    /// 栏目
     /// </summary>
     [ValidServiceToken]
     public class AppModuleController : ApiController
@@ -29,28 +29,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public AppModuleResponse GetModule(GetAppModuleRequest request)
+        public ResponseFormat<AppModuleResponse> GetModule(GetAppModuleRequest request)
         {
-            try
-            {
-                return appModule.Process(request);
-            }
-            catch (TransactionException e)
-            {
-                return new AppModuleResponse()
-                {
-                    Code = e.ErrorCode,
-                    Message = e.ErrorMessage
-                };
-            }
-            catch (Exception e)
-            {
-                return new AppModuleResponse()
-                {
-                    Code = "99",
-                    Message = "系统错误"
-                };
-            }
+            return ApiActuator.Runing(() => appModule.Process(request));
         }
     }
 }

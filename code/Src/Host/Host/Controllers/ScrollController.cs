@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model.Scroll.GetScrollImg;
 using Eagles.Application.Model.Scroll.GetScrollNew;
+using Eagles.Base;
 using Eagles.Interface.Core.Scroll;
 
 namespace Eagles.Application.Host.Controllers
@@ -24,9 +25,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetScrollImgResponse GetScrollImg(GetScrollImgRequest request)
+        public ResponseFormat<GetScrollImgResponse> GetScrollImg(GetScrollImgRequest request)
         {
-            return scrollHandler.GetScrollImg(request);
+            return ApiActuator.Runing(() => scrollHandler.GetScrollImg(request));
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetScrollNewsResponse GetScrollNews(GetScrollNewsRequest request)
+        public ResponseFormat<GetScrollNewsResponse> GetScrollNews(GetScrollNewsRequest request)
         {
-            return scrollHandler.GetScrollNews(request);
+            return ApiActuator.Runing(() => scrollHandler.GetScrollNews(request));
         }
     }
 }

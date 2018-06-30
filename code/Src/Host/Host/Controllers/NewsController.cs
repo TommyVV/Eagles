@@ -32,30 +32,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
+        public ResponseFormat<GetModuleNewsResponse> GetModuleNews(GetModuleNewsRequest request)
         {
-            try
-            {
-                return newsHandler.GetModuleNews(request);
-            }
-            catch (TransactionException e)
-            {
-                return new GetModuleNewsResponse()
-                {
-                    Code = e.ErrorCode,
-                    Message = e.Message
-                };
-                
-            }
-            catch (Exception e)
-            {
-                return new GetModuleNewsResponse()
-                {
-                    Code = "99",
-                    Message = "系统错误"
-                };
-            }
-            
+            return ApiActuator.Runing(() => newsHandler.GetModuleNews(request));
         }
 
         /// <summary>
@@ -64,32 +43,12 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request)
+        public ResponseFormat<GetNewsDetailResponse> GetNewsDetail(GetNewsDetailRequest request)
         {
-            try
-            {
-                return newsHandler.GetNewsDetail(request);
-            }
-            catch (TransactionException e)
-            {
-                return new GetNewsDetailResponse()
-                {
-                    Code = e.ErrorCode,
-                    Message = e.Message
-                };
-
-            }
-            catch (Exception e)
-            {
-                return new GetNewsDetailResponse()
-                {
-                    Code = "99",
-                    Message = "系统错误"
-                };
-            }
+            return ApiActuator.Runing(() => newsHandler.GetNewsDetail(request));
 
         }
 
-       
+
     }
 }

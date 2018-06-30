@@ -42,7 +42,7 @@ where Token=@Token AND TokenType=@TokenType", new {Token = token, TokenType = to
         public int EditUserScore(int userId, int score)
         {
             //修改用户积分            
-            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score + @Score where UserId = @UserId", new {UserId = userId, Score = score});
+            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId = @UserId  and  Score>=@Score", new {UserId = userId, Score = score});
         }
 
         public bool CheckAppId(int appId)
