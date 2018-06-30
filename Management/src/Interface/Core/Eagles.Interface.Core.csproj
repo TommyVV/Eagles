@@ -45,6 +45,7 @@
     <Compile Include="IModuleHandler.cs" />
     <Compile Include="IOperGroupHandler.cs" />
     <Compile Include="IOperHandler.cs" />
+    <Compile Include="IRewardScoreHandler.cs" />
     <Compile Include="ITestPaperHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />

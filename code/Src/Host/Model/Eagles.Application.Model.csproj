@@ -48,6 +48,7 @@
     <Compile Include="Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="Activity\EditActivityReview\EditActivityReviewResponse.cs" />
     <Compile Include="Common\AnswerClass.cs" />
+    <Compile Include="Common\Token.cs" />
     <Compile Include="Common\UserRelationship.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />

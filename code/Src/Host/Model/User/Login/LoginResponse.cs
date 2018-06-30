@@ -3,7 +3,7 @@
     /// <summary>
     /// 登录接口
     /// </summary>
-    public class LoginResponse : ResponseBase
+    public class LoginResponse 
     {
         /// <summary>
         /// Token

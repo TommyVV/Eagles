@@ -39,5 +39,8 @@ namespace Eagles.Interface.Core.User
         /// <param name="request"></param>
         /// <returns></returns>
         RegisterResponse Register(RegisterRequest request);
+
+
+
     }
 }

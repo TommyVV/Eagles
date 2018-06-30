@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Eagles.Application.Host.Common;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.User;
@@ -11,6 +12,9 @@ using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
+using Eagles.Base.Config;
+using Eagles.Base.Configuration;
+using Eagles.Base.Json.Implement;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.User
@@ -20,10 +24,12 @@ namespace Eagles.DomainService.Core.User
         private readonly IUtil util;
         private readonly IDesEncrypt desEncrypt;
         private readonly IUserInfoAccess userInfoAccess;
+        private readonly IConfigurationManager Config;
 
-        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt)
+        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt, IConfigurationManager config)
         {
             this.desEncrypt = desEncrypt;
+            Config = config;
             this.userInfoAccess = userInfoAccess;
             this.util = util;
         }
@@ -133,10 +139,9 @@ namespace Eagles.DomainService.Core.User
 
                 if (!password1.Equals(password2))
                 {
-                    response.Code = "96";
-                    response.Message = "账户密码错误";
-                    return response;
+                    throw new TransactionException("96", "账户密码错误");
                 }
+
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
@@ -146,6 +151,7 @@ namespace Eagles.DomainService.Core.User
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
                 };
+
                 var tokenInfo = userInfoAccess.InsertToken(userToken);
                 if (tokenInfo > 0)
                 {
@@ -153,20 +159,17 @@ namespace Eagles.DomainService.Core.User
                 }
                 else
                 {
-                    response.Code = "96";
-                    response.Message = "登录失败";
-                    return response;
+                    throw new TransactionException("96", "登陆失败");
                 }
+
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
-                response.Code = "00";
-                response.Message = "登录成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无此账号";
+                throw new TransactionException("96", "查无此账号");
             }
+
             return response;
         }
 
@@ -179,13 +182,13 @@ namespace Eagles.DomainService.Core.User
             var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
-        
-        public GetUserRelationshipResponse GetUserRelationship (GetUserRelationshipRequest request)
+
+        public GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request)
         {
             var response = new GetUserRelationshipResponse();
             var userId = Convert.ToInt32(desEncrypt.Decrypt(request.UserId));
             var result = userInfoAccess.GetRelationship(userId);
-            response.UserRelationshipList = result?.Select(x => 
+            response.UserRelationshipList = result?.Select(x =>
             new UserRelationship
             {
                 UserId = x.UserId,

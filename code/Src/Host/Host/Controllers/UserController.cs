@@ -7,7 +7,7 @@ using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.GetUserInfo;
-
+using Eagles.Base;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -31,9 +31,11 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public LoginResponse Login(LoginRequest request)
+        public ResponseFormat<LoginResponse> Login(LoginRequest request)
         {
-            return userHandler.Login(request);
+
+            return ApiActuator.Runing(() => userHandler.Login(request));
+            //  return userHandler.Login(request);
         }
 
         /// <summary>
@@ -42,9 +44,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public RegisterResponse Register(RegisterRequest request)
+        [AllowAnonymous]
+        public ResponseFormat<RegisterResponse> Register(RegisterRequest request)
         {
-            return userHandler.Register(request);
+            return ApiActuator.Runing(() => userHandler.Register(request));
         }
 
         /// <summary>
@@ -53,9 +56,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditUserResponse EditUser(EditUserRequest request)
+        public ResponseFormat<EditUserResponse> EditUser(EditUserRequest request)
         {
-            return userHandler.EditUser(request);
+            return ApiActuator.Runing(() => userHandler.EditUser(request));
         }
 
         /// <summary>
@@ -64,9 +67,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetUserInfoResponse GetUserInfo(GetUserInfoRequest request)
+        public ResponseFormat<GetUserInfoResponse> GetUserInfo(GetUserInfoRequest request)
         {
-            return userHandler.GetUserInfo(request);
+            return ApiActuator.Runing(() => userHandler.GetUserInfo(request));
         }
 
         /// <summary>
@@ -75,9 +78,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CreateArticleResponse CreateArticle(CreateArticleRequest request)
+        public ResponseFormat<CreateArticleResponse> CreateArticle(CreateArticleRequest request)
         {
-            return newsHandler.CreateArticle(request);
+            return ApiActuator.Runing(() => newsHandler.CreateArticle(request));
         }
 
         /// <summary>
@@ -86,9 +89,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewsResponse GetUserArticle(GetNewsRequest request)
+        public ResponseFormat<GetNewsResponse> GetUserArticle(GetNewsRequest request)
         {
-            return newsHandler.GetUserArticle(request);
+            return ApiActuator.Runing(() => newsHandler.GetUserArticle(request));
         }
     }
 }
