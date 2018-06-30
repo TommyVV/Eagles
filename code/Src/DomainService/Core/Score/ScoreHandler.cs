@@ -129,16 +129,19 @@ namespace Eagles.DomainService.Core.Score
         {
             var response = new GetScoreRankResponse();
             if (request.AppId <= 0)
-                throw new Base.TransactionException("01", "AppId不允许为空");
+                throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
-                throw new Base.TransactionException("01", "AppId不存在");
+                throw new TransactionException("01", "AppId不存在");
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)
             {
-                //response.UserRank = userResult?.Select(x => new Application.Model.Common.Activity()
-                //{
-
-                //}).ToList();
+                response.UserRank = userResult?.Select(x => new Application.Model.Common.UserRank()
+                {
+                    Rank = x.No,
+                    Name = x.Name,
+                    BranchName = x.OrgName,
+                    Score = x.Score
+                }).ToList();
             }
             else
             {
@@ -147,10 +150,13 @@ namespace Eagles.DomainService.Core.Score
             var branckResult = iScoreAccess.GetBranchRank();
             if (branckResult != null && branckResult.Count > 0)
             {
-                //response.BranchRank = userResult?.Select(x => new Application.Model.Common.Activity()
-                //{
-
-                //}).ToList();
+                response.BranchRank = branckResult?.Select(x => new Application.Model.Common.BranchRank()
+                {
+                    Rank = x.No,
+                    Branch = x.OrgName,
+                    UserCount = x.UserCount,
+                    Score = x.Score
+                }).ToList();
             }
             else
             {

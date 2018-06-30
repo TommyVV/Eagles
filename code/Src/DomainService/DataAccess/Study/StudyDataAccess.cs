@@ -21,7 +21,7 @@ namespace Ealges.DomianService.DataAccess.Study
             }
             else
             {
-                return dbManager.Excuted(@"insert into eagles.tb_user_study_log (OrgId,BranchId,TraceId,UserId,NewsId,ModuleId,StudyTime,CreateTime) values 
+                return dbManager.Excuted(@"insert into eagles.tb_user_study_log (OrgId,BranchId,UserId,NewsId,ModuleId,StudyTime,CreateTime) values 
 (@OrgId,@BranchId,@UserId,@NewsId,@ModuleId,@StudyTime,@CreateTime)", userStudy);
             }
         }

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Eagles.Application.Model.GetMenu;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.AppMenu;
 using Eagles.Interface.DataAccess.Menu;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Application.Model.GetMenu;
 
 namespace Eagles.DomainService.Core.AppMenu
 {
@@ -20,7 +20,7 @@ namespace Eagles.DomainService.Core.AppMenu
             this.util = util;
         }
 
-        public GetMenuResponse Process(GetMenuRequest request)
+        public GetMenuResponse GetMenu(GetMenuRequest request)
         {
             var response = new GetMenuResponse();
             if (request.AppId <= 0)
@@ -42,18 +42,14 @@ namespace Eagles.DomainService.Core.AppMenu
                 HasSubMenu = false
 
             }).ToList();
-
-            var secondMenu = menus.Where(x => x.Level == "2").Select(x =>
-                new AppSubMenu()
-                {
-                    MenuId = x.MenuId,
-                    MenuName = x.MenuName,
-                    TargetUrl = x.TargetUrl,
-                    ParentMenuId = x.ParentMenuId,
-                }).ToList();
-
-            // build relations 
-
+            var secondMenu = menus.Where(x => x.Level == "2").Select(x => new AppSubMenu()
+            {
+                MenuId = x.MenuId,
+                MenuName = x.MenuName,
+                TargetUrl = x.TargetUrl,
+                ParentMenuId = x.ParentMenuId,
+            }).ToList();
+            // build relations
             mainMenu.ForEach(x =>
             {
                 var sub = secondMenu.FindAll(y => y.ParentMenuId == x.MenuId).ToList();
@@ -63,7 +59,6 @@ namespace Eagles.DomainService.Core.AppMenu
                     x.HasSubMenu = true;
                 }
             });
-
             response.AppMenus = mainMenu;
             return response;
         }

@@ -29,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public GetMenuResponse GetAppMenu(GetMenuRequest request)
         {
-            return appMenu.Process(request);
+            return appMenu.GetMenu(request);
         }
     }
 }

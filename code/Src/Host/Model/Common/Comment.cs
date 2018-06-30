@@ -28,6 +28,11 @@ namespace Eagles.Application.Model.Common
         public int CommentUserId { get; set; }
 
         /// <summary>
+        /// 评论用户名称
+        /// </summary>
+        public string CommentUserName { get; set; }
+
+        /// <summary>
         /// 评论时间
         /// </summary>
         public DateTime CommentTime { get; set; }

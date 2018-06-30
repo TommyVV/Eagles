@@ -37,6 +37,11 @@ namespace Eagles.DomainService.Core.UserComment
                 return response;
             }
             var userId = Convert.ToInt32(desEncrypt.Decrypt(request.CommentUserId)); //评论人
+            var userInfo = util.GetUserInfo(userId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
             var tbUserComment = new TbUserComment()
             {
                 OrgId = tokens.OrgId,
@@ -45,6 +50,7 @@ namespace Eagles.DomainService.Core.UserComment
                 Content = request.Comment,
                 CreateTime = DateTime.Now,
                 UserId = userId,
+                UserName = userInfo.Name,
                 ReviewStatus = -1
             };
             var result = userCommentAccess.EditUserComment(tbUserComment);
@@ -106,6 +112,7 @@ namespace Eagles.DomainService.Core.UserComment
                 Id = x.Id,
                 CommentTime = x.ReviewTime,
                 CommentUserId = x.UserId,
+                CommentUserName = x.UserName,
                 CommentContent = x.Content
             }).ToList();
             if (result != null && result.Count > 0)

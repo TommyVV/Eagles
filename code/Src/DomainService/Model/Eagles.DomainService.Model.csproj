@@ -73,6 +73,8 @@
     <Compile Include="Test.cs" />
     <Compile Include="User\TbUserActivity.cs" />
     <Compile Include="User\TbUserComment.cs" />
+    <Compile Include="User\TbBranchRank.cs" />
+    <Compile Include="User\TbUserRank.cs" />
     <Compile Include="User\TbUserInfo.cs" />
     <Compile Include="User\TbUserNews.cs" />
     <Compile Include="User\TbUserNotice.cs" />

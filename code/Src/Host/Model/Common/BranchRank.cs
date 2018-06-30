@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 排名
         /// </summary>
-        public string Rank;
+        public int Rank;
 
         /// <summary>
         /// 支部
@@ -20,11 +20,11 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 党员数
         /// </summary>
-        public string UserCount;
+        public int UserCount;
 
         /// <summary>
         /// 积分
         /// </summary>
-        public string Score;
+        public int Score;
     }
 }

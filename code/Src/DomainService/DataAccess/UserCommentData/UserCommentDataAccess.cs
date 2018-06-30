@@ -16,8 +16,8 @@ namespace Ealges.DomianService.DataAccess.UserCommentData
 
         public int EditUserComment(TbUserComment userComment)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,ReviewStatus,CommentType) 
-value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus,CommentType)", userComment);
+            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,UserName,ReviewStatus,CommentType) 
+value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,CommentType)", userComment);
         }
 
         public int AuditUserComment(int messageId, int reviewStatus)
@@ -27,7 +27,7 @@ value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus,CommentType)", user
 
         public List<TbUserComment> GetUserComment(string commentType, int id, int userId)
         {
-            return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment 
+            return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime from eagles.tb_user_comment 
 where CommentType = @CommentType and Id = @Id and (ReviewStatus = 0 or UserId = @UserId) ", new { CommentType = commentType, Id = id, UserId = userId });
         }
 
