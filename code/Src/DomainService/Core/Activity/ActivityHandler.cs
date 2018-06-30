@@ -15,6 +15,7 @@ using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
+using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.DomainService.Model.Activity;
 
 namespace Eagles.DomainService.Core.Activity
@@ -313,6 +314,48 @@ namespace Eagles.DomainService.Core.Activity
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
+                response.Code = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.Code = "96";
+                response.Message = "查无数据";
+            }
+            return response;
+        }
+
+        public GetPublicActivityResponse GetPublicActivity(GetPublicActivityRequest request)
+        {
+            var response = new GetPublicActivityResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                response.Code = "96";
+                response.Message = "获取Token失败";
+                return response;
+            }
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+            {
+                throw new TransactionException("01", "用户不存在");
+            }
+            var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId);
+            response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
+            {
+                ActivityId = x.ActivityId,
+                ActivityName = x.ActivityName,
+                ActivityType = x.ActivityType,
+                ActivityDate = x.BeginTime,
+                Content = x.HtmlContent,
+                ImgUrl = x.ImageUrl
+            }).ToList();
+            if (result != null && result.Count > 0)
+            {
                 response.Code = "00";
                 response.Message = "查询成功";
             }

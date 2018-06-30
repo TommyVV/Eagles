@@ -171,14 +171,21 @@ join eagles.tb_user_activity b on a.ActivityId = b.ActivityId where a.ActivityTy
 
         public TbActivity GetActivityDetail(int activityId)
         {
-            var result = dbManager.Query<Eagles.DomainService.Model.Activity.TbActivity>(
-                @"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId",
-                new { ActivityId = activityId});
+            var result = dbManager.Query<TbActivity>(@"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,
+Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId", new { ActivityId = activityId});
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
             }
             return null;
+        }
+
+        public List<TbActivity> GetPublicActivity(ActivityType activityType, int appId)
+        {
+            return dbManager.Query<TbActivity>(
+                @"select activityId,activityName,ImageUrl,HtmlContent from eagles.tb_activity 
+where ActivityType = @ActivityType and OrgId = @OrgId and IsPublic = @IsPublic and OrgReview = @OrgReview and BranchReview = @BranchReview ",
+                new {ActivityType = (int) activityType, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
         }
     }
 }

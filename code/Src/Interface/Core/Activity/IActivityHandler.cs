@@ -1,11 +1,13 @@
-﻿using Eagles.Application.Model.Activity.CreateActivity;
+﻿using Eagles.Base;
+using Eagles.Application.Model.Activity.CreateActivity;
 using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
-using Eagles.Base;
+using Eagles.Application.Model.Activity.GetPublicActivity;
+
 
 namespace Eagles.Interface.Core.Activity
 {
@@ -18,5 +20,6 @@ namespace Eagles.Interface.Core.Activity
         EditActivityFeedBackResponse EditActivityFeedBack(EditActivityFeedBackRequest request);
         GetActivityResponse GetActivity(GetActivityRequest request);
         GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request);
+        GetPublicActivityResponse GetPublicActivity(GetPublicActivityRequest request);
     }
 }

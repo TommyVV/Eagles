@@ -5,9 +5,9 @@ using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
+using Eagles.DomainService.Model.Task;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.TaskAccess;
-using DomainModel = Eagles.DomainService.Model;
 
 namespace Ealges.DomianService.DataAccess.TaskData
 {
@@ -20,7 +20,7 @@ namespace Ealges.DomianService.DataAccess.TaskData
             this.dbManager = dbManager;
         }
 
-        public int CreateTask(int orgId, int branchId, int toUserId, DomainModel.Task.TbTask reqTask)
+        public int CreateTask(int orgId, int branchId, int toUserId, TbTask reqTask)
         {
             #region 事务操作taskId无法获取
             /*
@@ -208,13 +208,13 @@ where TaskId = @TaskId ",
                 });
         }
 
-        public List<DomainModel.Task.TbTask> GetTask(string userId)
+        public List<TbTask> GetTask(string userId)
         {
-            return dbManager.Query<DomainModel.Task.TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
+            return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new {UserId = userId});
         }
 
-        public DomainModel.Task.TbTask GetTaskDetail(int taskId)
+        public TbTask GetTaskDetail(int taskId)
         {
             var result = dbManager.Query<DomainModel.Task.TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,
 a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,b.ToUserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId", new {TaskId = taskId});
@@ -225,15 +225,21 @@ a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,b.ToUserId from eagles.tb_t
             return null;
         }
 
-        public List<DomainModel.User.TbUserComment> GetTaskComment(int taskId)
+        public List<TbUserComment> GetTaskComment(int taskId)
         {
-            return dbManager.Query<DomainModel.User.TbUserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", new {Id = taskId});
+            return dbManager.Query<TbUserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", new {Id = taskId});
         }
 
-        public List<DomainModel.User.TbUserTaskStep> GetTaskStep(int taskId)
+        public List<TbUserTaskStep> GetTaskStep(int taskId)
         {
-            return dbManager.Query<DomainModel.User.TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
+            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
         }
 
+        public List<TbTask> GetPublicTask(int appId)
+        {
+            return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
+join eagles.tb_user_task b on a.TaskId = b.TaskId where a.OrgId = @OrgId and a.IsPublic = @IsPublic and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ",
+                new {Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+        }
     }
 }

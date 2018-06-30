@@ -30,6 +30,8 @@ namespace Eagles.Interface.DataAccess.TaskAccess
         List<TbUserComment> GetTaskComment(int taskId);
 
         List<TbUserTaskStep> GetTaskStep(int taskId);
-                
+
+        List<TbTask> GetPublicTask(int appId);
+        
     }
 }
