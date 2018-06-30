@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.UserArticle;
-using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.CreateNews;
-using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNews;
+using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNewsDetail;
-using Eagles.Application.Model.News.GetTestPaper;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.News
@@ -173,134 +170,6 @@ namespace Eagles.DomainService.Core.News
             }
             return response;
         }
-
-        public GetTestPaperResponse GetTestPaper(GetTestPaperRequest request)
-        {
-            var response = new GetTestPaperResponse();
-            if (request.TestId < 0)
-                throw new TransactionException("01", "TestId 非法");
-            if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
-            if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
-            var resultTest = newsDa.GetTestPaper(request.TestId);
-            if (resultTest == null || !resultTest.Any())
-            {
-                return response;
-            }
-            //遍历问题
-            var questions = new List<AppQuestion>();
-            resultTest.ForEach(x =>
-            {
-                var answer = new AppAnswer()
-                {
-                    QuestionId = x.QuestionId,
-                    AnswerId = x.AnswerId,
-                    Answer = x.Answer,
-                    AnswerType = x.AnswerType,
-                    IsRight = x.IsRight,
-                    ImageUrl = x.ImageUrl
-                };
-                var nowQuestion = questions.Find(y => y.QuestionId == x.QuestionId);
-                if (nowQuestion == null)
-                {
-                    questions.Add(new AppQuestion()
-                    {
-                        QuestionId = x.QuestionId,
-                        Question = x.Question,
-                        Multiple = x.Multiple,
-                        MultipleCount = x.MultipleCount,
-                        AnswerList = new List<AppAnswer>()
-                        {
-                            answer
-                        }
-                    });
-                }
-                else
-                {
-                    nowQuestion.AnswerList.Add(answer);
-                }
-            });
-            response.TestList = questions;
-            return response;
-        }
-
-        public CompleteTestResponse CompleteTest(CompleteTestRequest request)
-        {
-            var response = new CompleteTestResponse();
-            var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-            var userInfo = util.GetUserInfo(tokens.UserId);
-            if (userInfo == null)
-            {
-                throw new TransactionException("01", "用户不存在");
-            }
-            int testScore = 0; //答题分数
-            //查询TB_TEST_PAPER
-            var testPaper = newsDa.GetTestPaperInfo(request.TestId);
-            var passScore = testPaper.PassScore; //及格分数
-            var questionSocre = testPaper.QuestionSocre; //每题分值
-            var passAwardScore = testPaper.PassAwardScore; //及格奖励积分
-
-            //查询正确答案
-            var rightAnswer = newsDa.GetTestRightAnswer(request.TestId);
-            var answerList = request.TestList;
-            //匹配正确答案
-            int i = 0;
-            answerList.ForEach(x =>
-                {
-                    var score = rightAnswer.Find(y => x.AnswerId == y.AnswerId);
-                    if (score != null && 1 == score.IsRight)
-                        i++;
-                }
-            );
-            testScore = questionSocre * i; //每题分数*答对数量=答题分数
-
-            //插入tb_user_test
-            var userTest = new TbUserTest()
-            {
-                OrgId = tokens.OrgId,
-                BranchId = tokens.BranchId,
-                UserId = tokens.UserId,
-                TestId = request.TestId,
-                Score = testScore,
-                TotalScore = 0,
-                CreateTime = DateTime.Now,
-                UseTime = request.UseTime
-            };
-            newsDa.CreateUserTest(userTest);
-            
-            //如果及格,给用户奖励积分
-            if (testScore >= passScore)
-            {
-
-                //插入user_score_trace
-                var userScoreTrace = new TbUserScoreTrace()
-                {
-                    UserId = tokens.UserId,
-                    CreateTime = DateTime.Now,
-                    Score = passAwardScore,
-                    RewardsType = "50",
-                    Comment = "完成试卷奖励积分",
-                    OriScore = userInfo.Score,
-                };
-                util.CreateScoreLs(userScoreTrace);
-                //修改用户积分
-                util.EditUserScore(tokens.UserId, passAwardScore);
-            }
-            else
-            {
-                response.Code = "00";
-                response.Message = "答题成功但未及格";
-            }
-            response.Code = "00";
-            response.Message = "答题成功并奖励积分";
-            return response;
-        }
+        
     }
 }

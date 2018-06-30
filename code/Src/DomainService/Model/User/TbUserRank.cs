@@ -1,31 +1,27 @@
 ﻿using System;
 
-namespace Eagles.Application.Model.Common
+namespace Eagles.DomainService.Model.User
 {
     /// <summary>
-    /// 党员积分排行榜
+    /// TB_USER_INFO
     /// </summary>
-    public class UserRank
+    public class TbUserRank
     {
         /// <summary>
         /// 排名
         /// </summary>
-        public int Rank;
-
+        public int No { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
-        public string Name;
-
+        public string Name { get; set; }
         /// <summary>
         /// 支部
         /// </summary>
-        public string BranchName;
-
+        public string OrgName { get; set; }
         /// <summary>
         /// 积分
         /// </summary>
-        public int Score;
-
+        public int Score { get; set; }
     }
 }

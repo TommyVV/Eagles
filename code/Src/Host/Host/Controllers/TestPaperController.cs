@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Web.Http;
+using Eagles.Base;
+using Eagles.Interface.Core.UserTest;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetTestPaper;
-using Eagles.Base;
-using Eagles.Interface.Core.News;
 
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
     /// TestPaperController
     /// </summary>
+    [ValidServiceToken]
     public class TestPaperController: ApiController
     {
-        private INewsHandler newsHandler;
+        private IUserTestHandler userTestHandler;
 
-        public TestPaperController(INewsHandler newsHandler)
+        public TestPaperController(IUserTestHandler userTestHandler)
         {
-            this.newsHandler = newsHandler;
+            this.userTestHandler = userTestHandler;
         }
-
-
-
+        
         /// <summary>
         /// 获取新闻试卷
         /// </summary>
@@ -31,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         {
             try
             {
-                return newsHandler.GetTestPaper(request);
+                return userTestHandler.GetTestPaper(request);
             }
             catch (TransactionException e)
             {
@@ -40,7 +39,6 @@ namespace Eagles.Application.Host.Controllers
                     Code = e.ErrorCode,
                     Message = e.Message
                 };
-
             }
             catch (Exception e)
             {
@@ -63,7 +61,7 @@ namespace Eagles.Application.Host.Controllers
         {
             try
             {
-                return newsHandler.CompleteTest(request);
+                return userTestHandler.CompleteTest(request);
             }
             catch (TransactionException e)
             {
@@ -72,7 +70,6 @@ namespace Eagles.Application.Host.Controllers
                     Code = e.ErrorCode,
                     Message = e.Message
                 };
-
             }
             catch (Exception e)
             {

@@ -18,8 +18,5 @@ namespace Eagles.Interface.Core.News
 
         GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request);
 
-        GetTestPaperResponse GetTestPaper(GetTestPaperRequest request);
-
-        CompleteTestResponse CompleteTest(CompleteTestRequest request);
     }
 }

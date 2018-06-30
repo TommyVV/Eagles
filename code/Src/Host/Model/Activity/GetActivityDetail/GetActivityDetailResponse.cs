@@ -34,6 +34,11 @@ namespace Eagles.Application.Model.Activity.GetActivityDetail
         public List<string> ActivityJoinPeopleList { get; set; }
 
         /// <summary>
+        /// 活动状态
+        /// </summary>
+        public int ActivityStatus { get; set; }
+
+        /// <summary>
         /// 发起用户编号
         /// </summary>
         public string InitiateEncryptUserId { get; set; }

@@ -42,16 +42,18 @@ Address = order.Address, Province = order.Province, City = order.City, District 
             return dbManager.Query<TbUserScoreTrace>("select OrgId, UserId, TraceId, CreateTime, Score, RewardsType, Comment, OriScore from eagles.tb_user_score_trace where UserId = @UserId ", new { UserId =userId});
         }
 
-        public List<UserRank> GetUserRank()
+        public List<TbUserRank> GetUserRank()
         {
-            var sql = @"select a.Name, b.OrgName,a.Score from tb_user_info a join tb_org_info b on a.OrgId = b.OrgId order by a.Score desc limit 10 ";
-            throw new System.NotImplementedException();
+            var sql = @"select (@i:=@i+1) as No,a.Name,b.OrgName,a.Score from tb_user_info a 
+join tb_org_info b on a.OrgId = b.OrgId ,(select @i:=0) as it order by a.Score desc limit 10; ";
+            return dbManager.Query<TbUserRank>(sql);
         }
 
-        public List<BranchRank> GetBranchRank()
+        public List<TbBranchRank> GetBranchRank()
         {
-            var sql = @"select sum(score) as ss from tb_user_info group by orgId order by ss desc limit 10 ";
-            throw new System.NotImplementedException();
+            var sql = @"select (@i:=@i+1) as No,b.OrgName,count(a.UserId) as UserCount,a.Score from tb_user_info a 
+join tb_org_info b on a.OrgId = b.OrgId ,(select @i:=0) as it group by b.OrgName,a.Score order by a.Score desc limit 10; ";
+            return dbManager.Query<TbBranchRank>(sql);
         }
     }
 }

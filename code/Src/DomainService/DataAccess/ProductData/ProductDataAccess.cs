@@ -17,14 +17,13 @@ namespace Ealges.DomianService.DataAccess.ProductData
 
         public List<DomainModel.Product.TbProduct> GetProduct()
         {
-            return dbManager.Query<DomainModel.Product.TbProduct>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product ", new { });
+            return dbManager.Query<DomainModel.Product.TbProduct>("select ProdId,ProdName,Score,ImageUrl from eagles.tb_product where Status = @Status ", new {Status = 0});
         }
 
         public DomainModel.Product.TbProduct GetProductDetail(int productId)
         {
             var result = dbManager.Query<DomainModel.Product.TbProduct>(
-                "select ProdId,ProdName,Score,ImageUrl,SaleCount,BeginTime,EndTime,HtmlDescription from eagles.tb_product where ProdId = @ProdId ",
-                new {ProdId = productId});
+                "select ProdId,ProdName,Score,ImageUrl,SaleCount,BeginTime,EndTime,HtmlDescription from eagles.tb_product where ProdId = @ProdId ", new {ProdId = productId});
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();

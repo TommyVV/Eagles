@@ -1,9 +1,10 @@
 ﻿using System;
 using Eagles.Base;
-using Eagles.Application.Model.User.EditUser;
-using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.Login;
+using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
+using Eagles.Application.Model.User.GetUserInfo;
+using Eagles.Application.Model.User.GetUserRelationship;
 
 namespace Eagles.Interface.Core.User
 {
@@ -40,7 +41,11 @@ namespace Eagles.Interface.Core.User
         /// <returns></returns>
         RegisterResponse Register(RegisterRequest request);
 
-
-
+        /// <summary>
+        /// 用户上下级查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request);
     }
 }

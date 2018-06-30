@@ -7,6 +7,7 @@ namespace Eagles.Application.Host.Controllers
     /// <summary>
     /// UserMessageControllerv
     /// </summary>
+    [ValidServiceToken]
     public class UserMessageController: ApiController
     {
         private readonly IUserMessageHandler userMessage;

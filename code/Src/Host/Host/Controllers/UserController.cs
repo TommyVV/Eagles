@@ -7,16 +7,17 @@ using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.GetUserInfo;
-using Eagles.Base;
+using Eagles.Application.Model.User.GetUserRelationship;
+
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
     /// 用户Controller
     /// </summary>
+    [ValidServiceToken]
     public class UserController : ApiController
     {
         private IUserHandler userHandler;
-
         private INewsHandler newsHandler;
 
         public UserController(IUserHandler userHandler, INewsHandler newsHandler)
@@ -73,7 +74,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 文章发布
+        /// 用户文章发布
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -92,6 +93,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetNewsResponse> GetUserArticle(GetNewsRequest request)
         {
             return ApiActuator.Runing(() => newsHandler.GetUserArticle(request));
+        }
+
+        /// <summary>
+        /// 用户上下级查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request)
+        {
+            return userHandler.GetUserRelationship(request);
         }
     }
 }
