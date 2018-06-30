@@ -54,6 +54,7 @@
     <Compile Include="UserComment\IUserCommentAccess.cs" />
     <Compile Include="UserInfo\IUserInfo.cs" />
     <Compile Include="UserMessage\IUserMessageDataAccess.cs" />
+    <Compile Include="UserTest\IUserTestDataAccess.cs" />
     <Compile Include="Util\IUtil.cs" />
   </ItemGroup>
   <ItemGroup>

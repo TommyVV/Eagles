@@ -19,22 +19,11 @@ namespace Ealges.DomianService.DataAccess.AppModule
         public List<TbAppModule> GetAppModule(int orgId, int moduleType)
         {
             var sql = new StringBuilder();
-            sql .Append(@"SELECT OrgId,
-    ModuleId,
-    ModuleName,
-    TragetUrl,
-    ModuleType,
-    SmallImageUrl,
-    ImageUrl,
-    Priority,
-    IndexPageCount,
-    IndexDisplay
-FROM eagles.tb_app_module where OrgId=@OrgId");
+            sql .Append(@"SELECT OrgId,ModuleId,ModuleName,TargetUrl,ModuleType,SmallImageUrl,ImageUrl,Priority,IndexPageCount,IndexDisplay from eagles.tb_app_module where OrgId=@OrgId");
             if (moduleType > 0)
             {
                 sql.Append(" And ModuleType=@ModuleType ");
             }
-
             sql.Append(" order by Priority desc ");
             var result=dbManager.Query<TbAppModule>(sql.ToString(), new {OrgId = orgId, ModuleType =moduleType});
             return result;

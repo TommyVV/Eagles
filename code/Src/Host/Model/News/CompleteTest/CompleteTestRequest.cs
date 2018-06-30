@@ -21,6 +21,6 @@ namespace Eagles.Application.Model.News.CompleteTest
         /// <summary>
         /// 答案List
         /// </summary>
-        public List<AnswerClass> TestList { get; set; }
+        public List<ReqAnswer> TestList { get; set; }
     }
 }

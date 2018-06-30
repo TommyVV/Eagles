@@ -15,13 +15,8 @@ namespace Ealges.DomianService.DataAccess.AppMenu
 
         public List<Eagles.DomainService.Model.App.TbAppMenu> GetAppMenus(int appId)
         {
-            var result=dbManager.Query<Eagles.DomainService.Model.App.TbAppMenu>(@"SELECT OrgId,
-                MenuId,
-                MenuName,
-                Level,
-                ParentMenuId,
-                TragetUrl
-            FROM eagles.tb_app_menu where OrgId=@OrgId ", new {OrgId = appId});
+            var result=dbManager.Query<Eagles.DomainService.Model.App.TbAppMenu>(@"SELECT OrgId,MenuId,MenuName,Level,ParentMenuId,TargetUrl from eagles.tb_app_menu 
+where OrgId=@OrgId ", new {OrgId = appId});
             return result;
         }
     }
