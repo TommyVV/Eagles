@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Transactions;
 using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core.UserTest;
@@ -28,11 +29,11 @@ namespace Eagles.DomainService.Core.UserTest
         {
             var response = new GetTestPaperResponse();
             if (request.TestId < 0)
-                throw new TransactionException("01", "TestId 非法");
+                throw new Base.TransactionException("01", "TestId 非法");
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new Base.TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new Base.TransactionException("01", "AppId不存在");
             var resultTest = testDa.GetTestPaper(request.TestId);
             if (resultTest == null || !resultTest.Any())
             {
@@ -88,12 +89,12 @@ namespace Eagles.DomainService.Core.UserTest
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
-                throw new TransactionException("01", "用户不存在");
+                throw new Base.TransactionException("01", "用户不存在");
             }
             //查询用户是否已经回答过该试题
             var userTest = testDa.GetUserTest(request.TestId, userInfo.UserId);
             if (userTest != null)
-                throw new TransactionException("01", "该用户已参与过此题");
+                throw new Base.TransactionException("01", "该用户已参与过此题");
             int testScore = 0; //答题分数
             //查询TB_TEST_PAPER
             var testPaper = testDa.GetTestPaperInfo(request.TestId);

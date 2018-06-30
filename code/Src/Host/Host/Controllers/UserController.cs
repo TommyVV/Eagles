@@ -8,6 +8,7 @@ using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
+using Eagles.Base;
 
 namespace Eagles.Application.Host.Controllers
 {

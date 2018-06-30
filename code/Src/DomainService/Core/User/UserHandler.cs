@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Eagles.Application.Host.Common;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.User;
@@ -12,9 +11,7 @@ using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
-using Eagles.Base.Config;
 using Eagles.Base.Configuration;
-using Eagles.Base.Json.Implement;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.User
