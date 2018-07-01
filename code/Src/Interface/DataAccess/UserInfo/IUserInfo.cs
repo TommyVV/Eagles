@@ -16,6 +16,7 @@ namespace Eagles.Interface.DataAccess.UserInfo
 
         int InsertToken(TbUserToken userToken);
 
-        List<TbUserRelationship> GetRelationship(int userId);
+        List<TbUserRelationship> GetRelationship(int userId, bool relationshipType);
+        List<TbUserInfo> GetUserInfo(List<int> userIdList);
     }
 }

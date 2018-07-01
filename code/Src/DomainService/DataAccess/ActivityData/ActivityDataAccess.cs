@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
+using Dapper;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
@@ -21,10 +24,11 @@ namespace Ealges.DomianService.DataAccess.ActivityData
 
         public int CreateActivity(TbActivity reqActivity)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
-TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status) 
+            return dbManager.Excuted(
+                @"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
+TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status,CreateType) 
 value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
-@AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status)",
+@AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status,@CreateType)",
                 new
                 {
                     OrgId = reqActivity.OrgId,
@@ -32,11 +36,11 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
                     ActivityName = reqActivity.ActivityName,
                     HtmlContent = reqActivity.HtmlContent,
                     BeginTime = reqActivity.BeginTime,
-                    EndTime = reqActivity.EndTime ,
+                    EndTime = reqActivity.EndTime,
                     FromUser = reqActivity.FromUser,
                     ActivityType = reqActivity.ActivityType,
                     MaxCount = reqActivity.MaxCount,
-                    CanComment =reqActivity.CanComment,
+                    CanComment = reqActivity.CanComment,
                     TestId = reqActivity.TestId,
                     MaxUser = reqActivity.MaxUser,
                     Attach1 = reqActivity.Attach1,
@@ -52,10 +56,11 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
                     OrgReview = "-1",
                     BranchReview = "-1",
                     ToUserId = reqActivity.ToUserId,
-                    Status = reqActivity.Status
+                    Status = reqActivity.Status,
+                    CreateType = reqActivity.CreateType
                 });
         }
-        
+
         public int EditActivityJoin(int orgId, int branchId, int activityId, int userId)
         {
             return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)",
@@ -150,23 +155,97 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
                 });
         }
         
-        public List<TbActivity> GetActivity(ActivityType activityType, ActivityPage activityPage, string userId = null)
+        public List<TbActivity> GetActivity(ActivityType activityType, int branchId)
         {
-            switch (activityPage)
+
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            if (activityType > 0)
             {
-                case ActivityPage.All:
-                    return dbManager.Query<TbActivity>(
-                        @"select activityId,activityName,ImageUrl,HtmlContent from eagles.tb_activity where ActivityType = @ActivityType", new { ActivityType = (int)activityType });
-                case ActivityPage.Mine:
-                    return dbManager.Query<TbActivity>(
-                        @"select a.activityId,a.activityName,a.ImageUrl,a.HtmlContent from eagles.tb_activity a 
-join eagles.tb_user_activity b on a.ActivityId = b.ActivityId where a.ActivityType = @ActivityType and b.UserId = @UserId  ", new { ActivityType = (int)activityType, UserId = userId });
-                case ActivityPage.Other:
-                    return dbManager.Query<TbActivity>(
-                        @"select a.activityId,a.activityName,a.ImageUrl,a.HtmlContent from eagles.tb_activity a 
-join eagles.tb_user_activity b on a.ActivityId = b.ActivityId where a.ActivityType = @ActivityType and b.UserId <> @UserId  ", new { ActivityType = (int)activityType, UserId = userId });
-                default: return null;
+                parameter.Append(" and ActivityType = @ActivityType ");
+                dynamicParams.Add("ActivityType", activityType);
             }
+
+            if (branchId > 0)
+            {
+                parameter.Append(" and BranchId = @BranchId ");
+                dynamicParams.Add("BranchId", branchId);
+            }
+
+            sql.AppendFormat(@" SELECT `tb_activity`.`OrgId`,
+    `tb_activity`.`BranchId`,
+    `tb_activity`.`ActivityId`,
+    `tb_activity`.`ActivityName`,
+    `tb_activity`.`HtmlContent`,
+    `tb_activity`.`BeginTime`,
+    `tb_activity`.`EndTime`,
+    `tb_activity`.`FromUser`,
+    `tb_activity`.`ActivityType`,
+    `tb_activity`.`MaxCount`,
+    `tb_activity`.`CanComment`,
+    `tb_activity`.`TestId`,
+    `tb_activity`.`MaxUser`,
+    `tb_activity`.`Attach1`,
+    `tb_activity`.`Attach2`,
+    `tb_activity`.`Attach3`,
+    `tb_activity`.`Attach4`,
+    `tb_activity`.`AttachType1`,
+    `tb_activity`.`AttachType2`,
+    `tb_activity`.`AttachType3`,
+    `tb_activity`.`AttachType4`,
+    `tb_activity`.`ImageUrl`,
+    `tb_activity`.`IsPublic`,
+    `tb_activity`.`OrgReview`,
+    `tb_activity`.`BranchReview`,
+    `tb_activity`.`ToUserId`,
+    `tb_activity`.`Status`
+FROM `eagles`.`tb_activity`
+  where  1=1 and Status=0 {0}  
+ ", parameter);
+
+            return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
+
+
+        }
+
+
+        public List<TbUserActivity> GetUserActivity(int userId)
+        {
+
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            parameter.Append(" and UserId = @UserId ");
+            dynamicParams.Add("UserId", userId);
+            
+
+            sql.AppendFormat(@" SELECT `tb_user_activity`.`orgId`,
+    `tb_user_activity`.`BranchId`,
+    `tb_user_activity`.`ActivityId`,
+    `tb_user_activity`.`UserId`,
+    `tb_user_activity`.`UserFeedBack`,
+    `tb_user_activity`.`CreateTime`,
+    `tb_user_activity`.`Status`,
+    `tb_user_activity`.`CompleteTime`,
+    `tb_user_activity`.`RewardsScore`,
+    `tb_user_activity`.`Attach1`,
+    `tb_user_activity`.`Attach2`,
+    `tb_user_activity`.`Attach3`,
+    `tb_user_activity`.`Attach4`,
+    `tb_user_activity`.`AttachType1`,
+    `tb_user_activity`.`AttachType2`,
+    `tb_user_activity`.`AttachType3`,
+    `tb_user_activity`.`AttachType4`
+FROM `eagles`.`tb_user_activity`
+
+  where  1=1  {0}  
+ ", parameter);
+
+            return dbManager.Query<TbUserActivity>(sql.ToString(), dynamicParams);
+
         }
 
         public TbActivity GetActivityDetail(int activityId, int appId)

@@ -105,8 +105,6 @@ namespace Eagles.DomainService.Core.Score
                     Comment = x.Comment,
                     OriScore = x.OriScore
                 }).ToList();
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
@@ -150,8 +148,9 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
+                //response.Code = "96";
+                //response.Message = "查无数据";
             }
             return response;
         }

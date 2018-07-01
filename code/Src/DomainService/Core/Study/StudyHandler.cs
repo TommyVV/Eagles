@@ -69,16 +69,16 @@ namespace Eagles.DomainService.Core.Study
                     util.CreateScoreLs(scoreLs);
                 }
             }
-            if (result > 0)
+            if (result <= 0)
             {
                 response.Code = "00";
                 response.Message = "学习时间记录成功";
             }
-            else
-            {
-                response.Code = "96";
-                response.Message = "学习时间记录失败";
-            }
+            //else
+            //{
+            //    response.Code = "96";
+            //    response.Message = "学习时间记录失败";
+            //}
             return response;
         }
 

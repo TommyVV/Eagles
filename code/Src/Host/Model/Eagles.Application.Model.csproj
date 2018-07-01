@@ -53,6 +53,7 @@
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
+    <Compile Include="Common\UserLevel.cs" />
     <Compile Include="Common\UserRelationship.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Task\GetPublicTaskDetail\GetPublicTaskDetailResponse.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskRequest.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskResponse.cs" />
+    <Compile Include="Upload\FileUploadResult.cs" />
+    <Compile Include="Upload\UploadResponse.cs" />
     <Compile Include="UserComment\AuditUserComment\AuditUserCommentRequest.cs" />
     <Compile Include="UserComment\AuditUserComment\AuditUserCommentResponse.cs" />
     <Compile Include="Activity\EditActivityFeedBack\EditActivityFeedBackRequest.cs" />

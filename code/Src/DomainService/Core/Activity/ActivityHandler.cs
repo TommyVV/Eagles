@@ -18,6 +18,7 @@ using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.Application.Model.Activity.GetPublicActivityDetail;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.Activity
 {
@@ -72,6 +73,7 @@ namespace Eagles.DomainService.Core.Activity
             act.TestId = request.TestId;
             act.MaxCount = request.MaxCount;
             act.MaxUser = request.MaxUser;
+            act.CreateType = request.CreateType;
             act.ImageUrl = "";
             if (1 == userInfo.IsLeader)
                 act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
@@ -268,7 +270,65 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException("01", "用户不存在");
             }
-            var result = iActivityAccess.GetActivity(request.ActivityType, request.ActivityPage, tokens.UserId.ToString());
+
+            //得到所有支部下活动
+            var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
+
+            List<TbUserActivity> userActivity;
+
+            switch (request.ActivityPage)
+            {
+                case ActivityPage.All:
+
+                    break;
+
+                case ActivityPage.Mine:
+                    //得到用户参与活动
+                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
+
+                    result = (from act in result
+                        join usact in userActivity on new {act.BranchId, act.ActivityId} equals new
+                        {
+                            usact.BranchId,
+                            usact.ActivityId
+                        }
+                        select new TbActivity
+                        {
+                            ActivityId = act.ActivityId,
+                            ActivityName = act.ActivityName,
+                            ActivityType = act.ActivityType,
+                            BeginTime = act.BeginTime,
+                            HtmlContent = act.HtmlContent,
+                            ImageUrl = act.ImageUrl
+                        }).ToList();
+                    break;
+
+                case ActivityPage.Other:
+
+                    //得到用户未参与活动
+                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);                
+                    result = (from act in result
+                              where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId)
+                      
+                        select new TbActivity
+                        {
+                            ActivityId = act.ActivityId,
+                            ActivityName = act.ActivityName,
+                            ActivityType = act.ActivityType,
+                            BeginTime = act.BeginTime,
+                            HtmlContent = act.HtmlContent,
+                            ImageUrl = act.ImageUrl
+                        }).ToList();
+
+                    break;
+                    
+            }
+
+            if (result.Count == 0)
+            {
+                throw new TransactionException("96", "查无数据");
+            }
+
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,
@@ -278,19 +338,12 @@ namespace Eagles.DomainService.Core.Activity
                 Content = x.HtmlContent,
                 ImgUrl = x.ImageUrl
             }).ToList();
-            if (result != null && result.Count > 0)
-            {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
-            }
+
+         
+
             return response;
         }
-        
+
         public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
         {
             var response = new GetActivityDetailResponse();

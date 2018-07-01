@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Text;
+using Dapper;
 using Eagles.Base.DataBase;
+using Eagles.DomainService.Model.Activity;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.Sms;
 using Eagles.Interface.DataAccess.UserInfo;
@@ -52,12 +55,85 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             return null;
         }
 
-        public List<TbUserRelationship> GetRelationship(int userId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="relationshipType">ture 为查询上级信息  false 为查询下级信息</param>
+        /// <returns></returns>
+        public List<TbUserRelationship> GetRelationship(int userId,bool relationshipType)
         {
-            var userInfo = dbManager.Query<TbUserRelationship>("select UserId,SubUserId from eagles.tb_user_relationship where UserId = @UserId ", new { UserId = userId });
-            if (userInfo != null && userInfo.Any())
-                return userInfo;
-            return null;
+
+
+
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            if (relationshipType)
+            {
+                parameter.Append(" and UserId = @UserId ");
+                dynamicParams.Add("UserId", userId);
+            }
+            else           
+            {
+                parameter.Append(" and SubUserId = @SubUserId ");
+                dynamicParams.Add("SubUserId", userId);
+            }
+         
+            sql.AppendFormat(@" select UserId,SubUserId from eagles.tb_user_relationship 
+  where  1=1  {0}  
+ ", parameter);
+
+            return dbManager.Query<TbUserRelationship>(sql.ToString(), dynamicParams);
+
+        
+        }
+
+        public List<TbUserInfo> GetUserInfo(List<int> userIdList)
+        {
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@"    SELECT `tb_user_info`.`OrgId`,
+    `tb_user_info`.`BranchId`,
+    `tb_user_info`.`UserId`,
+    `tb_user_info`.`Password`,
+    `tb_user_info`.`Name`,
+    `tb_user_info`.`Sex`,
+    `tb_user_info`.`Ethinc`,
+    `tb_user_info`.`Birthday`,
+    `tb_user_info`.`Origin`,
+    `tb_user_info`.`OriginAddress`,
+    `tb_user_info`.`Phone`,
+    `tb_user_info`.`IdNumber`,
+    `tb_user_info`.`Eduction`,
+    `tb_user_info`.`School`,
+    `tb_user_info`.`Provice`,
+    `tb_user_info`.`City`,
+    `tb_user_info`.`District`,
+    `tb_user_info`.`Address`,
+    `tb_user_info`.`Company`,
+    `tb_user_info`.`Dept`,
+    `tb_user_info`.`Title`,
+    `tb_user_info`.`PreMemberTime`,
+    `tb_user_info`.`MemberTime`,
+    `tb_user_info`.`MemberType`,
+    `tb_user_info`.`Status`,
+    `tb_user_info`.`MemberStatus`,
+    `tb_user_info`.`PhotoUrl`,
+    `tb_user_info`.`NickPhotoUrl`,
+    `tb_user_info`.`CreateTime`,
+    `tb_user_info`.`EditTime`,
+    `tb_user_info`.`OperId`,
+    `tb_user_info`.`IsCustomer`,
+    `tb_user_info`.`Score`,
+    `tb_user_info`.`IsLeader`
+FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
+ ");
+            dynamicParams.Add("UserId", userIdList.ToArray() );
+
+            return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
         }
 
         public int InsertToken(TbUserToken userToken)
