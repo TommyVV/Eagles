@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Host.App_Start;
 using Eagles.Base.Md5Helper;
+using Eagles.Base.ValidateVode;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -8,17 +8,18 @@ namespace Eagles.Application.Host.Controllers
     {
         private readonly IMd5Helper md5Helper;
 
+        private readonly IValidateCode validate;
 
-        public TestController(IMd5Helper md5Helper)
+        public TestController(IMd5Helper md5Helper, IValidateCode validate)
         {
             this.md5Helper = md5Helper;
+            this.validate = validate;
         }
 
         [HttpGet]
-        [TestIoc]
         public string Test(string str)
         {
-            return md5Helper.Md5Encypt(str);
+            return validate.GenerateValidCodeToBase64(1234);
         }
     }
 }
