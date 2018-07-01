@@ -208,38 +208,47 @@ where TaskId = @TaskId ",
                 });
         }
 
+        public List<TbUserTaskStep> GetTaskStep(int taskId)
+        {
+            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
+        }
+
         public List<TbTask> GetTask(string userId)
         {
             return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new {UserId = userId});
         }
 
-        public TbTask GetTaskDetail(int taskId)
+        public TbTask GetTaskDetail(int taskId, int appId)
         {
-            var result = dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,
-a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,b.ToUserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId", new {TaskId = taskId});
+            var result = dbManager.Query<TbTask>(
+                @"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,a.Attach1,a.Attach2,a.Attach3,a.Attach4,
+a.CreateTime,b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
             }
             return null;
         }
-
-        public List<TbUserComment> GetTaskComment(int taskId)
-        {
-            return dbManager.Query<TbUserComment>("select Id,OrgId,MessageId,Content,CreateTime,UserId,ReviewUser,ReviewTime from eagles.tb_user_comment where Id = @Id", new {Id = taskId});
-        }
-
-        public List<TbUserTaskStep> GetTaskStep(int taskId)
-        {
-            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
-        }
-
+        
         public List<TbTask> GetPublicTask(int appId)
         {
             return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where a.OrgId = @OrgId and a.IsPublic = @IsPublic and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ",
                 new {Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+        }
+
+        public TbTask GetPublicTaskDetail(int taskId, int appId)
+        {
+            var result = dbManager.Query<TbTask>(
+                @"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,a.Attach1,a.Attach2,a.Attach3,a.Attach4,
+a.CreateTime,b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId and a.IsPublic = @IsPublic 
+and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ",new {TaskId = taskId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+            if (result != null && result.Any())
+            {
+                return result.FirstOrDefault();
+            }
+            return null;
         }
     }
 }

@@ -24,8 +24,10 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
        // List<TbActivity> GetActivity(ActivityType activityType, int branchId);
         List<TbUserActivity> GetUserActivity(int userId);
 
-        TbActivity GetActivityDetail(int activityId);
+        TbActivity GetActivityDetail(int activityId, int appId);
 
         List<TbActivity> GetPublicActivity(ActivityType activityType, int appId);
+
+        TbActivity GetPublicActivityDetail(int activityId, int appId);
     }
 }

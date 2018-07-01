@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Eagles.Application.Model.Module;
 using Eagles.Base;
 using Eagles.Interface.Core.AppModule;

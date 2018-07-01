@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
+using Eagles.Base;
 using Eagles.Interface.Core.Activity;
 using Eagles.Application.Model.Activity.CreateActivity;
 using Eagles.Application.Model.Activity.EditActivityJoin;
@@ -8,7 +8,8 @@ using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
-using Eagles.Base;
+using Eagles.Application.Model.Activity.GetPublicActivity;
+using Eagles.Application.Model.Activity.GetPublicActivityDetail;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -27,29 +28,6 @@ namespace Eagles.Application.Host.Controllers
         public ActivityController(IActivityHandler activityHandler)
         {
             this.activityHandler = activityHandler;
-        }
-
-        /// <summary>
-        /// 活动查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<GetActivityResponse> GetActivityList(GetActivityRequest request)
-        {
-            return  ApiActuator.Runing(() => activityHandler.GetActivity(request));
-        }
-
-        /// <summary>
-        /// 活动详情查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<GetActivityDetailResponse> GetActivityDetail(GetActivityDetailRequest request)
-        {
-         //   ApiActuator.Runing(() => activityHandler.GetActivity(request));
-            return ApiActuator.Runing(() => activityHandler.GetActivityDetail(request));
         }
         
         /// <summary>
@@ -105,6 +83,50 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<EditActivityJoinResponse> EditActivityJoin(EditActivityJoinRequest request)
         {
             return ApiActuator.Runing(() => activityHandler.EditActivityJoin(request));
+        }
+
+        /// <summary>
+        /// 活动查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetActivityResponse> GetActivityList(GetActivityRequest request)
+        {
+            return ApiActuator.Runing(() => activityHandler.GetActivity(request));
+        }
+
+        /// <summary>
+        /// 活动详情查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetActivityDetailResponse> GetActivityDetail(GetActivityDetailRequest request)
+        {
+            return ApiActuator.Runing(() => activityHandler.GetActivityDetail(request));
+        }
+
+        /// <summary>
+        /// 公开活动查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetPublicActivityResponse> GetPublicActivityList(GetPublicActivityRequest request)
+        {
+            return ApiActuator.Runing(() => activityHandler.GetPublicActivity(request));
+        }
+
+        /// <summary>
+        /// 公开活动详情查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetPublicActivityDetailResponse> GetPublicActivityDetail(GetPublicActivityDetailRequest request)
+        {
+            return ApiActuator.Runing(() => activityHandler.GetPublicActivityDetail(request));
         }
     }
 }

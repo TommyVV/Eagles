@@ -16,6 +16,7 @@ using Eagles.Application.Model.Activity.EditActivityReview;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
+using Eagles.Application.Model.Activity.GetPublicActivityDetail;
 using Eagles.DomainService.Model.Activity;
 using Eagles.DomainService.Model.User;
 
@@ -151,7 +152,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId);
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
             {
                 response.Code = "96";
@@ -227,14 +228,14 @@ namespace Eagles.DomainService.Core.Activity
                 response.Message = "获取Token失败";
                 return response;
             }
-            var taskInfo = iActivityAccess.GetActivityDetail(request.ActivityId);
-            if (taskInfo == null)
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
+            if (activityInfo == null)
             {
                 response.Code = "96";
                 response.Message = "活动不存在";
                 return response;
             }
-            if (taskInfo.Status != 0)
+            if (activityInfo.Status != 0)
             {
                 response.Code = "96";
                 response.Message = "活动状态不正确";
@@ -263,12 +264,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "AppId不存在");
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-
+                throw new TransactionException("96", "获取Token失败");
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
@@ -355,7 +351,10 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-            var result = iActivityAccess.GetActivityDetail(request.ActivityId);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+                throw new TransactionException("96", "获取Token失败");
+            var result = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (result != null)
             {
                 response.ActivityId = request.ActivityId;
@@ -410,6 +409,37 @@ namespace Eagles.DomainService.Core.Activity
             }).ToList();
             if (result != null && result.Count > 0)
             {
+                response.Code = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.Code = "96";
+                response.Message = "查无数据";
+            }
+            return response;
+        }
+
+        public GetPublicActivityDetailResponse GetPublicActivityDetail(GetPublicActivityDetailRequest request)
+        {
+            var response = new GetPublicActivityDetailResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            var result = iActivityAccess.GetPublicActivityDetail(request.ActivityId, request.AppId);
+            if (result != null)
+            {
+                response.ActivityId = request.ActivityId;
+                response.ActivityName = result.ActivityName;
+                response.ActivityContent = result.HtmlContent;
+                response.ActivityImageUrl = result.ImageUrl;
+                response.ActivityStatus = result.Status;
+                response.AttachmentList = new List<Attachment>();
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
+                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
                 response.Code = "00";
                 response.Message = "查询成功";
             }

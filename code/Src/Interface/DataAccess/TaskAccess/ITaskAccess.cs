@@ -22,16 +22,16 @@ namespace Eagles.Interface.DataAccess.TaskAccess
         int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 
         int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
-        
-        List<TbTask> GetTask(string userId);
 
-        TbTask GetTaskDetail(int taskId);
-
-        List<TbUserComment> GetTaskComment(int taskId);
 
         List<TbUserTaskStep> GetTaskStep(int taskId);
 
-        List<TbTask> GetPublicTask(int appId);
+        List<TbTask> GetTask(string userId);
+
+        TbTask GetTaskDetail(int taskId, int appId);
         
+        List<TbTask> GetPublicTask(int appId);
+
+        TbTask GetPublicTaskDetail(int taskId, int appId);
     }
 }

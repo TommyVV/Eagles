@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+    <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailRequest.cs" />
+    <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
     <Compile Include="Common\ResAnswer.cs" />
@@ -63,6 +65,8 @@
     <Compile Include="Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
     <Compile Include="Score\AppScoreExchange\AppScoreExchangeResponse.cs" />
     <Compile Include="News\GetTestPaper\AppQuestion.cs" />
+    <Compile Include="Task\GetPublicTaskDetail\GetPublicTaskDetailRequest.cs" />
+    <Compile Include="Task\GetPublicTaskDetail\GetPublicTaskDetailResponse.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskRequest.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskResponse.cs" />
     <Compile Include="UserComment\AuditUserComment\AuditUserCommentRequest.cs" />
