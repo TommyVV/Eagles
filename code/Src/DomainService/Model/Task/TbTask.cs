@@ -21,8 +21,16 @@ namespace Eagles.DomainService.Model.Task
         public int CanComment { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime EndTime { get; set; }
+
+        /// <summary>
+        /// 任务发起人
+        /// </summary>
         public int FromUser { get; set; }
-        public int ToUserId { get; set; }
+        /// <summary>
+        /// 任务负责人
+        /// </summary>
+        public int UserId { get; set; }
+
         public int IsPublic { get; set; }
         public int OrgId { get; set; }
         public string OrgReview { get; set; }

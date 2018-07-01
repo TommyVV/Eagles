@@ -7,8 +7,8 @@ using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
-using Eagles.DomainService.Model.Activity;
 using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
@@ -73,7 +73,7 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
                     CreateTime = DateTime.Now
                 });
         }
-        
+
         public int EditActivityReview(ActivityTypeEnum type, int activityId)
         {
             var result = 0;
@@ -157,7 +157,6 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
         
         public List<TbActivity> GetActivity(ActivityType activityType, int branchId)
         {
-
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -206,10 +205,7 @@ FROM `eagles`.`tb_activity`
  ", parameter);
 
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
-
-
         }
-
 
         public List<TbUserActivity> GetUserActivity(int userId)
         {
@@ -276,6 +272,16 @@ where ActivityId = @ActivityId and OrgId = @OrgId and IsPublic = @IsPublic and O
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
+            }
+            return null;
+        }
+
+        public List<string> GetActivityJoinPeople(int activityId)
+        {
+            var result = dbManager.Query<string>("select userId from eagles.tb_user_activity where ActivityId = @ActivityId ", new {ActivityId = activityId});
+            if (result != null && result.Any())
+            {
+                return result;
             }
             return null;
         }

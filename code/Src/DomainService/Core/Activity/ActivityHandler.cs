@@ -3,10 +3,12 @@ using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
-using Eagles.Interface.Core.Activity;
-using Eagles.Interface.DataAccess.Util;
+using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.Activity;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
+using Eagles.Interface.Core.Activity;
+using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ActivityAccess;
 using Eagles.Application.Model.Activity.CreateActivity;
 using Eagles.Application.Model.Activity.EditActivityComplete;
@@ -17,8 +19,6 @@ using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.Application.Model.Activity.GetPublicActivityDetail;
-using Eagles.DomainService.Model.Activity;
-using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.Activity
 {
@@ -362,6 +362,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
+                response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
@@ -435,6 +436,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
+                response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });

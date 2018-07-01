@@ -19,22 +19,22 @@ using Eagles.Application.Model.Task.GetPublicTaskDetail;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
+using Eagles.DomainService.Model.Task;
 using Eagles.DomainService.Model.User;
-using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Task
 {
     public class TaskHandler : ITaskHandler
     {
-        private readonly IDesEncrypt desEncrypt;
         private readonly ITaskAccess iTaskAccess;
+        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public TaskHandler(ITaskAccess iTaskAccess, IUtil util, IDesEncrypt desEncrypt)
+        public TaskHandler(ITaskAccess iTaskAccess, IDesEncrypt desEncrypt, IUtil util)
         {
             this.iTaskAccess = iTaskAccess;
-            this.util = util;
             this.desEncrypt = desEncrypt;
+            this.util = util;
         }
 
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
@@ -49,20 +49,19 @@ namespace Eagles.DomainService.Core.Task
             }
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException("01", "用户不存在");
-            }
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
             var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
             if (fromUser == toUser)
-            {
                 throw new TransactionException("01", "负责人不能和发起人一致");
-            }
-            var task = new DomainModel.Task.TbTask();
+            var task = new TbTask();
+            task.OrgId = tokens.OrgId;
+            task.BranchId = tokens.BranchId;
             task.TaskName = request.TaskName;
             task.BeginTime = request.TaskBeginDate;
             task.EndTime = request.TaskEndDate;
             task.TaskContent = request.TaskContent;
+            task.CreateTime = DateTime.Now;
             task.FromUser = fromUser;
             task.CanComment = request.CanComment;
             task.IsPublic = request.IsPublic;
@@ -94,7 +93,7 @@ namespace Eagles.DomainService.Core.Task
                     task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(tokens.OrgId, tokens.BranchId, toUser, task);
+            var result = iTaskAccess.CreateTask(task, toUser);
             if (result > 0)
             {
                 response.Code = "00";
@@ -162,7 +161,7 @@ namespace Eagles.DomainService.Core.Task
                     break;
                 case TaskTypeEnum.Accept:
                     //下级接受任务
-                    if (taskInfo.ToUserId != tokens.UserId)
+                    if (taskInfo.UserId != tokens.UserId)
                     {
                         response.Code = "96";
                         response.Message = "必须负责人接受任务";
@@ -171,7 +170,7 @@ namespace Eagles.DomainService.Core.Task
                     break;
                 case TaskTypeEnum.Apply:
                     //下级申请完成任务
-                    if (taskInfo.ToUserId != tokens.UserId)
+                    if (taskInfo.UserId != tokens.UserId)
                     {
                         response.Code = "96";
                         response.Message = "必须负责人申请完成任务";
@@ -254,7 +253,7 @@ namespace Eagles.DomainService.Core.Task
                 response.Message = "任务状态不正确";
                 return response;
             }
-            if (taskInfo.ToUserId != tokens.UserId)
+            if (taskInfo.UserId != tokens.UserId)
             {
                 response.Code = "96";
                 response.Message = "必须负责人编辑计划";
@@ -366,9 +365,10 @@ namespace Eagles.DomainService.Core.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
-                TaskFromUser = x.FromUser,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime
+                TaskDate = x.BeginTime,
+                TaskFromUser = x.FromUser,
+                TaskToUser = x.UserId
             }).ToList();
             if (result != null && result.Count > 0)
             {

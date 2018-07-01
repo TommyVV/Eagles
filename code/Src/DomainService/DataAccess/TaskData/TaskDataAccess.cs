@@ -20,35 +20,8 @@ namespace Ealges.DomianService.DataAccess.TaskData
             this.dbManager = dbManager;
         }
 
-        public int CreateTask(int orgId, int branchId, int toUserId, TbTask reqTask)
+        public int CreateTask(TbTask reqTask, int toUserId)
         {
-            #region 事务操作taskId无法获取
-            /*
-            var commands = new List<TransactionCommand>()
-            {
-                new TransactionCommand()
-                {
-                    CommandString = @"insert into eagles.tb_task (TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
-                    Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview) 
-                    value(@TaskName, @FromUser, @TaskContent, @BeginTime, @EndTime, @AttachType1, @AttachType2, @AttachType3, @AttachType4, @Attach1, @Attach2, @Attach3, @Attach4,
-                    @CreateTime, @CanComment, @Status, @IsPublic, @OrgReview, @BranchReview)",
-                    Parameter =  new {TaskName = reqTask.TaskName, FromUser = reqTask.FromUser, TaskContent = reqTask.TaskContent, BeginTime = reqTask.BeginTime,
-                        EndTime = reqTask.EndTime, AttachType1 = reqTask.AttachType1, AttachType2 = reqTask.AttachType2, AttachType3 = reqTask.AttachType3,
-                        AttachType4 = reqTask.AttachType4, Attach1 = reqTask.Attach1, Attach2 = reqTask.Attach2, Attach3 = reqTask.Attach3, Attach4 = reqTask.Attach4,
-                        CreateTime = reqTask.CreateTime, CanComment = reqTask.CanComment, Status = 0, IsPublic = reqTask.IsPublic, OrgReview = "-1", BranchReview = "-1"
-                    }
-                },
-                //todo taskId不明确
-                new TransactionCommand()
-                {
-                    CommandString = "insert into eagles.tb_user_task(TaskId,UserId) value (insert into eagles.tb_user_task(@TaskId,@UserId)",
-                    Parameter =  new { TaskId = "", UserId = reqTask.FromUser }
-                }
-            };
-            dbManager.ExcutedByTransaction(commands);
-            */
-            #endregion
-
             var result = 0;
             var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
 Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview) 
@@ -56,8 +29,8 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
 @CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview); select LAST_INSERT_ID(); ",
                 new
                 {
-                    OrgId = orgId,
-                    BranchId = branchId,
+                    OrgId = reqTask.OrgId,
+                    BranchId = reqTask.BranchId,
                     TaskName = reqTask.TaskName,
                     FromUser = reqTask.FromUser, //任务发起人
                     TaskContent = reqTask.TaskContent,
@@ -71,7 +44,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                     Attach2 = reqTask.Attach2,
                     Attach3 = reqTask.Attach3,
                     Attach4 = reqTask.Attach4,
-                    CreateTime = DateTime.Now,
+                    CreateTime = reqTask.CreateTime,
                     CanComment = reqTask.CanComment,
                     Status = reqTask.Status, //任务状态初始状态
                     IsPublic = reqTask.IsPublic,
@@ -81,8 +54,8 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
                 new
                 {
-                    OrgId = orgId,
-                    BranchId = branchId,
+                    OrgId = reqTask.OrgId,
+                    BranchId = reqTask.BranchId,
                     TaskId = taskId,
                     UserId = toUserId //任务责任人
                 });
@@ -215,7 +188,7 @@ where TaskId = @TaskId ",
 
         public List<TbTask> GetTask(string userId)
         {
-            return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
+            return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new {UserId = userId});
         }
 

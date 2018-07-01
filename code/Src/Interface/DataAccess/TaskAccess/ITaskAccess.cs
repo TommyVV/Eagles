@@ -9,7 +9,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 {
     public interface ITaskAccess : IInterfaceBase
     {
-        int CreateTask(int orgId, int branchId, int toUserId, TbTask task);
+        int CreateTask(TbTask reqTask, int toUserId);
 
         int RemoveTaskStep(int taskId, int stepId);
 

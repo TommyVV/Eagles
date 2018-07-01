@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
-using Eagles.DomainService.Model.Order;
 using Eagles.DomainService.Model.User;
-using Eagles.Application.Model.Common;
+using Eagles.DomainService.Model.Order;
 using Eagles.Interface.DataAccess.ScoreAccess;
 
 namespace Ealges.DomianService.DataAccess.ScoreData
@@ -64,8 +63,7 @@ namespace Ealges.DomianService.DataAccess.ScoreData
 
         public List<TbUserRank> GetUserRank()
         {
-            var sql = @"
-select * from  eagles.tb_user_info  order by Score desc limit 10  ";
+            var sql = @"select * from  eagles.tb_user_info  order by Score desc limit 10  ";
             return dbManager.Query<TbUserRank>(sql);
         }
 
