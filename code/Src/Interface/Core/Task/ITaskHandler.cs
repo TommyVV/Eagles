@@ -5,6 +5,7 @@ using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.GetPublicTask;
+using Eagles.Application.Model.Task.GetPublicTaskDetail;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
@@ -24,5 +25,6 @@ namespace Eagles.Interface.Core.Task
         GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request);
         GetTaskStepResponse GetTaskStep(GetTaskStepRequest request);
         GetPublicTaskResponse GetPublicTask(GetPublicTaskRequest request);
+        GetPublicTaskDetailResponse GetPublicTaskDetail(GetPublicTaskDetailRequest request);
     }
 }
