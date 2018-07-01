@@ -13,8 +13,8 @@ namespace Eagles.Application.Model.Common
         public int UserId { get; set; }
 
         /// <summary>
-        /// 下级id
+        /// 姓名
         /// </summary>
-        public int SubUserId { get; set; }
+        public string Name { get; set; }
     }
 }

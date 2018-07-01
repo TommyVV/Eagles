@@ -36,7 +36,24 @@ where Token=@Token AND TokenType=@TokenType", new {Token = token, TokenType = to
         public int CreateScoreLs(TbUserScoreTrace userScoreTrace)
         {
             //增加修改积分的流水
-            return dbManager.Excuted(@"insert into eagles.tb_user_score_trace(UserId,CreateTime,Score,RewardsType,Comment,OriScore) value (@UserId,@CreateTime,@Score,@RewardsType,@Comment,@OriScore)", userScoreTrace);
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_user_score_trace`
+(`OrgId`,
+`UserId`,
+`TraceId`,
+`CreateTime`,
+`Score`,
+`RewardsType`,
+`Comment`,
+`OriScore`)
+VALUES
+(@OrgId,
+@UserId,
+@TraceId,
+@CreateTime,
+@Score,
+@RewardsType,
+@Comment,
+@OriScore);", userScoreTrace);
         }
 
         public int EditUserScore(int userId, int score)

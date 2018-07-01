@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
@@ -184,14 +185,37 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new GetUserRelationshipResponse();
             var userId = Convert.ToInt32(desEncrypt.Decrypt(request.UserId));
-            var result = userInfoAccess.GetRelationship(userId);
-            response.UserRelationshipList = result?.Select(x =>
-            new UserRelationship
-            {
-                UserId = x.UserId,
-                SubUserId = x.SubUserId
-            }).ToList();
-            return null;
+
+            var superiorUserList = userInfoAccess.GetRelationship(userId, true);
+
+            var lowerUserList = userInfoAccess.GetRelationship(userId, false);
+
+            var slist = superiorUserList.Select(x => x.UserId).ToList();
+
+            var llist = lowerUserList.Select(x => x.SubUserId).ToList();
+
+
+            List<int> userIdList = slist.Union(llist).ToList();
+
+            var userInfo = userInfoAccess.GetUserInfo(userIdList);
+
+            response.SuperiorUserList = superiorUserList?.Select(x =>
+                new UserRelationship
+                {
+                    UserId = x.UserId,
+                    Name = userInfo.First(u => (u.UserId == x.UserId)).Name
+                }).ToList();
+
+
+            response.LowerUserList = lowerUserList?.Select(x =>
+                new UserRelationship
+                {
+                    UserId = x.UserId,
+                    Name = userInfo.First(u => (u.UserId == x.SubUserId)).Name
+                }).ToList();
+
+
+            return response;
         }
     }
 }

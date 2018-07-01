@@ -7,6 +7,7 @@ using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
+using Eagles.Application.Model.Activity.GetPublicActivityDetail;
 
 
 namespace Eagles.Interface.Core.Activity
@@ -21,5 +22,6 @@ namespace Eagles.Interface.Core.Activity
         GetActivityResponse GetActivity(GetActivityRequest request);
         GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request);
         GetPublicActivityResponse GetPublicActivity(GetPublicActivityRequest request);
+        GetPublicActivityDetailResponse GetPublicActivityDetail(GetPublicActivityDetailRequest request);
     }
 }

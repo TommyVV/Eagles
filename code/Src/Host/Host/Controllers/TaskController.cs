@@ -1,14 +1,17 @@
 ﻿using System.Web.Http;
+using Eagles.Base;
+using Eagles.Interface.Core.Task;
 using Eagles.Application.Model.Task.CreateTask;
+using Eagles.Application.Model.Task.RemoveTaskStep;
+using Eagles.Application.Model.Task.EditTaskStep;
 using Eagles.Application.Model.Task.EditTaskAccept;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
-using Eagles.Application.Model.Task.EditTaskStep;
+using Eagles.Application.Model.Task.GetTaskStep;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
-using Eagles.Application.Model.Task.GetTaskStep;
-using Eagles.Application.Model.Task.RemoveTaskStep;
-using Eagles.Interface.Core.Task;
+using Eagles.Application.Model.Task.GetPublicTask;
+using Eagles.Application.Model.Task.GetPublicTaskDetail;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -35,9 +38,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CreateTaskResponse CreateTask(CreateTaskRequest request)
+        public ResponseFormat<CreateTaskResponse> CreateTask(CreateTaskRequest request)
         {
-            return taskHandler.CreateTask(request);
+            return ApiActuator.Runing(() => taskHandler.CreateTask(request));
         }
 
         /// <summary>
@@ -46,9 +49,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public RemoveTaskStepResponse RemoveTaskStep(RemoveTaskStepRequest request)
+        public ResponseFormat<RemoveTaskStepResponse> RemoveTaskStep(RemoveTaskStepRequest request)
         {
-            return taskHandler.RemoveTaskStep(request);
+            return ApiActuator.Runing(() => taskHandler.RemoveTaskStep(request));
         }
 
         /// <summary>
@@ -57,9 +60,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditTaskCompleteResponse EditTaskComplete(EditTaskCompleteRequest request)
+        public ResponseFormat<EditTaskCompleteResponse> EditTaskComplete(EditTaskCompleteRequest request)
         {
-            return taskHandler.EditTaskComplete(request);
+            return ApiActuator.Runing(() => taskHandler.EditTaskComplete(request));
         }
 
         /// <summary>
@@ -68,9 +71,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditTaskStepResponse EditTaskStep(EditTaskStepRequest request)
+        public ResponseFormat<EditTaskStepResponse> EditTaskStep(EditTaskStepRequest request)
         {
-            return taskHandler.EditTaskStep(request);
+            return ApiActuator.Runing(() => taskHandler.EditTaskStep(request));
         }
 
         /// <summary>
@@ -79,9 +82,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditTaskAcceptResponse EditTaskAccept(EditTaskAcceptRequest request)
+        public ResponseFormat<EditTaskAcceptResponse> EditTaskAccept(EditTaskAcceptRequest request)
         {
-            return taskHandler.EditTaskAccept(request);
+            return ApiActuator.Runing(() => taskHandler.EditTaskAccept(request));
         }
 
         /// <summary>
@@ -90,31 +93,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditTaskFeedBackResponse EditTaskFeedBack(EditTaskFeedBackRequest request)
+        public ResponseFormat<EditTaskFeedBackResponse> EditTaskFeedBack(EditTaskFeedBackRequest request)
         {
-            return taskHandler.EditTaskFeedBack(request);
-        }
-        
-        /// <summary>
-        /// 任务查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetTaskResponse GetTask(GetTaskRequest request)
-        {
-            return taskHandler.GetTask(request);
-        }
-
-        /// <summary>
-        /// 任务详情查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public GetTaskDetailResponse GetTaskDetail(GetTaskDetailRequest request)
-        {
-            return taskHandler.GetTaskDetail(request);
+            return ApiActuator.Runing(() => taskHandler.EditTaskFeedBack(request));
         }
 
         /// <summary>
@@ -123,9 +104,53 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetTaskStepResponse GetTaskStep(GetTaskStepRequest request)
+        public ResponseFormat<GetTaskStepResponse> GetTaskStep(GetTaskStepRequest request)
         {
-            return taskHandler.GetTaskStep(request);
+            return ApiActuator.Runing(() => taskHandler.GetTaskStep(request));
+        }
+
+        /// <summary>
+        /// 任务查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetTaskResponse> GetTask(GetTaskRequest request)
+        {
+            return ApiActuator.Runing(() => taskHandler.GetTask(request));
+        }
+
+        /// <summary>
+        /// 任务详情查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetTaskDetailResponse> GetTaskDetail(GetTaskDetailRequest request)
+        {
+            return ApiActuator.Runing(() => taskHandler.GetTaskDetail(request));
+        }
+
+        /// <summary>
+        /// 公开任务查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetPublicTaskResponse> GetPublicTask(GetPublicTaskRequest request)
+        {
+            return ApiActuator.Runing(() => taskHandler.GetPublicTask(request));
+        }
+
+        /// <summary>
+        /// 公开任务详情查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetPublicTaskDetailResponse> GetPublicTaskDetail(GetPublicTaskDetailRequest request)
+        {
+            return ApiActuator.Runing(() => taskHandler.GetPublicTaskDetail(request));
         }
     }
 }
