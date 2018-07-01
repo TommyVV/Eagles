@@ -2,6 +2,7 @@
 using Eagles.Application.Model.Score.AppScoreExchange;
 using Eagles.Application.Model.Score.GetScoreExchangeLs;
 using Eagles.Application.Model.Score.GetScoreRank;
+using Eagles.Base;
 using Eagles.Interface.Core.Score;
 
 namespace Eagles.Application.Host.Controllers
@@ -24,9 +25,10 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public AppScoreExchangeResponse AppScoreExchange(AppScoreExchangeRequest request)
+        public ResponseFormat<AppScoreExchangeResponse> AppScoreExchange(AppScoreExchangeRequest request)
         {
-            return scoreHandler.AppScoreExchange(request);
+            return ApiActuator.Runing(() => scoreHandler.AppScoreExchange(request));
+            //return scoreHandler.AppScoreExchange(request);
         }
 
         /// <summary>
@@ -35,9 +37,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetScoreExchangeLsResponse GetScoreExchangeLs(GetScoreExchangeLsRequest request)
+        public ResponseFormat<GetScoreExchangeLsResponse> GetScoreExchangeLs(GetScoreExchangeLsRequest request)
         {
-            return scoreHandler.GetScoreExchangeLs(request);
+            return ApiActuator.Runing(() => scoreHandler.GetScoreExchangeLs(request));
+           // return scoreHandler.GetScoreExchangeLs(request);
         }
 
         /// <summary>
@@ -46,9 +49,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
+        public ResponseFormat<GetScoreRankResponse> GetScoreRank(GetScoreRankRequest request)
         {
-            return scoreHandler.GetScoreRank(request);
+            return ApiActuator.Runing(() => scoreHandler.GetScoreRank(request));
+      
         }
     }
 }

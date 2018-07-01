@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiActuator.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\Implement\ConfigurationManager.cs" />
     <Compile Include="Configuration\XmlPath.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Json\IJsonSerialize.cs" />
     <Compile Include="Json\Implement\JsonSerialize.cs" />
+    <Compile Include="ResponseFormat.cs" />
     <Compile Include="TransactionException.cs" />
   </ItemGroup>
   <ItemGroup>

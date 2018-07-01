@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model.GetMenu;
+using Eagles.Base;
 using Eagles.Interface.Core.AppMenu;
 
 namespace Eagles.Application.Host.Controllers
@@ -8,12 +9,12 @@ namespace Eagles.Application.Host.Controllers
     /// 
     /// </summary>
     [ValidServiceToken]
-    public class AppMenuController: ApiController
+    public class AppMenuController : ApiController
     {
         private readonly IAppMenuHandler appMenu;
 
         /// <summary>
-        /// construction
+        /// 菜单
         /// </summary>
         /// <param name="appMenu"></param>
         public AppMenuController(IAppMenuHandler appMenu)
@@ -27,9 +28,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetMenuResponse GetAppMenu(GetMenuRequest request)
+        public ResponseFormat<GetMenuResponse> GetAppMenu(GetMenuRequest request)
         {
-            return appMenu.GetMenu(request);
+            return ApiActuator.Runing(() => appMenu.GetMenu(request));
         }
     }
 }

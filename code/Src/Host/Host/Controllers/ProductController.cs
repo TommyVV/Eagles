@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model.Product.GetProduct;
 using Eagles.Application.Model.Product.GetProductDetail;
+using Eagles.Base;
 using Eagles.Interface.Core.Product;
 
 namespace Eagles.Application.Host.Controllers
@@ -28,9 +29,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetProductResponse GetProduct(GetProductRequest request)
+        public ResponseFormat<GetProductResponse> GetProduct(GetProductRequest request)
         {
-            return productHandler.GetProduct(request);
+            return ApiActuator.Runing(() => productHandler.GetProduct(request));
+          
         }
 
         /// <summary>
@@ -39,9 +41,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetProductDetailResponse GetProductDetail(GetProductDetailRequest request)
+        public ResponseFormat<GetProductDetailResponse> GetProductDetail(GetProductDetailRequest request)
         {
-            return productHandler.GetProductDetail(request);
+            return ApiActuator.Runing(() => productHandler.GetProductDetail(request));
         }
     }
 }

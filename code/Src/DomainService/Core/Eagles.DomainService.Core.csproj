@@ -71,6 +71,7 @@
     <Compile Include="Test\TestHandler.cs" />
     <Compile Include="UserComment\UserCommentHandler.cs" />
     <Compile Include="UserMessage\UserMessageHandler.cs" />
+    <Compile Include="UserTest\UserTestHandler.cs" />
     <Compile Include="User\UserHandler.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
-using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.News;
-using Eagles.DomainService.Model.Question;
 using Eagles.Interface.DataAccess.NewsDa;
 
 namespace Ealges.DomianService.DataAccess.NewsDA
@@ -18,39 +16,74 @@ namespace Ealges.DomianService.DataAccess.NewsDA
 
         public List<TbNews> GetModuleNews(int moduleId,int appId,int count)
         {
-            return dbManager.Query<TbNews>(@"select OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
-OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl from eagles.tb_news where Module=@Module And OrgId=@OrgId limit @Count", new {Module = moduleId, OrgId = appId, Count = count});
+            return dbManager.Query<TbNews>(@"SELECT `tb_news`.`OrgId`,
+    `tb_news`.`NewsId`,
+    `tb_news`.`ShortDesc`,
+    `tb_news`.`Title`,
+    `tb_news`.`HtmlContent`,
+    `tb_news`.`Author`,
+    `tb_news`.`Source`,
+    `tb_news`.`Module`,
+    `tb_news`.`Status`,
+    `tb_news`.`BeginTime`,
+    `tb_news`.`EndTime`,
+    `tb_news`.`TestId`,
+    `tb_news`.`Attach1`,
+    `tb_news`.`Attach2`,
+    `tb_news`.`Attach3`,
+    `tb_news`.`Attach4`,
+    `tb_news`.`Attach5`,
+    `tb_news`.`OperId`,
+    `tb_news`.`CreateTime`,
+    `tb_news`.`IsImage`,
+    `tb_news`.`IsVideo`,
+    `tb_news`.`IsAttach`,
+    `tb_news`.`IsClass`,
+    `tb_news`.`IsLearning`,
+    `tb_news`.`IsText`,
+    `tb_news`.`ViewCount`,
+    `tb_news`.`ReviewId`,
+    `tb_news`.`CanStudy`,
+    `tb_news`.`ImageUrl`,
+    `tb_news`.`IsExternal`,
+    `tb_news`.`ExternalUrl`
+FROM `eagles`.`tb_news`  where Module=@Module And OrgId=@OrgId limit @Count", new {Module = moduleId, OrgId = appId, Count = count});
         }
 
         public TbNews GetNewsDetail(int newsId, int appId)
         {
-            return dbManager.QuerySingle<TbNews>(@"select OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,Attach1,Attach2,Attach3,Attach4,Attach5,
-OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl from eagles.tb_news where NewsId=@NewsId And OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
-        }
-
-        public List<TbQuestEx> GetTestPaper(int testId)
-        {
-            return dbManager.Query<TbQuestEx>(@"select c.TestId,a.QuestionId,a.Question,a.Multiple,a.MultipleCount,b.AnswerId,b.Answer,b.AnswerType,b.IsRight,b.ImageUrl
-from eagles.tb_question a join eagles.tb_quest_anwser b on a.questionId = b.questionId join eagles.tb_test_question c on a.questionId = c.questionId where c.TestId = @TestId ", new {TestId = testId});
-        }
-
-        public TbTestPaper GetTestPaperInfo(int testId)
-        {
-            return dbManager.QuerySingle<TbTestPaper>(@"select TestId,TestName,HasReward,QuestionSocre,PassScore,HasLimitedTime,LimitedTime,HtmlDescription 
-from eagles.tb_test_paper where TestId=@TestId And Status=0 ", new {TestId = testId});
-        }
-
-        public List<TbQuestAnswer> GetTestRightAnswer(int testId)
-        {
-            return dbManager.Query<TbQuestAnswer>(@"select a.OrgId, a.QuestionId, a.AnswerId, a.Answer, a.AnswerType, a.IsRight, a.ImageUrl
-from eagles.tb_quest_anwser a join eagles.tb_test_question b on a.questionId = b.questionId
-where b.TestId = @TestId and a.IsRight = 1; ", new { TestId = testId });
-        }
-
-        public int CreateUserTest(TbUserTest userTest)
-        {
-            return dbManager.Excuted(@"insert into eagles.tb_user_test (OrgId,BranchId,UserId,TestId,Score,TotalScore,CreateTime,UseTime) 
-value (@OrgId,@BranchId,@UserId,@TestId,@Score,@TotalScore,@CreateTime,@UseTime) ", userTest);
+            return dbManager.QuerySingle<TbNews>(@"SELECT `tb_news`.`OrgId`,
+    `tb_news`.`NewsId`,
+    `tb_news`.`ShortDesc`,
+    `tb_news`.`Title`,
+    `tb_news`.`HtmlContent`,
+    `tb_news`.`Author`,
+    `tb_news`.`Source`,
+    `tb_news`.`Module`,
+    `tb_news`.`Status`,
+    `tb_news`.`BeginTime`,
+    `tb_news`.`EndTime`,
+    `tb_news`.`TestId`,
+    `tb_news`.`Attach1`,
+    `tb_news`.`Attach2`,
+    `tb_news`.`Attach3`,
+    `tb_news`.`Attach4`,
+    `tb_news`.`Attach5`,
+    `tb_news`.`OperId`,
+    `tb_news`.`CreateTime`,
+    `tb_news`.`IsImage`,
+    `tb_news`.`IsVideo`,
+    `tb_news`.`IsAttach`,
+    `tb_news`.`IsClass`,
+    `tb_news`.`IsLearning`,
+    `tb_news`.`IsText`,
+    `tb_news`.`ViewCount`,
+    `tb_news`.`ReviewId`,
+    `tb_news`.`CanStudy`,
+    `tb_news`.`ImageUrl`,
+    `tb_news`.`IsExternal`,
+    `tb_news`.`ExternalUrl`
+FROM `eagles`.`tb_news`  where NewsId=@NewsId And OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
         }
     }
 }

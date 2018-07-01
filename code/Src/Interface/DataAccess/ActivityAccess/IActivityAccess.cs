@@ -21,6 +21,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         List<TbActivity> GetActivity(ActivityType activityType, ActivityPage activityPage, string userId = null);
 
         TbActivity GetActivityDetail(int activityId);
-        
+
+        List<TbActivity> GetPublicActivity(ActivityType activityType, int appId);
     }
 }

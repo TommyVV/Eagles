@@ -56,6 +56,7 @@
     <Compile Include="Test\ITestHandler.cs" />
     <Compile Include="UserComment\IUserCommentHandler.cs" />
     <Compile Include="UserMessage\IUserMessageHandler.cs" />
+    <Compile Include="UserTest\IUserTestHandler.cs" />
     <Compile Include="User\IUserHandler.cs" />
   </ItemGroup>
   <ItemGroup>

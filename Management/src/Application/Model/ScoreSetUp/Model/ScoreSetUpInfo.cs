@@ -4,10 +4,19 @@ using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.ScoreSetUp.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ScoreSetUpInfo
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public OperationType OperationType { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int ScoreSetUpId { get; set; }
 
         /// <summary>
@@ -16,6 +25,9 @@ namespace Eagles.Application.Model.ScoreSetUp.Model
         public int Score { get; set; }
 
         //状态
+        /// <summary>
+        /// 
+        /// </summary>
         public Status Status { get; set; }
 
         /// <summary>

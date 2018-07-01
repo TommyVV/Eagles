@@ -39,13 +39,21 @@ Address = order.Address, Province = order.Province, City = order.City, District 
 
         public List<TbUserScoreTrace> GetScoreExchangeLs(int userId)
         {
-            return dbManager.Query<TbUserScoreTrace>("select OrgId, UserId, TraceId, CreateTime, Score, RewardsType, Comment, OriScore from eagles.tb_user_score_trace where UserId = @UserId ", new { UserId =userId});
+            return dbManager.Query<TbUserScoreTrace>(@"SELECT `tb_user_score_trace`.`OrgId`,
+                `tb_user_score_trace`.`UserId`,
+                `tb_user_score_trace`.`TraceId`,
+                `tb_user_score_trace`.`CreateTime`,
+                `tb_user_score_trace`.`Score`,
+                `tb_user_score_trace`.`RewardsType`,
+                `tb_user_score_trace`.`Comment`,
+                `tb_user_score_trace`.`OriScore`
+            FROM `eagles`.`tb_user_score_trace` where UserId = @UserId ", new { UserId =userId});
         }
 
         public List<TbUserRank> GetUserRank()
         {
-            var sql = @"select (@i:=@i+1) as No,a.Name,b.OrgName,a.Score from tb_user_info a 
-join tb_org_info b on a.OrgId = b.OrgId ,(select @i:=0) as it order by a.Score desc limit 10; ";
+            var sql = @"
+select * from  eagles.tb_user_info  order by Score desc limit 10  ";
             return dbManager.Query<TbUserRank>(sql);
         }
 

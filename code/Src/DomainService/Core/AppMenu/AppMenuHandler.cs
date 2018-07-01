@@ -28,7 +28,6 @@ namespace Eagles.DomainService.Core.AppMenu
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var menus = menuDataAccess.GetAppMenus(request.AppId);
-
             if (menus == null || !menus.Any())
             {
                 return response;

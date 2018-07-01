@@ -14,6 +14,7 @@ using Eagles.Application.Model.Task.EditTaskAccept;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Task.EditTaskStep;
+using Eagles.Application.Model.Task.GetPublicTask;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
@@ -407,5 +408,33 @@ namespace Eagles.DomainService.Core.Task
             return response;
         }
 
+        public GetPublicTaskResponse GetPublicTask(GetPublicTaskRequest request)
+        {
+            var response = new GetPublicTaskResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException("01", "AppId不允许为空");
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException("01", "AppId不存在");
+            var result = iTaskAccess.GetPublicTask(request.AppId);
+            response.TaskList = result?.Select(x => new Application.Model.Common.Task
+            {
+                TaskId = x.TaskId,
+                TaskeName = x.TaskName,
+                TaskFromUser = x.FromUser,
+                TaskStatus = x.Status,
+                TaskDate = x.BeginTime
+            }).ToList();
+            if (result != null && result.Count > 0)
+            {
+                response.Code = "00";
+                response.Message = "查询成功";
+            }
+            else
+            {
+                response.Code = "96";
+                response.Message = "查无数据";
+            }
+            return response;
+        }
     }
 }

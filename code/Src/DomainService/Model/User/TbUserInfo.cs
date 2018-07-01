@@ -143,5 +143,10 @@ namespace Eagles.DomainService.Model.User
         /// 用户积分
         /// </summary>
         public int Score { get; set; }
+
+        /// <summary>
+        /// 账号
+        /// </summary>
+        public string Account { get; set; }
     }
 }

@@ -36,29 +36,31 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException("96", "获取Token失败");
             }
+
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
                 throw new TransactionException("01", "用户不存在");
             }
+
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
-            if(productInfo == null)
+            if (productInfo == null)
             {
-                response.Code = "96";
-                response.Message = "商品信息不存在";
-                return response;
+                throw new TransactionException("96", "商品信息不存在");
             }
+
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分
             var userScore = userInfo.Score; //用户积分
-            if(userScore < score)
-                throw new TransactionException("01","用户积分不足");
-            var order = new DomainModel.Order.TbOrder()
+            if (userScore < score * request.Count)
+                throw new TransactionException("01", "用户积分不足");
+
+
+
+            var order = new DomainModel.Order.TbOrder
             {
                 OrgId = tokens.OrgId,
                 ProdId = request.ProductId,
@@ -70,22 +72,19 @@ namespace Eagles.DomainService.Core.Score
                 Province = request.Province,
                 City = request.City,
                 District = request.District,
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+                UserId = userInfo.UserId
             };
+
             //订单表、流水表
-            var result = iScoreAccess.AppScoreExchange(order, userScore);
+            iScoreAccess.AppScoreExchange(order, userScore);
             //更新用户积分
-            util.EditUserScore(tokens.UserId, score * -1);
-            if (result)
+            var result = util.EditUserScore(tokens.UserId, score * request.Count);
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "兑换成功";
+                throw new TransactionException("01", "用户积分不足");
             }
-            else
-            {
-                response.Code = "96";
-                response.Message = "兑换失败";
-            }
+
             return response;
         }
 
@@ -119,8 +118,7 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException("96", "查无数据");
             }
             return response;
         }
