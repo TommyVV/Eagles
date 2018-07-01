@@ -64,6 +64,8 @@
     <Compile Include="News\GetTestPaper\AppQuestion.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskRequest.cs" />
     <Compile Include="Task\GetPublicTask\GetPublicTaskResponse.cs" />
+    <Compile Include="Upload\FileUploadResult.cs" />
+    <Compile Include="Upload\UploadResponse.cs" />
     <Compile Include="UserComment\AuditUserComment\AuditUserCommentRequest.cs" />
     <Compile Include="UserComment\AuditUserComment\AuditUserCommentResponse.cs" />
     <Compile Include="Activity\EditActivityFeedBack\EditActivityFeedBackRequest.cs" />

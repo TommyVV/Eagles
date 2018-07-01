@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Web;
+using System.Web.Http;
 using Eagles.Base.Md5Helper;
 using Eagles.Base.ValidateVode;
 
@@ -16,10 +19,12 @@ namespace Eagles.Application.Host.Controllers
             this.validate = validate;
         }
 
-        [HttpGet]
-        public string Test(string str)
+        [HttpPost,HttpPut, HttpOptions]
+        public string Test()
         {
-            return validate.GenerateValidCodeToBase64(1234);
+            return null;
         }
+
+        
     }
 }
