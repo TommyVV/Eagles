@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
-using Eagles.Application.Model.Product.GetProduct;
 using Eagles.Base;
+using Eagles.DomainService.Model.Product;
+using Eagles.Application.Model.Product.GetProduct;
 
 namespace Eagles.Interface.DataAccess.ProductAccess
 {
     public interface IProductAccess : IInterfaceBase
     {
-        List<DomainService.Model.Product.TbProduct> GetProduct(GetProductRequest request );
+        int GetOrderByProduct(int productId, int userId);
 
-        DomainService.Model.Product.TbProduct GetProductDetail(int productId);
+        List<TbProduct> GetProduct(GetProductRequest request );
+
+        TbProduct GetProductDetail(int productId);
     }
 }

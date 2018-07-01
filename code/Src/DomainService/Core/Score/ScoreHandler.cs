@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Eagles.Base;
+using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ScoreAccess;
@@ -8,7 +9,6 @@ using Eagles.Interface.DataAccess.ProductAccess;
 using Eagles.Application.Model.Score.GetScoreRank;
 using Eagles.Application.Model.Score.AppScoreExchange;
 using Eagles.Application.Model.Score.GetScoreExchangeLs;
-using DomainModel = Eagles.DomainService.Model;
 
 namespace Eagles.DomainService.Core.Score
 {
@@ -35,32 +35,28 @@ namespace Eagles.DomainService.Core.Score
             var response = new AppScoreExchangeResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
                 throw new TransactionException("96", "获取Token失败");
-            }
-
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException("01", "用户不存在");
-            }
-
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if (productInfo == null)
-            {
                 throw new TransactionException("96", "商品信息不存在");
-            }
-
+            var buyCount = request.Count; //购买数量
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分
+            var stock = productInfo.Stock; //库存
+            var maxBuyCount = productInfo.MaxBuyCount; //每人最大购买数量
+            var userCount = iproductAccess.GetOrderByProduct(request.ProductId, userInfo.UserId);
+            if (maxBuyCount > 0 && buyCount >= userCount)
+                throw new TransactionException("01", "超过最大购买数量");
             var userScore = userInfo.Score; //用户积分
+            if (stock < buyCount)
+                throw new TransactionException("01", "商品库存不足");
             if (userScore < score * request.Count)
                 throw new TransactionException("01", "用户积分不足");
-
-
-
-            var order = new DomainModel.Order.TbOrder
+            var order = new TbOrder
             {
                 OrgId = tokens.OrgId,
                 ProdId = request.ProductId,
@@ -75,16 +71,12 @@ namespace Eagles.DomainService.Core.Score
                 CreateTime = DateTime.Now,
                 UserId = userInfo.UserId
             };
-
             //订单表、流水表
-            iScoreAccess.AppScoreExchange(order, userScore);
+            var exchange = iScoreAccess.AppScoreExchange(order, userScore, buyCount);
             //更新用户积分
             var result = util.EditUserScore(tokens.UserId, score * request.Count);
             if (result <= 0)
-            {
-                throw new TransactionException("01", "用户积分不足");
-            }
-
+                throw new TransactionException("01", "更新用户积分失败");
             return response;
         }
 

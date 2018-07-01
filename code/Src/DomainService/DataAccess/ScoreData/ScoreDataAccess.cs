@@ -17,21 +17,33 @@ namespace Ealges.DomianService.DataAccess.ScoreData
             this.dbManager = dbManager;
         }
 
-        public bool AppScoreExchange(TbOrder order, int userScore)
+        public bool AppScoreExchange(TbOrder order, int userScore, int saleCount)
         {
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = @"insert into eagles.tb_order (OrgId,ProdId,ProdName,OrderStatus,Score,Count,Address,Province,City,District,CreateTime) value 
-(@OrgId,@ProdId,@ProdName,@OrderStatus,@Score,@Count,@Address,@Province,@City,@District,@CreateTime) ",
-                    Parameter =  new {OrgId = order.OrgId, ProdId = order.ProdId, ProdName = order.ProdName, OrderStatus = order.OrderStatus, Score = order.Score, Count = order.Count,
-Address = order.Address, Province = order.Province, City = order.City, District = order.District, CreateTime = order.CreateTime}
+                    CommandString = @"insert into eagles.tb_order (OrgId,ProdId,ProdName,OrderStatus,Score,Count,UserId,Address,Province,City,District,CreateTime) value 
+(@OrgId,@ProdId,@ProdName,@OrderStatus,@Score,@Count,@UserId,@Address,@Province,@City,@District,@CreateTime) ",
+                    Parameter = order
                 },
                 new TransactionCommand()
                 {
                     CommandString = "insert into eagles.tb_user_score_trace (OrgId,UserId,CreateTime,Score,Comment,OriScore) value (@OrgId,@UserId,@CreateTime,@Score,@Comment,@OriScore) ",
-                    Parameter =  new {OrgId = order.OrgId, UserId = order.UserId, CreateTime = order.CreateTime, Score = order.Score, Comment = "兑换商品积分扣除", OriScore = userScore}
+                    Parameter = new
+                    {
+                        OrgId = order.OrgId,
+                        UserId = order.UserId,
+                        CreateTime = order.CreateTime,
+                        Score = order.Score * -1,
+                        Comment = "兑换商品积分扣除",
+                        OriScore = userScore
+                    }
+                },
+                new TransactionCommand()
+                {
+                    CommandString = "update eagles.tb_product set Stock = Stock - @Stock, SaleCount = SaleCount + @SaleCount where ProdId = @ProdId ",
+                    Parameter = new {Stock = saleCount, SaleCount = saleCount, ProdId = order.ProdId}
                 }
             };
             return dbManager.ExcutedByTransaction(commands);

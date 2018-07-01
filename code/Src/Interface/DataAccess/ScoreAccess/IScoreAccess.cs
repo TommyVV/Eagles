@@ -7,7 +7,7 @@ namespace Eagles.Interface.DataAccess.ScoreAccess
 {
     public interface IScoreAccess : IInterfaceBase
     {
-        bool AppScoreExchange(TbOrder order, int userScore);
+        bool AppScoreExchange(TbOrder order, int userScore, int saleCount);
 
         List<TbUserScoreTrace> GetScoreExchangeLs(int userId);
 
