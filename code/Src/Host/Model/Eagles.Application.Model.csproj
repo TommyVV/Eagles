@@ -51,6 +51,7 @@
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
+    <Compile Include="Common\UserLevel.cs" />
     <Compile Include="Common\UserRelationship.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />

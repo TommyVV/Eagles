@@ -2,6 +2,7 @@
 using Eagles.Interface.Core.Study;
 using Eagles.Application.Model.Study.EditStudyTime;
 using Eagles.Application.Model.Study.GetStudyTime;
+using Eagles.Base;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -24,9 +25,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditStudyTimeResponse EditStudyTime(EditStudyTimeRequest request)
+        public ResponseFormat<EditStudyTimeResponse> EditStudyTime(EditStudyTimeRequest request)
         {
-            return iStudyHandler.EditStudyTime(request);
+            return ApiActuator.Runing(() => iStudyHandler.EditStudyTime(request));
+           // return iStudyHandler.EditStudyTime(request);
         }
 
         /// <summary>
@@ -35,9 +37,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetStudyTimeResponse GetStudyTime(GetStudyTimeRequest request)
+        public ResponseFormat<GetStudyTimeResponse> GetStudyTime(GetStudyTimeRequest request)
         {
-            return iStudyHandler.GetStudyTime(request);
+            return ApiActuator.Runing(() => iStudyHandler.GetStudyTime(request));
         }
     }
 }

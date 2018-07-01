@@ -74,5 +74,10 @@ namespace Eagles.Application.Model.Activity.CreateActivity
         /// 附件列表
         /// </summary>
         public List<Attachment> AttachList { get; set; }
+
+        /// <summary>
+        /// 创建类型 1 下级向上级 2 上级
+        /// </summary>
+        public int CreateType { get; set; }
     }
 }

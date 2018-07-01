@@ -9,8 +9,16 @@ namespace Eagles.Application.Model.User.GetUserRelationship
     public class GetUserRelationshipResponse : ResponseBase
     {
         /// <summary>
-        /// 用户编号
+        /// 上级
         /// </summary>
-        public List<UserRelationship> UserRelationshipList { get; set; }
+        public List<UserRelationship> SuperiorUserList { get; set; }
+
+
+        /// <summary>
+        /// 下级
+        /// </summary>
+        public List<UserRelationship> LowerUserList { get; set; }
+
+
     }
 }

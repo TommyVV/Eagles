@@ -8,6 +8,7 @@ using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
+using Eagles.Base;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -34,9 +35,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetActivityResponse GetActivityList(GetActivityRequest request)
+        public ResponseFormat<GetActivityResponse> GetActivityList(GetActivityRequest request)
         {
-            return activityHandler.GetActivity(request);
+            return  ApiActuator.Runing(() => activityHandler.GetActivity(request));
         }
 
         /// <summary>
@@ -45,9 +46,10 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetActivityDetailResponse GetActivityDetail(GetActivityDetailRequest request)
+        public ResponseFormat<GetActivityDetailResponse> GetActivityDetail(GetActivityDetailRequest request)
         {
-            return activityHandler.GetActivityDetail(request);
+         //   ApiActuator.Runing(() => activityHandler.GetActivity(request));
+            return ApiActuator.Runing(() => activityHandler.GetActivityDetail(request));
         }
         
         /// <summary>
@@ -56,9 +58,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CreateActivityResponse CreateActivity(CreateActivityRequest request)
+        public ResponseFormat<CreateActivityResponse> CreateActivity(CreateActivityRequest request)
         {
-            return activityHandler.CreateActivity(request);
+            return ApiActuator.Runing(() => activityHandler.CreateActivity(request));
         }
 
         /// <summary>
@@ -67,9 +69,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditActivityReviewResponse EditActivityReview(EditActivityReviewRequest request)
+        public ResponseFormat<EditActivityReviewResponse> EditActivityReview(EditActivityReviewRequest request)
         {
-            return activityHandler.EditActivityReview(request);
+            return ApiActuator.Runing(() => activityHandler.EditActivityReview(request));
         }
 
         /// <summary>
@@ -78,9 +80,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditActivityComplete(EditActivityCompleteRequest request)
+        public ResponseFormat<EditActivityCompleteResponse> EditActivityComplete(EditActivityCompleteRequest request)
         {
-            return activityHandler.EditActivityComplete(request);
+            return ApiActuator.Runing(() => activityHandler.EditActivityComplete(request));
         }
 
         /// <summary>
@@ -89,9 +91,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditActivityFeedBack(EditActivityFeedBackRequest request)
+        public ResponseFormat<EditActivityFeedBackResponse> EditActivityFeedBack(EditActivityFeedBackRequest request)
         {
-            return activityHandler.EditActivityFeedBack(request);
+            return ApiActuator.Runing(() => activityHandler.EditActivityFeedBack(request));
         }
 
         /// <summary>
@@ -100,9 +102,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditActivityJoinResponse EditActivityJoin(EditActivityJoinRequest request)
+        public ResponseFormat<EditActivityJoinResponse> EditActivityJoin(EditActivityJoinRequest request)
         {
-            return activityHandler.EditActivityJoin(request);
+            return ApiActuator.Runing(() => activityHandler.EditActivityJoin(request));
         }
     }
 }

@@ -3,6 +3,7 @@ using Eagles.Base;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.ActivityAccess
 {
@@ -18,7 +19,10 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
         
-        List<TbActivity> GetActivity(ActivityType activityType, ActivityPage activityPage, string userId = null);
+        List<TbActivity> GetActivity(ActivityType activityType,int branchId);
+
+       // List<TbActivity> GetActivity(ActivityType activityType, int branchId);
+        List<TbUserActivity> GetUserActivity(int userId);
 
         TbActivity GetActivityDetail(int activityId);
 
