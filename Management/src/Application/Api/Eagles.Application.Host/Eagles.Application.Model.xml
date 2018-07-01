@@ -3053,9 +3053,29 @@
             集合
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.OperationType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreSetUpId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Score">
             <summary>
             积分奖励值
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Status">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Keyword">

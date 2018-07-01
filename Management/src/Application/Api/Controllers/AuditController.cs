@@ -25,7 +25,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/CreateAudit")]
         [HttpPost]
         public ResponseBase CreateAudit(CreateAuditRequset requset)
         {
@@ -39,7 +38,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetAudit")]
         [HttpPost]
         public GetAuditResponse GetAudit(GetAuditRequest requset)
         {

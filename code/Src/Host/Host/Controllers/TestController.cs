@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Eagles.Application.Host.App_Start;
 using Eagles.Base.Md5Helper;
 
 namespace Eagles.Application.Host.Controllers
@@ -14,6 +15,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         [HttpGet]
+        [TestIoc]
         public string Test(string str)
         {
             return md5Helper.Md5Encypt(str);

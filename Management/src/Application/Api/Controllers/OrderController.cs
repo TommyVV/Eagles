@@ -25,7 +25,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/EditOrders")]
         [HttpPost]
         public ResponseBase EditOrders(EditDeliverGoodsRequest requset)
         {
@@ -38,7 +37,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetOrdersDetail")]
         [HttpPost]
         public GetDeliverGoodsDetailResponse GetOrdersDetail(GetDeliverGoodsDetailRequset requset)
         {
@@ -50,7 +48,6 @@ namespace Eagles.Application.Host.Controllers
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        [Route("api/GetOrders")]
         [HttpPost]
         public GetDeliverGoodsResponse GetOrders(GetDeliverGoodsRequset requset)
         {
