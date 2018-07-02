@@ -7,9 +7,9 @@ namespace Eagles.Application.Model.User.Login
     public class LoginRequest : RequestBase
     {
         /// <summary>
-        /// 用户Id
+        /// 用户名称
         /// </summary>
-        public int UserId { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// 用户密码

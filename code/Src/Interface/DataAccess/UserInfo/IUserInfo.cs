@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
+using Eagles.DomainService.Model.Sms;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.UserInfo
@@ -12,11 +13,14 @@ namespace Eagles.Interface.DataAccess.UserInfo
 
         TbUserInfo GetUserInfo(int userId);
 
-        TbUserInfo GetLogin(int userId);
+        TbUserInfo GetLogin(string user);
 
         int InsertToken(TbUserToken userToken);
 
         List<TbUserRelationship> GetRelationship(int userId, bool relationshipType);
+
         List<TbUserInfo> GetUserInfo(List<int> userIdList);
+
+        TbValidCode GetValidCode(TbValidCode validCode);
     }
 }

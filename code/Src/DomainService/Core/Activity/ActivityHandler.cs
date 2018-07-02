@@ -362,6 +362,8 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
+                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
+                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.ToUserId.ToString());
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });

@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
+using Eagles.Base.Configuration;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserInfo;
+using Eagles.DomainService.Model.Sms;
+using Eagles.DomainService.Model.User;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
-using Eagles.Base.Configuration;
-using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.User
 {
     public class UserHandler : IUserHandler
     {
+        private readonly IUserInfoAccess userInfoAccess;
         private readonly IUtil util;
         private readonly IDesEncrypt desEncrypt;
-        private readonly IUserInfoAccess userInfoAccess;
         private readonly IConfigurationManager Config;
 
         public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt, IConfigurationManager config)
@@ -127,9 +128,9 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new LoginResponse();
             var guit = Guid.NewGuid().ToString();
-            var userId = request.UserId;
+            var userId = request.UserName;
             var pwd = request.UserPwd;
-            var result = userInfoAccess.GetLogin(request.UserId);
+            var result = userInfoAccess.GetLogin(request.UserName);
             if (result != null)
             {
                 var password1 = desEncrypt.Encrypt(result.Password);
@@ -174,10 +175,19 @@ namespace Eagles.DomainService.Core.User
         public RegisterResponse Register(RegisterRequest request)
         {
             var response = new RegisterResponse();
-            var userInfo = new TbUserInfo();
-            var phone = request.Phone;
-            var code = request.SmsCode;
+            var login = userInfoAccess.GetLogin(request.Phone);
+            if(login != null)
+                throw new TransactionException("01", "手机号已存在");
+            var userInfo = new TbUserInfo() { Phone = request.Phone, Password = request.Pwd, CreateTime = DateTime.Now };
+            var codeInfo = new TbValidCode() { Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq };
+            var resultCode = userInfoAccess.GetValidCode(codeInfo);
+            if (resultCode == null)
+                throw new TransactionException("01", "验证码错误");
             var result = userInfoAccess.CreateUser(userInfo);
+            if (result > 0)
+            {
+                response.Message = "注册成功";
+            }
             return response;
         }
 

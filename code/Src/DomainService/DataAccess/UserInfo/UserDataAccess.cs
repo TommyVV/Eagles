@@ -1,16 +1,15 @@
-﻿using System.Linq;
+﻿using System.Text;
+using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using Dapper;
 using Eagles.Base.DataBase;
-using Eagles.DomainService.Model.Activity;
-using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.Sms;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.UserInfo;
 
 namespace Ealges.DomianService.DataAccess.UserInfo
 {
-    public class UserDataAccess :IUserInfoAccess
+    public class UserDataAccess : IUserInfoAccess
     {
         private readonly IDbManager dbManager;
 
@@ -19,13 +18,14 @@ namespace Ealges.DomianService.DataAccess.UserInfo
             this.dbManager = dbManager;
         }
 
+        public int InsertToken(TbUserToken userToken)
+        {
+            return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)", userToken);
+        }
+
         public int CreateUser(TbUserInfo userInfo)
         {
-            var codeResult = dbManager.Query<TbValidCode>("select Phone,TbValidCode,ExpireTime FROM eagles.tb_validcode where phone = @phone ", userInfo.Phone);
-
-            var result = dbManager.Query<TbUserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", userInfo.Phone);
-            
-            return dbManager.Excuted(@"insert into eagles.tb_user_info", userInfo);
+            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime) value (@Phone,@Password,@CreateTime)", userInfo);
         }
 
         public int EditUser(TbUserInfo userInfo)
@@ -46,10 +46,9 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             return null;
         }
 
-        public TbUserInfo GetLogin(int userId)
+        public TbUserInfo GetLogin(string user)
         {
-            var userInfo = dbManager.Query<TbUserInfo>(
-                "select UserId,Password from eagles.tb_user_info where UserId = @UserId ", new {UserId = userId});
+            var userInfo = dbManager.Query<TbUserInfo>("select UserId,Password from eagles.tb_user_info where (Name = @Name or Phone = @Phone) ", new { Name = user, Phone = user });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
@@ -63,13 +62,9 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
         /// <returns></returns>
         public List<TbUserRelationship> GetRelationship(int userId,bool relationshipType)
         {
-
-
-
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
             if (relationshipType)
             {
                 parameter.Append(" and UserId = @UserId ");
@@ -80,21 +75,14 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
                 parameter.Append(" and SubUserId = @SubUserId ");
                 dynamicParams.Add("SubUserId", userId);
             }
-         
-            sql.AppendFormat(@" select UserId,SubUserId from eagles.tb_user_relationship 
-  where  1=1  {0}  
- ", parameter);
-
+            sql.AppendFormat(@" select UserId,SubUserId from eagles.tb_user_relationship where  1=1  {0} ", parameter);
             return dbManager.Query<TbUserRelationship>(sql.ToString(), dynamicParams);
-
-        
         }
 
         public List<TbUserInfo> GetUserInfo(List<int> userIdList)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
             sql.Append(@"    SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`BranchId`,
     `tb_user_info`.`UserId`,
@@ -135,10 +123,10 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
 
             return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
         }
-
-        public int InsertToken(TbUserToken userToken)
+        
+        public TbValidCode GetValidCode(TbValidCode validCode)
         {
-           return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)",userToken);
+            return dbManager.QuerySingle<TbValidCode>("select Phone from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
         }
     }
 }
