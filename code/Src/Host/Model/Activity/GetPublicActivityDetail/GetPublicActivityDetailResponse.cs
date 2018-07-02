@@ -49,6 +49,11 @@ namespace Eagles.Application.Model.Activity.GetPublicActivityDetail
         public string AcceptEncryptUserId { get; set; }
 
         /// <summary>
+        /// 创建类型
+        /// </summary>
+        public int CreateType { get; set; }
+
+        /// <summary>
         /// 附件集合
         /// </summary>
         public List<Attachment> AttachmentList { get; set; }

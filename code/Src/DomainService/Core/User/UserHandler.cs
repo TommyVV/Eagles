@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base;
+using Eagles.Base.Md5Helper;
 using Eagles.Base.DesEncrypt;
 using Eagles.Base.Configuration;
 using Eagles.Interface.Core.User;
@@ -23,12 +24,14 @@ namespace Eagles.DomainService.Core.User
         private readonly IUserInfoAccess userInfoAccess;
         private readonly IUtil util;
         private readonly IDesEncrypt desEncrypt;
-        private readonly IConfigurationManager Config;
+        private readonly IMd5Helper md5Helper;
+        private readonly IConfigurationManager config;
 
-        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt, IConfigurationManager config)
+        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt, IMd5Helper md5Helper, IConfigurationManager config)
         {
             this.desEncrypt = desEncrypt;
-            Config = config;
+            this.md5Helper = md5Helper;
+            this.config = config;
             this.userInfoAccess = userInfoAccess;
             this.util = util;
         }
@@ -128,19 +131,12 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new LoginResponse();
             var guit = Guid.NewGuid().ToString();
-            //  var userId = request.Phone;
-            var pwd = request.UserPwd;
             var result = userInfoAccess.GetLogin(request.Phone);
             if (result != null)
             {
-                // var password1 = desEncrypt.Encrypt(result.Password);
-                var password = desEncrypt.Encrypt(pwd);
-
+                var password = md5Helper.Md5Encypt(request.UserPwd);
                 if (!result.Password.Equals(password))
-                {
                     throw new TransactionException("96", "账户密码错误");
-                }
-
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
@@ -150,7 +146,6 @@ namespace Eagles.DomainService.Core.User
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
                 };
-
                 var tokenInfo = userInfoAccess.InsertToken(userToken);
                 if (tokenInfo > 0)
                 {
@@ -160,7 +155,6 @@ namespace Eagles.DomainService.Core.User
                 {
                     throw new TransactionException("96", "登陆失败");
                 }
-
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(result.UserId.ToString());
             }
@@ -168,7 +162,6 @@ namespace Eagles.DomainService.Core.User
             {
                 throw new TransactionException("96", "查无此账号");
             }
-
             return response;
         }
 
@@ -178,11 +171,10 @@ namespace Eagles.DomainService.Core.User
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
                 throw new TransactionException("01", "手机号已存在");
-
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
-                Password = desEncrypt.Encrypt(request.Pwd),
+                Password = md5Helper.Md5Encypt(request.Pwd),
                 CreateTime = DateTime.Now
             };
             var codeInfo = new TbValidCode() {Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq};
@@ -194,7 +186,6 @@ namespace Eagles.DomainService.Core.User
             {
                 response.Message = "注册成功";
             }
-
             return response;
         }
 
@@ -202,36 +193,24 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new GetUserRelationshipResponse();
             var userId = Convert.ToInt32(desEncrypt.Decrypt(request.UserId));
-
             var superiorUserList = userInfoAccess.GetRelationship(userId, true);
-
             var lowerUserList = userInfoAccess.GetRelationship(userId, false);
-
             var slist = superiorUserList.Select(x => x.UserId).ToList();
-
             var llist = lowerUserList.Select(x => x.SubUserId).ToList();
-
-
             List<int> userIdList = slist.Union(llist).ToList();
-
             var userInfo = userInfoAccess.GetUserInfo(userIdList);
-
             response.SuperiorUserList = superiorUserList?.Select(x =>
                 new UserRelationship
                 {
                     UserId = x.UserId,
                     Name = userInfo.First(u => (u.UserId == x.UserId)).Name
                 }).ToList();
-
-
             response.LowerUserList = lowerUserList?.Select(x =>
                 new UserRelationship
                 {
                     UserId = x.UserId,
                     Name = userInfo.First(u => (u.UserId == x.SubUserId)).Name
                 }).ToList();
-
-
             return response;
         }
     }

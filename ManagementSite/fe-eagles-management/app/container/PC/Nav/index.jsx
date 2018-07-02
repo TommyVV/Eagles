@@ -51,7 +51,15 @@ export default class App extends React.Component {
     console.log(this.state.current);
     return (
       <Layout>
-        <Sider className="pc_nav" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
+        <Sider
+          className="pc_nav"
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0
+          }}
+        >
           <div className="nav__logo">
             睿穗党建云
             <img src={baixian} alt="" className="baixian" />
@@ -348,6 +356,100 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/meet/detail")}
               >
                 会议信息
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub14"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>栏目信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="27"
+                onClick={e => hashHistory.replace("/programalist")}
+              >
+                栏目列表
+              </Menu.Item>
+              <Menu.Item
+                key="28"
+                onClick={e => hashHistory.replace("/programa/detail")}
+              >
+                栏目详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub15"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>活动信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="29"
+                onClick={e => hashHistory.replace("/activitylist")}
+              >
+                活动列表
+              </Menu.Item>
+              <Menu.Item
+                key="30"
+                onClick={e => hashHistory.replace("/activity/detail")}
+              >
+                活动详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub16"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>新闻信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="31"
+                onClick={e => hashHistory.replace("/newslist")}
+              >
+                新闻列表
+              </Menu.Item>
+              <Menu.Item
+                key="32"
+                onClick={e => hashHistory.replace("/news/detail")}
+              >
+                新闻详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub17"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>权限组管理</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="33"
+                onClick={e => hashHistory.replace("/permissionlist")}
+              >
+                权限组列表
+              </Menu.Item>
+              <Menu.Item
+                key="34"
+                onClick={e => hashHistory.replace("/permission/detail")}
+              >
+                权限组详情
+              </Menu.Item>
+              <Menu.Item
+                key="35"
+                onClick={e => hashHistory.replace("/permission/manage")}
+              >
+                权限管理
               </Menu.Item>
             </SubMenu>
           </Menu>

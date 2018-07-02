@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
@@ -36,21 +36,12 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
-
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
-
+                throw new TransactionException("96", "获取Token失败");
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException("01", "用户不存在");
-            }
-
             var newsInfo = new TbUserNews()
             {
                 OrgId = tokens.OrgId,
@@ -82,10 +73,7 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException("01", "AppId不存在");
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                return null;// todo error
-            }
-            
+                throw new TransactionException("96", "获取Token失败");
             var news = articleData.GetUserNewsList(tokens.UserId);
             //convert news 
             return new GetNewsResponse()
