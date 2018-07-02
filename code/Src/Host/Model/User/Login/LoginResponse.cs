@@ -3,7 +3,7 @@
     /// <summary>
     /// 登录接口
     /// </summary>
-    public class LoginResponse 
+    public class LoginResponse
     {
         /// <summary>
         /// Token
@@ -14,5 +14,10 @@
         /// 加密用户Id
         /// </summary>
         public string EncryptUserid { get; set; }
+
+        /// <summary>
+        /// 是否需要验证码
+        /// </summary>
+        public bool IsVerifyCode { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Icon, Input, Button } from "antd";
-import {  hashHistory } from 'react-router';
+import { hashHistory } from "react-router";
 import "./login.less";
 
 const FormItem = Form.Item;
@@ -15,14 +15,41 @@ class LoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     let { getFieldValue, setFields, getFieldsValue } = this.props.form;
+    debugger
     this.props.form.validateFields((err, values) => {
       if (!err) {
         let mobile = getFieldValue("mobile").substr(0, 11);
         let password = getFieldValue("password");
-		console.log(mobile, password);
-		hashHistory.replace('/home');
+        console.log(mobile, password);
+        hashHistory.replace("/home");
       }
     });
+  };
+  //发送请求
+  submitLogin = async (mobile, password) => {
+    this.setState({ loading: true });
+    const res = await login({
+      mobile,
+      password: md5(password)
+    });
+    this.setState({ loading: false });
+    if (res.code == 0) {
+      //保存用户相关信息
+      let { allSubModuleDto, refreshToken, token } = res.data;
+      let info = {
+        initAuthList: allSubModuleDto,
+        refreshToken,
+        token,
+        hasLogin: true
+      };
+      localStorage.info = JSON.stringify({
+        ...info
+      });
+      this.props.loadData(allSubModuleDto);
+      this.props.history.replace("/");
+    } else {
+      this.setState({ errMsg: res.message });
+    }
   };
 
   render() {
@@ -41,7 +68,7 @@ class LoginForm extends React.Component {
               // label="手机号"
               colon={false}
             >
-              {getFieldDecorator("mobile", {
+              {getFieldDecorator("name", {
                 rules: [
                   {
                     required: true,

@@ -153,5 +153,50 @@ const navMap = [
     key: "26",
     sub: "sub13"
   },
+  {
+    pathname: "#/programalist",
+    key: "27",
+    sub: "sub14"
+  },
+  {
+    pathname: "#/programa/detail",
+    key: "28",
+    sub: "sub14"
+  },
+  {
+    pathname: "#/activitylist",
+    key: "29",
+    sub: "sub15"
+  },
+  {
+    pathname: "#/activity/detail",
+    key: "30",
+    sub: "sub15"
+  },
+  {
+    pathname: "#/newslist",
+    key: "31",
+    sub: "sub16"
+  },
+  {
+    pathname: "#/news/detail",
+    key: "32",
+    sub: "sub16"
+  },
+  {
+    pathname: "#/permissionlist",
+    key: "33",
+    sub: "sub17"
+  },
+  {
+    pathname: "#/permission/detail",
+    key: "34",
+    sub: "sub17"
+  },
+  {
+    pathname: "#/permission/manage",
+    key: "35",
+    sub: "sub17"
+  },
 ];
 export default navMap;
