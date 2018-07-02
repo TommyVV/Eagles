@@ -58,6 +58,15 @@ import MenuDetailTwo from "../container/PC/Menu/DetailTwo";
 import MeetList from "../container/PC/Meet";
 import MeetDetail from "../container/PC/Meet/Detail";
 import ImportMeetMember from "../container/PC/Meet/ImportMeetMember";
+import ProgramaList from "../container/PC/Programa";
+import ProgramaDetail from "../container/PC/Programa/Detail";
+import ActivityList from "../container/PC/Activity";
+import ActivityDetail from "../container/PC/Activity/Detail";
+import NewsList from "../container/PC/News";
+import NewsDetail from "../container/PC/News/Detail";
+import PermissionList from "../container/PC/Permission";
+import PermissionDetail from "../container/PC/Permission/Detail";
+import PermissionManage from "../container/PC/Permission/Manage";
 
 class RouteMap extends Component {
   render() {
@@ -117,6 +126,19 @@ class RouteMap extends Component {
           <route path="/meetlist" component={MeetList} />
           <route path="/importmember/:id" component={ImportMeetMember} />
           <route path="/meet/detail(/:id)" component={MeetDetail} />
+          {/* 栏目信息 */}
+          <route path="/programalist" component={ProgramaList} />
+          <route path="/programa/detail(/:id)" component={ProgramaDetail} />
+          {/* 活动信息 */}
+          <route path="/activitylist" component={ActivityList} />
+          <route path="/activity/detail(/:id)" component={ActivityDetail} />
+          {/* 新闻信息 */}
+          <route path="/newslist" component={NewsList} />
+          <route path="/news/detail(/:id)" component={NewsDetail} />
+          {/* 权限信息 */}
+          <route path="/permissionlist" component={PermissionList} />
+          <route path="/permission/detail(/:id)" component={PermissionDetail} />
+          <route path="/permission/manage" component={PermissionManage} />
           {/*分享*/}
           {/* <route path="/sharemanage/published" component={SharePublished} /> */}
           {/* <route path="/sharemanage/published" component={SharePublished} />
