@@ -46,9 +46,9 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             return null;
         }
 
-        public TbUserInfo GetLogin(string user)
+        public TbUserInfo GetLogin(string phone)
         {
-            var userInfo = dbManager.Query<TbUserInfo>("select UserId,Password from eagles.tb_user_info where (Name = @Name or Phone = @Phone) ", new { Name = user, Phone = user });
+            var userInfo = dbManager.Query<TbUserInfo>("select UserId,Password from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;

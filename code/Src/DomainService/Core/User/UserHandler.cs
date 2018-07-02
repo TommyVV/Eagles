@@ -128,15 +128,15 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new LoginResponse();
             var guit = Guid.NewGuid().ToString();
-            var userId = request.UserName;
+            //  var userId = request.Phone;
             var pwd = request.UserPwd;
-            var result = userInfoAccess.GetLogin(request.UserName);
+            var result = userInfoAccess.GetLogin(request.Phone);
             if (result != null)
             {
-                var password1 = desEncrypt.Encrypt(result.Password);
-                var password2 = desEncrypt.Encrypt(pwd);
+                // var password1 = desEncrypt.Encrypt(result.Password);
+                var password = desEncrypt.Encrypt(pwd);
 
-                if (!password1.Equals(password2))
+                if (!result.Password.Equals(password))
                 {
                     throw new TransactionException("96", "账户密码错误");
                 }
@@ -144,7 +144,7 @@ namespace Eagles.DomainService.Core.User
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
-                    UserId = userId,
+                    UserId = result.UserId,
                     Token = guit,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
@@ -162,7 +162,7 @@ namespace Eagles.DomainService.Core.User
                 }
 
                 //返回前端加密userId
-                response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
+                response.EncryptUserid = desEncrypt.Encrypt(result.UserId.ToString());
             }
             else
             {
@@ -176,10 +176,16 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new RegisterResponse();
             var login = userInfoAccess.GetLogin(request.Phone);
-            if(login != null)
+            if (login != null)
                 throw new TransactionException("01", "手机号已存在");
-            var userInfo = new TbUserInfo() { Phone = request.Phone, Password = request.Pwd, CreateTime = DateTime.Now };
-            var codeInfo = new TbValidCode() { Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq };
+
+            var userInfo = new TbUserInfo()
+            {
+                Phone = request.Phone,
+                Password = desEncrypt.Encrypt(request.Pwd),
+                CreateTime = DateTime.Now
+            };
+            var codeInfo = new TbValidCode() {Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq};
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
                 throw new TransactionException("01", "验证码错误");
@@ -188,6 +194,7 @@ namespace Eagles.DomainService.Core.User
             {
                 response.Message = "注册成功";
             }
+
             return response;
         }
 
