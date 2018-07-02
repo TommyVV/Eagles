@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -17,16 +18,16 @@ namespace Eagles.Application.Host.Controllers
         {
             this.testHandler = testHandler;
         }
-        
+
         /// <summary>
         /// 编辑  菜单
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditMenus(EditMenusRequset requset)
+        public ResponseFormat<bool> EditMenus(EditMenusRequset requset)
         {
-            return testHandler.EditMenus(requset);
+            return ApiActuator.Runing(() => testHandler.EditMenus(requset));
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveMenus(RemoveMenusRequset requset)
+        public ResponseFormat<bool> RemoveMenus(RemoveMenusRequset requset)
         {
-            return testHandler.RemoveMenus(requset);
+            return ApiActuator.Runing(() => testHandler.RemoveMenus(requset));
         }
 
         /// <summary>
@@ -46,9 +47,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetMenusResponse GetMenus(GetMenusRequset requset)
+        public ResponseFormat<GetMenusResponse> GetMenus(GetMenusRequset requset)
         {
-            return testHandler.GetMenus(requset);
+            return ApiActuator.Runing(() => testHandler.GetMenus(requset));
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetMenusDetailResponse GetMenusDetail(GetMenusDetailRequest requset)
+        public ResponseFormat<GetMenusDetailResponse> GetMenusDetail(GetMenusDetailRequest requset)
         {
-            return testHandler.GetMenusDetail(requset);
+            return ApiActuator.Runing(() => testHandler.GetMenusDetail(requset));
         }
 
     }

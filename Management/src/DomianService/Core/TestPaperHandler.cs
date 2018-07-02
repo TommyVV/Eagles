@@ -6,6 +6,8 @@ using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base.Configuration;
+using Eagles.Base.DataBase;
+using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -15,12 +17,14 @@ namespace Eagles.DomainService.Core
     public class TestPaperHandler : ITestPaperHandler
     {
 
+        private readonly IDbManager dbManager;
 
         private readonly ITestPaperDataAccess dataAccess;
 
-        public TestPaperHandler(ITestPaperDataAccess dataAccess)
+        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager)
         {
             this.dataAccess = dataAccess;
+            this.dbManager = dbManager;
         }
 
 
@@ -32,12 +36,7 @@ namespace Eagles.DomainService.Core
         public GetSubjectDetailResponse GetSubjectDetail(GetSubjectDetailRequset requset)
         {
 
-            var response = new GetSubjectDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-
-            };
+            var response = new GetSubjectDetailResponse();
 
             TbQuestion result = dataAccess.GetSubjectDetail(requset);
 
@@ -73,24 +72,13 @@ namespace Eagles.DomainService.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        public ResponseBase RemoveSubject(RemoveSubjectRequset requset)
+        public bool RemoveSubject(RemoveSubjectRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            //todo 删除题目答案表中的信息 事务处理  删除题目时 删除选项 删除题目  删除和试卷关联的关系
-            int subjectResult = dataAccess.RemoveSubject(requset);
-            int result1 = dataAccess.RemoveTestQuestionRelationshipByQuestionId(requset.QuestionId);
-            int optionResult = dataAccess.RemoveOptionByQuestionId(requset.QuestionId);
 
-            if (subjectResult < 0)
-            {
-                response.IsSuccess = false;
-            }
+            // 删除题目答案表中的信息 事务处理  删除题目时 删除选项 删除题目  删除和试卷关联的关系
 
-            return response;
+            return dataAccess.RemoveExercisesSubjectRelationship(requset);
+
         }
 
         /// <summary>
@@ -98,14 +86,10 @@ namespace Eagles.DomainService.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        public ResponseBase EditSubject(EditSubjectRequset requset)
+        public int EditSubject(EditSubjectRequset requset)
         {
 
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+          
 
             TbQuestion info;
 
@@ -134,10 +118,13 @@ namespace Eagles.DomainService.Core
                 }).ToList());
 
                 int result = dataAccess.EditSubject(info);
+
                 if (result < 0)
                 {
-                    response.IsSuccess = false;
+                    return 0;
                 }
+
+                return requset.Info.QuestionId;
             }
             else
             {
@@ -165,10 +152,11 @@ namespace Eagles.DomainService.Core
 
                 if (result < 0)
                 {
-                    response.IsSuccess = false;
+                    return 0;
                 }
+
+                return requset.Info.QuestionId;
             }
-            return response;
         }
 
         /// <summary>
@@ -251,6 +239,7 @@ namespace Eagles.DomainService.Core
                 }).ToList();
                 //创建题目试卷 关系
                 int result1 = dataAccess.CreateTestQuestionRelationship(list);
+
                 if (result < 0)
                 {
                     response.IsSuccess = false;
@@ -265,23 +254,27 @@ namespace Eagles.DomainService.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        public ResponseBase RemoveExercises(RemoveExercisesRequset requset)
+        public bool RemoveExercises(RemoveExercisesRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            //TODO 删除试卷 题目关系
-            int result = dataAccess.RemoveExercises(requset);
-            int result1 = dataAccess.RemoveTestQuestionRelationshipByTestId(requset.ExercisesId);
 
-            if (result < 0)
-            {
-                response.IsSuccess = false;
-            }
+            //return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
+            //{
+            //    new TransactionCommand()
+            //    {
+            //        CommandString = @"DELETE FROM `eagles`.`tb_test_paper`  WHERE TestId=@TestId ",
+            //        Parameter = new {TestId = requset.ExercisesId}
+            //    },
+            //    new TransactionCommand()
+            //    {
+            //        CommandString = @"DELETE FROM `eagles`.`tb_test_question` WHERE TestId=@TestId;",
+            //        Parameter = new {TestId = requset.ExercisesId}
+            //    },
 
-            return response;
+            //});
+            // 删除试卷 题目关系
+            return dataAccess.RemoveExercisesRelationship(requset);
+            //int result1 = dataAccess.RemoveTestQuestionRelationshipByTestId(requset.ExercisesId);
+
         }
 
         /// <summary>
@@ -291,11 +284,7 @@ namespace Eagles.DomainService.Core
         /// <returns></returns>
         public GetExercisesDetailResponse GetExercisesDetail(GetExercisesDetailRequset requset)
         {
-            var response = new GetExercisesDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+            var response = new GetExercisesDetailResponse();
             TbTestPaper info = dataAccess.GetExercisesDetail(requset);
 
             if (info == null) throw new Exception("无数据");
@@ -341,9 +330,7 @@ namespace Eagles.DomainService.Core
             var response = new GetExercisesResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
                 List = new List<Exercises>(),
-                Message = "成功",
             };
             var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TbTestPaper>();
 
@@ -387,11 +374,7 @@ namespace Eagles.DomainService.Core
         public GetRandomSubjectResponse GetRandomSubject(GetRandomSubjectRequset requset)
         {
 
-            var response = new GetRandomSubjectResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+            var response = new GetRandomSubjectResponse();
             //得到试卷 + 习题的关系
             List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
 

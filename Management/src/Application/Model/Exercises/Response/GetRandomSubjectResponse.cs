@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Exercises.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetRandomSubjectResponse : ResponseBase
+    public class GetRandomSubjectResponse 
     { 
         
         /// <summary>

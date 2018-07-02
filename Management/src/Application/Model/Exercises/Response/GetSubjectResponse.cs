@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Exercises.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetSubjectResponse : ResponseBase
+    public class GetSubjectResponse 
     {
         /// <summary>
         /// 总条数

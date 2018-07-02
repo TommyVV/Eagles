@@ -13,7 +13,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-   public  class MenusHandler: IMenusHandler
+    public class MenusHandler : IMenusHandler
     {
 
         private readonly IMenusDataAccess dataAccess;
@@ -22,17 +22,10 @@ namespace Eagles.DomainService.Core
         {
             this.dataAccess = dataAccess;
         }
-        public ResponseBase EditMenus(EditMenusRequset requset)
+        public bool EditMenus(EditMenusRequset requset)
         {
 
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-
             TbAppMenu mod;
-
 
             if (requset.Info.MenuId > 0)
             {
@@ -47,17 +40,14 @@ namespace Eagles.DomainService.Core
                 };
                 int result = dataAccess.EditNews(mod);
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                return result > 0;
             }
             else
             {
                 mod = new TbAppMenu
                 {
                     Level = requset.Info.MenuLevel,
-                  //MenuId = requset.DetailInfo.MenuId,
+                    //MenuId = requset.DetailInfo.MenuId,
                     MenuName = requset.Info.MenuName,
                     OrgId = requset.Info.OrgId,
                     ParentMenuId = requset.Info.ParentId,
@@ -66,52 +56,34 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.CreateNews(mod);
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                return result > 0;
             }
-
-            return response;
         }
 
-        public ResponseBase RemoveMenus(RemoveMenusRequset requset)
+        public bool RemoveMenus(RemoveMenusRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
             int result = dataAccess.RemoveMenus(requset);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
+            return result > 0;
         }
 
         public GetMenusDetailResponse GetMenusDetail(GetMenusDetailRequest requset)
         {
-            var response = new GetMenusDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            TbAppMenu detail = dataAccess.GetMenusDetail(requset);
+            var response = new GetMenusDetailResponse();
 
+            TbAppMenu detail = dataAccess.GetMenusDetail(requset);
 
             if (detail == null) throw new Exception("无数据");
 
             response.Info = new Menus
             {
                 MenuId = detail.MenuId,
-                MenuLevel=detail.Level,
-                MenuLink=detail.TragetUrl,
-                OrgId=detail.OrgId,
-                MenuName=detail.MenuName,
-                ParentId=detail.ParentMenuId
+                MenuLevel = detail.Level,
+                MenuLink = detail.TragetUrl,
+                OrgId = detail.OrgId,
+                MenuName = detail.MenuName,
+                ParentId = detail.ParentMenuId
                 // Category=detail.ViewCount
             };
             return response;
@@ -122,8 +94,6 @@ namespace Eagles.DomainService.Core
             var response = new GetMenusResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbAppMenu> list = dataAccess.GetNewsList(requset) ?? new List<TbAppMenu>();
 

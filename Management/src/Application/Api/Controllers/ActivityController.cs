@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -25,9 +26,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditActivityTask(EditActivityTaskInfoRequset requset)
+        public ResponseFormat<bool> EditActivityTask(EditActivityTaskInfoRequset requset)
         {
-            return _ActivityTaskHandler.EditActivity(requset);
+            return ApiActuator.Runing(() => _ActivityTaskHandler.EditActivity(requset));
         }
 
         /// <summary>
@@ -36,9 +37,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveActivityTask(RemoveActivityTaskRequset requset)
+        public ResponseFormat<bool> RemoveActivityTask(RemoveActivityTaskRequset requset)
         {
-            return _ActivityTaskHandler.RemoveActivity(requset);
+            return ApiActuator.Runing(() => _ActivityTaskHandler.RemoveActivity(requset));
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetActivityTaskDetailResponse GetActivityTaskDetail(GetActivityTaskDetailRequset requset)
+        public ResponseFormat<GetActivityTaskDetailResponse> GetActivityTaskDetail(GetActivityTaskDetailRequset requset)
         {
-            return _ActivityTaskHandler.GetActivityDetail(requset);
+            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivityDetail(requset));
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetActivityTaskResponse GetActivityTask(GetActivityTaskRequset requset)
+        public ResponseFormat<GetActivityTaskResponse> GetActivityTask(GetActivityTaskRequset requset)
         {
-            return _ActivityTaskHandler.GetActivity(requset);
+            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivity(requset));
         }
     }
 }

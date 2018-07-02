@@ -10,7 +10,8 @@ namespace Eagles.Interface.DataAccess
         List<TbTestPaper> GetExercisesList(GetExercisesRequset requset,out int totalCount);
         List<TbQuestion> GetSubjectListByQuestionId(List<int> questionId);
         TbTestPaper GetExercisesDetail(GetExercisesDetailRequset requset);
-        int RemoveExercises(RemoveExercisesRequset requset);
+        bool RemoveExercisesRelationship(RemoveExercisesRequset requset);
+        bool RemoveExercisesSubjectRelationship(RemoveSubjectRequset requset);
         int EditExercises(TbTestPaper info);
         int CreateExercises(TbTestPaper info);
         int EditSubject(TbQuestion info);

@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Menus.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetMenusResponse : ResponseBase
+    public class GetMenusResponse 
     {
         /// <summary>
         /// 总条数

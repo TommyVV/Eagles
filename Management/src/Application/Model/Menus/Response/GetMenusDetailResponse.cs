@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetMenusDetailResponse : ResponseBase
+    public class GetMenusDetailResponse
     {
         /// <summary>
         /// 

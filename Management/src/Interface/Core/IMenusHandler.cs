@@ -17,14 +17,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditMenus(EditMenusRequset requset);
+        bool EditMenus(EditMenusRequset requset);
 
         /// <summary>
         /// 删除 菜单
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveMenus(RemoveMenusRequset requset);
+        bool RemoveMenus(RemoveMenusRequset requset);
 
         /// <summary>
         /// 菜单 详情

@@ -18,14 +18,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditActivity(EditActivityTaskInfoRequset requset);
+        bool EditActivity(EditActivityTaskInfoRequset requset);
 
         /// <summary>
         /// 删除 活动
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveActivity(RemoveActivityTaskRequset requset);
+        bool RemoveActivity(RemoveActivityTaskRequset requset);
 
         /// <summary>
         /// 活动 详情

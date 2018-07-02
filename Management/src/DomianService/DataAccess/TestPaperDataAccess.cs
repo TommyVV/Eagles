@@ -4,6 +4,7 @@ using System.Text;
 using Dapper;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Base.DataBase;
+using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
 using Eagles.Interface.DataAccess;
 
@@ -140,11 +141,44 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
             return dbManager.Query<TbTestPaper>(sql.ToString(), dynamicParams).FirstOrDefault();
         }
 
-        public int RemoveExercises(RemoveExercisesRequset requset)
+        public bool RemoveExercisesRelationship(RemoveExercisesRequset requset)
         {
-            return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_test_paper`
-WHERE TestId=@TestId;
-", new {TestId = requset.ExercisesId});
+            return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
+            {
+                new TransactionCommand()
+                {
+                    CommandString = @"DELETE FROM `eagles`.`tb_test_paper`  WHERE TestId=@TestId ",
+                    Parameter = new {TestId = requset.ExercisesId}
+                },
+                new TransactionCommand()
+                {
+                    CommandString = @"DELETE FROM `eagles`.`tb_test_question` WHERE TestId=@TestId;",
+                    Parameter = new {TestId = requset.ExercisesId}
+                },
+
+            });
+        }
+
+        public bool RemoveExercisesSubjectRelationship(RemoveSubjectRequset requset)
+        {
+            return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
+            {
+                new TransactionCommand()
+                {
+                    CommandString = @"DELETE FROM `eagles`.`tb_question` WHERE QuestionId=@QuestionId;",
+                    Parameter = new {requset.QuestionId}
+                },
+                new TransactionCommand()
+                {
+                    CommandString = @" DELETE FROM `eagles`.`tb_test_question` WHERE QuestionId=@QuestionId;",
+                    Parameter =  new {requset.QuestionId}
+                },
+                new TransactionCommand()
+                {
+                    CommandString = @"  DELETE FROM `eagles`.`tb_quest_anwser` WHERE QuestionId=@QuestionId;", 
+                    Parameter =  new {requset.QuestionId}
+                },
+            });
         }
 
         public int EditExercises(TbTestPaper info)

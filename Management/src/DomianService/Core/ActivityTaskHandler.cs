@@ -21,14 +21,10 @@ namespace Eagles.DomainService.Core
         {
             this.dataAccess = dataAccess;
         }
-        public ResponseBase EditActivity(EditActivityTaskInfoRequset requset)
-        {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
 
+        public bool EditActivity(EditActivityTaskInfoRequset requset)
+        {
+           
             TbActivity mod;
 
             if (requset.DetailInfo.ActivityTaskId > 0)
@@ -66,10 +62,7 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.EditActivity(mod);
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                return result > 0;
             }
             else
             {
@@ -114,32 +107,19 @@ namespace Eagles.DomainService.Core
                     //IndexPageCount = requset.DetailInfo.IndexPageCount
                 };
 
-                int result = dataAccess.CreateActivity(mod);
+                var result = dataAccess.CreateActivity(mod);
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                return result > 0;
             }
 
-            return response;
         }
 
-        public ResponseBase RemoveActivity(RemoveActivityTaskRequset requset)
+        public bool RemoveActivity(RemoveActivityTaskRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            int result = dataAccess.RemoveActivity(requset);
+           
+            var result = dataAccess.RemoveActivity(requset);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
+            return result > 0;
         }
 
         public GetActivityTaskDetailResponse GetActivityDetail(GetActivityTaskDetailRequset requset)

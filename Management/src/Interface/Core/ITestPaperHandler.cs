@@ -29,41 +29,41 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveSubject(RemoveSubjectRequset requset);
+        bool RemoveSubject(RemoveSubjectRequset requset);
 
         /// <summary>
         /// 编辑试卷
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditSubject(EditSubjectRequset requset);
+        int EditSubject(EditSubjectRequset requset);
         #endregion
 
-        #region 习题
+        #region 试卷
 
         /// <summary>
-        /// 编辑习题
+        /// 编辑试卷
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
         ResponseBase EditExercises(EditExercisesRequset requset);
 
         /// <summary>
-        /// 删除习题
+        /// 删除试卷
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveExercises(RemoveExercisesRequset requset);
+        bool RemoveExercises(RemoveExercisesRequset requset);
 
         /// <summary>
-        /// 习题详情
+        /// 试卷详情
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
         GetExercisesDetailResponse GetExercisesDetail(GetExercisesDetailRequset requset);
 
         /// <summary>
-        /// 习题列表
+        /// 试卷列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
