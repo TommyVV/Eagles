@@ -41,11 +41,7 @@ namespace Eagles.DomainService.Core.Activity
             var toUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
@@ -55,9 +51,7 @@ namespace Eagles.DomainService.Core.Activity
             if(!string.IsNullOrEmpty(request.ActivityToUserId))
                 toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
             if (fromUser == toUser)
-            {
                 throw new TransactionException("01", "负责人不能和发起人一致");
-            }
             var act = new TbActivity();
             act.OrgId = tokens.OrgId;
             act.BranchId = tokens.BranchId;
@@ -76,7 +70,7 @@ namespace Eagles.DomainService.Core.Activity
             act.CreateType = request.CreateType;
             act.ImageUrl = "";
             if (1 == userInfo.IsLeader)
-                act.Status = 0; //1:初始状态;(上级发给下级的初始状态) 
+                act.Status = 0; //1:初始状态;(上级发给下级的初始状态)
             else
                 act.Status = -1; //2:下级发起任务;上级审核任务是否允许开始
             var attachList = request.AttachList;
@@ -122,11 +116,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityJoinResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result > 0)
@@ -147,18 +137,10 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityReviewResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "活动不存在";
-                return response;
-            }
+                throw new TransactionException("96", "活动不存在");
             switch (request.Type)
             {
                 case ActivityTypeEnum.Audit:
@@ -199,11 +181,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityCompleteResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (result)
             {
@@ -223,11 +201,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityFeedBackResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
             {
@@ -267,10 +241,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("96", "获取Token失败");
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException("01", "用户不存在");
-            }
-
             //得到所有支部下活动
             var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
 
@@ -364,6 +335,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityStatus = result.Status;
                 response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
                 response.AcceptEncryptUserId = desEncrypt.Encrypt(result.ToUserId.ToString());
+                response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
@@ -390,11 +362,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("01", "AppId不存在");
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("96", "获取Token失败");
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
@@ -438,6 +406,7 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
+                response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });

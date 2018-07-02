@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Base.Configuration;
@@ -144,13 +144,12 @@ namespace Eagles.DomainService.Core.User
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
-                    UserId = userId,
+                    UserId = result.UserId,
                     Token = guit,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
                 };
-
                 var tokenInfo = userInfoAccess.InsertToken(userToken);
                 if (tokenInfo > 0)
                 {
@@ -160,9 +159,8 @@ namespace Eagles.DomainService.Core.User
                 {
                     throw new TransactionException("96", "登陆失败");
                 }
-
                 //返回前端加密userId
-                response.EncryptUserid = desEncrypt.Encrypt(userId.ToString());
+                response.EncryptUserid = desEncrypt.Encrypt(result.UserId.ToString());
             }
             else
             {

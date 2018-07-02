@@ -39,14 +39,19 @@ namespace Eagles.Application.Model.Activity.GetActivityDetail
         public int ActivityStatus { get; set; }
 
         /// <summary>
-        /// 发起用户编号
+        /// 发起人用户编号
         /// </summary>
         public string InitiateEncryptUserId { get; set; }
 
         /// <summary>
-        /// 接受用户编号
+        /// 负责人用户编号
         /// </summary>
         public string AcceptEncryptUserId { get; set; }
+
+        /// <summary>
+        /// 创建类型
+        /// </summary>
+        public int CreateType { get; set; }
 
         /// <summary>
         /// 附件集合
