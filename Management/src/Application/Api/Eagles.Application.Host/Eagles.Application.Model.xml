@@ -2843,11 +2843,6 @@
             凭证
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RequestBase.AppId">
-            <summary>
-            AppId
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.ResponseBase">
             <summary>
             基本的返回

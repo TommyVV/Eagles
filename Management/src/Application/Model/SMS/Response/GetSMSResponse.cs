@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.SMS.Response
 {
-    public class GetSMSResponse : ResponseBase
+    public class GetSMSResponse 
     {
         /// <summary>
         /// 总条数

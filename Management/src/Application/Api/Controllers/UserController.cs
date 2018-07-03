@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -26,9 +27,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditPartyMember(EditUserInfoDetailsRequest requset)
+        public ResponseFormat<bool> EditPartyMember(EditUserInfoDetailsRequest requset)
         {
-            return _partyMemberHandler.EditUserInfoDetails(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.EditUserInfoDetails(requset));
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemovePartyMember(RemoveUserInfoDetailsRequest requset)
+        public ResponseFormat<bool> RemovePartyMember(RemoveUserInfoDetailsRequest requset)
         {
-            return _partyMemberHandler.RemoveUserInfoDetails(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.RemoveUserInfoDetails(requset));
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetUserInfoDetailResponse GetPartyMemberDetail(GetUserInfoDetailRequest requset)
+        public ResponseFormat<GetUserInfoDetailResponse> GetPartyMemberDetail(GetUserInfoDetailRequest requset)
         {
-            return _partyMemberHandler.GetUserInfoDetail(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.GetUserInfoDetail(requset));
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetPartyMemberResponse GetPartyMember(GetPartyMemberRequest requset)
+        public ResponseFormat<GetPartyMemberResponse> GetPartyMember(GetPartyMemberRequest requset)
         {
-            return _partyMemberHandler.GetPartyMemberList(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.GetPartyMemberList(requset));
         }
 
 
@@ -71,9 +72,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>]
         [HttpPost]
-        public ResponseBase RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
+        public ResponseFormat<bool> RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
         {
-            return _partyMemberHandler.RemoveAuthorityUserSetUp(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.RemoveAuthorityUserSetUp(requset));
         }
 
 
@@ -83,9 +84,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)
+        public ResponseFormat<GetAuthorityUserSetUpResponse> GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)
         {
-            return _partyMemberHandler.GetAuthorityUserSetUp(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.GetAuthorityUserSetUp(requset));
         }
 
 
@@ -95,9 +96,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
+        public ResponseFormat<bool> CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
         {
-            return _partyMemberHandler.CreateAuthorityUserSetUp(requset);
+            return ApiActuator.Runing(() => _partyMemberHandler.CreateAuthorityUserSetUp(requset));
         }
     }
 }

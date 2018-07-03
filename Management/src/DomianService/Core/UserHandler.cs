@@ -6,6 +6,7 @@ using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.PartyMember.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
+using Eagles.Base;
 using Eagles.Base.Configuration;
 using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
@@ -34,14 +35,11 @@ namespace Eagles.DomainService.Core
 
             var response = new GetPartyMemberResponse
             {
-                ErrorCode = "00",
-                IsSuccess = true,
-                Message = "成功",
             };
             //  //得到试卷 + 习题的关系
             List<TbUserInfo> list = dataAccess.GetUserInfoList(request, out int totalCount);
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
@@ -63,12 +61,11 @@ namespace Eagles.DomainService.Core
 
             var response = new GetUserInfoDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
+               
             };
             TbUserInfo detail = dataAccess.GetUserInfoDetail(request);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(new List<int> { detail.OrgId });
 
@@ -113,31 +110,18 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public ResponseBase RemoveUserInfoDetails(RemoveUserInfoDetailsRequest request)
+        public bool RemoveUserInfoDetails(RemoveUserInfoDetailsRequest request)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            int result = dataAccess.RemoveUserInfo(request);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
+            return dataAccess.RemoveUserInfo(request) > 0;
 
-            return response;
+
         }
 
-        public ResponseBase EditUserInfoDetails(EditUserInfoDetailsRequest request)
+        public bool EditUserInfoDetails(EditUserInfoDetailsRequest request)
         {
 
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+           
 
             TbUserInfo mod;
 
@@ -180,12 +164,9 @@ namespace Eagles.DomainService.Core
                     Status = request.Info.Status,
                 };
 
-                int result = dataAccess.EditUserInfo(mod);
+               return dataAccess.EditUserInfo(mod)>0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+              
             }
             else
             {
@@ -227,15 +208,10 @@ namespace Eagles.DomainService.Core
                     Status = request.Info.Status,
                 };
 
-                int result = dataAccess.CreateUserInfo(mod);
+                return dataAccess.CreateUserInfo(mod)>0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+               
             }
-
-            return response;
 
         }
 
@@ -243,9 +219,7 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetAuthorityUserSetUpResponse
             {
-                ErrorCode = "00",
-                IsSuccess = true,
-                Message = "成功",
+                
             };
             //  用户列表
             List<TbUserInfo> list = dataAccess.GetUserInfoList(requset, out int totalCount);
@@ -253,7 +227,7 @@ namespace Eagles.DomainService.Core
             //获取用户下级权限
             List<TbUserRelationship> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             //机构信息
             var orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
@@ -282,13 +256,9 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public ResponseBase CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
+        public bool CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             List<TbUserRelationship> list;
 
@@ -300,23 +270,14 @@ namespace Eagles.DomainService.Core
                 SubUserId = x
             }).ToList();
 
-            int result = dataAccess.CreateAuthorityUserSetUp(list);
+            return dataAccess.CreateAuthorityUserSetUp(list) > 0;
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
 
-            return response;
         }
 
-        public ResponseBase RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
+        public bool RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             List<TbUserRelationship> list;
 
@@ -328,14 +289,9 @@ namespace Eagles.DomainService.Core
                 SubUserId = x
             }).ToList();
 
-            int result = dataAccess.RemoveAuthorityUserSetUp(list);
+           return dataAccess.RemoveAuthorityUserSetUp(list)>0;
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
+            
         }
     }
 }

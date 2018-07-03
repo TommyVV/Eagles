@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.SMSOrg.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetSMSOrgResponse : ResponseBase
+    public class GetSMSOrgResponse 
     {
         /// <summary>
         /// 总条数

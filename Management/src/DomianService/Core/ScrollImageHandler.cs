@@ -7,6 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.RollImage.Model;
 using Eagles.Application.Model.RollImage.Requset;
 using Eagles.Application.Model.RollImage.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.ScrollImage;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -23,13 +24,9 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase EditRollImages(EditRollImageRequest requset)
+        public bool EditRollImages(EditRollImageRequest requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+           
 
             TbScrollImage mod;
 
@@ -44,12 +41,8 @@ namespace Eagles.DomainService.Core
                     PageType = requset.PageId
                 };
 
-                int result = dataAccess.EditRollImages(mod);
+                return dataAccess.EditRollImages(mod)>0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
             else
             {
@@ -62,46 +55,30 @@ namespace Eagles.DomainService.Core
                     PageType = requset.PageId
                 };
 
-                int result = dataAccess.CreateRollImages(mod);
+                return dataAccess.CreateRollImages(mod)>0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                
             }
-
-            return response;
+            
 
         }
 
-        public ResponseBase RemoveRollImages(RemoveRollImageRequset requset)
+        public bool RemoveRollImages(RemoveRollImageRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-
-            int result = dataAccess.RemoveRollImages(requset);
-
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
+          
+           return dataAccess.RemoveRollImages(requset)>0;
+                 
         }
 
         public GetRollImageDetailsResponse GetRollImagesDetail(GetRollImageDetailRequset requset)
         {
             var response = new GetRollImageDetailsResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
+              
             };
             TbScrollImage detail = dataAccess.GetRollImagesDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new RollImageInfo
             {
@@ -118,12 +95,11 @@ namespace Eagles.DomainService.Core
             var response = new GetRollImageResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
+               
             };
             List<TbScrollImage> list = dataAccess.GetRollImagesList(requset) ?? new List<TbScrollImage>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new RollImageInfo
             {

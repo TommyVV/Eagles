@@ -9,10 +9,10 @@ namespace Eagles.Interface.Core
     {
         GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request);
         GetUserInfoDetailResponse GetUserInfoDetail(GetUserInfoDetailRequest request);
-        ResponseBase RemoveUserInfoDetails(RemoveUserInfoDetailsRequest request);
-        ResponseBase EditUserInfoDetails(EditUserInfoDetailsRequest request);
+        bool RemoveUserInfoDetails(RemoveUserInfoDetailsRequest request);
+        bool EditUserInfoDetails(EditUserInfoDetailsRequest request);
         GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset);
-        ResponseBase CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset);
-        ResponseBase RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset);
+        bool CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset);
+        bool RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset);
     }
 }

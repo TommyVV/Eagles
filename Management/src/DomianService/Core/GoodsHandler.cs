@@ -5,6 +5,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Goods.Model;
 using Eagles.Application.Model.Goods.Requset;
 using Eagles.Application.Model.Goods.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.Product;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -19,14 +20,11 @@ namespace Eagles.DomainService.Core
         {
             this.dataAccess = dataAccess;
         }
-        public ResponseBase EditGoods(EditGoodsRequset requset)
+
+        public bool EditGoods(EditGoodsRequset requset)
         {
 
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             TbProduct mod;
 
@@ -35,31 +33,28 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TbProduct
                 {
-                    BeginTime=requset.Info.SellStartTime,
-                    EndTime=requset.Info.SellEndTime,
-                   // CreateTime=now,
-                    EditTime=now,
-                    HtmlDescription=requset.Info.Content,
-                    ImageUrl =requset.Info.GoodsIcon,
-                    MaxBuyCount=requset.Info.MaxExchangeNum,
-                    OrgId=requset.OrgId,
-                    Price=requset.Info.ReferePrice,
-                    ProdId=requset.Info.GoodsId,
-                    ProdName=requset.Info.GoodsName,
-                    SaleCount=requset.Info.Sale,
-                    Score=requset.Info.Score,
-                    SmallImageUrl=requset.Info.GoodsImg,
-                    Status=requset.Info.GoodsStatus,
-                    Stock=requset.Info.Stock,
-                    
+                    BeginTime = requset.Info.SellStartTime,
+                    EndTime = requset.Info.SellEndTime,
+                    // CreateTime=now,
+                    EditTime = now,
+                    HtmlDescription = requset.Info.Content,
+                    ImageUrl = requset.Info.GoodsIcon,
+                    MaxBuyCount = requset.Info.MaxExchangeNum,
+                    OrgId = requset.OrgId,
+                    Price = requset.Info.ReferePrice,
+                    ProdId = requset.Info.GoodsId,
+                    ProdName = requset.Info.GoodsName,
+                    SaleCount = requset.Info.Sale,
+                    Score = requset.Info.Score,
+                    SmallImageUrl = requset.Info.GoodsImg,
+                    Status = requset.Info.GoodsStatus,
+                    Stock = requset.Info.Stock,
+
                 };
 
-                int result = dataAccess.EditGoods(mod);
+                return dataAccess.EditGoods(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+
             }
             else
             {
@@ -81,48 +76,34 @@ namespace Eagles.DomainService.Core
                     SmallImageUrl = requset.Info.GoodsImg,
                     Status = requset.Info.GoodsStatus,
                     Stock = requset.Info.Stock,
-                   
+
                 };
 
-                int result = dataAccess.CreateGoods(mod);
+                return dataAccess.CreateGoods(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
 
-            return response;
         }
 
-        public ResponseBase RemoveGoods(RemoveGoodsRequset requset)
+        public bool RemoveGoods(RemoveGoodsRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            int result = dataAccess.RemoveGoods(requset);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
+            return dataAccess.RemoveGoods(requset) > 0;
 
-            return response;
+
         }
 
         public GetGoodsDetailResponse GetGoodsDetail(GetGoodsDetailRequset requset)
         {
             var response = new GetGoodsDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
+               
+               
             };
             TbProduct detail = dataAccess.GetGoodsDetail(requset);
        
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new GoodsDetail
             {
@@ -148,12 +129,12 @@ namespace Eagles.DomainService.Core
             var response = new GetGoodsResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
+               
+               
             };
             List<TbProduct> list = dataAccess.GetNewsList(requset) ?? new List<TbProduct>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new Goods
             {

@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Audit.Requset;
 using Eagles.Application.Model.Audit.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -26,9 +27,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase CreateAudit(CreateAuditRequset requset)
+        public ResponseFormat<bool> CreateAudit(CreateAuditRequset requset)
         {
-            return _AuditHandler.CreateAudit(requset);
+             return ApiActuator.Runing(() =>_AuditHandler.CreateAudit(requset));
         }
 
  
@@ -39,9 +40,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetAuditResponse GetAudit(GetAuditRequest requset)
+        public ResponseFormat<GetAuditResponse> GetAudit(GetAuditRequest requset)
         {
-            return _AuditHandler.GetAuditList(requset);
+             return ApiActuator.Runing(() =>_AuditHandler.GetAuditList(requset));
         }
     }
 }

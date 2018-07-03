@@ -7,6 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.ActivityTask.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -126,12 +127,10 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetActivityTaskDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
             };
             TbActivity detail = dataAccess.GetActivityDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new ActivityDetailInfo
             {
@@ -178,12 +177,10 @@ namespace Eagles.DomainService.Core
             var response = new GetActivityTaskResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbActivity> list = dataAccess.GetGetActivityList(requset) ?? new List<TbActivity>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new ActivityTaskModel
             {

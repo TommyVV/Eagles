@@ -5,6 +5,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Organization.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.Org;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -21,13 +22,9 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase EditOrganization(EditOrganizationRequset requset)
+        public bool EditOrganization(EditOrganizationRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             TbOrgInfo mod;
             var now = DateTime.Now;
@@ -46,12 +43,9 @@ namespace Eagles.DomainService.Core
                     OperId = 0,
                 };
 
-                int result = dataAccess.EditOrganization(mod);
+                return dataAccess.EditOrganization(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+
             }
             else
             {
@@ -67,33 +61,20 @@ namespace Eagles.DomainService.Core
                     Logo = requset.Info.Logo,
                     OperId = 0,
                 };
-                int result = dataAccess.CreateOrganization(mod);
+                return dataAccess.CreateOrganization(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+
             }
 
-            return response;
         }
 
-        public ResponseBase RemoveOrganization(RemoveOrganizationRequset requset)
+        public bool RemoveOrganization(RemoveOrganizationRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+            
        
-            int result = dataAccess.RemoveOrganization(requset);
+            return dataAccess.RemoveOrganization(requset)>0;
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
+           
         }
 
         public GetOrganizationResponse Organization(GetOrganizationRequset requset)
@@ -101,12 +82,11 @@ namespace Eagles.DomainService.Core
             var response = new GetOrganizationResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
+                
             };
             List<TbOrgInfo> list = dataAccess.GetOrganizationList(requset) ?? new List<TbOrgInfo>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new Organization
             {
@@ -125,12 +105,11 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetOrganizationDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
+                
             };
             TbOrgInfo detail = dataAccess.GetOrganizationDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new OrganizationDetail
             {

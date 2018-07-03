@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Goods.Requset;
 using Eagles.Application.Model.Goods.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -24,9 +25,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditGoods(EditGoodsRequset requset)
+        public ResponseFormat<bool> EditGoods(EditGoodsRequset requset)
         {
-            return testHandler.EditGoods(requset);
+            return ApiActuator.Runing(() =>testHandler.EditGoods(requset));
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveGoods(RemoveGoodsRequset requset)
+        public ResponseFormat<bool> RemoveGoods(RemoveGoodsRequset requset)
         {
-            return testHandler.RemoveGoods(requset);
+            return ApiActuator.Runing(() =>testHandler.RemoveGoods(requset));
         }
 
         /// <summary>
@@ -46,9 +47,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetGoodsResponse GetGoods(GetGoodsRequest requset)
+        public ResponseFormat<GetGoodsResponse> GetGoods(GetGoodsRequest requset)
         {
-            return testHandler.GetGoods(requset);
+            return ApiActuator.Runing(() =>testHandler.GetGoods(requset));
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetGoodsDetailResponse GetGoodsDetail(GetGoodsDetailRequset requset)
+        public ResponseFormat<GetGoodsDetailResponse> GetGoodsDetail(GetGoodsDetailRequset requset)
         {
-            return testHandler.GetGoodsDetail(requset);
+            return ApiActuator.Runing(() =>testHandler.GetGoodsDetail(requset));
         }
 
     }

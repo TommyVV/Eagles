@@ -5,6 +5,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
+using Eagles.Base;
 using Eagles.Base.Configuration;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
@@ -43,7 +44,7 @@ namespace Eagles.DomainService.Core
             var optionList = dataAccess.GetOptionList(new List<int>() { requset.QuestionId });
 
 
-            if (result == null) throw new Exception("无数据");
+            if (result == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new SubjectDetails
             {
@@ -287,7 +288,7 @@ namespace Eagles.DomainService.Core
             var response = new GetExercisesDetailResponse();
             TbTestPaper info = dataAccess.GetExercisesDetail(requset);
 
-            if (info == null) throw new Exception("无数据");
+            if (info == null) throw new TransactionException("M01","无业务数据");
 
             //得到试卷 + 习题的关系
             List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
@@ -334,7 +335,7 @@ namespace Eagles.DomainService.Core
             };
             var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TbTestPaper>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
 
 

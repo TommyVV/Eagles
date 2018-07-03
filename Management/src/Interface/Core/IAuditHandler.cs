@@ -12,7 +12,7 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase CreateAudit(CreateAuditRequset requset);
+        bool CreateAudit(CreateAuditRequset requset);
 
         /// <summary>
         /// 查询审核流水列表 列表

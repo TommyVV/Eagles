@@ -2,7 +2,7 @@
 
 namespace Eagles.Application.Model.RollImage.Response
 {
-    public class GetRollImageDetailsResponse:ResponseBase
+    public class GetRollImageDetailsResponse
     {
         /// <summary>
         /// 

@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core
 
             TbNews detail = dataAccess.GetNewsDetail(requset);
 
-            if (detail == null) throw new TransactionException("01", "无业务数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new NewDetail
             {
@@ -138,7 +138,7 @@ namespace Eagles.DomainService.Core
             };
             List<TbNews> list = dataAccess.GetNewsList(requset) ?? new List<TbNews>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new New
             {

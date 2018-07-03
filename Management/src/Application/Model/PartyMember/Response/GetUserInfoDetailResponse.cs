@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.PartyMember.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetUserInfoDetailResponse : ResponseBase
+    public class GetUserInfoDetailResponse 
     {
         /// <summary>
         /// 集合

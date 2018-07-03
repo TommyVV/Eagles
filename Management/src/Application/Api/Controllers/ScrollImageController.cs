@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.RollImage.Requset;
 using Eagles.Application.Model.RollImage.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -25,9 +26,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditScrollImage(EditRollImageRequest requset)
+        public ResponseFormat<bool> EditScrollImage(EditRollImageRequest requset)
         {
-            return _ScrollImageHandler.EditRollImages(requset);
+            return ApiActuator.Runing(() =>_ScrollImageHandler.EditRollImages(requset));
         }
 
         /// <summary>
@@ -36,9 +37,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveScrollImage(RemoveRollImageRequset requset)
+        public ResponseFormat<bool> RemoveScrollImage(RemoveRollImageRequset requset)
         {
-            return _ScrollImageHandler.RemoveRollImages(requset);
+            return ApiActuator.Runing(() =>_ScrollImageHandler.RemoveRollImages(requset));
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetRollImageDetailsResponse GetScrollImageDetail(GetRollImageDetailRequset requset)
+        public ResponseFormat<GetRollImageDetailsResponse> GetScrollImageDetail(GetRollImageDetailRequset requset)
         {
-            return _ScrollImageHandler.GetRollImagesDetail(requset);
+            return ApiActuator.Runing(() =>_ScrollImageHandler.GetRollImagesDetail(requset));
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetRollImageResponse GetScrollImage(GetRollImageRequest requset)
+        public ResponseFormat<GetRollImageResponse> GetScrollImage(GetRollImageRequest requset)
         {
-            return _ScrollImageHandler.GetRollImages(requset);
+            return ApiActuator.Runing(() =>_ScrollImageHandler.GetRollImages(requset));
         }
     }
 }

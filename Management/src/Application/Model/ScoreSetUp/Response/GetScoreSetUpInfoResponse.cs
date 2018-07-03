@@ -3,7 +3,7 @@ using Eagles.Application.Model.ScoreSetUp.Model;
 
 namespace Eagles.Application.Model.ScoreSetUp.Response
 {
-    public class GetScoreSetUpInfoResponse : ResponseBase
+    public class GetScoreSetUpInfoResponse 
     {
         /// <summary>
         /// 总条数

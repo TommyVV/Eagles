@@ -17,14 +17,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditRollImages(EditRollImageRequest requset);
+        bool EditRollImages(EditRollImageRequest requset);
 
         /// <summary>
         /// 删除 滚动图
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveRollImages(RemoveRollImageRequset requset);
+        bool RemoveRollImages(RemoveRollImageRequset requset);
 
         /// <summary>
         /// 滚动图 详情

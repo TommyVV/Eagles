@@ -10,6 +10,7 @@ using Eagles.Application.Model.AuthorityGroup.Response;
 using Eagles.Application.Model.AuthorityGroupSetUp.Model;
 using Eagles.Application.Model.AuthorityGroupSetUp.Requset;
 using Eagles.Application.Model.AuthorityGroupSetUp.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.Authority;
 using Eagles.DomainService.Model.Oper;
 using Eagles.Interface.Core;
@@ -28,13 +29,10 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
             OperdataAccess = operdataAccess;
         }
-        public ResponseBase EditOperGroup(EditAuthorityGroupRequset requset)
+
+        public bool EditOperGroup(EditAuthorityGroupRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             TbOperGroup mod;
             var now = DateTime.Now;
@@ -50,12 +48,8 @@ namespace Eagles.DomainService.Core
                     OrgId = requset.Info.OrgId
                 };
 
-                int result = dataAccess.EditOperGroup(mod);
+                return dataAccess.EditOperGroup(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
             else
             {
@@ -68,51 +62,33 @@ namespace Eagles.DomainService.Core
                     OrgId = requset.Info.OrgId
                 };
 
-                int result = dataAccess.CreateOperGroup(mod);
+                return dataAccess.CreateOperGroup(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
 
-            return response;
         }
 
-        public ResponseBase RemoveOperGroup(RemoveAuthorityGroupInfoRequset requset)
+        public bool RemoveOperGroup(RemoveAuthorityGroupInfoRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
 
-            var result1 = OperdataAccess.GetOperListByAuthorityGroupId(requset.AuthorityGroupId);
-            if (result1 > 0)
+            var result = OperdataAccess.GetOperListByAuthorityGroupId(requset.AuthorityGroupId);
+            if (result > 0)
             {
-                throw new Exception("有用户属于改群组");
+                throw new TransactionException("M02", "请先移除该群众下用户在进行操作");
             }
 
-            var result = dataAccess.RemoveOperGroup(requset);
+            return dataAccess.RemoveOperGroup(requset) > 0;
 
-            if (result < 0)
-            {
-                response.IsSuccess = false;
-            }
-
-            return response;
         }
 
         public GetAuthorityGroupDetailResponse GetOperGroupDetail(GetAuthorityGroupDetailRequset requset)
         {
             var response = new GetAuthorityGroupDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
             };
             TbOperGroup detail = dataAccess.GetOperGroupDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new AuthorityGroup
             {
@@ -130,12 +106,10 @@ namespace Eagles.DomainService.Core
             var response = new GetAuthorityGroupResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbOperGroup> list = dataAccess.GetOperGroupList(requset) ?? new List<TbOperGroup>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new AuthorityGroup
             {
@@ -147,16 +121,13 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public ResponseBase EditAuthorityGroupSetUp(EditAuthorityGroupSetUpRequset requset)
+        public bool EditAuthorityGroupSetUp(EditAuthorityGroupSetUpRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
             if (!(requset.AuthorityInfo.Count > 0 && requset.GroupId > 0))
             {
-                throw new Exception("数据异常");
+                throw new TransactionException("M03", "数据异常");
+                ;
             }
 
             int result = dataAccess.RemoveAuthorityGroupSetUp(requset.GroupId);
@@ -166,26 +137,19 @@ namespace Eagles.DomainService.Core
                 var now = DateTime.Now;
                 List<TbAuthority> list = requset.AuthorityInfo.Select(x => new TbAuthority
                 {
-                    CreateTime=now,
-                    FunCode=x.FunCode,
-                    OperId=0,
-                    GroupId=requset.GroupId,
-                    OrgId=requset.OrgId,
-                    EditTime=now,
+                    CreateTime = now,
+                    FunCode = x.FunCode,
+                    OperId = 0,
+                    GroupId = requset.GroupId,
+                    OrgId = requset.OrgId,
+                    EditTime = now,
                 }).ToList();
 
-                int result1 = dataAccess.CreateAuthorityGroupSetUp(list);
-                if (result1 < 0)
-                {
-                    response.IsSuccess = false;
-                }
-            }
-            else
-            {
-                response.IsSuccess = false;
+                return dataAccess.CreateAuthorityGroupSetUp(list) > 0;
+
             }
 
-            return response;
+            throw new TransactionException("M04", "权限组维护失败");
 
         }
 
@@ -193,16 +157,14 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetAuthorityGroupSetUpResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbAuthority> list = dataAccess.GetAuthorityGroupSetUp(requset) ?? new List<TbAuthority>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new AuthorityInfo
             {
-                FunCode = x.FunCode,             
+                FunCode = x.FunCode,
                 CreateTime = x.CreateTime,
             }).ToList();
             return response;

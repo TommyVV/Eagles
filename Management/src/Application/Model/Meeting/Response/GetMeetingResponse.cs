@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Meeting.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetMeetingResponse : ResponseBase
+    public class GetMeetingResponse 
     {
         /// <summary>
         /// 总条数

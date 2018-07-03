@@ -12,9 +12,9 @@ namespace Eagles.Interface.Core
 {
     public interface IOrganizationHandler:IInterfaceBase
     {
-        ResponseBase EditOrganization(EditOrganizationRequset requset);
+        bool EditOrganization(EditOrganizationRequset requset);
 
-        ResponseBase RemoveOrganization(RemoveOrganizationRequset requset);
+        bool RemoveOrganization(RemoveOrganizationRequset requset);
 
         GetOrganizationResponse Organization(GetOrganizationRequset requset);
 

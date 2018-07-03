@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Operator.Requset;
 using Eagles.Application.Model.Operator.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -25,9 +26,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditOperator(EditOperatorRequset requset)
+        public ResponseFormat<bool> EditOperator(EditOperatorRequset requset)
         {
-            return _OperatorHandler.EditOper(requset);
+             return ApiActuator.Runing(() =>_OperatorHandler.EditOper(requset));
         }
 
         /// <summary>
@@ -36,9 +37,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveOperator(RemoveOperatorRequset requset)
+        public ResponseFormat<bool> RemoveOperator(RemoveOperatorRequset requset)
         {
-            return _OperatorHandler.RemoveOper(requset);
+             return ApiActuator.Runing(() =>_OperatorHandler.RemoveOper(requset));
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetOperatorDetailResponse GetOperatorDetail(GetOperatorDetailRequset requset)
+        public ResponseFormat<GetOperatorDetailResponse> GetOperatorDetail(GetOperatorDetailRequset requset)
         {
-            return _OperatorHandler.GetOperDetail(requset);
+             return ApiActuator.Runing(() =>_OperatorHandler.GetOperDetail(requset));
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetOperatorResponse GetOperator(GetOperatorRequset requset)
+        public ResponseFormat<GetOperatorResponse> GetOperator(GetOperatorRequset requset)
         {
-            return _OperatorHandler.GetOperList(requset);
+             return ApiActuator.Runing(() =>_OperatorHandler.GetOperList(requset));
         }
     }
 }

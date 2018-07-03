@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Audit.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuditResponse : ResponseBase
+    public class GetAuditResponse 
     {
         /// <summary>
         /// 总条数

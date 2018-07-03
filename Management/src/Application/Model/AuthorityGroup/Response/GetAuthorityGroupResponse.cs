@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.AuthorityGroup.Response
     /// <summary>
     /// 权限组列表返回
     /// </summary>
-    public class GetAuthorityGroupResponse:ResponseBase
+    public class GetAuthorityGroupResponse
     {
         /// <summary>
         /// 总条数

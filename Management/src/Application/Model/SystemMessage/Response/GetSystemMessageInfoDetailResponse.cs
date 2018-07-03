@@ -2,7 +2,7 @@
 
 namespace Eagles.Application.Model.SystemMessage.Response
 {
-    public class GetSystemMessageInfoDetailResponse : ResponseBase
+    public class GetSystemMessageInfoDetailResponse 
     {
         /// <summary>
         /// 

@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Organization.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetOrganizationDetailResponse : ResponseBase
+    public class GetOrganizationDetailResponse 
     {
         /// <summary>
         /// 

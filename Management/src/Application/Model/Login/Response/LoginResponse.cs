@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class LoginResponse : ResponseBase
+    public class LoginResponse 
     {
         /// <summary>
         /// 凭证

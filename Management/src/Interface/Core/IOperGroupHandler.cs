@@ -19,14 +19,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditOperGroup(EditAuthorityGroupRequset requset);
+        bool EditOperGroup(EditAuthorityGroupRequset requset);
 
         /// <summary>
         /// 删除 管理员群组
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveOperGroup(RemoveAuthorityGroupInfoRequset requset);
+        bool RemoveOperGroup(RemoveAuthorityGroupInfoRequset requset);
 
         /// <summary>
         /// 管理员群组 详情
@@ -48,7 +48,7 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditAuthorityGroupSetUp(EditAuthorityGroupSetUpRequset requset);
+        bool EditAuthorityGroupSetUp(EditAuthorityGroupSetUpRequset requset);
 
         /// <summary>
         /// 获得操作员菜单权限组

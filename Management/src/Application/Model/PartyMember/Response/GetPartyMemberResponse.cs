@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.PartyMember.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetPartyMemberResponse : ResponseBase
+    public class GetPartyMemberResponse 
     {
         /// <summary>
         /// 总条数

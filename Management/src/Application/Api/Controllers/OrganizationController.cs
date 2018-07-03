@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -26,9 +27,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditOrganization(EditOrganizationRequset requset)
+        public ResponseFormat<bool> EditOrganization(EditOrganizationRequset requset)
         {
-            return _columnHandler.EditOrganization(requset);
+            return ApiActuator.Runing(() =>_columnHandler.EditOrganization(requset));
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveOrganization(RemoveOrganizationRequset requset)
+        public ResponseFormat<bool> RemoveOrganization(RemoveOrganizationRequset requset)
         {
-            return _columnHandler.RemoveOrganization(requset);
+            return ApiActuator.Runing(() =>_columnHandler.RemoveOrganization(requset));
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetOrganizationDetailResponse GetOrganizationDetail(GetOrganizationDetailRequset requset)
+        public ResponseFormat<GetOrganizationDetailResponse> GetOrganizationDetail(GetOrganizationDetailRequset requset)
         {
-            return _columnHandler.GetOrganizationDetail(requset);
+            return ApiActuator.Runing(() =>_columnHandler.GetOrganizationDetail(requset));
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetOrganizationResponse GetOrganization(GetOrganizationRequset requset)
+        public ResponseFormat<GetOrganizationResponse> GetOrganization(GetOrganizationRequset requset)
         {
-            return _columnHandler.Organization(requset);
+            return ApiActuator.Runing(() =>_columnHandler.Organization(requset));
         }
     }
 }

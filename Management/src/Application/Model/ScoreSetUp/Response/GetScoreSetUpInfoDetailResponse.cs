@@ -2,7 +2,7 @@
 
 namespace Eagles.Application.Model.ScoreSetUp.Response
 {
-   public  class GetScoreSetUpInfoDetailResponse : ResponseBase
+   public  class GetScoreSetUpInfoDetailResponse 
     {
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增

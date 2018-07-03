@@ -7,6 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Operator.Model;
 using Eagles.Application.Model.Operator.Requset;
 using Eagles.Application.Model.Operator.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.News;
 using Eagles.DomainService.Model.Oper;
 using Eagles.Interface.Core;
@@ -22,13 +23,9 @@ namespace Eagles.DomainService.Core
         {
             this.dataAccess = dataAccess;
         }
-        public ResponseBase EditOper(EditOperatorRequset requset)
+        public bool EditOper(EditOperatorRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             TbOper mod;
             var now = DateTime.Now;
@@ -46,12 +43,9 @@ namespace Eagles.DomainService.Core
                     Status=requset.Info.Status
                 };
 
-                int result = dataAccess.EditOper(mod);
+                return dataAccess.EditOper(mod)>0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+               
             }
             else
             {
@@ -66,46 +60,25 @@ namespace Eagles.DomainService.Core
                     Status = requset.Info.Status
                 };
 
-                int result = dataAccess.CreateOper(mod);
-
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+                return dataAccess.CreateOper(mod)>0;
+                
             }
-
-            return response;
+            
         }
 
-        public ResponseBase RemoveOper(RemoveOperatorRequset requset)
+        public bool RemoveOper(RemoveOperatorRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            //TODO 删除试卷 题目关系
-            int result = dataAccess.RemoveOper(requset);
+           
+            return dataAccess.RemoveOper(requset)>0;
 
-            if (result < 0)
-            {
-                response.IsSuccess = false;
-            }
-
-            return response;
-            
         }
 
         public GetOperatorDetailResponse GetOperDetail(GetOperatorDetailRequset requset)
         {
-            var response = new GetOperatorDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+            var response = new GetOperatorDetailResponse();
             TbOper detail = dataAccess.GetOperDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01","无业务数据");
 
             response.Info = new OperatorDetail
             {
@@ -127,12 +100,10 @@ namespace Eagles.DomainService.Core
             var response = new GetOperatorResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbOper> list = dataAccess.GetOperList(requset) ?? new List<TbOper>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new Operator
             {

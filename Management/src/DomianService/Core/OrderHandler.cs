@@ -8,6 +8,7 @@ using Eagles.Application.Model.DeliverGoods.Model;
 using Eagles.Application.Model.DeliverGoods.Requset;
 using Eagles.Application.Model.DeliverGoods.Response;
 using Eagles.Application.Model.PartyMember.Requset;
+using Eagles.Base;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -26,13 +27,9 @@ namespace Eagles.DomainService.Core
             this.memberDataAccess = memberDataAccess;
         }
 
-        public ResponseBase EditOrders(EditDeliverGoodsRequest requset)
+        public bool EditOrders(EditDeliverGoodsRequest requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
 
             if (requset.OrderInfo.Count > 0)
@@ -42,33 +39,25 @@ namespace Eagles.DomainService.Core
                     OrderId = x.OrderId,
                     Address = x.Address,
                     ExpressId = x.ExpressId,
-                    OperId=0,
+                    OperId = 0,
                 }).ToList();
 
-                int result = dataAccess.EditOrder(mod);
+                return dataAccess.EditOrder(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
 
-            return response;
+            throw new TransactionException("M03", "数据异常");
+
         }
 
         public GetDeliverGoodsDetailResponse GetOrdersDetail(GetDeliverGoodsDetailRequset requset)
         {
 
 
-            var response = new GetDeliverGoodsDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+            var response = new GetDeliverGoodsDetailResponse();
             TbOrder detail = dataAccess.GetOrderDetail(requset);
 
-
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             var userInfo = memberDataAccess.GetUserInfoDetail(new GetUserInfoDetailRequest {UserId = detail.UserId});
             response.Info = new DeliverGoods
@@ -86,12 +75,10 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetDeliverGoodsResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbOrder> list = dataAccess.GetOrderList(requset);
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new DeliverGoods
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.SMS.Response
 {
-   public  class GetSMSDetailResponse : ResponseBase
+   public  class GetSMSDetailResponse 
     {
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增

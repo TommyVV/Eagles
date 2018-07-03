@@ -3,7 +3,7 @@ using Eagles.Application.Model.SystemMessage.Model;
 
 namespace Eagles.Application.Model.SystemMessage.Response
 {
-    public class GetSystemMessageResponse : ResponseBase
+    public class GetSystemMessageResponse 
     {
         /// <summary>
         /// 总条数

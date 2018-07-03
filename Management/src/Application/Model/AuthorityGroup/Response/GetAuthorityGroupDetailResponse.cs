@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuthorityGroupDetailResponse : ResponseBase
+    public class GetAuthorityGroupDetailResponse 
     {
         /// <summary>
         /// 

@@ -84,7 +84,7 @@ namespace Eagles.DomainService.Core
             };
             TbAppModule detail = dataAccess.GetColumnDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new ColumnInfoDetails
             {

@@ -12,14 +12,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditGoods(EditGoodsRequset requset);
+        bool EditGoods(EditGoodsRequset requset);
 
         /// <summary>
         /// 删除 商品
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveGoods(RemoveGoodsRequset requset);
+        bool RemoveGoods(RemoveGoodsRequset requset);
 
         /// <summary>
         /// 商品 详情

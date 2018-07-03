@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.AuthorityGroupSetUp.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuthorityGroupSetUpResponse:ResponseBase
+    public class GetAuthorityGroupSetUpResponse
     {
       
         /// <summary>

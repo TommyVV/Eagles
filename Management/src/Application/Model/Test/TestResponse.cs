@@ -2,7 +2,7 @@
 
 namespace Eagles.Application.Model.Test
 {
-    public class TestResponse: ResponseBase
+    public class TestResponse
     {
         public List<AreaInfo> AreaInfo { get; set; }
 

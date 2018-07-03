@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.DeliverGoods.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetDeliverGoodsResponse : ResponseBase
+    public class GetDeliverGoodsResponse 
     {
         /// <summary>
         /// 总条数

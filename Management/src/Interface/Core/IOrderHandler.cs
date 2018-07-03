@@ -17,7 +17,7 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditOrders(EditDeliverGoodsRequest requset);
+        bool EditOrders(EditDeliverGoodsRequest requset);
 
         /// <summary>
         /// 订单发货 详情

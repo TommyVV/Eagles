@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Organization.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetOrganizationResponse : ResponseBase
+    public class GetOrganizationResponse 
     {
         /// <summary>
         /// 总条数

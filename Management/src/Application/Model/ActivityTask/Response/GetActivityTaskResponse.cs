@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.ActivityTask.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetActivityTaskResponse : ResponseBase
+    public class GetActivityTaskResponse 
     {
         /// <summary>
         /// 总条数

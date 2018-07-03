@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Goods.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetGoodsDetailResponse : ResponseBase
+    public class GetGoodsDetailResponse 
     {
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增

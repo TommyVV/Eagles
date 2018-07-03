@@ -7,6 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Menus.Model;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -74,7 +75,7 @@ namespace Eagles.DomainService.Core
 
             TbAppMenu detail = dataAccess.GetMenusDetail(requset);
 
-            if (detail == null) throw new Exception("无数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new Menus
             {
@@ -97,7 +98,7 @@ namespace Eagles.DomainService.Core
             };
             List<TbAppMenu> list = dataAccess.GetNewsList(requset) ?? new List<TbAppMenu>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new Menus
             {

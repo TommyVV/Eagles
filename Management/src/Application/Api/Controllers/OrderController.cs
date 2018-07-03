@@ -4,6 +4,7 @@ using Eagles.Application.Model.DeliverGoods.Requset;
 using Eagles.Application.Model.DeliverGoods.Response;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -26,9 +27,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditOrders(EditDeliverGoodsRequest requset)
+        public ResponseFormat<bool> EditOrders(EditDeliverGoodsRequest requset)
         {
-            return testHandler.EditOrders(requset);
+            return ApiActuator.Runing(() =>testHandler.EditOrders(requset));
         }
 
 
@@ -38,9 +39,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetDeliverGoodsDetailResponse GetOrdersDetail(GetDeliverGoodsDetailRequset requset)
+        public ResponseFormat<GetDeliverGoodsDetailResponse> GetOrdersDetail(GetDeliverGoodsDetailRequset requset)
         {
-            return testHandler.GetOrdersDetail(requset);
+            return ApiActuator.Runing(() =>testHandler.GetOrdersDetail(requset));
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetDeliverGoodsResponse GetOrders(GetDeliverGoodsRequset requset)
+        public ResponseFormat<GetDeliverGoodsResponse> GetOrders(GetDeliverGoodsRequset requset)
         {
-            return testHandler.GetOrders(requset);
+            return ApiActuator.Runing(() =>testHandler.GetOrders(requset));
         }
     }
 }

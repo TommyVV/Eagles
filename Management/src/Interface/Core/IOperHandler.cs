@@ -17,14 +17,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditOper(EditOperatorRequset requset);
+        bool EditOper(EditOperatorRequset requset);
 
         /// <summary>
         /// 删除 管理员
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveOper(RemoveOperatorRequset requset);
+        bool RemoveOper(RemoveOperatorRequset requset);
 
         /// <summary>
         /// 管理员 详情

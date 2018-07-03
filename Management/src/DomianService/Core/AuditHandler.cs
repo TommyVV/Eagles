@@ -10,6 +10,7 @@ using Eagles.Application.Model.Audit.Response;
 using Eagles.Application.Model.Menus.Model;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
+using Eagles.Base;
 using Eagles.DomainService.Model.App;
 using Eagles.DomainService.Model.Audit;
 using Eagles.Interface.Core;
@@ -27,13 +28,9 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase CreateAudit(CreateAuditRequset requset)
+        public bool CreateAudit(CreateAuditRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
+
 
             var now = DateTime.Now;
             var mod = new TbReview
@@ -50,14 +47,8 @@ namespace Eagles.DomainService.Core
 
             };
 
-            int result = dataAccess.CreateAudit(mod);
+            return dataAccess.CreateAudit(mod) > 0;
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
-
-            return response;
 
         }
 
@@ -66,12 +57,11 @@ namespace Eagles.DomainService.Core
             var response = new GetAuditResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
+               
             };
             List<TbReview> list = dataAccess.GetAuditList(requset);
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
             response.List = list.Select(x => new Audit
             {
