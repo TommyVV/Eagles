@@ -152,7 +152,7 @@ namespace Eagles.DomainService.Core.Activity
                         throw new TransactionException("96", "必须负责人申请完成活动");
                     break;
             }
-            var result = iActivityAccess.EditActivityReview(request.Type, request.ReviewType);
+            var result = iActivityAccess.EditActivityReview(request.Type,request.ActivityId, request.ReviewType);
             if (result <= 0)
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
