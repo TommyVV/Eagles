@@ -13,7 +13,8 @@ namespace Eagles.Application.Model
         public ResponseBase()
         {
             IsSuccess = true;
-            Code = "00";
+            Code = MessageCode.Success;
+            Message = MessageKey.Success;
         }
 
         /// <summary>
