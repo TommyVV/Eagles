@@ -8,7 +8,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {
-    public class ColumnDataAccess: IColumnDataAccess
+    public class ColumnDataAccess : IColumnDataAccess
     {
 
         private readonly IDbManager dbManager;
@@ -18,11 +18,12 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbAppModule> GetColumnList(GetColumnRequset requset)
+        public List<TbAppModule> GetColumnList(GetColumnRequset requset, out int totalCount)
         {
 
 
             var sql = new StringBuilder();
+            var sqlTotal = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
@@ -49,6 +50,10 @@ namespace Ealges.DomianService.DataAccess
             //    parameter.Append(" and Status = @Status ");
             //    dynamicParams.Add("Status", (int)requset.Status);
             //}
+            sqlTotal.AppendFormat(@"SELECT count(1)
+FROM `eagles`.`tb_app_module`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sqlTotal.ToString(), dynamicParams);
 
 
             sql.AppendFormat(@" SELECT `tb_app_module`.`OrgId`,
@@ -139,7 +144,7 @@ VALUES
 @Priority ,
 @IndexPageCount ,
 @IndexDisplay );
-", mod);        
+", mod);
         }
     }
 }

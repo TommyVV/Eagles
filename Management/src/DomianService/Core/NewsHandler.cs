@@ -136,10 +136,10 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0
             };
-            List<TbNews> list = dataAccess.GetNewsList(requset) ?? new List<TbNews>();
+            List<TbNews> list = dataAccess.GetNewsList(requset, out int totalCount) ?? new List<TbNews>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
-
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new New
             {
                 AuditStatus = AuditStatus.审核通过,

@@ -41,12 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDataBaseConfiguration.cs" />
+    <Compile Include="IEaglesConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
       <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
       <Name>Eagles.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomianService\Model\Eagles.DomainService.Model.csproj">
+      <Project>{2F5808BE-CDB2-49E5-976A-30A9016B9BC2}</Project>
+      <Name>Eagles.DomainService.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

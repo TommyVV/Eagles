@@ -35,5 +35,15 @@ namespace Eagles.DomainService.Model.Oper
         /// 状态;0:正常;1:禁用
         /// </summary>
         public int Status { get; set; }
+
+        /// <summary>
+        /// 失败次数
+        /// </summary>
+        public int LoginErrorCount { get; set; }
+
+        /// <summary>
+        /// 锁定时间
+        /// </summary>
+        public double LockingTime { get; set; }
     }
 }

@@ -107,10 +107,10 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0,
             };
-            List<TbAppModule> list = dataAccess.GetColumnList(requset) ?? new List<TbAppModule>();
+            List<TbAppModule> list = dataAccess.GetColumnList(requset, out int totalCount) ?? new List<TbAppModule>();
 
             if (list.Count == 0) throw new TransactionException("01", "无业务数据");
-
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new ColumnInfo
             {
                 AuditStatus = AuditStatus.审核通过,

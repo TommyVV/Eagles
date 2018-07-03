@@ -41,6 +41,7 @@ namespace Eagles.DomainService.Core
                     EditTime = now,
                     Logo = requset.Info.Logo,
                     OperId = 0,
+                    OrgId = requset.Info.OrgId
                 };
 
                 return dataAccess.EditOrganization(mod) > 0;

@@ -7,7 +7,7 @@ namespace Eagles.Interface.DataAccess
 {
     public interface IColumnDataAccess: IInterfaceBase
     {
-        List<TbAppModule> GetColumnList(GetColumnRequset requset);
+        List<TbAppModule> GetColumnList(GetColumnRequset requset, out int totalCount);
         TbAppModule GetColumnDetail(GetColumnDetailRequset requset);
         int RemoveColumn(RemoveColumnRequset requset);
         int EditColumn(TbAppModule mod);

@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Login.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class LoginRequset
+    public class LoginRequset: OrgRequest
     {
         /// <summary>
         /// 密码
@@ -25,10 +25,10 @@ namespace Eagles.Application.Model.Login.Requset
         public string VerificationCode { get; set; }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public LoginType LoginType { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public LoginType LoginType { get; set; }
 
     }
 }

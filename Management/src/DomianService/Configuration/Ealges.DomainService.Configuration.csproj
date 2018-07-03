@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseConfiguration.cs" />
+    <Compile Include="EaglesConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +52,10 @@
     <ProjectReference Include="..\..\Interface\Configuration\Eagles.Interface.Configuration.csproj">
       <Project>{b96a3614-0de7-4ceb-a3c2-11ec17c6e1b2}</Project>
       <Name>Eagles.Interface.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Eagles.DomainService.Model.csproj">
+      <Project>{2F5808BE-CDB2-49E5-976A-30A9016B9BC2}</Project>
+      <Name>Eagles.DomainService.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

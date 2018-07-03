@@ -17,9 +17,10 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbNews> GetNewsList(GetNewRequset requset)
+        public List<TbNews> GetNewsList(GetNewRequset requset,out int totalCount)
         {
             var sql = new StringBuilder();
+            var sqlTotal = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
@@ -47,6 +48,10 @@ namespace Ealges.DomianService.DataAccess
             //    dynamicParams.Add("Status", (int)requset.Status);
             //}
 
+            sqlTotal.AppendFormat(@"SELECT count(1)
+FROM `eagles`.`tb_news`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sqlTotal.ToString(), dynamicParams);
 
             sql.AppendFormat(@" SELECT `tb_news`.`OrgId`,
     `tb_news`.`NewsId`,

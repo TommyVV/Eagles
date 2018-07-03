@@ -135,6 +135,7 @@
     <Compile Include="Goods\Requset\RemoveGoodsRequset.cs" />
     <Compile Include="Goods\Response\GetGoodsDetailResponse.cs" />
     <Compile Include="Goods\Response\GetGoodsResponse.cs" />
+    <Compile Include="Login\Model\Verification.cs" />
     <Compile Include="Login\Requset\LoginImageRequset.cs" />
     <Compile Include="Login\Requset\LoginRequset.cs" />
     <Compile Include="Login\Response\LoginResponse.cs" />

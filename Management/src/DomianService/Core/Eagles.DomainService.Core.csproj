@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityTaskHandler.cs" />
+    <Compile Include="LoginHandler.cs" />
     <Compile Include="ModuleHandler.cs" />
     <Compile Include="OperGroupHandler.cs" />
     <Compile Include="OperHandler.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
       <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
       <Name>Eagles.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Interface\Configuration\Eagles.Interface.Configuration.csproj">
+      <Project>{B96A3614-0DE7-4CEB-A3C2-11EC17C6E1B2}</Project>
+      <Name>Eagles.Interface.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Interface\Core\Eagles.Interface.Core.csproj">
       <Project>{7D0A628C-3430-4F7B-A93F-E221E9C17A08}</Project>

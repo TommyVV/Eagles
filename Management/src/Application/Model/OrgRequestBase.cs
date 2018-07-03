@@ -21,4 +21,22 @@ namespace Eagles.Application.Model
         /// </summary>
         public int BranchId { get; set; }
     }
+
+    /// <summary>
+    /// 机构和组织
+    /// </summary>
+    public class OrgRequest 
+    {
+        /// <summary>
+        /// 机构id
+        /// </summary>
+        public int OrgId { get; set; }
+
+        /// <summary>
+        /// 支部id
+        /// </summary>
+        public int BranchId { get; set; }
+    }
+
+
 }
