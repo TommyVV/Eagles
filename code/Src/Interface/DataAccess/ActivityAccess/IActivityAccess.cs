@@ -13,7 +13,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 
         int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
 
-        int EditActivityReview(ActivityTypeEnum type, int activityId);
+        int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType);
 
         bool EditActivityComplete(int activityId);
         

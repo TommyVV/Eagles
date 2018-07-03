@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Transactions;
-using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core.UserTest;
 using Eagles.Interface.DataAccess.Util;

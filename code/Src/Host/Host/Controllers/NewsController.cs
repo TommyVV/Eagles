@@ -1,11 +1,8 @@
-﻿using System;
-using System.Web.Http;
-using Eagles.Application.Model.News.CompleteTest;
-using Eagles.Application.Model.News.GetModuleNews;
-using Eagles.Application.Model.News.GetNewsDetail;
-using Eagles.Application.Model.News.GetTestPaper;
+﻿using System.Web.Http;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
+using Eagles.Application.Model.News.GetModuleNews;
+using Eagles.Application.Model.News.GetNewsDetail;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -48,7 +45,5 @@ namespace Eagles.Application.Host.Controllers
             return ApiActuator.Runing(() => newsHandler.GetNewsDetail(request));
 
         }
-
-
     }
 }

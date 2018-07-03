@@ -55,7 +55,7 @@ namespace Eagles.DomainService.Core.User
                 Birthday = reqUserInfo.Birth,
                 Phone = reqUserInfo.Telphone,
                 Address = reqUserInfo.Address,
-                OriginAddress = reqUserInfo.CensusAddress,
+                OriginAddress = reqUserInfo.OriginAddress,
                 Ethnic = reqUserInfo.Ethnic,
                 BranchId = reqUserInfo.Branch,
                 Dept = reqUserInfo.Department,
@@ -91,24 +91,22 @@ namespace Eagles.DomainService.Core.User
             var response = new GetUserInfoResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException("01", "获取Token失败");
             if (request.AppId <= 0)
                 throw new TransactionException("01", "AppId不允许为空");
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException("01", "AppId不存在");
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
+            if (result == null)
+                throw new TransactionException("01", "用户信息不存在");
             var userInfo = new UserInfo();
             userInfo.Name = result.Name;
             userInfo.Gender = result.Sex;
-            userInfo.Birth = result.Birthday;
+            userInfo.Birth = result.Birthday.ToLocalTime();
             userInfo.Telphone = result.Phone;
             userInfo.Address = result.Address;
             userInfo.Origin = result.Origin;
-            userInfo.CensusAddress = result.OriginAddress;
+            userInfo.OriginAddress = result.OriginAddress;
             userInfo.Ethnic = result.Ethnic;
             userInfo.Branch = result.BranchId;
             userInfo.Department = result.Dept;
@@ -117,7 +115,7 @@ namespace Eagles.DomainService.Core.User
             userInfo.IdCard = result.IdNumber;
             userInfo.Employer = result.Company;
             userInfo.PrepPartyDate = result.PreMemberTime;
-            userInfo.FormalPartyDat = result.MemberTime;
+            userInfo.FormalPartyDat = result.MemberTime.ToLocalTime();
             userInfo.PartyType = result.MemberType;
             userInfo.Provice = result.Provice;
             userInfo.City = result.City;
