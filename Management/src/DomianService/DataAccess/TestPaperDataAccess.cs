@@ -269,6 +269,7 @@ VALUES
 @Answer,
 @Multiple,
 @MultipleCount);
+select last_insert_id(); 
 ", info);
         }
 
