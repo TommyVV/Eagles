@@ -70,7 +70,8 @@ namespace Eagles.DomainService.Core
                 var startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
                 var time = startTime.AddSeconds(oper.LockingTime);
 
-                if (DateTime.Compare(DateTime.Now, time) < 0) throw new TransactionException("M07", "账号已被锁定,请" + time.ToString("u") + "后在进行登陆");
+                if (DateTime.Compare(DateTime.Now, time) < 0)
+                    throw new TransactionException("M07", "账号已被锁定,请" + time.ToString("u") + "后在进行登陆");
 
 
 
@@ -98,7 +99,10 @@ namespace Eagles.DomainService.Core
                 respone.Token = Guid.NewGuid().ToString();
 
                 dataAccess.InsertToken(new TbUserToken());
-
+                dataAccess.UpdateOperErrorCount(new TbOper
+                {
+                    LoginErrorCount = 0
+                });
             }
             catch (TransactionException ex)
             {
