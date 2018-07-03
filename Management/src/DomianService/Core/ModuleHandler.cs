@@ -6,6 +6,7 @@ using Eagles.Application.Model.Column.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
 using Eagles.Application.Model.Enums;
+using Eagles.Base;
 using Eagles.DomainService.Model.App;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -21,13 +22,8 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase EditColumn(EditColumnRequset requset)
+        public bool EditColumn(EditColumnRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
 
             TbAppModule mod;
 
@@ -48,12 +44,8 @@ namespace Eagles.DomainService.Core
                     IndexPageCount = requset.Info.IndexPageCount
                 };
 
-                int result = dataAccess.EditColumn(mod);
+                return dataAccess.EditColumn(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
             else
             {
@@ -70,41 +62,25 @@ namespace Eagles.DomainService.Core
                     IndexPageCount = requset.Info.IndexPageCount
                 };
 
-                int result = dataAccess.CreateColumn(mod);
+                return dataAccess.CreateColumn(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
+
             }
 
-            return response;
 
         }
 
-        public ResponseBase RemoveColumn(RemoveColumnRequset requset)
+        public bool RemoveColumn(RemoveColumnRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            int result = dataAccess.RemoveColumn(requset);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
+            return dataAccess.RemoveColumn(requset) > 0;
 
-            return response;
         }
 
         public GetColumnDetailResponse GetColumnDetail(GetColumnDetailRequset requset)
         {
             var response = new GetColumnDetailResponse
             {
-                ErrorCode = "00",
-                Message = "成功",
             };
             TbAppModule detail = dataAccess.GetColumnDetail(requset);
 
@@ -117,10 +93,10 @@ namespace Eagles.DomainService.Core
                 ColumnId = detail.ModuleId,
                 ColumnName = detail.ModuleName,
                 OrderBy = detail.Priority,
-                ColumnIcon=detail.SmallImageUrl,
-                ColumnImg=detail.ImageUrl,
-                IsSetTop=detail.IndexDisplay,
-                ModuleType =detail.ModuleType,
+                ColumnIcon = detail.SmallImageUrl,
+                ColumnImg = detail.ImageUrl,
+                IsSetTop = detail.IndexDisplay,
+                ModuleType = detail.ModuleType,
             };
             return response;
         }
@@ -130,12 +106,10 @@ namespace Eagles.DomainService.Core
             var response = new GetColumnResponse
             {
                 TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
             };
             List<TbAppModule> list = dataAccess.GetColumnList(requset) ?? new List<TbAppModule>();
 
-            if (list.Count == 0) throw new Exception("无数据");
+            if (list.Count == 0) throw new TransactionException("01", "无业务数据");
 
             response.List = list.Select(x => new ColumnInfo
             {

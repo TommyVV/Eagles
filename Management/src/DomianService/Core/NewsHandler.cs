@@ -8,6 +8,7 @@ using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.News.Model;
 using Eagles.Application.Model.News.Requset;
 using Eagles.Application.Model.News.Response;
+using Eagles.Base;
 using Eagles.Base.Json.Implement;
 using Eagles.DomainService.Model.News;
 using Eagles.Interface.Core;
@@ -15,7 +16,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-   public class NewsHandler: INewsHandler
+    public class NewsHandler : INewsHandler
     {
         private readonly INewsDataAccess dataAccess;
 
@@ -24,17 +25,11 @@ namespace Eagles.DomainService.Core
             this.dataAccess = dataAccess;
         }
 
-        public ResponseBase EditNews(EditNewRequset requset)
+        public bool EditNews(EditNewRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
 
             TbNews mod;
 
-        
             if (requset.Info.NewsId > 0)
             {
                 mod = new TbNews
@@ -59,12 +54,8 @@ namespace Eagles.DomainService.Core
                     OrgId = requset.Info.OrgId,
                 };
 
-                int result = dataAccess.EditNews(mod);
+                return dataAccess.EditNews(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
             else
             {
@@ -81,7 +72,7 @@ namespace Eagles.DomainService.Core
                     HtmlContent = requset.Info.Content,
                     CreateTime = requset.Info.CreateTime,
                     Module = requset.Info.ModuleId,
-                //    NewsId = requset.DetailInfo.NewsId,
+                    //    NewsId = requset.DetailInfo.NewsId,
                     ImageUrl = requset.Info.NewsImg,
                     Title = requset.Info.NewsName,
                     // NewsType=NewsType.
@@ -90,46 +81,25 @@ namespace Eagles.DomainService.Core
                     OrgId = requset.Info.OrgId,
                 };
 
-                int result = dataAccess.CreateNews(mod);
+                return dataAccess.CreateNews(mod) > 0;
 
-                if (result > 0)
-                {
-                    response.IsSuccess = true;
-                }
             }
-
-            return response;
-
         }
 
-        public ResponseBase RemoveNews(RemoveNewRequset requset)
+        public bool RemoveNews(RemoveNewRequset requset)
         {
-            var response = new ResponseBase
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            int result = dataAccess.RemoveNews(requset);
 
-            if (result > 0)
-            {
-                response.IsSuccess = true;
-            }
+            return dataAccess.RemoveNews(requset) > 0;
 
-            return response;
         }
 
         public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {
-            var response = new GetNewDetailResponse
-            {
-                ErrorCode = "00",
-                Message = "成功",
-            };
-            TbNews detail = dataAccess.GetNewsDetail(requset);
-            var json = new JsonSerialize();
+            var response = new GetNewDetailResponse();
 
-            if (detail == null) throw new Exception("无数据");
+            TbNews detail = dataAccess.GetNewsDetail(requset);
+
+            if (detail == null) throw new TransactionException("01", "无业务数据");
 
             response.Info = new NewDetail
             {
@@ -153,7 +123,7 @@ namespace Eagles.DomainService.Core
                 ModuleId = detail.Module,
                 TestId = detail.TestId,
                 Content = detail.HtmlContent,
-                OrgId=detail.OrgId,
+                OrgId = detail.OrgId,
                 // Category=detail.ViewCount
             };
             return response;
@@ -164,25 +134,23 @@ namespace Eagles.DomainService.Core
 
             var response = new GetNewResponse
             {
-                TotalCount = 0,
-                ErrorCode = "00",
-                Message = "成功",
+                TotalCount = 0
             };
             List<TbNews> list = dataAccess.GetNewsList(requset) ?? new List<TbNews>();
 
             if (list.Count == 0) throw new Exception("无数据");
 
-            response.List = list.Select(x => new Application.Model.News.Model.New
+            response.List = list.Select(x => new New
             {
-                AuditStatus= AuditStatus.审核通过,
-                Author=x.Author,
-                CreateTime=x.CreateTime,
-                NewsId=x.NewsId,
-                NewsImg=x.ImageUrl,
-                NewsName=x.Title,
-               // NewsType=NewsType.
-               Source=x.Source,
-                OrgId=x.OrgId
+                AuditStatus = AuditStatus.审核通过,
+                Author = x.Author,
+                CreateTime = x.CreateTime,
+                NewsId = x.NewsId,
+                NewsImg = x.ImageUrl,
+                NewsName = x.Title,
+                // NewsType=NewsType.
+                Source = x.Source,
+                OrgId = x.OrgId
             }).ToList();
             return response;
         }

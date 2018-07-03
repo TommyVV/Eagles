@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Column.Response
      /// <summary>
      /// 
      /// </summary>
-     public class GetColumnResponse : ResponseBase
+     public class GetColumnResponse 
     {
         /// <summary>
         /// 总条数

@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.News.Requset;
 using Eagles.Application.Model.News.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -17,16 +18,16 @@ namespace Eagles.Application.Host.Controllers
         {
             this.testHandler = testHandler;
         }
-        
+
         /// <summary>
         /// 编辑  新闻
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditNews(EditNewRequset requset)
+        public ResponseFormat<bool> EditNews(EditNewRequset requset)
         {
-            return testHandler.EditNews(requset);
+            return ApiActuator.Runing(() => testHandler.EditNews(requset));
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveNews(RemoveNewRequset requset)
+        public ResponseFormat<bool> RemoveNews(RemoveNewRequset requset)
         {
-            return testHandler.RemoveNews(requset);
+            return ApiActuator.Runing(() => testHandler.RemoveNews(requset));
         }
 
         /// <summary>
@@ -46,9 +47,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewResponse GetNews(GetNewRequset requset)
+        public ResponseFormat<GetNewResponse> GetNews(GetNewRequset requset)
         {
-            return testHandler.GetNews(requset);
+            return ApiActuator.Runing(() => testHandler.GetNews(requset));
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
+        public ResponseFormat<GetNewDetailResponse> GetNewsDetail(GetNewDetailRequset requset)
         {
-            return testHandler.GetNewsDetail(requset);
+            return ApiActuator.Runing(() => testHandler.GetNewsDetail(requset));
         }
 
     }

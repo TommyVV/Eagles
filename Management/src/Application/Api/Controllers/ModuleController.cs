@@ -2,6 +2,7 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -26,9 +27,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase EditColumn(EditColumnRequset requset)
+        public ResponseFormat<bool> EditColumn(EditColumnRequset requset)
         {
-            return _moduleHandler.EditColumn(requset);
+             return ApiActuator.Runing(() => _moduleHandler.EditColumn(requset));
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseBase RemoveColumn(RemoveColumnRequset requset)
+        public ResponseFormat<bool> RemoveColumn(RemoveColumnRequset requset)
         {
-            return _moduleHandler.RemoveColumn(requset);
+             return ApiActuator.Runing(() => _moduleHandler.RemoveColumn(requset));
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetColumnDetailResponse GetColumnDetail(GetColumnDetailRequset requset)
+        public ResponseFormat<GetColumnDetailResponse> GetColumnDetail(GetColumnDetailRequset requset)
         {
-            return _moduleHandler.GetColumnDetail(requset);
+             return ApiActuator.Runing(() => _moduleHandler.GetColumnDetail(requset));
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetColumnResponse GetColumn(GetColumnRequset requset)
+        public ResponseFormat<GetColumnResponse> GetColumn(GetColumnRequset requset)
         {
-            return _moduleHandler.GetColumn(requset);
+             return ApiActuator.Runing(() => _moduleHandler.GetColumn(requset));
         }
     }
 }

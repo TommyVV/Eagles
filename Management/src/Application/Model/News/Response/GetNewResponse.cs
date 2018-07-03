@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.News.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetNewResponse : ResponseBase
+    public class GetNewResponse
     {
         /// <summary>
         /// 总条数

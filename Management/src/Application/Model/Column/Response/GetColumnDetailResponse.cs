@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Column.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetColumnDetailResponse : ResponseBase
+    public class GetColumnDetailResponse 
     {
         /// <summary>
         /// 

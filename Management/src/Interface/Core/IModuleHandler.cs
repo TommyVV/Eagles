@@ -13,14 +13,14 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase EditColumn(EditColumnRequset requset);
+        bool EditColumn(EditColumnRequset requset);
 
         /// <summary>
         /// 删除 栏目
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        ResponseBase RemoveColumn(RemoveColumnRequset requset);
+        bool RemoveColumn(RemoveColumnRequset requset);
 
         /// <summary>
         /// 栏目 详情

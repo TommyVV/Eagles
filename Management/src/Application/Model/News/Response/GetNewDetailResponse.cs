@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.News.Response
    /// <summary>
    /// 
    /// </summary>
-   public  class GetNewDetailResponse : ResponseBase
+   public  class GetNewDetailResponse 
     {
         /// <summary>
         /// 
