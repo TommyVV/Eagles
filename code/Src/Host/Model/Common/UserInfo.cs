@@ -55,7 +55,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 户籍地址
         /// </summary>
-        public string CensusAddress { get; set; }
+        public string OriginAddress { get; set; }
 
         /// <summary>
         /// 常住地址

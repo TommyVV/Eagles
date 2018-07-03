@@ -112,6 +112,11 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
+            if (activityInfo == null)
+                throw new TransactionException("96", "活动不存在");
+            if(activityInfo.Status!=0)
+                throw new TransactionException("96", "活动状态不正确");
             var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result <= 0)
@@ -130,28 +135,24 @@ namespace Eagles.DomainService.Core.Activity
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
+            var createType = activityInfo.CreateType;
             switch (request.Type)
             {
                 case ActivityTypeEnum.Audit:
                     //上级审核任务
-                    if (activityInfo.FromUser != tokens.UserId)
-                    {
-                        response.Code = "96";
-                        response.Message = "必须发起人审核";
-                        return response;
-                    }
+                    if (1 == createType && activityInfo.ToUserId != tokens.UserId)
+                        throw new TransactionException("96", "必须发起人审核");
                     break;
                 case ActivityTypeEnum.Apply:
-                    //下级申请完成任务
-                    if(activityInfo.ToUserId != tokens.UserId)
-                    {
-                        response.Code = "96";
-                        response.Message = "必须负责人申请完成活动";
-                        return response;
-                    }
+                    //上级发起的活动
+                    if (2 == createType && activityInfo.ToUserId != tokens.UserId)
+                        throw new TransactionException("96", "必须负责人申请完成活动");
+                    //下级发起的活动
+                    else if(1 == createType && activityInfo.ToUserId != tokens.UserId)
+                        throw new TransactionException("96", "必须负责人申请完成活动");
                     break;
             }
-            var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
+            var result = iActivityAccess.EditActivityReview(request.Type, request.ReviewType);
             if (result <= 0)
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);

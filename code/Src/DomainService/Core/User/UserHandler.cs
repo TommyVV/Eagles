@@ -54,7 +54,7 @@ namespace Eagles.DomainService.Core.User
                 Birthday = reqUserInfo.Birth,
                 Phone = reqUserInfo.Telphone,
                 Address = reqUserInfo.Address,
-                OriginAddress = reqUserInfo.CensusAddress,
+                OriginAddress = reqUserInfo.OriginAddress,
                 Ethnic = reqUserInfo.Ethnic,
                 BranchId = reqUserInfo.Branch,
                 Dept = reqUserInfo.Department,
@@ -92,14 +92,16 @@ namespace Eagles.DomainService.Core.User
             if (util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
+            if (result == null)
+                throw new TransactionException("01", "用户信息不存在");
             var userInfo = new UserInfo();
             userInfo.Name = result.Name;
             userInfo.Gender = result.Sex;
-            userInfo.Birth = result.Birthday;
+            userInfo.Birth = result.Birthday.ToLocalTime();
             userInfo.Telphone = result.Phone;
             userInfo.Address = result.Address;
             userInfo.Origin = result.Origin;
-            userInfo.CensusAddress = result.OriginAddress;
+            userInfo.OriginAddress = result.OriginAddress;
             userInfo.Ethnic = result.Ethnic;
             userInfo.Branch = result.BranchId;
             userInfo.Department = result.Dept;
@@ -108,7 +110,7 @@ namespace Eagles.DomainService.Core.User
             userInfo.IdCard = result.IdNumber;
             userInfo.Employer = result.Company;
             userInfo.PrepPartyDate = result.PreMemberTime;
-            userInfo.FormalPartyDat = result.MemberTime;
+            userInfo.FormalPartyDat = result.MemberTime.ToLocalTime();
             userInfo.PartyType = result.MemberType;
             userInfo.Provice = result.Provice;
             userInfo.City = result.City;

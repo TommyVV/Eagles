@@ -74,7 +74,7 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
                 });
         }
 
-        public int EditActivityReview(ActivityTypeEnum type, int activityId)
+        public int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType)
         {
             var result = 0;
             switch (type)

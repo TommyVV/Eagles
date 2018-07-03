@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Eagles.Base;
 using Eagles.Interface.Core.UserTest;
 using Eagles.Application.Model.News.CompleteTest;
@@ -26,29 +25,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetTestPaperResponse GetTestPaper(GetTestPaperRequest request)
+        public ResponseFormat<GetTestPaperResponse> GetTestPaper(GetTestPaperRequest request)
         {
-            try
-            {
-                return userTestHandler.GetTestPaper(request);
-            }
-            catch (TransactionException e)
-            {
-                return new GetTestPaperResponse()
-                {
-                    Code = e.ErrorCode,
-                    Message = e.Message
-                };
-            }
-            catch (Exception e)
-            {
-                return new GetTestPaperResponse()
-                {
-                    Code = "99",
-                    Message = "系统错误"
-                };
-            }
-
+            return ApiActuator.Runing(() => userTestHandler.GetTestPaper(request));
         }
 
         /// <summary>
@@ -57,29 +36,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CompleteTestResponse TestPaperAnswer(CompleteTestRequest request)
+        public ResponseFormat<CompleteTestResponse> TestPaperAnswer(CompleteTestRequest request)
         {
-            try
-            {
-                return userTestHandler.CompleteTest(request);
-            }
-            catch (TransactionException e)
-            {
-                return new CompleteTestResponse()
-                {
-                    Code = e.ErrorCode,
-                    Message = e.Message
-                };
-            }
-            catch (Exception e)
-            {
-                return new CompleteTestResponse()
-                {
-                    Code = "99",
-                    Message = "系统错误"
-                };
-            }
-
+            return ApiActuator.Runing(() => userTestHandler.CompleteTest(request));
         }
     }
 }
