@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.DomainService.Model.User;
@@ -41,17 +42,17 @@ namespace Eagles.DomainService.Core.Activity
             var toUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
             }
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //活动发起人
             if(!string.IsNullOrEmpty(request.ActivityToUserId))
                 toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
             if (fromUser == toUser)
-                throw new TransactionException("01", "负责人不能和发起人一致");
+                throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
             var act = new TbActivity();
             act.OrgId = tokens.OrgId;
             act.BranchId = tokens.BranchId;
@@ -98,15 +99,9 @@ namespace Eagles.DomainService.Core.Activity
                 }
             }
             var result = iActivityAccess.CreateActivity(act);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -116,18 +111,12 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityJoinResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -137,10 +126,10 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityReviewResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
-                throw new TransactionException("96", "活动不存在");
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             switch (request.Type)
             {
                 case ActivityTypeEnum.Audit:
@@ -163,15 +152,9 @@ namespace Eagles.DomainService.Core.Activity
                     break;
             }
             var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -181,17 +164,11 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityCompleteResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
-            if (result)
+            if (!result)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
             }
             return response;
         }
@@ -201,7 +178,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new EditActivityFeedBackResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
             {
@@ -216,15 +193,9 @@ namespace Eagles.DomainService.Core.Activity
                 return response;
             }
             var result = iActivityAccess.EditActivityFeedBack(request.ActivityId, request.Content, request.AttachList);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -233,15 +204,15 @@ namespace Eagles.DomainService.Core.Activity
         {
             var response = new GetActivityResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
             var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
 
@@ -297,7 +268,7 @@ namespace Eagles.DomainService.Core.Activity
 
             if (result.Count == 0)
             {
-                throw new TransactionException("96", "查无数据");
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
 
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
@@ -319,12 +290,12 @@ namespace Eagles.DomainService.Core.Activity
         {
             var response = new GetActivityDetailResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var result = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (result != null)
             {
@@ -342,13 +313,10 @@ namespace Eagles.DomainService.Core.Activity
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData); ;
             }
             return response;
         }
@@ -357,16 +325,16 @@ namespace Eagles.DomainService.Core.Activity
         {
             var response = new GetPublicActivityResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
             {
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId);
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
@@ -378,15 +346,9 @@ namespace Eagles.DomainService.Core.Activity
                 Content = x.HtmlContent,
                 ImgUrl = x.ImageUrl
             }).ToList();
-            if (result != null && result.Count > 0)
+            if (result == null || result.Count < 0)
             {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -395,9 +357,9 @@ namespace Eagles.DomainService.Core.Activity
         {
             var response = new GetPublicActivityDetailResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iActivityAccess.GetPublicActivityDetail(request.ActivityId, request.AppId);
             if (result != null)
             {
@@ -413,13 +375,10 @@ namespace Eagles.DomainService.Core.Activity
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
                 response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

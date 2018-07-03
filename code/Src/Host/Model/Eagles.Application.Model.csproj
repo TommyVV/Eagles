@@ -55,6 +55,8 @@
     <Compile Include="Common\ReqAnswer.cs" />
     <Compile Include="Common\UserLevel.cs" />
     <Compile Include="Common\UserRelationship.cs" />
+    <Compile Include="MessageCode.cs" />
+    <Compile Include="MessageKey.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
     <Compile Include="News\GetTestPaper\AppAnswer.cs" />

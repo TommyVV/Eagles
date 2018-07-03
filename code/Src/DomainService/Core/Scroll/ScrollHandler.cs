@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.Scroll;
 using Eagles.Interface.DataAccess.Util;
@@ -24,21 +25,15 @@ namespace Eagles.DomainService.Core.Scroll
         {
             var response = new GetScrollImgResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iScrollAccess.GetScrollImg(request.PageType);
-            if (result != null && result.Count > 0)
+            if (result == null || result.Count <= 0)
             {
-                response.RollImgUrl = result?.Select(x => x.ImageUrl).ToList();
-                response.Code = "00";
-                response.Message = "查询成功";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
-            }
+            response.RollImgUrl = result?.Select(x => x.ImageUrl).ToList();
             return response;
         }
 
@@ -46,9 +41,9 @@ namespace Eagles.DomainService.Core.Scroll
         {
             var response = new GetScrollNewsResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
 
             var nowDate = DateTime.Now.ToString("yyyyMMdd");
             var date = DateTime.Now.ToString("MMdd");
@@ -65,8 +60,7 @@ namespace Eagles.DomainService.Core.Scroll
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

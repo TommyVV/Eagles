@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.Product;
 using Eagles.Interface.DataAccess.Util;
@@ -23,9 +24,9 @@ namespace Eagles.DomainService.Core.Product
         {
             var response = new GetProductResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProduct(request);
             if (result != null && result.Count > 0)
             {
@@ -40,7 +41,7 @@ namespace Eagles.DomainService.Core.Product
             }
             else
             {
-                throw new TransactionException("96", "查无数据");
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -49,9 +50,9 @@ namespace Eagles.DomainService.Core.Product
         {
             var response = new GetProductDetailResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProductDetail(request.ProductId);
             if (result != null)
             {
@@ -69,7 +70,7 @@ namespace Eagles.DomainService.Core.Product
             }
             else
             {
-                throw new TransactionException("96", "查无数据");
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

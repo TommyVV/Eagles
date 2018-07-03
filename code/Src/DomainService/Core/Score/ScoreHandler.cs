@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core.Score;
@@ -35,14 +36,14 @@ namespace Eagles.DomainService.Core.Score
             var response = new AppScoreExchangeResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if (productInfo == null)
-                throw new TransactionException("96", "商品信息不存在");
+                throw new TransactionException(MessageCode.ProductNotExists, MessageKey.ProductNotExists);
             var buyCount = request.Count; //购买数量
             var prodName = productInfo.ProdName; //商品名称
             var score = productInfo.Score; //商品积分
@@ -50,12 +51,12 @@ namespace Eagles.DomainService.Core.Score
             var maxBuyCount = productInfo.MaxBuyCount; //每人最大购买数量
             var userCount = iproductAccess.GetOrderByProduct(request.ProductId, userInfo.UserId);
             if (maxBuyCount > 0 && buyCount >= userCount)
-                throw new TransactionException("01", "超过最大购买数量");
+                throw new TransactionException(MessageCode.LimitedCount, MessageKey.LimitedCount);
             var userScore = userInfo.Score; //用户积分
             if (stock < buyCount)
-                throw new TransactionException("01", "商品库存不足");
+                throw new TransactionException(MessageCode.NoInventory, MessageKey.NoInventory);
             if (userScore < score * request.Count)
-                throw new TransactionException("01", "用户积分不足");
+                throw new TransactionException(MessageCode.InsufficientScore, MessageKey.InsufficientScore);
             var order = new TbOrder
             {
                 OrgId = tokens.OrgId,
@@ -76,7 +77,7 @@ namespace Eagles.DomainService.Core.Score
             //更新用户积分
             var result = util.EditUserScore(tokens.UserId, score * request.Count);
             if (result <= 0)
-                throw new TransactionException("01", "更新用户积分失败");
+                throw new TransactionException(MessageCode.UpdateScoreFail, MessageKey.UpdateScoreFail);
             return response;
         }
 
@@ -86,14 +87,12 @@ namespace Eagles.DomainService.Core.Score
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iScoreAccess.GetScoreExchangeLs(tokens.UserId);
             if (result != null && result.Count > 0)
             {
@@ -108,7 +107,7 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                throw new TransactionException("96", "查无数据");
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -117,9 +116,9 @@ namespace Eagles.DomainService.Core.Score
         {
             var response = new GetScoreRankResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)
             {
@@ -148,9 +147,7 @@ namespace Eagles.DomainService.Core.Score
             }
             else
             {
-                throw new TransactionException("96", "查无数据");
-                //response.Code = "96";
-                //response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

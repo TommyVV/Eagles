@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.AppMenu;
 using Eagles.Interface.DataAccess.Menu;
@@ -24,9 +25,9 @@ namespace Eagles.DomainService.Core.AppMenu
         {
             var response = new GetMenuResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var menus = menuDataAccess.GetAppMenus(request.AppId);
             if (menus == null || !menus.Any())
             {

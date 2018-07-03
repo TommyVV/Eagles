@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model;
 
 namespace Eagles.Base
 {

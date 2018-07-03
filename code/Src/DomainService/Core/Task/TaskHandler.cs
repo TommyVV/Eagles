@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
@@ -43,17 +44,15 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
             var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
             if (fromUser == toUser)
-                throw new TransactionException("01", "负责人不能和发起人一致");
+                throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
             var task = new TbTask();
             task.OrgId = tokens.OrgId;
             task.BranchId = tokens.BranchId;
@@ -324,27 +323,21 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new GetTaskStepResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var result = iTaskAccess.GetTaskStep(request.TaskId);
             response.StepList = result?.Select(x => new Step
             {
                 StepId = x.StepId,
                 StepName = x.StepName
             }).ToList();
-            if (result != null && result.Count > 0)
+            if (result == null || result.Count <= 0)
             {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -353,12 +346,12 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new GetTaskResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userId = desEncrypt.Decrypt(request.EncryptUserid);
             var result = iTaskAccess.GetTask(userId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
@@ -370,15 +363,9 @@ namespace Eagles.DomainService.Core.Task
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();
-            if (result != null && result.Count > 0)
+            if (result == null || result.Count <= 0)
             {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -387,12 +374,12 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new GetTaskDetailResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-                throw new TransactionException("96", "获取Token失败");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var result = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (result != null)
             {
@@ -407,13 +394,10 @@ namespace Eagles.DomainService.Core.Task
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -422,9 +406,9 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new GetPublicTaskResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iTaskAccess.GetPublicTask(request.AppId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
@@ -434,15 +418,9 @@ namespace Eagles.DomainService.Core.Task
                 TaskStatus = x.Status,
                 TaskDate = x.BeginTime
             }).ToList();
-            if (result != null && result.Count > 0)
+            if (result == null || result.Count <= 0)
             {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -451,9 +429,9 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new GetPublicTaskDetailResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iTaskAccess.GetPublicTaskDetail(request.TaskId, request.AppId);
             if (result != null)
             {
@@ -468,13 +446,11 @@ namespace Eagles.DomainService.Core.Task
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
-                response.Code = "00";
-                response.Message = "查询成功";
+              
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

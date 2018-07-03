@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core.Study;
@@ -88,25 +89,20 @@ namespace Eagles.DomainService.Core.Study
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iStudyAccess.GetStudyTime(tokens.UserId, request.NewsId, request.ModuleId);
             if (result != null)
             {
                 response.StudyTime = result.StudyTime;
-                response.Code = "00";
-                response.Message = "查询成功";
             }
             else
             {
-                response.Code = "96";
-                response.Message = "查询失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

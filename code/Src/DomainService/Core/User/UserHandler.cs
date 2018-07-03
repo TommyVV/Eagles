@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.Md5Helper;
 using Eagles.Base.DesEncrypt;
@@ -42,9 +43,7 @@ namespace Eagles.DomainService.Core.User
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var reqUserInfo = request.RequestUserInfo;
             var userInfo = new TbUserInfo()
@@ -73,15 +72,9 @@ namespace Eagles.DomainService.Core.User
                 PhotoUrl = reqUserInfo.PhotoUrl
             };
             var result = userInfoAccess.EditUser(userInfo);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "修改成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -92,14 +85,12 @@ namespace Eagles.DomainService.Core.User
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidParameter);
             }
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             var userInfo = new UserInfo();
             userInfo.Name = result.Name;
@@ -136,7 +127,8 @@ namespace Eagles.DomainService.Core.User
             {
                 var password = md5Helper.Md5Encypt(request.UserPwd);
                 if (!result.Password.Equals(password))
-                    throw new TransactionException("96", "账户密码错误");
+                    throw new TransactionException(MessageCode.UserNameOrPasswordError,
+                        MessageKey.UserNameOrPasswordError);
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
@@ -153,14 +145,16 @@ namespace Eagles.DomainService.Core.User
                 }
                 else
                 {
-                    throw new TransactionException("96", "登陆失败");
+                    throw new TransactionException(MessageCode.LoginFail,
+                        MessageKey.LoginFail);
                 }
                 //返回前端加密userId
                 response.EncryptUserid = desEncrypt.Encrypt(result.UserId.ToString());
             }
             else
             {
-                throw new TransactionException("96", "查无此账号");
+                throw new TransactionException(MessageCode.LoginFail,
+                    MessageKey.LoginFail);
             }
             return response;
         }
@@ -170,22 +164,18 @@ namespace Eagles.DomainService.Core.User
             var response = new RegisterResponse();
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
-                throw new TransactionException("01", "手机号已存在");
+                throw new TransactionException(MessageCode.ExistsPhone,MessageKey.ExistsPhone);
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
                 Password = md5Helper.Md5Encypt(request.Pwd),
                 CreateTime = DateTime.Now
             };
-            var codeInfo = new TbValidCode() {Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq};
+            var codeInfo = new TbValidCode() { Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
-                throw new TransactionException("01", "验证码错误");
+                throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
             var result = userInfoAccess.CreateUser(userInfo);
-            if (result > 0)
-            {
-                response.Message = "注册成功";
-            }
             return response;
         }
 

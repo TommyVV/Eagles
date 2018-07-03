@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Http;
+using Eagles.Application.Model;
 using Eagles.Base.Md5Helper;
 using Eagles.Base.ValidateVode;
 
@@ -19,10 +21,13 @@ namespace Eagles.Application.Host.Controllers
             this.validate = validate;
         }
 
-        [HttpPost,HttpPut, HttpOptions]
-        public string Test()
+        [HttpGet]
+        public ResponseBase Test()
         {
-            return null;
+            return new ResponseBase()
+            {
+                DateTime = DateTime.Now.Date
+            };
         }
 
         

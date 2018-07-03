@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.DomainService.Model.User;
@@ -32,15 +33,13 @@ namespace Eagles.DomainService.Core.UserComment
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var userId = Convert.ToInt32(desEncrypt.Decrypt(request.CommentUserId)); //评论人
             var userInfo = util.GetUserInfo(userId);
             if (userInfo == null)
             {
-                throw new TransactionException("01", "用户不存在");
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var tbUserComment = new TbUserComment()
             {
@@ -56,13 +55,7 @@ namespace Eagles.DomainService.Core.UserComment
             var result = userCommentAccess.EditUserComment(tbUserComment);
             if (result > 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -73,20 +66,12 @@ namespace Eagles.DomainService.Core.UserComment
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = userCommentAccess.AuditUserComment(request.CommentId, request.ReviewStatus);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "审核成功";
-            }
-            else
-            {
-                response.Code = "00";
-                response.Message = "审核失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -95,15 +80,13 @@ namespace Eagles.DomainService.Core.UserComment
         {
             var response = new GetUserCommentResponse();
             if (request.AppId <= 0)
-                throw new TransactionException("01", "AppId不允许为空");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (util.CheckAppId(request.AppId))
-                throw new TransactionException("01", "AppId不存在");
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = userCommentAccess.GetUserComment(request.CommentType, request.Id, tokens.UserId);
             response.CommentList = result?.Select(x => new Comment
@@ -117,13 +100,7 @@ namespace Eagles.DomainService.Core.UserComment
             }).ToList();
             if (result != null && result.Count > 0)
             {
-                response.Code = "00";
-                response.Message = "查询成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "查无数据";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
