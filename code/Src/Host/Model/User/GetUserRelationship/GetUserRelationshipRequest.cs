@@ -8,6 +8,6 @@
         /// <summary>
         /// 用户Id
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

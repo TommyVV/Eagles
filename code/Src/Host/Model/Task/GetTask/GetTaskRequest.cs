@@ -6,9 +6,9 @@
     public class GetTaskRequest : RequestBase
     {
         /// <summary>
-        /// 加密用户编号
+        /// 用户编号
         /// </summary>
-        public string EncryptUserid { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 任务状态

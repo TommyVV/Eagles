@@ -13,7 +13,7 @@
         /// <summary>
         /// 加密用户Id
         /// </summary>
-        public string EncryptUserid { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 是否需要验证码

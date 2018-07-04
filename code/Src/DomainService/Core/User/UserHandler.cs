@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.Md5Helper;
-using Eagles.Base.DesEncrypt;
 using Eagles.Base.Configuration;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
@@ -24,15 +22,11 @@ namespace Eagles.DomainService.Core.User
     {
         private readonly IUserInfoAccess userInfoAccess;
         private readonly IUtil util;
-        private readonly IDesEncrypt desEncrypt;
         private readonly IMd5Helper md5Helper;
-        private readonly IConfigurationManager config;
 
-        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IDesEncrypt desEncrypt, IMd5Helper md5Helper, IConfigurationManager config)
+        public UserHandler(IUserInfoAccess userInfoAccess, IUtil util, IMd5Helper md5Helper)
         {
-            this.desEncrypt = desEncrypt;
             this.md5Helper = md5Helper;
-            this.config = config;
             this.userInfoAccess = userInfoAccess;
             this.util = util;
         }
@@ -151,7 +145,7 @@ namespace Eagles.DomainService.Core.User
                         MessageKey.LoginFail);
                 }
                 //返回前端加密userId
-                response.EncryptUserid = desEncrypt.Encrypt(result.UserId.ToString());
+                response.UserId = result.UserId;
             }
             else
             {
@@ -184,25 +178,33 @@ namespace Eagles.DomainService.Core.User
         public GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request)
         {
             var response = new GetUserRelationshipResponse();
-            var userId = Convert.ToInt32(desEncrypt.Decrypt(request.UserId));
-            var superiorUserList = userInfoAccess.GetRelationship(userId, true);
-            var lowerUserList = userInfoAccess.GetRelationship(userId, false);
-            var slist = superiorUserList.Select(x => x.UserId).ToList();
-            var llist = lowerUserList.Select(x => x.SubUserId).ToList();
-            List<int> userIdList = slist.Union(llist).ToList();
-            var userInfo = userInfoAccess.GetUserInfo(userIdList);
-            response.SuperiorUserList = superiorUserList?.Select(x =>
-                new UserRelationship
+            var userId = request.UserId;
+            var superiorUserList = userInfoAccess.GetRelationship(userId, false);
+            var lowerUserList = userInfoAccess.GetRelationship(userId, true);
+            var userRelationship=new List<UserRelationship>()
+            {
+
+            };
+            lowerUserList.ForEach(x =>
+            {
+                userRelationship.Add(new UserRelationship()
                 {
-                    UserId = x.UserId,
-                    Name = userInfo.First(u => (u.UserId == x.UserId)).Name
-                }).ToList();
-            response.LowerUserList = lowerUserList?.Select(x =>
-                new UserRelationship
-                {
-                    UserId = x.UserId,
-                    Name = userInfo.First(u => (u.UserId == x.SubUserId)).Name
-                }).ToList();
+                    Name = x.NickName,
+                    UserId =x.SubUserId,
+                    IsLeader = false
+                });
+            });
+           superiorUserList.ForEach(x =>
+           {
+               userRelationship.Add(new UserRelationship()
+               {
+                   Name = x.NickName,
+                   UserId = x.UserId,
+                   IsLeader = true
+               });
+           });
+
+            response.UserList = userRelationship;
             return response;
         }
     }

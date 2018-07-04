@@ -16,5 +16,10 @@ namespace Eagles.Application.Model.Common
         /// 姓名
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 是否是领导
+        /// </summary>
+        public bool IsLeader { get; set; }
     }
 }

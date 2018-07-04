@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
-using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ActivityAccess;
@@ -26,13 +24,11 @@ namespace Eagles.DomainService.Core.Activity
     public class ActivityHandler : IActivityHandler
     {
         private readonly IActivityAccess iActivityAccess;
-        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public ActivityHandler(IActivityAccess iActivityAccess, IDesEncrypt desEncrypt, IUtil util)
+        public ActivityHandler(IActivityAccess iActivityAccess, IUtil util)
         {
             this.iActivityAccess = iActivityAccess;
-            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -48,9 +44,9 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
             }
-            var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityFromUser)); //活动发起人
-            if(!string.IsNullOrEmpty(request.ActivityToUserId))
-                toUser = Convert.ToInt32(desEncrypt.Decrypt(request.ActivityToUserId)); //活动负责人
+            var fromUser = request.ActivityFromUser; //活动发起人
+            if(request.ActivityToUserId>0)
+                toUser = request.ActivityToUserId; //活动负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
             var act = new TbActivity();
@@ -117,7 +113,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             if (activityInfo.Status != 0)
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
-            var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
+            var joinUserid = request.JoinUserid; //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result <= 0)
             {
@@ -302,8 +298,8 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
-                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
-                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.ToUserId.ToString());
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();
@@ -366,8 +362,8 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
-                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
-                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.ToUserId.ToString());
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();

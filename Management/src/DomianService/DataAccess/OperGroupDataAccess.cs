@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.AuthorityGroup.Requset;
 using Eagles.Application.Model.AuthorityGroupSetUp.Requset;

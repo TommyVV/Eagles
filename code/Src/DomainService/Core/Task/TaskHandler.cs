@@ -28,13 +28,11 @@ namespace Eagles.DomainService.Core.Task
     public class TaskHandler : ITaskHandler
     {
         private readonly ITaskAccess iTaskAccess;
-        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public TaskHandler(ITaskAccess iTaskAccess, IDesEncrypt desEncrypt, IUtil util)
+        public TaskHandler(ITaskAccess iTaskAccess, IUtil util)
         {
             this.iTaskAccess = iTaskAccess;
-            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -47,8 +45,8 @@ namespace Eagles.DomainService.Core.Task
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
-            var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
+            var fromUser = request.TaskFromUser; //任务发起人
+            var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
             var task = new TbTask();
@@ -289,7 +287,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var userId = desEncrypt.Decrypt(request.EncryptUserid);
+            var userId = request.UserId;
             var result = iTaskAccess.GetTask(userId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
@@ -325,9 +323,9 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = desEncrypt.Encrypt(result.FromUser.ToString()); //加密返回前端
-                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
-                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.UserId.ToString());
+                response.TaskFounder = result.FromUser; //加密返回前端
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
@@ -379,9 +377,9 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = desEncrypt.Encrypt(result.FromUser.ToString()); //加密返回前端
-                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
-                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.UserId.ToString());
+                response.TaskFounder = result.FromUser; //加密返回前端
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
