@@ -276,9 +276,10 @@ where ActivityId = @ActivityId and OrgId = @OrgId and IsPublic = @IsPublic and O
             return null;
         }
 
-        public List<string> GetActivityJoinPeople(int activityId)
+        public List<JoinPeople> GetActivityJoinPeople(int activityId)
         {
-            var result = dbManager.Query<string>("select userId from eagles.tb_user_activity where ActivityId = @ActivityId ", new {ActivityId = activityId});
+            var result = dbManager.Query<JoinPeople>(@"select a.UserId, b.Name from eagles.tb_user_activity a 
+join eagles.tb_user_info b on a.UserId = b.UserId where ActivityId = @ActivityId ", new {ActivityId = activityId});
             if (result != null && result.Any())
             {
                 return result;

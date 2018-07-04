@@ -1,19 +1,22 @@
-﻿
+﻿using System;
+
 namespace Eagles.Application.Model.Common
 {
     /// <summary>
-    /// 参与用户集合
+    /// 反馈
     /// </summary>
-    public class JoinPeople
+    public class FeedBack
     {
         /// <summary>
         /// 用户编号
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
-        /// 用户名称
+        /// 反馈
         /// </summary>
-        public string Name { get; set; }
+        public string UserFeedBack { get; set; }
+
+
     }
 }

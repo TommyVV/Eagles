@@ -1,14 +1,14 @@
 ﻿using System.Web.Http;
+using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.Core.User;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.User.Login;
-using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
+using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
-using Eagles.Base;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -35,9 +35,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<LoginResponse> Login(LoginRequest request)
         {
-
             return ApiActuator.Runing(() => userHandler.Login(request));
-            //  return userHandler.Login(request);
         }
 
         /// <summary>

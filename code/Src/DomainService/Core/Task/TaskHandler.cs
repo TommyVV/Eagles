@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
-using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.TaskAccess;
@@ -17,11 +16,11 @@ using Eagles.Application.Model.Task.EditTaskAccept;
 using Eagles.Application.Model.Task.EditTaskComplete;
 using Eagles.Application.Model.Task.EditTaskFeedBack;
 using Eagles.Application.Model.Task.EditTaskStep;
-using Eagles.Application.Model.Task.GetPublicTask;
-using Eagles.Application.Model.Task.GetPublicTaskDetail;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
+using Eagles.Application.Model.Task.GetPublicTask;
+using Eagles.Application.Model.Task.GetPublicTaskDetail;
 
 namespace Eagles.DomainService.Core.Task
 {

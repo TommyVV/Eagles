@@ -9,7 +9,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 {
     public interface IActivityAccess : IInterfaceBase
     {
-        int CreateActivity(DomainService.Model.Activity.TbActivity activity);
+        int CreateActivity(TbActivity activity);
 
         int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
 
@@ -20,8 +20,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
         
         List<TbActivity> GetActivity(ActivityType activityType,int branchId);
-
-       // List<TbActivity> GetActivity(ActivityType activityType, int branchId);
+        
         List<TbUserActivity> GetUserActivity(int userId);
 
         TbActivity GetActivityDetail(int activityId, int appId);
@@ -30,6 +29,6 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 
         TbActivity GetPublicActivityDetail(int activityId, int appId);
 
-        List<string> GetActivityJoinPeople(int activityId);
+        List<JoinPeople> GetActivityJoinPeople(int activityId);
     }
 }
