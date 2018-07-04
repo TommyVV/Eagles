@@ -258,6 +258,7 @@
     <Compile Include="App_Start\ValidServiceToken.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\ScrollImageController.cs" />
     <Compile Include="Controllers\OperGroupController.cs" />
     <Compile Include="Controllers\OperController.cs" />

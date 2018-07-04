@@ -3058,17 +3058,17 @@
             
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse">
+        <member name="T:Eagles.Application.Model.ScoreRank.Response.GetScoreRankResponse">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse.TotalCount">
+        <member name="P:Eagles.Application.Model.ScoreRank.Response.GetScoreRankResponse.TotalCount">
             <summary>
             总条数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Response.ScoreRankResponse.List">
+        <member name="P:Eagles.Application.Model.ScoreRank.Response.GetScoreRankResponse.List">
             <summary>
             集合
             </summary>
@@ -3108,32 +3108,53 @@
             可获取积分次数
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpInfoRequset">
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.LearnTime">
+            <summary>
+            学习时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.RewardType">
+             <summary>
+             奖励类型;
+            0:任务奖励
+            1:活动奖励;
+            2:字数奖励
+            3:关键字奖励
+            4:学习时间奖励
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.WordCount">
+            <summary>
+            字数
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpInfoRequset.Info">
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.EditScoreSetUpRequset.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpInfoRequset.ScoreSetUpId">
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpDetailRequset.ScoreSetUpId">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoDetailResponse.Info">
+        <!-- 对于成员“P:Eagles.Application.Model.ScoreSetUp.Requset.RemoveScoreSetUpRequset.ScoreSetUpId”忽略有格式错误的 XML 注释 -->
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpDetailResponse.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoResponse.TotalCount">
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpResponse.TotalCount">
             <summary>
             总条数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpInfoResponse.List">
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpResponse.List">
             <summary>
             集合
             </summary>

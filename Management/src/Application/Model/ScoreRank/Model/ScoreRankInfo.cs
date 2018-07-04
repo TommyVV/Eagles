@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.ScoreRank.Model
         /// <summary>
         /// 积分
         /// </summary>
-        public string Score { get; set; }
+        public int Score { get; set; }
         /// <summary>
         /// 用户使用积分
         /// </summary>
@@ -29,7 +29,7 @@ namespace Eagles.Application.Model.ScoreRank.Model
         /// <summary>
         /// 用户身份
         /// </summary>
-        public UserIdentity UserIdentity { get; set; }
+        public int UserIdentity { get; set; }
 
     }
 }

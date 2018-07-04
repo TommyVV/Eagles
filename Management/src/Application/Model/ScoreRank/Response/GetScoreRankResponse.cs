@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.ScoreRank.Response
     /// <summary>
     /// 
     /// </summary>
-    public class ScoreRankResponse:ResponseBase
+    public class GetScoreRankResponse 
     {
         /// <summary>
         /// 总条数

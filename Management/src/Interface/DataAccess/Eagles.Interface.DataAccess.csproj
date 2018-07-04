@@ -46,6 +46,7 @@
     <Compile Include="ILoginDataAccess.cs" />
     <Compile Include="IOperGroupDataAccess.cs" />
     <Compile Include="IRewardScoreDataAccess.cs" />
+    <Compile Include="IScoreDataAccess.cs" />
     <Compile Include="IScrollImageDataAccess.cs" />
     <Compile Include="ITestPaperDataAccess.cs" />
     <Compile Include="IGoodsDataAccess.cs" />

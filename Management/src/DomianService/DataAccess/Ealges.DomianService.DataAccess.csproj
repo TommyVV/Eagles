@@ -49,6 +49,7 @@
     <Compile Include="LoginDataAccess.cs" />
     <Compile Include="OperDataAccess.cs" />
     <Compile Include="OperGroupDataAccess.cs" />
+    <Compile Include="ScoreDataAccess.cs" />
     <Compile Include="ScrollImageDataAccess.cs" />
     <Compile Include="TestPaperDataAccess.cs" />
     <Compile Include="GoodsDataAccess.cs" />
