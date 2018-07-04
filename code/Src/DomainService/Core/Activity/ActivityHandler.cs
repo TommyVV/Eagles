@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
-using Eagles.DomainService.Model.User;
-using Eagles.DomainService.Model.Activity;
-using Eagles.Application.Model.Enums;
-using Eagles.Application.Model.Common;
 using Eagles.Interface.Core.Activity;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ActivityAccess;
+using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.Activity;
+using Eagles.Application.Model;
+using Eagles.Application.Model.Enums;
+using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Activity.CreateActivity;
-using Eagles.Application.Model.Activity.EditActivityComplete;
-using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.EditActivityJoin;
 using Eagles.Application.Model.Activity.EditActivityReview;
+using Eagles.Application.Model.Activity.EditActivityComplete;
+using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
@@ -114,9 +114,9 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
-                throw new TransactionException("96", "活动不存在");
-            if(activityInfo.Status!=0)
-                throw new TransactionException("96", "活动状态不正确");
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
+            if (activityInfo.Status != 0)
+                throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var joinUserid = Convert.ToInt32(desEncrypt.Decrypt(request.JoinUserid)); //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result <= 0)
@@ -166,6 +166,11 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
+            if (activityInfo == null)
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
+            if (activityInfo.Status != 0)
+                throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (!result)
             {
@@ -182,17 +187,9 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "活动不存在";
-                return response;
-            }
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             if (activityInfo.Status != 0)
-            {
-                response.Code = "96";
-                response.Message = "活动状态不正确";
-                return response;
-            }
+                throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var result = iActivityAccess.EditActivityFeedBack(request.ActivityId, request.Content, request.AttachList);
             if (result <= 0)
             {
@@ -369,6 +366,8 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityContent = result.HtmlContent;
                 response.ActivityImageUrl = result.ImageUrl;
                 response.ActivityStatus = result.Status;
+                response.InitiateEncryptUserId = desEncrypt.Encrypt(result.FromUser.ToString());
+                response.AcceptEncryptUserId = desEncrypt.Encrypt(result.ToUserId.ToString());
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>();

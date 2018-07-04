@@ -16,5 +16,10 @@ namespace Eagles.Application.Model.Task.EditTaskAccept
         /// 任务Id
         /// </summary>
         public int TaskId { get; set; }
+
+        /// <summary>
+        /// 审核状态 0-通过 1-不通过
+        /// </summary>
+        public int ReviewType { get; set; }
     }
 }

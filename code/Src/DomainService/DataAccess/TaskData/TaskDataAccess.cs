@@ -67,7 +67,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return dbManager.Excuted("delete from eagles.tb_user_task_step where TaskId = @TaskId and StepId = @StepId", new { TaskId = taskId, StepId = stepId });
         }
 
-        public int EditTaskAccept(TaskTypeEnum type, int taskId)
+        public int EditTaskAccept(TaskTypeEnum type, int taskId, int reviewType)
         {
             var result = 0;
             switch (type)

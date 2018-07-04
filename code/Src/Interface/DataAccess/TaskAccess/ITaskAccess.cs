@@ -13,7 +13,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int RemoveTaskStep(int taskId, int stepId);
 
-        int EditTaskAccept(TaskTypeEnum type, int taskId);
+        int EditTaskAccept(TaskTypeEnum type, int taskId, int reviewType);
 
         bool EditTaskComplete(int taskId, int isPublic, int score);
 
