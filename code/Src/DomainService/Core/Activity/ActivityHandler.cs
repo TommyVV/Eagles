@@ -61,9 +61,6 @@ namespace Eagles.DomainService.Core.Activity
             act.ToUserId = toUser;
             act.CanComment = request.CanComment;
             act.IsPublic = request.IsPublic;
-            act.TestId = request.TestId;
-            act.MaxCount = request.MaxCount;
-            act.MaxUser = request.MaxUser;
             act.CreateType = request.CreateType;
             act.ImageUrl = "";
             if (1 == userInfo.IsLeader)
@@ -96,9 +93,7 @@ namespace Eagles.DomainService.Core.Activity
             }
             var result = iActivityAccess.CreateActivity(act);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -116,9 +111,7 @@ namespace Eagles.DomainService.Core.Activity
             var joinUserid = request.JoinUserid; //活动参与人
             var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -150,9 +143,7 @@ namespace Eagles.DomainService.Core.Activity
             }
             var result = iActivityAccess.EditActivityReview(request.Type,request.ActivityId, request.ReviewType);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -169,9 +160,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (!result)
-            {
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
-            }
             return response;
         }
 
@@ -188,9 +177,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var result = iActivityAccess.EditActivityFeedBack(request.ActivityId, request.Content, request.AttachList);
             if (result <= 0)
-            {
                  throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -209,19 +196,14 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
             var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
-
             List<TbUserActivity> userActivity;
-
             switch (request.ActivityPage)
             {
                 case ActivityPage.All:
-
                     break;
-
                 case ActivityPage.Mine:
                     //得到用户参与活动
                     userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
-
                     result = (from act in result
                         join usact in userActivity on new {act.BranchId, act.ActivityId} equals new
                         {
@@ -238,14 +220,11 @@ namespace Eagles.DomainService.Core.Activity
                             ImageUrl = act.ImageUrl
                         }).ToList();
                     break;
-
                 case ActivityPage.Other:
-
                     //得到用户未参与活动
-                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);                
+                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
                     result = (from act in result
-                              where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId)
-                      
+                        where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId)
                         select new TbActivity
                         {
                             ActivityId = act.ActivityId,
@@ -255,16 +234,12 @@ namespace Eagles.DomainService.Core.Activity
                             HtmlContent = act.HtmlContent,
                             ImageUrl = act.ImageUrl
                         }).ToList();
-
                     break;
-                    
             }
-
             if (result.Count == 0)
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
-
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,
@@ -272,11 +247,8 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityType = x.ActivityType,
                 ActivityDate = x.BeginTime,
                 Content = x.HtmlContent,
-                ImgUrl = x.ImageUrl
+                ImageUrl = x.ImageUrl
             }).ToList();
-
-         
-
             return response;
         }
 
@@ -327,9 +299,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
             var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId);
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
@@ -338,12 +308,10 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityType = x.ActivityType,
                 ActivityDate = x.BeginTime,
                 Content = x.HtmlContent,
-                ImgUrl = x.ImageUrl
+                ImageUrl = x.ImageUrl
             }).ToList();
             if (result == null || result.Count < 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 

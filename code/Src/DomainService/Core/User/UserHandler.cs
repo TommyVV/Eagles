@@ -67,9 +67,7 @@ namespace Eagles.DomainService.Core.User
             };
             var result = userInfoAccess.EditUser(userInfo);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -123,8 +121,7 @@ namespace Eagles.DomainService.Core.User
             {
                 var password = md5Helper.Md5Encypt(request.UserPwd);
                 if (!result.Password.Equals(password))
-                    throw new TransactionException(MessageCode.UserNameOrPasswordError,
-                        MessageKey.UserNameOrPasswordError);
+                    throw new TransactionException(MessageCode.UserNameOrPasswordError, MessageKey.UserNameOrPasswordError);
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
@@ -141,16 +138,14 @@ namespace Eagles.DomainService.Core.User
                 }
                 else
                 {
-                    throw new TransactionException(MessageCode.LoginFail,
-                        MessageKey.LoginFail);
+                    throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
                 }
                 //返回前端加密userId
                 response.UserId = result.UserId;
             }
             else
             {
-                throw new TransactionException(MessageCode.LoginFail,
-                    MessageKey.LoginFail);
+                throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
             }
             return response;
         }
