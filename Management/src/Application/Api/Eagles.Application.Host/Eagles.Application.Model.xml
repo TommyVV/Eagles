@@ -1667,6 +1667,16 @@
             集合
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.Login.Model.Verification.Code">
+            <summary>
+            验证码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Model.Verification.Account">
+            <summary>
+            账号
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Login.Requset.LoginImageRequset">
             <summary>
             验证码图片
@@ -1694,11 +1704,6 @@
             验证码
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.LoginType">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.Login.Response.LoginResponse">
             <summary>
             
@@ -1707,6 +1712,11 @@
         <member name="P:Eagles.Application.Model.Login.Response.LoginResponse.Token">
             <summary>
             凭证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Login.Response.LoginResponse.IsVerificationCode">
+            <summary>
+            是否需要验证码验证
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Meeting.Model.Meeting">
@@ -2457,6 +2467,21 @@
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.OrgRequestBase.BranchId">
+            <summary>
+            支部id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.OrgRequest">
+            <summary>
+            机构和组织
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgRequest.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.OrgRequest.BranchId">
             <summary>
             支部id
             </summary>

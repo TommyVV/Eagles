@@ -18,7 +18,7 @@ namespace Eagles.DomainService.Core
 {
     public class LoginHandler : ILoginHandler
     {
-        private readonly ILoginAccess dataAccess;
+        private readonly ILoginDataAccess dataAccess;
 
         private readonly IValidateCode validateCode;
 
@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Core
 
         private readonly IOperDataAccess userAccess;
 
-        public LoginHandler(ILoginAccess dataAccess, IValidateCode validateCode, IEaglesConfig configuration, IOperDataAccess userAccess)
+        public LoginHandler(ILoginDataAccess dataAccess, IValidateCode validateCode, IEaglesConfig configuration, IOperDataAccess userAccess)
         {
             this.dataAccess = dataAccess;
             this.validateCode = validateCode;
@@ -88,8 +88,8 @@ namespace Eagles.DomainService.Core
                     {
                         OrgId = oper.OrgId,
                         Account = oper.OperName,
-                        Code = GetRandomArray(6, 1, 9).ToString(),
-
+                        //  Code = GetRandomArray(6, 1, 9).ToString(),
+                        Code = "666666"
                     });
 
                     if (result <= 0) throw new TransactionException("M06", "验证码错误");
@@ -98,7 +98,14 @@ namespace Eagles.DomainService.Core
 
                 respone.Token = Guid.NewGuid().ToString();
 
-                dataAccess.InsertToken(new TbUserToken());
+                dataAccess.InsertToken(new TbUserToken()
+                {
+                    UserId = oper.OperId,
+                    Token = respone.Token,
+                    CreateTime = DateTime.Now,
+                    ExpireTime = DateTime.Now.AddMinutes(30),
+                    TokenType = 1
+                });
                 dataAccess.UpdateOperErrorCount(new TbOper
                 {
                     LoginErrorCount = 0
@@ -106,13 +113,19 @@ namespace Eagles.DomainService.Core
             }
             catch (TransactionException ex)
             {
+                var now = DateTime.Now;
+                DateTime startTime =
+                    TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+                var intResult = (now - startTime).TotalSeconds;
                 //记录失败次数
                 if (oper != null)
                 {
                     var info = new TbOper
                     {
+                        OperId=oper.OperId,
                         OperName = requset.Account,
                         OrgId = requset.OrgId,
+                        LockingTime = intResult
                     };
 
                     //验证码校验
@@ -125,8 +138,8 @@ namespace Eagles.DomainService.Core
                         {
                             OrgId = oper.OrgId,
                             Account = oper.OperName,
-                            Code = GetRandomArray(6, 1, 9).ToString(),
-
+                            // Code = GetRandomArray(6, 1, 9).ToString(),
+                            Code = "666666"
                         });
 
 
@@ -135,12 +148,12 @@ namespace Eagles.DomainService.Core
                     //锁定账号
                     else if (oper.LoginErrorCount >= configuration.EaglesConfiguration.LoginErrorCount)
                     {
-                        var now = DateTime.Now;
+
                         now = now.AddHours(configuration.EaglesConfiguration.LockingTime);
 
-                        DateTime startTime =
+                        startTime =
                             TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-                        var intResult = (now - startTime).TotalSeconds;
+                        intResult = (now - startTime).TotalSeconds;
 
                         //触发锁定后 重置失败次数
                         info.LockingTime = intResult;
@@ -168,8 +181,8 @@ namespace Eagles.DomainService.Core
         public string VerificationCode(Verification requset)
         {
             var code = dataAccess.GetverificationInfo(requset);
-
-            return validateCode.GenerateValidCodeToBase64(code);
+           
+            return validateCode.GenerateValidCodeToBase64(666666);
         }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Operator.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Oper;
@@ -142,6 +143,23 @@ FROM `eagles`.`tb_oper`
             dynamicParams.Add("GroupId", requsetAuthorityGroupId);
 
             return dbManager.Query<TbOper>(sql.ToString(), dynamicParams).Count;
+        }
+
+        public TbOper GetOperInfo(LoginRequset requset)
+        {
+            return dbManager.QuerySingle<TbOper>(@" SELECT `tb_oper`.`OrgId`,
+    `tb_oper`.`OperId`,
+    `tb_oper`.`OperName`,
+    `tb_oper`.`CreateTime`,
+    `tb_oper`.`GroupId`,
+    `tb_oper`.`Status`,
+    `tb_oper`.`Password`,
+    `tb_oper`.`LoginErrorCount`,
+    `tb_oper`.`LockingTime`
+FROM `eagles`.`tb_oper`
+WHERE `OperName` = @OperName;
+ ", new {OperName = requset.Account});
+
         }
     }
 }
