@@ -248,6 +248,8 @@
     <Compile Include="SystemMessage\Response\GetSystemMessageResponse.cs" />
     <Compile Include="Test\TestRequest.cs" />
     <Compile Include="Test\TestResponse.cs" />
+    <Compile Include="Upload\FileUploadResult.cs" />
+    <Compile Include="Upload\UploadResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

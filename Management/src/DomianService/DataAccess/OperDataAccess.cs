@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Operator.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Oper;
@@ -142,6 +143,11 @@ FROM `eagles`.`tb_oper`
             dynamicParams.Add("GroupId", requsetAuthorityGroupId);
 
             return dbManager.Query<TbOper>(sql.ToString(), dynamicParams).Count;
+        }
+
+        public TbOper GetOperInfo(LoginRequset requset)
+        {
+            throw new NotImplementedException();
         }
     }
 }
