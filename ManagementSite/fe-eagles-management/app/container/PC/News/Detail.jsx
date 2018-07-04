@@ -12,6 +12,7 @@ import {
   DatePicker,
   Checkbox
 } from "antd";
+import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import {
@@ -21,6 +22,7 @@ import {
 } from "../../../services/projectService";
 import Crop from "../../../components/PC/Crop";
 import "./style.less";
+import { getNewsInfoById } from "../../../services/newsService";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -30,7 +32,8 @@ class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false //裁剪图片
+      showCrop: false, //裁剪图片
+      loading: false
     };
   }
 
@@ -136,11 +139,41 @@ class Base extends Component {
   onChangeTime = (date, dateString) => {
     console.log(date, dateString);
   };
+  beforeUpload(file) {
+    const isJPG = file.type === "image/jpeg";
+    if (!isJPG) {
+      message.error("You can only upload JPG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJPG && isLt2M;
+  }
+  handleChange = info => {
+    if (info.file.status === "正在上传 ") {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl =>
+        this.setState({
+          imageUrl,
+          loading: false
+        })
+      );
+    }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
     const { showCrop } = this.state;
-    console.log("members - ", this.props);
+    console.log("props - ", this.props);
+    console.log(
+      "StarTime - ",
+      new Date(this.props.news.StarTime).format("yyyy-MM-dd")
+    );
     const props = {
       name: "file",
       action: "//jsonplaceholder.typicode.com/posts/",
@@ -165,7 +198,7 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 10 }
       }
     };
     const formItemLayoutDate = {
@@ -175,45 +208,45 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 11 }
+        sm: { span: 12 }
       }
     };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("intergralId")(<Input />)}
+          {getFieldDecorator("NewsId")(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="标题">
-          {getFieldDecorator("name", {
+          {getFieldDecorator("NewsName", {
             rules: [
               {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                required: true
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入标题" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="类型">
-          {getFieldDecorator("type")(
-            <Select>
-              <Option value="0">投票</Option>
-              <Option value="1">问卷</Option>
-            </Select>
-          )}
+        <FormItem {...formItemLayout} label="来源">
+          {getFieldDecorator("Source", {
+            rules: [
+              {
+                required: true
+              }
+            ]
+          })(<Input placeholder="必填，请输入新闻来源" />)}
         </FormItem>
         <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
+              {this.props.news.StarTime ? (
+                <DatePicker
+                  defaultValue={moment(
+                    new Date(this.props.news.StarTime).format("yyyy-MM-dd"),
+                    "YYYY-MM-DD"
+                  )}
+                />
+              ) : (
+                <DatePicker />
+              )}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -228,18 +261,34 @@ class Base extends Component {
             </span>
           </Col>
           <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
+            <FormItem>{getFieldDecorator("EndTime")(<DatePicker />)}</FormItem>
           </Col>
+        </FormItem>
+        <FormItem {...formItemLayout} label="新闻封面">
+          {getFieldDecorator("NewsImg")(
+            <Upload
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action="//jsonplaceholder.typicode.com/posts/"
+              beforeUpload={this.beforeUpload}
+              onChange={this.handleChange}
+            >
+              {this.props.news.NewsImg ? (
+                <img
+                  src={this.props.news.NewsImg}
+                  alt="avatar"
+                  style={{ width: "100%" }}
+                />
+              ) : (
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">Upload</div>
+                </div>
+              )}
+            </Upload>
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="内容">
           {getFieldDecorator("price", {
@@ -250,7 +299,7 @@ class Base extends Component {
                 pattern: /^(?!.{21}|\s*$)/g
               }
             ]
-          })(<TextArea rows={4} />)}
+          })(<TextArea rows={6} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="习题选择">
           {getFieldDecorator("exercise")(
@@ -270,15 +319,25 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="分类">
           {getFieldDecorator("classify")(
-            <Checkbox.Group style={{ width: '100%' }}>
-            <Row>
-              <Col span={8}><Checkbox value="A">新闻</Checkbox></Col>
-              <Col span={8}><Checkbox value="B">直播</Checkbox></Col>
-              <Col span={8}><Checkbox value="C">C</Checkbox></Col>
-              <Col span={8}><Checkbox value="D">D</Checkbox></Col>
-              <Col span={8}><Checkbox value="E">E</Checkbox></Col>
-            </Row>
-          </Checkbox.Group>
+            <Checkbox.Group style={{ width: "100%" }}>
+              <Row>
+                <Col span={8}>
+                  <Checkbox value="A">新闻</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="B">直播</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="C">C</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="D">D</Checkbox>
+                </Col>
+                <Col span={8}>
+                  <Checkbox value="E">E</Checkbox>
+                </Col>
+              </Row>
+            </Checkbox.Group>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
@@ -298,7 +357,7 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {this.props.news.NewsId ? "更新" : "新建"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
@@ -328,12 +387,20 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    const news = props.news;
+    console.log("新闻详情数据回显 - ", news);
     return {
-      // intergralId: Form.createFormField({ value: "" }),
-      page: Form.createFormField({ value: "0" }),
-      // state: Form.createFormField({ value: "0" })
+      NewsId: Form.createFormField({ value: news.NewsId ? news.NewsId : "" }),
+      NewsName: Form.createFormField({
+        value: news.NewsName ? news.NewsName : ""
+      }),
+      Source: Form.createFormField({
+        value: news.Source ? news.Source : ""
+      }),
+      // StartTime: Form.createFormField({
+      //   value: news.StartTime ? moment(news.StartTime,"YYYY-MM-DD") : ""
+      // }),
+      state: Form.createFormField({ value: "0" })
     };
   }
 })(Base);
@@ -342,49 +409,26 @@ class NewsDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      newsDetail: {} //新闻详情
     };
   }
 
   componentWillMount() {
-    // let { projectId } = this.props.params;
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    let { id } = this.props.params;
+    if (id) {
+      this.getInfo(id); //拿新闻详情
+    }
   }
 
   componentWillUnmount() {
     // this.props.clearProjectInfo();
   }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async NewsId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getNewsInfoById({ NewsId });
+      console.log("projectDetails", Info);
+      this.setState({ newsDetail: Info });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
@@ -392,10 +436,10 @@ class NewsDetail extends Component {
   };
 
   render() {
-    const { projectDetails } = this.state;
+    const { newsDetail } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap news={newsDetail} />
       </Nav>
     );
   }

@@ -3416,5 +3416,35 @@
             area name 
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileId">
+            <summary>
+            文件唯一id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileName">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileType">
+            <summary>
+            文件类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileSize">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileUrl">
+            <summary>
+            访问路径
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Upload.UploadResponse.FileUploadResults">
+            <summary>
+            上传结果
+            </summary>
+        </member>
     </members>
 </doc>

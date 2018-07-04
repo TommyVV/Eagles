@@ -8,7 +8,7 @@ namespace Eagles.Application.Model.Activity.GetActivity
     public class GetActivityRequest : RequestBase
     {
         /// <summary>
-        /// 活动类型;0:报名;1:投票;2:问卷调查
+        /// 活动类型;0:全部；1：报名;2:投票;3:问卷调查
         /// </summary>
         public ActivityType ActivityType { get; set; }
 

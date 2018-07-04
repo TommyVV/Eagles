@@ -13,8 +13,10 @@
         public static readonly string InvalidParameter = "非法参数";
 
         public static readonly string UserNotExists = "用户不存在";
-
+        
         public static readonly string ActivityNotExists = "活动不存在";
+
+        public static readonly string ActivityStatusError = "活动状态不正确";
 
         public static readonly string InvalidActivityUser = "不符合规则的活动用户";
 
@@ -37,6 +39,10 @@
         public static readonly string InvalidCode = "校验码错误";
 
         public static readonly string RepeatJoin = "重复参与活动";
+
+        public static readonly string TaskNotExists = "任务不存在";
+
+        public static readonly string TaskStatusError = "任务状态不正确";
 
         public static readonly string SystemError = "系统错误";
     }

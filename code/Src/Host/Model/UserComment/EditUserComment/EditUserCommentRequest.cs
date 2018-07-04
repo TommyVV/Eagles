@@ -19,7 +19,7 @@
         /// 评论用户Id
         /// </summary>
 
-        public string CommentUserId { get; set; }
+        public int CommentUserId { get; set; }
 
         /// <summary>
         /// 评论内容

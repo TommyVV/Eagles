@@ -2,7 +2,6 @@
 using System.Linq;
 using Eagles.Application.Model;
 using Eagles.Base;
-using Eagles.Base.DesEncrypt;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.Core.UserComment;
@@ -17,13 +16,11 @@ namespace Eagles.DomainService.Core.UserComment
     public class UserCommentHandler :IUserCommentHandler
     {
         private readonly IUserCommentAccess userCommentAccess;
-        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public UserCommentHandler(IUserCommentAccess userCommentAccess, IDesEncrypt desEncrypt, IUtil util)
+        public UserCommentHandler(IUserCommentAccess userCommentAccess,  IUtil util)
         {
             this.userCommentAccess = userCommentAccess;
-            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -35,7 +32,7 @@ namespace Eagles.DomainService.Core.UserComment
             {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
-            var userId = Convert.ToInt32(desEncrypt.Decrypt(request.CommentUserId)); //评论人
+            var userId = request.CommentUserId; //评论人
             var userInfo = util.GetUserInfo(userId);
             if (userInfo == null)
             {

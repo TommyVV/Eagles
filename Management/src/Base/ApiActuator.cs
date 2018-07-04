@@ -1,6 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
-using NLog;
 
 namespace Eagles.Base
 {

@@ -11,13 +11,9 @@ namespace Eagles.Application.Model.User.GetUserRelationship
         /// <summary>
         /// 上级
         /// </summary>
-        public List<UserRelationship> SuperiorUserList { get; set; }
+        public List<UserRelationship> UserList { get; set; }
 
 
-        /// <summary>
-        /// 下级
-        /// </summary>
-        public List<UserRelationship> LowerUserList { get; set; }
 
 
     }

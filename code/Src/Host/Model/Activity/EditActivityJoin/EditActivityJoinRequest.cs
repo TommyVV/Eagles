@@ -13,6 +13,6 @@
         /// <summary>
         /// 参与活动UserId
         /// </summary>
-        public string JoinUserid { get; set; }
+        public int JoinUserid { get; set; }
     }
 }

@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
     debugger
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let mobile = getFieldValue("mobile").substr(0, 11);
+        let mobile = getFieldValue("name").substr(0, 11);
         let password = getFieldValue("password");
         console.log(mobile, password);
         hashHistory.replace("/home");

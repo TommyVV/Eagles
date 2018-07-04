@@ -67,15 +67,16 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
             var dynamicParams = new DynamicParameters();
             if (relationshipType)
             {
-                parameter.Append(" and UserId = @UserId ");
+                parameter.Append(" and a.UserId = @UserId ");
                 dynamicParams.Add("UserId", userId);
             }
             else           
             {
-                parameter.Append(" and SubUserId = @SubUserId ");
+                parameter.Append(" and a.SubUserId = @SubUserId ");
                 dynamicParams.Add("SubUserId", userId);
             }
-            sql.AppendFormat(@" select UserId,SubUserId from eagles.tb_user_relationship where  1=1  {0} ", parameter);
+            sql.AppendFormat(@" select a.UserId,a.SubUserId,b.Name from eagles.tb_user_relationship a 
+inner join tb_user_info b on a.SubUserId=b.UserId where  1=1  {0} ", parameter);
             return dbManager.Query<TbUserRelationship>(sql.ToString(), dynamicParams);
         }
 

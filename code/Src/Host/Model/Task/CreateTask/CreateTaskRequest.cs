@@ -17,12 +17,12 @@ namespace Eagles.Application.Model.Task.CreateTask
         /// <summary>
         /// 任务发起人
         /// </summary>
-        public string TaskFromUser { get; set; }
+        public int TaskFromUser { get; set; }
         
         /// <summary>
         /// 任务负责人
         /// </summary>
-        public string TaskToUserId { get; set; }
+        public int TaskToUserId { get; set; }
 
         /// <summary>
         /// 任务开始时间

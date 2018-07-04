@@ -21,5 +21,15 @@ namespace Eagles.DomainService.Model.Config
         /// 锁定时间
         /// </summary>
         public double LockingTime { get; set; }
+
+        /// <summary>
+        /// 图片存放目录
+        /// </summary>
+        public string FilePath { get; set; }
+
+        /// <summary>
+        /// 图片网络url
+        /// </summary>
+        public string ImageBaseUrl { get; set; }
     }
 }

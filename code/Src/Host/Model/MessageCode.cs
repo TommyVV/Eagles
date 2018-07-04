@@ -13,8 +13,10 @@
         public static readonly string InvalidParameter = "13";
 
         public static readonly string UserNotExists = "20";
-
+        
         public static readonly string ActivityNotExists = "30";
+
+        public static readonly string ActivityStatusError = "32";
 
         public static readonly string InvalidActivityUser = "31";
 
@@ -37,6 +39,10 @@
         public static readonly string InvalidCode = "53";
 
         public static readonly string RepeatJoin = "54";
+
+        public static readonly string TaskNotExists = "61";
+
+        public static readonly string TaskStatusError = "62";
 
         public static readonly string SystemError = "96";
     }

@@ -51,6 +51,7 @@
     <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
+    <Compile Include="Common\JoinPeople.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
     <Compile Include="Common\UserLevel.cs" />

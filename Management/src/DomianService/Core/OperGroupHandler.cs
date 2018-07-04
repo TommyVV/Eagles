@@ -22,6 +22,7 @@ namespace Eagles.DomainService.Core
     {
 
         private readonly IOperGroupDataAccess dataAccess;
+
         private readonly IOperDataAccess OperdataAccess;
 
         public OperGroupHandler(IOperGroupDataAccess dataAccess, IOperDataAccess operdataAccess)
@@ -127,7 +128,6 @@ namespace Eagles.DomainService.Core
             if (!(requset.AuthorityInfo.Count > 0 && requset.GroupId > 0))
             {
                 throw new TransactionException("M03", "数据异常");
-                ;
             }
 
             int result = dataAccess.RemoveAuthorityGroupSetUp(requset.GroupId);

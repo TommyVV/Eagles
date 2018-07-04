@@ -22,7 +22,7 @@ namespace Eagles.Application.Model.Task.GetPublicTaskDetail
         /// <summary>
         /// 任务创建者
         /// </summary>
-        public string TaskFounder { get; set; }
+        public int TaskFounder { get; set; }
         
         /// <summary>
         /// 任务内容
@@ -62,12 +62,12 @@ namespace Eagles.Application.Model.Task.GetPublicTaskDetail
         /// <summary>
         /// 发起用户编号
         /// </summary>
-        public string InitiateEncryptUserid { get; set; }
+        public int InitiateUserId { get; set; }
 
         /// <summary>
         /// 接受用户编号
         /// </summary>
-        public string AcceptEncryptUserid { get; set; }
+        public int AcceptUserId { get; set; }
 
         /// <summary>
         /// 附件集合

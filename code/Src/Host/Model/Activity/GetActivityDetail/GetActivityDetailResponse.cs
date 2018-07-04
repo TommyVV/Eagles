@@ -41,12 +41,12 @@ namespace Eagles.Application.Model.Activity.GetActivityDetail
         /// <summary>
         /// 发起人用户编号
         /// </summary>
-        public string InitiateEncryptUserId { get; set; }
+        public int InitiateUserId { get; set; }
 
         /// <summary>
         /// 负责人用户编号
         /// </summary>
-        public string AcceptEncryptUserId { get; set; }
+        public int AcceptUserId { get; set; }
 
         /// <summary>
         /// 创建类型

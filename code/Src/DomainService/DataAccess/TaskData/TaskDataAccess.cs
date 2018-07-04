@@ -67,7 +67,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return dbManager.Excuted("delete from eagles.tb_user_task_step where TaskId = @TaskId and StepId = @StepId", new { TaskId = taskId, StepId = stepId });
         }
 
-        public int EditTaskAccept(TaskTypeEnum type, int taskId)
+        public int EditTaskAccept(TaskTypeEnum type, int taskId, int reviewType)
         {
             var result = 0;
             switch (type)
@@ -186,7 +186,7 @@ where TaskId = @TaskId ",
             return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
         }
 
-        public List<TbTask> GetTask(string userId)
+        public List<TbTask> GetTask(int userId)
         {
             return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new {UserId = userId});

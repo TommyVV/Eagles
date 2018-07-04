@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.DesEncrypt;
 using Eagles.Interface.Core.Task;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.TaskAccess;
+using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Model.Task;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Task.CreateTask;
@@ -20,21 +22,17 @@ using Eagles.Application.Model.Task.GetPublicTaskDetail;
 using Eagles.Application.Model.Task.GetTask;
 using Eagles.Application.Model.Task.GetTaskDetail;
 using Eagles.Application.Model.Task.GetTaskStep;
-using Eagles.DomainService.Model.Task;
-using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.Task
 {
     public class TaskHandler : ITaskHandler
     {
         private readonly ITaskAccess iTaskAccess;
-        private readonly IDesEncrypt desEncrypt;
         private readonly IUtil util;
 
-        public TaskHandler(ITaskAccess iTaskAccess, IDesEncrypt desEncrypt, IUtil util)
+        public TaskHandler(ITaskAccess iTaskAccess, IUtil util)
         {
             this.iTaskAccess = iTaskAccess;
-            this.desEncrypt = desEncrypt;
             this.util = util;
         }
 
@@ -43,14 +41,12 @@ namespace Eagles.DomainService.Core.Task
             var response = new CreateTaskResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);            
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var fromUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskFromUser)); //任务发起人
-            var toUser = Convert.ToInt32(desEncrypt.Decrypt(request.TaskToUserId)); //任务负责人
+            var fromUser = request.TaskFromUser; //任务发起人
+            var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
             var task = new TbTask();
@@ -111,11 +107,10 @@ namespace Eagles.DomainService.Core.Task
             var response = new RemoveTaskStepResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
+            if (taskInfo == null)
+                throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
             if (result > 0)
             {
@@ -135,49 +130,29 @@ namespace Eagles.DomainService.Core.Task
             var response = new EditTaskAcceptResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
-            if (taskInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "任务不存在";
-                return response;
-            }
+            if (taskInfo == null)            
+                throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             switch (request.Type)
             {
                 case TaskTypeEnum.Audit:
                     //上级审核任务
                     if (taskInfo.FromUser != tokens.UserId)
-                    {
-                        response.Code = "96";
-                        response.Message = "必须发起人审核";
-                        return response;
-                    }
+                        throw new TransactionException("96", "必须发起人审核");
                     break;
                 case TaskTypeEnum.Accept:
                     //下级接受任务
                     if (taskInfo.UserId != tokens.UserId)
-                    {
-                        response.Code = "96";
-                        response.Message = "必须负责人接受任务";
-                        return response;
-                    }
+                        throw new TransactionException("96", "必须负责人接受任务");
                     break;
                 case TaskTypeEnum.Apply:
                     //下级申请完成任务
                     if (taskInfo.UserId != tokens.UserId)
-                    {
-                        response.Code = "96";
-                        response.Message = "必须负责人申请完成任务";
-                        return response;
-                    }
+                        throw new TransactionException("96", "必须负责人申请完成任务");
                     break;
             }
-            var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId);
+            var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId, request.ReviewType);
             if (result > 0)
             {
                 response.Code = "00";
@@ -196,24 +171,12 @@ namespace Eagles.DomainService.Core.Task
             var response = new EditTaskCompleteResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "任务不存在";
-                return response;
-            }
-            if(taskInfo.Status != 0)
-            {
-                response.Code = "96";
-                response.Message = "任务状态不正确";
-                return response;
-            }
+                throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
+            if (taskInfo.Status != 0)
+                throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             var score = util.RewardScore("0"); //任务奖励积分
             var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, score.Score);
             if (result)
@@ -234,30 +197,14 @@ namespace Eagles.DomainService.Core.Task
             var response = new EditTaskStepResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "任务不存在";
-                return response;
-            }
+                throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             if (taskInfo.Status != 0)
-            {
-                response.Code = "96";
-                response.Message = "任务状态不正确";
-                return response;
-            }
+                throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             if (taskInfo.UserId != tokens.UserId)
-            {
-                response.Code = "96";
-                response.Message = "必须负责人编辑计划";
-                return response;
-            }
+                throw new TransactionException("96", "必须负责人编辑计划");
             iTaskAccess.GetTaskStep(request.TaskId);
             var taskStep = new TbUserTaskStep(){
                 StepId = request.StepId,
@@ -287,24 +234,12 @@ namespace Eagles.DomainService.Core.Task
             var response = new EditTaskFeedBackResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
-            }
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
-            {
-                response.Code = "96";
-                response.Message = "任务不存在";
-                return response;
-            }
+                throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             if (taskInfo.Status != 0)
-            {
-                response.Code = "96";
-                response.Message = "任务状态不正确";
-                return response;
-            }
+                throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             var result = iTaskAccess.EditTaskFeedBack(request.TaskId, request.Content, request.AttachList);
             if (result > 0)
             {
@@ -352,7 +287,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var userId = desEncrypt.Decrypt(request.EncryptUserid);
+            var userId = request.UserId;
             var result = iTaskAccess.GetTask(userId);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
@@ -388,7 +323,9 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = desEncrypt.Encrypt(result.FromUser.ToString()); //加密返回前端
+                response.TaskFounder = result.FromUser; //加密返回前端
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
@@ -440,13 +377,14 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = desEncrypt.Encrypt(result.FromUser.ToString()); //加密返回前端
+                response.TaskFounder = result.FromUser; //加密返回前端
+                response.InitiateUserId = result.FromUser;
+                response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>();
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
                 response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
-              
+                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });              
             }
             else
             {

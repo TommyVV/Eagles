@@ -16,10 +16,11 @@ const Option = Select.Option;
 import { hashHistory } from "react-router";
 import {
   getProjectInfoById,
-  getProjectList,
+  getNewsList,
   deleteProject,
-  updateProject
-} from "../../../services/projectService";
+  updateProject,
+  deleteNews
+} from "../../../services/newsService";
 import util from "../../../utils/util";
 import Nav from "../Nav";
 import "./style.less";
@@ -132,7 +133,7 @@ class NewsList extends React.Component {
     super(props);
     this.state = {
       selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
+      newsList: [], // 新闻列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
       pageConfig: {} // 当前页配置
@@ -140,15 +141,16 @@ class NewsList extends React.Component {
     this.columns = [
       {
         title: "标题",
-        dataIndex: "title"
+        dataIndex: "NewsName",
+        width: "30%"
       },
       {
         title: "作者",
-        dataIndex: "author"
+        dataIndex: "Author"
       },
       {
         title: "标题图片",
-        dataIndex: "image",
+        dataIndex: "NewsImg",
         render: image => {
           return (
             <div>
@@ -159,28 +161,25 @@ class NewsList extends React.Component {
       },
       {
         title: "来源",
-        dataIndex: "source"
+        dataIndex: "Source"
       },
       {
         title: "发布时间",
-        dataIndex: "date"
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-DD")}</span>
       },
       {
         title: "操作",
-        render: (text, record) => {
+        dataIndex: "NewsId",
+        render: NewsId => {
+          console.log(NewsId);
           return (
             <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/news/detail/${record.projectId}`)
-                }
-              >
+              <a onClick={() => hashHistory.replace(`/news/detail/${NewsId}`)}>
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(NewsId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -190,43 +189,17 @@ class NewsList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        title: "关于建党工作我有话说",
-        author: "张三",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        source: "哈弗",
-        date: "2018-06-30"
-      },
-      {
-        key: "2",
-        title: "关于建党工作我有话说",
-        author: "张三",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        source: "哈弗",
-        date: "2018-06-30"
-      },
-      {
-        key: "3",
-        title: "关于建党工作我有话说",
-        author: "张三",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        source: "哈弗",
-        date: "2018-06-30"
-      }
-    ];
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      UserId: "",
+      NewsName: "",
+      StartTime: "2018-06-01T01:37:09.235Z",
+      EndTime: "2018-07-03T01:37:09.235Z"
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -235,20 +208,21 @@ class NewsList extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
+  getCurrentList = async params => {
+    const PageNumber = this.getListConfig;
+    try {
+      let { List, TotalCount } = await getNewsList(params);
+      console.log("projectList - ", List);
+      List.forEach(v => {
+        v.key = v.NewsId;
+      });
+      this.setState({ newsList: List, current: PageNumber });
+      // this.updatePageConfig(totalSize);
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   // 更新分页配置
   updatePageConfig(totalSize) {
     let pageConfig = {
@@ -298,26 +272,23 @@ class NewsList extends React.Component {
     }
   };
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async NewsId => {
+    console.log(NewsId);
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await deleteNews({
+            NewsId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
               requestPage: this.state.current,
-              keyword: this.state.keyword
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -346,7 +317,7 @@ class NewsList extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, newsList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -355,7 +326,7 @@ class NewsList extends React.Component {
       <Nav>
         <WrapperSearchForm />
         <Table
-          dataSource={this.data}
+          dataSource={newsList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
