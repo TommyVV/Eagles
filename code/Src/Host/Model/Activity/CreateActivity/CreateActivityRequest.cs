@@ -46,29 +46,19 @@ namespace Eagles.Application.Model.Activity.CreateActivity
         public string ActivityContent { get; set; }
 
         /// <summary>
-        /// 每人最大参与次数
-        /// </summary>
-        public int MaxCount { get; set; }
-
-        /// <summary>
-        /// 最大参与人数
-        /// </summary>
-        public int MaxUser { get; set; }
-
-        /// <summary>
         /// 是否允许评论;0:允许;1:禁止
         /// </summary>
         public int CanComment { get; set; }
-
-        /// <summary>
-        /// 试卷编号
-        /// </summary>
-        public int TestId { get; set; }
-
+        
         /// <summary>
         /// 是否公开
         /// </summary>
         public int IsPublic { get; set; }
+
+        /// <summary>
+        /// 缩略图
+        /// </summary>
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// 附件列表

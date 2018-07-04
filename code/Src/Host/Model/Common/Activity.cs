@@ -9,6 +9,11 @@ namespace Eagles.Application.Model.Common
     public class Activity
     {
         /// <summary>
+        /// 活动类型
+        /// </summary>
+        public ActivityType ActivityType { get; set; }
+
+        /// <summary>
         /// 活动Id
         /// </summary>
         public int ActivityId { get; set; }
@@ -17,12 +22,7 @@ namespace Eagles.Application.Model.Common
         /// 活动名称
         /// </summary>
         public string ActivityName { get; set; }
-
-        /// <summary>
-        /// 活动类型
-        /// </summary>
-        public ActivityType ActivityType { get; set; }
-
+        
         /// <summary>
         /// 活动内容
         /// </summary>
@@ -41,6 +41,6 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动图片Url
         /// </summary>
-        public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
