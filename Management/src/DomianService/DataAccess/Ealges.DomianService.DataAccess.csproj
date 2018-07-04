@@ -46,6 +46,7 @@
     <Compile Include="ActivityTaskDataAccess.cs" />
     <Compile Include="AuditDataAccess.cs" />
     <Compile Include="ColumnDataAccess.cs" />
+    <Compile Include="LoginDataAccess.cs" />
     <Compile Include="OperDataAccess.cs" />
     <Compile Include="OperGroupDataAccess.cs" />
     <Compile Include="ScrollImageDataAccess.cs" />

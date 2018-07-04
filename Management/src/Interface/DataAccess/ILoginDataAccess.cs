@@ -11,7 +11,7 @@ using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess
 {
-    public interface ILoginAccess : IInterfaceBase
+    public interface ILoginDataAccess : IInterfaceBase
     {
        
         void UpdateOperErrorCount(TbOper operId);
