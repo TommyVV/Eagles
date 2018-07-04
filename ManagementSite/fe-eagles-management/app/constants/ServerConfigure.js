@@ -6,7 +6,8 @@
 // const API_SERVER = 'http://10.65.4.15:8080/hci-platform'; //必烈
 // const API_SERVER = 'http://10.65.50.109:8081/hci-platform'; //家家
 // const API_SERVER = 'https://operation.qingtui.cn/hci-platform'; //8G服务器
-const API_SERVER = ""; //mock
+// const API_SERVER = ""; //mock
+const API_SERVER = "http://51service.xyz/ManagementService"; //test
 
 // 活动
 const ACTIVITY = {
@@ -55,7 +56,7 @@ const OPERGROUP = {
   OPERGROUP_DETAIL: "/api/OperGroup/GetOperGroupDetail", //权限组详情
   OPERGROUP_LIST: "/api/OperGroup/GetOperGroupList", //权限组列表
   PERMISSION_DETAIL: "/api/OperGroup/GetAuthorityGroupSetUp", //权限详情
-  PERMISSION_EDIT: "/api/OperGroup/EditAuthorityGroupSetUp", //权限编辑
+  PERMISSION_EDIT: "/api/OperGroup/EditAuthorityGroupSetUp" //权限编辑
 };
 // 发货
 const ORDER = {
@@ -99,7 +100,7 @@ const EDITPARTYMEMBER = {
   EDITPARTYMEMBER_DETAIL: "/api/User/GetPartyMemberDetail", //党员详情
   NEXT_CREATE: "/api/User/CreateAuthorityUserSetUp", //创建下级人员
   NEXT_DELETE: "/api/User/RemoveAuthorityUserSetUp", //删除下级人员
-  NEXT_LIST: "/api/User/GetAuthorityUserSetUp", //下级人员列表
+  NEXT_LIST: "/api/User/GetAuthorityUserSetUp" //下级人员列表
 };
 
 // 搜索
@@ -235,6 +236,23 @@ const COMMENT = {
 
 export const serverConfig = {
   API_SERVER,
+
+  ACTIVITY,
+  AUDIT,
+  MENU,
+  NEWS,
+  OPERATOR,
+  OPERGROUP,
+  ORDER,
+  ORG,
+  GOODS,
+  IMAGE,
+  TESTPAPER,
+  EDITPARTYMEMBER,
+
+
+
+  
   SEARCH,
   AGENCY,
   SHARE,
