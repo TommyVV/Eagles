@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.Task.EditTaskStep
         /// <summary>
         /// 支部Id
         /// </summary>
-        public string BranchId { get; set; }
+        public int BranchId { get; set; }
 
         /// <summary>
         /// 任务Id
