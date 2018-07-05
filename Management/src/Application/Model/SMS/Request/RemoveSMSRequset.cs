@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.SMS.Request
 {
-    public class RemoveSMSRequest : RequestBase
+    public class RemoveSMSRequset : RequestBase
     {
         /// <summary>
         ///  '短信提供方ID',

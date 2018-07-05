@@ -3337,17 +3337,17 @@
              '短信提供方ID',
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.SMS.Request.GetSMSRequest">
+        <member name="T:Eagles.Application.Model.SMS.Request.GetSMSRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Request.GetSMSRequest.VendorName">
+        <member name="P:Eagles.Application.Model.SMS.Request.GetSMSRequset.VendorName">
             <summary>
             短信提供方名称
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Request.RemoveSMSRequest.VendorId">
+        <member name="P:Eagles.Application.Model.SMS.Request.RemoveSMSRequset.VendorId">
             <summary>
              '短信提供方ID',
             </summary>

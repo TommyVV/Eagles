@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.SMS.Request
     /// <summary>
     /// 
     /// </summary>
-    public class GetSMSRequest : OrgListRequestBase
+    public class GetSMSRequset : OrgListRequestBase
     {
         /// <summary>
         /// 短信提供方名称

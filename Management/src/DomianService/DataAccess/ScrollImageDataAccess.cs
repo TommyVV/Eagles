@@ -21,7 +21,7 @@ namespace Ealges.DomianService.DataAccess
         {
             this.dbManager = dbManager;
         }
-        public int CreateRollImages(TbScrollImage mod)
+        public int EditRollImages(TbScrollImage mod)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_scroll_image`
 SET
@@ -33,7 +33,7 @@ WHERE `Id` = @Id
 ", mod);
         }
 
-        public int EditRollImages(TbScrollImage mod)
+        public int CreateRollImages(TbScrollImage mod)
         {
             return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_news`
 (`OrgId`,
