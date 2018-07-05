@@ -379,11 +379,14 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskFounder = result.FromUser; //加密返回前端
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
-                response.AcctachmentList = new List<Attachment>();
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });              
+                response.AcctachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentName = result.Attach1},
+                    new Attachment() {AttachmentName = result.Attach2},
+                    new Attachment() {AttachmentName = result.Attach3},
+                    new Attachment() {AttachmentName = result.Attach4}
+                };
+
             }
             else
             {
