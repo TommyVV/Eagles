@@ -286,5 +286,13 @@ join eagles.tb_user_info b on a.UserId = b.UserId where ActivityId = @ActivityId
             }
             return null;
         }
+
+        public List<TbUserActivity> GetActivityFeedBack(int activityId, int appId)
+        {
+            return dbManager.Query<TbUserActivity>(@"select a.activityId,a.UserId,b.Name,a.UserFeedBack,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,
+a.Attach1,a.Attach2,a.Attach3,a.Attach4 from eagles.tb_user_activity a join eagles.tb_user_info b on a.UserId = b.UserId
+where ActivityId = @ActivityId and OrgId = @OrgId  ",
+                new { ActivityId = activityId, Orgid = appId });
+        }
     }
 }

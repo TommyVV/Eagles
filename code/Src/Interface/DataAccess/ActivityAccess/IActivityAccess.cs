@@ -30,5 +30,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         TbActivity GetPublicActivityDetail(int activityId, int appId);
 
         List<JoinPeople> GetActivityJoinPeople(int activityId);
+
+        List<TbUserActivity> GetActivityFeedBack(int activityId, int appId);
     }
 }
