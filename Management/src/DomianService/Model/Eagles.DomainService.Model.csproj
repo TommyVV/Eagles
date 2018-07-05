@@ -44,6 +44,7 @@
     <Compile Include="App\TbAppMenu.cs" />
     <Compile Include="App\TbAppModule.cs" />
     <Compile Include="App\TB_APP_MENU.cs" />
+    <Compile Include="Area\AreaData.cs" />
     <Compile Include="Audit\TbReview.cs" />
     <Compile Include="Authority\TbAuthority.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />

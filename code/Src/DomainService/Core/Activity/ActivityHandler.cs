@@ -276,11 +276,13 @@ namespace Eagles.DomainService.Core.Activity
                 response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
-                response.AttachmentList = new List<Attachment>();
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
+                response.AttachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                };
             }
             else
             {
@@ -336,11 +338,13 @@ namespace Eagles.DomainService.Core.Activity
                 response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
-                response.AttachmentList = new List<Attachment>();
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
+                response.AttachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                };
             }
             else
             {
