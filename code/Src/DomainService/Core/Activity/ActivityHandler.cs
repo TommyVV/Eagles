@@ -50,20 +50,22 @@ namespace Eagles.DomainService.Core.Activity
                 toUser = request.ActivityToUserId; //活动负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
-            var act = new TbActivity();
-            act.OrgId = tokens.OrgId;
-            act.BranchId = tokens.BranchId;
-            act.ActivityName = request.ActivityName;
-            act.ActivityType = request.ActivityType;
-            act.BeginTime = request.ActivityBeginDate;
-            act.EndTime = request.ActivityEndDate;
-            act.HtmlContent = request.ActivityContent;
-            act.FromUser = fromUser;
-            act.ToUserId = toUser;
-            act.CanComment = request.CanComment;
-            act.IsPublic = request.IsPublic;
-            act.CreateType = request.CreateType;
-            act.ImageUrl = "";
+            var act = new TbActivity
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                ActivityName = request.ActivityName,
+                ActivityType = request.ActivityType,
+                BeginTime = request.ActivityBeginDate,
+                EndTime = request.ActivityEndDate,
+                HtmlContent = request.ActivityContent,
+                FromUser = fromUser,
+                ToUserId = toUser,
+                CanComment = request.CanComment,
+                IsPublic = request.IsPublic,
+                CreateType = request.CreateType,
+                ImageUrl = ""
+            };
             if (1 == userInfo.IsLeader)
                 act.Status = 0; //1:初始状态;(上级发给下级的初始状态)
             else
@@ -71,25 +73,24 @@ namespace Eagles.DomainService.Core.Activity
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
-                if (i == 0)
+                switch (i)
                 {
-                    act.AttachType1 = attachList[i].AttachmentType;
-                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    act.AttachType2 = attachList[i].AttachmentType;
-                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    act.AttachType3 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    act.AttachType4 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    case 0:
+                        act.AttachType1 = attachList[i].AttachmentType;
+                        act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 1:
+                        act.AttachType2 = attachList[i].AttachmentType;
+                        act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 2:
+                        act.AttachType3 = attachList[i].AttachmentType;
+                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 3:
+                        act.AttachType4 = attachList[i].AttachmentType;
+                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                        break;
                 }
             }
             var result = iActivityAccess.CreateActivity(act);
