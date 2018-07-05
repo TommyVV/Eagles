@@ -1,12 +1,12 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/ServerConfigure";
 
-const { NEWS } = serverConfig;
-// 根据id查看新闻详情
-export const getNewsInfoById = async params => {
+const { ORG } = serverConfig;
+// 根据id查看机构详情
+export const getOrgInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_DETAIL,
+      url: ORG.ORG_DETAIL,
       method: "post",
       params
     });
@@ -21,11 +21,11 @@ export const getNewsInfoById = async params => {
   }
 };
 
-// 查看新闻列表
-export const getNewsList = async params => {
+// 查看机构列表
+export const getOrgList = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_LIST,
+      url: ORG.ORG_LIST,
       method: "post",
       params
     });
@@ -40,16 +40,16 @@ export const getNewsList = async params => {
   }
 };
 
-// 创建或编辑新闻
-export const createOrEditNews = async params => {
+// 创建或编辑机构
+export const createOrEditOrg = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_EDIT,
+      url: ORG.ORG_EDIT,
       params
     });
+    let { Code, Message } = res.data;
     if (res.status === 200) {
-      debugger
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);
@@ -59,12 +59,12 @@ export const createOrEditNews = async params => {
   }
 };
 
-// 删除新闻
-export const deleteNews = async params => {
+// 删除机构
+export const deleteOrg = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_DELETE,
+      url: ORG.ORG_DELETE,
       params
     });
     let { Code, Message } = res.data;

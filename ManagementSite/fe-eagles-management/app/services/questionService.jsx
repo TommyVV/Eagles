@@ -1,17 +1,17 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/ServerConfigure";
 
-const { NEWS } = serverConfig;
-// 根据id查看新闻详情
-export const getNewsInfoById = async params => {
+const { TESTPAPER } = serverConfig;
+// 根据id查看试卷详情
+export const getQuestionInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_DETAIL,
+      url: TESTPAPER.TESTPAPER_DETAIL,
       method: "post",
       params
     });
     let { Code, Result, Message } = res.data;
-    if (res.status === 200) {
+    if (Code === "00") {
       return Result;
     } else {
       throw new Error(`${Code} - ${Message}`);
@@ -21,17 +21,17 @@ export const getNewsInfoById = async params => {
   }
 };
 
-// 查看新闻列表
-export const getNewsList = async params => {
+// 查看试卷列表
+export const getQuestionList = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_LIST,
+      url: TESTPAPER.TESTPAPER_LIST,
       method: "post",
       params
     });
     let { Code, Result, Message } = res.data;
-    if (res.status === 200) {
-      return Code == "00" ? Result : { List: [] };
+    if (Code === "00") {
+      return Result;
     } else {
       throw new Error(`${Code} - ${Message}`);
     }
@@ -40,35 +40,30 @@ export const getNewsList = async params => {
   }
 };
 
-// 创建或编辑新闻
-export const createOrEditNews = async params => {
+// 创建或编辑试卷
+export const createOrEditQuestion = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_EDIT,
+      url: PROJECT.UPDATE,
       params
     });
-    if (res.status === 200) {
-      debugger
-      return res.data;
-    } else {
-      throw new Error(`${Code} - ${Message}`);
-    }
+    return res.data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-// 删除新闻
-export const deleteNews = async params => {
+// 删除试卷
+export const deleteQuestion = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_DELETE,
+      url: TESTPAPER.TESTPAPER_DELETE,
       params
     });
     let { Code, Message } = res.data;
-    if (res.status === 200) {
+    if (Code === "00") {
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);

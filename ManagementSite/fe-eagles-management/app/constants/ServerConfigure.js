@@ -103,6 +103,15 @@ const EDITPARTYMEMBER = {
   NEXT_LIST: "/api/User/GetAuthorityUserSetUp" //下级人员列表
 };
 
+//文件
+const FILE = {
+  UPLOAD: "/api/Upload/UploadFile", //文件上传
+  DOWNLOAD: "/file/download", //文件下载
+  DELETE: "/file/delete", //文件删除
+};
+
+
+
 // 搜索
 const SEARCH = {
   SEARCH_ALL: "/consultation/search",
@@ -216,18 +225,7 @@ const MY = {
   COLLECT_ARTICLE: "/collection/add", //收藏分享或需求
   DEL_COLLECT_ARTICLE: "/collection/delete" //取消收藏分享或需求
 };
-//文件
-const FILE = {
-  UPLOAD: "/file/upload", //文件上传
-  PROGRESS: "/file/download/progress", //下载进度查询
-  DOWNLOAD: "/file/download", //文件下载
-  DELETE: "/file/delete", //文件删除
-  DELETEPROJECTFILE: "/project/delete/file", //项目文件删除
-  UPLOAD_PERJECT_FILE: "/project/file/upload", //移动端上传文件接口
-  GET_DOWNLOAD_FILE: "/getPersonDownloadFile", //获取某人已下载的文件列表
-  GET_DOWNLOADING_FILE: "/getPersonDownloading", //获取下载中文件
-  BATCH: "/file/batch/download?fileIdList=" //文件下载（批量打包下载）
-};
+
 // 评论
 const COMMENT = {
   LIST: "/review/comment/get", //获取评论列表
@@ -240,6 +238,7 @@ export const serverConfig = {
   ACTIVITY,
   AUDIT,
   MENU,
+  MODULE,
   NEWS,
   OPERATOR,
   OPERGROUP,
@@ -249,7 +248,7 @@ export const serverConfig = {
   IMAGE,
   TESTPAPER,
   EDITPARTYMEMBER,
-
+  FILE,
 
 
   
@@ -261,7 +260,6 @@ export const serverConfig = {
   LOGIN,
   INDEX,
   MY,
-  FILE,
   COMMENT,
   REVIEW
 };

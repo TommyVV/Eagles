@@ -14,12 +14,6 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import {
-  getProjectInfoById,
-  getProjectList,
-  deleteProject,
-  updateProject
-} from "../../../services/projectService";
 import util from "../../../utils/util";
 import Nav from "../Nav";
 import "./style.less";

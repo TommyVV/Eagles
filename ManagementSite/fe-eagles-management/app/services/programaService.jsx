@@ -1,17 +1,17 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/ServerConfigure";
 
-const { NEWS } = serverConfig;
-// 根据id查看新闻详情
-export const getNewsInfoById = async params => {
+const { MODULE } = serverConfig;
+// 根据id查看试卷详情
+export const getProgramaInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_DETAIL,
+      url: MODULE.MODULE_DETAIL,
       method: "post",
       params
     });
     let { Code, Result, Message } = res.data;
-    if (res.status === 200) {
+    if (Code === "00") {
       return Result;
     } else {
       throw new Error(`${Code} - ${Message}`);
@@ -21,11 +21,11 @@ export const getNewsInfoById = async params => {
   }
 };
 
-// 查看新闻列表
-export const getNewsList = async params => {
+// 查看试卷列表
+export const getProgramaList = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_LIST,
+      url: MODULE.MODULE_LIST,
       method: "post",
       params
     });
@@ -40,35 +40,30 @@ export const getNewsList = async params => {
   }
 };
 
-// 创建或编辑新闻
-export const createOrEditNews = async params => {
+// 创建或编辑试卷
+export const createOrEditPrograma = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_EDIT,
+      url: MODULE.MODULE_EDIT,
       params
     });
-    if (res.status === 200) {
-      debugger
-      return res.data;
-    } else {
-      throw new Error(`${Code} - ${Message}`);
-    }
+    return res.data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-// 删除新闻
-export const deleteNews = async params => {
+// 删除试卷
+export const deletePrograma = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_DELETE,
+      url: MODULE.MODULE_DELETE,
       params
     });
     let { Code, Message } = res.data;
-    if (res.status === 200) {
+    if (Code === "00") {
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);

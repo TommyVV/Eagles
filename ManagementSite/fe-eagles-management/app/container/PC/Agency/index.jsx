@@ -9,7 +9,6 @@ import { saveAgencyInfo, saveLabel, saveFileUrl, chooseMember, removeMemberFn, c
 import { showModal, hideModal } from "../../../actions/PC/appAction";
 import Member from "../../../components/PC/Member";
 import MemberList from "../../../components/PC/MemberList";
-import Crop from "../../../components/PC/Crop";
 import Nav from '../Nav';
 import './style.less';
 import { deleteFile } from "../../../services/fileService";

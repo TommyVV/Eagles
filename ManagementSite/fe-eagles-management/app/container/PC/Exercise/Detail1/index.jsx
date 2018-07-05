@@ -3,7 +3,6 @@ import { Button, Table, Row, Col, message, Avatar, Modal, Icon } from 'antd';
 import Nav from '../../Nav';
 import { connect } from "react-redux";
 import FzSearch from "../../../../components/PC/FzSearch";
-import { getProjectInfoById, getFileList, deleteProjectFile } from "../../../../services/projectService";
 import { downloadFile, downloadBatchFile } from "../../../../services/fileService";
 import { Toast } from 'react-qtui';
 import FileUpload from "../FileUpload";
