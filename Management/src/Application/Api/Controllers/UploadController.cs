@@ -26,6 +26,7 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<UploadResponse> UploadFile()
         {
             //set allow post 
+            httprun
             HttpContext.Current.Response.Headers.Add("Allow", "POST");
             return ApiActuator.Runing(() => fileUpload.Process());
         }

@@ -16,6 +16,11 @@
         public int UserId { get; set; }
 
         /// <summary>
+        /// 是否游客
+        /// </summary>
+        public int IsCustomer { get; set; }
+
+        /// <summary>
         /// 是否需要验证码
         /// </summary>
         public bool IsVerifyCode { get; set; }

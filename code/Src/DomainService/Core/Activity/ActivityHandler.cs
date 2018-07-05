@@ -18,6 +18,7 @@ using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.Application.Model.Activity.GetPublicActivityDetail;
+using Eagles.Application.Model.Activity.GetActivityFeedBack;
 
 namespace Eagles.DomainService.Core.Activity
 {
@@ -49,20 +50,22 @@ namespace Eagles.DomainService.Core.Activity
                 toUser = request.ActivityToUserId; //活动负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
-            var act = new TbActivity();
-            act.OrgId = tokens.OrgId;
-            act.BranchId = tokens.BranchId;
-            act.ActivityName = request.ActivityName;
-            act.ActivityType = request.ActivityType;
-            act.BeginTime = request.ActivityBeginDate;
-            act.EndTime = request.ActivityEndDate;
-            act.HtmlContent = request.ActivityContent;
-            act.FromUser = fromUser;
-            act.ToUserId = toUser;
-            act.CanComment = request.CanComment;
-            act.IsPublic = request.IsPublic;
-            act.CreateType = request.CreateType;
-            act.ImageUrl = "";
+            var act = new TbActivity
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                ActivityName = request.ActivityName,
+                ActivityType = request.ActivityType,
+                BeginTime = request.ActivityBeginDate,
+                EndTime = request.ActivityEndDate,
+                HtmlContent = request.ActivityContent,
+                FromUser = fromUser,
+                ToUserId = toUser,
+                CanComment = request.CanComment,
+                IsPublic = request.IsPublic,
+                CreateType = request.CreateType,
+                ImageUrl = ""
+            };
             if (1 == userInfo.IsLeader)
                 act.Status = 0; //1:初始状态;(上级发给下级的初始状态)
             else
@@ -70,25 +73,24 @@ namespace Eagles.DomainService.Core.Activity
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
-                if (i == 0)
+                switch (i)
                 {
-                    act.AttachType1 = attachList[i].AttachmentType;
-                    act.Attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    act.AttachType2 = attachList[i].AttachmentType;
-                    act.Attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    act.AttachType3 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    act.AttachType4 = attachList[i].AttachmentType;
-                    act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    case 0:
+                        act.AttachType1 = attachList[i].AttachmentType;
+                        act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 1:
+                        act.AttachType2 = attachList[i].AttachmentType;
+                        act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 2:
+                        act.AttachType3 = attachList[i].AttachmentType;
+                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                        break;
+                    case 3:
+                        act.AttachType4 = attachList[i].AttachmentType;
+                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                        break;
                 }
             }
             var result = iActivityAccess.CreateActivity(act);
@@ -274,11 +276,13 @@ namespace Eagles.DomainService.Core.Activity
                 response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
-                response.AttachmentList = new List<Attachment>();
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
+                response.AttachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                };
             }
             else
             {
@@ -334,16 +338,50 @@ namespace Eagles.DomainService.Core.Activity
                 response.AcceptUserId = result.ToUserId;
                 response.CreateType = result.CreateType;
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
-                response.AttachmentList = new List<Attachment>();
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3 });
-                response.AttachmentList.Add(new Attachment() { AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4 });
+                response.AttachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                };
             }
             else
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
+            return response;
+        }
+
+        public GetActivityFeedBackResponse GetActivityFeedBack(GetActivityFeedBackRequest request)
+        {
+            var response = new GetActivityFeedBackResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId);
+            response.FeedBackList = result?.Select(x => new FeedBack
+            {
+                UserId = x.UserId,
+                UserName = x.UserName,
+                UserFeedBack = x.UserFeedBack,
+                AttachList = new List<Attachment>()
+                {
+                    new Attachment() { AttachmentType = x.AttachType1, AttachmentDownloadUrl = x.Attach1 },
+                    new Attachment() { AttachmentType = x.AttachType2, AttachmentDownloadUrl = x.Attach2 },
+                    new Attachment() { AttachmentType = x.AttachType3, AttachmentDownloadUrl = x.Attach3 },
+                    new Attachment() { AttachmentType = x.AttachType4, AttachmentDownloadUrl = x.Attach4 }
+                }
+            }).ToList();
+            if (result == null || result.Count < 0)
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
         }
     }

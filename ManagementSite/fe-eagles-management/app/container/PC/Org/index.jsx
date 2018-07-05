@@ -9,17 +9,12 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
+  Cascader
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import {
-  getProjectInfoById,
-  getProjectList,
-  deleteProject,
-  updateProject
-} from "../../../services/projectService";
+import { getOrgList, deleteOrg } from "../../../services/orgService";
 import util from "../../../utils/util";
 import Nav from "../Nav";
 import "./style.less";
@@ -30,42 +25,34 @@ class OrgList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
-      current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      orgList: [] // 项目列表数组
     };
     this.columns = [
       {
         title: "机构编号",
-        dataIndex: "num"
+        dataIndex: "OrgId"
       },
       {
         title: "机构名称",
-        dataIndex: "name"
+        dataIndex: "OrgName"
       },
       {
         title: "添加时间",
-        dataIndex: "date"
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-DD")}</span>
       },
       {
         title: "操作",
-        id: "1",
         render: obj => {
           return (
             <div>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/org/detail/${obj.systemId}`)
-                }
+                onClick={() => hashHistory.replace(`/org/detail/${obj.OrgId}`)}
               >
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(obj.OrgId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -75,38 +62,16 @@ class OrgList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        num: "oper01",
-        name: "管理员",
-        date: "2018-5-12 10:16",
-        id: "1"
-      },
-      {
-        key: "2",
-        num: "oper02",
-        name: "管理员",
-        date: "2018-5-12 10:16",
-        id: "2"
-      },
-      {
-        key: "3",
-        num: "oper03",
-        name: "管理员",
-        date: "2018-5-12 10:16",
-        id: "3"
-      },
-      
-    ];
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      Province: "",
+      City: "",
+      District: ""
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -115,20 +80,21 @@ class OrgList extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
+  getCurrentList = async params => {
+    const { PageNumber } = this.getListConfig;
+    try {
+      let res = await getOrgList(params);
+      console.log("orgList - ", res.List);
+      res.List.forEach(v => {
+        v.key = v.OrgId;
+      });
+      this.setState({ orgList: res.List, current: PageNumber });
+      // this.updatePageConfig(totalSize);
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   // 更新分页配置
   updatePageConfig(totalSize) {
     let pageConfig = {
@@ -145,59 +111,23 @@ class OrgList extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async OrgId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await deleteOrg({
+            OrgId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              requestPage: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -225,42 +155,95 @@ class OrgList extends React.Component {
       throw new Error(e);
     }
   };
+  onChange(value, selectedOptions) {
+    const areaParam = {};
+    value.map((obj, index) => {
+      if (index == 0) {
+        areaParam.Province = obj;
+      }
+      if (index == 1) {
+        areaParam.City = obj;
+      }
+      if (index == 2) {
+        areaParam.District = obj;
+      }
+    });
+    let params = {
+      ...this.getListConfig,
+      ...areaParam
+    };
+    this.getCurrentList(params);
+  }
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, orgList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     const formItemLayout = {
       labelCol: {
-        xl: { span: 4 }
+        xl: { span: 3 }
       },
       wrapperCol: {
         xl: { span: 10 }
       }
     };
+    const options = [
+      {
+        value: "浙江",
+        label: "浙江",
+        children: [
+          {
+            value: "杭州",
+            label: "杭州",
+            children: [
+              {
+                value: "西湖",
+                label: "西湖"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        value: "湖北",
+        label: "湖北",
+        children: [
+          {
+            value: "襄阳",
+            label: "襄阳",
+            children: [
+              {
+                value: "襄城区",
+                label: "襄城区"
+              }
+            ]
+          }
+        ]
+      }
+    ];
     return (
       <Nav>
         <Row gutter={24}>
           <Col span={12}>
             <Form>
               <FormItem {...formItemLayout} label="选择组织">
-                <Select>
-                  <Option value="0">党组织一</Option>
-                  <Option value="1">党组织二</Option>
-                </Select>
+                <Cascader
+                  options={options}
+                  onChange={this.onChange.bind(this)}
+                  placeholder="请选择地区"
+                />
               </FormItem>
             </Form>
           </Col>
         </Row>
         <Table
-          dataSource={this.data}
+          dataSource={orgList}
           columns={this.columns}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-
         <Row
           type="flex"
           gutter={24}

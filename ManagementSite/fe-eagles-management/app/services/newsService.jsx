@@ -11,7 +11,7 @@ export const getNewsInfoById = async params => {
       params
     });
     let { Code, Result, Message } = res.data;
-    if (Code === "00") {
+    if (res.status === 200) {
       return Result;
     } else {
       throw new Error(`${Code} - ${Message}`);
@@ -30,8 +30,8 @@ export const getNewsList = async params => {
       params
     });
     let { Code, Result, Message } = res.data;
-    if (Code === "00") {
-      return Result;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { List: [] };
     } else {
       throw new Error(`${Code} - ${Message}`);
     }
@@ -45,10 +45,15 @@ export const createOrEditNews = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: PROJECT.UPDATE,
+      url: NEWS.NEWS_EDIT,
       params
     });
-    return res.data;
+    if (res.status === 200) {
+      debugger
+      return res.data;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
   } catch (e) {
     throw new Error(e);
   }
@@ -63,7 +68,7 @@ export const deleteNews = async params => {
       params
     });
     let { Code, Message } = res.data;
-    if (Code === "00") {
+    if (res.status === 200) {
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);

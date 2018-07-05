@@ -13,12 +13,6 @@ import {
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
-import {
-  createProject,
-  getProjectInfoById,
-  getFileList
-} from "../../../services/projectService";
-import Crop from "../../../components/PC/Crop";
 import "./style.less";
 
 const FormItem = Form.Item;

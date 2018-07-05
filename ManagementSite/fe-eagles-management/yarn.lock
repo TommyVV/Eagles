@@ -1272,6 +1272,14 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+braft-editor@^1.9.7:
+  version "1.9.7"
+  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/braft-editor/-/braft-editor-1.9.7.tgz#127af88f0e2bf26786a783bf0d35b707460e49c9"
+  dependencies:
+    draft-convert "^2.0.0"
+    draft-js "^0.10.3"
+    draftjs-utils "^0.8.7"
+
 brorand@^1.0.1:
   version "1.1.0"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
@@ -2232,13 +2240,24 @@ domutils@1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-draft-js@^0.10.0, draft-js@~0.10.0:
+draft-convert@^2.0.0:
+  version "2.1.2"
+  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/draft-convert/-/draft-convert-2.1.2.tgz#00624b40fc80dca320c4e693a5fd21debb78206d"
+  dependencies:
+    immutable "~3.7.4"
+    invariant "^2.2.1"
+
+draft-js@^0.10.0, draft-js@^0.10.3, draft-js@~0.10.0:
   version "0.10.5"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/draft-js/-/draft-js-0.10.5.tgz#bfa9beb018fe0533dbb08d6675c371a6b08fa742"
   dependencies:
     fbjs "^0.8.15"
     immutable "~3.7.4"
     object-assign "^4.1.0"
+
+draftjs-utils@^0.8.7:
+  version "0.8.8"
+  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/draftjs-utils/-/draftjs-utils-0.8.8.tgz#5835daed95f59d3ee1f96fdcbbb9809772c86490"
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -4263,10 +4282,6 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mobile-detect@^1.4.0:
-  version "1.4.1"
-  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/mobile-detect/-/mobile-detect-1.4.1.tgz#f4b67c49bb84bf0437f72e3067deb1c60ad7b23c"
-
 mockjs@^1.0.1-beta3:
   version "1.0.1-beta3"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/mockjs/-/mockjs-1.0.1-beta3.tgz#d234f3c27256397564f2c955142e891909537209"
@@ -4276,6 +4291,10 @@ mockjs@^1.0.1-beta3:
 moment@2.x, moment@^2.19.3:
   version "2.22.1"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
+
+moment@^2.22.2:
+  version "2.22.2"
+  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -5766,22 +5785,6 @@ react-perfect-scrollbar@^1.0.0:
     react "^16.3.1"
     react-dom "^16.3.1"
 
-react-qt-emoji@^2.1.0:
-  version "2.1.0"
-  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/react-qt-emoji/-/react-qt-emoji-2.1.0.tgz#7df0bcd16c97e9fe786d52eaeb4797925cfeef34"
-
-react-qtui@^1.1.10:
-  version "1.1.10"
-  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/react-qtui/-/react-qtui-1.1.10.tgz#06f3bd084ed926493387fc2a0363b48a1bee5d4e"
-  dependencies:
-    babel-runtime "^6.26.0"
-    classnames "^2.2.0"
-    mobile-detect "^1.4.0"
-    prop-types "^15.6.0"
-    react "^15.6.2"
-    react-dom "^15.6.2"
-    warning "^3.0.0"
-
 react-redux@^5.0.7:
   version "5.0.7"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
@@ -7127,10 +7130,6 @@ validate-npm-package-license@^3.0.1:
 vary@~1.1.2:
   version "1.1.2"
   resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
-
-vconsole@^3.1.0:
-  version "3.2.0"
-  resolved "http://maven.dev.qingtui.im:8081/nexus/content/groups/npm-all/vconsole/-/vconsole-3.2.0.tgz#960e2877d685a9543f5f30ec055a66a96ac15bb5"
 
 vendors@^1.0.0:
   version "1.0.2"

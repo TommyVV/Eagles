@@ -49,6 +49,8 @@
     <Compile Include="ActivityTask\Requset\RemoveActivityTaskRequset.cs" />
     <Compile Include="ActivityTask\Response\GetActivityTaskDetailResponse.cs" />
     <Compile Include="ActivityTask\Response\GetActivityTaskResponse.cs" />
+    <Compile Include="Area\AreaInfo.cs" />
+    <Compile Include="Area\AreaResponse.cs" />
     <Compile Include="Audit\Model\Audit.cs" />
     <Compile Include="Audit\Requset\CreateAuditRequset.cs" />
     <Compile Include="Audit\Requset\GetAuditRequest.cs" />

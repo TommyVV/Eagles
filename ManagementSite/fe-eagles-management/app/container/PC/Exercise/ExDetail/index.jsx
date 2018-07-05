@@ -11,15 +11,8 @@ import {
   Icon
 } from "antd";
 import { connect } from "react-redux";
-import DemandList from "../DemandList";
-import MemberList from "../../../../components/PC/MemberList";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
-import {
-  createProject,
-  getProjectInfoById,
-  getFileList
-} from "../../../../services/projectService";
 import {
   saveProjectInfo,
   chooseMember,

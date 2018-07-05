@@ -14,6 +14,11 @@
         /// 是否公开
         /// </summary>
         public int IsPublic { get; set; }
-        
+
+        /// <summary>
+        /// 活动通过/拒绝
+        /// </summary>
+        public string CompleteStatus { get; set; }
+
     }
 }

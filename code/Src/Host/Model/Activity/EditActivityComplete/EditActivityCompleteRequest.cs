@@ -11,8 +11,8 @@
         public int ActivityId { get; set; }
 
         /// <summary>
-        /// 活动完成/审核
+        /// 活动通过/拒绝
         /// </summary>
-        public string ActivityType { get; set; }
+        public string CompleteStatus { get; set; }
     }
 }

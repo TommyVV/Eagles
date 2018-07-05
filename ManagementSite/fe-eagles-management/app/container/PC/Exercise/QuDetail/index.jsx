@@ -17,11 +17,6 @@ import { connect } from "react-redux";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
 import {
-  createProject,
-  getProjectInfoById,
-  getFileList
-} from "../../../../services/projectService";
-import {
   saveProjectInfo,
   chooseMember,
   removeMemberFn,

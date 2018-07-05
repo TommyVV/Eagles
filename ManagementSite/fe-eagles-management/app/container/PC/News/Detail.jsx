@@ -15,14 +15,17 @@ import {
 import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
-import {
-  createProject,
-  getProjectInfoById,
-  getFileList
-} from "../../../services/projectService";
-import Crop from "../../../components/PC/Crop";
 import "./style.less";
-import { getNewsInfoById } from "../../../services/newsService";
+import {
+  getNewsInfoById,
+  createOrEditNews
+} from "../../../services/newsService";
+import { getQuestionList } from "../../../services/questionService";
+import { getProgramaList } from "../../../services/programaService";
+import { serverConfig } from "../../../constants/ServerConfigure";
+// 引入编辑器以及编辑器样式
+import BraftEditor from "braft-editor";
+import "braft-editor/dist/braft.css";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -32,7 +35,6 @@ class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false, //裁剪图片
       loading: false
     };
   }
@@ -43,17 +45,16 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
+          let { StarTime, EndTime } = values;
+          let params = {
             ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
+            StarTime: moment(StarTime, "yyyy-MM-dd").format(),
+            EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+            NewsImg: this.props.news.NewsImg
+          };
+          params = delete params.isTest;
+          console.log("params: ", params);
+          let { code } = await createOrEditNews(params);
           if (code === 0) {
             let tip = this.props.project.projectId
               ? "保存项目成功"
@@ -142,59 +143,52 @@ class Base extends Component {
   beforeUpload(file) {
     const isJPG = file.type === "image/jpeg";
     if (!isJPG) {
-      message.error("You can only upload JPG file!");
+      message.error("只能上传图片!");
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
+    const isLt5M = file.size / 1024 / 1024 < 5;
+    if (!isLt5M) {
+      message.error("图片必须小于5M!");
     }
-    return isJPG && isLt2M;
+    return isJPG && isLt5M;
   }
   handleChange = info => {
-    if (info.file.status === "正在上传 ") {
-      this.setState({ loading: true });
-      return;
+    debugger;
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
-        this.setState({
-          imageUrl,
-          loading: false
-        })
-      );
+      message.success(`${info.file.name} 上传成功`);
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} 上传失败`);
     }
   };
-
+  rewardHandleChange = value => {
+    const { setRewardWrapper } = this.props; //是否显示试卷列表
+    // this.props.form.setFieldsValue({
+    //   isTest: value,
+    //   TestId: value == "0" ? "0" : ""
+    // });
+    setRewardWrapper(value == "1" ? true : false);
+  };
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { showCrop } = this.state;
-    console.log("props - ", this.props);
-    console.log(
-      "StarTime - ",
-      new Date(this.props.news.StarTime).format("yyyy-MM-dd")
-    );
+    const {
+      getFieldDecorator,
+      setFieldsValue,
+      getFieldsValue
+    } = this.props.form;
+    const { news, isRewardWrapper, setNews } = this.props; //是否显示试卷列表
     const props = {
       name: "file",
-      action: "//jsonplaceholder.typicode.com/posts/",
+      action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
       headers: {
         authorization: "authorization-text"
       },
-      onChange(info) {
-        if (info.file.status !== "uploading") {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === "done") {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === "error") {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      }
+      onChange: this.handleChange
     };
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 2 }
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -204,12 +198,34 @@ class Base extends Component {
     const formItemLayoutDate = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 2 }
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 }
       }
+    };
+    const formItemLayoutContent = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 2 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 19 }
+      }
+    };
+    // 编辑器属性
+    const editorProps = {
+      height: 300,
+      contentFormat: "html",
+      initialContent: news.Content,
+      onChange: Content => {
+        console.log(Content);
+        setFieldsValue({ Content });
+        console.log(getFieldsValue());
+      }
+      // onRawChange: this.handleRawChange
     };
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -236,18 +252,7 @@ class Base extends Component {
         </FormItem>
         <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
-            <FormItem>
-              {this.props.news.StarTime ? (
-                <DatePicker
-                  defaultValue={moment(
-                    new Date(this.props.news.StarTime).format("yyyy-MM-dd"),
-                    "YYYY-MM-DD"
-                  )}
-                />
-              ) : (
-                <DatePicker />
-              )}
-            </FormItem>
+            <FormItem>{getFieldDecorator("StarTime")(<DatePicker />)}</FormItem>
           </Col>
           <Col span={1}>
             <span
@@ -271,41 +276,70 @@ class Base extends Component {
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={false}
-              action="//jsonplaceholder.typicode.com/posts/"
+              action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
               beforeUpload={this.beforeUpload}
-              onChange={this.handleChange}
+              onChange={info => {
+                if (info.file.status !== "uploading") {
+                  console.log(info.file, info.fileList);
+                }
+                if (info.file.status === "done") {
+                  message.success(`${info.file.name} 上传成功`);
+                  const imageUrl =
+                    info.file.response.Result.FileUploadResults[0].FileUrl;
+                  setNews({ ...news, NewsImg: imageUrl });
+                  setFieldsValue({ NewsImg: imageUrl });
+                } else if (info.file.status === "error") {
+                  message.error(`${info.file.name} 上传失败`);
+                }
+              }}
             >
-              {this.props.news.NewsImg ? (
+              {news.NewsImg ? (
                 <img
-                  src={this.props.news.NewsImg}
+                  src={news.NewsImg}
                   alt="avatar"
                   style={{ width: "100%" }}
                 />
               ) : (
                 <div>
                   <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">Upload</div>
+                  <div className="ant-upload-text">上传</div>
                 </div>
               )}
             </Upload>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("price", {
+        <FormItem {...formItemLayoutContent} label="内容">
+          {getFieldDecorator("Content", {
             rules: [
               {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                required: true
               }
             ]
-          })(<TextArea rows={6} />)}
+          })(
+            <div className="editor-wrap">
+              <BraftEditor {...editorProps} />
+            </div>
+          )}
         </FormItem>
-        <FormItem {...formItemLayout} label="习题选择">
-          {getFieldDecorator("exercise")(
+        <FormItem {...formItemLayout} label="是否有试卷">
+          {getFieldDecorator("isTest")(
+            <Select onChange={this.rewardHandleChange}>
+              <Option value="0">否</Option>
+              <Option value="1">是</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="试卷选择"
+          style={{
+            display: isRewardWrapper ? "block" : "none"
+          }}
+        >
+          {getFieldDecorator("TestId")(
             <Select>
-              <Option value="0">习题一</Option>
-              <Option value="1">习题二</Option>
+              <Option value="0">试卷一</Option>
+              <Option value="1">试卷二</Option>
             </Select>
           )}
         </FormItem>
@@ -351,7 +385,7 @@ class Base extends Component {
         </FormItem>
         <FormItem>
           <Row gutter={24}>
-            <Col span={2} offset={4}>
+            <Col span={2} offset={2}>
               <Button
                 htmlType="submit"
                 className="btn btn--primary"
@@ -370,16 +404,6 @@ class Base extends Component {
             </Col>
           </Row>
         </FormItem>
-        {showCrop ? (
-          <Crop
-            handleFile={() => this.handleFile("avatar")}
-            onCancel={() =>
-              this.setState({
-                ["showCrop"]: false
-              })
-            }
-          />
-        ) : null}
       </Form>
     );
   }
@@ -387,20 +411,37 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    const news = props.news;
+    const { news, isRewardWrapper } = props;
     console.log("新闻详情数据回显 - ", news);
     return {
       NewsId: Form.createFormField({ value: news.NewsId ? news.NewsId : "" }),
       NewsName: Form.createFormField({
-        value: news.NewsName ? news.NewsName : ""
+        value: news.NewsName
       }),
       Source: Form.createFormField({
-        value: news.Source ? news.Source : ""
+        value: news.Source
       }),
-      // StartTime: Form.createFormField({
-      //   value: news.StartTime ? moment(news.StartTime,"YYYY-MM-DD") : ""
-      // }),
-      state: Form.createFormField({ value: "0" })
+      StarTime: Form.createFormField({
+        value: news.StarTime ? moment(news.StarTime, "YYYY-MM-DD") : null
+      }),
+      EndTime: Form.createFormField({
+        value: news.EndTime ? moment(news.EndTime, "YYYY-MM-DD") : null
+      }),
+      NewsImg: Form.createFormField({
+        value: news.NewsImg
+      }),
+      isTest: Form.createFormField({
+        value: isRewardWrapper ? "1" : "0"
+      }),
+      TestId: Form.createFormField({
+        value: news.TestId <= 0 ? "" : news.TestId
+      }),
+      Content: Form.createFormField({
+        value: news.Content
+      }),
+      Category: Form.createFormField({
+        value: news.TestId <= "0" ? "0" : "1"
+      })
     };
   }
 })(Base);
@@ -409,7 +450,9 @@ class NewsDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newsDetail: {} //新闻详情
+      newsDetail: {}, //新闻详情
+      programaList: [], // 栏目列表
+      isRewardWrapper: false // 是否显示试卷
     };
   }
 
@@ -418,28 +461,63 @@ class NewsDetail extends Component {
     if (id) {
       this.getInfo(id); //拿新闻详情
     }
+    // 拿栏目详情
+    this.getProgramaList();
   }
 
   componentWillUnmount() {
     // this.props.clearProjectInfo();
   }
+
+  // 查询栏目列表
+  getProgramaList = async () => {
+    const res = await getProgramaList();
+    console.log("getProgramaList", res.List);
+    this.setState({ programaList: res.List });
+  };
   // 根据id查询详情
   getInfo = async NewsId => {
     try {
       const { Info } = await getNewsInfoById({ NewsId });
-      console.log("projectDetails", Info);
-      this.setState({ newsDetail: Info });
+      console.log("newsDetails", Info);
+      // 说明有试卷
+      if (Info.TestId > 0) {
+        // const { List } = await getQuestionList();
+        // console.log(List);
+      } else {
+        // const { List } = await getQuestionList();
+        // console.log(List);
+      }
+      this.setState({
+        newsDetail: Info,
+        isRewardWrapper: Info.TestId > 0 ? true : false
+      });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
+  setRewardWrapper(isRewardWrapper) {
+    this.setState({
+      isRewardWrapper
+    });
+  }
+  setNews(news) {
+    this.setState({
+      newsDetail: news
+    });
+  }
 
   render() {
-    const { newsDetail } = this.state;
+    const { newsDetail, isRewardWrapper } = this.state;
     return (
       <Nav>
-        <FormMap news={newsDetail} />
+        <FormMap
+          news={newsDetail}
+          isRewardWrapper={isRewardWrapper}
+          setRewardWrapper={this.setRewardWrapper.bind(this)}
+          setNews={this.setNews.bind(this)}
+        />
       </Nav>
     );
   }

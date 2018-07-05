@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiActuator.cs" />
+    <Compile Include="Cache\ICacheHelper.cs" />
+    <Compile Include="Cache\Implement\CacheHelper.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\Implement\ConfigurationManager.cs" />
     <Compile Include="Configuration\XmlPath.cs" />
