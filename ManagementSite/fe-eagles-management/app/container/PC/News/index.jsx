@@ -15,10 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import {
-  getProjectInfoById,
   getNewsList,
-  deleteProject,
-  updateProject,
   deleteNews
 } from "../../../services/newsService";
 import util from "../../../utils/util";
@@ -172,7 +169,6 @@ class NewsList extends React.Component {
         title: "操作",
         dataIndex: "NewsId",
         render: NewsId => {
-          console.log(NewsId);
           return (
             <div>
               <a onClick={() => hashHistory.replace(`/news/detail/${NewsId}`)}>
@@ -209,14 +205,14 @@ class NewsList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const PageNumber = this.getListConfig;
+    const { PageNumber } = this.getListConfig;
     try {
-      let { List, TotalCount } = await getNewsList(params);
-      console.log("projectList - ", List);
+      let res = await getNewsList(params);
+      console.log("projectList - ", res.List);
       List.forEach(v => {
         v.key = v.NewsId;
       });
-      this.setState({ newsList: List, current: PageNumber });
+      this.setState({ newsList: res.List, current: PageNumber });
       // this.updatePageConfig(totalSize);
     } catch (e) {
       message.error("获取失败");
@@ -287,7 +283,7 @@ class NewsList extends React.Component {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
+              requestPage: this.state.current
               // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });

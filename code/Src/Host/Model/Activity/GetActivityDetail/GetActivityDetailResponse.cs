@@ -31,7 +31,7 @@ namespace Eagles.Application.Model.Activity.GetActivityDetail
         /// <summary>
         /// 活动参与人数集合
         /// </summary>
-        public List<string> ActivityJoinPeopleList { get; set; }
+        public List<JoinPeople> ActivityJoinPeopleList { get; set; }
 
         /// <summary>
         /// 活动状态

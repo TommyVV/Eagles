@@ -12,12 +12,6 @@ import {
   DatePicker
 } from "antd";
 import { hashHistory } from "react-router";
-import {
-  getProjectInfoById,
-  getProjectList,
-  deleteProject,
-  updateProject
-} from "../../../services/projectService";
 import Nav from "../Nav";
 import "./style.less";
 

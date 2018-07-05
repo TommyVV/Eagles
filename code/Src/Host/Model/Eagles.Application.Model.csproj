@@ -47,10 +47,13 @@
   <ItemGroup>
     <Compile Include="Activity\EditActivityReview\EditActivityReviewRequest.cs" />
     <Compile Include="Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+    <Compile Include="Activity\GetActivityFeedBack\GetActivityFeedBackRequest.cs" />
+    <Compile Include="Activity\GetActivityFeedBack\GetActivityFeedBackResponse.cs" />
     <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailRequest.cs" />
     <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
+    <Compile Include="Common\FeedBack.cs" />
     <Compile Include="Common\JoinPeople.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
@@ -162,7 +165,6 @@
     <Compile Include="Common\Attachment.cs" />
     <Compile Include="Common\BranchRank.cs" />
     <Compile Include="Common\Comment.cs" />
-    <Compile Include="Common\DwWork.cs" />
     <Compile Include="Common\News.cs" />
     <Compile Include="Common\Product.cs" />
     <Compile Include="Common\Score.cs" />

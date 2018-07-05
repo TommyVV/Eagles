@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.ScoreRank.Response
     /// <summary>
     /// 
     /// </summary>
-    public class GetScoreRankDetailResponse 
+    public class GetScoreRankDetailResponse
     {
         /// <summary>
         /// 

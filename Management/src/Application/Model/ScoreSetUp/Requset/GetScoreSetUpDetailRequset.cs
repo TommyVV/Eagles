@@ -1,6 +1,6 @@
 ﻿namespace Eagles.Application.Model.ScoreSetUp.Requset
 {
-    public class GetScoreSetUpInfoRequset:RequestBase
+    public class GetScoreSetUpDetailRequset : RequestBase
     {
         /// <summary>
         /// 

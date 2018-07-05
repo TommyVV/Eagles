@@ -18,6 +18,7 @@ using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
 using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.Application.Model.Activity.GetPublicActivityDetail;
+using Eagles.Application.Model.Activity.GetActivityFeedBack;
 
 namespace Eagles.DomainService.Core.Activity
 {
@@ -344,6 +345,38 @@ namespace Eagles.DomainService.Core.Activity
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
+            return response;
+        }
+
+        public GetActivityFeedBackResponse GetActivityFeedBack(GetActivityFeedBackRequest request)
+        {
+            var response = new GetActivityFeedBackResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (util.CheckAppId(request.AppId))
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId);
+            response.FeedBackList = result?.Select(x => new FeedBack
+            {
+                UserId = x.UserId,
+                UserName = x.UserName,
+                UserFeedBack = x.UserFeedBack,
+                AttachList = new List<Attachment>()
+                {
+                    new Attachment() { AttachmentType = x.AttachType1, AttachmentDownloadUrl = x.Attach1 },
+                    new Attachment() { AttachmentType = x.AttachType2, AttachmentDownloadUrl = x.Attach2 },
+                    new Attachment() { AttachmentType = x.AttachType3, AttachmentDownloadUrl = x.Attach3 },
+                    new Attachment() { AttachmentType = x.AttachType4, AttachmentDownloadUrl = x.Attach4 }
+                }
+            }).ToList();
+            if (result == null || result.Count < 0)
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
         }
     }

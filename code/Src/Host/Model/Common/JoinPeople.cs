@@ -1,7 +1,9 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Common
 {
+    /// <summary>
+    /// 参与用户集合
+    /// </summary>
     public class JoinPeople
     {
         /// <summary>
@@ -12,6 +14,6 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 用户名称
         /// </summary>
-        public string UserName { get; set; }
+        public string Name { get; set; }
     }
 }

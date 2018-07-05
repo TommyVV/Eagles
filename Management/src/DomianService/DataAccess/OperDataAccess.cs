@@ -147,7 +147,19 @@ FROM `eagles`.`tb_oper`
 
         public TbOper GetOperInfo(LoginRequset requset)
         {
-            throw new NotImplementedException();
+            return dbManager.QuerySingle<TbOper>(@" SELECT `tb_oper`.`OrgId`,
+    `tb_oper`.`OperId`,
+    `tb_oper`.`OperName`,
+    `tb_oper`.`CreateTime`,
+    `tb_oper`.`GroupId`,
+    `tb_oper`.`Status`,
+    `tb_oper`.`Password`,
+    `tb_oper`.`LoginErrorCount`,
+    `tb_oper`.`LockingTime`
+FROM `eagles`.`tb_oper`
+WHERE `OperName` = @OperName;
+ ", new {OperName = requset.Account});
+
         }
     }
 }

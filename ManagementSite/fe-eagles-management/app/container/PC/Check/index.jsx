@@ -15,12 +15,6 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
-import {
-  getProjectInfoById,
-  getProjectList,
-  deleteProject,
-  updateProject
-} from "../../../services/projectService";
 import util from "../../../utils/util";
 import Nav from "../Nav";
 import "./style.less";

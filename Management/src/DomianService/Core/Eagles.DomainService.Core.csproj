@@ -47,6 +47,7 @@
     <Compile Include="ModuleHandler.cs" />
     <Compile Include="OperGroupHandler.cs" />
     <Compile Include="OperHandler.cs" />
+    <Compile Include="ScoreHandler.cs" />
     <Compile Include="ScrollImageHandler.cs" />
     <Compile Include="TestPaperHandler.cs" />
     <Compile Include="GoodsHandler.cs" />

@@ -39,5 +39,25 @@ namespace Eagles.Application.Model.ScoreSetUp.Model
         /// 可获取积分次数
         /// </summary>
         public int ScoreCount { get; set; }
+
+        /// <summary>
+        /// 学习时间
+        /// </summary>
+        public int LearnTime { get; set; }
+
+        /// <summary>
+        /// 奖励类型;
+        ///0:任务奖励
+        ///1:活动奖励;
+        ///2:字数奖励
+        ///3:关键字奖励
+        ///4:学习时间奖励
+        /// </summary>
+        public int RewardType { get; set; }
+
+        /// <summary>
+        /// 字数
+        /// </summary>
+        public int WordCount { get; set; }
     }
 }

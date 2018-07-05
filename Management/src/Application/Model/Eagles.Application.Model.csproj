@@ -219,11 +219,12 @@
     <Compile Include="ScoreRank\Response\GetScoreRankDetailResponse.cs" />
     <Compile Include="ScoreRank\Response\GetScoreRankResponse.cs" />
     <Compile Include="ScoreSetUp\Model\ScoreSetUpInfo.cs" />
-    <Compile Include="ScoreSetUp\Requset\EditScoreSetUpInfoRequset.cs" />
-    <Compile Include="ScoreSetUp\Requset\GetScoreSetUpInfoDetailRequset.cs" />
+    <Compile Include="ScoreSetUp\Requset\EditScoreSetUpRequset.cs" />
+    <Compile Include="ScoreSetUp\Requset\GetScoreSetUpDetailRequset.cs" />
     <Compile Include="ScoreSetUp\Requset\GetScoreSetUpRequset.cs" />
-    <Compile Include="ScoreSetUp\Response\GetScoreSetUpInfoDetailResponse.cs" />
-    <Compile Include="ScoreSetUp\Response\GetScoreSetUpInfoResponse.cs" />
+    <Compile Include="ScoreSetUp\Requset\RemoveScoreSetUpRequset.cs" />
+    <Compile Include="ScoreSetUp\Response\GetScoreSetUpDetailResponse.cs" />
+    <Compile Include="ScoreSetUp\Response\GetScoreSetUpResponse.cs" />
     <Compile Include="SMSOrg\Model\SMSOrg.cs" />
     <Compile Include="SMSOrg\Request\EditSMSOrgRequset.cs" />
     <Compile Include="SMSOrg\Request\GetSMSOrgDetailRequset.cs" />

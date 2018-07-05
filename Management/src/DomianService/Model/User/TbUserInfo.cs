@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.User
 {

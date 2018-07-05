@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Base.Md5Helper;
-using Eagles.Base.Configuration;
 using Eagles.Interface.Core.User;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserInfo;
 using Eagles.DomainService.Model.Sms;
 using Eagles.DomainService.Model.User;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
@@ -140,7 +139,6 @@ namespace Eagles.DomainService.Core.User
                 {
                     throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
                 }
-                //返回前端加密userId
                 response.UserId = result.UserId;
             }
             else
