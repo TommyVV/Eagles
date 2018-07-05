@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using Eagles.Application.Model.ScoreSetUp.Requset;
+using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Score;
 using Eagles.Interface.DataAccess;
 
@@ -11,29 +13,125 @@ namespace Ealges.DomianService.DataAccess
 {
     public class ScoreDataAccess: IScoreDataAccess
     {
+        private readonly IDbManager dbManager;
         public int EditScoreSetUp(TbRewardScore mod)
         {
-            throw new NotImplementedException();
+            return dbManager.Excuted(@"UPDATE `eagles`.`tb_reward_score`
+SET
+`OrgId` = @OrgId,
+`BranchId` = @BranchId,
+`RewardType` = @RewardType,
+`Score` = @Score,
+`keyWord` = @keyWord,
+`LearnTime` = @LearnTime,
+`WordCount` = @WordCount
+WHERE `RewardId` = @RewardId
+
+", mod);
         }
+
+        
+        
 
         public int CreateScoreSetUp(TbRewardScore mod)
         {
-            throw new NotImplementedException();
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_reward_score`
+(`RewardId`,
+`OrgId`,
+`BranchId`,
+`RewardType`,
+`Score`,
+`keyWord`,
+`LearnTime`,
+`WordCount`)
+VALUES
+(@RewardId,
+@OrgId,
+@BranchId,
+@RewardType,
+@Score,
+@keyWord,
+@LearnTime,
+@WordCount);
+
+
+", mod);
         }
 
         public int RemoveScoreSetUp(RemoveScoreSetUpRequset requset)
         {
-            throw new NotImplementedException();
+
+            return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_reward_score`
+
+WHERE    RewardId=@RewardId;
+", new { RewardId=requset.ScoreSetUpId });
         }
 
         public TbRewardScore GetScoreSetUpDetail(GetScoreSetUpDetailRequset requset)
+
         {
-            throw new NotImplementedException();
+
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_reward_score`.`RewardId`,
+    `tb_reward_score`.`OrgId`,
+    `tb_reward_score`.`BranchId`,
+    `tb_reward_score`.`RewardType`,
+    `tb_reward_score`.`Score`,
+    `tb_reward_score`.`keyWord`,
+    `tb_reward_score`.`LearnTime`,
+    `tb_reward_score`.`WordCount`
+FROM `eagles`.`tb_reward_score`  
+  where RewardId=@RewardId;
+ ");
+            dynamicParams.Add("RewardId", requset.ScoreSetUpId);
+
+            return dbManager.QuerySingle<TbRewardScore>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbRewardScore> GetScoreSetUps(GetScoreSetUpRequset requset)
+        public List<TbRewardScore> GetScoreSetUps(GetScoreSetUpRequset requset,out int totalCount)
         {
-            throw new NotImplementedException();
+
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            if (requset.OperationType > 0)
+            {
+                parameter.Append(" and RewardType = @RewardType ");
+                dynamicParams.Add("RewardType", requset.OperationType);
+            }
+
+            if (requset.BranchId > 0)
+            {
+                parameter.Append(" and BranchId = @BranchId ");
+                dynamicParams.Add("BranchId", requset.BranchId);
+            }
+
+            if (requset.OrgId > 0)
+            {
+                parameter.Append(" and OrgId = @OrgId ");
+                dynamicParams.Add("OrgId", requset.OrgId);
+            }
+
+
+
+            totalCount = 0;
+            sql.AppendFormat(@" SELECT `tb_reward_score`.`RewardId`,
+    `tb_reward_score`.`OrgId`,
+    `tb_reward_score`.`BranchId`,
+    `tb_reward_score`.`RewardType`,
+    `tb_reward_score`.`Score`,
+    `tb_reward_score`.`keyWord`,
+    `tb_reward_score`.`LearnTime`,
+    `tb_reward_score`.`WordCount`
+FROM `eagles`.`tb_reward_score`  where 1=1  {0}  
+ ", parameter);
+
+            return dbManager.Query<TbRewardScore>(sql.ToString(), dynamicParams);
+
+            
         }
     }
 }

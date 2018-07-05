@@ -15,7 +15,7 @@ namespace Eagles.Interface.DataAccess
         int CreateScoreSetUp(TbRewardScore mod);
         int RemoveScoreSetUp(RemoveScoreSetUpRequset requset);
         TbRewardScore GetScoreSetUpDetail(GetScoreSetUpDetailRequset requset);
-        List<TbRewardScore> GetScoreSetUps(GetScoreSetUpRequset requset);
+        List<TbRewardScore> GetScoreSetUps(GetScoreSetUpRequset requset, out int totalCount);
 
 
     }

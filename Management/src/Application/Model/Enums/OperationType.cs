@@ -8,10 +8,10 @@ namespace Eagles.Application.Model.Enums
 {
     public enum OperationType
     {
-        阅读=5,
-        积分兑换=10,
-        试卷问答=15,
-        活动=20,
-        任务=25
+        任务奖励 = 0,
+        活动奖励 = 1,
+        字数奖励 = 2,
+        关键字奖励 = 3,
+        学习时间奖励 = 4
     }
 }

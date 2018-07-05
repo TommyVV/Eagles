@@ -115,10 +115,11 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
 
             };
-            List<TbRewardScore> list = dataAccess.GetScoreSetUps(requset) ?? new List<TbRewardScore>();
+            List<TbRewardScore> list = dataAccess.GetScoreSetUps(requset, out int totalCount) ?? new List<TbRewardScore>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new ScoreSetUpInfo
             {
                 Keyword = x.KeyWord.Split(',').ToList(),

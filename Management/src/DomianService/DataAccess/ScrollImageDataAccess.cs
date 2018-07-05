@@ -97,7 +97,6 @@ VALUES
 @ImageUrl);
 
 ", mod);
-            throw new NotImplementedException();
         }
 
         public int RemoveRollImages(RemoveRollImageRequset requset)
