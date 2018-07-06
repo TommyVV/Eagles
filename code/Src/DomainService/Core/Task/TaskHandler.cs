@@ -90,13 +90,11 @@ namespace Eagles.DomainService.Core.Task
             var result = iTaskAccess.CreateTask(task, toUser);
             if (result > 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
+               
             }
             else
             {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -111,15 +109,10 @@ namespace Eagles.DomainService.Core.Task
             if (taskInfo == null)
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
-            if (result > 0)
+           
+            if(result<=0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -152,15 +145,9 @@ namespace Eagles.DomainService.Core.Task
                     break;
             }
             var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId, request.ReviewType);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -178,15 +165,9 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             var score = util.RewardScore("0"); //任务奖励积分
             var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, score.Score);
-            if (result)
+            if (!result)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -215,15 +196,9 @@ namespace Eagles.DomainService.Core.Task
                 CreateTime = DateTime.Now
             };
             var result = iTaskAccess.EditTaskStep(request.Action, taskStep);
-            if (result > 0)
+            if (result<=0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }
@@ -240,15 +215,9 @@ namespace Eagles.DomainService.Core.Task
             if (taskInfo.Status != 0)
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             var result = iTaskAccess.EditTaskFeedBack(request.TaskId, request.Content, request.AttachList);
-            if (result > 0)
+            if (result <= 0)
             {
-                response.Code = "00";
-                response.Message = "成功";
-            }
-            else
-            {
-                response.Code = "96";
-                response.Message = "失败";
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
         }

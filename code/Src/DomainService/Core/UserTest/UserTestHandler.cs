@@ -161,11 +161,6 @@ namespace Eagles.DomainService.Core.UserTest
                 //修改用户积分
                 util.EditUserScore(tokens.UserId, passAwardScore);
             }
-            else
-            {
-                response.Code = "00";
-                response.Message = "答题成功但未及格";
-            }
             return response;
         }
     }

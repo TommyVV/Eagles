@@ -27,9 +27,7 @@ namespace Eagles.DomainService.Core.Study
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
             {
-                response.Code = "96";
-                response.Message = "获取Token失败";
-                return response;
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var oriScore = util.GetUserInfo(tokens.UserId).Score;
             var result = 0;
@@ -70,16 +68,7 @@ namespace Eagles.DomainService.Core.Study
                     util.CreateScoreLs(scoreLs);
                 }
             }
-            if (result <= 0)
-            {
-                response.Code = "00";
-                response.Message = "学习时间记录成功";
-            }
-            //else
-            //{
-            //    response.Code = "96";
-            //    response.Message = "学习时间记录失败";
-            //}
+           
             return response;
         }
 
