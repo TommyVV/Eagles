@@ -24,33 +24,9 @@ namespace Ealges.DomianService.DataAccess.TaskData
         {
             var result = 0;
             var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachType1,AttachType2,AttachType3,AttachType4,
-Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview) 
+Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,CreateType) 
 value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachType1,@AttachType2,@AttachType3,@AttachType4,@Attach1,@Attach2,@Attach3,@Attach4,
-@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview); select LAST_INSERT_ID(); ",
-                new
-                {
-                    OrgId = reqTask.OrgId,
-                    BranchId = reqTask.BranchId,
-                    TaskName = reqTask.TaskName,
-                    FromUser = reqTask.FromUser, //任务发起人
-                    TaskContent = reqTask.TaskContent,
-                    BeginTime = reqTask.BeginTime,
-                    EndTime = reqTask.EndTime,
-                    AttachType1 = reqTask.AttachType1,
-                    AttachType2 = reqTask.AttachType2,
-                    AttachType3 = reqTask.AttachType3,
-                    AttachType4 = reqTask.AttachType4,
-                    Attach1 = reqTask.Attach1,
-                    Attach2 = reqTask.Attach2,
-                    Attach3 = reqTask.Attach3,
-                    Attach4 = reqTask.Attach4,
-                    CreateTime = reqTask.CreateTime,
-                    CanComment = reqTask.CanComment,
-                    Status = reqTask.Status, //任务状态初始状态
-                    IsPublic = reqTask.IsPublic,
-                    OrgReview = "-1",
-                    BranchReview = "-1"
-                });
+@CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@CreateType); select LAST_INSERT_ID(); ", reqTask);
             result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
                 new
                 {
@@ -74,7 +50,10 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             {
                 case TaskTypeEnum.Audit:
                     //上级审核任务
-                    result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
+                    if (0 == reviewType)
+                        result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
+                    else
+                        result = dbManager.Excuted("update eagles.tb_task set Status = -9 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核不通过
                     break;
                 case TaskTypeEnum.Accept:
                     //下级接受任务
@@ -88,19 +67,26 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return result;
         }
 
-        public bool EditTaskComplete(int taskId, int isPublic, int score)
+        public bool EditTaskComplete(int taskId, int isPublic, int completeStatus)
         {
+            //查询任务奖励积分
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.tb_reward_score where RewardType = 0", new { });
+            var commandString = "";
+            if (completeStatus == 0)
+                commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
+            else
+                commandString = @"update eagles.tb_task set Status = -8, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = "update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 ",
-                    Parameter =  new {IsPublic = isPublic, TaskId = taskId}
+                    CommandString = commandString,
+                    Parameter = new { IsPublic = isPublic, TaskId = taskId }
                 },
                 new TransactionCommand()
                 {
                     CommandString = "update tb_user_task set RewardsScore=@RewardsScore where TaskId=@TaskId",
-                    Parameter =  new {RewardsScore = score, TaskId = taskId}
+                    Parameter = new { RewardsScore = score, TaskId = taskId }
                 },
             };
             return dbManager.ExcutedByTransaction(commands);

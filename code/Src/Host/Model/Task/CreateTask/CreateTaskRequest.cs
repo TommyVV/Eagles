@@ -49,6 +49,14 @@ namespace Eagles.Application.Model.Task.CreateTask
         /// </summary>
         public int IsPublic { get; set; }
 
+        /// <summary>
+        /// 创建类型 0上级发布 1下级向上级申请  
+        /// </summary>
+        public int CreateType { get; set; }
+
+        /// <summary>
+        /// 附件集合
+        /// </summary>
         public List<Attachment> AttachList { get; set; }
     }
 }

@@ -13,6 +13,6 @@
         /// <summary>
         /// 活动通过/拒绝
         /// </summary>
-        public string CompleteStatus { get; set; }
+        public int CompleteStatus { get; set; }
     }
 }
