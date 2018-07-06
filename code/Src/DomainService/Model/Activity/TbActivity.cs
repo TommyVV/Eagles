@@ -128,7 +128,7 @@ namespace Eagles.DomainService.Model.Activity
         public int ToUserId { get; set; }
 
         /// <summary>
-        /// 创建类型 1 下级向上级申请  2上级发布
+        /// 创建类型 0上级发布 1下级向上级申请  
         /// </summary>
         public int CreateType { get; set; }
     }

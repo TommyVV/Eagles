@@ -42,9 +42,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
-            }
             var fromUser = request.ActivityFromUser; //活动发起人
             if(request.ActivityToUserId>0)
                 toUser = request.ActivityToUserId; //活动负责人
@@ -110,8 +108,18 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             if (activityInfo.Status != 0)
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
-            var joinUserid = request.JoinUserid; //活动参与人
-            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, joinUserid);
+            var branchId = activityInfo.BranchId;
+            var userBranchId = tokens.BranchId;
+            if (userBranchId != branchId)
+                throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
+            var userActivity = iActivityAccess.GetUserActivity(tokens.UserId);
+            if(userActivity !=null)
+                throw new TransactionException(MessageCode.JoinActivityExist, MessageKey.JoinActivityExist);
+            var maxUser = activityInfo.MaxUser; //活动最大参与人数            
+            var activityUserCount = iActivityAccess.GetUserActivityCount(request.ActivityId); //活动实际参与人数
+            if (activityUserCount >= maxUser)
+                throw new TransactionException(MessageCode.JoinActivityMax, MessageKey.JoinActivityMax);
+            var result = iActivityAccess.EditActivityJoin(tokens.OrgId, tokens.BranchId, request.ActivityId, tokens.UserId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
@@ -136,14 +144,14 @@ namespace Eagles.DomainService.Core.Activity
                     break;
                 case ActivityTypeEnum.Apply:
                     //上级发起的活动
-                    if (2 == createType && activityInfo.ToUserId != tokens.UserId)
+                    if (0 == createType && activityInfo.ToUserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成活动");
                     //下级发起的活动
-                    else if(1 == createType && activityInfo.ToUserId != tokens.UserId)
+                    else if (1 == createType && activityInfo.FromUser != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成活动");
                     break;
             }
-            var result = iActivityAccess.EditActivityReview(request.Type,request.ActivityId, request.ReviewType);
+            var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId, request.ReviewType);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
@@ -158,8 +166,15 @@ namespace Eagles.DomainService.Core.Activity
             var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
             if (activityInfo == null)
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
-            if (activityInfo.Status != 0)
+            if (activityInfo.Status != 1)
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
+            var createType = activityInfo.CreateType;
+            //上级发起的活动
+            if (0 == createType && activityInfo.ToUserId != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成活动");
+            //下级发起的活动
+            else if (1 == createType && activityInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成活动");
             var result = iActivityAccess.EditActivityComplete(request.ActivityId);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
@@ -177,6 +192,14 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             if (activityInfo.Status != 0)
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
+            var createType = activityInfo.CreateType;
+            //上级发起的活动
+            if (0 == createType && activityInfo.ToUserId != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成活动");
+            //下级发起的活动
+            else if (1 == createType && activityInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成活动");
+            //todo
             var result = iActivityAccess.EditActivityFeedBack(request.ActivityId, request.Content, request.AttachList);
             if (result <= 0)
                  throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
@@ -219,6 +242,7 @@ namespace Eagles.DomainService.Core.Activity
                             ActivityType = act.ActivityType,
                             BeginTime = act.BeginTime,
                             HtmlContent = act.HtmlContent,
+                            TestId = act.TestId,
                             ImageUrl = act.ImageUrl
                         }).ToList();
                     break;
@@ -234,6 +258,7 @@ namespace Eagles.DomainService.Core.Activity
                             ActivityType = act.ActivityType,
                             BeginTime = act.BeginTime,
                             HtmlContent = act.HtmlContent,
+                            TestId = act.TestId,
                             ImageUrl = act.ImageUrl
                         }).ToList();
                     break;
@@ -249,6 +274,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityType = x.ActivityType,
                 ActivityDate = x.BeginTime,
                 Content = x.HtmlContent,
+                TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();
             return response;
@@ -312,6 +338,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityType = x.ActivityType,
                 ActivityDate = x.BeginTime,
                 Content = x.HtmlContent,
+                TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();
             if (result == null || result.Count < 0)

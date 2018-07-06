@@ -13,7 +13,7 @@ using Eagles.Interface.DataAccess.ActivityAccess;
 
 namespace Ealges.DomianService.DataAccess.ActivityData
 {
-    public class ActivityDataAccess :IActivityAccess
+    public class ActivityDataAccess : IActivityAccess
     {
         private readonly IDbManager dbManager;
 
@@ -160,51 +160,52 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
             if (activityType > 0)
             {
                 parameter.Append(" and ActivityType = @ActivityType ");
                 dynamicParams.Add("ActivityType", activityType);
             }
-
             if (branchId > 0)
             {
                 parameter.Append(" and BranchId = @BranchId ");
                 dynamicParams.Add("BranchId", branchId);
             }
-
             sql.AppendFormat(@" SELECT `tb_activity`.`OrgId`,
-    `tb_activity`.`BranchId`,
-    `tb_activity`.`ActivityId`,
-    `tb_activity`.`ActivityName`,
-    `tb_activity`.`HtmlContent`,
-    `tb_activity`.`BeginTime`,
-    `tb_activity`.`EndTime`,
-    `tb_activity`.`FromUser`,
-    `tb_activity`.`ActivityType`,
-    `tb_activity`.`MaxCount`,
-    `tb_activity`.`CanComment`,
-    `tb_activity`.`TestId`,
-    `tb_activity`.`MaxUser`,
-    `tb_activity`.`Attach1`,
-    `tb_activity`.`Attach2`,
-    `tb_activity`.`Attach3`,
-    `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
-    `tb_activity`.`ImageUrl`,
-    `tb_activity`.`IsPublic`,
-    `tb_activity`.`OrgReview`,
-    `tb_activity`.`BranchReview`,
-    `tb_activity`.`ToUserId`,
-    `tb_activity`.`Status`
+`tb_activity`.`BranchId`,
+`tb_activity`.`ActivityId`,
+`tb_activity`.`ActivityName`,
+`tb_activity`.`HtmlContent`,
+`tb_activity`.`BeginTime`,
+`tb_activity`.`EndTime`,
+`tb_activity`.`FromUser`,
+`tb_activity`.`ActivityType`,
+`tb_activity`.`MaxCount`,
+`tb_activity`.`CanComment`,
+`tb_activity`.`TestId`,
+`tb_activity`.`MaxUser`,
+`tb_activity`.`Attach1`,
+`tb_activity`.`Attach2`,
+`tb_activity`.`Attach3`,
+`tb_activity`.`Attach4`,
+`tb_activity`.`AttachType1`,
+`tb_activity`.`AttachType2`,
+`tb_activity`.`AttachType3`,
+`tb_activity`.`AttachType4`,
+`tb_activity`.`ImageUrl`,
+`tb_activity`.`IsPublic`,
+`tb_activity`.`OrgReview`,
+`tb_activity`.`BranchReview`,
+`tb_activity`.`ToUserId`,
+`tb_activity`.`Status`
 FROM `eagles`.`tb_activity`
-  where  1=1 and Status=0 {0}  
- ", parameter);
+where  1=1 {0} ", parameter);
 
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
+        }
+
+        public int GetUserActivityCount(int activityId)
+        {
+            return dbManager.ExecuteScalar<int>("select count(*) from eagles.tb_user_activity where ActivityId = @ActivityId ", new { ActivityId = activityId });
         }
 
         public List<TbUserActivity> GetUserActivity(int userId)
@@ -213,41 +214,34 @@ FROM `eagles`.`tb_activity`
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
             parameter.Append(" and UserId = @UserId ");
             dynamicParams.Add("UserId", userId);
-            
-
             sql.AppendFormat(@" SELECT `tb_user_activity`.`orgId`,
-    `tb_user_activity`.`BranchId`,
-    `tb_user_activity`.`ActivityId`,
-    `tb_user_activity`.`UserId`,
-    `tb_user_activity`.`UserFeedBack`,
-    `tb_user_activity`.`CreateTime`,
-    `tb_user_activity`.`Status`,
-    `tb_user_activity`.`CompleteTime`,
-    `tb_user_activity`.`RewardsScore`,
-    `tb_user_activity`.`Attach1`,
-    `tb_user_activity`.`Attach2`,
-    `tb_user_activity`.`Attach3`,
-    `tb_user_activity`.`Attach4`,
-    `tb_user_activity`.`AttachType1`,
-    `tb_user_activity`.`AttachType2`,
-    `tb_user_activity`.`AttachType3`,
-    `tb_user_activity`.`AttachType4`
+`tb_user_activity`.`BranchId`,
+`tb_user_activity`.`ActivityId`,
+`tb_user_activity`.`UserId`,
+`tb_user_activity`.`UserFeedBack`,
+`tb_user_activity`.`CreateTime`,
+`tb_user_activity`.`Status`,
+`tb_user_activity`.`CompleteTime`,
+`tb_user_activity`.`RewardsScore`,
+`tb_user_activity`.`Attach1`,
+`tb_user_activity`.`Attach2`,
+`tb_user_activity`.`Attach3`,
+`tb_user_activity`.`Attach4`,
+`tb_user_activity`.`AttachType1`,
+`tb_user_activity`.`AttachType2`,
+`tb_user_activity`.`AttachType3`,
+`tb_user_activity`.`AttachType4`
 FROM `eagles`.`tb_user_activity`
-
-  where  1=1  {0}  
- ", parameter);
-
+  where  1=1  {0}  ", parameter);
             return dbManager.Query<TbUserActivity>(sql.ToString(), dynamicParams);
-
         }
 
         public TbActivity GetActivityDetail(int activityId, int appId)
         {
-            var result = dbManager.Query<TbActivity>(@"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,
-Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
+            var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,
+Attach3,Attach4,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
@@ -258,17 +252,16 @@ Attach2,Attach3,Attach4 from eagles.tb_activity where ActivityId = @ActivityId a
         public List<TbActivity> GetPublicActivity(ActivityType activityType, int appId)
         {
             return dbManager.Query<TbActivity>(
-                @"select activityId,activityName,ImageUrl,HtmlContent from eagles.tb_activity 
+                @"select activityId,activityName,ImageUrl,HtmlContent,TestId from eagles.tb_activity 
 where ActivityType = @ActivityType and OrgId = @OrgId and IsPublic = @IsPublic and OrgReview = @OrgReview and BranchReview = @BranchReview ",
                 new {ActivityType = (int) activityType, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
         }
 
         public TbActivity GetPublicActivityDetail(int activityId, int appId)
         {
-            var result = dbManager.Query<TbActivity>(
-                @"select ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,Attach3,Attach4 from eagles.tb_activity 
-where ActivityId = @ActivityId and OrgId = @OrgId and IsPublic = @IsPublic and OrgReview = @OrgReview and BranchReview = @BranchReview",
-                new {ActivityId = activityId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+            var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,
+Attach3,Attach4,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId 
+and IsPublic = @IsPublic and OrgReview = @OrgReview and BranchReview = @BranchReview", new {ActivityId = activityId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();

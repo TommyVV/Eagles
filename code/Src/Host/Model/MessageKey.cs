@@ -18,6 +18,10 @@
 
         public static readonly string ActivityStatusError = "活动状态不正确";
 
+        public static readonly string JoinActivityExist = "已经参与此活动";
+
+        public static readonly string JoinActivityMax = "活动参与人数达上限";
+
         public static readonly string InvalidActivityUser = "不符合规则的活动用户";
 
         public static readonly string ProductNotExists = "产品不存在";

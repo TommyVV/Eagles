@@ -9,10 +9,5 @@
         /// 活动Id
         /// </summary>
         public int ActivityId { get; set; }
-
-        /// <summary>
-        /// 参与活动UserId
-        /// </summary>
-        public int JoinUserid { get; set; }
     }
 }

@@ -37,6 +37,11 @@ namespace Eagles.Application.Model.Common
         /// 活动日期
         /// </summary>
         public DateTime ActivityDate { get; set; }
+        
+        /// <summary>
+        /// 试卷编号
+        /// </summary>
+        public int TestId { get; set; }
 
         /// <summary>
         /// 活动图片Url

@@ -18,6 +18,10 @@
 
         public static readonly string ActivityStatusError = "32";
 
+        public static readonly string JoinActivityExist = "33";
+
+        public static readonly string JoinActivityMax = "34";
+
         public static readonly string InvalidActivityUser = "31";
 
         public static readonly string ProductNotExists = "40";

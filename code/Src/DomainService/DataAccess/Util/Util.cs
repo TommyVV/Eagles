@@ -27,7 +27,7 @@ where Token=@Token AND TokenType=@TokenType", new {Token = token, TokenType = to
         
         public TbUserInfo GetUserInfo(int userId)
         {
-            var user = dbManager.Query<TbUserInfo>(@" select UserId,Name,IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
+            var user = dbManager.Query<TbUserInfo>(@"select OrgId,BranchId,UserId,Name,IsLeader,Score from eagles.tb_user_info where UserId = @UserId", new { UserId = userId });
             if (user != null && user.Any())
                 return user.FirstOrDefault();
             return null;
