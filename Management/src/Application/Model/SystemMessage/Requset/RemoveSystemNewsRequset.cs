@@ -1,6 +1,9 @@
 ﻿namespace Eagles.Application.Model.SystemMessage.Requset
 {
-    public class DeleteSystemMessageInfoRequset:RequestBase
+    /// <summary>
+    /// 
+    /// </summary>
+    public class RemoveSystemNewsRequset : RequestBase
     {
 
         /// <summary>
