@@ -3,7 +3,7 @@
     /// <summary>
     /// 用户评论接口
     /// </summary>
-    public class EditUserCommentResponse : ResponseBase
+    public class EditUserCommentResponse 
     {
     }
 }

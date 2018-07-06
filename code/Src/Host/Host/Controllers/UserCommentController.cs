@@ -3,6 +3,7 @@ using Eagles.Application.Model.UserComment.AuditUserComment;
 using Eagles.Interface.Core.UserComment;
 using Eagles.Application.Model.UserComment.EditUserComment;
 using Eagles.Application.Model.UserComment.GetUserComment;
+using Eagles.Base;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -25,9 +26,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetUserCommentResponse GetUserComment(GetUserCommentRequest request)
+        public ResponseFormat<GetUserCommentResponse> GetUserComment(GetUserCommentRequest request)
         {
-            return userCommentHandler.GetUserComment(request);
+            return ApiActuator.Runing(() => userCommentHandler.GetUserComment(request));
         }
 
         /// <summary>
@@ -36,9 +37,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public EditUserCommentResponse EditUserComment(EditUserCommentRequest request)
+        public ResponseFormat<EditUserCommentResponse> EditUserComment(EditUserCommentRequest request)
         {
-            return userCommentHandler.EditUserComment(request);
+            return ApiActuator.Runing(() => userCommentHandler.EditUserComment(request));
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public AuditUserCommentResponse AuditUserComment(AuditUserCommentRequest request)
+        public ResponseFormat<AuditUserCommentResponse> AuditUserComment(AuditUserCommentRequest request)
         {
-            return userCommentHandler.AuditUserComment(request);
+            return ApiActuator.Runing(() => userCommentHandler.AuditUserComment(request));
         }
     }
 }

@@ -29,10 +29,6 @@ namespace Eagles.DomainService.Core.UserMessage
             var count= userMessage.GetUserUnreadMessageCount(userInfo.UserId);
             return new GetUserUnreadMessage()
             {
-                IsSuccess = true,
-                Code = "00",
-                Message = "成功",
-                DateTime = DateTime.Now,
                 UnreadMessageCount = count
             };
         }

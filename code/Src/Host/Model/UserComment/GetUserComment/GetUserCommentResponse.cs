@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.UserComment.GetUserComment
     /// <summary>
     /// 用户评论查询
     /// </summary>
-    public class GetUserCommentResponse : ResponseBase
+    public class GetUserCommentResponse 
     {
         /// <summary>
         /// 活动评论

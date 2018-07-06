@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Scroll.GetScrollNew
     /// <summary>
     /// 滚动消息查询
     /// </summary>
-    public class GetScrollNewsResponse : ResponseBase
+    public class GetScrollNewsResponse
     {
        public List<SystemNews> SystemNewsList { get; set; }
 
