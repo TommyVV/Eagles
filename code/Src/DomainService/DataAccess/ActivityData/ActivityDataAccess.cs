@@ -24,54 +24,15 @@ namespace Ealges.DomianService.DataAccess.ActivityData
 
         public int CreateActivity(TbActivity reqActivity)
         {
-            return dbManager.Excuted(
-                @"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
+            return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachType1, AttachType2, AttachType3, AttachType4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status,CreateType) 
 value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
-@AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status,@CreateType)",
-                new
-                {
-                    OrgId = reqActivity.OrgId,
-                    BranchId = reqActivity.BranchId,
-                    ActivityName = reqActivity.ActivityName,
-                    HtmlContent = reqActivity.HtmlContent,
-                    BeginTime = reqActivity.BeginTime,
-                    EndTime = reqActivity.EndTime,
-                    FromUser = reqActivity.FromUser,
-                    ActivityType = reqActivity.ActivityType,
-                    MaxCount = reqActivity.MaxCount,
-                    CanComment = reqActivity.CanComment,
-                    TestId = reqActivity.TestId,
-                    MaxUser = reqActivity.MaxUser,
-                    Attach1 = reqActivity.Attach1,
-                    Attach2 = reqActivity.Attach2,
-                    Attach3 = reqActivity.Attach3,
-                    Attach4 = reqActivity.Attach4,
-                    AttachType1 = reqActivity.AttachType1,
-                    AttachType2 = reqActivity.AttachType2,
-                    AttachType3 = reqActivity.AttachType3,
-                    AttachType4 = reqActivity.AttachType4,
-                    ImageUrl = reqActivity.ImageUrl,
-                    IsPublic = reqActivity.IsPublic,
-                    OrgReview = "-1",
-                    BranchReview = "-1",
-                    ToUserId = reqActivity.ToUserId,
-                    Status = reqActivity.Status,
-                    CreateType = reqActivity.CreateType
-                });
+@AttachType1, @AttachType2, @AttachType3, @AttachType4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status,@CreateType)", reqActivity);
         }
 
-        public int EditActivityJoin(int orgId, int branchId, int activityId, int userId)
+        public int EditActivityJoin(TbUserActivity userActivity)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)",
-                new
-                {
-                    OrgId = orgId,
-                    BranchId = branchId,
-                    ActivityId = activityId,
-                    UserId = userId,
-                    CreateTime = DateTime.Now
-                });
+            return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)", userActivity);
         }
 
         public int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType)
@@ -81,7 +42,10 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             {
                 case ActivityTypeEnum.Audit:
                     //上级审核任务
-                    result = dbManager.Excuted("update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = -1 ", new { ActivityId = activityId }); //3-审核通过
+                    if (0 == reviewType)
+                        result = dbManager.Excuted("update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = -1 ", new { ActivityId = activityId }); //审核通过
+                    else
+                        result = dbManager.Excuted("update eagles.tb_activity set Status = -9 where ActivityId = @ActivityId and Status = -1 ", new { ActivityId = activityId }); //审核不通过
                     break;                
                 case ActivityTypeEnum.Apply:
                     //下级申请完成任务
@@ -91,68 +55,35 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             return result;
         }
 
-        public bool EditActivityComplete(int activityId)
+        public bool EditActivityComplete(int activityId, int completeStatus)
         {
-            //查询任务奖励积分
-            var score = dbManager.ExecuteScalar<int>("select Score from eagles.tb_reward_score where RewardType = 0", new { });
+            //查询活动奖励积分
+            var score = dbManager.ExecuteScalar<int>("select Score from eagles.tb_reward_score where RewardType = 1", new { });
+            var commandString = "";
+            if (completeStatus == 0)
+                commandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1"; //通过
+            else
+                commandString = @"update eagles.tb_activity set Status = -8 where ActivityId = @ActivityId and Status = 1"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1 ",
-                    Parameter =   new { ActivityId = activityId }
+                    CommandString = commandString,
+                    Parameter = new { ActivityId = activityId }
                 },
                 new TransactionCommand()
                 {
                     CommandString = "update eagles.tb_user_activity set RewardsScore = @RewardsScore, CompleteTime=@CompleteTime where ActivityId = @ActivityId",
-                    Parameter =  new { RewardsScore = score, CompleteTime = DateTime.Now, ActivityId = activityId }
+                    Parameter = new { RewardsScore = score, CompleteTime = DateTime.Now, ActivityId = activityId }
                 }
             };
             return dbManager.ExcutedByTransaction(commands);
         }
         
-        public int EditActivityFeedBack(int activityId, string content, List<Attachment> attachList)
+        public int EditActivityFeedBack(TbUserActivity userActivity)
         {
-            string attach1 = string.Empty, attach2 = string.Empty, attach3 = string.Empty, attach4 = string.Empty,
-                attachType1 = string.Empty, attachType2 = string.Empty, attachType3 = string.Empty, attachType4 = string.Empty;
-            for (int i = 0; i < attachList.Count; i++)
-            {
-                if (i == 0)
-                {
-                    attachType1 = attachList[i].AttachmentType;
-                    attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    attachType2 = attachList[i].AttachmentType;
-                    attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    attachType3 = attachList[i].AttachmentType;
-                    attach3 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    attachType4 = attachList[i].AttachmentType;
-                    attach4 = attachList[i].AttachmentDownloadUrl;
-                }
-            }
-            return dbManager.Excuted(@"update eagles.tb_user_activity set UserFeedBack = @UserFeedBack, AttachType1 = @AttachType1, AttachType2 = @AttachType2, 
-AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4 where ActivityId = @ActivityId ",
-                new
-                {
-                    UserFeedBack = content,
-                    AttachType1 = attachType1,
-                    AttachType2 = attachType2,
-                    AttachType3 = attachType3,
-                    AttachType4 = attachType4,
-                    Attach1 = attach1,
-                    Attach2 = attach2,
-                    Attach3 = attach3,
-                    Attach4 = attach4,
-                    ActivityId = activityId
-                });
+            return dbManager.Excuted(@"update eagles.tb_user_activity set UserFeedBack = @UserFeedBack, AttachType1 = @AttachType1, AttachType2 = @AttachType2, AttachType3 = @AttachType3, 
+AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4 where ActivityId = @ActivityId and UserId = @UserId ", userActivity);
         }
         
         public List<TbActivity> GetActivity(ActivityType activityType, int branchId)
@@ -199,7 +130,6 @@ AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Atta
 `tb_activity`.`Status`
 FROM `eagles`.`tb_activity`
 where  1=1 {0} ", parameter);
-
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
         }
 
@@ -210,7 +140,6 @@ where  1=1 {0} ", parameter);
 
         public List<TbUserActivity> GetUserActivity(int userId)
         {
-
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -241,7 +170,7 @@ FROM `eagles`.`tb_user_activity`
         public TbActivity GetActivityDetail(int activityId, int appId)
         {
             var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,
-Attach3,Attach4,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
+Attach3,Attach4,FromUser,ToUserId,ImageUrl,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
@@ -260,7 +189,7 @@ where ActivityType = @ActivityType and OrgId = @OrgId and IsPublic = @IsPublic a
         public TbActivity GetPublicActivityDetail(int activityId, int appId)
         {
             var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachType1,AttachType2,AttachType3,AttachType4,Attach1,Attach2,
-Attach3,Attach4,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId 
+Attach3,Attach4,FromUser,ToUserId,ImageUrl,CreateType,MaxCount,MaxUser from eagles.tb_activity where ActivityId = @ActivityId and OrgId = @OrgId 
 and IsPublic = @IsPublic and OrgReview = @OrgReview and BranchReview = @BranchReview", new {ActivityId = activityId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
             if (result != null && result.Any())
             {

@@ -59,10 +59,13 @@ namespace Eagles.DomainService.Core.Task
             task.FromUser = fromUser;
             task.CanComment = request.CanComment;
             task.IsPublic = request.IsPublic;
-            if (1 == userInfo.IsLeader)
-                task.Status = -2; // -2:上级发起(待接受)
+            task.CreateType = request.CreateType;
+            task.OrgReview = "-1";
+            task.BranchReview = "-1";
+            if (0 == request.CreateType)
+                task.Status = -2; //0:初始状态;(上级发给下级的初始状态)
             else
-                task.Status = -1; // -1:下级申请上级待审核状态
+                task.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
             var attachList = request.AttachList;
             for (int i = 0; i < attachList.Count; i++)
             {
@@ -88,14 +91,8 @@ namespace Eagles.DomainService.Core.Task
                 }
             }
             var result = iTaskAccess.CreateTask(task, toUser);
-            if (result > 0)
-            {
-               
-            }
-            else
-            {
+            if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -126,21 +123,34 @@ namespace Eagles.DomainService.Core.Task
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)            
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
+            var createType = taskInfo.CreateType;
+            var taskStatus = taskInfo.Status;
             switch (request.Type)
             {
+                //上级审核任务
                 case TaskTypeEnum.Audit:
-                    //上级审核任务
-                    if (taskInfo.FromUser != tokens.UserId)
-                        throw new TransactionException("96", "必须发起人审核");
+                    if (taskStatus != -1)
+                        throw new TransactionException("96", "任务状态不正确");
+                    //下级发起的活动才会由上级审核
+                    if (1 == createType && taskInfo.UserId != tokens.UserId)
+                        throw new TransactionException("96", "必须上级审核");
                     break;
+                //下级接受任务
                 case TaskTypeEnum.Accept:
-                    //下级接受任务
-                    if (taskInfo.UserId != tokens.UserId)
+                    if (taskStatus != -2)
+                        throw new TransactionException("96", "任务状态不正确");
+                    if (0 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人接受任务");
                     break;
+                //下级申请完成任务
                 case TaskTypeEnum.Apply:
-                    //下级申请完成任务
-                    if (taskInfo.UserId != tokens.UserId)
+                    if (taskStatus != 2)
+                        throw new TransactionException("96", "任务状态不正确");
+                    //上级发起的任务
+                    if (0 == createType && taskInfo.UserId != tokens.UserId)
+                        throw new TransactionException("96", "必须负责人申请完成任务");
+                    //下级发起的任务
+                    else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成任务");
                     break;
             }
@@ -163,12 +173,17 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             if (taskInfo.Status != 0)
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
-            var score = util.RewardScore("0"); //任务奖励积分
-            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, score.Score);
+            var createType = taskInfo.CreateType;
+            //上级发起的活动
+            if (0 == createType && taskInfo.UserId != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成任务");
+            //下级发起的活动
+            else if (1 == createType && taskInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须负责人申请完成任务");
+            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, request.CompleteStatus);
             if (!result)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            //todo 所有参与任务的人增加积分
             return response;
         }
         
@@ -183,9 +198,14 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             if (taskInfo.Status != 0)
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
-            if (taskInfo.UserId != tokens.UserId)
+            var createType = taskInfo.CreateType;
+            //上级发起的活动
+            if (0 == createType && taskInfo.UserId != tokens.UserId)
                 throw new TransactionException("96", "必须负责人编辑计划");
-            iTaskAccess.GetTaskStep(request.TaskId);
+            //下级发起的活动
+            else if (1 == createType && taskInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须负责人编辑计划");
+            //iTaskAccess.GetTaskStep(request.TaskId);
             var taskStep = new TbUserTaskStep(){
                 StepId = request.StepId,
                 OrgId = tokens.OrgId,
@@ -196,10 +216,8 @@ namespace Eagles.DomainService.Core.Task
                 CreateTime = DateTime.Now
             };
             var result = iTaskAccess.EditTaskStep(request.Action, taskStep);
-            if (result<=0)
-            {
+            if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -291,14 +309,16 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = result.FromUser; //加密返回前端
+                response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
-                response.AcctachmentList = new List<Attachment>();
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach1 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach2 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach3 });
-                response.AcctachmentList.Add(new Attachment() { AttachmentName = result.Attach4 });
+                response.AcctachmentList = new List<Attachment>
+                {
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                };
             }
             else
             {
@@ -345,15 +365,15 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime;
                 response.TaskEndDate = result.EndTime;
-                response.TaskFounder = result.FromUser; //加密返回前端
+                response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentName = result.Attach1},
-                    new Attachment() {AttachmentName = result.Attach2},
-                    new Attachment() {AttachmentName = result.Attach3},
-                    new Attachment() {AttachmentName = result.Attach4}
+                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
                 };
 
             }

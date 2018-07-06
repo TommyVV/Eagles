@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Common
 {
     /// <summary>
@@ -11,12 +10,7 @@ namespace Eagles.Application.Model.Common
         /// 附件类型
         /// </summary>
         public string AttachmentType { get; set; }
-
-        /// <summary>
-        /// 附件名称
-        /// </summary>
-        public string AttachmentName { get; set; }
-
+        
         /// <summary>
         /// 附件Url
         /// </summary>

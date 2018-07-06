@@ -11,13 +11,13 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
     {
         int CreateActivity(TbActivity activity);
 
-        int EditActivityJoin(int orgId, int branchId, int activityId, int userId);
+        int EditActivityJoin(TbUserActivity userActivity);
 
         int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType);
 
-        bool EditActivityComplete(int activityId);
+        bool EditActivityComplete(int activityId, int completeStatus);
         
-        int EditActivityFeedBack(int activityyId, string content, List<Attachment> list);
+        int EditActivityFeedBack(TbUserActivity userActivity);
         
         List<TbActivity> GetActivity(ActivityType activityType,int branchId);
 

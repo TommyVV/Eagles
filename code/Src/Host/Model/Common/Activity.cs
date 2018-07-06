@@ -24,11 +24,6 @@ namespace Eagles.Application.Model.Common
         public string ActivityName { get; set; }
         
         /// <summary>
-        /// 活动内容
-        /// </summary>
-        public string Content { get; set; }
-
-        /// <summary>
         /// 活动状态
         /// </summary>
         public int Status { get; set; }
