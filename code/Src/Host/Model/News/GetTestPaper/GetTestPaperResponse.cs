@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.News.GetTestPaper
     /// <summary>
     /// 新闻试卷查询
     /// </summary>
-    public class GetTestPaperResponse : ResponseBase
+    public class GetTestPaperResponse
     {
         /// <summary>
         /// 试卷List

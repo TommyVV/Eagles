@@ -3,7 +3,7 @@
     /// <summary>
     /// 任务完成接口
     /// </summary>
-    public class EditTaskCompleteResponse : ResponseBase
+    public class EditTaskCompleteResponse 
     {
 
     }

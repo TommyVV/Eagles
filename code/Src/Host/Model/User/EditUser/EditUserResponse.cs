@@ -3,7 +3,7 @@
     /// <summary>
     /// 用户信息修改
     /// </summary>
-    public class EditUserResponse : ResponseBase
+    public class EditUserResponse 
     {
 
     }

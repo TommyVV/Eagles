@@ -2,7 +2,7 @@
 
 namespace Eagles.Application.Model.Upload
 {
-    public class UploadResponse:ResponseBase
+    public class UploadResponse
     {
         /// <summary>
         /// 上传结果

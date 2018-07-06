@@ -100,9 +100,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request)
+        public ResponseFormat<GetUserRelationshipResponse> GetUserRelationship(GetUserRelationshipRequest request)
         {
-            return userHandler.GetUserRelationship(request);
+            return ApiActuator.Runing(() => userHandler.GetUserRelationship(request)); 
         }
     }
 }

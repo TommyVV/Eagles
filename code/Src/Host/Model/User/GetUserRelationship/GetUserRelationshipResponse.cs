@@ -6,10 +6,10 @@ namespace Eagles.Application.Model.User.GetUserRelationship
     /// <summary>
     /// 用户上下级关系查询
     /// </summary>
-    public class GetUserRelationshipResponse : ResponseBase
+    public class GetUserRelationshipResponse 
     {
         /// <summary>
-        /// 上级
+        /// 用户列表
         /// </summary>
         public List<UserRelationship> UserList { get; set; }
 

@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Product.GetProduct
     /// <summary>
     /// 获取积分商品
     /// </summary>
-    public class GetProductResponse : ResponseBase
+    public class GetProductResponse
     {
         /// <summary>
         /// 商品列表

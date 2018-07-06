@@ -7,7 +7,7 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
     /// <summary>
     /// 任务详情查询
     /// </summary>
-    public class GetTaskDetailResponse : ResponseBase
+    public class GetTaskDetailResponse 
     {
         /// <summary>
         /// 任务Id

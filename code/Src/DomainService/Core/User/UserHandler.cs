@@ -140,7 +140,7 @@ namespace Eagles.DomainService.Core.User
                     throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
                 }
                 response.UserId = result.UserId;
-                response.IsCustomer = result.IsCustomer;
+                response.IsInternalUser = result.IsCustomer==0;
             }
             else
             {

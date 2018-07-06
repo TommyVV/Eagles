@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Score.GetScoreRank
     /// <summary>
     /// 积分排行查询
     /// </summary>
-    public class GetScoreRankResponse : ResponseBase
+    public class GetScoreRankResponse
     {
         /// <summary>
         /// 排行类型 0-全部 1-支部积分排行榜 2-支部积分排行榜

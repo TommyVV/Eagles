@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Task.GetTask
     /// <summary>
     /// 任务查询
     /// </summary>
-    public class GetTaskResponse : ResponseBase
+    public class GetTaskResponse 
     {
         /// <summary>
         /// 任务列表

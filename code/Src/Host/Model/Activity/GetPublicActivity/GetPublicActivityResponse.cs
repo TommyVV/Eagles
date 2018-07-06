@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Activity.GetPublicActivity
     /// <summary>
     /// 公开活动查询
     /// </summary>
-    public class GetPublicActivityResponse : ResponseBase
+    public class GetPublicActivityResponse 
     {
         /// <summary>
         /// 活动列表

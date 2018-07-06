@@ -16,9 +16,9 @@
         public int UserId { get; set; }
 
         /// <summary>
-        /// 是否游客
+        /// 是否是内部用户
         /// </summary>
-        public int IsCustomer { get; set; }
+        public bool IsInternalUser { get; set; }
 
         /// <summary>
         /// 是否需要验证码

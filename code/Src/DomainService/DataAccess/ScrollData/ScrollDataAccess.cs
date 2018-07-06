@@ -15,7 +15,7 @@ namespace Ealges.DomianService.DataAccess.ScrollData
 
         public List<Eagles.DomainService.Model.ScrollImage.TbScrollImage> GetScrollImg(string pageType)
         {
-            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.TbScrollImage>("select OrgId,PageType,ImageUrl from eagles.tb_scroll_image where PageType = @PageType", new {PageType = pageType});
+            return dbManager.Query<Eagles.DomainService.Model.ScrollImage.TbScrollImage>("select OrgId,PageType,ImageUrl,TargetUrl from eagles.tb_scroll_image where PageType = @PageType", new {PageType = pageType});
         }
 
         public List<Eagles.DomainService.Model.News.TbSystemNews> GetScrollNews(string nowDate,string date)

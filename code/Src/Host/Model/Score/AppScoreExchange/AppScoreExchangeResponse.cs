@@ -3,7 +3,7 @@
     /// <summary>
     /// 积分兑换接口
     /// </summary>
-    public class AppScoreExchangeResponse : ResponseBase
+    public class AppScoreExchangeResponse 
     {
 
     }

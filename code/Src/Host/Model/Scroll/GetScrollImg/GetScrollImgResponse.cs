@@ -15,6 +15,22 @@ namespace Eagles.Application.Model.Scroll.GetScrollImg
         /// <summary>
         /// 滚动图片Url
         /// </summary>
-        public List<string> RollImgUrl { get; set; }
+        public List<RollImage> ImageList { get; set; }
+    }
+
+    /// <summary>
+    /// 图片
+    /// </summary>
+    public class RollImage
+    {
+        /// <summary>
+        /// 图片地址
+        /// </summary>
+        public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 跳转链接
+        /// </summary>
+        public string TargetUrl { get; set; }
     }
 }

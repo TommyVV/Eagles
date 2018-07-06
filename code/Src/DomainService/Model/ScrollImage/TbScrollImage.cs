@@ -10,5 +10,6 @@ namespace Eagles.DomainService.Model.ScrollImage
         public string ImageUrl { get; set; }
         public int OrgId { get; set; }
         public string PageType { get; set; }
+        public string TargetUrl { get; set; }
     }
 }

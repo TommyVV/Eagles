@@ -3,7 +3,7 @@
     /// <summary>
     /// 文章发布
     /// </summary>
-    public class CreateArticleResponse : ResponseBase
+    public class CreateArticleResponse 
     {
         
     }

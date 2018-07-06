@@ -33,7 +33,11 @@ namespace Eagles.DomainService.Core.Scroll
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
-            response.RollImgUrl = result?.Select(x => x.ImageUrl).ToList();
+            response.ImageList = result?.Select(x => new RollImage()
+            {
+                ImageUrl = x.ImageUrl,
+                TargetUrl = x.TargetUrl
+            }).ToList();
             return response;
         }
 
@@ -47,9 +51,9 @@ namespace Eagles.DomainService.Core.Scroll
 
             var nowDate = DateTime.Now.ToString("yyyyMMdd");
             var date = DateTime.Now.ToString("MMdd");
-            var result = iScrollAccess.GetScrollNews(nowDate,date);
+            var result = iScrollAccess.GetScrollNews(nowDate, date);
 
-            if (result != null && result.Any() )
+            if (result != null && result.Any())
             {
                 response.SystemNewsList = result.Select(x => new SystemNews()
                 {

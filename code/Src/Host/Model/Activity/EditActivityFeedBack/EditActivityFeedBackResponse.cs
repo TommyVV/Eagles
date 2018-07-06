@@ -3,7 +3,7 @@
     /// <summary>
     /// 活动反馈接口
     /// </summary>
-    public class EditActivityFeedBackResponse : ResponseBase
+    public class EditActivityFeedBackResponse
     {
     }
 }

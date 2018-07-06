@@ -2,8 +2,11 @@
 
 namespace Eagles.Application.Model.Module
 {
-    public class AppModuleResponse:ResponseBase
+    public class AppModuleResponse
     {
+        /// <summary>
+        /// 分类列表
+        /// </summary>
         public List<Module> Modules { get; set; }
     }
 }

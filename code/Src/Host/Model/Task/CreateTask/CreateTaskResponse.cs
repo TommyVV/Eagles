@@ -3,7 +3,7 @@
     /// <summary>
     /// 任务发布
     /// </summary>
-    public class CreateTaskResponse : ResponseBase
+    public class CreateTaskResponse 
     {
 
     }

@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.Task.GetTaskStep
     /// <summary>
     /// 任务步骤查询
     /// </summary>
-    public class GetTaskStepResponse : ResponseBase
+    public class GetTaskStepResponse 
     {
         /// <summary>
         /// 步骤列表

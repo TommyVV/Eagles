@@ -3,7 +3,7 @@
     /// <summary>
     /// 活动发布
     /// </summary>
-    public class CreateActivityResponse : ResponseBase
+    public class CreateActivityResponse
     {
 
     }

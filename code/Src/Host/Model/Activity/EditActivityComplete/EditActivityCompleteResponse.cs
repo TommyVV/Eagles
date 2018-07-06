@@ -3,7 +3,7 @@
     /// <summary>
     /// 活动完成接口
     /// </summary>
-    public class EditActivityCompleteResponse : ResponseBase
+    public class EditActivityCompleteResponse 
     {
 
     }

@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
     /// <summary>
     /// 新闻详情查询
     /// </summary>
-    public class GetNewsDetailResponse : ResponseBase
+    public class GetNewsDetailResponse 
     {
         /// <summary>
         /// 新闻编号
