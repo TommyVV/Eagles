@@ -1,6 +1,6 @@
 ﻿namespace Eagles.Application.Model.UserMessage
 {
-    public class GetUserUnreadMessage:ResponseBase
+    public class GetUserUnreadMessage
     {
         /// <summary>
         /// 未读消息数量

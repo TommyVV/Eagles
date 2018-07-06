@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Model.UserMessage;
+using Eagles.Base;
 using Eagles.Interface.Core.UserMessage;
 
 namespace Eagles.Application.Host.Controllers
@@ -23,9 +24,9 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        public GetUserUnreadMessage GetUserUnreadMessage(string token)
+        public ResponseFormat<GetUserUnreadMessage> GetUserUnreadMessage(string token)
         {
-            return userMessage.GetUserUnreadMessage(token);
+            return ApiActuator.Runing(() => userMessage.GetUserUnreadMessage(token));
         }
     }
 }
