@@ -1,12 +1,12 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/ServerConfigure";
 
-const { NEWS } = serverConfig;
-// 根据id查看新闻详情
-export const getNewsInfoById = async params => {
+const { GOODS } = serverConfig;
+// 根据id查看详情
+export const getInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_DETAIL,
+      url: GOODS.GOODS_DETAIL,
       method: "post",
       params
     });
@@ -21,11 +21,11 @@ export const getNewsInfoById = async params => {
   }
 };
 
-// 查看新闻列表
-export const getNewsList = async params => {
+// 查看列表
+export const getList = async params => {
   try {
     let res = await sendRequest({
-      url: NEWS.NEWS_LIST,
+      url: GOODS.GOODS_LIST,
       method: "post",
       params
     });
@@ -40,12 +40,12 @@ export const getNewsList = async params => {
   }
 };
 
-// 创建或编辑新闻
-export const createOrEditNews = async params => {
+// 创建或编辑
+export const createOrEdit= async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_EDIT,
+      url: GOODS.GOODS_EDIT,
       params
     });
     if (res.status === 200) {
@@ -58,12 +58,12 @@ export const createOrEditNews = async params => {
   }
 };
 
-// 删除新闻
-export const deleteNews = async params => {
+// 删除
+export const del = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: NEWS.NEWS_DELETE,
+      url: GOODS.GOODS_DELETE,
       params
     });
     let { Code, Message } = res.data;

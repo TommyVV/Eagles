@@ -82,6 +82,7 @@ async function request({ method = "get", url, params }) {
     throw new Error(e);
   }
 }
+
 /**
  * 请求url方法
  * @param  {object} config 请求参数配置（method,url,params）
@@ -110,3 +111,4 @@ export default async config => {
     throw new Error(e);
   }
 };
+
