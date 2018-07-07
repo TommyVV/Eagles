@@ -260,6 +260,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SystemNewsController.cs" />
     <Compile Include="Controllers\SmsConfigController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\ScrollImageController.cs" />

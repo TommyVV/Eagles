@@ -51,6 +51,7 @@
     <Compile Include="ScoreHandler.cs" />
     <Compile Include="ScrollImageHandler.cs" />
     <Compile Include="SmsConfigHandler.cs" />
+    <Compile Include="SystemNewsHandler.cs" />
     <Compile Include="TestPaperHandler.cs" />
     <Compile Include="GoodsHandler.cs" />
     <Compile Include="AuditHandler.cs" />

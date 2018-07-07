@@ -49,6 +49,7 @@
     <Compile Include="IScoreDataAccess.cs" />
     <Compile Include="IScrollImageDataAccess.cs" />
     <Compile Include="ISmsConfigDataAccess.cs" />
+    <Compile Include="ISystemNewsDataAccess.cs" />
     <Compile Include="ITestPaperDataAccess.cs" />
     <Compile Include="IGoodsDataAccess.cs" />
     <Compile Include="IMenusDataAccess.cs" />
