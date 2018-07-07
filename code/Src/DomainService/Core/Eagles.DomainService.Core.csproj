@@ -64,6 +64,7 @@
     <Compile Include="FileUpload\FileUploadHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
+    <Compile Include="Register\RegisterHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />
     <Compile Include="Scroll\ScrollHandler.cs" />
     <Compile Include="Study\StudyHandler.cs" />

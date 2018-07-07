@@ -128,5 +128,26 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
         {
             return dbManager.QuerySingle<TbValidCode>("select Phone from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
         }
+
+        public int InsertSmsCode(TbValidCode validateCode)
+        {
+            var sql = @"
+INSERT INTO eagles.tb_validcode
+(OrgId,
+Phone,
+ValidCode,
+Seq,
+CreateTime,
+ExpireTime)
+VALUES
+(
+@OrgId,
+@Phone,
+@ValidCode,
+@Seq,
+@CreateTime,
+@ExpireTime)";
+            return dbManager.Excuted(sql, validateCode);
+        }
     }
 }

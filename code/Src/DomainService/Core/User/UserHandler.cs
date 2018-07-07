@@ -114,7 +114,7 @@ namespace Eagles.DomainService.Core.User
         public LoginResponse Login(LoginRequest request)
         {
             var response = new LoginResponse();
-            var guit = Guid.NewGuid().ToString();
+            var guid = Guid.NewGuid().ToString("N");
             var result = userInfoAccess.GetLogin(request.Phone);
             if (result != null)
             {
@@ -125,7 +125,7 @@ namespace Eagles.DomainService.Core.User
                 var userToken = new TbUserToken()
                 {
                     UserId = result.UserId,
-                    Token = guit,
+                    Token = guid,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
@@ -133,7 +133,7 @@ namespace Eagles.DomainService.Core.User
                 var tokenInfo = userInfoAccess.InsertToken(userToken);
                 if (tokenInfo > 0)
                 {
-                    response.Token = guit;
+                    response.Token = guid;
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace Eagles.DomainService.Core.User
                 Password = md5Helper.Md5Encypt(request.Pwd),
                 CreateTime = DateTime.Now
             };
-            var codeInfo = new TbValidCode() { Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq };
+            var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
                 throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
