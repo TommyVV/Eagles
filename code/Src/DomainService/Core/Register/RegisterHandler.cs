@@ -19,10 +19,10 @@ namespace Eagles.DomainService.Core.Register
 
         public ValidateCodeResponse GenerateSmsCode(ValidateCodeRequest request)
         {
-            //if (request.Phone<=0||request.Phone!=11)
-            //{
-            //    throw new TransactionException(MessageCode.ParametersIsEmpty, MessageKey.ParametersIsEmpty);
-            //}
+            if (string.IsNullOrEmpty(request.Phone)||request.Phone.Length!=11)
+            {
+                throw new TransactionException(MessageCode.ParametersIsEmpty, MessageKey.ParametersIsEmpty);
+            }
 
             if (request.AppId <= 0)
             {
