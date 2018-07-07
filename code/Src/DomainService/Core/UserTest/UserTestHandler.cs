@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Transactions;
-using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core.UserTest;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserTest;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetTestPaper;
-using TransactionException = Eagles.Base.TransactionException;
 
 namespace Eagles.DomainService.Core.UserTest
 {
@@ -38,9 +36,7 @@ namespace Eagles.DomainService.Core.UserTest
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var resultTest = testDa.GetTestPaper(request.TestId);
             if (resultTest == null || !resultTest.Any())
-            {
-                return response;
-            }
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             //遍历问题
             var questions = new List<AppQuestion>();
             resultTest.ForEach(x =>
@@ -74,6 +70,10 @@ namespace Eagles.DomainService.Core.UserTest
                     nowQuestion.AnswerList.Add(answer);
                 }
             });
+            response.FullScore = resultTest[0].QuestionSocre * questions.Count;
+            response.PassScore = resultTest[0].PassScore;
+            response.PassAwardScore = resultTest[0].PassAwardScore;
+            response.LimitedTime = resultTest[0].LimitedTime;
             response.TestList = questions;
             return response;
         }

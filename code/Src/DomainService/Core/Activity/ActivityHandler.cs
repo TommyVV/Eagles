@@ -64,6 +64,8 @@ namespace Eagles.DomainService.Core.Activity
                 IsPublic = request.IsPublic,
                 CreateType = request.CreateType,
                 ImageUrl = request.ImageUrl,
+                MaxCount = 99,
+                MaxUser = 99,
                 OrgReview = "-1",
                 BranchReview = "-1"
             };
@@ -181,11 +183,11 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var createType = activityInfo.CreateType;
             //上级发起的活动
-            if (0 == createType && activityInfo.ToUserId != tokens.UserId)
-                throw new TransactionException("96", "必须负责人申请完成活动");
+            if (0 == createType && activityInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须上级完成活动");
             //下级发起的活动
-            else if (1 == createType && activityInfo.FromUser != tokens.UserId)
-                throw new TransactionException("96", "必须负责人申请完成活动");
+            else if (1 == createType && activityInfo.ToUserId != tokens.UserId)
+                throw new TransactionException("96", "必须上级完成活动");
             var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);

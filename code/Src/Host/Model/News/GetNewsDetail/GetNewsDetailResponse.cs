@@ -14,6 +14,11 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         public int NewsId { get; set; }
 
         /// <summary>
+        /// 简单描述
+        /// </summary>
+        public string ShortDesc { get; set; }
+
+        /// <summary>
         /// 新闻名称
         /// </summary>
         public string Title { get; set; }
@@ -57,25 +62,6 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// 附件
         /// </summary>
         public List<string> Attach { get; set; }
-        ///// <summary>
-        ///// 附件1
-        ///// </summary>
-        //public string Attach1 { get; set; }
-
-        ///// <summary>
-        ///// 附件2
-        ///// </summary>
-        //public string Attach2 { get; set; }
-
-        ///// <summary>
-        ///// 附件3
-        ///// </summary>
-        //public string Attach3 { get; set; }
-
-        ///// <summary>
-        ///// 附件4
-        ///// </summary>
-        //public string Attach4 { get; set; }
 
         /// <summary>
         /// 阅读数量

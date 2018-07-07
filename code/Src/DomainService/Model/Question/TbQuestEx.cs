@@ -6,6 +6,26 @@
     public class TbQuestEx
     {
         /// <summary>
+        /// 每一题分值
+        /// </summary>
+        public int QuestionSocre { get; set; }
+
+        /// <summary>
+        /// 及格分
+        /// </summary>
+        public int PassScore { get; set; }
+
+        /// <summary>
+        /// 奖励积分
+        /// </summary>
+        public int PassAwardScore { get; set; }
+
+        /// <summary>
+        /// 时间(分钟)
+        /// </summary>
+        public int LimitedTime { get; set; }
+
+        /// <summary>
         /// 问题编号
         /// </summary>
         public int QuestionId { get; set; }

@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.News.GetTestPaper
         /// 问题编号
         /// </summary>
         public int QuestionId { get; set; }
-
+        
         /// <summary>
         /// 选项编号
         /// </summary>

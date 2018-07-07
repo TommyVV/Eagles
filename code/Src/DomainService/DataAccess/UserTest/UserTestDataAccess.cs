@@ -17,8 +17,12 @@ namespace Ealges.DomianService.DataAccess.UserTest
 
         public List<TbQuestEx> GetTestPaper(int testId)
         {
-            return dbManager.Query<TbQuestEx>(@"select c.TestId,a.QuestionId,a.Question,a.Multiple,a.MultipleCount,b.AnswerId,b.Answer,b.AnswerType,b.IsRight,b.ImageUrl
-from eagles.tb_question a join eagles.tb_quest_anwser b on a.questionId = b.questionId join eagles.tb_test_question c on a.questionId = c.questionId where c.TestId = @TestId ", new { TestId = testId });
+            return dbManager.Query<TbQuestEx>(@"select a.TestId,a.QuestionSocre,a.PassScore,a.PassAwardScore,a.LimitedTime,c.QuestionId,c.Question,c.Multiple,c.MultipleCount,d.AnswerId,
+d.Answer,d.AnswerType,d.IsRight,d.ImageUrl from eagles.tb_test_paper a
+join eagles.tb_test_question b on b.TestId = a.TestId
+join eagles.tb_question c on c.QuestionId = b.QuestionId
+join eagles.tb_quest_anwser d on d.QuestionId = c.QuestionId 
+where a.TestId = @TestId ", new { TestId = testId });
         }
 
         public TbTestPaper GetTestPaperInfo(int testId)

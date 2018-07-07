@@ -62,7 +62,6 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
-
             return response;
         }
 
@@ -81,9 +80,9 @@ namespace Eagles.DomainService.Core.News
             {
                 NewsList = news.Select(x => new Application.Model.Common.News
                 {
-                    CreateTime = x.CreateTime,
                     NewsId = x.NewsId,
-                    Title = x.Title
+                    Title = x.Title,
+                    CreateTime = x.CreateTime
                 }).ToList()
             };
         }
@@ -131,6 +130,7 @@ namespace Eagles.DomainService.Core.News
             if (result != null)
             {
                 response.NewsId = result.NewsId;
+                response.ShortDesc = result.ShortDesc;
                 response.Title = result.Title;
                 response.HtmlContent = result.HtmlContent;
                 response.Author = result.Author;
@@ -146,10 +146,6 @@ namespace Eagles.DomainService.Core.News
                     result.Attach3,
                     result.Attach4
                 };
-                //response.Attach1 = result.Attach1;
-                //response.Attach2 = result.Attach2;
-                //response.Attach3 = result.Attach3;
-                //response.Attach4 = result.Attach4;
                 response.ViewCount = result.ViewCount;
                 response.CanStudy = result.CanStudy;
             }
@@ -159,6 +155,5 @@ namespace Eagles.DomainService.Core.News
             }
             return response;
         }
-        
     }
 }
