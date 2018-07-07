@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Application.Model.Enums;
-using Eagles.Application.Model.Common;
 using Eagles.DomainService.Model.Task;
 using Eagles.DomainService.Model.User;
 
@@ -16,12 +15,10 @@ namespace Eagles.Interface.DataAccess.TaskAccess
         int EditTaskAccept(TaskAcceptType type, int taskId, int reviewType);
 
         bool EditTaskComplete(int taskId, int isPublic, int completeStatus);
-
-        int EditTaskComment(int orgId, int taskId, int userId, string content);
         
         int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 
-        int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
+        int EditTaskFeedBack(TbUserTaskStep userTaskStep);
         
         List<TbUserTaskStep> GetTaskStep(int taskId);
 

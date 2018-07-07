@@ -63,7 +63,7 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             if (completeStatus == 0)
                 commandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1"; //通过
             else
-                commandString = @"update eagles.tb_activity set Status = -8 where ActivityId = @ActivityId and Status = 1"; //不通过
+                commandString = @"update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = 1"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
@@ -129,7 +129,7 @@ AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @A
 `tb_activity`.`ToUserId`,
 `tb_activity`.`Status`
 FROM `eagles`.`tb_activity`
-where  1=1 {0} ", parameter);
+where 1=1 and Status <> -9 {0} ", parameter);
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
         }
 

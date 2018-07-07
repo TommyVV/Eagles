@@ -6,7 +6,7 @@
     public class EditUserCommentRequest : RequestBase
     {
         /// <summary>
-        /// 评论类型 0-任务 1-任务 2-
+        /// 评论类型 0-任务 1-活动 2-
         /// </summary>
         public string CommentType { get; set; }
 

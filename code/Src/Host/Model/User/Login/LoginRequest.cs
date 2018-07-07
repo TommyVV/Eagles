@@ -19,6 +19,6 @@ namespace Eagles.Application.Model.User.Login
         /// <summary>
         /// 验证码
         /// </summary>
-        public string VerifyCode { get; set; }
+        public string ValidCode { get; set; }
     }
 }

@@ -158,7 +158,7 @@ namespace Eagles.DomainService.Core.User
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
-                Password = md5Helper.Md5Encypt(request.Pwd),
+                Password = md5Helper.Md5Encypt(request.UserPwd),
                 CreateTime = DateTime.Now,
                 IsCustomer = 0
             };

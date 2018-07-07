@@ -75,7 +75,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             if (completeStatus == 0)
                 commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
             else
-                commandString = @"update eagles.tb_task set Status = -8, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
+                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
@@ -91,21 +91,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             };
             return dbManager.ExcutedByTransaction(commands);
         }
-
-        public int EditTaskComment(int orgId, int taskId, int userId, string content)
-        {
-            return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,ReviewStatus) value (@OrgId,@Id,@Content,@Createtime,@UserId,@ReviewStatus)",
-                new
-                {
-                    OrgId = orgId,
-                    Id = taskId,
-                    Content = content,
-                    Createtime = DateTime.Now,
-                    UserId = userId,
-                    ReviewStatus = "-1"
-                });
-        }
-
+        
         public int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep)
         {
             int result = 0;
@@ -121,50 +107,11 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return result;
         }
         
-        public int EditTaskFeedBack(int taskId, string content, List<Attachment> attachList)
+        public int EditTaskFeedBack(TbUserTaskStep userTaskStep)
         {
-            string attach1 = string.Empty, attach2 = string.Empty, attach3 = string.Empty, attach4 = string.Empty,
-                attachType1 = string.Empty, attachType2 = string.Empty, attachType3 = string.Empty, attachType4 = string.Empty;
-            for (int i = 0; i < attachList.Count; i++)
-            {
-                if (i == 0)
-                {
-                    attachType1 = attachList[i].AttachmentType;
-                    attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    attachType2 = attachList[i].AttachmentType;
-                    attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    attachType3 = attachList[i].AttachmentType;
-                    attach3 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    attachType4 = attachList[i].AttachmentType;
-                    attach4 = attachList[i].AttachmentDownloadUrl;
-                }
-            }
             return dbManager.Excuted(@"update eagles.tb_user_task_step set Content = @Content, UpdateTime = @UpdateTime, 
 AttachType1 = @AttachType1, AttachType2 = @AttachType2, AttachType3 = @AttachType3, AttachType4 = @AttachType4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4 
-where TaskId = @TaskId ",
-                new
-                {
-                    Content = content,
-                    UpdateTime = DateTime.Now,
-                    AttachType1 = attachType1,
-                    AttachType2 = attachType2,
-                    AttachType3 = attachType3,
-                    AttachType4 = attachType4,
-                    Attach1 = attach1,
-                    Attach2 = attach2,
-                    Attach3 = attach3,
-                    Attach4 = attach4,
-                    TaskId = taskId
-                });
+where TaskId = @TaskId and StepId = @StepId", userTaskStep);
         }
 
         public List<TbUserTaskStep> GetTaskStep(int taskId)
@@ -183,10 +130,10 @@ where TaskId = @TaskId ",
         {
             if (string.IsNullOrEmpty(status))
                 return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new { UserId = userId });
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 ", new { UserId = userId });
             else
                 return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId, a.Status = @Status ", new { UserId = userId, Status = status });
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 and a.Status = @Status ", new { UserId = userId, Status = status });
         }
 
         public TbTask GetTaskDetail(int taskId, int appId)
