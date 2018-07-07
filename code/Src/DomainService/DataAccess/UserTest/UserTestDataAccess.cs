@@ -27,7 +27,7 @@ where a.TestId = @TestId ", new { TestId = testId });
 
         public TbTestPaper GetTestPaperInfo(int testId)
         {
-            return dbManager.QuerySingle<TbTestPaper>(@"select TestId,TestName,HasReward,QuestionSocre,PassScore,HasLimitedTime,LimitedTime,HtmlDescription 
+            return dbManager.QuerySingle<TbTestPaper>(@"select TestId,TestName,HasReward,QuestionSocre,PassScore,HasLimitedTime,LimitedTime,HtmlDescription ,TestType
 from eagles.tb_test_paper where TestId=@TestId And Status=0 ", new { TestId = testId });
         }
 
