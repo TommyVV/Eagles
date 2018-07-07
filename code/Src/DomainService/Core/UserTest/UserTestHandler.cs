@@ -8,8 +8,11 @@ using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserTest;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
+using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetTestPaper;
+using Eagles.Base.Json;
+using Eagles.DomainService.Model.Question;
 
 namespace Eagles.DomainService.Core.UserTest
 {
@@ -19,10 +22,13 @@ namespace Eagles.DomainService.Core.UserTest
 
         private readonly IUtil util;
 
-        public UserTestHandler(IUserTestDataAccess testDa, IUtil util)
+        private readonly IJsonSerialize jsonSerialize;
+
+        public UserTestHandler(IUserTestDataAccess testDa, IUtil util, IJsonSerialize jsonSerialize)
         {
             this.testDa = testDa;
             this.util = util;
+            this.jsonSerialize = jsonSerialize;
         }
 
         public GetTestPaperResponse GetTestPaper(GetTestPaperRequest request)
@@ -101,32 +107,9 @@ namespace Eagles.DomainService.Core.UserTest
             var passScore = testPaper.PassScore; //及格分数
             var questionSocre = testPaper.QuestionSocre; //每题分值
             var passAwardScore = testPaper.PassAwardScore; //及格奖励积分
-            //查询正确答案
-            var rightAnswer = testDa.GetTestRightAnswer(request.TestId, 0);
-            var answerList = new List<ResAnswer>();
-            answerList = request.TestList.Select(x => new ResAnswer()
-            {
-                QuestionId = x.QuestionId,
-                AnswerId = x.AnswerId
-                
-            }).ToList();
-            //匹配正确答案
-            int i = 0;
-            answerList.ForEach(x =>
-                {
-                    var score = rightAnswer.Find(y => x.AnswerId == y.AnswerId);
-                    if (score != null && 0 == score.IsRight)
-                    {
-                        x.IsRight = 0;
-                        i++;
-                    }
-                    else
-                    {
-                        x.IsRight = 1;
-                    }
-                }
-            );
-            testScore = questionSocre * i; //每题分数*答对数量=答题分数
+            var testType = testPaper.TestType;
+
+            var userAnswer = jsonSerialize.SerializeObject(request.TestList);
             //插入tb_user_test
             userTest = new TbUserTest()
             {
@@ -137,31 +120,108 @@ namespace Eagles.DomainService.Core.UserTest
                 Score = testScore,
                 TotalScore = 0,
                 CreateTime = DateTime.Now,
-                UseTime = request.UseTime
+                UseTime = request.UseTime,
+                Answer = userAnswer
             };
             testDa.CreateUserTest(userTest);
+
+            //如果是投票，没有正确答案。
+            if (testType == ExercisesType.投票)
+            {
+                if (testScore >= 0)
+                {
+                    WriteScoreLs(tokens.UserId, passAwardScore, userInfo.Score);
+                }
+                return response;
+            }
+
+            //查询正确答案
+            var rightAnswer = testDa.GetTestRightAnswer(request.TestId, 0);
+
+            if (rightAnswer == null || !rightAnswer.Any())
+            {
+                //如果没有找到正确答案 直接返回，不加分（数据异常）
+            }
+            var errorCount = 0;
+            var resutlAnswer = new List<ResAnswer>();
+            var userAnswerObj=new List<TbQuestAnswer>();//todo
+            foreach (var question in request.TestList)
+            {
+                //判断所有答案是否是正确答案
+                for (var i = 0; i < question.Answers.Count; i++)
+                {
+                    userAnswerObj.Add(new TbQuestAnswer()
+                    {
+                        AnswerId = question.Answers[i].AnswerId,
+                        //Answer = 
+
+                    });
+                    var questRight = rightAnswer.Where(x => x.QuestionId == question.QuestionId).ToList();
+                    if (!questRight.Exists(x => x.AnswerId == question.Answers[i].AnswerId))
+                    {
+                        errorCount++;
+                        resutlAnswer.Add(new ResAnswer()
+                        {
+                            QuestionId = question.QuestionId,
+                            IsRight = false
+                        });
+                        break;
+                    }
+                    //如果已经没有答案了，但是这道题还有正确答案，则该题回答错误
+                    if (i == question.Answers.Count - 1)
+                    {
+                        if (i == questRight.Count-1)
+                        {
+                            resutlAnswer.Add(new ResAnswer()
+                            {
+                                QuestionId = question.QuestionId,
+                                IsRight = true
+                            });
+                        }
+                        else
+                        {
+                            errorCount++;
+                            resutlAnswer.Add(new ResAnswer()
+                            {
+                                QuestionId = question.QuestionId,
+                                IsRight = false
+                            });
+                        }
+                    }
+
+                }
+            }
+
+            //正确数量=总题数-未答题数量-错误数量
+            var rightCount = rightAnswer.Count - (rightAnswer.Count - request.TestList.Count) - errorCount;
+            testScore = questionSocre * rightCount; //每题分数*答对数量=答题分数
             response.TestScore = testScore;
             response.Score = passAwardScore;
             response.UseTime = request.UseTime;
-            response.TestList = answerList;
+            response.TestList = resutlAnswer;
             //如果及格,给用户奖励积分
             if (testScore >= passScore)
             {
-                //插入用户流水表user_score_trace
-                var userScoreTrace = new TbUserScoreTrace()
-                {
-                    UserId = tokens.UserId,
-                    CreateTime = DateTime.Now,
-                    Score = passAwardScore,
-                    RewardsType = "50",
-                    Comment = "完成试卷奖励积分",
-                    OriScore = userInfo.Score,
-                };
-                util.CreateScoreLs(userScoreTrace);
-                //修改用户积分
-                util.EditUserScore(tokens.UserId, passAwardScore);
+                WriteScoreLs(tokens.UserId, passAwardScore, userInfo.Score);
             }
             return response;
+        }
+
+        private void WriteScoreLs(int userId, int passAwardScore, int score)
+        {
+            //插入用户流水表user_score_trace
+            var userScoreTrace = new TbUserScoreTrace()
+            {
+                UserId = userId,
+                CreateTime = DateTime.Now,
+                Score = passAwardScore,
+                RewardsType = "50",
+                Comment = "完成试卷奖励积分",
+                OriScore = score,
+            };
+            util.CreateScoreLs(userScoreTrace);
+            //修改用户积分
+            util.EditUserScore(userId, passAwardScore);
         }
     }
 }

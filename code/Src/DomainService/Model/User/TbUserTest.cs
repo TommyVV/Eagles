@@ -35,5 +35,7 @@ namespace Eagles.DomainService.Model.User
         /// 
         /// </summary>
         public int UseTime { get; set; }
+
+        public string Answer { get; set; }
     }
 }
