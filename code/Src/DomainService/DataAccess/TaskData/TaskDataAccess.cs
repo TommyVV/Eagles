@@ -51,7 +51,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
                 case TaskTypeEnum.Audit:
                     //上级审核任务
                     if (0 == reviewType)
-                        result = dbManager.Excuted("update eagles.tb_task set Status = 3 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
+                        result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
                     else
                         result = dbManager.Excuted("update eagles.tb_task set Status = -9 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核不通过
                     break;
