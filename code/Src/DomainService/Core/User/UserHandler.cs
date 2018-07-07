@@ -159,7 +159,8 @@ namespace Eagles.DomainService.Core.User
             {
                 Phone = request.Phone,
                 Password = md5Helper.Md5Encypt(request.Pwd),
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+                IsCustomer = 0
             };
             var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
