@@ -112,8 +112,8 @@ function moduleListTitle() {
 				var pctitietwo = ''; //PC端右边标题
 				for(var i = 0; i < data.Modules.length; i++) {
 					var urls = data.Modules[i].TargetUrl;
-					if(urls == '') {
-						urls = 'partyLearning_list.html'; //列表页
+					if(urls == ''||urls == null) {
+						urls="partyLearning_list.html?paramModuleid="+data.Modules[i].ModuleId+"&paramModuleType=0";//列表页
 					} else {
 						urls = data.Modules[i].TargetUrl;
 					}
