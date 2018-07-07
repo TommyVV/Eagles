@@ -113,7 +113,7 @@ function moduleListTitle() {
 				for(var i = 0; i < data.Modules.length; i++) {
 					var urls = data.Modules[i].TargetUrl;
 					if(urls == '') {
-						urls = 'leftNav.html'; //列表页
+						urls = 'partyLearning_list.html'; //列表页
 					} else {
 						urls = data.Modules[i].TargetUrl;
 					}
@@ -171,7 +171,7 @@ function moduleListcontent(moduleId, class1, flag) {
 					if(data.NewsInfos[i].IsExternal == true) {
 						externalUrl = data.NewsInfos[i].ExternalUrl
 					} else {
-						externalUrl = 'deta.html' //详情页
+						externalUrl = 'partyLearning_detail.html' //详情页
 					}
 					//移动端代码
 					if(i < 2) { 
