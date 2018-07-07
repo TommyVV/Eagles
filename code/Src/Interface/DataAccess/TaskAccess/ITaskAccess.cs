@@ -13,7 +13,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int RemoveTaskStep(int taskId, int stepId);
 
-        int EditTaskAccept(TaskTypeEnum type, int taskId, int reviewType);
+        int EditTaskAccept(TaskAcceptType type, int taskId, int reviewType);
 
         bool EditTaskComplete(int taskId, int isPublic, int completeStatus);
 
@@ -22,11 +22,12 @@ namespace Eagles.Interface.DataAccess.TaskAccess
         int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 
         int EditTaskFeedBack(int taskId, string content, List<Attachment> list);
-
-
+        
         List<TbUserTaskStep> GetTaskStep(int taskId);
 
-        List<TbTask> GetTask(int userId);
+        TbUserTaskStep GetStep(int stepId);
+
+        List<TbTask> GetTask(int userId, string status);
 
         TbTask GetTaskDetail(int taskId, int appId);
         

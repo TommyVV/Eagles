@@ -4,7 +4,7 @@ namespace Eagles.Application.Model.Enums
     /// <summary>
     /// 
     /// </summary>
-    public enum TaskTypeEnum
+    public enum TaskAcceptType
     {
         /// <summary>
         /// 上级审核任务

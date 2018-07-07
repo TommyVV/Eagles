@@ -43,23 +43,23 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             return dbManager.Excuted("delete from eagles.tb_user_task_step where TaskId = @TaskId and StepId = @StepId", new { TaskId = taskId, StepId = stepId });
         }
 
-        public int EditTaskAccept(TaskTypeEnum type, int taskId, int reviewType)
+        public int EditTaskAccept(TaskAcceptType type, int taskId, int reviewType)
         {
             var result = 0;
             switch (type)
             {
-                case TaskTypeEnum.Audit:
+                case TaskAcceptType.Audit:
                     //上级审核任务
                     if (0 == reviewType)
                         result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核通过
                     else
                         result = dbManager.Excuted("update eagles.tb_task set Status = -9 where TaskId = @TaskId and Status = -1 ", new { TaskId = taskId }); //3-审核不通过
                     break;
-                case TaskTypeEnum.Accept:
+                case TaskAcceptType.Accept:
                     //下级接受任务
                     result = dbManager.Excuted("update eagles.tb_task set Status = 0 where TaskId = @TaskId and Status = -2 ", new { TaskId = taskId }); //0-任务已接受
                     break;
-                case TaskTypeEnum.Apply:
+                case TaskAcceptType.Apply:
                     //下级申请完成任务
                     result = dbManager.Excuted("update eagles.tb_task set Status = 2 where TaskId = @TaskId and Status = 0 ", new { TaskId = taskId }); //2-完成任务待审核
                     break;
@@ -112,7 +112,7 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@At
             switch (action)
             {
                 case ActionEnum.Create:
-                    result = dbManager.Excuted(@"insert into eagles.tb_user_task_step (OrgId,BranchId,TaskId,UserId,StepName,Content,CreateTime) value (@OrgId,@BranchId,@TaskId,@UserId,@StepName,@CreateTime) ", taslStep);
+                    result = dbManager.Excuted(@"insert into eagles.tb_user_task_step (OrgId,BranchId,TaskId,UserId,StepName,Content,CreateTime) value (@OrgId,@BranchId,@TaskId,@UserId,@StepName,@Content,@CreateTime) ", taslStep);
                     break;
                 case ActionEnum.Modify:
                     result = dbManager.Excuted("update eagles.tb_user_task_step set StepName = @StepName where TaskId = @TaskId and StepId = @StepId", taslStep);
@@ -169,20 +169,31 @@ where TaskId = @TaskId ",
 
         public List<TbUserTaskStep> GetTaskStep(int taskId)
         {
-            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId", new {TaskId = taskId});
+            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId",
+                new { TaskId = taskId });
         }
 
-        public List<TbTask> GetTask(int userId)
+        public TbUserTaskStep GetStep(int stepId)
         {
-            return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new {UserId = userId});
+            return dbManager.QuerySingle<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where StepId = @StepId",
+                new { StepId = stepId });
+        }
+
+        public List<TbTask> GetTask(int userId, string status)
+        {
+            if (string.IsNullOrEmpty(status))
+                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId ", new { UserId = userId });
+            else
+                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId, a.Status = @Status ", new { UserId = userId, Status = status });
         }
 
         public TbTask GetTaskDetail(int taskId, int appId)
         {
             var result = dbManager.Query<TbTask>(
                 @"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,a.Attach1,a.Attach2,a.Attach3,a.Attach4,
-a.CreateTime,b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
+a.CreateTime,a.CreateType, b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();
@@ -201,8 +212,8 @@ join eagles.tb_user_task b on a.TaskId = b.TaskId where a.OrgId = @OrgId and a.I
         {
             var result = dbManager.Query<TbTask>(
                 @"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachType1,a.AttachType2,a.AttachType3,a.AttachType4,a.Attach1,a.Attach2,a.Attach3,a.Attach4,
-a.CreateTime,b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId and a.IsPublic = @IsPublic 
-and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ",new {TaskId = taskId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+a.CreateTime,a.CreateType,b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId where a.TaskId = @TaskId and a.OrgId = @OrgId and a.IsPublic = @IsPublic 
+and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ", new {TaskId = taskId, Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
             if (result != null && result.Any())
             {
                 return result.FirstOrDefault();

@@ -96,7 +96,7 @@
     <Compile Include="Activity\CreateActivity\CreateActivityResponse.cs" />
     <Compile Include="Enums\NewsEnum.cs" />
     <Compile Include="Enums\ActivityTypeEnum.cs" />
-    <Compile Include="Enums\TaskTypeEnum.cs" />
+    <Compile Include="Enums\TaskAcceptType.cs" />
     <Compile Include="Module\AppModuleResponse.cs" />
     <Compile Include="Module\GetAppModuleRequest.cs" />
     <Compile Include="Module\Module.cs" />

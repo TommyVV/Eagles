@@ -105,12 +105,12 @@ namespace Eagles.DomainService.Core.Task
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
-            var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
-           
-            if(result<=0)
-            {
+            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            if (stepInfo == null)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
+            if (result <= 0)
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
         }
 
@@ -128,7 +128,7 @@ namespace Eagles.DomainService.Core.Task
             switch (request.Type)
             {
                 //上级审核任务
-                case TaskTypeEnum.Audit:
+                case TaskAcceptType.Audit:
                     if (taskStatus != -1)
                         throw new TransactionException("96", "任务状态不正确");
                     //下级发起的活动才会由上级审核
@@ -136,14 +136,14 @@ namespace Eagles.DomainService.Core.Task
                         throw new TransactionException("96", "必须上级审核");
                     break;
                 //下级接受任务
-                case TaskTypeEnum.Accept:
+                case TaskAcceptType.Accept:
                     if (taskStatus != -2)
                         throw new TransactionException("96", "任务状态不正确");
                     if (0 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人接受任务");
                     break;
                 //下级申请完成任务
-                case TaskTypeEnum.Apply:
+                case TaskAcceptType.Apply:
                     if (taskStatus != 2)
                         throw new TransactionException("96", "任务状态不正确");
                     //上级发起的任务
@@ -156,9 +156,7 @@ namespace Eagles.DomainService.Core.Task
             }
             var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId, request.ReviewType);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -171,7 +169,7 @@ namespace Eagles.DomainService.Core.Task
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
-            if (taskInfo.Status != 0)
+            if (taskInfo.Status != 2)
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
             var createType = taskInfo.CreateType;
             //上级发起的活动
@@ -205,17 +203,22 @@ namespace Eagles.DomainService.Core.Task
             //下级发起的活动
             else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                 throw new TransactionException("96", "必须负责人编辑计划");
-            //iTaskAccess.GetTaskStep(request.TaskId);
+            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            var action = ActionEnum.Create;
+            if(stepInfo != null)
+                action = ActionEnum.Modify;
+            else
+                action = ActionEnum.Create;
             var taskStep = new TbUserTaskStep(){
                 StepId = request.StepId,
+                StepName = request.StepName,
                 OrgId = tokens.OrgId,
                 BranchId = tokens.BranchId,
                 TaskId = request.TaskId,
                 UserId = tokens.UserId,
-                Content = request.StepContent,
                 CreateTime = DateTime.Now
             };
-            var result = iTaskAccess.EditTaskStep(request.Action, taskStep);
+            var result = iTaskAccess.EditTaskStep(action, taskStep);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
@@ -273,8 +276,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var userId = request.UserId;
-            var result = iTaskAccess.GetTask(userId);
+            var result = iTaskAccess.GetTask(tokens.UserId, request.Status);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
