@@ -49,5 +49,14 @@ namespace Eagles.Application.Model.News.Model
         public string Attach3 { get; set; }
         public string Attach4 { get; set; }
         public string Attach5 { get; set; }
+
+        /// <summary>
+        /// 外部链接url
+        /// </summary>
+        public string ExternalUrl { get; set; }
+        /// <summary>
+        /// 是否有url
+        /// </summary>
+        public int IsExternal { get; set; }
     }
 }

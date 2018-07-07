@@ -2,12 +2,15 @@
 
 namespace Eagles.Application.Model.SystemMessage.Requset
 {
-    public class EditSystemMessageInfoRequset:RequestBase
+    /// <summary>
+    /// 
+    /// </summary>
+    public class EditSystemNewsRequset : RequestBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public SystemMessageInfoDetails Info { get; set; }
+        public SystemNews Info { get; set; }
 
 
     }

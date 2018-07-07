@@ -51,6 +51,7 @@
     <Compile Include="ISmsConfigHandler.cs" />
     <Compile Include="IRewardScoreHandler.cs" />
     <Compile Include="IScoreHandler.cs" />
+    <Compile Include="ISystemNewsHandler.cs" />
     <Compile Include="ITestPaperHandler.cs" />
     <Compile Include="IGoodsHandler.cs" />
     <Compile Include="IMenusHandler.cs" />

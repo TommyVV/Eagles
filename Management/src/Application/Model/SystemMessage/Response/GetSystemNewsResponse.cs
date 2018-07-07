@@ -3,7 +3,10 @@ using Eagles.Application.Model.SystemMessage.Model;
 
 namespace Eagles.Application.Model.SystemMessage.Response
 {
-    public class GetSystemMessageResponse 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GetSystemNewsResponse 
     {
         /// <summary>
         /// 总条数
@@ -12,6 +15,6 @@ namespace Eagles.Application.Model.SystemMessage.Response
         /// <summary>
         /// 集合
         /// </summary>
-        public List<SystemMessageInfo> List { get; set; }
+        public List<SystemNews> List { get; set; }
     }
 }
