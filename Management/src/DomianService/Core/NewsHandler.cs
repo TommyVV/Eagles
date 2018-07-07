@@ -124,6 +124,8 @@ namespace Eagles.DomainService.Core
                 TestId = detail.TestId,
                 Content = detail.HtmlContent,
                 OrgId = detail.OrgId,
+                ExternalUrl=detail.ExternalUrl,
+                IsExternal=detail.IsExternal
                 // Category=detail.ViewCount
             };
             return response;

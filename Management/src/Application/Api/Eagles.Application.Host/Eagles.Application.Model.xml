@@ -2109,6 +2109,16 @@
             附件 json格式
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ExternalUrl">
+            <summary>
+            外部链接url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsExternal">
+            <summary>
+            是否有url
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.News.Requset.EditNewRequset">
             <summary>
             
@@ -3367,57 +3377,116 @@
             集合
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.SystemMessageName">
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsId">
             <summary>
-            系统通知标题
+            消息id
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.StartTime">
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsName">
             <summary>
-            开始时间
+            消息名称
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.EndTime">
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsContent">
             <summary>
-            结束时间
+            消息内容
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemMessageInfo.Content">
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NoticeTime">
             <summary>
-            内容 json格式 图片 文字
+            提示日期
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.DeleteSystemMessageInfoRequset.SystemMessageId">
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.OperId">
+            <summary>
+            操作员
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.RepeatTime">
+            <summary>
+            重复类型;
+             0:每年;
+             1:仅1次
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.HtmlDesc">
+            <summary>
+            HTML描述
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsType">
+            <summary>
+            系统通知类型
+            00:领袖诞辰
+            10:系统通知
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SystemMessage.Requset.RemoveSystemNewsRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.EditSystemMessageInfoRequset.Info">
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.RemoveSystemNewsRequset.SystemMessageId">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemMessageInfoDetailRequset.SystemMessageId">
+        <member name="T:Eagles.Application.Model.SystemMessage.Requset.EditSystemNewsRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemMessageRequest.SystemMessageName">
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.EditSystemNewsRequset.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsDetailRequset.SystemMessageId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsRequset.SystemMessageName">
             <summary>
             标题 名字
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageInfoDetailResponse.info">
+        <member name="T:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsDetailResponse">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageResponse.TotalCount">
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsDetailResponse.info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsResponse.TotalCount">
             <summary>
             总条数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemMessageResponse.List">
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsResponse.List">
             <summary>
             集合
             </summary>

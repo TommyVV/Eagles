@@ -123,7 +123,9 @@ FROM `eagles`.`tb_news`
     `tb_news`.`ViewCount`,
     `tb_news`.`ReviewId`,
     `tb_news`.`CanStudy`,
-    `tb_news`.`ImageUrl`
+    `tb_news`.`ImageUrl`,
+    `tb_news`.`IsExternal`,
+    `tb_news`.`ExternalUrl`
 FROM `eagles`.`tb_news`
   where NewsId=@NewsId;
  ");
