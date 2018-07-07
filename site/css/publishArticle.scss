@@ -1,0 +1,63 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
+html,body{
+    height:100%;
+}
+.container{
+    padding:0 px2rem(55);
+}
+.publish{
+    font-size: px2rem(24) !important;
+    padding-top:px2rem(61);
+    color:#949494;
+    &-title{
+        width:100%;
+        height:px2rem(60);
+        border-radius: px2rem(4);
+        background-color:rgba(238,238,238,1);
+        outline: none;
+        padding-left: px2rem(38);
+        margin-bottom:px2rem(20);
+        -webkit-appearance: none;
+        border: none ;  
+        font-size: px2rem(24) !important
+    }
+    &-type{
+        width:px2rem(150);
+        height:px2rem(60);
+        background-color:rgba(238,238,238,1);
+        border:none;
+        margin-bottom:px2rem(20);
+        outline: none;
+        padding-left:px2rem(38);
+        font-size: px2rem(24) !important
+    }
+    &-content{
+        height:px2rem(600);
+        background-color:rgba(238,238,238,1);
+        width:100%;
+        border:none;
+        resize: none;
+        outline: none;
+        padding:px2rem(22) px2rem(38);
+        margin-bottom:px2rem(121);
+        font-size: px2rem(24) !important
+    }
+    &-btn{
+        height:px2rem(84);
+        width:px2rem(520);
+        color:#fff;
+        font-size: px2rem(30);
+        border:none;
+        margin:0 auto;
+        display:block;
+        letter-spacing: 5px;
+        background: linear-gradient(to bottom right, #FF5454, #E51A1A);
+        outline: none;
+    }
+}
+

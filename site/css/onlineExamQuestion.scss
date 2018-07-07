@@ -1,0 +1,159 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
+html,body{
+    height:100%;
+}
+.container{
+    padding:0;
+    height:100%;
+    width:pc(1980);
+}
+.ques{
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    &-countdown{
+        padding-left:px2rem(36);
+        color:#4B758A;
+        font-size: px2rem(24);
+        height:px2rem(36);
+        background:rgba(207,233,246,1);
+        line-height: px2rem(36);
+    }
+    &-content{
+        font-size: px2rem(30);
+        padding:px2rem(79) px2rem(57) 0 px2rem(34);
+        flex:1;
+        &-question{
+            line-height: 1.5;
+            margin-bottom:px2rem(60);
+        }
+        &-options{
+            // padding-left:px2rem(35);
+            &-list{
+                display:flex;
+                color:#141414;
+                line-height: 1;
+                padding-bottom:px2rem(38);
+                display: flex;
+                align-items: center;
+                label{
+                    font-weight: 400;
+                    width:100%;
+                    // display:inline-block;
+                    display:flex;
+                    &-explain{
+                        padding-left:px2rem(18);
+                    }
+                    
+                }
+                
+            }
+        }
+
+        &-button{
+            display:flex;
+            justify-content: center;
+            padding-top:px2rem(78);
+            button{
+                width:px2rem(230);
+                height:px2rem(74);
+                border-radius:px2rem(36);
+                border:1px solid #949494;
+                background-color:#fff;
+                outline: none;
+            }
+            &-prev{
+                margin-right:px2rem(59);
+            }
+            &-submit{
+                display:none;
+            }
+
+        }
+    }
+    &-count{
+        font-size: px2rem(30);
+        color:#949494;
+        text-align: center;
+        padding-bottom:px2rem(25);
+    }
+    &-modal{
+        position: fixed;
+        height:100%;
+        width:100%;
+        background-color:rgba(0,0,0,0.5);
+        display:none;
+        top:0;
+        left:0;
+        &-wrap{
+            position: absolute;
+            width:100%;
+            bottom:0;
+            background:#fff;
+            // display:flex;
+            flex-wrap: wrap;
+            padding-top:px2rem(46);
+            padding-left:px2rem(18.5);
+            align-content: flex-start; 
+            overflow: auto;
+            max-height:px2rem(853);
+            &.list-show{
+                display: flex;
+            }
+            &.list-hide{
+                display: none;
+            }
+            
+            span{
+                width:px2rem(84);
+                height:px2rem(84);
+                border:1px solid #48C52B;
+                line-height: px2rem(84);
+                text-align: center;
+                border-radius: px2rem(42);
+                margin:0 px2rem(17.5) px2rem(40) px2rem(17.5);
+            }
+        }
+    }
+}
+
+input[type=radio] + span{
+    display:inline-block;
+    background:url(./../icons/sel_no@2x.png);
+    width:15px;
+    height:15px;
+    background-size: cover;
+    margin-right: 9px;
+}
+input[type=radio]:checked + span{
+    // display:inline-block;
+    background:url(./../icons/sel_yes@2x.png);
+    background-size: cover;
+    border-radius: 50%;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
+}
+
+input[type=checkbox] + span{
+    background:url(./../icons/sel_no@2x.png);
+    background-size: cover;
+    display:inline-block;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
+    background-size: cover;
+}
+input[type=checkbox]:checked + span{
+    // display:inline-block;
+    background:url(./../icons/sel_yes@2x.png);
+    background-size: cover;
+    width:15px;
+    height:15px;
+    margin-right: 9px;
+}

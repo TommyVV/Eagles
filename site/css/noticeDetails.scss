@@ -1,0 +1,108 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+html,body{
+	height: 100%;
+}
+.container{
+	height: 100%;
+}
+@media screen and (max-width: 768px) {
+    .noticeDetailsModal{
+        background-color: #f8f8f8;
+        min-height: 100%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .noticeDetailsModal{
+        background-color: rgba(248,248,248,1);
+        min-height: 100%;
+    } 
+}
+.noticeDetailsBox{
+	padding-top: px2rem(33);
+	padding-left: px2rem(48);
+	padding-right: px2rem(48);
+	margin-top: px2rem(36);
+	background: rgba(255,255,255,1);
+    .item{
+		position: relative;
+		.title{
+			width:100%;
+			font-size:px2rem(48);
+			font-family:SourceHanSansCN-Medium;
+			font-weight: 600;
+			color:rgba(20,20,20,1);
+			line-height:px2rem(60);
+			margin-bottom: px2rem(35);
+		}
+		.createTime{
+			font-size:px2rem(30);
+			font-family:SourceHanSansCN-Normal;
+			color:rgba(148,148,148,1);
+			padding-bottom: px2rem(25);
+		}
+		.hr{
+			height: 1px;
+			width: 100%;
+			background:rgba(238,238,238,1);
+			margin: px2rem(27) 0 px2rem(55)
+		}
+		.articleBox{
+			.articleTop{
+				height: px2rem(30);
+				margin-bottom: px2rem(53);
+				.author{
+					float: left;
+					font-size:px2rem(30);
+					font-family:SourceHanSansCN-Normal;
+					color:rgba(148,148,148,1);
+				}
+				.learnTime{
+					float: right;
+					font-size:px2rem(24);
+					font-family:SourceHanSansCN-Normal;
+					color:rgba(148,148,148,1);
+				}
+			}
+			.articleContent{
+				.articleText{
+					font-size:px2rem(30);
+					font-family:SourceHanSansCN-Light;
+					color:rgba(20,20,20,1);
+					line-height:px2rem(48);
+					margin-bottom: px2rem(40);
+				}
+				.articleImage{
+					display: block;
+					height: px2rem(438);
+					width: 100%;
+					margin-bottom: px2rem(40);
+				}
+				.browseNum{
+					text-align: right;
+					font-size:px2rem(24);
+					font-family:SourceHanSansCN-Normal;
+					color:rgba(148,148,148,1);
+					padding-top: px2rem(16);
+					padding-bottom: px2rem(11);
+				}
+			}
+		}
+		.downloadPDF{
+			padding-bottom: px2rem(59);
+			display: flex;
+			.name{
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+				overflow: hidden;
+				// flex: 1 0 0;
+			}
+		}
+	}
+}

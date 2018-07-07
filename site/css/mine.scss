@@ -1,0 +1,165 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+.head-area{
+    width: 100%;
+    height: px2rem(292);
+    background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: px2rem(83) px2rem(34) px2rem(40) px2rem(34);
+    color: white;
+}
+.head-icon{
+    width:px2rem(170);
+    height: px2rem(170);
+    border-radius: 50%;
+    float: left;
+}
+.head-info{
+    float: left;
+    margin-left: px2rem(34);
+    .info-name{
+        font-size: px2rem(36);
+        height: px2rem(85);
+        line-height: 1;
+        vertical-align: bottom;
+        display: table-cell;
+    }
+    .info-tel{
+        font-size: px2rem(24);
+        margin-top:px2rem(10);
+    }
+}
+.info-edit{
+    float: right;
+    width: px2rem(50);
+    height: px2rem(170);
+    text-align: center;
+    position: relative;
+    span{
+        position: absolute;
+        left: 0;
+        top:px2rem(50);
+        font-size:px2rem(26); 
+    }
+}
+// 中间部分样式
+.mid-area{
+    width:100%;
+    height: px2rem(174);
+    .mid-part{
+        width:33.3333%;
+        float: left;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .points{
+            font-size:px2rem(36);
+            color:rgba(248,119,62,1);
+            line-height:1.3;
+        }
+        .email{
+            font-size:px2rem(36);
+            color:#F5C55C;
+            line-height:1.3;
+        }
+        .file{
+            font-size:px2rem(36);
+            color:#58A8ED;
+            line-height:1.3;
+        }
+        .small-title{
+            font-size:px2rem(24);
+            color:rgba(148,148,148,1);
+            line-height:2;
+        }
+    }
+}
+// 任务部分
+.task-area{
+    width:100%;
+    border-top: px2rem(22) solid #F8F8F8;
+    .task-part{
+        box-sizing: border-box;
+        padding: px2rem(30) px2rem(35);
+        height:px2rem(90);
+        border-bottom: 1px solid #EEEEEE;
+    }
+    .d-right{
+        color: #AFAFB1;
+        float: right;
+    }
+}
+
+.pc,.mobile{
+    display:none;
+}
+.left-nav{
+    height:717px;
+    background:#fff;
+}
+.min-wrap{
+    width:1200px;
+    margin:0 auto;
+    display:flex;
+    height:717px;
+    .main-content{
+        flex:1;
+        background:#fff;
+        padding:0 60px;
+        &-top{
+            line-height: 1;
+            padding:39px 0 71px 0 ;
+            &-name{
+                font-size: 18px;
+                color:#0F0F0F;
+                margin-right: 5px;         
+            }
+            &-tel{
+                margin-left: 29px;  
+                font-size: 14px;
+                color:#949494;
+            }
+        }
+        ul{
+            list-style: none;
+            display:flex;
+            li{
+                display:flex;
+                flex:1;
+                background:#F5F5F5;
+                height:182px;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                &:nth-child(2){
+                    margin:0 20px;
+                }
+                .pro-label{
+                    font-size: 21px;
+                    color:#949494;
+                }
+                .integral{
+                    color:#F8773E;
+                    font-size: 47px;
+                }
+                img{
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+    }
+}

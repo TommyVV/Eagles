@@ -1,0 +1,77 @@
+@import 'common/px2rem.scss';
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+html,body{
+	height: 100%;
+}
+.container{
+	height: 100%;
+}
+@media screen and (max-width: 768px) {
+    .myNoticeModal{
+        background-color: #f8f8f8;
+        min-height: 100%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .myNoticeModal{
+        background-color: rgba(248,248,248,1);
+        min-height: 100%;
+    } 
+}
+.myNoticeBox{
+	padding: px2rem(38) px2rem(35);
+    .item{
+		margin-bottom:px2rem(25);
+		padding: px2rem(30) px2rem(35) px2rem(27);
+		background:rgba(255,255,255,1);
+		border-radius:4px;
+		position: relative;
+		.title{
+			width:100%;
+			font-size:px2rem(30);
+			font-family:SourceHanSansCN-Regular;
+			font-weight: 600;
+			color:rgba(20,20,20,1);
+			line-height:px2rem(48);
+			margin-bottom: px2rem(22);
+		}
+		.content{
+			font-size:px2rem(24);
+			font-family:SourceHanSansCN-Regular;
+			color:rgba(148,148,148,1);
+			line-height:px2rem(36);
+			margin-bottom: px2rem(35);
+		}
+		.overflow-two-line{
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+		}
+		.time{
+			font-size:px2rem(24);
+			font-family:Roboto-Regular;
+			color:rgba(148,148,148,1);
+			line-height:px2rem(36);
+		}
+		.new{
+			position: absolute;
+			top: px2rem(12);
+			right: px2rem(13);
+			width:px2rem(72);
+			height:px2rem(26);
+			background:rgba(242,72,72,1);
+			border-radius:px2rem(13);
+			font-size:px2rem(20);
+			font-family:SourceHanSansCN-Regular;
+			color:rgba(255,255,255,1);
+			line-height:px2rem(26);
+			text-align: center;
+		}
+	}
+}

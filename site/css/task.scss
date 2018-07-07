@@ -1,0 +1,198 @@
+@import 'common/px2rem.scss';
+.head-area {
+    width: 100%;
+    height: px2rem(80);
+    .task-cate {
+        float: left;
+        width: 33.33%;
+        line-height: px2rem(80);
+        text-align: center;
+    }
+}
+
+.drog-down-menu {
+    width: 100%;
+    position: relative;
+    .menu-list {
+        width: 100%;
+        background-color: white;
+        position: absolute;
+        padding: 0px 15px;
+        z-index: 2;
+        .list-item {
+            height: px2rem(70);
+            border-bottom: 1px solid #EEEEEE;
+            line-height: px2rem(70);
+        }
+    }
+}
+
+.task-list {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+.task-item {
+    margin: 0 21px;
+    border-bottom: 1px solid #EEEEEE;
+    .task-title {
+        padding-top: 30px;
+        line-height: 23px;
+        font-size: 18px;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        -webkit-line-clamp: 2; /** 显示的行数 **/
+        overflow: hidden;  /** 隐藏超出的内容 **/
+    }
+    .task-content {
+        margin-top: 21px;
+        margin-bottom: 30px;
+        height: 36px;
+        font-size: 12px;
+        .task-info {
+            text-align: left;
+            float: left;
+            color: #949494;
+        }
+        .task-status {
+            float: right;
+            margin-top: px2rem(21);
+            width: px2rem(140);
+            height: px2rem(40);
+            line-height: px2rem(40);
+            border-radius: px2rem(20);
+            text-align: center;
+        }
+        .accept-status {
+            color: white;
+        }
+        .init-status {
+            border: 1px solid #949494;
+            color: #949494;
+        }
+    }
+}
+
+.mobile,.pc{
+    display:none;
+}
+.pc-wrap{
+    width:1000px;
+    margin:0 auto;
+    .assign{
+        background:#fff;
+        height:107px;
+        color:#949494;
+        display:flex;
+        align-items: center;
+        padding-left:48px;
+        margin-bottom: 10px;
+        .name-label{
+            font-size: 24px;
+        }
+        .select{
+            width:118px;
+            height:30px;
+            background:#fff;
+            border:1px solid #EEEEEE;
+            position: relative;
+            display:flex;
+            font-size: 16px;
+            color:#949494;
+            align-items: center;
+            padding:0 14px 0 18px;
+            &-name{
+                flex:1;
+            }
+            i{
+                font-size: 8px;
+            }
+            ul{
+                display:none;
+                list-style: none;
+                position: absolute;
+                top:33px;
+                left:0;
+                background:#fff;
+                width:100%;
+                box-shadow: -4px 4px 4px #dfdfdf;
+                li{
+                    padding-left:18px;
+                    height:30px;
+                    font-size: 16px;
+                    color:#949494;
+                    line-height: 30px;
+                    cursor: pointer;
+                    &:hover{
+                        background:rgba(242,242,242,1);
+                    }
+                }
+            }
+        }
+    }
+    .list{
+        background:#fff;
+        padding:0 35px;
+        &-header{
+            display:flex;
+            border-bottom:1px solid #EEEEEE;
+            line-height: 1;
+            padding:35px 0 20px 0;
+            &-list{
+                flex:1;
+                color:#0F0F0F;
+                font-size: 30px;
+            }
+            &-more{
+                font-size: 18px;
+                color:#949494;
+            }
+        }
+        ul{
+            padding:0 14px;
+            list-style: none;
+            padding-bottom:58px;
+            li{
+                padding-bottom: 41px;
+                border-bottom: 1px solid #EEEEEE;
+                .title{
+                    font-size: 24px;
+                    padding:24px 0 0 0;
+                    line-height: 1;
+                }
+                p{
+                    font-size: 14px;
+                    color:#949494;
+                    margin-bottom: 45px;
+                }
+                .props{
+                    display:flex;
+                    &-left{
+                        flex:1;
+                        font-size: 18px;
+                        color:#949494;
+                        .detail{
+                            color:#141414;
+                        }
+                    }
+                    &-btn{
+                        font-size: 18px;
+                        color:#FFFFFF;
+                        width:120px;
+                        height:40px;
+                        border-radius: 20px;
+                        background:#F24848;
+                        line-height: 40px;
+                        text-align: center;
+                        &.already{
+                            background:#fff;
+                            color:#949494;
+                            border:1px solid #949494;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

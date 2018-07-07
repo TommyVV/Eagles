@@ -1,0 +1,151 @@
+/*
+* 分享列表的item
+*/
+
+.await {
+    display: inline-block;
+    background: #F66F90;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    position: relative;
+    top: -5px;
+    margin-right: 10px;
+}
+
+.share-item {
+    padding: 20px 16px 16px;
+    background-color: #ffffff;
+    position: relative;
+    cursor: pointer;
+    &:first-child:before {
+        display: none;
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 1px;
+        border-top: 1px solid #D9D9D9;
+        color: #D9D9D9;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    &:active {
+        background-color: #ECECEC;
+    }
+    .share-item__name {
+        font-size: 18px;
+        color: #333333; // line-height: 28px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .share-item__content {
+        font-size: 14px;
+        color: #999999;
+        max-height: 46px;
+        margin-top: 8px;
+        overflow: hidden; // margin-bottom: 17px;
+    }
+    .share-item__info {
+        font-size: 12px;
+        margin-top: 12px;
+        .share-item__info__user {
+            color: #999999;
+            float: left;
+        }
+        .share-item__info__price {
+            color: #FC7256;
+            float: right;
+            font-size: 18px;
+        }
+        .share-item__info__type {
+            border: 1px solid #3D82E1;
+            border-radius: 4px;
+            font-size: 12px;
+            height: 20px;
+            padding: 2px 6px;
+            color: #3D82E1;
+            margin-left: 16px;
+        }
+    }
+    .share-item__info:after {
+        clear: both;
+        display: block;
+        content: "";
+    }
+}
+.share-item:hover {
+    background: #ECECEC;
+}
+/*
+* 我的分享列表的item
+*/
+
+.myshare-item {
+    padding: 20px 16px 16px;
+    background-color: #ffffff;
+    position: relative;
+    &:first-child:before {
+        display: none;
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 1px;
+        border-top: 1px solid #D9D9D9;
+        color: #D9D9D9;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+    .myshare-item__name {
+        font-size: 18px;
+        color: #333333;
+        margin-bottom: 4px;
+    }
+    .myshare-item__info {
+        font-size: 12px;
+        display: flex;
+        color: #999999;
+        .myshare-item__info__price {
+            flex-grow: 1;
+            text-align: left;
+            align-self: flex-end;
+            .myshare-item__info__total--price {
+                font-size: 14px;
+            }
+        }
+        .myshare-item__info__total {
+            text-align: right;
+            flex-grow: 1;
+            align-self: flex-end;
+            .myshare-item__info__total--price {
+                color: #FC7256;
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+.myshare-item:active {
+    background-color: #ECECEC;
+}
+
+.hanlde {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background: red;
+    margin-right: 10px;
+}

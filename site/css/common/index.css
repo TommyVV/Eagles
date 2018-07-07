@@ -1,0 +1,227 @@
+html,body{
+    height: 100%;
+}
+.container{
+    height: 100%;
+}
+.main_content{
+    display: none;
+}
+.navbar-toggle{
+    float:left;
+}
+@media screen and (max-width: 768px) {
+    .loginModal{
+        background-color: #f8f8f8;
+        height: 100%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .loginModal{
+        background-color: #fff;
+        height: 100%;
+    }
+}
+.loginBox{
+    background-color: #f8f8f8;
+    /*position: absolute;
+    top:50%;
+    transform: translateY(-50%);*/
+}
+.logo{
+    margin-top:56px;
+    text-align: center;
+}
+.form-horizontal{
+    padding: 56px 22.5px 0 22.5px;
+}
+.form-horizontal .form-group{
+    position: relative;
+    margin-left:0;
+    margin-right: 0;
+}
+.form-control{
+    background-color: #f8f8f8;
+    border:none;
+    border-bottom: 1px solid #A8A8A8;
+    box-shadow: none;
+    border-radius: 0;
+    padding-left: 28px;
+    font-size: 12px;
+}
+.form-control:focus{
+    box-shadow: none;
+}
+.form-group .icon{
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 26px;
+    left: 2px;
+    bottom:5px;
+}
+.form-group .user-icon{
+    background: url('../assets/images/user.png') no-repeat center center;
+}
+.form-group .pwd-icon{
+    background: url('../assets/images/lock.png') no-repeat center center;
+}
+.form-group .cap-icon{
+    background: url('../assets/images/verifycode.png') no-repeat center center;
+}
+.form-group .btn-cap{
+    position: absolute;
+    display: inline-block;
+    box-sizing: border-box;
+    right: 5px;
+    bottom:5px;
+    padding: 0px 15px;
+    line-height: 30px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #b5b5b5;
+}
+.btn-login{
+    display: block;
+    margin:0 auto;
+    margin-top:69px;
+    width: 90%;
+    height: 42px;
+    background-color: #EE2F2F;
+    color: #fff;
+    border:none;
+    outline: none;
+}
+.btn-login:focus,.btn-login:hover{
+    border:none;
+    outline: none;
+    color:#fff;
+    box-shadow: none;
+}
+/*.form-bg{
+    background: #00b4ef;
+}
+.form-horizontal{
+    background: #fff;
+    padding-bottom: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+.form-horizontal .heading{
+    display: block;
+    font-size: 35px;
+    font-weight: 700;
+    padding: 35px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+.form-horizontal .form-group{
+    padding: 0 40px;
+    margin: 0 0 25px 0;
+    position: relative;
+}
+.form-horizontal .form-control{
+    background: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+    padding: 0 20px 0 45px;
+    height: 40px;
+    transition: all 0.3s ease 0s;
+}
+.form-horizontal .form-control:focus{
+    background: #e0e0e0;
+    box-shadow: none;
+    outline: 0 none;
+}
+.form-horizontal .form-group i{
+    position: absolute;
+    top: 12px;
+    left: 60px;
+    font-size: 17px;
+    color: #c8c8c8;
+    transition : all 0.5s ease 0s;
+}
+.form-horizontal .form-control:focus + i{
+    color: #00b4ef;
+}
+.form-horizontal .fa-question-circle{
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    font-size: 20px;
+    color: #808080;
+    transition: all 0.5s ease 0s;
+}
+.form-horizontal .fa-question-circle:hover{
+    color: #000;
+}
+.form-horizontal .main-checkbox{
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: #11a3fc;
+    border-radius: 50%;
+    position: relative;
+    margin: 5px 0 0 5px;
+    border: 1px solid #11a3fc;
+}
+.form-horizontal .main-checkbox label{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.form-horizontal .main-checkbox label:after{
+    content: "";
+    width: 10px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.form-horizontal .main-checkbox input[type=checkbox]{
+    visibility: hidden;
+}
+.form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
+    opacity: 1;
+}
+.form-horizontal .text{
+    float: left;
+    margin-left: 7px;
+    line-height: 20px;
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+.form-horizontal .btn{
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+@media only screen and (max-width: 479px){
+    .form-horizontal .form-group{
+        padding: 0 25px;
+    }
+    .form-horizontal .form-group i{
+        left: 45px;
+    }
+    .form-horizontal .btn{
+        padding: 10px 20px;
+    }
+}*/

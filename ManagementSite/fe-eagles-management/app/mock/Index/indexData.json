@@ -1,0 +1,56 @@
+{
+    "code": 0,
+    "message": "success",
+    "data": {
+        "hasMore": 1,
+        "orgData": [],
+        "totalSize": 49,
+        "articleData": [
+            {
+                "id": "9E801CBF-CDA0-4E58-B69C-D64864F42E40",
+                "role": 1,
+                "createTime": 1522805335000,
+                "title": "123",
+                "type": "share",
+                "introduction": "123",
+                "name": "公司名字"
+            },
+            {
+                "id": "6F78D82D-5F5F-4A0F-8314-76D623B34E04",
+                "role": 0,
+                "createTime": 1522805274000,
+                "title": "123123",
+                "type": "share",
+                "introduction": "1233",
+                "name": "admin"
+            },
+            {
+                "id": "B45918A0-CD4E-46FF-AD31-60A74E71C262",
+                "role": 0,
+                "createTime": 1522805259000,
+                "title": "123123",
+                "type": "share",
+                "introduction": "008",
+                "name": "admin"
+            },
+            {
+                "id": "AF8471B9-8FEE-40DA-90E4-679538FF1DEF",
+                "role": 1,
+                "createTime": 1522805001000,
+                "title": "审核7",
+                "type": "share",
+                "introduction": "123",
+                "name": "果果"
+            },
+            {
+                "id": "BBAF94EA-94DC-42EE-8603-A4DBE34967C4",
+                "role": 1,
+                "createTime": 1522805000000,
+                "title": "审核7",
+                "type": "share",
+                "introduction": "123",
+                "name": "果果"
+            }
+        ]
+    }
+}

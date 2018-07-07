@@ -1,0 +1,38 @@
+
+.pc-nav{
+    width:100%;
+    border:1px solid #E0E0E0;
+    height:90px;
+    font-size: 16px;
+    // overflow: hidden;
+    margin-bottom: 12px;
+	&-wrap{
+        display:flex;
+        width:1200px;
+        margin:0 auto;
+        height:100%;
+        .logo{
+            flex:1;
+        }
+        .level-one{
+            height:100%;
+            display:flex;
+            & > li{
+                list-style:none;
+                height:100%;
+                box-sizing: content-box;
+                margin-left: 102px;
+                & > a{
+                    color:#949494;
+                    text-decoration: none;
+                    display:inline-block;
+                    height:100%;
+                    line-height: 90px;
+                }
+                &.active{
+                    border-bottom:2px solid peru;
+                }
+            }
+        }
+    }
+}

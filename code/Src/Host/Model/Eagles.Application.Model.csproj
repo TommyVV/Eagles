@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3DE06D44-2860-4A92-9FDD-1529093CC970}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eagles.Application.Model</RootNamespace>
+    <AssemblyName>Eagles.Application.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Host\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Host\bin\Eagles.Application.Model.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activity\EditActivityReview\EditActivityReviewRequest.cs" />
+    <Compile Include="Activity\EditActivityReview\EditActivityReviewResponse.cs" />
+    <Compile Include="Activity\GetActivityFeedBack\GetActivityFeedBackRequest.cs" />
+    <Compile Include="Activity\GetActivityFeedBack\GetActivityFeedBackResponse.cs" />
+    <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailRequest.cs" />
+    <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
+    <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
+    <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
+    <Compile Include="Common\FeedBack.cs" />
+    <Compile Include="Common\JoinPeople.cs" />
+    <Compile Include="Common\ResAnswer.cs" />
+    <Compile Include="Common\ReqAnswer.cs" />
+    <Compile Include="Common\UserLevel.cs" />
+    <Compile Include="Common\UserRelationship.cs" />
+    <Compile Include="MessageCode.cs" />
+    <Compile Include="MessageKey.cs" />
+    <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
+    <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
+    <Compile Include="News\GetTestPaper\AppAnswer.cs" />
+    <Compile Include="News\GetTestPaper\GetTestPaperResponse.cs" />
+    <Compile Include="News\GetTestPaper\GetTestPaperRequest.cs" />
+    <Compile Include="GetMenu\AppMenu.cs" />
+    <Compile Include="GetMenu\AppSubMenu.cs" />
+    <Compile Include="Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
+    <Compile Include="Score\AppScoreExchange\AppScoreExchangeResponse.cs" />
+    <Compile Include="News\GetTestPaper\AppQuestion.cs" />
+    <Compile Include="Task\GetPublicTaskDetail\GetPublicTaskDetailRequest.cs" />
+    <Compile Include="Task\GetPublicTaskDetail\GetPublicTaskDetailResponse.cs" />
+    <Compile Include="Task\GetPublicTask\GetPublicTaskRequest.cs" />
+    <Compile Include="Task\GetPublicTask\GetPublicTaskResponse.cs" />
+    <Compile Include="Upload\FileUploadResult.cs" />
+    <Compile Include="Upload\UploadResponse.cs" />
+    <Compile Include="UserComment\AuditUserComment\AuditUserCommentRequest.cs" />
+    <Compile Include="UserComment\AuditUserComment\AuditUserCommentResponse.cs" />
+    <Compile Include="Activity\EditActivityFeedBack\EditActivityFeedBackRequest.cs" />
+    <Compile Include="Activity\EditActivityFeedBack\EditActivityFeedBackResponse.cs" />
+    <Compile Include="Activity\EditActivityJoin\EditActivityJoinRequest.cs" />
+    <Compile Include="Activity\EditActivityJoin\EditActivityJoinResponse.cs" />
+    <Compile Include="Enums\ActionEnum.cs" />
+    <Compile Include="Activity\GetActivityDetail\GetActivityDetailRequest.cs" />
+    <Compile Include="Activity\GetActivityDetail\GetActivityDetailResponse.cs" />
+    <Compile Include="Activity\GetActivity\GetActivityRequest.cs" />
+    <Compile Include="Activity\GetActivity\GetActivityResponse.cs" />
+    <Compile Include="Activity\EditActivityComplete\EditActivityCompleteRequest.cs" />
+    <Compile Include="Activity\CreateActivity\CreateActivityRequest.cs" />
+    <Compile Include="Activity\EditActivityComplete\EditActivityCompleteResponse.cs" />
+    <Compile Include="Activity\CreateActivity\CreateActivityResponse.cs" />
+    <Compile Include="Enums\NewsEnum.cs" />
+    <Compile Include="Enums\ActivityTypeEnum.cs" />
+    <Compile Include="Enums\TaskTypeEnum.cs" />
+    <Compile Include="Module\AppModuleResponse.cs" />
+    <Compile Include="Module\GetAppModuleRequest.cs" />
+    <Compile Include="Module\Module.cs" />
+    <Compile Include="News\GetModuleNews\GetModuleNewsRequest.cs" />
+    <Compile Include="News\GetModuleNews\GetModuleNewsResponse.cs" />
+    <Compile Include="News\GetNewsDetail\GetNewsDetailRequest.cs" />
+    <Compile Include="News\GetNewsDetail\GetNewsDetailResponse.cs" />
+    <Compile Include="News\GetNews\GetNewsRequest.cs" />
+    <Compile Include="News\GetNews\GetNewsResponse.cs" />
+    <Compile Include="GetNotice\GetNoticRequest.cs" />
+    <Compile Include="GetNotice\GetNoticResponse.cs" />
+    <Compile Include="Scroll\GetScrollNew\GetScrollNewsRequest.cs" />
+    <Compile Include="Scroll\GetScrollNew\GetScrollNewsResponse.cs" />
+    <Compile Include="News\CreateNews\CreateArticleRequest.cs" />
+    <Compile Include="News\CreateNews\CreateArticleResponse.cs" />
+    <Compile Include="Score\GetScoreExchangeLs\GetScoreExchangeLsRequest.cs" />
+    <Compile Include="Score\GetScoreExchangeLs\GetScoreExchangeLsResponse.cs" />
+    <Compile Include="Product\GetProductDetail\GetProductDetailRequest.cs" />
+    <Compile Include="Product\GetProductDetail\GetProductDetailResponse.cs" />
+    <Compile Include="Product\GetProduct\GetProductRequest.cs" />
+    <Compile Include="Product\GetProduct\GetProductResponse.cs" />
+    <Compile Include="Score\GetScoreRank\GetScoreRankRequest.cs" />
+    <Compile Include="Score\GetScoreRank\GetScoreRankResponse.cs" />
+    <Compile Include="Study\EditStudyTime\EditStudyTimeRequest.cs" />
+    <Compile Include="Study\EditStudyTime\EditStudyTimeResponse.cs" />
+    <Compile Include="Study\GetStudyTime\GetStudyTimeRequest.cs" />
+    <Compile Include="Study\GetStudyTime\GetStudyTimeResponse.cs" />
+    <Compile Include="UserComment\EditUserComment\EditUserCommentRequest.cs" />
+    <Compile Include="UserComment\EditUserComment\EditUserCommentResponse.cs" />
+    <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
+    <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />
+    <Compile Include="User\GetUserRelationship\GetUserRelationshipResponse.cs" />
+    <Compile Include="User\Login\LoginRequest.cs" />
+    <Compile Include="User\Login\LoginResponse.cs" />
+    <Compile Include="GetMenu\GetMenuRequest.cs" />
+    <Compile Include="GetMenu\GetMenuResponse.cs" />
+    <Compile Include="Scroll\GetScrollImg\GetScrollImgRequest.cs" />
+    <Compile Include="Scroll\GetScrollImg\GetScrollImgResponse.cs" />
+    <Compile Include="UserComment\GetUserComment\GetUserCommentRequest.cs" />
+    <Compile Include="UserComment\GetUserComment\GetUserCommentResponse.cs" />
+    <Compile Include="Task\EditTaskAccept\EditTaskAcceptRequest.cs" />
+    <Compile Include="Task\EditTaskAccept\EditTaskAcceptResponse.cs" />
+    <Compile Include="Task\EditTaskFeedBack\EditTaskFeedBackRequest.cs" />
+    <Compile Include="Task\EditTaskFeedBack\EditTaskFeedBackResponse.cs" />
+    <Compile Include="Task\GetTaskDetail\GetTaskDetailRequest.cs" />
+    <Compile Include="Task\GetTaskDetail\GetTaskDetailResponse.cs" />
+    <Compile Include="Task\GetTask\GetTaskRequest.cs" />
+    <Compile Include="Task\GetTask\GetTaskResponse.cs" />
+    <Compile Include="Task\EditTaskComplete\EditTaskCompleteRequest.cs" />
+    <Compile Include="Task\CreateTask\CreateTaskRequest.cs" />
+    <Compile Include="Task\EditTaskComplete\EditTaskCompleteResponse.cs" />
+    <Compile Include="Task\CreateTask\CreateTaskResponse.cs" />
+    <Compile Include="Task\EditTaskStep\EditTaskStepRequest.cs" />
+    <Compile Include="Task\EditTaskStep\EditTaskStepResponse.cs" />
+    <Compile Include="Task\GetTaskStep\GetTaskStepRequest.cs" />
+    <Compile Include="Task\GetTaskStep\GetTaskStepResponse.cs" />
+    <Compile Include="User\GetUserInfo\GetUserInfoRequest.cs" />
+    <Compile Include="User\GetUserInfo\GetUserInfoResponse.cs" />
+    <Compile Include="User\EditUser\EditUserRequest.cs" />
+    <Compile Include="User\EditUser\EditUserResponse.cs" />
+    <Compile Include="Task\RemoveTaskStep\RemoveTaskStepRequest.cs" />
+    <Compile Include="Task\RemoveTaskStep\RemoveTaskStepResponse.cs" />
+    <Compile Include="User\Register\RegisterRequest.cs" />
+    <Compile Include="User\Register\RegisterResponse.cs" />
+    <Compile Include="User\Token\TokenRequest.cs" />
+    <Compile Include="User\Token\TokenResponse.cs" />
+    <Compile Include="Common\Activity.cs" />
+    <Compile Include="Common\Attachment.cs" />
+    <Compile Include="Common\BranchRank.cs" />
+    <Compile Include="Common\Comment.cs" />
+    <Compile Include="Common\News.cs" />
+    <Compile Include="Common\Product.cs" />
+    <Compile Include="Common\Score.cs" />
+    <Compile Include="Common\Step.cs" />
+    <Compile Include="Common\Task.cs" />
+    <Compile Include="Common\UserInfo.cs" />
+    <Compile Include="Common\UserRank.cs" />
+    <Compile Include="Enums\ActivityType.cs" />
+    <Compile Include="Enums\AuditStatus.cs" />
+    <Compile Include="Enums\ExercisesType.cs" />
+    <Compile Include="Enums\GoodsStatus.cs" />
+    <Compile Include="Enums\Status.cs" />
+    <Compile Include="RequestBase.cs" />
+    <Compile Include="ResponseBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\TestRequest.cs" />
+    <Compile Include="Test\TestResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

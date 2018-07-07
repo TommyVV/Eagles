@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{700BDFDA-E1CC-4A06-A9D9-4E01B8EADFB4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eagles.Interface.DataAccess</RootNamespace>
+    <AssemblyName>Eagles.Interface.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IActivityTaskDataAccess.cs" />
+    <Compile Include="IAuditDataAccess.cs" />
+    <Compile Include="IColumnDataAccess.cs" />
+    <Compile Include="ILoginDataAccess.cs" />
+    <Compile Include="IOperGroupDataAccess.cs" />
+    <Compile Include="IRewardScoreDataAccess.cs" />
+    <Compile Include="IScoreDataAccess.cs" />
+    <Compile Include="IScrollImageDataAccess.cs" />
+    <Compile Include="ISmsConfigDataAccess.cs" />
+    <Compile Include="ITestPaperDataAccess.cs" />
+    <Compile Include="IGoodsDataAccess.cs" />
+    <Compile Include="IMenusDataAccess.cs" />
+    <Compile Include="INewsDataAccess.cs" />
+    <Compile Include="IOrderDataAccess.cs" />
+    <Compile Include="IOrganizationDataAccess.cs" />
+    <Compile Include="IPartyMemberDataAccess.cs" />
+    <Compile Include="IOperDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\IDataAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Model\Eagles.Application.Model.csproj">
+      <Project>{08F867E1-26A8-46AC-9AC7-16404F6DED95}</Project>
+      <Name>Eagles.Application.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Base\Eagles.Base.csproj">
+      <Project>{403FAB37-72EF-4BAD-B749-05E494DC4B5B}</Project>
+      <Name>Eagles.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DomianService\Model\Eagles.DomainService.Model.csproj">
+      <Project>{2f5808be-cdb2-49e5-976a-30a9016b9bc2}</Project>
+      <Name>Eagles.DomainService.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

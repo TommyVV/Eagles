@@ -1,0 +1,118 @@
+.comment__list {
+    .am-list-header {
+        padding: 0;
+        background-color: #f5f5f9;
+    }
+}
+
+.comment__container {
+    margin-top: 8px; // padding-bottom: 45px;
+    font-family: "Microsoft YaHei", 'sans-serif ';
+    .comment__container--titile {
+        padding-left: 16px;
+        padding-top: 14px;
+        background: #ffffff;
+        font-size: 14px;
+        color: #919191;
+        margin-bottom: 0px;
+    }
+    .comment__item {
+        padding: 0 16px;
+        position: relative;
+        &:after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 1px;
+            border-top: 1px solid #D9D9D9;
+            color: #D9D9D9;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        &:last-child::after {
+            display: none;
+        }
+    }
+}
+
+// 留言区(没有留言)
+.no-comment {
+    .am-list-footer {
+        background: #ffffff; // padding: 0 16px;
+        .msg-area {
+            background-color: #ffffff;
+            min-height: 80px;
+            font-size: 15px;
+            color: #D8D8D8;
+        }
+    }
+}
+
+// 评论输入
+.input-comment-wrapper {
+    .qtui-mask {
+        bottom: 50px;
+        z-index: 1;
+    }
+    .discuss-area {
+        height: auto;
+        display: flex;
+        padding: 10px 16px;
+        background-color: #ffffff;
+        position: fixed;
+        z-index: 500;
+        bottom: 0;
+        width: 100%;
+        .input-placeholder {
+            position: absolute;
+            padding-left: 16px;
+            padding-top: 5px;
+            font-size: 13px;
+            color: #b8b8b8;
+            pointer-events: none;
+            i {
+                margin-right: 4px;
+            }
+        }
+        .discuss-input {
+            overflow: scroll;
+            border-radius: 6px;
+            background-color: #EEEEEE;
+            color: #333333;
+            font-size: 13px;
+            outline: none;
+            user-select: text;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 5px 16px;
+            flex-grow: 4;
+            max-height: 68px;
+        }
+        .release-comment {
+            color: #999999;
+            flex-grow: 1;
+            text-align: right;
+            max-width: 40px;
+            min-width: 40px;
+            line-height: 30px;
+            align-self: flex-end;
+        }
+        .icon-wrapper {
+            flex-grow: 1;
+            max-width: 92px;
+            height: 30px;
+            .scroll-msg {
+                font-size: 22px;
+                margin-left: 24px;
+            }
+            .msg-collect {
+                font-size: 22px;
+                margin-left: 24px;
+            }
+        }
+    }
+}

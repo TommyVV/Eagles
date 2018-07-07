@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+
+}
+.bg-color{
+    background-color: #f8f8f8;
+}
+.line-color{
+    background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
+    background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+}
+.hide{
+    display: none;
+}
+.sub-btn {
+    width: 70%;
+    margin-left: 15%;
+    font-size: 0.64rem;
+    height: 1.792rem;
+    margin-bottom: 1.8773333333rem;
+    text-align: center;
+    line-height: 1.792rem;
+    color: white;
+    border-radius: 0.1706666667rem;
+    background-color: #EE2F2F; 
+    letter-spacing: 5px;}
+    

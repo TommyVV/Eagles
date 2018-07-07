@@ -1,0 +1,67 @@
+﻿using System.Web.Http;
+using Eagles.Application.Model;
+using Eagles.Application.Model.ActivityTask.Requset;
+using Eagles.Application.Model.ActivityTask.Response;
+using Eagles.Base;
+using Eagles.Interface.Core;
+
+namespace Eagles.Application.Host.Controllers
+{
+    /// <summary>
+    /// ActivityTask
+    /// </summary>
+    public class ActivityController : ApiController
+    {
+        private readonly IActivityTaskHandler _ActivityTaskHandler;
+
+        public ActivityController(IActivityTaskHandler testHandler)
+        {
+            this._ActivityTaskHandler = testHandler;
+        }
+
+
+        /// <summary>
+        /// 编辑 活动
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<bool> EditActivityTask(EditActivityTaskInfoRequset requset)
+        {
+            return ApiActuator.Runing(() => _ActivityTaskHandler.EditActivity(requset));
+        }
+
+        /// <summary>
+        /// 删除 活动
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<bool> RemoveActivityTask(RemoveActivityTaskRequset requset)
+        {
+            return ApiActuator.Runing(() => _ActivityTaskHandler.RemoveActivity(requset));
+        }
+
+        /// <summary>
+        /// 活动 详情
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetActivityTaskDetailResponse> GetActivityTaskDetail(GetActivityTaskDetailRequset requset)
+        {
+            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivityDetail(requset));
+        }
+
+        /// <summary>
+        /// 活动 列表
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetActivityTaskResponse> GetActivityTask(GetActivityTaskRequset requset)
+        {
+            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivity(requset));
+        }
+    }
+}
