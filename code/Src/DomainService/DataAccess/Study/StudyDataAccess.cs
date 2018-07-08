@@ -4,7 +4,7 @@ using Eagles.Interface.DataAccess.StudyAccess;
 
 namespace Ealges.DomianService.DataAccess.Study
 {
-    public class StudyDataAccess: IStudyAccess
+    public class StudyDataAccess : IStudyAccess
     {
         private readonly IDbManager dbManager;
 

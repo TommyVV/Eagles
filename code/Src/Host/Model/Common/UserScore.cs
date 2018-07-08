@@ -1,9 +1,11 @@
-﻿using System;
+﻿
 namespace Eagles.Application.Model.Common
 {
-    public class ScoreExchange
+    /// <summary>
+    /// 
+    /// </summary>
+    public class UserScore
     {
-
         /// <summary>
         /// 兑换积分
         /// </summary>

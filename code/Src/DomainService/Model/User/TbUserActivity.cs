@@ -24,6 +24,6 @@ namespace Eagles.DomainService.Model.User
         public string Status { get; set; }
         public string UserFeedBack { get; set; }
         public int UserId { get; set; }
-        public string UserName { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Eagles.Application.Model;
-using Eagles.Application.Model.Common;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.UserArticle;
+using Eagles.Application.Model;
+using Eagles.Application.Model.Common;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -97,7 +97,7 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
+            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.PageIndex, request.PageSize);
             if (result != null && result.Count > 0)
             {
                 response.NewsInfos = result?.Select(x => new Application.Model.Common.News()

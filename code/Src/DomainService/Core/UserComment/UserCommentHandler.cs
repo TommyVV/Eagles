@@ -10,6 +10,7 @@ using Eagles.Application.Model.Common;
 using Eagles.Application.Model.UserComment.AuditUserComment;
 using Eagles.Application.Model.UserComment.EditUserComment;
 using Eagles.Application.Model.UserComment.GetUserComment;
+using Eagles.Application.Model.UserComment.RemoveUserComment;
 
 namespace Eagles.DomainService.Core.UserComment
 {
@@ -66,6 +67,22 @@ namespace Eagles.DomainService.Core.UserComment
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = userCommentAccess.AuditUserComment(request.CommentId, request.ReviewStatus);
+            if (result <= 0)
+            {
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            }
+            return response;
+        }
+
+        public RemoveUserCommentResponse RemoveUserComment(RemoveUserCommentRequest request)
+        {
+            var response = new RemoveUserCommentResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            }
+            var result = userCommentAccess.RemoveUserComment(request.MessageId, request.Id);
             if (result <= 0)
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);

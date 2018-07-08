@@ -20,6 +20,11 @@ namespace Ealges.DomianService.DataAccess.UserCommentData
 value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,CommentType)", userComment);
         }
 
+        public int RemoveUserComment(int messageId, int id)
+        {
+            return dbManager.Excuted("delete from tb_user_comment where MessageId = @MessageId and Id = @Id ", new {MessageId = messageId, Id = id});
+        }
+
         public int AuditUserComment(int messageId, int reviewStatus)
         {
             return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = @reviewStatus where MessageId = @MessageId and ReviewStatus = -1 ", new { MessageId = messageId, ReviewStatus= reviewStatus });

@@ -63,6 +63,7 @@
     <Compile Include="AppModule\AppModuleHanlder.cs" />
     <Compile Include="FileUpload\FileUploadHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
+    <Compile Include="Order\OrderHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
     <Compile Include="Register\RegisterHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />

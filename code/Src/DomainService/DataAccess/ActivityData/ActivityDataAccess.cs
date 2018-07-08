@@ -86,11 +86,11 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
 AttachName4 = @AttachName4, Attach1 = @Attach1, Attach2 = @Attach2, Attach3 = @Attach3, Attach4 = @Attach4 where ActivityId = @ActivityId and UserId = @UserId ", userActivity);
         }
 
-        public List<TbUserActivity> GetActivityFeedBack(int activityId, int appId)
+        public List<TbUserActivity> GetActivityFeedBack(int activityId, int appId, int userId)
         {
             return dbManager.Query<TbUserActivity>(@"select a.activityId,a.UserId,b.Name,a.UserFeedBack,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
 a.Attach1,a.Attach2,a.Attach3,a.Attach4 from eagles.tb_user_activity a join eagles.tb_user_info b on a.UserId = b.UserId
-where a.ActivityId = @ActivityId and a.OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
+where a.ActivityId = @ActivityId and a.OrgId = @OrgId and a.UserId = @UserId ", new { ActivityId = activityId, Orgid = appId, UserId = userId });
         }
 
         public List<TbActivity> GetActivity(ActivityType activityType, int branchId, int pageIndex = 1, int pageSize = 10)
@@ -119,9 +119,8 @@ limit @PageIndex, @PageSize ", parameter);
         
         public TbActivity GetActivityDetail(int activityId, int appId)
         {
-            var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachName1,AttachName2
-,AttachName3,AttachName4,Attach1,Attach2,
-Attach3,Attach4,FromUser,ToUserId,ImageUrl,CreateType,MaxCount,MaxUser from eagles.tb_activity 
+            var result = dbManager.Query<TbActivity>(@"select OrgId,BranchId,ActivityId,ActivityName,Status,ImageUrl,HtmlContent,AttachName1,AttachName2,
+AttachName3,AttachName4,Attach1,Attach2,Attach3,Attach4,FromUser,ToUserId,ImageUrl,CreateType,MaxCount,MaxUser from eagles.tb_activity 
 where ActivityId = @ActivityId and OrgId = @OrgId ", new { ActivityId = activityId, Orgid = appId });
             if (result != null && result.Any())
             {

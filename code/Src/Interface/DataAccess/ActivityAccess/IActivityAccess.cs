@@ -19,7 +19,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         
         int EditActivityFeedBack(TbUserActivity userActivity);
 
-        List<TbUserActivity> GetActivityFeedBack(int activityId, int appId);
+        List<TbUserActivity> GetActivityFeedBack(int activityId, int appId, int userId);
 
         List<TbActivity> GetActivity(ActivityType activityType,int branchId, int pageIndex, int pageSize);
         

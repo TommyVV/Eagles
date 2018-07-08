@@ -433,14 +433,22 @@ namespace Eagles.DomainService.Core.Activity
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var userInfo = util.GetUserInfo(tokens.UserId);
-            if (userInfo == null)
-                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId);
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
+            if (activityInfo == null)
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
+            var createType = activityInfo.CreateType;
+            var userId = 0;
+            //上级发起的活动
+            if (0 == createType)
+                userId = activityInfo.ToUserId;
+            //下级发起的活动
+            else if (1 == createType)
+                userId = activityInfo.FromUser;
+            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId, userId);
             response.FeedBackList = result?.Select(x => new FeedBack
             {
                 UserId = x.UserId,
-                UserName = x.UserName,
+                UserName = x.Name,
                 UserFeedBack = x.UserFeedBack,
                 AttachList = new List<Attachment>()
                 {

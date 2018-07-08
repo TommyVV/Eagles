@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Base;
+using Eagles.Application.Model;
 using Eagles.Interface.Core.Product;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ProductAccess;
@@ -37,7 +37,6 @@ namespace Eagles.DomainService.Core.Product
                     ProductScore = x.Score,
                     ProductImageUrl = x.ImageUrl
                 }).ToList();
-              
             }
             else
             {

@@ -262,6 +262,7 @@
     <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\AppModuleController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />

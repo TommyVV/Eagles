@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Base;
+using Eagles.Application.Model;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
@@ -96,7 +96,7 @@ namespace Eagles.DomainService.Core.Score
             var result = iScoreAccess.GetScoreExchangeLs(tokens.UserId);
             if (result != null && result.Count > 0)
             {
-                response.ScoreList = result?.Select(x => new Application.Model.Common.ScoreExchange()
+                response.ScoreList = result?.Select(x => new Application.Model.Common.UserScore()
                 {
                     Score = x.Score,
                     CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),

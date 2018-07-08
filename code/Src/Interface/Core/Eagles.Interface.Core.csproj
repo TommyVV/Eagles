@@ -47,6 +47,7 @@
     <Compile Include="Common\ITokenHadler.cs" />
     <Compile Include="FileUpload\IFileUploadHandler.cs" />
     <Compile Include="News\INewsHandler.cs" />
+    <Compile Include="Order\IOrderHandler.cs" />
     <Compile Include="Product\IProductHandler.cs" />
     <Compile Include="Register\IRegisterHandler.cs" />
     <Compile Include="Score\IScoreHandler.cs" />

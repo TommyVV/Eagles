@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
-using Eagles.DomainService.Model.Order;
 using Eagles.DomainService.Model.Product;
 using Eagles.Interface.DataAccess.ProductAccess;
 using Eagles.Application.Model.Product.GetProduct;
@@ -18,24 +17,22 @@ namespace Ealges.DomianService.DataAccess.ProductData
             this.dbManager = dbManager;
         }
         
-        public int GetOrderByProduct(int productId, int userId)
-        {
-            return dbManager.ExecuteScalar<int>("select count(*) from eagles.tb_order where ProdId = @ProdId and UserId = @UserId;", new {ProdId = productId, UserId = userId});
-        }
-        
         public List<TbProduct> GetProduct(GetProductRequest requset)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-            parameter.Append(" and Status = @Status");
+            parameter.Append(" and Status = @Status ");
             dynamicParams.Add("Status", 0);
             if (!string.IsNullOrWhiteSpace(requset.ProductName))
             {
                 parameter.Append(" and ProdName like @ProdName ");
                 dynamicParams.Add("ProdName", "%" + requset.ProductName + "%");
             }
-            sql.AppendFormat(@"select ProdId,ProdName,Score,ImageUrl from eagles.tb_product where 1=1  {0} ", parameter);
+            int pageIndexParameter = (requset.PageIndex - 1) * requset.PageSize;
+            dynamicParams.Add("PageIndex", pageIndexParameter);
+            dynamicParams.Add("PageSize", requset.PageSize);
+            sql.AppendFormat(@"select ProdId,ProdName,Score,ImageUrl from eagles.tb_product where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbProduct>(sql.ToString(), dynamicParams);
         }
 
@@ -59,5 +56,10 @@ namespace Ealges.DomianService.DataAccess.ProductData
 `tb_product`.`Status` FROM `eagles`.`tb_product` where ProdId = @ProdId ", new {ProdId = productId});
         }
         
+        public int GetOrderByProduct(int productId, int userId)
+        {
+            return dbManager.ExecuteScalar<int>("select count(*) from eagles.tb_order where ProdId = @ProdId and UserId = @UserId;", new { ProdId = productId, UserId = userId });
+        }
+
     }
 }

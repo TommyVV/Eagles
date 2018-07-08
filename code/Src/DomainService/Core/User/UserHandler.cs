@@ -7,6 +7,7 @@ using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserInfo;
 using Eagles.DomainService.Model.Sms;
 using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Core.Utility;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.User.Login;
@@ -14,7 +15,6 @@ using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
-using Eagles.DomainService.Core.Utility;
 
 namespace Eagles.DomainService.Core.User
 {

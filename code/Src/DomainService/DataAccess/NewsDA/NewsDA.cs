@@ -14,11 +14,12 @@ namespace Ealges.DomianService.DataAccess.NewsDA
             this.dbManager = dbManager;
         }
 
-        public List<TbNews> GetModuleNews(int moduleId,int appId,int count)
+        public List<TbNews> GetModuleNews(int moduleId,int appId, int pageIndex = 1, int pageSize = 10)
         {
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
             return dbManager.Query<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,
 Attach1,Attach2,Attach3,Attach4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,IsExternal,ExternalUrl
-from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @Count", new {Module = moduleId, OrgId = appId, Count = count});
+from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @PageIndex, @PageSize", new {Module = moduleId, OrgId = appId, PageIndex = pageIndexParameter, PageSize = pageSize });
         }
 
         public TbNews GetNewsDetail(int newsId, int appId)

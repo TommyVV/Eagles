@@ -55,6 +55,7 @@
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
     <Compile Include="Common\FeedBack.cs" />
     <Compile Include="Common\JoinPeople.cs" />
+    <Compile Include="Common\OrderLs.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
     <Compile Include="Common\UserLevel.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="News\GetTestPaper\GetTestPaperRequest.cs" />
     <Compile Include="GetMenu\AppMenu.cs" />
     <Compile Include="GetMenu\AppSubMenu.cs" />
+    <Compile Include="Order\GetOrderLs\GetOrderLsRequest.cs" />
+    <Compile Include="Order\GetOrderLs\GetOrderLsResponse.cs" />
     <Compile Include="QueryRequestBase.cs" />
     <Compile Include="Register\ValidateCodeRequest.cs" />
     <Compile Include="Register\ValidateCodeResponse.cs" />
@@ -127,6 +130,8 @@
     <Compile Include="Study\GetStudyTime\GetStudyTimeResponse.cs" />
     <Compile Include="UserComment\EditUserComment\EditUserCommentRequest.cs" />
     <Compile Include="UserComment\EditUserComment\EditUserCommentResponse.cs" />
+    <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentRequest.cs" />
+    <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentResponse.cs" />
     <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipResponse.cs" />
@@ -170,7 +175,7 @@
     <Compile Include="Common\Comment.cs" />
     <Compile Include="Common\News.cs" />
     <Compile Include="Common\Product.cs" />
-    <Compile Include="Common\Score.cs" />
+    <Compile Include="Common\UserScore.cs" />
     <Compile Include="Common\Step.cs" />
     <Compile Include="Common\Task.cs" />
     <Compile Include="Common\UserInfo.cs" />
