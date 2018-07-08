@@ -171,7 +171,10 @@ namespace Eagles.DomainService.Core.User
 
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
+            {
                 throw new TransactionException(MessageCode.ExistsPhone, MessageKey.ExistsPhone);
+            }
+                
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
