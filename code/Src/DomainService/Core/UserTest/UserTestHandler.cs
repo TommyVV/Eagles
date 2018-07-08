@@ -51,9 +51,9 @@ namespace Eagles.DomainService.Core.UserTest
                 var answer = new AppAnswer()
                 {
                     QuestionId = x.QuestionId,
+                    AnswerType = x.AnswerType,
                     AnswerId = x.AnswerId,
                     Answer = x.Answer,
-                    AnswerType = x.AnswerType,
                     IsRight = x.IsRight,
                     ImageUrl = x.ImageUrl
                 };
@@ -229,7 +229,6 @@ namespace Eagles.DomainService.Core.UserTest
             {
                 WriteScoreLs(tokens.UserId, passAwardScore, userInfo.Score);
             }
-
             return response;
         }
 
@@ -247,10 +246,7 @@ namespace Eagles.DomainService.Core.UserTest
                     AnswerId = x.AnswerId,
                 }).ToList());
             }
-            
             testDa.WriteAnswerCount(list);
-
-
         }
 
         private void WriteScoreLs(int userId, int passAwardScore, int score)

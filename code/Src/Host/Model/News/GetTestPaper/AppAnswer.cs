@@ -10,7 +10,12 @@ namespace Eagles.Application.Model.News.GetTestPaper
         /// 问题编号
         /// </summary>
         public int QuestionId { get; set; }
-        
+
+        /// <summary>
+        /// 答案类型;0:默认 1:自定义
+        /// </summary>
+        public int AnswerType { get; set; }
+
         /// <summary>
         /// 选项编号
         /// </summary>
@@ -20,12 +25,7 @@ namespace Eagles.Application.Model.News.GetTestPaper
         /// 选项
         /// </summary>
         public string Answer { get; set; }
-
-        /// <summary>
-        /// 答案类型;0:默认 1:自定义
-        /// </summary>
-        public int AnswerType { get; set; }
-
+        
         /// <summary>
         /// 答案是否是正确答案;0;是;1:否
         /// </summary>

@@ -215,7 +215,7 @@ join eagles.tb_user_info b on a.UserId = b.UserId where ActivityId = @ActivityId
         {
             return dbManager.Query<TbUserActivity>(@"select a.activityId,a.UserId,b.Name,a.UserFeedBack,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
 a.Attach1,a.Attach2,a.Attach3,a.Attach4 from eagles.tb_user_activity a join eagles.tb_user_info b on a.UserId = b.UserId
-where ActivityId = @ActivityId and OrgId = @OrgId  ",
+where a.ActivityId = @ActivityId and a.OrgId = @OrgId  ",
                 new { ActivityId = activityId, Orgid = appId });
         }
     }
