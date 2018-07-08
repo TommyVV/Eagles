@@ -316,7 +316,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime,
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 Status = x.Status,
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
@@ -380,7 +380,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime,
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();

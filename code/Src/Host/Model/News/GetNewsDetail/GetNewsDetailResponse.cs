@@ -46,7 +46,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// <summary>
         /// 发布时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 试卷Id

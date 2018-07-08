@@ -82,7 +82,7 @@ namespace Eagles.DomainService.Core.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
                 }).ToList()
             };
         }
@@ -103,7 +103,7 @@ namespace Eagles.DomainService.Core.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
                     ImageUrl = x.ImageUrl,
                     ExternalUrl = x.ExternalUrl,
                     IsExternal = x.IsExternal==1,
@@ -136,7 +136,7 @@ namespace Eagles.DomainService.Core.News
                 response.Author = result.Author;
                 response.Source = result.Source;
                 response.Module = result.Module;
-                response.CreateTime = result.CreateTime;
+                response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TestId = result.TestId;
                 response.IsAttach = result.IsAttach;
                 response.Attach = new List<string>

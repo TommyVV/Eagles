@@ -95,12 +95,12 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 转预备党员日期
         /// </summary>
-        public DateTime PrepPartyDate { get; set; }
+        public string PrepPartyDate { get; set; }
 
         /// <summary>
         /// 转正式党员日期
         /// </summary>
-        public DateTime FormalPartyDat { get; set; }
+        public string FormalPartyDat { get; set; }
 
         /// <summary>
         /// 人员类别(正式/预备党员)

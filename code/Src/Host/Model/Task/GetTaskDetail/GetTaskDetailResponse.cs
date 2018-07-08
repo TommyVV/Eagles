@@ -32,12 +32,12 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
         /// <summary>
         /// 任务开始日期
         /// </summary>
-        public DateTime TaskBeginDate { get; set; }
+        public string TaskBeginDate { get; set; }
 
         /// <summary>
         /// 任务结束日期
         /// </summary>
-        public DateTime TaskEndDate { get; set; }
+        public string TaskEndDate { get; set; }
 
         /// <summary>
         /// 任务状态

@@ -30,12 +30,12 @@ namespace Eagles.Application.Model.Product.GetProductDetail
         /// <summary>
         /// 产品上架时间
         /// </summary>
-        public DateTime ProductBeginTime { get; set; }
+        public string ProductBeginTime { get; set; }
 
         /// <summary>
         /// 产品下架时间
         /// </summary>
-        public DateTime ProductEndTime { get; set; }
+        public string ProductEndTime { get; set; }
 
         /// <summary>
         /// 产品描述

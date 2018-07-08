@@ -66,7 +66,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 正式党员日期
         /// </summary>
-        public DateTime MemberTime { get; set; }
+        public string MemberTime { get; set; }
         /// <summary>
         /// 党员类型;0:党员;1:预备党员'
         /// </summary>
@@ -110,7 +110,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 预备党员日期
         /// </summary>
-        public DateTime PreMemberTime { get; set; }
+        public string PreMemberTime { get; set; }
         /// <summary>
         /// 省
         /// </summary>

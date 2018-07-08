@@ -105,7 +105,7 @@ namespace Eagles.DomainService.Core.User
                 IdCard = result.IdNumber,
                 Employer = result.Company,
                 PrepPartyDate = result.PreMemberTime,
-                FormalPartyDat = result.MemberTime.ToLocalTime(),
+                FormalPartyDat = result.MemberTime,
                 PartyType = result.MemberType,
                 Provice = result.Provice,
                 City = result.City,

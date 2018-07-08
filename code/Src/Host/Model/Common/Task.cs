@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 任务日期
         /// </summary>
-        public DateTime TaskDate { get; set; }
+        public string TaskDate { get; set; }
 
         /// <summary>
         /// 任务日期

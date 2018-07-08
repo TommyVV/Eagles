@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core.Score
                 response.ScoreList = result?.Select(x => new Application.Model.Common.ScoreExchange()
                 {
                     Score = x.Score,
-                    CreateTime = x.CreateTime,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
                     RewardsType = x.RewardsType,
                     Comment = x.Comment,
                     OriScore = x.OriScore

@@ -25,7 +25,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 文章时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 文章内容

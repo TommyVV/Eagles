@@ -313,7 +313,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime,
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();
@@ -340,8 +340,8 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskName = result.TaskName;
                 response.TaskContent = result.TaskContent;
                 response.TaskStatus = result.Status;
-                response.TaskBeginDate = result.BeginTime;
-                response.TaskEndDate = result.EndTime;
+                response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
@@ -373,7 +373,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime,
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();
@@ -397,8 +397,8 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskName = result.TaskName;
                 response.TaskContent = result.TaskContent;
                 response.TaskStatus = result.Status;
-                response.TaskBeginDate = result.BeginTime;
-                response.TaskEndDate = result.EndTime;
+                response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
