@@ -29,4 +29,11 @@
     border-radius: 0.1706666667rem;
     background-color: #EE2F2F; 
     letter-spacing: 5px;}
+
+.file {
+    padding-top: 0.64rem;
+}
     
+.file .glyphicon {
+    color: #65BBDE;
+}
