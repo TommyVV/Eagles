@@ -6,9 +6,13 @@
 // const API_SERVER = 'http://10.65.4.15:8080/hci-platform'; //必烈
 // const API_SERVER = 'http://10.65.50.109:8081/hci-platform'; //家家
 // const API_SERVER = 'https://operation.qingtui.cn/hci-platform'; //8G服务器
-// const API_SERVER = ""; //mock
-const API_SERVER = "http://51service.xyz/ManagementService"; //test
+const API_SERVER = ""; //mock
+// const API_SERVER = "http://51service.xyz/ManagementService"; //test
 
+// 活动
+const LOGIN = {
+  LOGIN: "/api/Login/Login", //登录
+}
 // 活动
 const ACTIVITY = {
   ACTIVITY_EDIT: "/api/Activity/EditActivityTask", //编辑活动
@@ -116,7 +120,7 @@ const AREA = {
 
 export const serverConfig = {
   API_SERVER,
-
+  LOGIN,
   ACTIVITY,
   AUDIT,
   MENU,

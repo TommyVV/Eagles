@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, Menu, Avatar, Row, Col, Icon } from "antd";
 import { connect } from "react-redux";
 import { hashHistory } from "react-router";
-import navMap from "./navMap.js";
+import navMap from "../../constants/config/navMap";
 import "./nav.less";
 
 const { Sider, Content, Header } = Layout;

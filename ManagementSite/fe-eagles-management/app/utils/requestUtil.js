@@ -4,7 +4,7 @@ import { hashHistory } from "react-router";
 import base from "../config/base";
 import { serverConfig } from "../constants/ServerConfigure";
 import Uitl from "./util";
-// import "../mock/mockData"; // 模拟本地数据
+import "../mock/mockData"; // 模拟本地数据
 
 /**
  * 重定向到login页面  防止用户修改localstoreage的值导致报错
@@ -12,10 +12,10 @@ import Uitl from "./util";
  */
 function redirectLogin() {
   localStorage.clear();
-  if (location.pathname.indexOf("/error") > -1) {
+  if (location.pathname.indexOf("/login") > -1) {
     return;
   } else {
-    hashHistory.replace("/error");
+    hashHistory.replace("/login");
   }
 }
 /**
@@ -51,6 +51,19 @@ let refreshToken = async refresh => {
  * @return {string} token和refresh
  */
 let getToken = () => {
+  if (location.hash === "#/login") {
+    return {};
+  }
+  let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
+  let { Token } = Info;
+  if (Token) {
+    return {
+      Token
+    };
+  } else {
+    return redirectLogin();
+  }
+
   let info = localStorage.info ? JSON.parse(localStorage.info) : {};
   let { token, refresh_token } = info;
   return {
@@ -64,8 +77,8 @@ let getToken = () => {
  * @return {json}        数据列表
  */
 async function request({ method = "get", url, params }) {
-  let { token } = await getToken();
-  params = { ...params, Token: token };
+  const Token = await getToken();
+  params = { ...params, Token };
   try {
     console.log("curd - params", params);
     let res = await axios({
@@ -90,7 +103,6 @@ async function request({ method = "get", url, params }) {
  */
 export default async config => {
   try {
-    let { refresh_token } = await getToken();
     let res = await request(config); // 首次请求
     let { code } = res.data;
     if (code === -1) {
@@ -98,8 +110,9 @@ export default async config => {
       throw new Error(res.data.message); //直接抛出错误
     }
     if (code === "4003") {
+      // let { refresh_token } = await getToken();
       // message==='token已过期'
-      await refreshToken(refresh_token); //刷新token
+      // await refreshToken(refresh_token); //刷新token
       return request(config); // 再次重新请求
     }
     if (code === "4002") {
@@ -111,4 +124,3 @@ export default async config => {
     throw new Error(e);
   }
 };
-

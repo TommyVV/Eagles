@@ -57,7 +57,7 @@ class RouteMap extends Component {
       <Router history={hashHistory}>
         {/*pc端*/}
         <Route path="/" component={PcApp}>
-          <IndexRoute component={Login} />
+          <route path="/login" component={Login} />
           {/* 首页 */}
           <route path="/home" component={HomePage} />
           {/* 习题 */}
