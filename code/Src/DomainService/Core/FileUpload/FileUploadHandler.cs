@@ -41,18 +41,20 @@ namespace Eagles.DomainService.Core.FileUpload
             var result=new List<FileUploadResult>();
             for (var i = 0; i < context.Request.Files.Count; i++)
             {
-                var fileName = Guid.NewGuid().ToString("N");
+                
+                var fileId = Guid.NewGuid().ToString("N");
                 var file = context.Request.Files[i];
+                var oldFileName = Path.GetFileName(file.FileName);
                 var extendName = Path.GetExtension(file.FileName);
-                var newFileName = fileName + extendName;
+                var newFileName = fileId + extendName;
                 file.SaveAs(root + newFileName);
                 result.Add(new FileUploadResult()
                 {
-                    FileName = newFileName,
+                    FileName = oldFileName,
                     FileSize = file.ContentLength,
                     FileType = extendName,
                     FileUrl = url + newFileName,
-                    FileId = fileName
+                    FileId = fileId
                 });
             }
             return result;

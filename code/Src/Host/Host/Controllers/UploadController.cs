@@ -21,7 +21,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 文件上传
         /// </summary>
-        [HttpPost,HttpOptions]
+        [HttpPost]
         public ResponseFormat<UploadResponse> UploadFile()
         {
             //set allow post 

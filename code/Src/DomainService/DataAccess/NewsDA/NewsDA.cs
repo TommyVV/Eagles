@@ -24,7 +24,7 @@ from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @Count", new {Mo
         public TbNews GetNewsDetail(int newsId, int appId)
         {
             return dbManager.QuerySingle<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,
-TestId,Attach1,Attach2,Attach3,Attach4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,
+TestId,Attach1,Attach2,Attach3,Attach4,AttachName1,AttachName2,AttachName3,AttachName4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,
 IsExternal,ExternalUrl from eagles.tb_news where NewsId=@NewsId and OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
         }
     }
