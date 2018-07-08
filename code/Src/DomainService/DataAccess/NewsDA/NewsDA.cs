@@ -5,7 +5,7 @@ using Eagles.Interface.DataAccess.NewsDa;
 
 namespace Ealges.DomianService.DataAccess.NewsDA
 {
-    public class NewsDa: INewsDa
+    public class NewsDa : INewsDa
     {
         private readonly IDbManager dbManager;
 
@@ -14,76 +14,19 @@ namespace Ealges.DomianService.DataAccess.NewsDA
             this.dbManager = dbManager;
         }
 
-        public List<TbNews> GetModuleNews(int moduleId,int appId,int count)
+        public List<TbNews> GetModuleNews(int moduleId,int appId, int pageIndex = 1, int pageSize = 10)
         {
-            return dbManager.Query<TbNews>(@"SELECT `tb_news`.`OrgId`,
-    `tb_news`.`NewsId`,
-    `tb_news`.`ShortDesc`,
-    `tb_news`.`Title`,
-    `tb_news`.`HtmlContent`,
-    `tb_news`.`Author`,
-    `tb_news`.`Source`,
-    `tb_news`.`Module`,
-    `tb_news`.`Status`,
-    `tb_news`.`BeginTime`,
-    `tb_news`.`EndTime`,
-    `tb_news`.`TestId`,
-    `tb_news`.`Attach1`,
-    `tb_news`.`Attach2`,
-    `tb_news`.`Attach3`,
-    `tb_news`.`Attach4`,
-    `tb_news`.`Attach5`,
-    `tb_news`.`OperId`,
-    `tb_news`.`CreateTime`,
-    `tb_news`.`IsImage`,
-    `tb_news`.`IsVideo`,
-    `tb_news`.`IsAttach`,
-    `tb_news`.`IsClass`,
-    `tb_news`.`IsLearning`,
-    `tb_news`.`IsText`,
-    `tb_news`.`ViewCount`,
-    `tb_news`.`ReviewId`,
-    `tb_news`.`CanStudy`,
-    `tb_news`.`ImageUrl`,
-    `tb_news`.`IsExternal`,
-    `tb_news`.`ExternalUrl`
-FROM `eagles`.`tb_news`  where Module=@Module And OrgId=@OrgId limit @Count", new {Module = moduleId, OrgId = appId, Count = count});
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
+            return dbManager.Query<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,
+Attach1,Attach2,Attach3,Attach4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,IsExternal,ExternalUrl
+from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @PageIndex, @PageSize", new {Module = moduleId, OrgId = appId, PageIndex = pageIndexParameter, PageSize = pageSize });
         }
 
         public TbNews GetNewsDetail(int newsId, int appId)
         {
-            return dbManager.QuerySingle<TbNews>(@"SELECT `tb_news`.`OrgId`,
-    `tb_news`.`NewsId`,
-    `tb_news`.`ShortDesc`,
-    `tb_news`.`Title`,
-    `tb_news`.`HtmlContent`,
-    `tb_news`.`Author`,
-    `tb_news`.`Source`,
-    `tb_news`.`Module`,
-    `tb_news`.`Status`,
-    `tb_news`.`BeginTime`,
-    `tb_news`.`EndTime`,
-    `tb_news`.`TestId`,
-    `tb_news`.`Attach1`,
-    `tb_news`.`Attach2`,
-    `tb_news`.`Attach3`,
-    `tb_news`.`Attach4`,
-    `tb_news`.`Attach5`,
-    `tb_news`.`OperId`,
-    `tb_news`.`CreateTime`,
-    `tb_news`.`IsImage`,
-    `tb_news`.`IsVideo`,
-    `tb_news`.`IsAttach`,
-    `tb_news`.`IsClass`,
-    `tb_news`.`IsLearning`,
-    `tb_news`.`IsText`,
-    `tb_news`.`ViewCount`,
-    `tb_news`.`ReviewId`,
-    `tb_news`.`CanStudy`,
-    `tb_news`.`ImageUrl`,
-    `tb_news`.`IsExternal`,
-    `tb_news`.`ExternalUrl`
-FROM `eagles`.`tb_news`  where NewsId=@NewsId And OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
+            return dbManager.QuerySingle<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,
+TestId,Attach1,Attach2,Attach3,Attach4,AttachName1,AttachName2,AttachName3,AttachName4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,
+IsExternal,ExternalUrl from eagles.tb_news where NewsId=@NewsId and OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
         }
     }
 }

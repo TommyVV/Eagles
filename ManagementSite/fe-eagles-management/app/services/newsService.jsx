@@ -49,7 +49,6 @@ export const createOrEditNews = async params => {
       params
     });
     if (res.status === 200) {
-      debugger
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);

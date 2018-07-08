@@ -20,12 +20,14 @@ namespace Ealges.DomianService.DataAccess.UserInfo
 
         public int InsertToken(TbUserToken userToken)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)", userToken);
+            return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType,OrgId,BranchId) 
+value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType,@OrgId,@BranchId)", userToken);
         }
 
         public int CreateUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime) value (@Phone,@Password,@CreateTime)", userInfo);
+            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader)
+value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader)", userInfo);
         }
 
         public int EditUser(TbUserInfo userInfo)
@@ -39,7 +41,7 @@ IsLeader=@IsLeader where UserId = @UserId", userInfo);
         {
             var userInfo = dbManager.Query<TbUserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,OriginAddress,Phone,IdNumber,Education,
 School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
-PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
+PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
@@ -47,7 +49,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_
 
         public TbUserInfo GetLogin(string phone)
         {
-            var userInfo = dbManager.Query<TbUserInfo>("select UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
+            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
@@ -127,6 +129,27 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
         public TbValidCode GetValidCode(TbValidCode validCode)
         {
             return dbManager.QuerySingle<TbValidCode>("select Phone from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
+        }
+
+        public int InsertSmsCode(TbValidCode validateCode)
+        {
+            var sql = @"
+INSERT INTO eagles.tb_validcode
+(OrgId,
+Phone,
+ValidCode,
+Seq,
+CreateTime,
+ExpireTime)
+VALUES
+(
+@OrgId,
+@Phone,
+@ValidCode,
+@Seq,
+@CreateTime,
+@ExpireTime)";
+            return dbManager.Excuted(sql, validateCode);
         }
     }
 }

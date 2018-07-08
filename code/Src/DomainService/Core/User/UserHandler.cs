@@ -7,6 +7,7 @@ using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserInfo;
 using Eagles.DomainService.Model.Sms;
 using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Core.Utility;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.User.Login;
@@ -66,7 +67,9 @@ namespace Eagles.DomainService.Core.User
             };
             var result = userInfoAccess.EditUser(userInfo);
             if (result <= 0)
+            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            }
             return response;
         }
 
@@ -80,33 +83,37 @@ namespace Eagles.DomainService.Core.User
             }
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             if (result == null)
                 throw new TransactionException("01", "用户信息不存在");
-            var userInfo = new UserInfo();
-            userInfo.Name = result.Name;
-            userInfo.Gender = result.Sex;
-            userInfo.Birth = result.Birthday.ToLocalTime();
-            userInfo.Telphone = result.Phone;
-            userInfo.Address = result.Address;
-            userInfo.Origin = result.Origin;
-            userInfo.OriginAddress = result.OriginAddress;
-            userInfo.Ethnic = result.Ethnic;
-            userInfo.Branch = result.BranchId;
-            userInfo.Department = result.Dept;
-            userInfo.Education = result.Education;
-            userInfo.School = result.School;
-            userInfo.IdCard = result.IdNumber;
-            userInfo.Employer = result.Company;
-            userInfo.PrepPartyDate = result.PreMemberTime;
-            userInfo.FormalPartyDat = result.MemberTime.ToLocalTime();
-            userInfo.PartyType = result.MemberType;
-            userInfo.Provice = result.Provice;
-            userInfo.City = result.City;
-            userInfo.District = result.District;
-            userInfo.PhotoUrl = result.PhotoUrl;
+            var userInfo = new UserInfo
+            {
+                Name = result.Name,
+                Gender = result.Sex,
+                Birth = result.Birthday.ToLocalTime(),
+                Telphone = result.Phone,
+                Address = result.Address,
+                Origin = result.Origin,
+                OriginAddress = result.OriginAddress,
+                Ethnic = result.Ethnic,
+                Branch = result.BranchId,
+                Department = result.Dept,
+                Education = result.Education,
+                School = result.School,
+                IdCard = result.IdNumber,
+                Employer = result.Company,
+                PrepPartyDate = result.PreMemberTime,
+                FormalPartyDat = result.MemberTime,
+                PartyType = result.MemberType,
+                Provice = result.Provice,
+                City = result.City,
+                District = result.District,
+                PhotoUrl = result.PhotoUrl,
+                Score = result.Score
+
+            };
             response.ResultUserInfo = userInfo;
             return response;
         }
@@ -114,18 +121,23 @@ namespace Eagles.DomainService.Core.User
         public LoginResponse Login(LoginRequest request)
         {
             var response = new LoginResponse();
-            var guit = Guid.NewGuid().ToString();
+            var guid = Guid.NewGuid().ToString("N");
             var result = userInfoAccess.GetLogin(request.Phone);
             if (result != null)
             {
                 var password = md5Helper.Md5Encypt(request.UserPwd);
                 if (!result.Password.Equals(password))
-                    throw new TransactionException(MessageCode.UserNameOrPasswordError, MessageKey.UserNameOrPasswordError);
+                {
+                    throw new TransactionException(MessageCode.UserNameOrPasswordError,
+                        MessageKey.UserNameOrPasswordError);
+                }
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
+                    OrgId = result.OrgId,
+                    BranchId = result.BranchId,
                     UserId = result.UserId,
-                    Token = guit,
+                    Token = guid,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
                     TokenType = 0
@@ -133,14 +145,14 @@ namespace Eagles.DomainService.Core.User
                 var tokenInfo = userInfoAccess.InsertToken(userToken);
                 if (tokenInfo > 0)
                 {
-                    response.Token = guit;
+                    response.Token = guid;
                 }
                 else
                 {
                     throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
                 }
                 response.UserId = result.UserId;
-                response.IsInternalUser = result.IsCustomer==0;
+                response.IsInternalUser = result.IsCustomer == 0;
             }
             else
             {
@@ -152,19 +164,46 @@ namespace Eagles.DomainService.Core.User
         public RegisterResponse Register(RegisterRequest request)
         {
             var response = new RegisterResponse();
+            if (request.AppId <= 0)
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+            if (!util.CheckAppId(request.AppId))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
+            if (string.IsNullOrEmpty(request.Phone) || request.Phone.Length != 11 || string.IsNullOrEmpty(request.UserPwd))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
-                throw new TransactionException(MessageCode.ExistsPhone,MessageKey.ExistsPhone);
+            {
+                throw new TransactionException(MessageCode.ExistsPhone, MessageKey.ExistsPhone);
+            }
+                
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
-                Password = md5Helper.Md5Encypt(request.Pwd),
-                CreateTime = DateTime.Now
+                Password = md5Helper.Md5Encypt(request.UserPwd),
+                CreateTime = DateTime.Now,
+                IsCustomer = 0,
+                OrgId = request.AppId,
+                BranchId = 0,
+                Score = 0,
+                EditTime = DateTime.Now,
+                Status = 0,
+                IsLeader = 0,
+                Name = request.Phone.MaskPhone(),
             };
-            var codeInfo = new TbValidCode() { Phone = request.Phone, Code = request.ValidCode, Seq = request.Seq };
+            var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
+            {
                 throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
+            }
             var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
@@ -175,7 +214,7 @@ namespace Eagles.DomainService.Core.User
             var userId = request.UserId;
             var superiorUserList = userInfoAccess.GetRelationship(userId, false);
             var lowerUserList = userInfoAccess.GetRelationship(userId, true);
-            var userRelationship=new List<UserRelationship>()
+            var userRelationship = new List<UserRelationship>()
             {
 
             };
@@ -184,19 +223,19 @@ namespace Eagles.DomainService.Core.User
                 userRelationship.Add(new UserRelationship()
                 {
                     Name = x.NickName,
-                    UserId =x.SubUserId,
+                    UserId = x.SubUserId,
                     IsLeader = false
                 });
             });
-           superiorUserList.ForEach(x =>
-           {
-               userRelationship.Add(new UserRelationship()
-               {
-                   Name = x.NickName,
-                   UserId = x.UserId,
-                   IsLeader = true
-               });
-           });
+            superiorUserList.ForEach(x =>
+            {
+                userRelationship.Add(new UserRelationship()
+                {
+                    Name = x.NickName,
+                    UserId = x.UserId,
+                    IsLeader = true
+                });
+            });
 
             response.UserList = userRelationship;
             return response;

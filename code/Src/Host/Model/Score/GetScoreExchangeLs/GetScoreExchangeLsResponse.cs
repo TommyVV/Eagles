@@ -11,6 +11,6 @@ namespace Eagles.Application.Model.Score.GetScoreExchangeLs
         /// <summary>
         /// 积分流水
         /// </summary>
-        public List<ScoreExchange> ScoreList { get; set; }
+        public List<UserScore> ScoreList { get; set; }
     }
 }

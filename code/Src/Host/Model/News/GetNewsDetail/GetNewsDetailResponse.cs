@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.News.GetNewsDetail
 {
@@ -12,6 +13,11 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// 新闻编号
         /// </summary>
         public int NewsId { get; set; }
+
+        /// <summary>
+        /// 简单描述
+        /// </summary>
+        public string ShortDesc { get; set; }
 
         /// <summary>
         /// 新闻名称
@@ -41,7 +47,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// <summary>
         /// 发布时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 试卷Id
@@ -56,26 +62,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// <summary>
         /// 附件
         /// </summary>
-        public List<string> Attach { get; set; }
-        ///// <summary>
-        ///// 附件1
-        ///// </summary>
-        //public string Attach1 { get; set; }
-
-        ///// <summary>
-        ///// 附件2
-        ///// </summary>
-        //public string Attach2 { get; set; }
-
-        ///// <summary>
-        ///// 附件3
-        ///// </summary>
-        //public string Attach3 { get; set; }
-
-        ///// <summary>
-        ///// 附件4
-        ///// </summary>
-        //public string Attach4 { get; set; }
+        public List<Attachment> Attach { get; set; }
 
         /// <summary>
         /// 阅读数量

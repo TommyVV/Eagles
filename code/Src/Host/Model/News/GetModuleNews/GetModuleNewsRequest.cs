@@ -3,7 +3,7 @@
     /// <summary>
     /// 新闻模块查询
     /// </summary>
-    public class GetModuleNewsRequest : RequestBase
+    public class GetModuleNewsRequest : QueryRequestBase
     {
         /// <summary>
         /// 

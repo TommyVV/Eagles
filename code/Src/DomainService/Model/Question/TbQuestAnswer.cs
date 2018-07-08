@@ -34,5 +34,10 @@ namespace Eagles.DomainService.Model.Question
         /// 问题编号
         /// </summary>
         public int QuestionId { get; set; }
+
+        /// <summary>
+        /// 用户当前选择数量
+        /// </summary>
+        public int UserCount { get; set; }
     }
 }

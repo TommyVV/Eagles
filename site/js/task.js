@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    var token = getRequest("token");
+    var userId = getRequest("userId");
+    var appId = getRequest("appId");
+
     //三会一课
     $("#t-cate").click(function () {
         cateStatus('t-cate');
@@ -39,7 +43,28 @@ $(document).ready(function () {
             $($("#" + id).find('span')).css('transform', 'rotate(180deg)');
         }
     }
-
+    getTaskList();
+    //查询活动
+    function getTaskList() {
+        $.ajax({
+            type: 'POST',
+            url: DOMAIN + '/api/Task/GetTask',
+            data: {
+                "UserId": userId,
+                "Status": '0',
+                "Token": token,
+                "AppId": appId
+            },
+            success: function (data) {
+                console.log('Task---', data);
+                if (data.Code == "00") {
+                    
+                } else {
+                    alert(data.Code, data.Message);
+                }
+            }
+        })
+    }
 
     $("#select-result").on('click', (e) => {
         if (e.target.tagName === 'LI') {

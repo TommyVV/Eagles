@@ -19,7 +19,7 @@
             <div class="pub-area">
                 <div class="pub-item">
                     标题:
-                    <input class="item-content" placeholder="任务/活动标题" />
+                    <input class="item-content" id="title" placeholder="任务/活动标题" />
                 </div>
                 <div class="pub-item">
                     指派:
@@ -28,17 +28,16 @@
                 </div>
                 <div class="pub-item">
                     开始时间:
-                    <span class="item-time">2018-02-10</span>
+                    <span class="item-time start">2018-02-10</span>
                     <span class="item-select">选择</span>
                 </div>
                 <div class="pub-item">
                     结束时间:
-                    <span class="item-time">2018-02-10</span>
+                    <span class="item-time end">2018-02-10</span>
                     <span class="item-select">选择</span>
                 </div>
             </div>
             <div class="plan-area">
-                <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="" cols="30" rows="10"></textarea>
                 <div class="img-area">
                     <div class="title">图片上传</div>
                     <div class="imgs">
@@ -47,9 +46,17 @@
                                 <div class="add">
                                     <div>+</div>
                                 </div>
-                                <input type="file">
+                                <input type="file" id="imgupload">
                             </div>
                         </div>
+                    </div>
+                </div>
+                <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="content" cols="30" rows="10"></textarea>
+                <div class="img-area">
+                    <div class="title">附件上传</div>
+                    <input type="file" id="fileupload">
+                    <div class="attaches">
+                        
                     </div>
                 </div>
                 <div class="pub-area">
@@ -61,8 +68,17 @@
     </div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="thirdparty/jquery.ui.widget.js"></script>
+    <script src="thirdparty/jquery.iframe-transport.js"></script>
+    <script src="thirdparty/jquery.fileupload.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/publishTask.js"></script>
+    <script>
+        $(function () {
+
+        });
+    </script>
 </body>
 
 </html>

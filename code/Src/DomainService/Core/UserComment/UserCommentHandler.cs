@@ -10,6 +10,7 @@ using Eagles.Application.Model.Common;
 using Eagles.Application.Model.UserComment.AuditUserComment;
 using Eagles.Application.Model.UserComment.EditUserComment;
 using Eagles.Application.Model.UserComment.GetUserComment;
+using Eagles.Application.Model.UserComment.RemoveUserComment;
 
 namespace Eagles.DomainService.Core.UserComment
 {
@@ -73,12 +74,28 @@ namespace Eagles.DomainService.Core.UserComment
             return response;
         }
 
+        public RemoveUserCommentResponse RemoveUserComment(RemoveUserCommentRequest request)
+        {
+            var response = new RemoveUserCommentResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+            {
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            }
+            var result = userCommentAccess.RemoveUserComment(request.MessageId, request.Id);
+            if (result <= 0)
+            {
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            }
+            return response;
+        }
+
         public GetUserCommentResponse GetUserComment(GetUserCommentRequest request)
         {
             var response = new GetUserCommentResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -90,7 +107,7 @@ namespace Eagles.DomainService.Core.UserComment
             {
                 CommentId = x.MessageId,
                 Id = x.Id,
-                CommentTime = x.ReviewTime,
+                CommentTime = x.ReviewTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 CommentUserId = x.UserId,
                 CommentUserName = x.UserName,
                 CommentContent = x.Content

@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Core.Scroll
             var response = new GetScrollImgResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iScrollAccess.GetScrollImg(request.PageType);
             if (result == null || result.Count <= 0)
@@ -46,7 +46,7 @@ namespace Eagles.DomainService.Core.Scroll
             var response = new GetScrollNewsResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
 
             var nowDate = DateTime.Now.ToString("yyyyMMdd");

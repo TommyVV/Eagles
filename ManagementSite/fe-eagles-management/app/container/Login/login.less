@@ -1,0 +1,79 @@
+.login-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -326px;
+    margin-top: -256px;
+    .login-panel {
+        background-color: #ffffff;
+        color: #616161;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.09);
+        border-radius: 6px;
+        width: 652px;
+        height: 512px;
+        position: relative;
+        .login-title {
+            font-size: 18px;
+            color: #333333;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .login-form-button {
+            width: 100%;
+            margin-top: 7px;
+            font-size: 16px;
+            height: 38px;
+        }
+    }
+    h1 {
+        text-align: center;
+        height: 90px;
+        line-height: 90px;
+        font-size: 32px;
+        margin: 0;
+        .icon-qingtuilogo {
+            margin-right: 29px;
+            font-size: 40px;
+        }
+    }
+    .err-msg-wrap {
+        text-align: center;
+        height: 24px;
+        margin-bottom: 4px;
+        margin-top: 4px;
+        visibility: hidden;
+        &.has-error {
+            visibility: visible;
+        }
+        .err-msg {
+            background-color: #fef2f2;
+            border: 1px solid #fc7256;
+            padding: 2px 10px;
+            height: 24px;
+            font-size: 12px;
+            color: #fc7256;
+            border-radius: 4px;
+            text-align: center;
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
+    .login-form {
+        width: 380px;
+        margin: 0 auto;
+        .ant-form-item {
+            margin-bottom: 27px;
+        }
+        .ant-form-item-with-help {
+            margin-bottom: 11px;
+        }
+        .ant-form-explain {
+            font-size: 12px;
+        }
+    }
+    .copyright {
+        color: #b1b1b1;
+        text-align: center;
+        margin-top: 20px;
+    }
+}

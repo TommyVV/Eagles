@@ -26,7 +26,7 @@ namespace Eagles.DomainService.Core.AppMenu
             var response = new GetMenuResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var menus = menuDataAccess.GetAppMenus(request.AppId);
             if (menus == null || !menus.Any())

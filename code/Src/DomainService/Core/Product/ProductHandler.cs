@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Base;
+using Eagles.Application.Model;
 using Eagles.Interface.Core.Product;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ProductAccess;
@@ -25,7 +25,7 @@ namespace Eagles.DomainService.Core.Product
             var response = new GetProductResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProduct(request);
             if (result != null && result.Count > 0)
@@ -37,7 +37,6 @@ namespace Eagles.DomainService.Core.Product
                     ProductScore = x.Score,
                     ProductImageUrl = x.ImageUrl
                 }).ToList();
-              
             }
             else
             {
@@ -51,7 +50,7 @@ namespace Eagles.DomainService.Core.Product
             var response = new GetProductDetailResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProductDetail(request.ProductId);
             if (result != null)
@@ -59,8 +58,8 @@ namespace Eagles.DomainService.Core.Product
                 response.ProductId = result.ProdId;
                 response.ProductName = result.ProdName;
                 response.PeopleCount = result.SaleCount;
-                response.ProductBeginTime = result.BeginTime;
-                response.ProductEndTime = result.EndTime;
+                response.ProductBeginTime = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.ProductEndTime = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.ProductScore = result.Score;
                 response.ProductImgUrl = result.SmallImageUrl;
                 response.ProductDescrption = result.HtmlDescription;

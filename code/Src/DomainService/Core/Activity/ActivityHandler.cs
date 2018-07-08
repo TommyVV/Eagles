@@ -64,6 +64,8 @@ namespace Eagles.DomainService.Core.Activity
                 IsPublic = request.IsPublic,
                 CreateType = request.CreateType,
                 ImageUrl = request.ImageUrl,
+                MaxCount = 99,
+                MaxUser = 99,
                 OrgReview = "-1",
                 BranchReview = "-1"
             };
@@ -77,19 +79,19 @@ namespace Eagles.DomainService.Core.Activity
                 switch (i)
                 {
                     case 0:
-                        act.AttachType1 = attachList[i].AttachmentType;
+                        act.AttachName1 = attachList[i].AttachName;
                         act.Attach1 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 1:
-                        act.AttachType2 = attachList[i].AttachmentType;
+                        act.AttachName2 = attachList[i].AttachName;
                         act.Attach2 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 2:
-                        act.AttachType3 = attachList[i].AttachmentType;
+                        act.AttachName3 = attachList[i].AttachName;
                         act.Attach4 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 3:
-                        act.AttachType4 = attachList[i].AttachmentType;
+                        act.AttachName4 = attachList[i].AttachName;
                         act.Attach4 = attachList[i].AttachmentDownloadUrl;
                         break;
                 }
@@ -181,11 +183,11 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
             var createType = activityInfo.CreateType;
             //上级发起的活动
-            if (0 == createType && activityInfo.ToUserId != tokens.UserId)
-                throw new TransactionException("96", "必须负责人申请完成活动");
+            if (0 == createType && activityInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须上级完成活动");
             //下级发起的活动
-            else if (1 == createType && activityInfo.FromUser != tokens.UserId)
-                throw new TransactionException("96", "必须负责人申请完成活动");
+            else if (1 == createType && activityInfo.ToUserId != tokens.UserId)
+                throw new TransactionException("96", "必须上级完成活动");
             var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
@@ -223,19 +225,19 @@ namespace Eagles.DomainService.Core.Activity
                 switch (i)
                 {
                     case 0:
-                        feeBack.AttachType1 = attachList[i].AttachmentType;
+                        feeBack.AttachName1 = attachList[i].AttachName;
                         feeBack.Attach1 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 1:
-                        feeBack.AttachType2 = attachList[i].AttachmentType;
+                        feeBack.AttachName2 = attachList[i].AttachName;
                         feeBack.Attach2 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 2:
-                        feeBack.AttachType3 = attachList[i].AttachmentType;
+                        feeBack.AttachName3 = attachList[i].AttachName;
                         feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
                         break;
                     case 3:
-                        feeBack.AttachType4 = attachList[i].AttachmentType;
+                        feeBack.AttachName4 = attachList[i].AttachName;
                         feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
                         break;
                 }
@@ -251,7 +253,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new GetActivityResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -260,7 +262,7 @@ namespace Eagles.DomainService.Core.Activity
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
-            var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
+            var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId, request.PageIndex, request.PageSize);
             List<TbUserActivity> userActivity;
             switch (request.ActivityPage)
             {
@@ -314,7 +316,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime,
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 Status = x.Status,
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
@@ -327,7 +329,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new GetActivityDetailResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -346,10 +348,10 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
             }
             else
@@ -364,7 +366,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new GetPublicActivityResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -372,13 +374,13 @@ namespace Eagles.DomainService.Core.Activity
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId);
+            var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId, request.PageIndex, request.PageSize);
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime,
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();
@@ -392,7 +394,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new GetPublicActivityDetailResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iActivityAccess.GetPublicActivityDetail(request.ActivityId, request.AppId);
             if (result != null)
@@ -408,10 +410,10 @@ namespace Eagles.DomainService.Core.Activity
                 response.ActivityJoinPeopleList = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
                 response.AttachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
             }
             else
@@ -426,26 +428,34 @@ namespace Eagles.DomainService.Core.Activity
             var response = new GetActivityFeedBackResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var userInfo = util.GetUserInfo(tokens.UserId);
-            if (userInfo == null)
-                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId);
+            var activityInfo = iActivityAccess.GetActivityDetail(request.ActivityId, request.AppId);
+            if (activityInfo == null)
+                throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
+            var createType = activityInfo.CreateType;
+            var userId = 0;
+            //上级发起的活动
+            if (0 == createType)
+                userId = activityInfo.ToUserId;
+            //下级发起的活动
+            else if (1 == createType)
+                userId = activityInfo.FromUser;
+            var result = iActivityAccess.GetActivityFeedBack(request.ActivityId, request.AppId, userId);
             response.FeedBackList = result?.Select(x => new FeedBack
             {
                 UserId = x.UserId,
-                UserName = x.UserName,
+                UserName = x.Name,
                 UserFeedBack = x.UserFeedBack,
                 AttachList = new List<Attachment>()
                 {
-                    new Attachment() { AttachmentType = x.AttachType1, AttachmentDownloadUrl = x.Attach1 },
-                    new Attachment() { AttachmentType = x.AttachType2, AttachmentDownloadUrl = x.Attach2 },
-                    new Attachment() { AttachmentType = x.AttachType3, AttachmentDownloadUrl = x.Attach3 },
-                    new Attachment() { AttachmentType = x.AttachType4, AttachmentDownloadUrl = x.Attach4 }
+                    new Attachment() { AttachName = x.AttachName1, AttachmentDownloadUrl = x.Attach1 },
+                    new Attachment() { AttachName = x.AttachName2, AttachmentDownloadUrl = x.Attach2 },
+                    new Attachment() { AttachName = x.AttachName3, AttachmentDownloadUrl = x.Attach3 },
+                    new Attachment() { AttachName = x.AttachName4, AttachmentDownloadUrl = x.Attach4 }
                 }
             }).ToList();
             if (result == null || result.Count < 0)

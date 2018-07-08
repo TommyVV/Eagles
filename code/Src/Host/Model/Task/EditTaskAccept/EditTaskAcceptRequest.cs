@@ -10,7 +10,7 @@ namespace Eagles.Application.Model.Task.EditTaskAccept
         /// <summary>
         /// 01-上级审核任务 02-下级接受任务 03-下级申请完成
         /// </summary>
-        public TaskTypeEnum Type { get; set; }
+        public TaskAcceptType Type { get; set; }
 
         /// <summary>
         /// 任务Id

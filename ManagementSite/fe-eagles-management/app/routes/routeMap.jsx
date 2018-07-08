@@ -2,49 +2,54 @@ import React, { Component } from "react";
 import { Route, IndexRoute, hashHistory, Router } from "react-router";
 
 // -------------------------------------------------  pc端路由  -------------------------------------------------
-import PcApp from "../container/PC/App";
-import Login from "../container/PC/Login/";
+import PcApp from "../container/App";
+import Login from "../container/Login/";
 
-import Exercise from "../container/PC/Exercise/"; // 习题问卷列表
-import ExerciseDetail from "../container/PC/Exercise/ExDetail"; // 习题问卷详情
-import QuestionDetail from "../container/PC/Exercise/QuDetail"; // 习题详情
-import HomePage from "../container/PC/Home";
-import PartyMemberList from "../container/PC/PartyMember";
-import PartyMemberDetail from "../container/PC/PartyMember/Detail";
-import SetNextPartyMember from "../container/PC/PartyMember/Next";
-import ImportMember from "../container/PC/PartyMember/ImportMember";
-import IntergralList from "../container/PC/Intergral";
-import IntergralDetail from "../container/PC/Intergral/Detail";
-import GoodsList from "../container/PC/Goods";
-import GoodsDetail from "../container/PC/Goods/Detail";
-import SendList from "../container/PC/Send";
-import SendDetail from "../container/PC/Send/Detail";
-import CheckList from "../container/PC/Check";
-import SystemList from "../container/PC/System";
-import SystemDetail from "../container/PC/System/Detail";
-import RankList from "../container/PC/Rank";
-import RankDetail from "../container/PC/Rank/Detail";
-import OperatorList from "../container/PC/Operator";
-import OperatorDetail from "../container/PC/Operator/Detail";
-import OrgList from "../container/PC/Org";
-import OrgDetail from "../container/PC/Org/Detail";
-import ImageList from "../container/PC/Image";
-import ImageDetail from "../container/PC/Image/Detail";
-import MenuList from "../container/PC/Menu";
-import MenuDetailOne from "../container/PC/Menu/DetailOne";
-import MenuDetailTwo from "../container/PC/Menu/DetailTwo";
-import MeetList from "../container/PC/Meet";
-import MeetDetail from "../container/PC/Meet/Detail";
-import ImportMeetMember from "../container/PC/Meet/ImportMeetMember";
-import ProgramaList from "../container/PC/Programa";
-import ProgramaDetail from "../container/PC/Programa/Detail";
-import ActivityList from "../container/PC/Activity";
-import ActivityDetail from "../container/PC/Activity/Detail";
-import NewsList from "../container/PC/News";
-import NewsDetail from "../container/PC/News/Detail";
-import PermissionList from "../container/PC/Permission";
-import PermissionDetail from "../container/PC/Permission/Detail";
-import PermissionManage from "../container/PC/Permission/Manage";
+import Exercise from "../container/Exercise/"; // 习题问卷列表
+import ExerciseDetail from "../container/Exercise/ExDetail"; // 习题问卷详情
+import QuestionDetail from "../container/Exercise/QuDetail"; // 习题详情
+import HomePage from "../container/Home";
+import PartyMemberList from "../container/PartyMember";
+import PartyMemberDetail from "../container/PartyMember/Detail";
+import SetNextPartyMember from "../container/PartyMember/Next";
+import ImportMember from "../container/PartyMember/ImportMember";
+import IntergralList from "../container/Intergral";
+import IntergralDetail from "../container/Intergral/Detail";
+import GoodsList from "../container/Goods";
+import GoodsDetail from "../container/Goods/Detail";
+import SendList from "../container/Send";
+import SendDetail from "../container/Send/Detail";
+import CheckList from "../container/Check";
+import SystemList from "../container/System";
+import SystemDetail from "../container/System/Detail";
+import RankList from "../container/Rank";
+import RankDetail from "../container/Rank/Detail";
+import OperatorList from "../container/Operator";
+import OperatorDetail from "../container/Operator/Detail";
+import OrgList from "../container/Org";
+import OrgDetail from "../container/Org/Detail";
+import ImageList from "../container/Image";
+import ImageDetail from "../container/Image/Detail";
+import MenuList from "../container/Menu";
+import MenuDetailOne from "../container/Menu/DetailOne";
+import MenuDetailTwo from "../container/Menu/DetailTwo";
+import MeetList from "../container/Meet";
+import MeetDetail from "../container/Meet/Detail";
+import ImportMeetMember from "../container/Meet/ImportMeetMember";
+import ProgramaList from "../container/Programa";
+import ProgramaDetail from "../container/Programa/Detail";
+import ActivityList from "../container/Activity";
+import ActivityDetail from "../container/Activity/Detail";
+import NewsList from "../container/News";
+import NewsDetail from "../container/News/Detail";
+import PermissionList from "../container/Permission";
+import PermissionDetail from "../container/Permission/Detail";
+import PermissionManage from "../container/Permission/Manage";
+import ImportNews from "../container/News/ImportNews";
+import SmsSystemList from "../container/SmsSystem";
+import SmsSystemDetail from "../container/SmsSystem/Detail";
+import SmsOrgList from "../container/SmsOrg";
+import SmsOrgDetail from "../container/SmsOrg/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -52,7 +57,7 @@ class RouteMap extends Component {
       <Router history={hashHistory}>
         {/*pc端*/}
         <Route path="/" component={PcApp}>
-          <IndexRoute component={Login} />
+          <route path="/login" component={Login} />
           {/* 首页 */}
           <route path="/home" component={HomePage} />
           {/* 习题 */}
@@ -113,10 +118,17 @@ class RouteMap extends Component {
           {/* 新闻信息 */}
           <route path="/newslist" component={NewsList} />
           <route path="/news/detail(/:id)" component={NewsDetail} />
+          <route path="/news/import" component={ImportNews} />
           {/* 权限信息 */}
           <route path="/permissionlist" component={PermissionList} />
           <route path="/permission/detail(/:id)" component={PermissionDetail} />
           <route path="/permission/manage" component={PermissionManage} />
+          {/* 系统短信配置 */}
+          <route path="/smssystemlist" component={SmsSystemList} />
+          <route path="/smssystem/detail(/:id)" component={SmsSystemDetail} />
+          {/* 机构短信配置 */}
+          <route path="/smsorglist" component={SmsOrgList} />
+          <route path="/smsorg/detail(/:id)" component={SmsOrgDetail} />
         </Route>
       </Router>
     );

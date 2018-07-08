@@ -8,6 +8,7 @@ using Eagles.Application.Model.Activity.EditActivityComplete;
 using Eagles.Application.Model.Activity.EditActivityFeedBack;
 using Eagles.Application.Model.Activity.GetActivity;
 using Eagles.Application.Model.Activity.GetActivityDetail;
+using Eagles.Application.Model.Activity.GetActivityFeedBack;
 using Eagles.Application.Model.Activity.GetPublicActivity;
 using Eagles.Application.Model.Activity.GetPublicActivityDetail;
 
@@ -127,6 +128,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetPublicActivityDetailResponse> GetPublicActivityDetail(GetPublicActivityDetailRequest request)
         {
             return ApiActuator.Runing(() => activityHandler.GetPublicActivityDetail(request));
+        }
+
+        /// <summary>
+        /// 活动反馈查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetActivityFeedBackResponse> GetActivityFeedBack(GetActivityFeedBackRequest request)
+        {
+            return ApiActuator.Runing(() => activityHandler.GetActivityFeedBack(request));
         }
     }
 }

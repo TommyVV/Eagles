@@ -18,21 +18,21 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
         bool EditActivityComplete(int activityId, int completeStatus);
         
         int EditActivityFeedBack(TbUserActivity userActivity);
+
+        List<TbUserActivity> GetActivityFeedBack(int activityId, int appId, int userId);
+
+        List<TbActivity> GetActivity(ActivityType activityType,int branchId, int pageIndex, int pageSize);
         
-        List<TbActivity> GetActivity(ActivityType activityType,int branchId);
-
-        int GetUserActivityCount(int activityId);
-
-        List<TbUserActivity> GetUserActivity(int userId);
-
         TbActivity GetActivityDetail(int activityId, int appId);
 
-        List<TbActivity> GetPublicActivity(ActivityType activityType, int appId);
+        List<TbActivity> GetPublicActivity(ActivityType activityType, int appId, int pageIndex, int pageSize);
 
         TbActivity GetPublicActivityDetail(int activityId, int appId);
 
         List<JoinPeople> GetActivityJoinPeople(int activityId);
+        
+        int GetUserActivityCount(int activityId);
 
-        List<TbUserActivity> GetActivityFeedBack(int activityId, int appId);
+        List<TbUserActivity> GetUserActivity(int userId);
     }
 }

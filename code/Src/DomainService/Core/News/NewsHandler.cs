@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Eagles.Application.Model;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.UserArticle;
+using Eagles.Application.Model;
+using Eagles.Application.Model.Common;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -35,7 +36,7 @@ namespace Eagles.DomainService.Core.News
             var response = new CreateArticleResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -62,7 +63,6 @@ namespace Eagles.DomainService.Core.News
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
-
             return response;
         }
 
@@ -70,7 +70,7 @@ namespace Eagles.DomainService.Core.News
         {
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -81,9 +81,9 @@ namespace Eagles.DomainService.Core.News
             {
                 NewsList = news.Select(x => new Application.Model.Common.News
                 {
-                    CreateTime = x.CreateTime,
                     NewsId = x.NewsId,
-                    Title = x.Title
+                    Title = x.Title,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
                 }).ToList()
             };
         }
@@ -95,16 +95,16 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
+            var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.PageIndex, request.PageSize);
             if (result != null && result.Count > 0)
             {
                 response.NewsInfos = result?.Select(x => new Application.Model.Common.News()
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
                     ImageUrl = x.ImageUrl,
                     ExternalUrl = x.ExternalUrl,
                     IsExternal = x.IsExternal==1,
@@ -125,31 +125,44 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             if (result != null)
             {
                 response.NewsId = result.NewsId;
+                response.ShortDesc = result.ShortDesc;
                 response.Title = result.Title;
                 response.HtmlContent = result.HtmlContent;
                 response.Author = result.Author;
                 response.Source = result.Source;
                 response.Module = result.Module;
-                response.CreateTime = result.CreateTime;
+                response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TestId = result.TestId;
                 response.IsAttach = result.IsAttach;
-                response.Attach = new List<string>
+                response.Attach = new List<Attachment>
                 {
-                    result.Attach1,
-                    result.Attach2,
-                    result.Attach3,
-                    result.Attach4
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach1,
+                        AttachName = result.AttachName1
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach2,
+                        AttachName = result.AttachName2
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach3,
+                        AttachName = result.AttachName3
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach4,
+                        AttachName = result.AttachName4
+                    },
                 };
-                //response.Attach1 = result.Attach1;
-                //response.Attach2 = result.Attach2;
-                //response.Attach3 = result.Attach3;
-                //response.Attach4 = result.Attach4;
                 response.ViewCount = result.ViewCount;
                 response.CanStudy = result.CanStudy;
             }
@@ -159,6 +172,5 @@ namespace Eagles.DomainService.Core.News
             }
             return response;
         }
-        
     }
 }

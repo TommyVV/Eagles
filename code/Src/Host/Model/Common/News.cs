@@ -15,12 +15,17 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 新闻文章标题
         /// </summary>
+        public string ShortDesc { get; set; }
+
+        /// <summary>
+        /// 新闻文章标题
+        /// </summary>
         public string Title { get; set; }
 
         /// <summary>
         /// 文章时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 文章内容

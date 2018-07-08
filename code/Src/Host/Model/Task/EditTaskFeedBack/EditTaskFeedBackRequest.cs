@@ -14,6 +14,11 @@ namespace Eagles.Application.Model.Task.EditTaskFeedBack
         public int TaskId { get; set; }
 
         /// <summary>
+        /// 步骤Id
+        /// </summary>
+        public int StepId { get; set; }
+
+        /// <summary>
         /// 反馈内容
         /// </summary>
         public string Content { get; set; }

@@ -1,5 +1,4 @@
-﻿using Eagles.Application.Model.Enums;
-
+﻿
 namespace Eagles.Application.Model.Task.EditTaskStep
 {
     /// <summary>
@@ -7,11 +6,6 @@ namespace Eagles.Application.Model.Task.EditTaskStep
     /// </summary>
     public class EditTaskStepRequest : RequestBase
     {
-        /// <summary>
-        /// 操作类型 增、删、改
-        /// </summary>
-        public ActionEnum Action { get; set; }
-
         /// <summary>
         /// 支部Id
         /// </summary>
@@ -30,7 +24,7 @@ namespace Eagles.Application.Model.Task.EditTaskStep
         /// <summary>
         /// 步骤内容
         /// </summary>
-        public string StepContent { get; set; }
+        public string StepName { get; set; }
         
     }
 }

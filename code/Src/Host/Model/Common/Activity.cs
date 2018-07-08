@@ -31,7 +31,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 活动日期
         /// </summary>
-        public DateTime ActivityDate { get; set; }
+        public string ActivityDate { get; set; }
         
         /// <summary>
         /// 试卷编号

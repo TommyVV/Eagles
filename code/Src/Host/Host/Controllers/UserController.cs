@@ -38,17 +38,7 @@ namespace Eagles.Application.Host.Controllers
             return ApiActuator.Runing(() => userHandler.Login(request));
         }
 
-        /// <summary>
-        /// 注册
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [AllowAnonymous]
-        public ResponseFormat<RegisterResponse> Register(RegisterRequest request)
-        {
-            return ApiActuator.Runing(() => userHandler.Register(request));
-        }
+        
 
         /// <summary>
         /// 更新用户信息

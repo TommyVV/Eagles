@@ -19,6 +19,6 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 是否正确
         /// </summary>
-        public int IsRight { get; set; }
+        public bool IsRight { get; set; }
     }
 }

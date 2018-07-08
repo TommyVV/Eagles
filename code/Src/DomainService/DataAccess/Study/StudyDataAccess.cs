@@ -4,7 +4,7 @@ using Eagles.Interface.DataAccess.StudyAccess;
 
 namespace Ealges.DomianService.DataAccess.Study
 {
-    public class StudyDataAccess: IStudyAccess
+    public class StudyDataAccess : IStudyAccess
     {
         private readonly IDbManager dbManager;
 
@@ -28,8 +28,7 @@ namespace Ealges.DomianService.DataAccess.Study
 
         public TbUserStudyLog GetStudyTime(int userId, int newsId, int moduleId)
         {
-            return dbManager.QuerySingle<TbUserStudyLog>(
-                @"select StudyTime from eagles.tb_user_study_log where UserId = @UserId and NewsId = @NewsId and ModuleId = @ModuleId ",
+            return dbManager.QuerySingle<TbUserStudyLog>(@"select StudyTime from eagles.tb_user_study_log where UserId = @UserId and NewsId = @NewsId and ModuleId = @ModuleId ",
                 new {UserId = userId, NewsId = newsId, ModuleId = moduleId});
         }
     }

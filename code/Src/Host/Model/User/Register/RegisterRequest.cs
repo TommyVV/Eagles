@@ -14,7 +14,7 @@ namespace Eagles.Application.Model.User.Register
         /// <summary>
         /// 注册密码
         /// </summary>
-        public string Pwd { get; set; }
+        public string UserPwd { get; set; }
 
         /// <summary>
         /// 短信验证码

@@ -10,6 +10,6 @@ namespace Eagles.DomainService.Model.Sms
         public string Phone { get; set; }
         public int Seq { get; set; }
         public int TraceId { get; set; }
-        public int Code { get; set; }
+        public int ValidCode { get; set; }
     }
 }

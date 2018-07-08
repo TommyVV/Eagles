@@ -63,7 +63,9 @@
     <Compile Include="AppModule\AppModuleHanlder.cs" />
     <Compile Include="FileUpload\FileUploadHandler.cs" />
     <Compile Include="News\NewsHandler.cs" />
+    <Compile Include="Order\OrderHandler.cs" />
     <Compile Include="Product\ProductHandler.cs" />
+    <Compile Include="Register\RegisterHandler.cs" />
     <Compile Include="Score\ScoreHandler.cs" />
     <Compile Include="Scroll\ScrollHandler.cs" />
     <Compile Include="Study\StudyHandler.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="UserMessage\UserMessageHandler.cs" />
     <Compile Include="UserTest\UserTestHandler.cs" />
     <Compile Include="User\UserHandler.cs" />
+    <Compile Include="Utility\Distinct.cs" />
+    <Compile Include="Utility\MaskPhone.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">

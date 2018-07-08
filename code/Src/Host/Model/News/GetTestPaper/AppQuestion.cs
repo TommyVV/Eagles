@@ -3,7 +3,7 @@
 namespace Eagles.Application.Model.News.GetTestPaper
 {
     /// <summary>
-    /// 试卷
+    /// 题目
     /// </summary>
     public class AppQuestion
     {

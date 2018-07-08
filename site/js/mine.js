@@ -47,6 +47,27 @@ $(document).ready(function () {
         new CalculateScreen();
     })
 });
+function minedel(){
+	$.ajax({
+        type: "post",
+		data: {
+			  
+			  "Token": "string",
+			  "AppId": 10000000
+		},
+		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
+		dataType: "json",
+        success:function(res){
+        	var data=res.Result;
+            if(res.Code == 00){
+            	$('.main-content-top-name,.lc_name').text(data.Name);//昵称
+				$('.main-content-top-tel,.info-tel').text(data.UserId);//用户id
+				$('.head-icon').text(data.PhotoUrl);//头像
+				
+            }
+        }
+	})
+}
 
 
 
