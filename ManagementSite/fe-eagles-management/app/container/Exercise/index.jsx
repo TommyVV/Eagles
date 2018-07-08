@@ -14,6 +14,11 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import {
+  getQuestionList,
+  deleteQuestion
+} from "../../services/questionService";
+import { typeMap, stateMap } from "../../constants/config/question";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -42,11 +47,16 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="习题类型">
-              {getFieldDecorator("exType")(
+              {getFieldDecorator("ExercisesType")(
                 <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">在线考试习题</Option>
-                  <Option value="2">新闻习题</Option>
+                  <Option value="4">全部</Option>
+                  {typeMap.map((obj, index) => {
+                    return (
+                      <Option key={index} value={obj.ExercisesType}>
+                        {obj.text}
+                      </Option>
+                    );
+                  })}
                 </Select>
               )}
             </FormItem>
@@ -60,7 +70,7 @@ class SearchForm extends Component {
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("startTime")(
+                  {getFieldDecorator("StartTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
@@ -78,7 +88,7 @@ class SearchForm extends Component {
               </Col>
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("endTime")(
+                  {getFieldDecorator("EndTime")(
                     <DatePicker placeholder="结束时间" />
                   )}
                 </FormItem>
@@ -87,12 +97,16 @@ class SearchForm extends Component {
           </Col>
           <Col span={5} key={4}>
             <FormItem label="状态">
-              {getFieldDecorator("state")(
+              {getFieldDecorator("Status")(
                 <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">待审核</Option>
-                  <Option value="2">审核通过</Option>
-                  <Option value="3">审核不通过</Option>
+                  <Option value="4">全部</Option>
+                  {stateMap.map((obj, index) => {
+                    return (
+                      <Option key={index} value={obj.Status}>
+                        {obj.text}
+                      </Option>
+                    );
+                  })}
                 </Select>
               )}
             </FormItem>
@@ -117,11 +131,11 @@ const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     // const project = props.project;
     return {
-      exType: Form.createFormField({
-        value: "0"
+      ExercisesType: Form.createFormField({
+        value: "4"
       }),
-      state: Form.createFormField({
-        value: "0"
+      Status: Form.createFormField({
+        value: "4"
       })
     };
   }
@@ -131,8 +145,8 @@ class Exercise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
+      selectedRowKeys: [], // id数组
+      questionList: [], // 列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
       pageConfig: {} // 当前页配置
@@ -140,45 +154,50 @@ class Exercise extends React.Component {
     this.columns = [
       {
         title: "问卷名称",
-        dataIndex: "questionName",
-        width: "20%"
+        dataIndex: "ExercisesName"
       },
       {
         title: "习题类型",
-        dataIndex: "quType",
-        width: "20%"
-      },
-      {
-        title: "状态",
-        dataIndex: "state",
-        width: "20%",
-        render: text => <span>{text}</span>
-      },
-      {
-        title: "发布时间",
-        dataIndex: "createTime",
-        width: "20%",
+        dataIndex: "ExercisesType",
         render: text => (
-          <span>{util.timeStampConvent(text, "yyyy-MM-dd hh:mm:ss")}</span>
+          <span>
+            {typeMap.map(obj => {
+              if (obj.ExercisesType == text) {
+                return obj.text;
+              }
+            })}
+          </span>
         )
       },
       {
+        title: "状态",
+        dataIndex: "Status",
+        render: text => (
+          <span>
+            {stateMap.map(obj => {
+              if (obj.Status == text) {
+                return obj.text;
+              }
+            })}
+          </span>
+        )
+      },
+      {
+        title: "发布时间",
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
+      },
+      {
         title: "操作",
-        width: "20%",
-        render: (text, record) => {
+        dataIndex: "ExercisesId",
+        render: id => {
           return (
             <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
-              >
+              <a onClick={() => hashHistory.replace(`/question/detail/${id}`)}>
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(id)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -188,37 +207,18 @@ class Exercise extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        questionName: "关于党的发展",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
-      },
-      {
-        key: "2",
-        questionName: "小红的考卷",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
-      },
-      {
-        key: "3",
-        questionName: "考卷B",
-        quType: "新闻习题",
-        state: "待审核",
-        createTime: "2018-5-12 10:16"
-      }
-    ];
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      StartTime: "",
+      EndTime: "",
+      ExercisesType: "",
+      ExercisesName: "",
+      Status: ""
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -227,25 +227,24 @@ class Exercise extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
+  getCurrentList = async params => {
+    try {
+      let { List, TotalCount } = await getQuestionList(params);
+      console.log(List, TotalCount);
+      List.forEach(v => (v.key = v.ExercisesId));
+      let { PageNumber } = params;
+      this.setState({ questionList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   // 更新分页配置
-  updatePageConfig(totalSize) {
+  updatePageConfig(TotalCount) {
     let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
+      total: TotalCount,
+      pageSize: this.getListConfig.PageSize,
       current: this.state.current,
       onChange: async (page, pagesize) => {
         this.getCurrentList({
@@ -257,59 +256,23 @@ class Exercise extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async id => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await deleteQuestion({
+            ExercisesId: id
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -338,7 +301,7 @@ class Exercise extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, questionList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -347,7 +310,7 @@ class Exercise extends React.Component {
       <Nav>
         <WrapperSearchForm />
         <Table
-          dataSource={this.data}
+          dataSource={questionList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
@@ -355,12 +318,7 @@ class Exercise extends React.Component {
           bordered
         />
 
-        <Row
-          type="flex"
-          justify="center"
-          gutter={24}
-          className={projectList.length === 0 ? "init" : ""}
-        >
+        <Row type="flex" justify="center" gutter={24}>
           <Col>
             <Button type="primary" className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/exercise/create`)}>
@@ -369,7 +327,7 @@ class Exercise extends React.Component {
             </Button>
           </Col>
           <Col>
-            <Button onClick={this.handleDelete} className="btn">
+            <Button onClick={() => this.handleDelete()} className="btn">
               批量删除
             </Button>
           </Col>
