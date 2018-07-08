@@ -110,7 +110,9 @@ namespace Eagles.DomainService.Core.User
                 Provice = result.Provice,
                 City = result.City,
                 District = result.District,
-                PhotoUrl = result.PhotoUrl
+                PhotoUrl = result.PhotoUrl,
+                Score = result.Score
+
             };
             response.ResultUserInfo = userInfo;
             return response;

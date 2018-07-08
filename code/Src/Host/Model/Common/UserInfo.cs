@@ -146,5 +146,10 @@ namespace Eagles.Application.Model.Common
         /// 是否上级
         /// </summary>
         public int IsLeader { get; set; }
+
+        /// <summary>
+        /// 用户积分
+        /// </summary>
+        public int Score { get; set; }
     }
 }

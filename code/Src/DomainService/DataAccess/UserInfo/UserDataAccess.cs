@@ -20,7 +20,8 @@ namespace Ealges.DomianService.DataAccess.UserInfo
 
         public int InsertToken(TbUserToken userToken)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType) value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType)", userToken);
+            return dbManager.Excuted(@"insert into eagles.tb_user_token (UserId,Token,CreateTime,ExpireTime,TokenType,OrgId,BranchId) 
+value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType,@OrgId,@BranchId)", userToken);
         }
 
         public int CreateUser(TbUserInfo userInfo)
@@ -40,7 +41,7 @@ IsLeader=@IsLeader where UserId = @UserId", userInfo);
         {
             var userInfo = dbManager.Query<TbUserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,OriginAddress,Phone,IdNumber,Education,
 School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
-PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
+PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
