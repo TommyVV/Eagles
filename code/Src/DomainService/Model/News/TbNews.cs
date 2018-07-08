@@ -23,6 +23,23 @@ namespace Eagles.DomainService.Model.News
         /// 附件4
         /// </summary>
         public string Attach4 { get; set; }
+
+        /// <summary>
+        /// 附件1
+        /// </summary>
+        public string AttachName1 { get; set; }
+        /// <summary>
+        /// 附件2
+        /// </summary>
+        public string AttachName2 { get; set; }
+        /// <summary>
+        /// 附件3
+        /// </summary>
+        public string AttachName3 { get; set; }
+        /// <summary>
+        /// 附件4
+        /// </summary>
+        public string AttachName4 { get; set; }
         /// <summary>
         /// 附件5
         /// </summary>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Eagles.Application.Model;
+using Eagles.Application.Model.Common;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Interface.DataAccess.Util;
@@ -139,12 +140,28 @@ namespace Eagles.DomainService.Core.News
                 response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TestId = result.TestId;
                 response.IsAttach = result.IsAttach;
-                response.Attach = new List<string>
+                response.Attach = new List<Attachment>
                 {
-                    result.Attach1,
-                    result.Attach2,
-                    result.Attach3,
-                    result.Attach4
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach1,
+                        AttachName = result.AttachName1
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach2,
+                        AttachName = result.AttachName2
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach3,
+                        AttachName = result.AttachName3
+                    },
+                    new Attachment()
+                    {
+                        AttachmentDownloadUrl = result.Attach4,
+                        AttachName = result.AttachName4
+                    },
                 };
                 response.ViewCount = result.ViewCount;
                 response.CanStudy = result.CanStudy;
