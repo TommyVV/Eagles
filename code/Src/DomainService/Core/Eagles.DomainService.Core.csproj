@@ -77,6 +77,7 @@
     <Compile Include="UserTest\UserTestHandler.cs" />
     <Compile Include="User\UserHandler.cs" />
     <Compile Include="Utility\Distinct.cs" />
+    <Compile Include="Utility\MaskPhone.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\Eagles.Base.csproj">

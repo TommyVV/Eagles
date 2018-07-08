@@ -35,7 +35,7 @@ namespace Eagles.DomainService.Core.News
             var response = new CreateArticleResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -69,7 +69,7 @@ namespace Eagles.DomainService.Core.News
         {
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -94,7 +94,7 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = newsDa.GetModuleNews(request.ModuleId, request.AppId, request.NewsCount);
             if (result != null && result.Count > 0)
@@ -124,7 +124,7 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = newsDa.GetNewsDetail(request.NewsId, request.AppId);
             if (result != null)

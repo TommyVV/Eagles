@@ -64,7 +64,7 @@ VALUES
 
         public bool CheckAppId(int appId)
         {
-            var user = dbManager.Query<TbOrgInfo>(@" select OrgId, OrgName, Province, City, District, Address, CreateTime, EditTime, OperId, Logo from eagles.tb_user_info where OrgId = @OrgId", new { OrgId = appId });
+            var user = dbManager.Query<TbOrgInfo>(@" select OrgId, OrgName, Province, City, District, Address, CreateTime, EditTime, OperId, Logo from eagles.tb_org_info where OrgId = @OrgId", new { OrgId = appId });
             if (user != null && user.Any())
                 return true;
             return false;

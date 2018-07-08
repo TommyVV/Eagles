@@ -80,7 +80,7 @@ namespace Eagles.DomainService.Core.Study
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iStudyAccess.GetStudyTime(tokens.UserId, request.NewsId, request.ModuleId);
             if (result != null)

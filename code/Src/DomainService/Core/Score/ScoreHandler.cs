@@ -91,7 +91,7 @@ namespace Eagles.DomainService.Core.Score
             }
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iScoreAccess.GetScoreExchangeLs(tokens.UserId);
             if (result != null && result.Count > 0)
@@ -117,7 +117,7 @@ namespace Eagles.DomainService.Core.Score
             var response = new GetScoreRankResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)

@@ -14,6 +14,7 @@ using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
+using Eagles.DomainService.Core.Utility;
 
 namespace Eagles.DomainService.Core.User
 {
@@ -80,7 +81,7 @@ namespace Eagles.DomainService.Core.User
             }
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             if (result == null)
@@ -124,6 +125,8 @@ namespace Eagles.DomainService.Core.User
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
+                    OrgId = result.OrgId,
+                    BranchId = result.BranchId,
                     UserId = result.UserId,
                     Token = guid,
                     CreateTime = DateTime.Now,
@@ -152,6 +155,15 @@ namespace Eagles.DomainService.Core.User
         public RegisterResponse Register(RegisterRequest request)
         {
             var response = new RegisterResponse();
+            if (request.AppId <= 0)
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+            if (!util.CheckAppId(request.AppId))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+
+            }
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
                 throw new TransactionException(MessageCode.ExistsPhone,MessageKey.ExistsPhone);
@@ -160,7 +172,14 @@ namespace Eagles.DomainService.Core.User
                 Phone = request.Phone,
                 Password = md5Helper.Md5Encypt(request.UserPwd),
                 CreateTime = DateTime.Now,
-                IsCustomer = 0
+                IsCustomer = 0,
+                OrgId = request.AppId,
+                BranchId = 0,
+                Score = 0,
+                EditTime = DateTime.Now,
+                Status = 0,
+                IsLeader = 0,
+                Name = request.Phone.MaskPhone(),
             };
             var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);

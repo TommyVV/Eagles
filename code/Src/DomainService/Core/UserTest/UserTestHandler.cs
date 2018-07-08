@@ -39,7 +39,7 @@ namespace Eagles.DomainService.Core.UserTest
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var resultTest = testDa.GetTestPaper(request.TestId);
             if (resultTest == null || !resultTest.Any())

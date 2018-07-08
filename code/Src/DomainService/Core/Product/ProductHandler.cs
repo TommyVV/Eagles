@@ -25,7 +25,7 @@ namespace Eagles.DomainService.Core.Product
             var response = new GetProductResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProduct(request);
             if (result != null && result.Count > 0)
@@ -51,7 +51,7 @@ namespace Eagles.DomainService.Core.Product
             var response = new GetProductDetailResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (util.CheckAppId(request.AppId))
+            if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iProductAccess.GetProductDetail(request.ProductId);
             if (result != null)

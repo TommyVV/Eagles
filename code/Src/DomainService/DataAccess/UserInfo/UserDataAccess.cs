@@ -25,7 +25,8 @@ namespace Ealges.DomianService.DataAccess.UserInfo
 
         public int CreateUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime) value (@Phone,@Password,@CreateTime)", userInfo);
+            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader)
+value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader)", userInfo);
         }
 
         public int EditUser(TbUserInfo userInfo)
