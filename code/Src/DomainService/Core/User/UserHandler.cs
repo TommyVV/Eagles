@@ -105,12 +105,14 @@ namespace Eagles.DomainService.Core.User
                 IdCard = result.IdNumber,
                 Employer = result.Company,
                 PrepPartyDate = result.PreMemberTime,
-                FormalPartyDat = result.MemberTime.ToLocalTime(),
+                FormalPartyDat = result.MemberTime,
                 PartyType = result.MemberType,
                 Provice = result.Provice,
                 City = result.City,
                 District = result.District,
-                PhotoUrl = result.PhotoUrl
+                PhotoUrl = result.PhotoUrl,
+                Score = result.Score
+
             };
             response.ResultUserInfo = userInfo;
             return response;

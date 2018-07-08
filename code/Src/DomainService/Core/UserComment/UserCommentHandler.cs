@@ -90,7 +90,7 @@ namespace Eagles.DomainService.Core.UserComment
             {
                 CommentId = x.MessageId,
                 Id = x.Id,
-                CommentTime = x.ReviewTime,
+                CommentTime = x.ReviewTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 CommentUserId = x.UserId,
                 CommentUserName = x.UserName,
                 CommentContent = x.Content

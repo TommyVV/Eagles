@@ -12,7 +12,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 兑换时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 积分奖励类型

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.News.GetNewsDetail
 {
@@ -46,7 +47,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// <summary>
         /// 发布时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 试卷Id
@@ -61,7 +62,7 @@ namespace Eagles.Application.Model.News.GetNewsDetail
         /// <summary>
         /// 附件
         /// </summary>
-        public List<string> Attach { get; set; }
+        public List<Attachment> Attach { get; set; }
 
         /// <summary>
         /// 阅读数量

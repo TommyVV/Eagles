@@ -59,8 +59,8 @@ namespace Eagles.DomainService.Core.Product
                 response.ProductId = result.ProdId;
                 response.ProductName = result.ProdName;
                 response.PeopleCount = result.SaleCount;
-                response.ProductBeginTime = result.BeginTime;
-                response.ProductEndTime = result.EndTime;
+                response.ProductBeginTime = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.ProductEndTime = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.ProductScore = result.Score;
                 response.ProductImgUrl = result.SmallImageUrl;
                 response.ProductDescrption = result.HtmlDescription;

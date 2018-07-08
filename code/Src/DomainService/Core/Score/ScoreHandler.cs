@@ -49,8 +49,8 @@ namespace Eagles.DomainService.Core.Score
             var score = productInfo.Score; //商品积分
             var stock = productInfo.Stock; //库存
             var maxBuyCount = productInfo.MaxBuyCount; //每人最大购买数量
-            var userCount = iproductAccess.GetOrderByProduct(request.ProductId, userInfo.UserId);
-            if (maxBuyCount > 0 && buyCount >= userCount)
+            var userCount = iproductAccess.GetOrderByProduct(request.ProductId, userInfo.UserId); //用户实际购买数量
+            if (maxBuyCount < userCount || maxBuyCount < buyCount + userCount)
                 throw new TransactionException(MessageCode.LimitedCount, MessageKey.LimitedCount);
             var userScore = userInfo.Score; //用户积分
             if (stock < buyCount)
@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core.Score
                 response.ScoreList = result?.Select(x => new Application.Model.Common.ScoreExchange()
                 {
                     Score = x.Score,
-                    CreateTime = x.CreateTime,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
                     RewardsType = x.RewardsType,
                     Comment = x.Comment,
                     OriScore = x.OriScore

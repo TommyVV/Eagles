@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 附件类型
         /// </summary>
-        public string AttachmentType { get; set; }
+        public string AttachName { get; set; }
         
         /// <summary>
         /// 附件Url

@@ -20,9 +20,9 @@ namespace Eagles.DomainService.Model.User
         public string Attach2 { get; set; }
         public string Attach3 { get; set; }
         public string Attach4 { get; set; }
-        public string AttachType1 { get; set; }
-        public string AttachType2 { get; set; }
-        public string AttachType3 { get; set; }
-        public string AttachType4 { get; set; }
+        public string AttachName1 { get; set; }
+        public string AttachName2 { get; set; }
+        public string AttachName3 { get; set; }
+        public string AttachName4 { get; set; }
     }
 }

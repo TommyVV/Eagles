@@ -48,20 +48,22 @@ namespace Eagles.DomainService.Core.Task
             var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
-            var task = new TbTask();
-            task.OrgId = tokens.OrgId;
-            task.BranchId = tokens.BranchId;
-            task.TaskName = request.TaskName;
-            task.BeginTime = request.TaskBeginDate;
-            task.EndTime = request.TaskEndDate;
-            task.TaskContent = request.TaskContent;
-            task.CreateTime = DateTime.Now;
-            task.FromUser = fromUser;
-            task.CanComment = request.CanComment;
-            task.IsPublic = request.IsPublic;
-            task.CreateType = request.CreateType;
-            task.OrgReview = "-1";
-            task.BranchReview = "-1";
+            var task = new TbTask
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                TaskName = request.TaskName,
+                BeginTime = request.TaskBeginDate,
+                EndTime = request.TaskEndDate,
+                TaskContent = request.TaskContent,
+                CreateTime = DateTime.Now,
+                FromUser = fromUser,
+                CanComment = request.CanComment,
+                IsPublic = request.IsPublic,
+                CreateType = request.CreateType,
+                OrgReview = "-1",
+                BranchReview = "-1"
+            };
             if (0 == request.CreateType)
                 task.Status = -2; //0:初始状态;(上级发给下级的初始状态)
             else
@@ -71,22 +73,22 @@ namespace Eagles.DomainService.Core.Task
             {
                 if (i == 0)
                 {
-                    task.AttachType1 = attachList[i].AttachmentType;
+                    task.AttachName1 = attachList[i].AttachName;
                     task.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    task.AttachType2 = attachList[i].AttachmentType;
+                    task.AttachName2 = attachList[i].AttachName;
                     task.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    task.AttachType3 = attachList[i].AttachmentType;
+                    task.AttachName3 = attachList[i].AttachName;
                     task.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    task.AttachType4 = attachList[i].AttachmentType;
+                    task.AttachName4 = attachList[i].AttachName;
                     task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
@@ -105,7 +107,7 @@ namespace Eagles.DomainService.Core.Task
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
-            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            var stepInfo = iTaskAccess.GetStepExist(request.StepId);
             if (stepInfo == null)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
@@ -203,7 +205,7 @@ namespace Eagles.DomainService.Core.Task
             //下级发起的活动
             else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                 throw new TransactionException("96", "必须负责人编辑计划");
-            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            var stepInfo = iTaskAccess.GetStepExist(request.StepId);
             var action = ActionEnum.Create;
             if(stepInfo != null)
                 action = ActionEnum.Modify;
@@ -247,22 +249,22 @@ namespace Eagles.DomainService.Core.Task
             {
                 if (i == 0)
                 {
-                    userTaskStep.AttachType1 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName1 = attachList[i].AttachName;
                     userTaskStep.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    userTaskStep.AttachType2 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName2 = attachList[i].AttachName;
                     userTaskStep.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    userTaskStep.AttachType3 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName3 = attachList[i].AttachName;
                     userTaskStep.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    userTaskStep.AttachType4 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName4 = attachList[i].AttachName;
                     userTaskStep.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
@@ -307,13 +309,13 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iTaskAccess.GetTask(tokens.UserId, request.Status);
+            var result = iTaskAccess.GetTask(tokens.UserId, request.Status, request.PageIndex, request.PageSize);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime,
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();
@@ -340,17 +342,17 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskName = result.TaskName;
                 response.TaskContent = result.TaskContent;
                 response.TaskStatus = result.Status;
-                response.TaskBeginDate = result.BeginTime;
-                response.TaskEndDate = result.EndTime;
+                response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
             }
             else
@@ -367,13 +369,13 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var result = iTaskAccess.GetPublicTask(request.AppId);
+            var result = iTaskAccess.GetPublicTask(request.AppId, request.PageIndex, request.PageSize);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime,
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();
@@ -397,17 +399,17 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskName = result.TaskName;
                 response.TaskContent = result.TaskContent;
                 response.TaskStatus = result.Status;
-                response.TaskBeginDate = result.BeginTime;
-                response.TaskEndDate = result.EndTime;
+                response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
 
             }

@@ -5,140 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="hotcss" content="initial-dpr=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>党建学习列表页</title>
+    <title>列表页</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/partyLearning_list.css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="container" style="overflow-x: hidden;">
+		<div class="container">
       <div class="row">
-        <!-- 搜索栏 -->
-        <div class="search">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="搜索专题">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">搜索</button>
-                </span>
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-        </div>  
         <!-- 主体内容 -->
         <div class="main_content">
           <div class="list-box">
             <div class="dropdown">
-              <div class="list-header dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                <span class="title">党务公开 ></span>
+              <div class="list-header dropdown-toggle" data-toggle="dropdown">
               </div>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li>分类一</li>
-                <li>分类二</li>
-                <li>分类三</li>
+              <ul class="dropdown-menu">
               </ul>
             </div>
             <div class="list-body">
-              <div class="list-bottom">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" src="./assets/images/1.jpg" alt="">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">政策法规、专题教育等应用助力碎片化时间学</h4>
-                    <span class="list-time">2018-06-10</span>
-                    <div class="study-time">
-                      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                      <span>已学习:</span>
-                      <span>75分钟</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- 此处追加新闻内容 -->
+              <div class="list-bottom"></div>
             </div>
           </div>
         </div>
@@ -147,6 +32,8 @@
 		<script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/partyLearning_list.js"></script>
+    
 	</body>
 </html>
