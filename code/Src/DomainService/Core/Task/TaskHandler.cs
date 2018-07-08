@@ -48,20 +48,22 @@ namespace Eagles.DomainService.Core.Task
             var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
-            var task = new TbTask();
-            task.OrgId = tokens.OrgId;
-            task.BranchId = tokens.BranchId;
-            task.TaskName = request.TaskName;
-            task.BeginTime = request.TaskBeginDate;
-            task.EndTime = request.TaskEndDate;
-            task.TaskContent = request.TaskContent;
-            task.CreateTime = DateTime.Now;
-            task.FromUser = fromUser;
-            task.CanComment = request.CanComment;
-            task.IsPublic = request.IsPublic;
-            task.CreateType = request.CreateType;
-            task.OrgReview = "-1";
-            task.BranchReview = "-1";
+            var task = new TbTask
+            {
+                OrgId = tokens.OrgId,
+                BranchId = tokens.BranchId,
+                TaskName = request.TaskName,
+                BeginTime = request.TaskBeginDate,
+                EndTime = request.TaskEndDate,
+                TaskContent = request.TaskContent,
+                CreateTime = DateTime.Now,
+                FromUser = fromUser,
+                CanComment = request.CanComment,
+                IsPublic = request.IsPublic,
+                CreateType = request.CreateType,
+                OrgReview = "-1",
+                BranchReview = "-1"
+            };
             if (0 == request.CreateType)
                 task.Status = -2; //0:初始状态;(上级发给下级的初始状态)
             else
@@ -71,22 +73,22 @@ namespace Eagles.DomainService.Core.Task
             {
                 if (i == 0)
                 {
-                    task.AttachType1 = attachList[i].AttachmentType;
+                    task.AttachName1 = attachList[i].AttachName;
                     task.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    task.AttachType2 = attachList[i].AttachmentType;
+                    task.AttachName2 = attachList[i].AttachName;
                     task.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    task.AttachType3 = attachList[i].AttachmentType;
+                    task.AttachName3 = attachList[i].AttachName;
                     task.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    task.AttachType4 = attachList[i].AttachmentType;
+                    task.AttachName4 = attachList[i].AttachName;
                     task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
@@ -247,22 +249,22 @@ namespace Eagles.DomainService.Core.Task
             {
                 if (i == 0)
                 {
-                    userTaskStep.AttachType1 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName1 = attachList[i].AttachName;
                     userTaskStep.Attach1 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 1)
                 {
-                    userTaskStep.AttachType2 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName2 = attachList[i].AttachName;
                     userTaskStep.Attach2 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 2)
                 {
-                    userTaskStep.AttachType3 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName3 = attachList[i].AttachName;
                     userTaskStep.Attach3 = attachList[i].AttachmentDownloadUrl;
                 }
                 else if (i == 3)
                 {
-                    userTaskStep.AttachType4 = attachList[i].AttachmentType;
+                    userTaskStep.AttachName4 = attachList[i].AttachName;
                     userTaskStep.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
@@ -347,10 +349,10 @@ namespace Eagles.DomainService.Core.Task
                 response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
             }
             else
@@ -404,10 +406,10 @@ namespace Eagles.DomainService.Core.Task
                 response.AcceptUserId = result.UserId;
                 response.AcctachmentList = new List<Attachment>
                 {
-                    new Attachment() {AttachmentType = result.AttachType1, AttachmentDownloadUrl = result.Attach1},
-                    new Attachment() {AttachmentType = result.AttachType2, AttachmentDownloadUrl = result.Attach2},
-                    new Attachment() {AttachmentType = result.AttachType3, AttachmentDownloadUrl = result.Attach3},
-                    new Attachment() {AttachmentType = result.AttachType4, AttachmentDownloadUrl = result.Attach4}
+                    new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
+                    new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
+                    new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
+                    new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
 
             }
