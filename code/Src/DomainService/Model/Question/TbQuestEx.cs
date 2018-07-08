@@ -69,5 +69,10 @@
         /// 选项图片 
         /// </summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 用户参与次数
+        /// </summary>
+        public int UserCount { get; set; }
     }
 }

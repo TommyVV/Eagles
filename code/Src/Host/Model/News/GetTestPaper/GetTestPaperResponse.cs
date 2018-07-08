@@ -28,6 +28,11 @@ namespace Eagles.Application.Model.News.GetTestPaper
         public int LimitedTime { get; set; }
 
         /// <summary>
+        /// 用户参与数量
+        /// </summary>
+        public int UserCount { get; set; }
+
+        /// <summary>
         /// 题目List
         /// </summary>
         public List<AppQuestion> TestList { get; set; }

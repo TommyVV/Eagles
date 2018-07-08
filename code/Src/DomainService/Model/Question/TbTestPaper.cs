@@ -75,5 +75,10 @@ namespace Eagles.DomainService.Model.Question
         /// 及格奖励积分
         /// </summary>
         public int PassAwardScore { get; set; }
+
+        /// <summary>
+        /// 用户参与数量
+        /// </summary>
+        public int UserCount { get; set; }
     }
 }

@@ -16,5 +16,9 @@ namespace Eagles.Interface.DataAccess.UserTest
         TbUserTest GetUserTest(int testId, int userId);
 
         int CreateUserTest(TbUserTest userTest);
+
+        int WriteAnswerCount(List<TbQuestAnswer> answers);
+
+        int UpdateTestPaperUserCount(TbTestPaper testPaper);
     }
 }
