@@ -68,6 +68,7 @@
     <Compile Include="News\GetTestPaper\GetTestPaperRequest.cs" />
     <Compile Include="GetMenu\AppMenu.cs" />
     <Compile Include="GetMenu\AppSubMenu.cs" />
+    <Compile Include="QueryRequestBase.cs" />
     <Compile Include="Register\ValidateCodeRequest.cs" />
     <Compile Include="Register\ValidateCodeResponse.cs" />
     <Compile Include="Score\AppScoreExchange\AppScoreExchangeRequest.cs" />
