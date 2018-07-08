@@ -67,7 +67,9 @@ namespace Eagles.DomainService.Core.User
             };
             var result = userInfoAccess.EditUser(userInfo);
             if (result <= 0)
+            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            }
             return response;
         }
 
@@ -86,28 +88,30 @@ namespace Eagles.DomainService.Core.User
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             if (result == null)
                 throw new TransactionException("01", "用户信息不存在");
-            var userInfo = new UserInfo();
-            userInfo.Name = result.Name;
-            userInfo.Gender = result.Sex;
-            userInfo.Birth = result.Birthday.ToLocalTime();
-            userInfo.Telphone = result.Phone;
-            userInfo.Address = result.Address;
-            userInfo.Origin = result.Origin;
-            userInfo.OriginAddress = result.OriginAddress;
-            userInfo.Ethnic = result.Ethnic;
-            userInfo.Branch = result.BranchId;
-            userInfo.Department = result.Dept;
-            userInfo.Education = result.Education;
-            userInfo.School = result.School;
-            userInfo.IdCard = result.IdNumber;
-            userInfo.Employer = result.Company;
-            userInfo.PrepPartyDate = result.PreMemberTime;
-            userInfo.FormalPartyDat = result.MemberTime.ToLocalTime();
-            userInfo.PartyType = result.MemberType;
-            userInfo.Provice = result.Provice;
-            userInfo.City = result.City;
-            userInfo.District = result.District;
-            userInfo.PhotoUrl = result.PhotoUrl;
+            var userInfo = new UserInfo
+            {
+                Name = result.Name,
+                Gender = result.Sex,
+                Birth = result.Birthday.ToLocalTime(),
+                Telphone = result.Phone,
+                Address = result.Address,
+                Origin = result.Origin,
+                OriginAddress = result.OriginAddress,
+                Ethnic = result.Ethnic,
+                Branch = result.BranchId,
+                Department = result.Dept,
+                Education = result.Education,
+                School = result.School,
+                IdCard = result.IdNumber,
+                Employer = result.Company,
+                PrepPartyDate = result.PreMemberTime,
+                FormalPartyDat = result.MemberTime.ToLocalTime(),
+                PartyType = result.MemberType,
+                Provice = result.Provice,
+                City = result.City,
+                District = result.District,
+                PhotoUrl = result.PhotoUrl
+            };
             response.ResultUserInfo = userInfo;
             return response;
         }
@@ -121,7 +125,10 @@ namespace Eagles.DomainService.Core.User
             {
                 var password = md5Helper.Md5Encypt(request.UserPwd);
                 if (!result.Password.Equals(password))
-                    throw new TransactionException(MessageCode.UserNameOrPasswordError, MessageKey.UserNameOrPasswordError);
+                {
+                    throw new TransactionException(MessageCode.UserNameOrPasswordError,
+                        MessageKey.UserNameOrPasswordError);
+                }
                 //登录新增Token
                 var userToken = new TbUserToken()
                 {
@@ -192,7 +199,9 @@ namespace Eagles.DomainService.Core.User
             var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
+            {
                 throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
+            }
             var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
