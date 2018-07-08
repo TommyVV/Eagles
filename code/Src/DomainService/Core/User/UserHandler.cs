@@ -143,7 +143,7 @@ namespace Eagles.DomainService.Core.User
                     throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
                 }
                 response.UserId = result.UserId;
-                response.IsInternalUser = result.IsCustomer==0;
+                response.IsInternalUser = result.IsCustomer == 0;
             }
             else
             {
@@ -162,11 +162,16 @@ namespace Eagles.DomainService.Core.User
             if (!util.CheckAppId(request.AppId))
             {
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-
             }
+
+            if (string.IsNullOrEmpty(request.Phone) || request.Phone.Length != 11 || string.IsNullOrEmpty(request.UserPwd))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
-                throw new TransactionException(MessageCode.ExistsPhone,MessageKey.ExistsPhone);
+                throw new TransactionException(MessageCode.ExistsPhone, MessageKey.ExistsPhone);
             var userInfo = new TbUserInfo()
             {
                 Phone = request.Phone,
@@ -195,7 +200,7 @@ namespace Eagles.DomainService.Core.User
             var userId = request.UserId;
             var superiorUserList = userInfoAccess.GetRelationship(userId, false);
             var lowerUserList = userInfoAccess.GetRelationship(userId, true);
-            var userRelationship=new List<UserRelationship>()
+            var userRelationship = new List<UserRelationship>()
             {
 
             };
@@ -204,19 +209,19 @@ namespace Eagles.DomainService.Core.User
                 userRelationship.Add(new UserRelationship()
                 {
                     Name = x.NickName,
-                    UserId =x.SubUserId,
+                    UserId = x.SubUserId,
                     IsLeader = false
                 });
             });
-           superiorUserList.ForEach(x =>
-           {
-               userRelationship.Add(new UserRelationship()
-               {
-                   Name = x.NickName,
-                   UserId = x.UserId,
-                   IsLeader = true
-               });
-           });
+            superiorUserList.ForEach(x =>
+            {
+                userRelationship.Add(new UserRelationship()
+                {
+                    Name = x.NickName,
+                    UserId = x.UserId,
+                    IsLeader = true
+                });
+            });
 
             response.UserList = userRelationship;
             return response;
