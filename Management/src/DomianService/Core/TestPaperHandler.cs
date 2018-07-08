@@ -54,10 +54,11 @@ namespace Eagles.DomainService.Core
                 OrgId = result.OrgId,
                 OptionList = optionList.Select(x => new Option
                 {
+                    QuestionId=x.QuestionId,
                     Img = x.ImageUrl,
-                    IsCustom = x.AnswerType == 1,
+                    AnswerType = x.AnswerType,
                     IsImg = string.IsNullOrWhiteSpace(x.ImageUrl),
-                    IsTrue = x.IsRight == 0,
+                    IsRight = x.IsRight,
                     OptionId = x.AnswerId,
                     OptionName = x.Answer,
                 }).ToList(),
@@ -110,9 +111,9 @@ namespace Eagles.DomainService.Core
                 int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 {
                     Answer = x.OptionName,
-                    AnswerType = x.IsCustom ? 1 : 0,
+                    AnswerType = x.AnswerType,
                     ImageUrl = x.IsImg ? x.Img : string.Empty,
-                    IsRight = x.IsTrue ? 0 : 1,
+                    IsRight = x.IsRight,
                     OrgId = requset.Info.OrgId,
                     QuestionId = requset.Info.QuestionId,
                     AnswerId = x.OptionId
@@ -142,9 +143,9 @@ namespace Eagles.DomainService.Core
                 int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 {
                     Answer = x.OptionName,
-                    AnswerType = x.IsCustom ? 1 : 0,
+                    AnswerType = x.AnswerType,
                     ImageUrl = x.IsImg ? x.Img : string.Empty,
-                    IsRight = x.IsTrue ? 0 : 1,
+                    IsRight = x.IsRight,
                     OrgId = requset.Info.OrgId,
                     QuestionId = requset.Info.QuestionId
                 }).ToList());

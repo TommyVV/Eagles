@@ -24,14 +24,14 @@ namespace Ealges.DomianService.DataAccess
         {
             return dbManager.Excuted(@" UPDATE `eagles`.`tb_oper`
 SET
-
+`OrgId` = @OrgId,
 `OperId` = @OperId,
 `OperName` = @OperName,
-`CreateTime` = @CreateTime,
 `GroupId` = @GroupId,
 `Status` = @Status,
 `Password` = @Password
-WHERE `OrgId` = @OrgId
+WHERE 
+`OperId` = @OperId
  ", mod);
         }
 
@@ -83,7 +83,7 @@ FROM `eagles`.`tb_oper`
             return dbManager.QuerySingle<TbOper>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbOper> GetOperList(GetOperatorRequset requset)
+        public List<TbOper> GetOperList(GetOperatorRequset requset,out int totalCount)
         {
 
             var sql = new StringBuilder();
@@ -100,15 +100,27 @@ FROM `eagles`.`tb_oper`
 
             if (requset.StartTime != null)
             {
-                parameter.Append(" and CreateTime <= @StartTime ");
+                parameter.Append(" and CreateTime >= @StartTime ");
                 dynamicParams.Add("StartTime", requset.StartTime);
             }
 
             if (requset.EndTime != null)
             {
-                parameter.Append(" and CreateTime >= @EndTime ");
+                parameter.Append(" and CreateTime <= @EndTime ");
                 dynamicParams.Add("EndTime", requset.EndTime);
             }
+
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_oper`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);          
+            dynamicParams.Add("pageSize", requset.PageSize);
+
 
             sql.AppendFormat(@" SELECT `tb_oper`.`OrgId`,
     `tb_oper`.`OperId`,
@@ -118,7 +130,7 @@ FROM `eagles`.`tb_oper`
     `tb_oper`.`Status`,
     `tb_oper`.`Password`
 FROM `eagles`.`tb_oper`
-  where  1=1  {0}  
+  where  1=1  {0}   order by CreateTime desc limit  @pageStart ,@pageSize;
  ", parameter);
 
             return dbManager.Query<TbOper>(sql.ToString(), dynamicParams);

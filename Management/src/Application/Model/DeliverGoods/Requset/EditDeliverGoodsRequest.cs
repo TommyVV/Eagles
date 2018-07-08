@@ -21,6 +21,8 @@ namespace Eagles.Application.Model.DeliverGoods.Requset
         //public DeliverStatus DeliverStatus { get; set; }
 
 
+          
+
         /// <summary>
         /// 备注
         /// </summary>

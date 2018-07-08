@@ -49,6 +49,6 @@ namespace Eagles.DomainService.Model.App
         /// <summary>
         /// 跳转链接
         /// </summary>
-        public string TragetUrl { get; set; }
+        public string TargetUrl { get; set; }
     }
 }

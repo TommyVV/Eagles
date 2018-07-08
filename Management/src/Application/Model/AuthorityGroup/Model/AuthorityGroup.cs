@@ -28,16 +28,16 @@ namespace Eagles.Application.Model.AuthorityGroup.Model
         /// </summary>
         public DateTime CreateTime { get; set; }
 
-        /// <summary>
-        /// 机构名称
-        /// </summary>
-        public string OrgName { get; set; }
+        ///// <summary>
+        ///// 机构名称
+        ///// </summary>
+        //public string OrgName { get; set; }
 
 
-        /// <summary>
-        /// 权限组状态
-        /// </summary>
-        public Status Status { get; set; }
+        ///// <summary>
+        ///// 权限组状态
+        ///// </summary>
+        //public Status Status { get; set; }
 
     }
 }

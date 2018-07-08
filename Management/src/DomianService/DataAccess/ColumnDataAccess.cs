@@ -23,7 +23,6 @@ namespace Ealges.DomianService.DataAccess
 
 
             var sql = new StringBuilder();
-            var sqlTotal = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
@@ -33,11 +32,11 @@ namespace Ealges.DomianService.DataAccess
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.ColumnName))
             {
@@ -50,23 +49,33 @@ namespace Ealges.DomianService.DataAccess
             //    parameter.Append(" and Status = @Status ");
             //    dynamicParams.Add("Status", (int)requset.Status);
             //}
-            sqlTotal.AppendFormat(@"SELECT count(1)
+
+
+            sql.AppendFormat(@"SELECT count(*)
 FROM `eagles`.`tb_app_module`  where 1=1  {0} ;
  ", parameter);
-            totalCount = dbManager.ExecuteScalar<int>(sqlTotal.ToString(), dynamicParams);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+
 
 
             sql.AppendFormat(@" SELECT `tb_app_module`.`OrgId`,
     `tb_app_module`.`ModuleId`,
     `tb_app_module`.`ModuleName`,
-    `tb_app_module`.`TragetUrl`,
+    `tb_app_module`.`TargetUrl`,
     `tb_app_module`.`ModuleType`,
     `tb_app_module`.`SmallImageUrl`,
     `tb_app_module`.`ImageUrl`,
     `tb_app_module`.`Priority`,
     `tb_app_module`.`IndexPageCount`,
     `tb_app_module`.`IndexDisplay`
-FROM `eagles`.`tb_app_module`   where 1=1  {0}  
+FROM `eagles`.`tb_app_module`   where 1=1  {0}  order by ModuleId desc limit  @pageStart ,@pageSize
  ", parameter);
 
             return dbManager.Query<TbAppModule>(sql.ToString(), dynamicParams);
@@ -80,7 +89,7 @@ FROM `eagles`.`tb_app_module`   where 1=1  {0}
             sql.Append(@" SELECT `tb_app_module`.`OrgId`,
     `tb_app_module`.`ModuleId`,
     `tb_app_module`.`ModuleName`,
-    `tb_app_module`.`TragetUrl`,
+    `tb_app_module`.`TargetUrl`,
     `tb_app_module`.`ModuleType`,
     `tb_app_module`.`SmallImageUrl`,
     `tb_app_module`.`ImageUrl`,
@@ -107,7 +116,7 @@ FROM `eagles`.`tb_app_module`  where ModuleId=@ColumnId;
 SET
 `OrgId` = @OrgId,
 `ModuleName` = @ModuleName,
-`TragetUrl` = @TragetUrl,
+`TargetUrl` = @TargetUrl,
 `ModuleType` = @ModuleType,
 `SmallImageUrl` = @SmallImageUrl,
 `ImageUrl` = @ImageUrl,
@@ -126,7 +135,7 @@ WHERE `ModuleId` = @ModuleId;
 (`OrgId`,
 `ModuleId`,
 `ModuleName`,
-`TragetUrl`,
+`TargetUrl`,
 `ModuleType`,
 `SmallImageUrl`,
 `ImageUrl`,
@@ -137,7 +146,7 @@ VALUES
 (@OrgId ,
 @ModuleId ,
 @ModuleName ,
-@TragetUrl ,
+@TargetUrl ,
 @ModuleType ,
 @SmallImageUrl ,
 @ImageUrl ,

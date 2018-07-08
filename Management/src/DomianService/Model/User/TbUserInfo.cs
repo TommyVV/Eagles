@@ -51,7 +51,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 民族
         /// </summary>
-        public string Ethnic { get; set; }
+     //   public string Ethnic { get; set; }
         /// <summary>
         /// 身份证号
         /// </summary>
@@ -148,5 +148,7 @@ namespace Eagles.DomainService.Model.User
         /// 锁定时间
         /// </summary>
         public double LockingTime { get; set; }
+
+      //  public string Ethinc { get; set; }
     }
 }

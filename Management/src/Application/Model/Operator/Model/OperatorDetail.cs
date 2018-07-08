@@ -11,11 +11,11 @@
         /// <returns></returns>
         public string Password { get; set; }
 
-        /// <summary>
-        /// 账号
-        /// </summary>
-        /// <returns></returns>
-        public string Account { get; set; }
+        ///// <summary>
+        ///// 账号
+        ///// </summary>
+        ///// <returns></returns>
+        //public string Account { get; set; }
 
         /// <summary>
         /// 权限组id

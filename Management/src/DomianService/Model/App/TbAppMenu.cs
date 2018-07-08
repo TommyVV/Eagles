@@ -13,6 +13,6 @@ namespace Eagles.DomainService.Model.App
         public string MenuName { get; set; }
         public int OrgId { get; set; }
         public int ParentMenuId { get; set; }
-        public string TragetUrl { get; set; }
+        public string TargetUrl { get; set; }
     }
 }

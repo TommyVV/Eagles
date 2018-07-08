@@ -24,19 +24,18 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            sql.Append(@" SELECT `tb_user_info`.`OrgId`,
+            sql.Append(@"     
+SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`BranchId`,
     `tb_user_info`.`UserId`,
     `tb_user_info`.`Password`,
     `tb_user_info`.`Name`,
     `tb_user_info`.`Sex`,
-    `tb_user_info`.`Ethinc`,
     `tb_user_info`.`Birthday`,
     `tb_user_info`.`Origin`,
     `tb_user_info`.`OriginAddress`,
     `tb_user_info`.`Phone`,
     `tb_user_info`.`IdNumber`,
-    `tb_user_info`.`Eduction`,
     `tb_user_info`.`School`,
     `tb_user_info`.`Provice`,
     `tb_user_info`.`City`,
@@ -59,7 +58,7 @@ namespace Ealges.DomianService.DataAccess
     `tb_user_info`.`Score`,
     `tb_user_info`.`IsLeader`
 FROM `eagles`.`tb_user_info`
-  where NewsId=@NewsId;
+  where UserId=@UserId;
  ");
             dynamicParams.Add("UserId", requset.UserId);
 

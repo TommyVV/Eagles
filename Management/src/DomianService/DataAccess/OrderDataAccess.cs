@@ -90,7 +90,7 @@ FROM `eagles`.`tb_order`
     `tb_order`.`UpdateTime`,
     `tb_order`.`OperId`
 FROM `eagles`.`tb_order`
-  where NewsId=@NewsId;
+  where OrderId=@OrderId;
  ");
             dynamicParams.Add("OrderId", requset.OrderId);
 

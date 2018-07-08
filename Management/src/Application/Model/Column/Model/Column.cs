@@ -21,7 +21,7 @@ namespace Eagles.Application.Model.Column.Model
         /// <summary>
         /// 栏目地址
         /// </summary>
-        public string ColumnAddress { get; set; }
+        public string TargetUrl { get; set; }
 
 
         /// <summary>

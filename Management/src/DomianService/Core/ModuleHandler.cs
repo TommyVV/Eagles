@@ -32,7 +32,7 @@ namespace Eagles.DomainService.Core
                 mod = new TbAppModule
                 {
 
-                    TragetUrl = requset.Info.ColumnAddress,
+                    TargetUrl = requset.Info.TargetUrl,
                     Priority = requset.Info.OrderBy,
                     SmallImageUrl = requset.Info.ColumnIcon,
                     ImageUrl = requset.Info.ColumnImg,
@@ -51,7 +51,7 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TbAppModule
                 {
-                    TragetUrl = requset.Info.ColumnAddress,
+                    TargetUrl = requset.Info.TargetUrl,
                     Priority = requset.Info.OrderBy,
                     SmallImageUrl = requset.Info.ColumnIcon,
                     ImageUrl = requset.Info.ColumnImg,
@@ -89,7 +89,7 @@ namespace Eagles.DomainService.Core
             response.Info = new ColumnInfoDetails
             {
                 //AuditStatus = AuditStatus.审核通过,
-                ColumnAddress = detail.TragetUrl,
+                TargetUrl = detail.TargetUrl,
                 ColumnId = detail.ModuleId,
                 ColumnName = detail.ModuleName,
                 OrderBy = detail.Priority,
@@ -97,6 +97,8 @@ namespace Eagles.DomainService.Core
                 ColumnImg = detail.ImageUrl,
                 IsSetTop = detail.IndexDisplay,
                 ModuleType = detail.ModuleType,
+                IndexPageCount = detail.IndexPageCount,
+                OrgId = detail.OrgId
             };
             return response;
         }
@@ -114,7 +116,7 @@ namespace Eagles.DomainService.Core
             response.List = list.Select(x => new ColumnInfo
             {
                 AuditStatus = AuditStatus.审核通过,
-                ColumnAddress = x.TragetUrl,
+                TargetUrl = x.TargetUrl,
                 ColumnId = x.ModuleId,
                 ColumnName = x.ModuleName,
                 OrderBy = x.Priority

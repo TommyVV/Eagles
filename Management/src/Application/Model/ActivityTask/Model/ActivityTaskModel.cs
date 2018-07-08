@@ -23,10 +23,10 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// </summary>
         public ActivityTaskType ActivityTaskType { get; set; }
 
-        /// <summary>
-        /// 作者id
-        /// </summary>
-        public string UserName { get; set; }
+        ///// <summary>
+        ///// 作者id
+        ///// </summary>
+        //public string UserName { get; set; }
 
         /// <summary>
         /// 新闻图片

@@ -39,4 +39,17 @@ namespace Eagles.Application.Model
     }
 
 
+    /// <summary>
+    /// 机构和组织
+    /// </summary>
+    public class ORequest
+    {
+        /// <summary>
+        /// 机构id
+        /// </summary>
+        public int OrgId { get; set; }
+
+       
+    }
+
 }

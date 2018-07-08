@@ -332,7 +332,8 @@ WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
 `Answer`,
 `AnswerType`,
 `IsRight`,
-`ImageUrl`)
+`ImageUrl`,
+`UserCount`)
 VALUES
 (@OrgId,
 @QuestionId,
@@ -340,7 +341,8 @@ VALUES
 @Answer,
 @AnswerType,
 @IsRight,
-@ImageUrl);", optionList);
+@ImageUrl,
+@UserCount);",  optionList);
 
         }
 

@@ -161,7 +161,7 @@ VALUES
     `tb_activity`.`Status`
 FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
-            dynamicParams.Add("ColumnId", requset.ActivityId);
+            dynamicParams.Add("ActivityId", requset.ActivityId);
 
             return dbManager.QuerySingle<TbActivity>(sql.ToString(), dynamicParams);
         }
@@ -185,17 +185,27 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
                 dynamicParams.Add("BranchId", requset.BranchId);
             }
 
+
+            if (requset.ActivityTaskType > 0)
+            {
+                parameter.Append(" and ActivityType = @ActivityType ");
+                dynamicParams.Add("ActivityType", requset.ActivityTaskType);
+            }
+
+            
+
+
             if (!string.IsNullOrWhiteSpace(requset.ActivityName))
             {
                 parameter.Append(" and ActivityName = @ActivityName ");
                 dynamicParams.Add("ActivityName", requset.ActivityName);
             }
 
-            if (requset.UserName > 0)
-            {
-                parameter.Append(" and ToUserId = @ToUserId ");
-                dynamicParams.Add("ToUserId", requset.UserName);
-            }
+            //if (requset.UserName > 0)
+            //{
+            //    parameter.Append(" and ToUserId = @ToUserId ");
+            //    dynamicParams.Add("ToUserId", requset.UserName);
+            //}
 
 
             sql.AppendFormat(@" SELECT `tb_activity`.`OrgId`,

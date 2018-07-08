@@ -17,6 +17,6 @@ namespace Eagles.Interface.DataAccess
 
         TbAppMenu GetMenusDetail(GetMenusDetailRequest requset);
 
-        List<TbAppMenu> GetNewsList(GetMenusRequset requset);
+        List<TbAppMenu> GetMenusList(GetMenusRequset requset, out int totalCount);
     }
 }

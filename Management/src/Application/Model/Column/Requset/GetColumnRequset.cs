@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Column.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetColumnRequset : OrgListRequestBase
+    public class GetColumnRequset : ListRequestBase
     {
 
         /// <summary>

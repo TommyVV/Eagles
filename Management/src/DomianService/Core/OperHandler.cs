@@ -37,7 +37,7 @@ namespace Eagles.DomainService.Core
                     OperId=requset.Info.OperId,
                    // CreateTime=now,
                     GroupId=requset.Info.AuthorityGroupId,
-                    OperName=requset.Info.AuthorityGroupName,
+                    OperName =requset.Info.OperName,
                     OrgId=requset.OrgId,
                     Password=requset.Info.Password,
                     Status=requset.Info.Status
@@ -54,7 +54,7 @@ namespace Eagles.DomainService.Core
                     OperId = requset.Info.OperId,
                     CreateTime = now,
                     GroupId = requset.Info.AuthorityGroupId,
-                    OperName = requset.Info.AuthorityGroupName,
+                    OperName = requset.Info.OperName,
                     OrgId = requset.OrgId,
                     Password = requset.Info.Password,
                     Status = requset.Info.Status
@@ -82,9 +82,9 @@ namespace Eagles.DomainService.Core
 
             response.Info = new OperatorDetail
             {
-                Account = detail.OperName,
+                //Account = detail.OperName,
                 Status = detail.Status,
-                // Password=detail.Password,
+                 Password=detail.Password,
                 AuthorityGroupId = detail.GroupId,
                 CreateTime = detail.CreateTime,
                 OperId = detail.OperId,
@@ -101,16 +101,17 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0,
             };
-            List<TbOper> list = dataAccess.GetOperList(requset) ?? new List<TbOper>();
+            List<TbOper> list = dataAccess.GetOperList(requset,out int totalCount) ?? new List<TbOper>();
 
             if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new Operator
             {
                 CreateTime = x.CreateTime,
                 OperId = x.OperId,
                 OperName = x.OperName,
-                AuthorityGroupName="",
+               // AuthorityGroupName="",
             }).ToList();
             return response;
         }

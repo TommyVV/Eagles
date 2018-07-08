@@ -14,11 +14,7 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         /// 订单主键
         /// </summary>
         public int OrderId { get; set; }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public string UserName { get; set; }
-
+       
         /// <summary>
         /// 地址
         /// </summary>
@@ -34,14 +30,65 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         /// </summary>
         public DateTime PlaceTime { get; set; }
 
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public DeliverStatus DeliverStatus { get; set; }
+
+        ///// <summary>
+        ///// 备注
+        ///// </summary>
+        //public string  Remark { get; set; }
+
+     
         /// <summary>
-        /// 
+        /// 数量
         /// </summary>
-        public DeliverStatus DeliverStatus { get; set; }
+        public int Count { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+       
 
         /// <summary>
-        /// 备注
+        /// 支付积分
         /// </summary>
-        public string  Remark { get; set; }
+        public int Score { get; set; }
+
+        /// <summary>
+        /// 订单状态;
+        /// 0:成功
+        ///1:失败
+        /// </summary>
+        public int OrderStatus { get; set; }
+    }
+
+
+    /// <summary>
+    /// 详情
+    /// </summary>
+    public class DeliverGoodsDeatil:DeliverGoods
+    {
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 区
+        /// </summary>
+        public string District { get; set; }
+
+
+        /// <summary>
+        /// 省
+        /// </summary>
+        public string Province { get; set; }
+
+        /// <summary>
+        /// 市
+        /// </summary>
+        public string City { get; set; }
     }
 }

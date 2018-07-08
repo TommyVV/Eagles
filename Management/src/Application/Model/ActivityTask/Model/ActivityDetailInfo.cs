@@ -23,10 +23,10 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// </summary>
         public string Content { get; set; }
 
-        /// <summary>
-        /// 考试类型
-        /// </summary>
-        public ExamType ExamType { get; set; }
+        ///// <summary>
+        ///// 考试类型
+        ///// </summary>
+        //public ExamType ExamType { get; set; }
 
         /// <summary>
         /// 最大参与人数
@@ -43,20 +43,20 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// </summary>
         public int IsComment { get; set; }
 
-        /// <summary>
-        /// 是否允许评论 允许投票是习题 选择才能生效
-        /// </summary>
-        public bool IsVote { get; set; }
+        ///// <summary>
+        ///// 是否允许评论 允许投票是习题 选择才能生效
+        ///// </summary>
+        //public int IsVote { get; set; }
 
         /// <summary>
         /// 习题id
         /// </summary>
         public int ExampleId { get; set; }
 
-        /// <summary>
-        /// 附件 json格式
-        /// </summary>
-        public string Enclosure { get; set; }
+        ///// <summary>
+        ///// 附件 json格式
+        ///// </summary>
+        //public string Enclosure { get; set; }
 
         /// <summary>
         /// 附件1

@@ -12,7 +12,7 @@ using Eagles.Interface.DataAccess;
 namespace Ealges.DomianService.DataAccess
 {
 
-    public class LoginDataAccess: ILoginDataAccess
+    public class LoginDataAccess : ILoginDataAccess
     {
         private readonly IDbManager dbManager;
 
@@ -24,14 +24,19 @@ namespace Ealges.DomianService.DataAccess
         public void UpdateOperErrorCount(TbOper mod)
         {
 
-             dbManager.Excuted(@" UPDATE `eagles`.`tb_oper`
+            var result =  dbManager.Excuted(@" UPDATE `eagles`.`tb_oper`
 SET
 `LoginErrorCount` = @LoginErrorCount,
 `LockingTime` = @LockingTime
 WHERE `OperId` = @OperId;
 
 
- ", mod);
+ ", new
+            {
+                mod.LoginErrorCount,
+                LockingTime = Convert.ToInt64(mod.LockingTime),
+                mod.OperId
+            });
         }
 
         public void CreateverificationInfo(Verification verification)

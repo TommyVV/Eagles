@@ -58,7 +58,8 @@ namespace Eagles.DomainService.Core
                     OrgReview = "",
                     Status = 0,
                     TestId = requset.DetailInfo.ExampleId,
-                    ToUserId = 0
+                    ToUserId = 0,
+                    
                 };
 
                 int result = dataAccess.EditActivity(mod);
@@ -188,12 +189,7 @@ namespace Eagles.DomainService.Core
                 ActivityTaskType = x.ActivityType,
             
                 ActivityTaskId = x.ActivityId,
-                //BranchId = BranchId,
-                //"" = BranchReview,
-                // 0 = FromUser,
                 ActivityTaskImg = x.ImageUrl,
-              
-               // UserName=x.ToUserId
             }).ToList();
             return response;
         }

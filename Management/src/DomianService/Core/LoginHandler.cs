@@ -128,6 +128,8 @@ namespace Eagles.DomainService.Core
                         LockingTime = intResult
                     };
 
+                    info.LoginErrorCount = oper.LoginErrorCount + 1;
+
                     //验证码校验
                     if (oper.LoginErrorCount >= configuration.EaglesConfiguration.CheckVerificationCode)
                     {
@@ -141,9 +143,7 @@ namespace Eagles.DomainService.Core
                             // Code = GetRandomArray(6, 1, 9).ToString(),
                             Code = "666666"
                         });
-
-
-                        oper.LoginErrorCount = oper.LoginErrorCount + 1;
+                      
                     }
                     //锁定账号
                     else if (oper.LoginErrorCount >= configuration.EaglesConfiguration.LoginErrorCount)
@@ -157,7 +157,7 @@ namespace Eagles.DomainService.Core
 
                         //触发锁定后 重置失败次数
                         info.LockingTime = intResult;
-                        oper.LoginErrorCount = 0;
+                        info.LoginErrorCount = 0;
                     }
 
                     dataAccess.UpdateOperErrorCount(info);

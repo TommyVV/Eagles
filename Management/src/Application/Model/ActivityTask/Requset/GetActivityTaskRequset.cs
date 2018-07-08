@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.ActivityTask.Requset
 {
@@ -7,10 +8,16 @@ namespace Eagles.Application.Model.ActivityTask.Requset
     /// </summary>
     public class GetActivityTaskRequset : OrgListRequestBase
     {
+        ///// <summary>
+        ///// 作者id
+        ///// </summary>
+        //public int UserName { get; set; }
+
+
         /// <summary>
-        /// 作者id
+        /// 活动任务类型
         /// </summary>
-        public int UserName { get; set; }
+        public ActivityTaskType ActivityTaskType { get; set; }
 
         /// <summary>
         /// 任务/活动 名字

@@ -15,7 +15,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-    public class OrderHandler: IOrderHandler
+    public class OrderHandler : IOrderHandler
     {
         private readonly IOrderDataAccess dataAccess;
 
@@ -32,13 +32,16 @@ namespace Eagles.DomainService.Core
 
 
 
-            if (requset.OrderInfo.Count > 0)
+            if (requset.OrderInfo.Count > 0 )
             {
                 var mod = requset.OrderInfo.Select(x => new TbOrder
                 {
                     OrderId = x.OrderId,
                     Address = x.Address,
                     ExpressId = x.ExpressId,
+                    City = x.City,
+                    District = x.District,
+                    Province = x.Province,
                     OperId = 0,
                 }).ToList();
 
@@ -59,14 +62,25 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
-            var userInfo = memberDataAccess.GetUserInfoDetail(new GetUserInfoDetailRequest {UserId = detail.UserId});
-            response.Info = new DeliverGoods
+            var userInfo = memberDataAccess.GetUserInfoDetail(new GetUserInfoDetailRequest { UserId = detail.UserId });
+
+            if (userInfo == null)
+            {
+                throw new TransactionException("M01", "无业务数据");
+            }
+            response.Info = new DeliverGoodsDeatil
             {
                 Address = detail.Address,
                 OrderId = detail.OrderId,
                 GoodsName = detail.ProdName,
                 PlaceTime = detail.CreateTime,
                 UserName = userInfo.Name,
+                City = detail.City,
+                Count = detail.Count,
+                District = detail.District,
+                Province = detail.Province,
+                Score=detail.Score,
+                OrderStatus=detail.OrderStatus
             };
             return response;
         }
@@ -78,7 +92,7 @@ namespace Eagles.DomainService.Core
             };
             List<TbOrder> list = dataAccess.GetOrderList(requset);
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new DeliverGoods
             {
@@ -86,8 +100,9 @@ namespace Eagles.DomainService.Core
                 OrderId = x.OrderId,
                 GoodsName = x.ProdName,
                 PlaceTime = x.CreateTime,
+                OrderStatus=x.OrderStatus
             }).ToList();
-            return response;          
+            return response;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseFormat<bool> EditActivityTask(EditActivityTaskInfoRequset requset)
+        public ResponseFormat<bool> EditActivity(EditActivityTaskInfoRequset requset)
         {
             return ApiActuator.Runing(() => _ActivityTaskHandler.EditActivity(requset));
         }
@@ -37,7 +37,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseFormat<bool> RemoveActivityTask(RemoveActivityTaskRequset requset)
+        public ResponseFormat<bool> RemoveActivity(RemoveActivityTaskRequset requset)
         {
             return ApiActuator.Runing(() => _ActivityTaskHandler.RemoveActivity(requset));
         }
@@ -48,7 +48,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseFormat<GetActivityTaskDetailResponse> GetActivityTaskDetail(GetActivityTaskDetailRequset requset)
+        public ResponseFormat<GetActivityTaskDetailResponse> GetActivityDetail(GetActivityTaskDetailRequset requset)
         {
             return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivityDetail(requset));
         }
@@ -59,7 +59,7 @@ namespace Eagles.Application.Host.Controllers
         /// <param name="requset"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseFormat<GetActivityTaskResponse> GetActivityTask(GetActivityTaskRequset requset)
+        public ResponseFormat<GetActivityTaskResponse> GetActivity(GetActivityTaskRequset requset)
         {
             return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivity(requset));
         }

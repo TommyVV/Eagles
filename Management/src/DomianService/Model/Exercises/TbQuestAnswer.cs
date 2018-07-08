@@ -34,5 +34,7 @@ namespace Eagles.DomainService.Model.Exercises
         /// 问题编号
         /// </summary>
         public int QuestionId { get; set; }
+
+        public int UserCount { get; set; }
     }
 }

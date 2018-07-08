@@ -48,7 +48,6 @@ VALUES
 @CreateTime,
 @EditTime);
 
-@Password);
  ", mod);
         }
 
@@ -92,13 +91,13 @@ FROM `eagles`.`tb_oper_group`
 
             if (requset.StartTime != null)
             {
-                parameter.Append(" and CreateTime <= @StartTime ");
+                parameter.Append(" and CreateTime >= @StartTime ");
                 dynamicParams.Add("StartTime", requset.StartTime);
             }
 
             if (requset.EndTime != null)
             {
-                parameter.Append(" and CreateTime >= @EndTime ");
+                parameter.Append(" and CreateTime <= @EndTime ");
                 dynamicParams.Add("EndTime", requset.EndTime);
             }
 

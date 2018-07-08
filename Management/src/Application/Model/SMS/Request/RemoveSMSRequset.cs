@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.SMS.Request
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RemoveSMSRequset : RequestBase
     {
         /// <summary>

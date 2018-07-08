@@ -19,9 +19,13 @@ namespace Eagles.DomainService.Core
 
         private readonly IMenusDataAccess dataAccess;
 
-        public MenusHandler(IMenusDataAccess dataAccess)
+        private readonly IOrganizationDataAccess OrgdataAccess;
+
+
+        public MenusHandler(IMenusDataAccess dataAccess, IOrganizationDataAccess orgdataAccess)
         {
             this.dataAccess = dataAccess;
+            OrgdataAccess = orgdataAccess;
         }
         public bool EditMenus(EditMenusRequset requset)
         {
@@ -37,7 +41,7 @@ namespace Eagles.DomainService.Core
                     MenuName = requset.Info.MenuName,
                     OrgId = requset.Info.OrgId,
                     ParentMenuId = requset.Info.ParentId,
-                    TragetUrl = requset.Info.MenuLink
+                    TargetUrl = requset.Info.MenuLink
                 };
                 int result = dataAccess.EditNews(mod);
 
@@ -52,7 +56,7 @@ namespace Eagles.DomainService.Core
                     MenuName = requset.Info.MenuName,
                     OrgId = requset.Info.OrgId,
                     ParentMenuId = requset.Info.ParentId,
-                    TragetUrl = requset.Info.MenuLink
+                    TargetUrl = requset.Info.MenuLink
                 };
 
                 int result = dataAccess.CreateNews(mod);
@@ -74,6 +78,10 @@ namespace Eagles.DomainService.Core
             var response = new GetMenusDetailResponse();
 
             TbAppMenu detail = dataAccess.GetMenusDetail(requset);
+            var orgdetail = OrgdataAccess.GetOrganizationDetail(new Application.Model.Organization.Requset.GetOrganizationDetailRequset
+            {
+                OrgId = detail.OrgId
+            });
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
@@ -81,14 +89,17 @@ namespace Eagles.DomainService.Core
             {
                 MenuId = detail.MenuId,
                 MenuLevel = detail.Level,
-                MenuLink = detail.TragetUrl,
+                MenuLink = detail.TargetUrl,
                 OrgId = detail.OrgId,
                 MenuName = detail.MenuName,
-                ParentId = detail.ParentMenuId
+                ParentId = detail.ParentMenuId,
+                OrgName= orgdetail?.OrgName
                 // Category=detail.ViewCount
             };
             return response;
         }
+
+      
 
         public GetMenusResponse GetMenus(GetMenusRequset requset)
         {
@@ -96,15 +107,16 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0,
             };
-            List<TbAppMenu> list = dataAccess.GetNewsList(requset) ?? new List<TbAppMenu>();
+            List<TbAppMenu> list = dataAccess.GetMenusList(requset, out int totalCount) ?? new List<TbAppMenu>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new Menus
             {
                 MenuId = x.MenuId,
                 MenuLevel = x.Level,
-                MenuLink = x.TragetUrl,
+                MenuLink = x.TargetUrl,
                 OrgId = x.OrgId,
                 MenuName = x.MenuName,
                 ParentId = x.ParentMenuId

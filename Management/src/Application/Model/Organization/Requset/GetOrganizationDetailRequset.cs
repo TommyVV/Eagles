@@ -8,6 +8,6 @@
         /// <summary>
         /// 凭证
         /// </summary>
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
     }
 }

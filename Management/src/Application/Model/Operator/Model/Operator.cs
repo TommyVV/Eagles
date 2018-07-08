@@ -17,10 +17,10 @@ namespace Eagles.Application.Model.Operator.Model
         /// </summary>
         public string OperName { get; set; }
 
-        /// <summary>
-        /// 权限组名称
-        /// </summary>
-        public string AuthorityGroupName { get; set; }
+        ///// <summary>
+        ///// 权限组名称
+        ///// </summary>
+        //public string AuthorityGroupName { get; set; }
 
         /// <summary>
         /// 创建时间
