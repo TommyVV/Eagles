@@ -1,0 +1,30 @@
+{
+  "Result": {
+    "Info": {
+      "HtmlDescription": "11111",
+      "SubjectList": [
+        {
+          "Question": "str1111111ing",
+          "QuestionId": 0
+        }
+      ],
+      "Content": "stri11111111ng",
+      "BranchId": 0,
+      "OrgId": 0,
+      "ExercisesName": "stri1111111111ng",
+      "ExercisesId": 0,
+      "ExercisesType": 0,
+      "IsScoreAward": true,
+      "PassAwardScore": 0,
+      "SubjectScore": 0,
+      "PassScore": 0,
+      "Status": 0,
+      "LimitedTime": 0,
+      "HasLimitedTime": true,
+      "CreateTime": "2018-07-07T02:02:48.855Z"
+    }
+  },
+  "DateTime": "2018-07-07T02:02:48.855Z",
+  "Code": "00",
+  "Message": "string"
+}
