@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Eagles.Application.Model.Upload;
 using Eagles.Base;
+using Eagles.DomainService.Core.FileUpload;
 using Eagles.Interface.Core.FileUpload;
 
 namespace Eagles.Application.Host.Controllers
@@ -21,7 +22,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 文件上传
         /// </summary>
-        [HttpPost]
+        [HttpPost,HttpOptions]
         public ResponseFormat<UploadResponse> UploadFile()
         {
             //set allow post 

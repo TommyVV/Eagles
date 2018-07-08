@@ -49,8 +49,8 @@ where b.TestId = @TestId and a.IsRight = @IsRight; ", new { TestId = testId, IsR
 
         public int CreateUserTest(TbUserTest userTest)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_test (OrgId,BranchId,UserId,TestId,Score,TotalScore,CreateTime,UseTime,Answer) 
-value (@OrgId,@BranchId,@UserId,@TestId,@Score,@TotalScore,@CreateTime,@UseTime,@Answer) ", userTest);
+            return dbManager.Excuted(@"insert into eagles.tb_user_test (OrgId,BranchId,UserId,TestId,Score,TotalScore,CreateTime,UseTime) 
+value (@OrgId,@BranchId,@UserId,@TestId,@Score,@TotalScore,@CreateTime,@UseTime) ", userTest);
         }
 
         public int WriteAnswerCount(List<TbQuestAnswer> answers)
