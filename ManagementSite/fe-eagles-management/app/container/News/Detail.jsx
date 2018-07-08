@@ -110,7 +110,7 @@ class Base extends Component {
         const url = obj.response.Result.FileUploadResults[0].FileUrl;
         attach[`Attach${++index}`] = url;
       });
-      this.props.saveInfo({ ...this.props.news, ...attach });
+      this.props.saveInfo({ ...this.props.news, ...attach });// todo 
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Input,
@@ -7,20 +8,31 @@ import {
   Row,
   Col,
   Select,
-  Avatar,
-  Icon,
   Checkbox,
   Table
 } from "antd";
-const { TextArea } = Input;
-import { connect } from "react-redux";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
+import { typeMap } from "../../../constants/config/question";
+import { getQuestionInfoById } from "../../../services/questionService";
+import { serverConfig } from "../../../constants/ServerConfigure";
+import { saveInfo, clearInfo } from "../../../actions/questionAction";
+// 引入编辑器以及编辑器样式
+import BraftEditor from "braft-editor";
+import "braft-editor/dist/braft.css";
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      questionReducer: state.questionReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class QuestionForm extends Component {
   constructor(props) {
     super(props);
@@ -80,23 +92,52 @@ class QuestionForm extends Component {
     });
   };
   rewardHandleChange = value => {
-    this.setState({ isRewardWrapper: value == "1" ? true : false });
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      ...values,
+      IsScoreAward: value == "1" ? true : false
+    });
   };
   change = e => {
-    this.setState({
-      isShowInput: e.target.checked
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      ...values,
+      HasLimitedTime: e.target.checked
     });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isRewardWrapper, isShowInput } = this.state;
+    const { question } = this.props;
+    const { isShowInput } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 2 }
       },
       wrapperCol: {
         xl: { span: 8 }
+      }
+    };
+    const formItemLayoutContent = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 2 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 19 }
+      }
+    };
+    const formItemLayoutChild = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 }
       }
     };
     const columns = [
@@ -139,92 +180,106 @@ class QuestionForm extends Component {
         exType: "单选"
       }
     ];
+    // 编辑器属性
+    const editorProps = {
+      height: 300,
+      contentFormat: "html",
+      initialContent: question.Content,
+
+      uploadImgShowBase64: false, // 是否使用base64
+      uploadImgServer: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD, // 图片上传到自己的服务器，自己需要自定义方法，todo
+      onChange: Content => {
+        setFieldsValue({ Content });
+        console.log("新闻内容：", getFieldsValue());
+      }
+      // onRawChange: this.handleRawChange
+    };
     return (
       <div className="create_pro_form">
         <Form onSubmit={this.handleSubmit}>
           <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-            {getFieldDecorator("projectId")(<Input />)}
+            {getFieldDecorator("ExercisesId")(<Input />)}
           </FormItem>
           <FormItem {...formItemLayout} label="名称">
-            {getFieldDecorator("questionName", {
+            {getFieldDecorator("ExercisesName", {
               rules: [
                 {
                   required: true,
-                  message: "必填，20字以内!",
-                  pattern: /^(?!.{21}|\s*$)/g
+                  message: "必填，请输入试卷名称"
                 }
               ]
-            })(<Input placeholder="必填，20字以内" />)}
+            })(<Input placeholder="请输入试卷名称" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="类型">
-            {getFieldDecorator("quType")(
+          <FormItem {...formItemLayout} label="试卷类型">
+            {getFieldDecorator("ExercisesType")(
               <Select>
-                <Option value="0">在线考试</Option>
-                <Option value="1">新闻习题</Option>
-                <Option value="2">随机试卷</Option>
+                {typeMap.map((obj, index) => {
+                  return (
+                    <Option key={index} value={obj.ExercisesType}>
+                      {obj.text}
+                    </Option>
+                  );
+                })}
               </Select>
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="来源">
-            {getFieldDecorator("from", {
-              rules: [
-                {
-                  required: true,
-                  message: "必填，20字以内!",
-                  pattern: /^(?!.{21}|\s*$)/g
-                }
-              ]
-            })(<Input placeholder="必填，20字以内" />)}
+            {getFieldDecorator("Source")(
+              <Input placeholder="请输入试卷来源" />
+            )}
           </FormItem>
-          <FormItem {...formItemLayout} label="内容">
-            {getFieldDecorator("content", {
-              rules: [
-                {
-                  required: true,
-                  message: "必填，20字以内!",
-                  pattern: /^(?!.{21}|\s*$)/g
-                }
-              ]
-            })(<TextArea rows={4} />)}
+          <FormItem {...formItemLayoutContent} label="内容">
+            {getFieldDecorator("Content")(
+              <div className="editor-wrap">
+                <BraftEditor {...editorProps} />
+              </div>
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否积分奖励">
-            {getFieldDecorator("isReward")(
-              <Select onChange={this.rewardHandleChange}>
+            {getFieldDecorator("IsScoreAward")(
+              <Select onChange={this.rewardHandleChange.bind(this)}>
                 <Option value="0">否</Option>
                 <Option value="1">是</Option>
               </Select>
             )}
           </FormItem>
-          <Form
-            layout="inline"
+          <div
             style={{
-              display: isRewardWrapper ? "block" : "none",
-              border: "1px solid #d9d9d9",
+              display: question.IsScoreAward ? "block" : "none",
+              border: "1px solid #e8e8e8",
+              borderRadius: "4px",
               padding: "24px",
-              marginBottom: "24px"
+              marginBottom: "24px",
+              width: "90%"
             }}
           >
             <Row gutter={24}>
-              <Col span={7} key={1}>
-                <FormItem label="及格奖励积分">
-                  {getFieldDecorator(`rewardAll`)(<Input />)}
+              <Col span={6} key={1}>
+                <FormItem {...formItemLayoutChild} label="及格奖励积分">
+                  {getFieldDecorator(`PassAwardScore`)(<Input />)}
                 </FormItem>
               </Col>
-              <Col span={7} key={2}>
-                <FormItem label="每题分值">
-                  {getFieldDecorator(`reward`)(<Input />)}
+              <Col span={6} key={2}>
+                <FormItem {...formItemLayoutChild} label="每题分值">
+                  {getFieldDecorator(`SubjectScore`)(<Input />)}
                 </FormItem>
               </Col>
-              <Col span={7} key={3}>
-                <FormItem label="及格分">
-                  {getFieldDecorator(`passScore`)(<Input />)}
+              <Col span={6} key={3}>
+                <FormItem {...formItemLayoutChild} label="及格分">
+                  {getFieldDecorator(`PassScore`)(<Input />)}
                 </FormItem>
               </Col>
             </Row>
-            <Row gutter={24} style={{ paddingTop: "24px" }}>
-              <Col span={12} key={4} style={{ display: "block" }}>
-                <Checkbox onChange={this.change}>随机生成题目</Checkbox>
+            <Row gutter={24}>
+              <Col span={7} key={4} style={{ display: "block" }}>
+                <Checkbox
+                  onChange={this.change.bind(this)}
+                  checked={question.HasLimitedTime}
+                >
+                  随机生成题目
+                </Checkbox>
                 <FormItem
+                  {...formItemLayoutChild}
                   label="随机生成题目数量"
                   style={{ display: isShowInput ? "block" : "none" }}
                 >
@@ -232,11 +287,12 @@ class QuestionForm extends Component {
                 </FormItem>
               </Col>
             </Row>
-          </Form>
+          </div>
           <Table
             columns={columns}
             dataSource={data}
             bordered
+            style={{ width: "90%" }}
             title={() => (
               <Row gutter={24}>
                 <Col span={4}>题目列表</Col>
@@ -266,14 +322,14 @@ class QuestionForm extends Component {
             )}
           />
           <FormItem>
-            <Row type="flex" justify="center" className="edit" gutter={24}>
-              <Col>
+            <Row type="flex" className="edit" gutter={24}>
+              <Col offset={2}>
                 <Button
                   htmlType="submit"
                   className="btn btn--primary"
                   type="primary"
                 >
-                  {this.props.project.projectId === "" ? "新建" : "保存"}
+                  {this.props.question.ExercisesId === "" ? "新建" : "保存"}
                 </Button>
               </Col>
               <Col>
@@ -294,85 +350,83 @@ class QuestionForm extends Component {
 
 const QuestionFormMap = Form.create({
   mapPropsToFields: props => {
-    const project = props.project;
+    const question = props.question;
+    console.log("数据回显：", question);
     return {
-      projectId: Form.createFormField({
-        value: project.basicData ? project.basicData.id : ""
+      ExercisesId: Form.createFormField({
+        value: question.ExercisesId
       }),
-      quType: Form.createFormField({
-        value: "0"
+      ExercisesName: Form.createFormField({
+        value: question.ExercisesName
       }),
-      isReward: Form.createFormField({
-        value: "0"
+      ExercisesType: Form.createFormField({
+        value: question.ExercisesType + ""
       }),
-      projectName: Form.createFormField({
-        value: project.basicData ? project.basicData.projectName : ""
+      Source: Form.createFormField({
+        value: question.Source
+      }),
+      Content: Form.createFormField({
+        value: question.Content
+      }),
+      IsScoreAward: Form.createFormField({
+        value: question.IsScoreAward ? "1" : "0"
+      }),
+      PassAwardScore: Form.createFormField({
+        value: question.PassAwardScore
+      }),
+      SubjectScore: Form.createFormField({
+        value: question.SubjectScore
+      }),
+      PassScore: Form.createFormField({
+        value: question.PassScore
+      }),
+      HasLimitedTime: Form.createFormField({
+        value: question.HasLimitedTime
+      }),
+      LimitedTime: Form.createFormField({
+        value: question.LimitedTime
       })
     };
   }
 })(QuestionForm);
-
-class QuestionDetail extends Component {
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      questionReducer: state.questionReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
+export default class QuestionDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      projectDetails: {} //项目详情
-    };
+    this.state = {};
   }
 
   componentWillMount() {
-    // let { projectId } = this.props.params;
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
-  }
-
-  componentWillUnmount() {
-    // this.props.clearProjectInfo();
+    let { id } = this.props.params;
+    if (id) {
+      this.getInfo(id); //拿详情
+    } else {
+      this.props.clearInfo();
+    }
   }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async id => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getQuestionInfoById();
+      this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <QuestionFormMap project={projectDetails} />
+        <QuestionFormMap question={this.props.questionReducer} />
       </Nav>
     );
   }
 }
-
-export default QuestionDetail;

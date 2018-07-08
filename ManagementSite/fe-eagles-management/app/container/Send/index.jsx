@@ -14,6 +14,10 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import {
+  getList,
+  edit
+} from "../../services/sendService";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -41,7 +45,7 @@ class SearchForm extends Component {
       >
         <Row gutter={24}>
           <Col span={5} key={2}>
-            <FormItem label="用户">
+            <FormItem label="商品名称">
               {getFieldDecorator(`user`)(<Input />)}
             </FormItem>
           </Col>
@@ -74,7 +78,7 @@ class SearchForm extends Component {
               </Col>
             </FormItem>
           </Col>
-          <Col span={5} key={4}>
+          {/* <Col span={5} key={4}>
             <FormItem label="状态">
               {getFieldDecorator("state")(
                 <Select>
@@ -85,15 +89,13 @@ class SearchForm extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col>
-          <Col span={5} key={5}>
+          </Col> */}
+          {/* <Col span={5} key={5}>
             <FormItem label="下单商品">
               {getFieldDecorator(`goods`)(<Input />)}
             </FormItem>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={23} style={{ textAlign: "right", paddingRight: "16px" }}>
+          </Col> */}
+          <Col span={8} key={4} style={{ paddingTop: "3px" }}>
             <Button type="primary" htmlType="submit">
               搜索
             </Button>
@@ -102,6 +104,16 @@ class SearchForm extends Component {
             </Button>
           </Col>
         </Row>
+        {/* <Row>
+          <Col span={23} style={{ textAlign: "right", paddingRight: "16px" }}>
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col>
+        </Row> */}
       </Form>
     );
   }
@@ -213,13 +225,16 @@ class SendList extends React.Component {
       }
     ];
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      StartTime: "",
+      EndTime: "",
+      OrgId: "",
+      GoodsName: ""
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -228,25 +243,24 @@ class SendList extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
+  getCurrentList = async params => {
+    try {
+      let { List, TotalCount } = await getList(params);
+      console.log(List, TotalCount);
+      List.forEach(v => (v.key = v.ExercisesId));
+      let { PageNumber } = params;
+      this.setState({ questionList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   // 更新分页配置
-  updatePageConfig(totalSize) {
+  updatePageConfig(TotalCount) {
     let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
+      total: TotalCount,
+      pageSize: this.getListConfig.PageSize,
       current: this.state.current,
       onChange: async (page, pagesize) => {
         this.getCurrentList({
@@ -258,59 +272,23 @@ class SendList extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
-  // 删除项目
-  handleDelete = async shareIds => {
+  // 编辑
+  handleDelete = async id => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await deleteQuestion({
+            ExercisesId: id
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -339,7 +317,7 @@ class SendList extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, sendList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -348,7 +326,7 @@ class SendList extends React.Component {
       <Nav>
         <WrapperSearchForm />
         <Table
-          dataSource={this.data}
+          dataSource={sendList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
@@ -362,11 +340,11 @@ class SendList extends React.Component {
           gutter={24}
           // className={projectList.length === 0 ? "init" : ""}
         >
-          <Col >
+          {/* <Col >
             <Button onClick={this.handleDelete} className="btn">
               批量发货
             </Button>
-          </Col>
+          </Col> */}
         </Row>
       </Nav>
     );

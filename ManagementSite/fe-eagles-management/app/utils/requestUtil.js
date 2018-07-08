@@ -78,7 +78,7 @@ let getToken = () => {
  */
 async function request({ method = "get", url, params }) {
   const Token = await getToken();
-  params = { ...params, Token };
+  params = { ...params, ...Token };
   try {
     console.log("curd - params", params);
     let res = await axios({

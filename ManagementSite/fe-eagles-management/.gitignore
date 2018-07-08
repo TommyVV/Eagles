@@ -10,3 +10,5 @@ dist/
 # IDE ignore
 .idea
 .vscode
+
+package-lock.json

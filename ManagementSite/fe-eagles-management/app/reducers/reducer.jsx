@@ -6,10 +6,12 @@ import userReducer from "./userReducer";
 import goodsReducer from "./goodsReducer";
 import orgReducer from "./orgReducer";
 import newsReducer from "./newsReducer";
+import questionReducer from "./questionReducer";
 
 const reducer = combineReducers({
   appReducer,
   userReducer,
+  questionReducer,
   goodsReducer,
   orgReducer,
   newsReducer
