@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
-using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
 using Eagles.DomainService.Model.Task;
 using Eagles.DomainService.Model.User;
@@ -23,8 +21,7 @@ namespace Ealges.DomianService.DataAccess.TaskData
         public int CreateTask(TbTask reqTask, int toUserId)
         {
             var result = 0;
-            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent
-,BeginTime,EndTime,AttachName1,AttachName2,AttachName3,AttachName4,
+            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachName1,AttachName2,AttachName3,AttachName4,
 Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,CreateType) 
 value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachName1,@AttachName2,@AttachName3,@AttachName4,@Attach1,@Attach2,@Attach3,@Attach4,
 @CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@CreateType); select LAST_INSERT_ID(); ", reqTask);
@@ -123,20 +120,28 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
                 new { TaskId = taskId });
         }
 
-        public TbUserTaskStep GetStep(int stepId)
+        public List<TbTask> GetTask(int userId, string status, int pageIndex, int pageSize)
         {
-            return dbManager.QuerySingle<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where StepId = @StepId",
-                new { StepId = stepId });
-        }
-
-        public List<TbTask> GetTask(int userId, string status)
-        {
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
             if (string.IsNullOrEmpty(status))
                 return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 ", new { UserId = userId });
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 limit @PageIndex, @PageSize ",
+                    new
+                    {
+                        UserId = userId,
+                        PageIndex = pageIndexParameter,
+                        PageSize = pageSize
+                    });
             else
                 return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 and a.Status = @Status ", new { UserId = userId, Status = status });
+join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 and a.Status = @Status limit @PageIndex, @PageSize ",
+                    new
+                    {
+                        UserId = userId,
+                        Status = status,
+                        PageIndex = pageIndexParameter,
+                        PageSize = pageSize
+                    });
         }
 
         public TbTask GetTaskDetail(int taskId, int appId)
@@ -153,11 +158,13 @@ where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = a
             return null;
         }
         
-        public List<TbTask> GetPublicTask(int appId)
+        public List<TbTask> GetPublicTask(int appId, int pageIndex, int pageSize)
         {
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
             return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status from eagles.tb_task a 
-join eagles.tb_user_task b on a.TaskId = b.TaskId where a.OrgId = @OrgId and a.IsPublic = @IsPublic and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ",
-                new {Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0});
+join eagles.tb_user_task b on a.TaskId = b.TaskId where a.OrgId = @OrgId and a.IsPublic = @IsPublic and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview 
+limit @PageIndex, @PageSize ",
+                new { Orgid = appId, IsPublic = 0, OrgReview = 0, BranchReview = 0, PageIndex = pageIndexParameter, PageSize = pageSize });
         }
 
         public TbTask GetPublicTaskDetail(int taskId, int appId)
@@ -171,6 +178,12 @@ and a.OrgReview = @OrgReview and a.BranchReview = @BranchReview ", new {TaskId =
                 return result.FirstOrDefault();
             }
             return null;
+        }
+
+        public TbUserTaskStep GetStepExist(int stepId)
+        {
+            return dbManager.QuerySingle<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where StepId = @StepId",
+                new { StepId = stepId });
         }
     }
 }

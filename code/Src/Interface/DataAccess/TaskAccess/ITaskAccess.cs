@@ -22,14 +22,14 @@ namespace Eagles.Interface.DataAccess.TaskAccess
         
         List<TbUserTaskStep> GetTaskStep(int taskId);
 
-        TbUserTaskStep GetStep(int stepId);
-
-        List<TbTask> GetTask(int userId, string status);
+        List<TbTask> GetTask(int userId, string status, int pageIndex, int pageSize);
 
         TbTask GetTaskDetail(int taskId, int appId);
         
-        List<TbTask> GetPublicTask(int appId);
+        List<TbTask> GetPublicTask(int appId, int pageIndex, int pageSize);
 
         TbTask GetPublicTaskDetail(int taskId, int appId);
+        
+        TbUserTaskStep GetStepExist(int stepId);
     }
 }

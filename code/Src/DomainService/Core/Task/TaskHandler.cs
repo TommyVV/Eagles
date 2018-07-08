@@ -107,7 +107,7 @@ namespace Eagles.DomainService.Core.Task
             var taskInfo = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (taskInfo == null)
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
-            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            var stepInfo = iTaskAccess.GetStepExist(request.StepId);
             if (stepInfo == null)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             var result = iTaskAccess.RemoveTaskStep(request.TaskId, request.StepId);
@@ -205,7 +205,7 @@ namespace Eagles.DomainService.Core.Task
             //下级发起的活动
             else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                 throw new TransactionException("96", "必须负责人编辑计划");
-            var stepInfo = iTaskAccess.GetStep(request.StepId);
+            var stepInfo = iTaskAccess.GetStepExist(request.StepId);
             var action = ActionEnum.Create;
             if(stepInfo != null)
                 action = ActionEnum.Modify;
@@ -309,7 +309,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iTaskAccess.GetTask(tokens.UserId, request.Status);
+            var result = iTaskAccess.GetTask(tokens.UserId, request.Status, request.PageIndex, request.PageSize);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,
@@ -369,7 +369,7 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var result = iTaskAccess.GetPublicTask(request.AppId);
+            var result = iTaskAccess.GetPublicTask(request.AppId, request.PageIndex, request.PageSize);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,

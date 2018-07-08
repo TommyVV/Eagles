@@ -5,7 +5,7 @@ using Eagles.Interface.DataAccess.NewsDa;
 
 namespace Ealges.DomianService.DataAccess.NewsDA
 {
-    public class NewsDa: INewsDa
+    public class NewsDa : INewsDa
     {
         private readonly IDbManager dbManager;
 

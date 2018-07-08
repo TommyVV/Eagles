@@ -49,7 +49,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
 
         public TbUserInfo GetLogin(string phone)
         {
-            var userInfo = dbManager.Query<TbUserInfo>("select UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
+            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;

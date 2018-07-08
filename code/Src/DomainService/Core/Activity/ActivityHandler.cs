@@ -262,7 +262,7 @@ namespace Eagles.DomainService.Core.Activity
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
-            var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId);
+            var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId, request.PageIndex, request.PageSize);
             List<TbUserActivity> userActivity;
             switch (request.ActivityPage)
             {
@@ -374,7 +374,7 @@ namespace Eagles.DomainService.Core.Activity
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId);
+            var result = iActivityAccess.GetPublicActivity(request.ActivityType, request.AppId, request.PageIndex, request.PageSize);
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,

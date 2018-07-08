@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model
 {
     /// <summary>
@@ -21,11 +20,11 @@ namespace Eagles.Application.Model
         /// <summary>
         /// 每页条数
         /// </summary>
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 10;
 
         /// <summary>
         /// 第几页
         /// </summary>
-        public int PageIndex { get; set; }
+        public int PageIndex { get; set; } = 1;
     }
 }
