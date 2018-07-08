@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Eagles.Application.Model.Area;
 using Eagles.Interface.Core.Area;
 
@@ -18,6 +13,10 @@ namespace Eagles.Application.Host.Controllers
             this.areaHandler = areaHandler;
         }
 
+        /// <summary>
+        /// 获取省市区
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public AreaResponse GetAreaInfo()
         {

@@ -44,6 +44,9 @@ export default class App extends React.Component {
       sub: ""
     });
   };
+  test(){
+    window.location=hashHistory.replace("/question/detail");
+  }
   render() {
     const { fetchList, search } = this.props;
     let { current, sub } = this.state;
@@ -82,7 +85,7 @@ export default class App extends React.Component {
             >
               <Menu.Item
                 key="1"
-                onClick={e => hashHistory.replace("/questionlist")}
+                onClick={this.test()}
               >
                 习题问卷列表
               </Menu.Item>
