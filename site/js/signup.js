@@ -29,7 +29,12 @@ $('.btn-signup').on('click', function (e) {
             if(res.Code == 00){
             		loginIn($('#inputUser').val(),$('#inputPassword').val())//调登陆接口
             }else{
-            		alert('注册失败')
+            	bootoast({
+				    message: '注册失败',
+					 type: 'warning',
+					 position:'right-bottom',
+					 timeout:2
+				  });
             }
         }
 	})
