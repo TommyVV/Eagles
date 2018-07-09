@@ -1,8 +1,5 @@
-const DOMAIN = 'http://www.51service.xyz/Eagles/swagger/ui/index';
-
 $('.btn-signup').on('click', function (e) {
     e.preventDefault();
-
     let password = $('#inputPassword').val();
     let account = $('#inputUser').val();
     let captcha = $('#inputCaptcha').val();
@@ -20,24 +17,24 @@ $('.btn-signup').on('click', function (e) {
         type: "post",
 		data: {
 		  "Phone": account,
-		  "Pwd": hex_md5(password),
-		  "ValidCode": 0,
-		  "Seq": 0,
-		  "Token": "string",
-		  "AppId": 0
+		  "UserPwd": password,
+		  "ValidCode":captcha,
+		  "Seq": $('#inputCaptcha').attr('CodeSeq'),
+		  "AppId": 10000000
 		},
-		url: "http://51service.xyz/Eagles/api/User/Register",
+		url: "http://51service.xyz/Eagles/api/Register/Register",
 		dataType: "json",
         success:function(res){
         	var data=res.Result;
             if(res.Code == 00){
-            	loginIn($('#inputUser').val(),hex_md5($('#inputPassword').val()))//调登陆接口
-              	
-
+            		loginIn($('#inputUser').val(),$('#inputPassword').val())//调登陆接口
+            }else{
+            		alert('注册失败')
             }
         }
 	})
 })
+console.log($(".btn-cap").text())
 var timer;
 $(".btn-cap").click(function(){
 	$(this).attr("disabled","disabled");
@@ -49,37 +46,38 @@ $(".btn-cap").click(function(){
     } 
     $.ajax({
            type: "POST",
-           url: 'http://51service.xyz/Eagles/api/User/Register',
+           url: 'http://51service.xyz/Eagles/api/Register/GetValidateCode',
            data: {
 			  "Phone": phone,
+ 			  "AppId": 10000000
 			},
-           success: function (data) {
-               if(data == '1'){
+           success: function (res) {
+               if(res.Code == 00){
+               		$('#inputCaptcha').attr('placeholder','请输入序号为'+res.Result.CodeSeq+'的验证码');
+               		$('#inputCaptcha').attr('CodeSeq',res.Result.CodeSeq);
 					var time=60
-					//$('.btn-cap').text()
+					$('.btn-cap').text(time)
 					timer = setInterval(function() {
 	                  time--;
+	                  $('.btn-cap').text(time)
 	                  if(time <= 0) {
 	                    clearInterval(timer);
 	                    time = 60;
 	                    $(".btn-cap").text('获取验证码');
 	                    $(".btn-cap").removeAttr("disabled");
 	                  }
-	                  $('.btn-cap').text(time)
 	               }, 1000)
 					return
 				}
            }
      });
 })
-function loginIn(account,hash){
+function loginIn(account,UserPwd){
 	$.ajax({
         type: "post",
 		data: {
 			  "Phone": account,
-			  "UserPwd": hash,
-			  "VerifyCode": "string",
-			  "Token": "string",
+			  "UserPwd": UserPwd,
 			  "AppId": 10000000
 		},
 		url: "http://51service.xyz/Eagles/api/User/Login",
@@ -87,10 +85,10 @@ function loginIn(account,hash){
         success:function(res){
         	var data=res.Result;
             if(res.Code == 00){
-            	localStorage.setItem("token",data.Token);//存储token
-              	localStorage.setItem("userId",data.UserId); //用户ID
-              	localStorage.setItem("IsInternalUser ",data.IsInternalUser); //是否是内部用户
-              	localStorage.setItem("IsVerifyCode  ",data.IsVerifyCode); //是否需要验证码
+            		localStorage.setItem("token",data.Result.Token);//存储token
+              	localStorage.setItem("userId",data.Result.UserId); //用户ID
+              	localStorage.setItem("IsInternalUser",data.Result.IsInternalUser); //是否是内部用户
+              	localStorage.setItem("IsVerifyCode",data.Result.IsVerifyCode); //是否需要验证码
               	//登陆成功页面跳转地址
             	var prevLink = document.referrer;
 				if($.trim(prevLink)==''){
@@ -106,4 +104,4 @@ function loginIn(account,hash){
         }
 	})
 }
-clearInterval(timer);//清楚定时器
+clearInterval(timer);//清除定时器

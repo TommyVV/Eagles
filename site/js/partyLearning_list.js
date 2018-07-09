@@ -1,8 +1,7 @@
-var Moduleid=getRequest('paramModuleid')//获取模块id
-var ModuleType=getRequest('paramModuleType')//获取来源页面id
-/*var Moduleid=2//传地址截取的值
-var ModuleType=0//传地址截取的值*/
-
+//var Moduleid=getRequest('paramModuleid')//获取模块id
+//var ModuleType=getRequest('paramModuleType')//获取来源页面id
+var Moduleid=2//传地址截取的值
+var ModuleType=0//传地址截取的值
 partyLearning(Moduleid)//新闻列表
 partyTitle(ModuleType,Moduleid)//来源页面的分类列表
 function partyLearning(moduleId) {
