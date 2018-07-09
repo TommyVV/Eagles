@@ -21,6 +21,8 @@ namespace Eagles.Interface.DataAccess.UserInfo
 
         List<TbUserInfo> GetUserInfo(List<int> userIdList);
 
+        List<TbUserNotice> GetUserNotice(int userId, int appId, int pageIndex = 1, int pageSize = 10);
+
         TbValidCode GetValidCode(TbValidCode validCode);
 
         int InsertSmsCode(TbValidCode validateCode);

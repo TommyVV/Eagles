@@ -1,7 +1,7 @@
-﻿using System.Text;
+﻿using Dapper;
 using System.Linq;
+using System.Text;
 using System.Collections.Generic;
-using Dapper;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Sms;
 using Eagles.DomainService.Model.User;
@@ -61,7 +61,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
         /// <param name="userId"></param>
         /// <param name="relationshipType">ture 为查询上级信息  false 为查询下级信息</param>
         /// <returns></returns>
-        public List<TbUserRelationship> GetRelationship(int userId,bool relationshipType)
+        public List<TbUserRelationship> GetRelationship(int userId, bool relationshipType)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -77,7 +77,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
                 dynamicParams.Add("SubUserId", userId);
             }
             sql.AppendFormat(@" select a.UserId,a.SubUserId,b.Name from eagles.tb_user_relationship a 
-inner join tb_user_info b on a.SubUserId=b.UserId where  1=1  {0} ", parameter);
+inner join tb_user_info b on a.SubUserId = b.UserId where 1=1 {0} ", parameter);
             return dbManager.Query<TbUserRelationship>(sql.ToString(), dynamicParams);
         }
 
@@ -119,13 +119,28 @@ inner join tb_user_info b on a.SubUserId=b.UserId where  1=1  {0} ", parameter);
     `tb_user_info`.`IsCustomer`,
     `tb_user_info`.`Score`,
     `tb_user_info`.`IsLeader`
-FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
- ");
-            dynamicParams.Add("UserId", userIdList.ToArray() );
-
+FROM `eagles`.`tb_user_info`  where  UserId  in @UserId ");
+            dynamicParams.Add("UserId", userIdList.ToArray());
             return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
         }
-        
+
+        public List<TbUserNotice> GetUserNotice(int userId, int appId, int pageIndex = 1, int pageSize = 10)
+        {
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
+            parameter.Append(" and UserId = @UserId ");
+            dynamicParams.Add("UserId", userId);
+            parameter.Append(" and OrgId = @OrgId ");
+            dynamicParams.Add("OrgId", appId);
+            dynamicParams.Add("PageIndex", pageIndexParameter);
+            dynamicParams.Add("PageSize", pageSize);
+            sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime from eagles.tb_user_notice 
+where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
+            return dbManager.Query<TbUserNotice>(sql.ToString(), dynamicParams);
+        }
+
         public TbValidCode GetValidCode(TbValidCode validCode)
         {
             return dbManager.QuerySingle<TbValidCode>("select Phone from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
@@ -133,22 +148,8 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
 
         public int InsertSmsCode(TbValidCode validateCode)
         {
-            var sql = @"
-INSERT INTO eagles.tb_validcode
-(OrgId,
-Phone,
-ValidCode,
-Seq,
-CreateTime,
-ExpireTime)
-VALUES
-(
-@OrgId,
-@Phone,
-@ValidCode,
-@Seq,
-@CreateTime,
-@ExpireTime)";
+            var sql = @"INSERT INTO eagles.tb_validcode (OrgId,Phone,ValidCode,Seq,CreateTime,ExpireTime)
+VALUES(@OrgId,@Phone,@ValidCode,@Seq,@CreateTime,@ExpireTime)";
             return dbManager.Excuted(sql, validateCode);
         }
     }

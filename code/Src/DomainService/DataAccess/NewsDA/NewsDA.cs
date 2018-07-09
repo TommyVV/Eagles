@@ -14,7 +14,7 @@ namespace Ealges.DomianService.DataAccess.NewsDA
             this.dbManager = dbManager;
         }
 
-        public List<TbNews> GetModuleNews(int moduleId,int appId, int pageIndex = 1, int pageSize = 10)
+        public List<TbNews> GetModuleNews(int moduleId, int appId, int pageIndex = 1, int pageSize = 10)
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             return dbManager.Query<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,

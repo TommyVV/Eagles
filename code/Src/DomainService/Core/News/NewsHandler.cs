@@ -75,7 +75,7 @@ namespace Eagles.DomainService.Core.News
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var news = articleData.GetUserNewsList(tokens.UserId);
+            var news = articleData.GetUserNewsList(tokens.UserId, request.PageIndex, request.PageSize);
             //convert news 
             return new GetNewsResponse()
             {

@@ -5,9 +5,9 @@ using Eagles.Interface.Core.User;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
-using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.User.GetUserInfo;
+using Eagles.Application.Model.User.GetUserNotice;
 using Eagles.Application.Model.User.GetUserRelationship;
 
 namespace Eagles.Application.Host.Controllers
@@ -37,9 +37,7 @@ namespace Eagles.Application.Host.Controllers
         {
             return ApiActuator.Runing(() => userHandler.Login(request));
         }
-
         
-
         /// <summary>
         /// 更新用户信息
         /// </summary>
@@ -63,6 +61,28 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
+        /// 用户通知查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetUserNoticeResponse> GetUserNotice(GetUserNoticeRequest request)
+        {
+            return ApiActuator.Runing(() => userHandler.GetUserNotice(request));
+        }
+
+        /// <summary>
+        /// 用户上下级查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetUserRelationshipResponse> GetUserRelationship(GetUserRelationshipRequest request)
+        {
+            return ApiActuator.Runing(() => userHandler.GetUserRelationship(request)); 
+        }
+        
+        /// <summary>
         /// 用户文章发布
         /// </summary>
         /// <param name="request"></param>
@@ -82,17 +102,6 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetNewsResponse> GetUserArticle(GetNewsRequest request)
         {
             return ApiActuator.Runing(() => newsHandler.GetUserArticle(request));
-        }
-
-        /// <summary>
-        /// 用户上下级查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<GetUserRelationshipResponse> GetUserRelationship(GetUserRelationshipRequest request)
-        {
-            return ApiActuator.Runing(() => userHandler.GetUserRelationship(request)); 
         }
     }
 }
