@@ -1,7 +1,7 @@
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 /*console.log(isMobile);*/
 //文章发布
-var token=localStorage.getItem("token")
+var token=localStorage.getItem("token");
 $('.publish-btn').on('click', function (e) {
     e.preventDefault();
     var title = $('.publish-title').val();//标题

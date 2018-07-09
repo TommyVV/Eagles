@@ -1,4 +1,5 @@
 var NewsTypes=getRequest('NewsType');
+var token=localStorage.getItem("token")
 if(NewsTypes==undefined){
 	$('.select_txt').text("文章");
 	myAricle(0,token);
@@ -46,7 +47,7 @@ if(conmids=='文章'){
 }else if(conmids=='会议'){
 	myAricle(2,token);
 }
-myAricle(token);//文章列表
+//myAricle(token);//文章列表
 function myAricle(NewsType,token) {
 	$.ajax({
 		type: "post",
@@ -68,7 +69,7 @@ function myAricle(NewsType,token) {
 					myAricle+='<div class="article">'+
                         '<div class="left"><img src="'+data.NewsList.ImageUrl +'" alt=""></div>'+
                         '<div class="right">'+
-                            '<div class="content overflow-two-line">'+data.NewsList[i].ShortDesc +'</div>'+
+                            '<div class="content overflow-two-line">'+data.NewsList[i].Title +'</div>'+
                             '<div class="date">'+data.NewsList[i].CreateTime  +'</div>'+
                         '</div>'+
                     '</div>';
