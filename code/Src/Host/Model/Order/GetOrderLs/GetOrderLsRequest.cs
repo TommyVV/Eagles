@@ -6,6 +6,6 @@ namespace Eagles.Application.Model.Order.GetOrderLs
     /// </summary>
     public class GetOrderLsRequest : QueryRequestBase
     {
-
+        
     }
 }
