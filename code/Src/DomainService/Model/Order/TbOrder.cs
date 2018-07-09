@@ -23,5 +23,6 @@ namespace Eagles.DomainService.Model.Order
         public int Score { get; set; }
         public DateTime UpdateTime { get; set; }
         public int UserId { get; set; }
+        public string SmallImageUrl { get; set; }
     }
 }
