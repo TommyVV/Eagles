@@ -34,15 +34,15 @@ function exchange() {
             			'<div class="item-title">'+data.ProductList[i].ProductName+'</div>'+
             			'<div class="item-point">'+data.ProductList[i].ProductScore+'</div>'+
             			'<div class="item-btn" urls="'+data.ProductList[i].ProductId+'">去看看</div>'+
-        </div>';
+        '</div>';
 				}
-				$('.goods-area').append(exchange)//文章列表
+				$('.goods-area').append(exchange)
 			}
 		}
 	});
 }
 //去看看
-    $('.goods-area').on('click', '.item-btn', function(e) {{
+    $('.goods-area').on('click', '.item-btn', function(e) {
     		var pro=$(this).attr('urls');
-        window.location.href = 'goodsDetail.html?productId="'+pro+'"';
+        window.location.href = 'goodsDetail.html?productId='+pro+'';
     });

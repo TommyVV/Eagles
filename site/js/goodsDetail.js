@@ -4,8 +4,7 @@ $(document).ready(function () {
     });
 });
 
-//var productId=getRequest('productId')//获取产品
-var productId=2//传地址截取的值
+var productId=getRequest('productId')//获取产品
 goodDetal(productId)
 function goodDetal(productIds) {
 	$.ajax({
