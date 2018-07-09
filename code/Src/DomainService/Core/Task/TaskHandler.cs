@@ -309,7 +309,7 @@ namespace Eagles.DomainService.Core.Task
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var result = iTaskAccess.GetTask(tokens.UserId, request.TaskType, request.PageIndex, request.PageSize);
+            var result = iTaskAccess.GetTask(request.UserId, request.TaskType, request.PageIndex, request.PageSize);
             response.TaskList = result?.Select(x => new Application.Model.Common.Task
             {
                 TaskId = x.TaskId,

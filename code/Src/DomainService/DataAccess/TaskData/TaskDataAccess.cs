@@ -123,7 +123,7 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
         public List<TbTask> GetTask(int userId, TaskEnum taskType, int pageIndex, int pageSize)
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
-            if (1 == (int) taskType)
+            if (TaskEnum.From == taskType)
                 return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where a.FromUser = @UserId and a.Status <> -9 limit @PageIndex, @PageSize ",
                     new {UserId = userId, PageIndex = pageIndexParameter, PageSize = pageSize});
