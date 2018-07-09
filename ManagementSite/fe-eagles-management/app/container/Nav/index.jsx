@@ -180,12 +180,12 @@ export default class App extends React.Component {
               >
                 商品发货列表
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 key="11"
                 onClick={e => hashHistory.replace("/send/detail")}
               >
                 商品发货详情
-              </Menu.Item>
+              </Menu.Item> */}
             </SubMenu>
             <SubMenu
               key="sub6"
