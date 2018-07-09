@@ -1,9 +1,9 @@
-//var Moduleid=getRequest('paramModuleid')//获取模块id
-//var ModuleType=getRequest('paramModuleType')//获取来源页面id
-//var token=localStorage.getItem("token")
-var token="123"
+var Moduleid=getRequest('paramModuleid')//获取模块id
+var ModuleType=getRequest('paramModuleType')//获取来源页面id
+var token=localStorage.getItem("token")
+/*var token="123"
 var Moduleid=2//传地址截取的值
-var ModuleType=0//传地址截取的值
+var ModuleType=0//传地址截取的值*/
 partyLearning(Moduleid,token)//新闻列表
 partyTitle(ModuleType,Moduleid)//来源页面的分类列表
 function partyLearning(moduleId,token) {
@@ -31,7 +31,7 @@ function partyLearning(moduleId,token) {
 					}
 					learningList+='<div class="media">'+
                   '<div class="media-left">'+
-                    '<a href="'+externalUrl+'"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>'+
+                    '<a href="'+externalUrl+'?newsId='+data.NewsInfos[i].NewsId+'"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>'+
                   '</div>'+
                   '<div class="media-body">'+
                     '<h4 class="media-heading">' + data.NewsInfos[i].Title + '</h4>'+

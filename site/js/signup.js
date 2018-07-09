@@ -32,7 +32,7 @@ $('.btn-signup').on('click', function (e) {
             	bootoast({
 				    message: '注册失败',
 					 type: 'warning',
-					 position:'right-bottom',
+					 position:'toast-top-center',
 					 timeout:2
 				  });
             }

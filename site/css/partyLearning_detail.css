@@ -44,6 +44,7 @@
     padding-top: 0.85333rem;
     color: #141414;
     font-size: 0.64rem; }
+    .main_content .content-box .content img{display: inline-block;width: 100%!important;height: auto;}
   .main_content .content-box .person-box {
     text-align: right;
     color: #949494;
