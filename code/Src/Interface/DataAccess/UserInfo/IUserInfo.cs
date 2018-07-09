@@ -26,5 +26,7 @@ namespace Eagles.Interface.DataAccess.UserInfo
         TbValidCode GetValidCode(TbValidCode validCode);
 
         int InsertSmsCode(TbValidCode validateCode);
+
+        List<TbUserInfo> GetBranchUser(int branchId);
     }
 }

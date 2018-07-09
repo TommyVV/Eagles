@@ -42,6 +42,8 @@
 
         public static readonly string InvalidCode = "校验码错误";
 
+        public static readonly string ExpireValidateCode = "验证码已过期，请重新获取";
+
         public static readonly string RepeatJoin = "重复参与活动";
 
         public static readonly string TaskNotExists = "任务不存在";
