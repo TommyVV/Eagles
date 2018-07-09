@@ -121,12 +121,7 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.EditSubject(info);
 
-                if (result < 0)
-                {
-                    return 0;
-                }
-
-                return requset.Info.QuestionId;
+                return result < 0 ? 0 : requset.Info.QuestionId;
             }
             else
             {
@@ -139,25 +134,22 @@ namespace Eagles.DomainService.Core
                     Question = requset.Info.Question,
                 };
 
+                var questionId = dataAccess.CreateSubject(info);
+
                 //todo 事务添加 批量新增选项信息
-                int createResult = dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
+                dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 {
                     Answer = x.OptionName,
                     AnswerType = x.AnswerType,
                     ImageUrl = x.IsImg ? x.Img : string.Empty,
                     IsRight = x.IsRight,
                     OrgId = requset.Info.OrgId,
-                    QuestionId = requset.Info.QuestionId
+                    QuestionId = questionId
                 }).ToList());
 
-                int result = dataAccess.CreateSubject(info);
+                return questionId;
 
-                if (result < 0)
-                {
-                    return 0;
-                }
 
-                return requset.Info.QuestionId;
             }
         }
 
