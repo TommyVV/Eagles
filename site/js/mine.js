@@ -43,11 +43,13 @@ $(document).ready(function () {
         new CalculateScreen();
     })
 });
-function minedel(){
+var token=localStorage.getItem("token")
+minedel(token);
+function minedel(token){
 	$.ajax({
         type: "post",
 		data: {
-			  "Token": "string",
+			  "Token": token,
 			  "AppId": 10000000
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",

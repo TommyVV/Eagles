@@ -1,11 +1,12 @@
 $('#pc-header').load('./head.html')
 $('#pc-footer').load('./footer.html')
-myInfo()//个人信息
-function myInfo(){
+var token=localStorage.getItem("token")
+myInfo(token)//个人信息
+function myInfo(token){
 	$.ajax({
         type: "post",
 		data: {
-			  "Token": "string",
+			  "Token": token,
 			  "AppId": 10000000
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
