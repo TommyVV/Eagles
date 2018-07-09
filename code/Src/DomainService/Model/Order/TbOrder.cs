@@ -14,6 +14,7 @@ namespace Eagles.DomainService.Model.Order
         public string District { get; set; }
         public string ExpressId { get; set; }
         public int OperId { get; set; }
+        public string ImageUrl { get; set; }
         public int OrderId { get; set; }
         public int OrderStatus { get; set; }
         public int OrgId { get; set; }
