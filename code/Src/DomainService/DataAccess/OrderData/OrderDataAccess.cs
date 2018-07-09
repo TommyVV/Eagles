@@ -18,7 +18,7 @@ namespace Ealges.DomianService.DataAccess.OrderData
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             return dbManager.Query<TbOrder>(@"select a.OrderId,b.ProdId,b.ProdName,b.SmallImageUrl,a.Score,a.CreateTime from eagles.tb_order a
-join tb_product b on a.ProdId = b.ProdId where a.UserId = @UserId limit @PageIndex, @PageSize ", new { UserId = userId , PageIndex = pageIndexParameter, PageSize = pageSize
+join eagles.tb_product b on a.ProdId = b.ProdId where a.UserId = @UserId limit @PageIndex, @PageSize ", new { UserId = userId , PageIndex = pageIndexParameter, PageSize = pageSize
             });
         }
     }
