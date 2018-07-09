@@ -2,6 +2,7 @@
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
+using Eagles.Application.Model.User.BranchUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserNotice;
 using Eagles.Application.Model.User.GetUserRelationship;

@@ -53,6 +53,7 @@
     <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
+    <Compile Include="Common\BranchUser.cs" />
     <Compile Include="Common\FeedBack.cs" />
     <Compile Include="Common\JoinPeople.cs" />
     <Compile Include="Common\OrderLs.cs" />
@@ -135,6 +136,8 @@
     <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentRequest.cs" />
     <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentResponse.cs" />
     <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
+    <Compile Include="User\BranchUser\GetBranchUserRequest.cs" />
+    <Compile Include="User\BranchUser\GetBranchUserResponse.cs" />
     <Compile Include="User\GetUserNotice\GetUserNoticeRequest.cs" />
     <Compile Include="User\GetUserNotice\GetUserNoticeResponse.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />

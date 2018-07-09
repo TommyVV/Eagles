@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using Eagles.Base;
 using Eagles.Base.Md5Helper;
 using Eagles.Interface.Core.User;
@@ -12,6 +11,7 @@ using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Core.Utility;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
+using Eagles.Application.Model.User.BranchUser;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
@@ -152,6 +152,10 @@ namespace Eagles.DomainService.Core.User
             {
                 throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
             }
+            if (resultCode.ExpireTime < DateTime.Now)
+            {
+                throw new TransactionException(MessageCode.ExpireValidateCode, MessageKey.ExpireValidateCode);
+            }
             var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
@@ -285,6 +289,41 @@ namespace Eagles.DomainService.Core.User
                     return response;
             }
             return response;
+        }
+
+        public GetBranchUserResponse GetBranchUser(GetBranchUserRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Token))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
+            if (request.AppId <= 0)
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
+            if (!util.CheckAppId(request.AppId))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
+            var userInfo = util.GetUserId(request.Token, 0);
+            if (userInfo == null)
+            {
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            }
+            var branchId = userInfo.BranchId;
+            var result = userInfoAccess.GetBranchUser(branchId);
+            var branchUser = result.Select(x => new BranchUser()
+            {
+                UserId = x.UserId,
+                UserName = x.Name
+            }).ToList();
+            return new GetBranchUserResponse()
+            {
+                BranchUsers = branchUser
+            };
         }
     }
 }
