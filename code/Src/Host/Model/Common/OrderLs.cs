@@ -22,6 +22,11 @@ namespace Eagles.Application.Model.Common
         public string ProdName { get; set; }
 
         /// <summary>
+        /// 产品图片
+        /// </summary>
+        public string SmallImageUrl { get; set; }
+
+        /// <summary>
         /// 订单号
         /// </summary>
         public int OrderId { get; set; }

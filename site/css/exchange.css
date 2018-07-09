@@ -67,6 +67,7 @@ body {
     .goods-item img {
       margin-top: 1.088rem;
       margin-left: 1.28rem;
+      display: inline-block;
       width: 4.48rem;
       height: 4.48rem; }
     .goods-item .item-title {
@@ -155,6 +156,7 @@ body {
     background: white; }
     .goods-item img {
       margin: 30px 38px;
+      display: inline-block;
       width: 166px;
       height: 166px; }
     .goods-item .item-title {

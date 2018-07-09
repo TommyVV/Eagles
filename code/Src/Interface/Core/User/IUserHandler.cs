@@ -1,9 +1,10 @@
-﻿using System;
-using Eagles.Base;
+﻿using Eagles.Base;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
+using Eagles.Application.Model.User.BranchUser;
 using Eagles.Application.Model.User.GetUserInfo;
+using Eagles.Application.Model.User.GetUserNotice;
 using Eagles.Application.Model.User.GetUserRelationship;
 
 namespace Eagles.Interface.Core.User
@@ -19,14 +20,7 @@ namespace Eagles.Interface.Core.User
         /// <param name="request"></param>
         /// <returns></returns>
         EditUserResponse EditUser(EditUserRequest request);
-
-        /// <summary>
-        /// 用户信息查询
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        GetUserInfoResponse GetUserInfo(GetUserInfoRequest request);
-
+        
         /// <summary>
         /// 登录
         /// </summary>
@@ -42,10 +36,31 @@ namespace Eagles.Interface.Core.User
         RegisterResponse Register(RegisterRequest request);
 
         /// <summary>
+        /// 用户信息查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetUserInfoResponse GetUserInfo(GetUserInfoRequest request);
+
+        /// <summary>
+        /// 用户通知查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetUserNoticeResponse GetUserNotice(GetUserNoticeRequest request);
+
+        /// <summary>
         /// 用户上下级查询
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request);
+
+        /// <summary>
+        /// 查询支部用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetBranchUserResponse GetBranchUser(GetBranchUserRequest request);
     }
 }

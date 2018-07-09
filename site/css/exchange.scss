@@ -80,6 +80,7 @@ body{
         img{
             margin-top: px2rem(51);
             margin-left: px2rem(60);
+            display: inline-block;
             width:px2rem(210);
             height: px2rem(210);
         }
@@ -181,6 +182,7 @@ body{
         background: white;
         img{
             margin: 30px 38px;
+            display: inline-block;
             width:166px;
             height:166px;
         }

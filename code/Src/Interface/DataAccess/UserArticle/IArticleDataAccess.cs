@@ -4,10 +4,10 @@ using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess.UserArticle
 {
-    public interface IArticleDataAccess: IInterfaceBase
+    public interface IArticleDataAccess : IInterfaceBase
     {
         int CreateArticle(TbUserNews userNews);
 
-        List<TbUserNews> GetUserNewsList(int userId);
+        List<TbUserNews> GetUserNewsList(int userId, int pageIndex, int pageSize);
     }
 }

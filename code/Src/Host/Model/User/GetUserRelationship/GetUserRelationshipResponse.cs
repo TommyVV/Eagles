@@ -12,9 +12,5 @@ namespace Eagles.Application.Model.User.GetUserRelationship
         /// 用户列表
         /// </summary>
         public List<UserRelationship> UserList { get; set; }
-
-
-
-
     }
 }

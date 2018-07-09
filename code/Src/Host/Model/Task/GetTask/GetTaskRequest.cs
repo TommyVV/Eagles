@@ -1,4 +1,5 @@
-﻿
+﻿using Eagles.Application.Model.Enums;
+
 namespace Eagles.Application.Model.Task.GetTask
 {
     /// <summary>
@@ -7,8 +8,13 @@ namespace Eagles.Application.Model.Task.GetTask
     public class GetTaskRequest : QueryRequestBase
     {
         /// <summary>
-        /// 任务状态
+        /// 用户Id
         /// </summary>
-        public string Status { get; set; }
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// 0-发起的任务 1-负责的任务
+        /// </summary>
+        public TaskEnum TaskType { get; set; }
     }
 }

@@ -4,7 +4,7 @@ import { hashHistory } from "react-router";
 import base from "../config/base";
 import { serverConfig } from "../constants/ServerConfigure";
 import Uitl from "./util";
-import "../mock/mockData"; // 模拟本地数据
+// import "../mock/mockData"; // 模拟本地数据
 
 /**
  * 重定向到login页面  防止用户修改localstoreage的值导致报错

@@ -4,8 +4,32 @@ $(document).ready(function () {
     });
 });
 
-
-
+var productId=getRequest('productId')//获取产品
+goodDetal(productId)
+function goodDetal(productIds) {
+	$.ajax({
+		type: "post",
+		data: {
+			"ProductId": productIds,
+			"AppId": 10000000
+		},
+		url: "http://51service.xyz/Eagles/api/Product/GetProductDetail",
+		dataType: "json",
+		success: function(res) {
+			//$('.goods-area').html('')
+			var data = res.Result;
+			if(res.Code == 00) {
+				$('.ld_img,.goods-img').attr('src',data.ProductImgUrl);
+				$('.overview-props-name').text(data.ProductName);
+				$('.overview-props-count span,.num span').text(data.PeopleCount);
+				$('.overview-props-price span').text(data.ProductScore+'积分');
+				$('.points').html(data.ProductScore+'积分换购');//移动端
+				$('.overview-props-date span,.time span').text(data.ProductBeginTime);
+				$('.detail p,.detail-content').html(data.ProductDescrption )//文章列表
+			}
+		}
+	});
+}
 
 class CalculateScreen {
     constructor() {
