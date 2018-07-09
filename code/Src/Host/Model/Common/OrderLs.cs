@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Eagles.Application.Model.Common
+﻿namespace Eagles.Application.Model.Common
 {
     /// <summary>
     /// 订单兑换流水
@@ -20,6 +14,11 @@ namespace Eagles.Application.Model.Common
         /// 产品名称
         /// </summary>
         public string ProdName { get; set; }
+
+        /// <summary>
+        /// 产品图片
+        /// </summary>
+        public string ImageUrl { get; set; }
 
         /// <summary>
         /// 订单号

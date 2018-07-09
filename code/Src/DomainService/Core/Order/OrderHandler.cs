@@ -39,6 +39,7 @@ namespace Eagles.DomainService.Core.Score
                     ProdName = x.ProdName,
                     OrderId = x.OrderId,
                     Score = x.Score,
+                    ImageUrl = x.ImageUrl,
                     CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
                 }).ToList();
             }
