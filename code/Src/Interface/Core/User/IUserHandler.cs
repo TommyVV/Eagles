@@ -1,4 +1,5 @@
 ﻿using System;
+using Eagles.Application.Model.User.BranchUser;
 using Eagles.Base;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
@@ -47,5 +48,12 @@ namespace Eagles.Interface.Core.User
         /// <param name="request"></param>
         /// <returns></returns>
         GetUserRelationshipResponse GetUserRelationship(GetUserRelationshipRequest request);
+
+        /// <summary>
+        /// 查询支部用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetBranchUserResponse GetBranchUser(GetBranchUserRequest request);
     }
 }

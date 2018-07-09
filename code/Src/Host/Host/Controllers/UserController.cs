@@ -7,6 +7,7 @@ using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.News.GetNews;
+using Eagles.Application.Model.User.BranchUser;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserRelationship;
 
@@ -93,6 +94,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetUserRelationshipResponse> GetUserRelationship(GetUserRelationshipRequest request)
         {
             return ApiActuator.Runing(() => userHandler.GetUserRelationship(request)); 
+        }
+
+        /// <summary>
+        /// 支部党员查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetBranchUserResponse> GetBranchUser(GetBranchUserRequest request)
+        {
+            return ApiActuator.Runing(() => userHandler.GetBranchUser(request));
         }
     }
 }

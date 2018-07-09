@@ -128,7 +128,7 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId
         
         public TbValidCode GetValidCode(TbValidCode validCode)
         {
-            return dbManager.QuerySingle<TbValidCode>("select Phone from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
+            return dbManager.QuerySingle<TbValidCode>("select Phone,ExpireTime from eagles.tb_validcode where Phone = @Phone and ValidCode = @ValidCode and Seq = @Seq ", validCode);
         }
 
         public int InsertSmsCode(TbValidCode validateCode)
@@ -150,6 +150,13 @@ VALUES
 @CreateTime,
 @ExpireTime)";
             return dbManager.Excuted(sql, validateCode);
+        }
+
+        public List<TbUserInfo> GetBranchUser(int branchId)
+        {
+            var userInfo = dbManager.Query<TbUserInfo>(@"select OrgId,BranchId,UserId,Name,Password,IsCustomer from eagles.tb_user_info 
+where BranchId = @BranchId AND IsCustomer=1 and Status=0 and MemberStatus=0  and MemberType=0", new { BranchId = branchId });
+            return userInfo;
         }
     }
 }
