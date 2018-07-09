@@ -2,12 +2,8 @@
  * 服务器请求URL配置
  */
 
-// const API_SERVER = 'http://10.65.52.226:8080/hci-platform'; //比干
-// const API_SERVER = 'http://10.65.4.15:8080/hci-platform'; //必烈
-// const API_SERVER = 'http://10.65.50.109:8081/hci-platform'; //家家
-// const API_SERVER = 'https://operation.qingtui.cn/hci-platform'; //8G服务器
-const API_SERVER = ""; //mock
-// const API_SERVER = "http://51service.xyz/ManagementService"; //test
+// const API_SERVER = ""; //mock
+const API_SERVER = "http://51service.xyz/ManagementService"; //test
 
 // 活动
 const LOGIN = {
@@ -64,9 +60,9 @@ const OPERGROUP = {
 };
 // 发货
 const ORDER = {
-  ORDER_EDIT: "/api/EditOrders", //编辑发货
-  ORDER_LIST: "/api/GetOrders", //发货列表
-  ORDER_DETAIL: "/api/GetOrdersDetail" //发货详情
+  ORDER_EDIT: "/api/Order/EditOrders", //编辑发货
+  ORDER_LIST: "/api/Order/GetOrders", //发货列表
+  ORDER_DETAIL: "/api/Order/GetOrdersDetail" //发货详情
 };
 // 组织机构
 const ORG = {
