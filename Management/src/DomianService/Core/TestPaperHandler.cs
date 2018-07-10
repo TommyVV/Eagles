@@ -44,7 +44,7 @@ namespace Eagles.DomainService.Core
             var optionList = dataAccess.GetOptionList(new List<int>() { requset.QuestionId });
 
 
-            if (result == null) throw new TransactionException("M01","无业务数据");
+            if (result == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new SubjectDetails
             {
@@ -54,7 +54,7 @@ namespace Eagles.DomainService.Core
                 OrgId = result.OrgId,
                 OptionList = optionList.Select(x => new Option
                 {
-                    QuestionId=x.QuestionId,
+                    QuestionId = x.QuestionId,
                     Img = x.ImageUrl,
                     AnswerType = x.AnswerType,
                     IsImg = string.IsNullOrWhiteSpace(x.ImageUrl),
@@ -91,7 +91,7 @@ namespace Eagles.DomainService.Core
         public int EditSubject(EditSubjectRequset requset)
         {
 
-          
+
 
             TbQuestion info;
 
@@ -107,19 +107,29 @@ namespace Eagles.DomainService.Core
                     QuestionId = requset.Info.QuestionId
                 };
 
-                //todo 事务修改 批量修改选项信息
-                int editResult = dataAccess.EditOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
-                {
-                    Answer = x.OptionName,
-                    AnswerType = x.AnswerType,
-                    ImageUrl = x.IsImg ? x.Img : string.Empty,
-                    IsRight = x.IsRight,
-                    OrgId = requset.Info.OrgId,
-                    QuestionId = requset.Info.QuestionId,
-                    AnswerId = x.OptionId
-                }).ToList());
+
+                //var optionList = dataAccess.GetOptionList( new List<int>{requset.Info.QuestionId});
+
+
+                ////todo 事务修改 批量修改选项信息
+                // dataAccess.CreateOption(requset.Info.OptionList.Select(x =>
+                //    new TbQuestAnswer
+                //    {
+                //        Answer = x.OptionName,
+                //        AnswerType = x.AnswerType,
+                //        ImageUrl = x.IsImg ? x.Img : string.Empty,
+                //        IsRight = x.IsRight,
+                //        OrgId = requset.Info.OrgId,
+                //        QuestionId = requset.Info.QuestionId,
+                //        AnswerId = x.OptionId
+                //    }).ToList());
 
                 int result = dataAccess.EditSubject(info);
+
+                if (requset.OptionId.Count > 0)
+                {
+                    dataAccess.UpdataOption(info.QuestionId, requset.OptionId);
+                }
 
                 return result < 0 ? 0 : requset.Info.QuestionId;
             }
@@ -136,16 +146,20 @@ namespace Eagles.DomainService.Core
 
                 var questionId = dataAccess.CreateSubject(info);
 
-                //todo 事务添加 批量新增选项信息
-                dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
+                if (requset.OptionId.Count > 0)
                 {
-                    Answer = x.OptionName,
-                    AnswerType = x.AnswerType,
-                    ImageUrl = x.IsImg ? x.Img : string.Empty,
-                    IsRight = x.IsRight,
-                    OrgId = requset.Info.OrgId,
-                    QuestionId = questionId
-                }).ToList());
+                    dataAccess.UpdataOption(info.QuestionId, requset.OptionId);
+                }
+                ////todo 事务添加 批量新增选项信息
+                //dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
+                //{
+                //    Answer = x.OptionName,
+                //    AnswerType = x.AnswerType,
+                //    ImageUrl = x.IsImg ? x.Img : string.Empty,
+                //    IsRight = x.IsRight,
+                //    OrgId = requset.Info.OrgId,
+                //    QuestionId = questionId
+                //}).ToList());
 
                 return questionId;
 
@@ -196,6 +210,31 @@ namespace Eagles.DomainService.Core
 
                 int result = dataAccess.EditExercises(info);
 
+
+               
+
+                List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
+                {
+                    OrgId = requset.Info.OrgId,
+                    QuestionId = x,
+                    TestId = requset.Info.ExercisesId
+                }).ToList();
+
+                dataAccess.RemoveExercisesRelationship(new RemoveExercisesRequset
+                {
+                    ExercisesId= requset.Info.ExercisesId
+                });
+                //创建题目试卷 关系
+                dataAccess.CreateTestQuestionRelationship(list);
+
+                if (result < 0)
+                {
+                    response.IsSuccess = false;
+                }
+
+
+
+
                 if (result < 0)
                 {
                     response.IsSuccess = false;
@@ -225,14 +264,14 @@ namespace Eagles.DomainService.Core
                 //得到新增的试卷id
                 int result = dataAccess.CreateExercises(info);
 
-                List<TbTestQuestion> list = requset.Info.SubjectList.Select(x => new TbTestQuestion
+                List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
                     OrgId = requset.Info.OrgId,
-                    QuestionId = x.QuestionId,
+                    QuestionId = x,
                     TestId = result
                 }).ToList();
                 //创建题目试卷 关系
-                int result1 = dataAccess.CreateTestQuestionRelationship(list);
+                dataAccess.CreateTestQuestionRelationship(list);
 
                 if (result < 0)
                 {
@@ -266,7 +305,7 @@ namespace Eagles.DomainService.Core
 
             //});
             // 删除试卷 题目关系
-            return dataAccess.RemoveExercisesRelationship(requset);
+            return dataAccess.RemoveExercises(requset);
             //int result1 = dataAccess.RemoveTestQuestionRelationshipByTestId(requset.ExercisesId);
 
         }
@@ -281,7 +320,7 @@ namespace Eagles.DomainService.Core
             var response = new GetExercisesDetailResponse();
             TbTestPaper info = dataAccess.GetExercisesDetail(requset);
 
-            if (info == null) throw new TransactionException("M01","无业务数据");
+            if (info == null) throw new TransactionException("M01", "无业务数据");
 
             //得到试卷 + 习题的关系
             List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
@@ -328,7 +367,7 @@ namespace Eagles.DomainService.Core
             };
             var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TbTestPaper>();
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
 
 
@@ -383,6 +422,48 @@ namespace Eagles.DomainService.Core
             }).ToList();
 
             return response;
+        }
+
+        public int EditOption(EditOptionRequset requset)
+        {
+            if (requset.Info.OptionId > 0)
+            {
+                var result = dataAccess.EditOption(
+                    new TbQuestAnswer
+                    {
+                        Answer = requset.Info.OptionName,
+                        AnswerType = requset.Info.AnswerType,
+                        ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
+                        IsRight = requset.Info.IsRight,
+                        OrgId = requset.OrgId,
+                        QuestionId = requset.Info.QuestionId
+                    }
+
+                );
+                  return result < 0 ? 0 : requset.Info.QuestionId;
+            }
+            else
+            {
+                var result = dataAccess.CreateOption(
+                    new TbQuestAnswer
+                    {
+                        Answer = requset.Info.OptionName,
+                        AnswerType = requset.Info.AnswerType,
+                        ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
+                        IsRight = requset.Info.IsRight,
+                        OrgId = requset.OrgId,
+                        QuestionId = requset.Info.QuestionId
+                    });
+
+                return result;
+            }
+
+
+        }
+
+        public bool RemoveOption(RemoveOptionRequset requset)
+        {
+           return  dataAccess.RemoveOption(requset)>0;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Eagles.Application.Model.Exercises.Requset
+﻿using System.Collections.Generic;
+
+namespace Eagles.Application.Model.Exercises.Requset
 {
     /// <summary>
     /// 
@@ -8,6 +10,8 @@
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增
         /// </summary>
-        public Model.ExercisesDetails Info { get; set; }
+        public Model.Exercises Info { get; set; }
+
+        public List<int> Subject { get; set; }
     }
 }
