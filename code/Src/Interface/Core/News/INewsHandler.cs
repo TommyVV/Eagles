@@ -1,4 +1,5 @@
-﻿using Eagles.Base;
+﻿using Eagles.Application.Model.News.AddNewsViewCount;
+using Eagles.Base;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.CompleteTest;
 using Eagles.Application.Model.News.GetNews;
@@ -17,6 +18,8 @@ namespace Eagles.Interface.Core.News
         GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request);
 
         GetNewsDetailResponse GetNewsDetail(GetNewsDetailRequest request);
+
+        AddNewsViewCountResponse AddNewsViewCount(AddNewsCountRequest request);
 
     }
 }

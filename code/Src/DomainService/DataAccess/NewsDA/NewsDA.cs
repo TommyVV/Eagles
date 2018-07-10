@@ -28,5 +28,13 @@ from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @PageIndex, @Pag
 TestId,Attach1,Attach2,Attach3,Attach4,AttachName1,AttachName2,AttachName3,AttachName4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,
 IsExternal,ExternalUrl from eagles.tb_news where NewsId=@NewsId and OrgId=@OrgId and Status = 0 ", new { NewsId = newsId, OrgId = appId });
         }
+
+        public int AddNewsViewCount(int newsId)
+        {
+            return dbManager.Excuted("update eagles.tb_news set ViewCount=ViewCount+1 where NewsId=@NewsId ",
+            new {
+                NewsId=newsId
+            });
+        }
     }
 }
