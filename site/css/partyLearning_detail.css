@@ -23,17 +23,29 @@
     color: #949494;
     font-size: 0.64rem;
     margin-top: 0.53333rem; }
+    .we_dels{width:100%;height: auto;overflow: hidden;}
   .main_content .header .source-box {
+  	width:70%;float: left;height: auto;
     color: #949494;
     font-size: 0.64rem;
     margin-top: 0.53333rem;
     padding-bottom: 1.10933rem;
     border-bottom: 1px solid #eee; }
+    
   .main_content .header .author-box {
     color: #949494;
     font-size: 0.64rem;
     margin-top: 1.28rem;
     position: relative; }
+    .main_content .header .person-box {
+    	height: auto;
+  	width: 30%;float: left;
+    text-align: right;
+    color: #949494;
+    font-size: 0.512rem;
+    padding: 0.768rem 0;
+    border-bottom: 1px solid #eee;
+    }
     .main_content .header .author-box .study-time {
       position: absolute;
       right: 0;
@@ -45,12 +57,14 @@
     color: #141414;
     font-size: 0.64rem; }
     .main_content .content-box .content img{display: inline-block;width: 100%!important;height: auto;}
-  .main_content .content-box .person-box {
+  /*.main_content .content-box .person-box {
+  	height: auto;
+  	width: 30%;float: left;
     text-align: right;
     color: #949494;
     font-size: 0.512rem;
     padding: 0.768rem 0;
-    border-bottom: 1px solid #eee; }
+    border-bottom: 1px solid #eee; }*/
   .main_content .content-box .file {
     padding: 1.17333rem 0; }
 

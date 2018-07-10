@@ -55,8 +55,8 @@ function myAricle(NewsType,token) {
 			"NewsType": NewsType,
 			"Token": token,
 			"AppId": 10000000,
-			"PageSize": 0,
-			"PageIndex": 0
+			"PageSize": 10,
+			"PageIndex": 1
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserArticle",
 		dataType: "json",
