@@ -25,8 +25,8 @@ class PcApp extends Component {
   }
 
   login = async () => {
-    const res = await login();
-    Util.setLoaclStorage(res.Token); // 保存token和refreshToken
+    // const res = await login();
+    // Util.setLoaclStorage(res.Token); // 保存token和refreshToken
     // 去掉正在加载的菊花
     this.setState({
       initDone: true
