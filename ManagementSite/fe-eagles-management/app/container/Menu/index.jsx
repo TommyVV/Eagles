@@ -9,11 +9,13 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
+  Cascader
 } from "antd";
-const FormItem = Form.Item;
-const Option = Select.Option;
+// const FormItem = Form.Item;
+// const Option = Select.Option;
 import { hashHistory } from "react-router";
+import { getList, del } from "../../services/menuService";
+// import { getAllArea } from "../../services/areaService";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -23,55 +25,53 @@ class MenuList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
-      current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      menuList: [] // 列表数组
     };
     this.columns = [
       {
-        title: "机构编号",
-        dataIndex: "num"
+        title: "菜单名称",
+        dataIndex: "MenuName"
+      },
+      {
+        title: "菜单链接",
+        dataIndex: "MenuLink"
       },
       {
         title: "机构名称",
-        dataIndex: "name"
+        dataIndex: "OrgName"
       },
       {
         title: "二级菜单",
-        dataIndex: "id",
-        render: id => {
+        render: obj => {
           return (
             <div>
-              <a
-                onClick={() => {
-                  hashHistory.replace(`/menutwo/detail/${id}`);
-                }}
-              >
-                去维护
-              </a>
+              {obj.MenuLevel == "1" ? (
+                <a
+                  onClick={() => {
+                    hashHistory.replace(`/menutwo/detail/${obj.MenuId}`);
+                  }}
+                >
+                  去维护
+                </a>
+              ) : null}
             </div>
           );
         }
       },
       {
         title: "操作",
-        id: "1",
         render: obj => {
           return (
             <div>
               <a
-                onClick={() => {
-                  hashHistory.replace(`/menuone/detail/${obj.id}`);
-                }}
+                onClick={() =>
+                  hashHistory.replace(`/menuone/detail/${obj.MenuId}`)
+                }
               >
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(obj.MenuId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -81,125 +81,64 @@ class MenuList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        num: "oper01",
-        name: "管理员",
-        id: "1"
-      },
-      {
-        key: "2",
-        num: "oper02",
-        name: "管理员",
-        id: "2"
-      },
-      {
-        key: "3",
-        num: "oper03",
-        name: "管理员",
-        id: "3"
-      }
-    ];
+
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
-
-  // 选择分享时触发的改变
-  onSelectChange = selectedRowKeys => {
-    this.setState({ selectedRowKeys });
-  };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
-  }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
+  getCurrentList = async params => {
+    const { PageNumber } = this.getListConfig;
     try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
+      let { List } = await getList(params);
+      console.log("List - ", List);
+      List.forEach(v => {
+        v.key = v.MenuId;
       });
-      this.updatePageConfig(totalSize);
+      this.setState({ menuList: List, current: PageNumber });
+      // this.updatePageConfig(totalSize);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
+  // 更新分页配置
+  updatePageConfig(totalSize) {
+    let pageConfig = {
+      total: totalSize,
+      pageSize: this.getListConfig.PageSize,
+      current: this.state.current,
+      onChange: async (page, pagesize) => {
+        this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: page
+        });
+      }
+    };
+    this.setState({ pageConfig });
+  }
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async MenuId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await del({
+            MenuId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -211,39 +150,19 @@ class MenuList extends React.Component {
       }
     });
   };
-  // 编辑项目
-  handleEdit = async () => {
-    try {
-      let { selectedRowKeys } = this.state;
-      console.log(selectedRowKeys);
-      if (selectedRowKeys.length > 1) {
-        return message.error("不能同时编辑多个项目");
-      }
-      if (selectedRowKeys.length === 0) {
-        return message.error("请选择需要编辑的项目");
-      }
-      hashHistory.replace(`/project/create/${selectedRowKeys[0]}`);
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 4 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { pageConfig, menuList } = this.state;
+    // const formItemLayout = {
+    //   labelCol: {
+    //     xl: { span: 3 }
+    //   },
+    //   wrapperCol: {
+    //     xl: { span: 10 }
+    //   }
+    // };
     return (
       <Nav>
-        <Row gutter={24}>
+        {/* <Row gutter={24}>
           <Col span={12}>
             <Form>
               <FormItem {...formItemLayout} label="选择组织">
@@ -254,15 +173,14 @@ class MenuList extends React.Component {
               </FormItem>
             </Form>
           </Col>
-        </Row>
+        </Row> */}
         <Table
-          dataSource={this.data}
+          dataSource={menuList}
           columns={this.columns}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-
         <Row
           type="flex"
           gutter={24}
@@ -270,7 +188,9 @@ class MenuList extends React.Component {
         >
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>
+              <a onClick={() => hashHistory.replace(`/operator/detail`)}>
+                新增
+              </a>
             </Button>
           </Col>
         </Row>
