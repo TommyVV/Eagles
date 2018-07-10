@@ -53,11 +53,15 @@ namespace Eagles.DomainService.Model.Task
         /// 任务发起人
         /// </summary>
         public int FromUser { get; set; }
+
+        public string FromUserName { get; set; }
+
         /// <summary>
         /// 任务负责人
         /// </summary>
         public int UserId { get; set; }
 
+        public string UserName { get; set; }
         public int IsPublic { get; set; }
         public string OrgReview { get; set; }
         public string BranchReview { get; set; }

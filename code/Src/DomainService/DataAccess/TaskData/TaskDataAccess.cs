@@ -18,20 +18,21 @@ namespace Ealges.DomianService.DataAccess.TaskData
             this.dbManager = dbManager;
         }
 
-        public int CreateTask(TbTask reqTask, int toUserId)
+        public int CreateTask(TbTask reqTask, int toUserId, string toUserName)
         {
             var result = 0;
-            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,TaskContent,BeginTime,EndTime,AttachName1,AttachName2,AttachName3,AttachName4,
-Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,CreateType) 
-value (@OrgId,@BranchId,@TaskName,@FromUser,@TaskContent,@BeginTime,@EndTime,@AttachName1,@AttachName2,@AttachName3,@AttachName4,@Attach1,@Attach2,@Attach3,@Attach4,
+            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,FromUserName,TaskContent,BeginTime,EndTime,
+AttachName1,AttachName2,AttachName3,AttachName4,Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,CreateType) 
+value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTime,@EndTime,@AttachName1,@AttachName2,@AttachName3,@AttachName4,@Attach1,@Attach2,@Attach3,@Attach4,
 @CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@CreateType); select LAST_INSERT_ID(); ", reqTask);
-            result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId) value (@OrgId,@BranchId,@TaskId,@UserId) ",
+            result = dbManager.Excuted(@"insert into eagles.tb_user_task(OrgId,BranchId,TaskId,UserId,UserName) value (@OrgId,@BranchId,@TaskId,@UserId,@UserName) ",
                 new
                 {
                     OrgId = reqTask.OrgId,
                     BranchId = reqTask.BranchId,
                     TaskId = taskId,
-                    UserId = toUserId //任务责任人
+                    UserId = toUserId, //任务责任人
+                    UserName = toUserName
                 });
             return result;
         }
@@ -116,7 +117,8 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
 
         public List<TbUserTaskStep> GetTaskStep(int taskId)
         {
-            return dbManager.Query<TbUserTaskStep>("select OrgId,BranchId,TaskId,UserId,StepId,StepName,CreateTime,Content,UpdateTime from eagles.tb_user_task_step where TaskId = @taskId",
+            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime from eagles.tb_user_task_step a
+join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
                 new { TaskId = taskId });
         }
 
@@ -124,21 +126,19 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             if (TaskEnum.From == taskType)
-                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
+                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.FromUserName,a.BeginTime,a.Status,b.UserId,b.UserName from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where a.FromUser = @UserId and a.Status <> -9 limit @PageIndex, @PageSize ",
                     new {UserId = userId, PageIndex = pageIndexParameter, PageSize = pageSize});
             else
-                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.BeginTime,a.Status,b.UserId from eagles.tb_task a 
+                return dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.TaskContent,a.FromUser,a.FromUserName,a.BeginTime,a.Status,b.UserId,b.UserName from eagles.tb_task a 
 join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a.Status <> -9 limit @PageIndex, @PageSize ",
                     new {UserId = userId, PageIndex = pageIndexParameter, PageSize = pageSize});
         }
 
         public TbTask GetTaskDetail(int taskId, int appId)
         {
-            var result = dbManager.Query<TbTask>(
-                @"select a.TaskId,a.TaskName,a.FromUser,a.Status,a.TaskContent,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4
-,a.Attach1,a.Attach2,a.Attach3,a.Attach4,
-a.CreateTime,a.CreateType, b.UserId from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId
+            var result = dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.FromUserName,a.Status,a.TaskContent,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
+a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,a.CreateType,b.UserId,UserName from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId
 where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
             if (result != null && result.Any())
             {

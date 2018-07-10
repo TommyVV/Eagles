@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.Task;
+using Eagles.Interface.Configuration;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.TaskAccess;
 using Eagles.DomainService.Model.User;
@@ -28,11 +29,13 @@ namespace Eagles.DomainService.Core.Task
     {
         private readonly ITaskAccess iTaskAccess;
         private readonly IUtil util;
+        private readonly IEaglesConfig configuration;
 
-        public TaskHandler(ITaskAccess iTaskAccess, IUtil util)
+        public TaskHandler(ITaskAccess iTaskAccess, IUtil util, IEaglesConfig configuration)
         {
             this.iTaskAccess = iTaskAccess;
             this.util = util;
+            this.configuration = configuration;
         }
 
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
@@ -48,6 +51,8 @@ namespace Eagles.DomainService.Core.Task
             var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
+            var fromUserName = util.GetUserInfo(fromUser).Name;
+            var toUserName = util.GetUserInfo(toUser).Name;
             var task = new TbTask
             {
                 OrgId = tokens.OrgId,
@@ -58,6 +63,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskContent = request.TaskContent,
                 CreateTime = DateTime.Now,
                 FromUser = fromUser,
+                FromUserName = fromUserName,
                 CanComment = request.CanComment,
                 IsPublic = request.IsPublic,
                 CreateType = request.CreateType,
@@ -92,9 +98,26 @@ namespace Eagles.DomainService.Core.Task
                     task.Attach4 = attachList[i].AttachmentDownloadUrl;
                 }
             }
-            var result = iTaskAccess.CreateTask(task, toUser);
+            var result = iTaskAccess.CreateTask(task, toUser, toUserName);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                Title = "任务发起",
+                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                FromUser = request.TaskFromUser,
+                UserId = request.TaskToUserId,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == request.CreateType)
+                userNotice.NewsType = 20; //20 任务发起（上级发给下级）
+            else
+                userNotice.NewsType = 21; //21 任务申请开始（下级发给上级）
+            util.CreateUserNotice(userNotice);
             return response;
         }
 
@@ -127,38 +150,70 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             var createType = taskInfo.CreateType;
             var taskStatus = taskInfo.Status;
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+
             switch (request.Type)
             {
                 //上级审核任务
                 case TaskAcceptType.Audit:
                     if (taskStatus != -1)
-                        throw new TransactionException("96", "任务状态不正确");
+                        throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
                     //下级发起的活动才会由上级审核
                     if (1 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须上级审核");
+
+                    userNotice.Title = "任务审核通过";
+                    userNotice.FromUser = taskInfo.UserId;
+                    userNotice.UserId = taskInfo.FromUser;
+                    userNotice.NewsType = 22; //22 任务审核通过（上级审核任务允许开始）
+
                     break;
                 //下级接受任务
                 case TaskAcceptType.Accept:
                     if (taskStatus != -2)
-                        throw new TransactionException("96", "任务状态不正确");
+                        throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
                     if (0 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人接受任务");
                     break;
                 //下级申请完成任务
                 case TaskAcceptType.Apply:
                     if (taskStatus != 0)
-                        throw new TransactionException("96", "任务状态不正确");
+                        throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
                     //上级发起的任务
                     if (0 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成任务");
                     //下级发起的任务
                     else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成任务");
+
+                    userNotice.Title = "活动申请完成";
+                    if (0 == createType)
+                    {
+                        userNotice.FromUser = taskInfo.UserId;
+                        userNotice.UserId = taskInfo.FromUser;
+                    }
+                    else
+                    {
+                        userNotice.FromUser = taskInfo.FromUser;
+                        userNotice.UserId = taskInfo.UserId;
+                    }
+                    userNotice.NewsType = 25; //25 任务申请完成
+
                     break;
             }
             var result = iTaskAccess.EditTaskAccept(request.Type, request.TaskId, request.ReviewType);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            if (request.ReviewType == 0)
+                util.CreateUserNotice(userNotice);
             return response;
         }
 
@@ -184,6 +239,29 @@ namespace Eagles.DomainService.Core.Task
             if (!result)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             //todo 所有参与任务的人增加积分
+            
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                NewsType = 26, //26 任务审核确认完成
+                Title = "任务完成",
+                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == createType)
+            {
+                userNotice.FromUser = taskInfo.FromUser;
+                userNotice.UserId = taskInfo.UserId;
+            }
+            else
+            {
+                userNotice.FromUser = taskInfo.UserId;
+                userNotice.UserId = taskInfo.FromUser;
+            }
+            if (request.CompleteStatus == 0)
+                util.CreateUserNotice(userNotice);
             return response;
         }
         
@@ -223,6 +301,29 @@ namespace Eagles.DomainService.Core.Task
             var result = iTaskAccess.EditTaskStep(action, taskStep);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                NewsType = 23, //23 任务负责人定制计划（新增，修改，删除）
+                Title = "任务负责人定制计划",
+                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == createType)
+            {
+                userNotice.FromUser = taskInfo.UserId;
+                userNotice.UserId = taskInfo.FromUser;
+            }
+            else
+            {
+                userNotice.FromUser = taskInfo.FromUser;
+                userNotice.UserId = taskInfo.UserId;
+            }
+            util.CreateUserNotice(userNotice);
+
             return response;
         }
 
@@ -237,6 +338,13 @@ namespace Eagles.DomainService.Core.Task
                 throw new TransactionException(MessageCode.TaskNotExists, MessageKey.TaskNotExists);
             if (taskInfo.Status != 0)
                 throw new TransactionException(MessageCode.TaskStatusError, MessageKey.TaskStatusError);
+            var createType = taskInfo.CreateType;
+            //上级发起的活动
+            if (0 == createType && taskInfo.UserId != tokens.UserId)
+                throw new TransactionException("96", "必须负责人反馈任务");
+            //下级发起的活动
+            else if (1 == createType && taskInfo.FromUser != tokens.UserId)
+                throw new TransactionException("96", "必须负责人反馈任务");
             var userTaskStep = new TbUserTaskStep()
             {
                 TaskId = request.TaskId,
@@ -270,9 +378,30 @@ namespace Eagles.DomainService.Core.Task
             }
             var result = iTaskAccess.EditTaskFeedBack(userTaskStep);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                NewsType = 24, //24 任务负责人反馈计划内容（新增，修改）
+                Title = "任务负责人反馈计划内容",
+                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == createType)
+            {
+                userNotice.FromUser = taskInfo.UserId;
+                userNotice.UserId = taskInfo.FromUser;
             }
+            else
+            {
+                userNotice.FromUser = taskInfo.FromUser;
+                userNotice.UserId = taskInfo.UserId;
+            }
+            util.CreateUserNotice(userNotice);
+
             return response;
         }
 
@@ -317,7 +446,9 @@ namespace Eagles.DomainService.Core.Task
                 TaskStatus = x.Status,
                 TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 TaskFromUser = x.FromUser,
-                TaskToUser = x.UserId
+                TaskFromUserName = x.FromUserName,
+                TaskToUser = x.UserId,
+                TaskToUserName = x.UserName
             }).ToList();
             if (result == null || result.Count <= 0)
             {
@@ -344,9 +475,13 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskStatus = result.Status;
                 response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
+                response.InitiateUserName = result.FromUserName;
                 response.AcceptUserId = result.UserId;
+                response.AcceptUserName = result.UserName;
+                response.CreateType = result.CreateType;
                 response.AcctachmentList = new List<Attachment>
                 {
                     new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},

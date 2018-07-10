@@ -33,8 +33,18 @@ namespace Eagles.Application.Model.Common
         public int TaskFromUser { get; set; }
 
         /// <summary>
+        /// 任务发起人名称
+        /// </summary>
+        public string TaskFromUserName { get; set; }
+
+        /// <summary>
         /// 任务接受人
         /// </summary>
         public int TaskToUser { get; set; }
+
+        /// <summary>
+        /// 任务接受人名称
+        /// </summary>
+        public string TaskToUserName { get; set; }
     }
 }

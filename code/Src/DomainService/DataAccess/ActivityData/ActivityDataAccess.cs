@@ -25,9 +25,9 @@ namespace Ealges.DomianService.DataAccess.ActivityData
         public int CreateActivity(TbActivity reqActivity)
         {
             return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
-TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachName1, AttachName2, AttachName3, AttachName4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status,CreateType) 
+TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachName1, AttachName2, AttachName3, AttachName4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status, CreateType) 
 value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
-@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status,@CreateType)", reqActivity);
+@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType)", reqActivity);
         }
 
         public int EditActivityJoin(TbUserActivity userActivity)
