@@ -53,15 +53,20 @@
     <Compile Include="Activity\GetPublicActivityDetail\GetPublicActivityDetailResponse.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityRequest.cs" />
     <Compile Include="Activity\GetPublicActivity\GetPublicActivityResponse.cs" />
+    <Compile Include="Common\BranchUser.cs" />
     <Compile Include="Common\FeedBack.cs" />
     <Compile Include="Common\JoinPeople.cs" />
     <Compile Include="Common\OrderLs.cs" />
     <Compile Include="Common\ResAnswer.cs" />
     <Compile Include="Common\ReqAnswer.cs" />
     <Compile Include="Common\UserLevel.cs" />
+    <Compile Include="Common\UserNotice.cs" />
     <Compile Include="Common\UserRelationship.cs" />
+    <Compile Include="Enums\TaskEnum.cs" />
     <Compile Include="MessageCode.cs" />
     <Compile Include="MessageKey.cs" />
+    <Compile Include="News\AddNewsViewCount\AddNewsCountRequest.cs" />
+    <Compile Include="News\AddNewsViewCount\AddNewsViewCountResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
     <Compile Include="News\GetTestPaper\AppAnswer.cs" />
@@ -133,6 +138,10 @@
     <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentRequest.cs" />
     <Compile Include="UserComment\RemoveUserComment\RemoveUserCommentResponse.cs" />
     <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
+    <Compile Include="User\BranchUser\GetBranchUserRequest.cs" />
+    <Compile Include="User\BranchUser\GetBranchUserResponse.cs" />
+    <Compile Include="User\GetUserNotice\GetUserNoticeRequest.cs" />
+    <Compile Include="User\GetUserNotice\GetUserNoticeResponse.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipResponse.cs" />
     <Compile Include="User\Login\LoginRequest.cs" />
@@ -194,6 +203,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="User\EditUserNoticeIsRead\" />
+    <Folder Include="User\EditViewsCount\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

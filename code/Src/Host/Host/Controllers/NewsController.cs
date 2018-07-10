@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Eagles.Application.Model.News.AddNewsViewCount;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -43,6 +44,18 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetNewsDetailResponse> GetNewsDetail(GetNewsDetailRequest request)
         {
             return ApiActuator.Runing(() => newsHandler.GetNewsDetail(request));
+
+        }
+
+        /// <summary>
+        /// 新闻详情查询
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<AddNewsViewCountResponse> AddNewsViewCount(AddNewsCountRequest request)
+        {
+            return ApiActuator.Runing(() => newsHandler.AddNewsViewCount(request));
 
         }
     }

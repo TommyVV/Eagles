@@ -8,6 +8,7 @@ using Eagles.Interface.DataAccess.NewsDa;
 using Eagles.Interface.DataAccess.UserArticle;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
+using Eagles.Application.Model.News.AddNewsViewCount;
 using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetModuleNews;
@@ -75,7 +76,7 @@ namespace Eagles.DomainService.Core.News
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var news = articleData.GetUserNewsList(tokens.UserId);
+            var news = articleData.GetUserNewsList(tokens.UserId, request.PageIndex, request.PageSize);
             //convert news 
             return new GetNewsResponse()
             {
@@ -171,6 +172,21 @@ namespace Eagles.DomainService.Core.News
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
             return response;
+        }
+
+        public AddNewsViewCountResponse AddNewsViewCount(AddNewsCountRequest request)
+        {
+            if (request.NewsId < 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (!util.CheckAppId(request.AppId))
+            {
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            }
+
+            var result = newsDa.AddNewsViewCount(request.NewsId);
+            return new AddNewsViewCountResponse();
         }
     }
 }

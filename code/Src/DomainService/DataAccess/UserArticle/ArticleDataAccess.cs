@@ -20,10 +20,12 @@ namespace Ealges.DomianService.DataAccess.UserArticle
 values (@OrgId,@BranchId,@NewsId,@UserId,@Title,@HtmlContent,@NewsType,@Status,@CreateTime,@ViewsCount,@RewardsScore,@ReviewId,@OrgReview,@BranchReview) ", userNews);
         }
 
-        public List<TbUserNews> GetUserNewsList(int userId)
+        public List<TbUserNews> GetUserNewsList(int userId, int pageIndex = 1, int pageSize = 10)
         {
+            int pageIndexParameter = (pageIndex - 1) * pageSize;
             var userNews = dbManager.Query<TbUserNews>(@"select OrgId,BranchId,NewsId,UserId,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,
-OrgReview,BranchReview from eagles.tb_user_news where UserId=@UserId", new { UserId =  userId  });
+OrgReview,BranchReview from eagles.tb_user_news where UserId = @UserId and Status = 0 limit @PageIndex, @PageSize ", 
+new { UserId =  userId , PageIndex = pageIndexParameter, PageSize = pageSize });
             return userNews;
         }
     }

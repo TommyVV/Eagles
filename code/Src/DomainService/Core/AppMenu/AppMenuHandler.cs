@@ -33,6 +33,8 @@ namespace Eagles.DomainService.Core.AppMenu
             {
                 return response;
             }
+
+            response.LogoUrl = menus[0].Logo;
             var mainMenu = menus.Where(x => x.Level == "1").Select(x => new Application.Model.GetMenu.AppMenu
             {
                 MenuId = x.MenuId,

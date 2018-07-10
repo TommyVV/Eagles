@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.DomainService.Model.User
 {
     /// <summary>
@@ -19,10 +18,9 @@ namespace Eagles.DomainService.Model.User
         /// 下级id
         /// </summary>
         public int UserId { get; set; }
-
         /// <summary>
         /// 用户昵称
         /// </summary>
-        public string NickName { get; set; }
+        public string Name { get; set; }
     }
 }

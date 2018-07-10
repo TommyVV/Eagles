@@ -7,16 +7,20 @@ namespace Eagles.Application.Model.Enums
     public enum NewsEnum
     {
         /// <summary>
-        /// 报名
+        /// 文章
         /// </summary>
         Article = 0,
         /// <summary>
-        /// 投票
+        /// 心得体会
         /// </summary>
         Experience = 1,
         /// <summary>
-        /// 问卷调查
+        /// 会议
         /// </summary>
-        Meeting = 2
+        Meeting = 2,
+        /// <summary>
+        /// 入党申请书
+        /// </summary>
+        Apply = 3
     }
 }

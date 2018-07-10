@@ -44,6 +44,8 @@
 
         public static readonly string RepeatJoin = "54";
 
+        public static readonly string ExpireValidateCode = "53";
+
         public static readonly string TaskNotExists = "61";
 
         public static readonly string TaskStatusError = "62";

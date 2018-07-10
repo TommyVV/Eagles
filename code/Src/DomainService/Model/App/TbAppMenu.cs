@@ -1,5 +1,4 @@
 ﻿using System;
-using Eagles.Application.Model.Enums;
 
 namespace Eagles.DomainService.Model.App
 {
@@ -14,5 +13,6 @@ namespace Eagles.DomainService.Model.App
         public int OrgId { get; set; }
         public int ParentMenuId { get; set; }
         public string TargetUrl { get; set; }
+        public string Logo { get; set; }
     }
 }

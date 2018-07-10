@@ -15,6 +15,11 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
+        public TestPaperDataAccess(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
+
         public List<TbTestPaper> GetExercisesList(GetExercisesRequset requset, out int totalCount)
         {
 
@@ -245,7 +250,7 @@ VALUES
             SET
                 `OrgId` = @OrgId,
                 `Question` = @Question,
-                `Answer` = @Answer,
+                `AnswerType` = @AnswerType,
                 `Multiple` = @Multiple,
                 `MultipleCount` = @MultipleCount
                 WHERE `QuestionId` = @QuestionId;
@@ -255,20 +260,21 @@ VALUES
 
         public int CreateSubject(TbQuestion info)
         {
-            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_question`
+            return dbManager.ExecuteScalar<int>(@"INSERT INTO `eagles`.`tb_question`
 (`OrgId`,
 `QuestionId`,
 `Question`,
-`Answer`,
+`AnswerType`,
 `Multiple`,
 `MultipleCount`)
 VALUES
 (@OrgId,
 @QuestionId,
 @Question,
-@Answer,
+@AnswerType,
 @Multiple,
 @MultipleCount);
+
 select last_insert_id(); 
 ", info);
         }
@@ -288,7 +294,7 @@ WHERE QuestionId=@QuestionId;", new { requset.QuestionId });
             sql.Append(@" SELECT `tb_question`.`OrgId`,
     `tb_question`.`QuestionId`,
     `tb_question`.`Question`,
-    `tb_question`.`Answer`,
+    `tb_question`.`AnswerType`,
     `tb_question`.`Multiple`,
     `tb_question`.`MultipleCount`
 FROM `eagles`.`tb_question`  where QuestionId=@QuestionId;
