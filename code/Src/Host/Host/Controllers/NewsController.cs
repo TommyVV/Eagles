@@ -48,7 +48,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 新闻详情查询
+        /// 更新新闻阅读量
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>

@@ -69,6 +69,7 @@ namespace Eagles.DomainService.Core.News
 
         public GetNewsResponse GetUserArticle(GetNewsRequest request)
         {
+            var response = new GetNewsResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
@@ -77,16 +78,18 @@ namespace Eagles.DomainService.Core.News
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             var news = articleData.GetUserNewsList(tokens.UserId, request.PageIndex, request.PageSize);
-            //convert news 
-            return new GetNewsResponse()
+            if (news != null && news.Count > 0)
             {
-                NewsList = news.Select(x => new Application.Model.Common.News
+                response.NewsList = news.Select(x => new Application.Model.Common.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
                     CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
-                }).ToList()
-            };
+                }).ToList();
+            }
+            else
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            return response;
         }
 
         public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
@@ -113,9 +116,7 @@ namespace Eagles.DomainService.Core.News
                 }).ToList();
             }
             else
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -181,10 +182,7 @@ namespace Eagles.DomainService.Core.News
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
-            {
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            }
-
             var result = newsDa.AddNewsViewCount(request.NewsId);
             return new AddNewsViewCountResponse();
         }
