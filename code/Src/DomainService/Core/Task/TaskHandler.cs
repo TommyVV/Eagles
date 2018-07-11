@@ -470,6 +470,7 @@ namespace Eagles.DomainService.Core.Task
             var result = iTaskAccess.GetTaskDetail(request.TaskId, request.AppId);
             if (result != null)
             {
+                response.TaskId = result.TaskId;
                 response.TaskName = result.TaskName;
                 response.TaskContent = result.TaskContent;
                 response.TaskStatus = result.Status;
