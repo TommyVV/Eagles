@@ -125,17 +125,17 @@ namespace Eagles.DomainService.Core.Score
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var userResult = iScoreAccess.GetUserRank();
+            var userResult = iScoreAccess.GetUserRank(request.AppId);
             if (userResult != null && userResult.Count > 0)
             {
                 var i = 1;
                 userResult?.ForEach(x =>
                 {
-                    response.UserRank.Add(new Application.Model.Common.UserRank()
+                    response.UserRank.Add(new UserRank()
                     {
                         Rank = i,
                         Name = x.Name,
-                        BranchName = x.OrgName,
+                        BranchName = x.BranchName,
                         Score = x.Score
                     });
                     i++;
@@ -145,16 +145,16 @@ namespace Eagles.DomainService.Core.Score
             {
                 response.UserRank = null;
             }
-            var branckResult = iScoreAccess.GetBranchRank();
+            var branckResult = iScoreAccess.GetBranchRank(request.AppId);
             if (branckResult != null && branckResult.Count > 0)
             {
                 var j = 1;
                 branckResult.ForEach(x =>
                   {
-                      response.BranchRank.Add(new Application.Model.Common.BranchRank()
+                      response.BranchRank.Add(new BranchRank()
                       {
                           Rank = j,
-                          Branch = x.OrgName,
+                          Branch = x.BranchName,
                           UserCount = x.UserCount,
                           Score = x.Score
                       });

@@ -18,7 +18,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 支部
         /// </summary>
-        public string OrgName { get; set; }
+        public string BranchName { get; set; }
         /// <summary>
         /// 积分
         /// </summary>
