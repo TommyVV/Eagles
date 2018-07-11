@@ -92,6 +92,13 @@ const TESTPAPER = {
   TESTPAPER_LIST: "/api/TestPaper/GetExercises", //试卷列表
   TESTPAPER_DETAIL: "/api/TestPaper/GetExercisesDetail" //试卷详情
 };
+//todo  习题（接口注释有问题）
+const EXERCISE = {
+  EDIT: "/api/TestPaper/EditSubject", //编辑习题
+  DELETE: "/api/TestPaper/RemoveExercises", //删除习题
+  LIST: "/api/TestPaper/GetExercises", //试卷习题
+  DETAIL: "/api/TestPaper/GetExercisesDetail" //试卷习题
+};
 // 党员
 const EDITPARTYMEMBER = {
   EDITPARTYMEMBER_EDIT: "/api/User/EditPartyMember", //编辑党员
@@ -129,6 +136,7 @@ export const serverConfig = {
   GOODS,
   IMAGE,
   TESTPAPER,
+  EXERCISE,
   EDITPARTYMEMBER,
   FILE,
   AREA

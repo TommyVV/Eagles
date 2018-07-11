@@ -1,5 +1,6 @@
 import sendRequest from "../utils/requestUtil";
-import { serverConfig } from "../constants/ServerConfigure";
+import Util from "../utils/util";
+import { serverConfig } from "../constants/config/ServerConfigure";
 
 const { NEWS } = serverConfig;
 // 根据id查看新闻详情
@@ -43,6 +44,8 @@ export const getNewsList = async params => {
 // 创建或编辑新闻
 export const createOrEditNews = async params => {
   try {
+    const user = Util.getOrgIdAndBranchId();
+    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: NEWS.NEWS_EDIT,

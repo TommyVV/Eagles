@@ -1,12 +1,13 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/config/ServerConfigure";
+import Util from "../utils/util";
 
-const { ORG } = serverConfig;
-// 根据id查看机构详情
-export const getOrgInfoById = async params => {
+const { EXERCISE } = serverConfig;
+// 根据id查看详情
+export const getInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: ORG.ORG_DETAIL,
+      url: EXERCISE.DETAIL,
       method: "post",
       params
     });
@@ -21,11 +22,11 @@ export const getOrgInfoById = async params => {
   }
 };
 
-// 查看机构列表
-export const getOrgList = async params => {
+// 查看列表
+export const getList = async params => {
   try {
     let res = await sendRequest({
-      url: ORG.ORG_LIST,
+      url: EXERCISE.LIST,
       method: "post",
       params
     });
@@ -40,12 +41,14 @@ export const getOrgList = async params => {
   }
 };
 
-// 创建或编辑机构
-export const createOrEditOrg = async params => {
+// 创建或编辑
+export const createOrEdit = async params => {
   try {
+    const user = Util.getOrgIdAndBranchId();
+    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
-      url: ORG.ORG_EDIT,
+      url: EXERCISE.EDIT,
       params
     });
     let { Code, Message } = res.data;
@@ -59,12 +62,12 @@ export const createOrEditOrg = async params => {
   }
 };
 
-// 删除机构
-export const deleteOrg = async params => {
+// 删除
+export const del = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: ORG.ORG_DELETE,
+      url: EXERCISE.DELETE,
       params
     });
     let { Code, Message } = res.data;

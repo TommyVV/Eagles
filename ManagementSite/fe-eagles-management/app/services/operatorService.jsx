@@ -1,5 +1,5 @@
 import sendRequest from "../utils/requestUtil";
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
 
 const { OPERATOR } = serverConfig;
 // 根据id查看详情

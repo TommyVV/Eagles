@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { hashHistory } from "react-router";
 import { login } from "../../services/loginService";
-import md5 from 'blueimp-md5';
+import md5 from "blueimp-md5";
 import "./login.less";
 
 const FormItem = Form.Item;
@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
   //发送请求
   submitLogin = async values => {
     this.setState({ loading: true });
-    const { Result, Code,Message } = await login({
+    const { Result, Code, Message } = await login({
       Account: values.Account,
       Password: md5(values.Password)
     });
@@ -34,12 +34,14 @@ class LoginForm extends React.Component {
       //保存用户相关信息
       let { Token, IsVerificationCode } = Result;
       // 密码错误次数超限，出现验证码
-      if(IsVerificationCode){
-
-      }else{
+      if (IsVerificationCode) {
+      } else {
+        // todo 把用户信息这两个字段写死
         let info = {
           Token,
-          hasLogin: true
+          hasLogin: true,
+          OrgId: "0",
+          BranchId: "0"
         };
         localStorage.info = JSON.stringify({
           ...info
