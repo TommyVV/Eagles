@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base;
 using Eagles.Application.Model;
+using Eagles.Application.Model.Common;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
@@ -114,7 +116,11 @@ namespace Eagles.DomainService.Core.Score
 
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
         {
-            var response = new GetScoreRankResponse();
+            var response = new GetScoreRankResponse()
+            {
+                UserRank = new List<UserRank>(),
+                BranchRank = new List<BranchRank>()
+            };
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
@@ -122,13 +128,18 @@ namespace Eagles.DomainService.Core.Score
             var userResult = iScoreAccess.GetUserRank();
             if (userResult != null && userResult.Count > 0)
             {
-                response.UserRank = userResult?.Select(x => new Application.Model.Common.UserRank()
+                var i = 1;
+                userResult?.ForEach(x =>
                 {
-                    Rank = x.No,
-                    Name = x.Name,
-                    BranchName = x.OrgName,
-                    Score = x.Score
-                }).ToList();
+                    response.UserRank.Add(new Application.Model.Common.UserRank()
+                    {
+                        Rank = i,
+                        Name = x.Name,
+                        BranchName = x.OrgName,
+                        Score = x.Score
+                    });
+                    i++;
+                });
             }
             else
             {
@@ -137,17 +148,18 @@ namespace Eagles.DomainService.Core.Score
             var branckResult = iScoreAccess.GetBranchRank();
             if (branckResult != null && branckResult.Count > 0)
             {
-                response.BranchRank = branckResult?.Select(x => new Application.Model.Common.BranchRank()
-                {
-                    Rank = x.No,
-                    Branch = x.OrgName,
-                    UserCount = x.UserCount,
-                    Score = x.Score
-                }).ToList();
-            }
-            else
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+                var j = 1;
+                branckResult.ForEach(x =>
+                  {
+                      response.BranchRank.Add(new Application.Model.Common.BranchRank()
+                      {
+                          Rank = j,
+                          Branch = x.OrgName,
+                          UserCount = x.UserCount,
+                          Score = x.Score
+                      });
+                      j++;
+                  });
             }
             return response;
         }
