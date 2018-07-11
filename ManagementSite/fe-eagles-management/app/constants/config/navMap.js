@@ -14,6 +14,16 @@ const navMap = [
     sub: "sub1"
   },
   {
+    pathname: "#/exerciselist",
+    key: "e1",
+    sub: "sube1"
+  },
+  {
+    pathname: "#/exercise/detail",
+    key: "e2",
+    sub: "sube1"
+  },
+  {
     pathname: "#/exercise/detail",
     key: "2",
     sub: "sub1"

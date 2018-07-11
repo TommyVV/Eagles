@@ -216,10 +216,12 @@ class GoodsList extends React.Component {
       onOk: async () => {
         try {
           const params = {
-            ...goods,
-            GoodsStatus: goods.GoodsStatus == "0" ? "1" : "0"
+            Info: {
+              ...goods,
+              GoodsStatus: goods.GoodsStatus == "0" ? "1" : "0"
+            }
           };
-          let { code } = await createOrEdit(params);
+          let { Code } = await createOrEdit(params);
           if (Code === "00") {
             message.success(`${tipTitle}成功`);
             await this.getCurrentList({
@@ -245,7 +247,7 @@ class GoodsList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({GoodsId});
+          let { Code } = await del({ GoodsId });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -302,15 +304,14 @@ class GoodsList extends React.Component {
 
         <Row
           type="flex"
-          justify="center"
+          // justify="center"
           gutter={24}
-          className={goodsList.length === 0 ? "init" : ""}
         >
-          <Col>
+          {/* <Col>
             <Button onClick={this.handleDelete} className="btn">
               批量下架
             </Button>
-          </Col>
+          </Col> */}
           <Col>
             <Button className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>

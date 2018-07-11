@@ -14,15 +14,33 @@ export const typeMap = [
 ];
 export const stateMap = [
   {
-    Status: "0",
+    Status: "1",
     text: "待审核",
   },
   {
-    Status: "1",
+    Status: "2",
     text: "审核通过",
   },
   {
-    Status: "2",
+    Status: "3",
     text: "审核不通过",
+  },
+];
+export const pageMap = [
+  {
+    value: "0",
+    text: "首页",
+  },
+  {
+    value: "1",
+    text: "党建门户",
+  },
+  {
+    value: "2",
+    text: "党务工作",
+  },
+  {
+    value: "3",
+    text: "党建学习",
   },
 ];

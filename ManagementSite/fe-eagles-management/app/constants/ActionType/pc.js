@@ -18,6 +18,11 @@ const goodsType = {
   SAVE_INFO: "SAVE_INFO", //保存商品详情
   CLEAR_INFO: "CLEAR_INFO" // 清空商品详情
 };
+// 栏目
+const programaType = {
+  SAVE_INFO: "SAVE_INFO", //保存详情
+  CLEAR_INFO: "CLEAR_INFO" // 清空详情
+};
 // 机构
 const orgType = {
   SAVE_ORG_INFO: "SAVE_ORG_INFO", //保存机构详情
@@ -34,6 +39,7 @@ export const actionType = {
   userType,
   questionType,
   goodsType,
+  programaType,
   orgType,
   newsType
 };

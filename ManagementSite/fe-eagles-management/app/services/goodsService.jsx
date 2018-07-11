@@ -1,5 +1,6 @@
 import sendRequest from "../utils/requestUtil";
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
+import Util from "../utils/util";
 
 const { GOODS } = serverConfig;
 // 根据id查看详情
@@ -41,8 +42,10 @@ export const getList = async params => {
 };
 
 // 创建或编辑
-export const createOrEdit= async params => {
+export const createOrEdit = async params => {
   try {
+    const user = Util.getOrgIdAndBranchId();
+    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: GOODS.GOODS_EDIT,

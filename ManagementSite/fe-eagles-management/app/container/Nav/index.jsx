@@ -94,6 +94,28 @@ export default class App extends React.Component {
               </Menu.Item>
             </SubMenu>
             <SubMenu
+              key="sube1"
+              title={
+                <span>
+                  <Icon type="mail" />
+                  <span>习题信息</span>
+                </span>
+              }
+            >
+              <Menu.Item
+                key="e1"
+                onClick={e => hashHistory.replace("/exerciselist")}
+              >
+                习题列表
+              </Menu.Item>
+              <Menu.Item
+                key="e2"
+                onClick={e => hashHistory.replace("/exercise/detail")}
+              >
+                习题详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
               key="sub2"
               title={
                 <span>

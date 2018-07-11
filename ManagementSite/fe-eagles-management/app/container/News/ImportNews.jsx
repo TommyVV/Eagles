@@ -176,11 +176,6 @@ class ImportNews extends React.Component {
 
         <Row type="flex" justify="center" gutter={24}>
           <Col>
-            <Button onClick={this.handleDelete} className="btn">
-              批量删除
-            </Button>
-          </Col>
-          <Col>
             <Button
               type="primary"
               className="btn btn--primary"
