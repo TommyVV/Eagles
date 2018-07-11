@@ -45,6 +45,8 @@ namespace Eagles.DomainService.Core.News
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            //发表文章奖励积分从tb_reward_score读取
+            var score = util.RewardScore("6");
             var newsInfo = new TbUserNews()
             {
                 OrgId = tokens.OrgId,
@@ -55,7 +57,7 @@ namespace Eagles.DomainService.Core.News
                 NewsType = request.NewsType,
                 Status = "-1",
                 CreateTime = DateTime.Now,
-                RewardsScore = request.RewardsScore,
+                RewardsScore = score.Score,
                 OrgReview = "-1",
                 BranchReview = "-1"
             };

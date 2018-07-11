@@ -55,10 +55,8 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             return result;
         }
 
-        public bool EditActivityComplete(int activityId, int completeStatus)
+        public bool EditActivityComplete(int activityId, int completeStatus, int score)
         {
-            //查询活动奖励积分
-            var score = dbManager.ExecuteScalar<int>("select Score from eagles.tb_reward_score where RewardType = 1", new { });
             var commandString = "";
             if (completeStatus == 0)
                 commandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1"; //通过

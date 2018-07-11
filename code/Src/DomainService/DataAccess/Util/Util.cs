@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using Eagles.Base.DataBase;
+using Eagles.Application.Model.Common;
+using Eagles.Interface.DataAccess.Util;
 using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.RewardScore;
-using Eagles.Interface.DataAccess.Util;
 
 namespace Ealges.DomianService.DataAccess.Util
 {
@@ -35,8 +36,21 @@ VALUES (@OrgId,@UserId,@TraceId,@CreateTime,@Score,@RewardsType,@Comment,@OriSco
         public int EditUserScore(int userId, int score)
         {
             //修改用户积分            
-            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId = @UserId  and  Score>=@Score", new {UserId = userId, Score = score});
+            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId = @UserId and Score>=@Score", new {UserId = userId, Score = score});
         }
+
+        public bool BatchEditUserScore(List<JoinPeople> userList, int score)
+        {
+            if (userList.Count <= 0)
+                return false;
+            var sql = new StringBuilder();
+            foreach (var user in userList)
+                sql.Append(string.Format("{0},", user.UserId));
+            sql.Remove(sql.ToString().LastIndexOf(','), 1);
+            dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId in (@UserId) and Score>=@Score", new { UserId = sql, Score = score });
+            return true;
+        }
+
         public bool CheckAppId(int appId)
         {
             var user = dbManager.Query<TbOrgInfo>(@" select OrgId, OrgName, Province, City, District, Address, CreateTime, EditTime, OperId, Logo from eagles.tb_org_info where OrgId = @OrgId", new { OrgId = appId });
@@ -66,20 +80,6 @@ where Token=@Token AND TokenType=@TokenType", new { Token = token, TokenType = t
             if (user != null && user.Any())
                 return user.FirstOrDefault();
             return null;
-        }
-        
-        public bool BatchEditUserScore(int score, List<int> userList)
-        {
-            if (userList.Count <= 0)
-                return false;
-            var sql = new StringBuilder();
-            foreach (var user in userList)
-            {
-                sql.Append(string.Format("{0},", user));
-            }
-            sql.Remove(sql.ToString().LastIndexOf(','), 1);
-            dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId in (@UserId) and Score>=@Score", new { UserId = sql, Score = score });
-            return true;
         }
     }
 }

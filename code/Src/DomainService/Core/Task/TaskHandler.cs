@@ -235,11 +235,11 @@ namespace Eagles.DomainService.Core.Task
             //下级发起的任务
             else if (1 == createType && taskInfo.UserId != tokens.UserId)
                 throw new TransactionException("96", "必须负责人申请完成任务");
-            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, request.CompleteStatus);
+            //查询任务奖励积分
+            var score = util.RewardScore("0").Score;
+            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, request.CompleteStatus, score);
             if (!result)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            //todo 所有参与任务的人增加积分
-            
             //发用户通知
             var userNotice = new TbUserNotice()
             {
@@ -250,16 +250,23 @@ namespace Eagles.DomainService.Core.Task
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
+            var userScore = 0;
+
             if (0 == createType)
             {
+                userScore = taskInfo.FromUser; //奖励积分的人
                 userNotice.FromUser = taskInfo.FromUser;
                 userNotice.UserId = taskInfo.UserId;
             }
             else
             {
+                userScore = taskInfo.UserId; //奖励积分的人
                 userNotice.FromUser = taskInfo.UserId;
                 userNotice.UserId = taskInfo.FromUser;
             }
+            util.EditUserScore(userScore, score); //增加完成任务的人积分
+            var scoreLs = new TbUserScoreTrace() { OrgId = tokens.OrgId, UserId = tokens.UserId, CreateTime = DateTime.Now, Score = score, RewardsType = "0", Comment = "完成任务获得积分" };
+            util.CreateScoreLs(scoreLs); //增加积分的人增加积分流水
             if (request.CompleteStatus == 0)
                 util.CreateUserNotice(userNotice);
             return response;

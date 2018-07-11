@@ -66,10 +66,8 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
             return result;
         }
 
-        public bool EditTaskComplete(int taskId, int isPublic, int completeStatus)
+        public bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int score)
         {
-            //查询任务奖励积分
-            var score = dbManager.ExecuteScalar<int>("select Score from eagles.tb_reward_score where RewardType = 0", new { });
             var commandString = "";
             if (completeStatus == 0)
                 commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过

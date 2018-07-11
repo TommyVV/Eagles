@@ -15,7 +15,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 
         int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType);
 
-        bool EditActivityComplete(int activityId, int completeStatus);
+        bool EditActivityComplete(int activityId, int completeStatus, int score);
         
         int EditActivityFeedBack(TbUserActivity userActivity);
 

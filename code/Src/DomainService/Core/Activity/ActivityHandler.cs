@@ -244,11 +244,11 @@ namespace Eagles.DomainService.Core.Activity
             //下级发起的活动
             else if (1 == createType && activityInfo.ToUserId != tokens.UserId)
                 throw new TransactionException("96", "必须上级完成活动");
-            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus);
+            //查询活动奖励积分
+            var score = util.RewardScore("1").Score;
+            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus, score);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
-            //todo 所有参与活动的人增加积分
-            
             //发用户通知
             var userNotice = new TbUserNotice()
             {
@@ -268,6 +268,14 @@ namespace Eagles.DomainService.Core.Activity
             {
                 userNotice.FromUser = activityInfo.ToUserId;
                 userNotice.UserId = activityInfo.FromUser;
+            }
+            //所有参与活动的人增加积分
+            var people = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
+            util.BatchEditUserScore(people, score); //增加所有完成活动人的积分
+            foreach (var user in people)
+            {
+                var scoreLs = new TbUserScoreTrace() { OrgId = tokens.OrgId, UserId = user.UserId, CreateTime = DateTime.Now, Score = score, RewardsType = "0", Comment = "完成活动获得积分" };
+                util.CreateScoreLs(scoreLs); //增加所有完成活动人的积分流水
             }
             if (request.CompleteStatus == 0)
                 util.CreateUserNotice(userNotice);
