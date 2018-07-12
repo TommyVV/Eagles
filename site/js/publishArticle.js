@@ -1,7 +1,9 @@
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
-/*console.log(isMobile);*/
 //文章发布
-var token=localStorage.getItem("token");
+var token=localStorage.getItem("token")
+//var appId=localStorage.getItem("token")
+var token="abc"
+var appId=10000000
 $('.publish-btn').on('click', function (e) {
     e.preventDefault();
     var title = $('.publish-title').val();//标题
@@ -37,3 +39,36 @@ $('.publish-btn').on('click', function (e) {
         }
 	})
 })
+$(".publish-type").change(function(){
+  if($(this).val()==3){
+  	$('.assign').show();
+  }else{
+  	$('.assign').hide();
+  }
+});
+branchUsers(token,appId);//党员支部信息展示
+function branchUsers(token,appId){
+	$.ajax({
+        type: "post",
+		data: {
+			  "Token": token,
+			  "AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/User/GetBranchUser",
+		dataType: "json",
+        success:function(res){
+        	$('#lp_w').html('');
+        	var data=res.Result;
+            if(res.Code == 00){
+            	var options='';
+            	if(res.Result.BranchUsers!=''||res.Result.BranchUsers!=null){
+            		for(var i = 0; i < data.BranchUsers.length; i++) {
+            			options+='<option value="'+data.BranchUsers[i].UserId+'">'+data.BranchUsers[i].UserName+'</option>'
+            		}
+            		$('#lp_w').append(options)
+            	}
+            }
+        }
+	})
+}
+
