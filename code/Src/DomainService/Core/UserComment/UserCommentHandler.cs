@@ -110,7 +110,8 @@ namespace Eagles.DomainService.Core.UserComment
                 CommentTime = x.ReviewTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 CommentUserId = x.UserId,
                 CommentUserName = x.UserName,
-                CommentContent = x.Content
+                CommentContent = x.Content,
+                CommentStatus = x.ReviewStatus
             }).ToList();
             if (result != null && result.Count > 0)
             {
