@@ -2,12 +2,7 @@ var mescroll;
 var token=localStorage.getItem("token")
 var appId=10000000
 $('.myNoticeBox').html('')
-if(mescroll)
- {
-	mescroll.destroy();
- }
- mescroll = new MeScroll("mescroll", {
- 	
+mescroll = new MeScroll("mescroll", {
 	down: {
 		auto: false,
 		isLock: true,
@@ -29,7 +24,7 @@ function downcallback()
 }
 function partyLearningfunc(page)
 {
-	console.log(1)
+	
 	noticeList(token,appId,page)
 }
 
@@ -62,7 +57,7 @@ function noticeList(token,appId,page) {
 	                    ''+news+''+
 	                	'</div>';
 					}
-					mescroll.endSuccess(10)
+					mescroll.endSuccess(data.NoticeList.length)
 					$('.myNoticeBox').append(noticeList);
 				}else{
 					mescroll.lockDownScroll( true );
