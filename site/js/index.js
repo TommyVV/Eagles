@@ -11,18 +11,6 @@ $('.navbar-search .search-cancle').on('click', function() {
 	$('.navbar-right .glyphicon-search').show();
 	$('.navbar-search').hide();
 })
-
-//search
-$('#search-input').on('keydown', (e) => {
-	if(e.keyCode == 13) {
-		console.log('keydown');
-	}
-})
-//跳转更多
-$('.more').on('click', () => {
-	console.log('load more');
-})
-
 $("[data-toggle='popover']").popover();
 
 class CalculateScreen {
@@ -295,8 +283,10 @@ function navbar() {
 						
 					}
 				}
-				$('#J_navlist').append(navdiv)
+				$('#J_navlist').append(navdiv);
 				$('.list-item').append(ptwo);
+				$('#name_logo').attr("src",data.LogoUrl);
+				
 				navList(12)
 			}
 		}

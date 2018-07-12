@@ -9,89 +9,31 @@
     <title>我的通知</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/myNotice.css" rel="stylesheet">
+    <link href="./css/mescroll.min.css" rel="stylesheet">
+    <style>
+    	.mescroll{
+		position: fixed;
+		top: 44px;
+		bottom: 0;
+		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
+	}
+    </style>
 </head>
 
 <body>
     <div class="container">
         <!-- 我的通知页 -->
-        <div class="row myNoticeModal">
+        <div class="row myNoticeModal mescroll" id="mescroll">
             <div class="col-md-offset-3 col-md-6 myNoticeBox">
-                <div class="item">
-                    <div class="title">
-                        信息大标题
-                    </div>
-                    <div class="content overflow-two-line">
-                        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-                    </div>
-                    <div class="time">
-                        2015-02-03
-                    </div>
-                    <span class="new">
-                        New
-                    </span>
-                </div>
-                <div class="item">
-                    <div class="title">
-                        信息大标题
-                    </div>
-                    <div class="content overflow-two-line">
-                        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-                    </div>
-                    <div class="time">
-                        2015-02-03
-                    </div>
-                    <span class="new">
-                        New
-                    </span>
-                </div>
-                <div class="item">
-                    <div class="title">
-                        信息大标题
-                    </div>
-                    <div class="content overflow-two-line">
-                        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-                    </div>
-                    <div class="time">
-                        2015-02-03
-                    </div>
-                    <span class="new">
-                        New
-                    </span>
-                </div>
-                <div class="item">
-                    <div class="title">
-                        信息大标题
-                    </div>
-                    <div class="content overflow-two-line">
-                        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-                    </div>
-                    <div class="time">
-                        2015-02-03
-                    </div>
-                    <span class="new">
-                        New
-                    </span>
-                </div>
-                <div class="item">
-                    <div class="title">
-                        信息大标题
-                    </div>
-                    <div class="content overflow-two-line">
-                        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-                    </div>
-                    <div class="time">
-                        2015-02-03
-                    </div>
-                    <span class="new">
-                        New
-                    </span>
-                </div>
+                
             </div>
         </div>
     </div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/mescroll.min.js"></script><!--作为滚动的js-->
+    <script src="js/common.js"></script>
     <script src="js/myNotice.js"></script>
 </body>
 

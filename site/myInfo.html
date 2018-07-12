@@ -10,6 +10,7 @@
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/myInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="css/leftNav.css">
+    
 </head>
 
 <body>
@@ -43,13 +44,14 @@
             <div class="col-md-offset-3 col-md-6 myInfoBox">
                 <div class="item">
                     <div class="photo">
-                        <div class="left">
+                        <div class="left" style="width:20%">
                             头像
                         </div>
                         <div class="right">
-                            <img id="ld_img" src=""
-                                alt="">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        	<div class="value">
+                        		<span class="glyphicon glyphicon-edit lg_left fg_klo" aria-hidden="true"></span>
+	           					<span><img id="ld_img" src="" alt="" /><input id="fileupload" type="file" name="file">&nbsp;</span>
+	                         </div>
                         </div>
                     </div>
                     <div class="normal">
@@ -57,14 +59,9 @@
                             姓名
                         </div>
                         <div class="right">
-                            <!-- <div class="edit">
-                                <input type="text">
-                                <span class="ensure">确定</span>
-                                <span class="cancel">取消</span>
-                            </div> -->
                             <div class="value">
-                                <span><label class="ld_name">简自豪</label>&nbsp;</span>
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><label class="ld_name"></label><input type="text" value="" class="ld_nameinput" />&nbsp;</span>
+                                <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                             </div>
                         </div>
                     </div>
@@ -73,8 +70,8 @@
                             性别
                         </div>
                         <div class="right">
-                            <span><label class="ld_sex"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_sex"></label><input type="text" value="" class="ld_sexinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -82,8 +79,8 @@
                             民族
                         </div>
                         <div class="right">
-                            <span><label class="ld_h"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_h"></label><input type="text" value="" class="ld_hinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -91,8 +88,8 @@
                             出生日期
                         </div>
                         <div class="right">
-                            <span><label class="ld_datas"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_datas"></label><input type="text" value="" class="ld_datasinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -102,8 +99,8 @@
                             籍贯
                         </div>
                         <div class="right">
-                            <span><label class="ld_des"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_des"></label><input type="text" value="" class="ld_desinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -111,8 +108,8 @@
                             户籍地址
                         </div>
                         <div class="right">
-                            <span><label class="ld_chengs"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_chengs"></label><input type="text" value="" class="ld_chengsinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -120,8 +117,8 @@
                             常住地址
                         </div>
                         <div class="right">
-                            <span><label class="ld_czds"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_czds"></label><input type="text" value="" class="ld_czdsinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -129,8 +126,8 @@
                             联系电话
                         </div>
                         <div class="right">
-                            <span><label class="ld_phone"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_phone"></label><input type="text" value="" class="ld_phoneinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -141,7 +138,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_sfzh"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -150,7 +146,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_gzd"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -159,7 +154,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_byz"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -167,8 +161,8 @@
                             工作单位
                         </div>
                         <div class="right">
-                            <span><label class="ld_bjy"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_bjy"></label><input type="text" value="" class="ld_bjyinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -178,8 +172,8 @@
                             部门/职务
                         </div>
                         <div class="right">
-                            <span><label class="ld_dak"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><label class="ld_dak"></label><input type="text" value="" class="ld_dakinput" />&nbsp;</span>
+                            <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -188,7 +182,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_dedata"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -197,7 +190,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_zgdata"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -206,7 +198,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_selib"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -217,7 +208,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_status"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -226,7 +216,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_myzf"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -235,7 +224,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_rzbdata"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -244,7 +232,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_zhizpeople"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -255,7 +242,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_peopledata"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="normal">
@@ -264,7 +250,6 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_pedata"></label>&nbsp;</span>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="button">
@@ -277,6 +262,9 @@
         <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
         <script src="thirdparty/jquery-2.1.4.min.js"></script>
         <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/jquery.ui.widget.js"></script>
+        <script src="js/jquery.iframe-transport.js"></script>
+        <script src="js/jquery.fileupload.js"></script>
         <script src="js/myInfo.js"></script>
 </body>
 

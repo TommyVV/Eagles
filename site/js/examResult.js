@@ -1,10 +1,10 @@
 
-examResult(TestList);
-function examResult(TestList) {
+examResult(TestId,TestList);
+function examResult(TestId,TestList) {
 	$.ajax({
 		type: "post",
 		data: {
-		  "TestId":23,
+		  "TestId":TestId,
 		  "UseTime": 0,
 		  "TestList": TestList,
 		  "Token": "abc",
