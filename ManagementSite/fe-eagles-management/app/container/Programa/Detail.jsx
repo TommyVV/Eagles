@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Input,
@@ -11,19 +12,33 @@ import {
   Icon,
   DatePicker
 } from "antd";
+import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/programaService";
+import { serverConfig } from "../../constants/config/ServerConfigure";
+import { saveInfo, clearInfo } from "../../actions/programaAction";
+import { pageMap } from "../../constants/config/appconfig";
+
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      goodsReducer: state.goodsReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false //裁剪图片
+      loading: false // 上传
     };
   }
 
@@ -33,27 +48,23 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          let params = {
+            Info: {
+              ...this.props.programa,
+              ...values
+            }
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = this.props.programa.ColumnId
+              ? "保存栏目成功"
+              : "创建栏目成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/programalist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = this.props.programa.ColumnId
+              ? "保存栏目失败"
+              : "创建栏目失败";
             message.error(tip);
           }
         } catch (e) {
@@ -71,69 +82,37 @@ class Base extends Component {
     this.props.saveAgencyInfo(values);
     // console.log('上传图片记录表单数据 - ', values, this.props.share)
   };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
-
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
+  beforeUpload(file) {
+    const isJPG = file.type === "image/jpeg";
+    if (!isJPG) {
+      message.error("只能上传图片!");
+    }
+    const isLt5M = file.size / 1024 / 1024 < 5;
+    if (!isLt5M) {
+      message.error("图片必须小于5M!");
+    }
+    return isJPG && isLt5M;
+  }
+  // 商品缩略图 或者  详情图
+  onChangeImage = (imageTitle, info) => {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} 上传成功`);
+      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
+      // 保存数据
+      let { getFieldsValue } = this.props.form;
+      let values = getFieldsValue();
+      this.props.saveInfo({ ...values, [imageTitle]: imageUrl });
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} 上传失败`);
+    }
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { showCrop } = this.state;
-    console.log("members - ", this.props);
+    const { programa } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -144,154 +123,101 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
-    const formItemLayoutDate = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 11 }
-      }
-    };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("intergralId")(<Input />)}
+          {getFieldDecorator("ColumnId")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="标题">
-          {getFieldDecorator("name", {
+        <FormItem {...formItemLayout} label="栏目名称">
+          {getFieldDecorator("ColumnName", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入栏目名称"
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入栏目名称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="地址">
-          {getFieldDecorator("name", {
+          {getFieldDecorator("TargetUrl", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入地址"
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入地址" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="排序">
-          {getFieldDecorator("name", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
+        <FormItem {...formItemLayout} label="排序码">
+          {getFieldDecorator("OrderBy")(<Input placeholder="请输入排序码" />)}
         </FormItem>
-        <FormItem label="生效时间" {...formItemLayoutDate}>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
-          <Col span={1}>
-            <span
-              style={{
-                display: "inline-block",
-                width: "100%",
-                textAlign: "center"
-              }}
-            >
-              -
-            </span>
-          </Col>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
-        </FormItem>
-        <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("price", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<TextArea rows={4} />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="置顶显示">
-          {getFieldDecorator("name", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="缩略图">
-          {getFieldDecorator("view")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
-              </div>
-            </span>
+        <FormItem {...formItemLayout} label="是否置顶显示">
+          {getFieldDecorator("IsSetTop")(
+            <Select>
+              <Option value="0">否</Option>
+              <Option value="1">是</Option>
+            </Select>
           )}
+        </FormItem>
+
+        <FormItem {...formItemLayout} label="缩略图">
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
+            beforeUpload={this.beforeUpload}
+            onChange={this.onChangeImage.bind(this, "ColumnIcon")}
+          >
+            {programa.ColumnIcon ? (
+              <img
+                src={programa.ColumnIcon}
+                alt="avatar"
+                style={{ width: "100%" }}
+              />
+            ) : (
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
+          </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="详情图">
-          {getFieldDecorator("detailImg")(
-            <span className="avatar-uploader  self-style">
-              <div className="ant-upload ant-upload-select ant-upload-select-picture-card">
-                <span
-                  className="ant-upload"
-                  onClick={() => this.setState({ ["showCrop"]: true })}
-                >
-                  <div>
-                    <Icon type="plus" />
-                    <div className="ant-upload-text">上传</div>
-                  </div>
-                </span>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
+            beforeUpload={this.beforeUpload}
+            onChange={this.onChangeImage.bind(this, "ColumnImg")}
+          >
+            {programa.ColumnImg ? (
+              <img
+                src={programa.ColumnImg}
+                alt="avatar"
+                style={{ width: "100%" }}
+              />
+            ) : (
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
               </div>
-            </span>
-          )}
+            )}
+          </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="所属页面">
-          {getFieldDecorator("page")(
+          {getFieldDecorator("ModuleType")(
             <Select>
-              <Option value="0">首页</Option>
-              <Option value="1">下架</Option>
+              {pageMap.map((obj, index) => {
+                return (
+                  <Option key={index} value={obj.value}>
+                    {obj.text}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
@@ -303,29 +229,19 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {!this.props.programa.ColumnId ? "新建" : "保存"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/project")}
+                onClick={() => hashHistory.replace("/programalist")}
               >
                 取消
               </Button>
             </Col>
           </Row>
         </FormItem>
-        {showCrop ? (
-          <Crop
-            handleFile={() => this.handleFile("avatar")}
-            onCancel={() =>
-              this.setState({
-                ["showCrop"]: false
-              })
-            }
-          />
-        ) : null}
       </Form>
     );
   }
@@ -333,63 +249,54 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    console.log("详情数据回显 - ", props);
+    const programa = props.programa;
     return {
-      // intergralId: Form.createFormField({ value: "" }),
-      page: Form.createFormField({ value: "0" })
-      // state: Form.createFormField({ value: "0" })
+      ColumnId: Form.createFormField({ value: programa.ColumnId }),
+      ColumnName: Form.createFormField({ value: programa.ColumnName }),
+      TargetUrl: Form.createFormField({ value: programa.TargetUrl }),
+      OrderBy: Form.createFormField({ value: programa.OrderBy }),
+      IsSetTop: Form.createFormField({
+        value: programa.IsSetTop == 0 ? "0" : "1"
+      }),
+      ModuleType: Form.createFormField({
+        value: programa.ModuleType ? programa.ModuleType + "" : "0"
+      })
     };
   }
 })(Base);
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      programaReducer: state.programaReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class ProgramaDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      projectDetails: {} //项目详情
-    };
+    this.state = {};
   }
 
   componentWillMount() {
-    // let { projectId } = this.props.params;
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    let { id } = this.props.params;
+    if (id) {
+      this.getInfo(id); //拿详情
+    } else {
+      this.props.clearInfo();
+    }
   }
 
   componentWillUnmount() {
-    // this.props.clearProjectInfo();
+    this.props.clearInfo();
   }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async ColumnId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getInfoById({ ColumnId });
+      this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
@@ -397,10 +304,9 @@ class ProgramaDetail extends Component {
   };
 
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap programa={this.props.programaReducer} />
       </Nav>
     );
   }

@@ -3,15 +3,17 @@ var ModuleType=getRequest('paramModuleType')//获取来源页面id
 var token=localStorage.getItem("token")*/
 var mescroll;
 var token="123"
-var Moduleid=2//传地址截取的值
+var Moduleid=3//传地址截取的值
 var ModuleType=0//传地址截取的值*/
-//partyLearning(Moduleid,token)//新闻列表
+var module;
 partyTitle(ModuleType,Moduleid)//来源页面的分类列表
-if(mescroll)
+$('.list-bottom').html('')
+/*if(mescroll)
  {
 	mescroll.destroy();
- }
- mescroll = new MeScroll("mescroll", { 
+ }*/
+ mescroll = new MeScroll("mescroll", {
+ 	
 	down: {
 		auto: false,
 		isLock: true,
@@ -20,10 +22,10 @@ if(mescroll)
 	up: {
 		page: {
             num: 0,
-            size: 4,
-            time: 1
+            size: 10,
+            time: null
         },
-       isLock: false,
+        isLock: false,
 		callback: partyLearningfunc, 
 		isBounce: false 
 	}
@@ -34,12 +36,12 @@ function downcallback()
 }
 function partyLearningfunc(page)
 {
-	partyLearning(Moduleid,token,page);
+	if(page.module){
+		partyLearning(page.module,token,page);
+	}else{
+		partyLearning(Moduleid,token,page);
+	}
 }
-
-mescroll.lockDownScroll( true );
-               		mescroll.lockUpScroll( true );
-
 function partyLearning(moduleId,token,page) {
 	$.ajax({
 		type: "post",
@@ -54,7 +56,7 @@ function partyLearning(moduleId,token,page) {
 		url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
 		dataType: "json",
 		success: function(res) {
-			$('.list-bottom').html('')
+			//$('.list-bottom').html('')
 			var data = res.Result;
 			if(res.Code == 00) {
 				if(res.Result.NewsInfos!=''||res.Result.NewsInfos!=null){
@@ -76,16 +78,18 @@ function partyLearning(moduleId,token,page) {
 	                  '</div>'+
 	                '</div>'
 					}
+					mescroll.endSuccess(data.NewsInfos.length);
 					$('.list-bottom').append(learningList)//新闻列表
-					/*mescroll.endBySize(4, 12);
-					mescroll.lockDownScroll( true );
-               		mescroll.lockUpScroll( true );*/
 				}else{
-					
+					mescroll.lockDownScroll( true );
+               		mescroll.lockUpScroll( true );
 				}
 				
+			}else{
+				mescroll.lockDownScroll( true );
+                mescroll.lockUpScroll( true );
+				$('.mescroll-hardware').html('没有更多')
 			}
-			//mescroll.endByPage(2, 4);
 		}
 	});
 }
@@ -120,8 +124,31 @@ function partyTitle(ModuleType,moduleId) {
 }
 //点击分类重新获取新分类的内容
 $('.dropdown-menu').on('click', 'li', function(e) {
-	var module=$(this).attr('ids')
-	partyLearning(module,token)//新闻列表
+	module=$(this).attr('ids')
 	partyTitle(ModuleType,module)//来源页面的分类列表
+	$('.list-bottom').html('')
+	if(mescroll){
+		mescroll.destroy();
+	}
+	 mescroll = new MeScroll("mescroll", {
+	 	
+		down: {
+			auto: false,
+			isLock: true,
+			callback: downcallback 
+		},
+		up: {
+			page: {
+	            num: 0,
+	            size: 10,
+	            time: null,
+	            module:module
+	        },
+	        isLock: false,
+			callback: partyLearningfunc, 
+			isBounce: false 
+		}
+	 });
+	
 })
 

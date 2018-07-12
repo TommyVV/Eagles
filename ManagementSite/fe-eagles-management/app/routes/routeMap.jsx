@@ -50,6 +50,7 @@ import SmsSystemList from "../container/SmsSystem";
 import SmsSystemDetail from "../container/SmsSystem/Detail";
 import SmsOrgList from "../container/SmsOrg";
 import SmsOrgDetail from "../container/SmsOrg/Detail";
+import ExList from "../container/Exercise/ExDetail/ExList";
 
 class RouteMap extends Component {
   render() {
@@ -63,6 +64,7 @@ class RouteMap extends Component {
           {/* 习题 */}
           <route path="/questionlist" component={Exercise} />
           <route path="/question/detail(/:id)" component={QuestionDetail} />
+          <route path="/exerciselist" component={ExList} />
           <route path="/exercise/detail(/:id)" component={ExerciseDetail} />
           {/* 党员 */}
           <route path="/partymemberlist" component={PartyMemberList} />

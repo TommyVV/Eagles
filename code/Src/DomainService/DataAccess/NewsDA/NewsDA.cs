@@ -31,10 +31,7 @@ IsExternal,ExternalUrl from eagles.tb_news where NewsId=@NewsId and OrgId=@OrgId
 
         public int AddNewsViewCount(int newsId)
         {
-            return dbManager.Excuted("update eagles.tb_news set ViewCount=ViewCount+1 where NewsId=@NewsId ",
-            new {
-                NewsId=newsId
-            });
+            return dbManager.Excuted("update eagles.tb_news set ViewCount=ViewCount+1 where NewsId=@NewsId ", new {NewsId = newsId});
         }
     }
 }

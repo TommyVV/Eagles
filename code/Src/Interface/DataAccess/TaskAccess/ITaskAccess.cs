@@ -14,7 +14,7 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 
         int EditTaskAccept(TaskAcceptType type, int taskId, int reviewType);
 
-        bool EditTaskComplete(int taskId, int isPublic, int completeStatus);
+        bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int rewardScore, int score);
         
         int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 

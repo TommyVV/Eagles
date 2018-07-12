@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eagles.Base;
 using Eagles.Application.Model;
+using Eagles.Application.Model.Common;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core.Score;
 using Eagles.Interface.DataAccess.Util;
@@ -114,40 +116,50 @@ namespace Eagles.DomainService.Core.Score
 
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequest request)
         {
-            var response = new GetScoreRankResponse();
+            var response = new GetScoreRankResponse()
+            {
+                UserRank = new List<UserRank>(),
+                BranchRank = new List<BranchRank>()
+            };
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            var userResult = iScoreAccess.GetUserRank();
+            var userResult = iScoreAccess.GetUserRank(request.AppId);
             if (userResult != null && userResult.Count > 0)
             {
-                response.UserRank = userResult?.Select(x => new Application.Model.Common.UserRank()
+                var i = 1;
+                userResult?.ForEach(x =>
                 {
-                    Rank = x.No,
-                    Name = x.Name,
-                    BranchName = x.OrgName,
-                    Score = x.Score
-                }).ToList();
+                    response.UserRank.Add(new UserRank()
+                    {
+                        Rank = i,
+                        Name = x.Name,
+                        BranchName = x.BranchName,
+                        Score = x.Score
+                    });
+                    i++;
+                });
             }
             else
             {
                 response.UserRank = null;
             }
-            var branckResult = iScoreAccess.GetBranchRank();
+            var branckResult = iScoreAccess.GetBranchRank(request.AppId);
             if (branckResult != null && branckResult.Count > 0)
             {
-                response.BranchRank = branckResult?.Select(x => new Application.Model.Common.BranchRank()
-                {
-                    Rank = x.No,
-                    Branch = x.OrgName,
-                    UserCount = x.UserCount,
-                    Score = x.Score
-                }).ToList();
-            }
-            else
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+                var j = 1;
+                branckResult.ForEach(x =>
+                  {
+                      response.BranchRank.Add(new BranchRank()
+                      {
+                          Rank = j,
+                          Branch = x.BranchName,
+                          UserCount = x.UserCount,
+                          Score = x.Score
+                      });
+                      j++;
+                  });
             }
             return response;
         }

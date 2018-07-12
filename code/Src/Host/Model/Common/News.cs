@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Common
 {
     /// <summary>
@@ -31,7 +30,7 @@ namespace Eagles.Application.Model.Common
         /// 文章内容
         /// </summary>
         public string NewsContent { get; set; }
-        
+
         /// <summary>
         /// 缩略图
         /// </summary>
@@ -46,9 +45,5 @@ namespace Eagles.Application.Model.Common
         /// 外部链接地址
         /// </summary>
         public string ExternalUrl { get; set; }
-
-        
     }
-
-
 }

@@ -37,6 +37,11 @@ Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Compa
 IsLeader=@IsLeader where UserId = @UserId", userInfo);
         }
 
+        public int EditUserNoticeIsRead(int newsId)
+        {
+            return dbManager.Excuted(@"update eagles.tb_user_notice set IsRead = @IsRead where NewsId = @NewsId", new {IsRead = 0, NewsId = newsId});
+        }
+
         public TbUserInfo GetUserInfo(int userId)
         {
             var userInfo = dbManager.Query<TbUserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,OriginAddress,Phone,IdNumber,Education,
@@ -136,7 +141,7 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId ");
             dynamicParams.Add("OrgId", appId);
             dynamicParams.Add("PageIndex", pageIndexParameter);
             dynamicParams.Add("PageSize", pageSize);
-            sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime from eagles.tb_user_notice 
+            sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime,TargetUrl from eagles.tb_user_notice 
 where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbUserNotice>(sql.ToString(), dynamicParams);
         }

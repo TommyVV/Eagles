@@ -23,5 +23,7 @@ namespace Eagles.DomainService.Model.User
         /// 接收用户
         /// </summary>
         public int UserId { get; set; }
+
+        public string TargetUrl { get; set; }
     }
 }

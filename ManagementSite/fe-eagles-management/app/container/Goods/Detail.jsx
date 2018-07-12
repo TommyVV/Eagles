@@ -16,7 +16,7 @@ import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/goodsService";
-import { serverConfig } from "../../constants/ServerConfigure";
+import { serverConfig } from "../../constants/config/ServerConfigure";
 import { saveInfo, clearInfo } from "../../actions/goodsAction";
 // 引入编辑器以及编辑器样式
 import BraftEditor from "braft-editor";

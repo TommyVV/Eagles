@@ -11,10 +11,11 @@ using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Core.Utility;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.User.BranchUser;
 using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.EditUser;
+using Eagles.Application.Model.User.BranchUser;
+using Eagles.Application.Model.User.EditUserNoticeIsRead;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserNotice;
 using Eagles.Application.Model.User.GetUserRelationship;
@@ -160,6 +161,22 @@ namespace Eagles.DomainService.Core.User
             return response;
         }
 
+        public EditUserNoticeIsReadResponse EditUserNoticeIsRead(EditUserNoticeIsReadRequest request)
+        {
+            var response = new EditUserNoticeIsReadResponse();
+            if (request.NewsId < 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (!util.CheckAppId(request.AppId))
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            var result = userInfoAccess.EditUserNoticeIsRead(request.NewsId);
+            if (result <= 0)
+                return response;
+            else
+                return new EditUserNoticeIsReadResponse() {Code = "96", Message = "更新失败"};
+        }
+
         public GetUserInfoResponse GetUserInfo(GetUserInfoRequest request)
         {
             var response = new GetUserInfoResponse();
@@ -221,9 +238,10 @@ namespace Eagles.DomainService.Core.User
                     Title = x.Title,
                     Content = x.Content,
                     IsRead = x.IsRead,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                     UserId = x.UserId,
-                    FromUser = x.FromUser
+                    FromUser = x.FromUser,
+                    TargetUrl = x.TargetUrl
                 }).ToList();
             }
             else

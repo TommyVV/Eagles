@@ -1,5 +1,5 @@
 import axios from "axios";
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
 const { FILE } = serverConfig;
 
 // 根据id查看新闻详情

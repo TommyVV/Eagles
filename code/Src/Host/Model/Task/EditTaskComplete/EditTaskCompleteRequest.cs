@@ -20,5 +20,9 @@
         /// </summary>
         public int CompleteStatus { get; set; }
 
+        /// <summary>
+        /// 任务评分
+        /// </summary>
+        public int Score { get; set; }
     }
 }

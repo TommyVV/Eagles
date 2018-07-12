@@ -41,5 +41,10 @@ namespace Eagles.Application.Model.Common
         /// 发送人
         /// </summary>
         public int FromUser { get; set; }
+
+        /// <summary>
+        /// 链接
+        /// </summary>
+        public string TargetUrl { get; set; }
     }
 }

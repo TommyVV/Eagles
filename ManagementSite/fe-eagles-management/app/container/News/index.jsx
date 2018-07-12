@@ -188,7 +188,7 @@ class NewsList extends React.Component {
     ];
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 2,
+      PageSize: 10,
       UserId: "",
       NewsName: "",
       StartTime: "2018-06-01T01:37:09.235Z",
@@ -343,7 +343,7 @@ class NewsList extends React.Component {
           </Col> */}
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
+              <a onClick={() => hashHistory.replace(`/news/detail`)}>
                 新增
               </a>
             </Button>

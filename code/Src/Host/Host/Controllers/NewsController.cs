@@ -1,9 +1,10 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model.News.AddNewsViewCount;
 using Eagles.Base;
 using Eagles.Interface.Core.News;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNewsDetail;
+using Eagles.Application.Model.News.GetPublicNews;
+using Eagles.Application.Model.News.AddNewsViewCount;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -22,6 +23,17 @@ namespace Eagles.Application.Host.Controllers
         public NewsController(INewsHandler newsHandler)
         {
             this.newsHandler = newsHandler;
+        }
+
+        /// <summary>
+        /// 更新新闻阅读量
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<AddNewsViewCountResponse> AddNewsViewCount(AddNewsCountRequest request)
+        {
+            return ApiActuator.Runing(() => newsHandler.AddNewsViewCount(request));
         }
 
         /// <summary>
@@ -44,19 +56,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<GetNewsDetailResponse> GetNewsDetail(GetNewsDetailRequest request)
         {
             return ApiActuator.Runing(() => newsHandler.GetNewsDetail(request));
-
         }
-
+        
         /// <summary>
-        /// 新闻详情查询
+        /// 公开文章列表查询
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public ResponseFormat<AddNewsViewCountResponse> AddNewsViewCount(AddNewsCountRequest request)
+        public ResponseFormat<GetPublicNewsResponse> GetPublicNews(GetPublicNewsRequest request)
         {
-            return ApiActuator.Runing(() => newsHandler.AddNewsViewCount(request));
-
+            return ApiActuator.Runing(() => newsHandler.GetPublicNews(request));
         }
     }
 }

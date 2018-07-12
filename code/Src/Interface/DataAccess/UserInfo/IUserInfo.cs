@@ -11,6 +11,8 @@ namespace Eagles.Interface.DataAccess.UserInfo
 
         int EditUser(TbUserInfo userInfo);
 
+        int EditUserNoticeIsRead(int newsId);
+
         TbUserInfo GetUserInfo(int userId);
 
         TbUserInfo GetLogin(string phone);

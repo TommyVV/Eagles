@@ -13,6 +13,7 @@ using Eagles.Application.Model.News.CreateNews;
 using Eagles.Application.Model.News.GetNews;
 using Eagles.Application.Model.News.GetModuleNews;
 using Eagles.Application.Model.News.GetNewsDetail;
+using Eagles.Application.Model.News.GetPublicNews;
 using Eagles.DomainService.Model.User;
 
 namespace Eagles.DomainService.Core.News
@@ -45,6 +46,8 @@ namespace Eagles.DomainService.Core.News
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            //发表文章奖励积分从tb_reward_score读取
+            var score = util.RewardScore("6");
             var newsInfo = new TbUserNews()
             {
                 OrgId = tokens.OrgId,
@@ -55,7 +58,7 @@ namespace Eagles.DomainService.Core.News
                 NewsType = request.NewsType,
                 Status = "-1",
                 CreateTime = DateTime.Now,
-                RewardsScore = request.RewardsScore,
+                RewardsScore = score.Score,
                 OrgReview = "-1",
                 BranchReview = "-1"
             };
@@ -67,8 +70,21 @@ namespace Eagles.DomainService.Core.News
             return response;
         }
 
+        public AddNewsViewCountResponse AddNewsViewCount(AddNewsCountRequest request)
+        {
+            if (request.NewsId < 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (!util.CheckAppId(request.AppId))
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            var result = newsDa.AddNewsViewCount(request.NewsId);
+            return new AddNewsViewCountResponse();
+        }
+
         public GetNewsResponse GetUserArticle(GetNewsRequest request)
         {
+            var response = new GetNewsResponse();
             if (request.AppId <= 0)
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
@@ -76,17 +92,50 @@ namespace Eagles.DomainService.Core.News
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            var news = articleData.GetUserNewsList(tokens.UserId, request.PageIndex, request.PageSize);
-            //convert news 
-            return new GetNewsResponse()
+            var news = articleData.GetUserNews(tokens.UserId, request.PageIndex, request.PageSize);
+            if (news != null && news.Count > 0)
             {
-                NewsList = news.Select(x => new Application.Model.Common.News
+                response.NewsList = news.Select(x => new UserNews
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
-                }).ToList()
-            };
+                    NewsContent = x.HtmlContent,
+                    NewsType = x.NewsType,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                    ViewsCount = x.ViewsCount
+                }).ToList();
+            }
+            else
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            return response;
+        }
+
+        public GetPublicNewsResponse GetPublicNews(GetPublicNewsRequest request)
+        {
+            var response = new GetPublicNewsResponse();
+            if (request.AppId <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            if (!util.CheckAppId(request.AppId))
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var news = articleData.GetPblicUserNews(tokens.UserId, request.PageIndex, request.PageSize);
+            if (news != null && news.Count > 0)
+            {
+                response.NewsList = news.Select(x => new UserNews
+                {
+                    NewsId = x.NewsId,
+                    Title = x.Title,
+                    NewsContent = x.HtmlContent,
+                    NewsType = x.NewsType,
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                    ViewsCount = x.ViewsCount
+                }).ToList();
+            }
+            else
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            return response;
         }
 
         public GetModuleNewsResponse GetModuleNews(GetModuleNewsRequest request)
@@ -105,17 +154,15 @@ namespace Eagles.DomainService.Core.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                     ImageUrl = x.ImageUrl,
                     ExternalUrl = x.ExternalUrl,
                     IsExternal = x.IsExternal==1,
-                    NewsContent=x.ShortDesc
+                    NewsContent = x.ShortDesc
                 }).ToList();
             }
             else
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -138,6 +185,7 @@ namespace Eagles.DomainService.Core.News
                 response.Author = result.Author;
                 response.Source = result.Source;
                 response.Module = result.Module;
+                response.ViewCount = result.ViewCount;
                 response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TestId = result.TestId;
                 response.IsAttach = result.IsAttach;
@@ -174,19 +222,5 @@ namespace Eagles.DomainService.Core.News
             return response;
         }
 
-        public AddNewsViewCountResponse AddNewsViewCount(AddNewsCountRequest request)
-        {
-            if (request.NewsId < 0)
-                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (request.AppId <= 0)
-                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            if (!util.CheckAppId(request.AppId))
-            {
-                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            }
-
-            var result = newsDa.AddNewsViewCount(request.NewsId);
-            return new AddNewsViewCountResponse();
-        }
     }
 }

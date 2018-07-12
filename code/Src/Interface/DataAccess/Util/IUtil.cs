@@ -1,4 +1,6 @@
-﻿using Eagles.Base;
+﻿using System.Collections.Generic;
+using Eagles.Application.Model.Common;
+using Eagles.Base;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.RewardScore;
 
@@ -27,6 +29,14 @@ namespace Eagles.Interface.DataAccess.Util
         /// <param name="score"></param>
         /// <returns></returns>
         int EditUserScore(int userId, int score);
+
+        /// <summary>
+        /// 批量更新用户积分
+        /// </summary>
+        /// <param name="userList"></param>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        bool BatchEditUserScore(List<JoinPeople> userList, int score);
 
         /// <summary>
         /// 校验AppId是否存在

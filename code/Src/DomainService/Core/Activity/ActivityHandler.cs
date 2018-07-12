@@ -108,7 +108,8 @@ namespace Eagles.DomainService.Core.Activity
             {
                 OrgId = tokens.OrgId,
                 Title = "活动发起",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已发起",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 FromUser = request.ActivityFromUser,
                 UserId = request.ActivityToUserId,
                 IsRead = 1,
@@ -173,7 +174,7 @@ namespace Eagles.DomainService.Core.Activity
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -188,6 +189,7 @@ namespace Eagles.DomainService.Core.Activity
                         throw new TransactionException("96", "必须发起人审核");
 
                     userNotice.Title = "活动审核通过";
+                    userNotice.Content = "活动已审核通过";
                     userNotice.FromUser = activityInfo.ToUserId;
                     userNotice.UserId = activityInfo.FromUser;
                     userNotice.NewsType = 12; //12 活动审核通过（上级审核通过）
@@ -204,6 +206,7 @@ namespace Eagles.DomainService.Core.Activity
                         throw new TransactionException("96", "必须负责人申请完成活动");
 
                     userNotice.Title = "活动申请完成";
+                    userNotice.Content = "负责人已发起活动申请完成";
                     if (0 == createType)
                     {
                         userNotice.FromUser = activityInfo.ToUserId;
@@ -244,18 +247,19 @@ namespace Eagles.DomainService.Core.Activity
             //下级发起的活动
             else if (1 == createType && activityInfo.ToUserId != tokens.UserId)
                 throw new TransactionException("96", "必须上级完成活动");
-            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus);
+            //查询活动奖励积分
+            var score = util.RewardScore("1").Score;
+            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus, score);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
-            //todo 所有参与活动的人增加积分
-            
             //发用户通知
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
                 NewsType = 15, //15 活动已完成
                 Title = "活动完成",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已完成",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -268,6 +272,14 @@ namespace Eagles.DomainService.Core.Activity
             {
                 userNotice.FromUser = activityInfo.ToUserId;
                 userNotice.UserId = activityInfo.FromUser;
+            }
+            //所有参与活动的人增加积分
+            var people = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
+            util.BatchEditUserScore(people, score); //增加所有完成活动人的积分
+            foreach (var user in people)
+            {
+                var scoreLs = new TbUserScoreTrace() { OrgId = tokens.OrgId, UserId = user.UserId, CreateTime = DateTime.Now, Score = score, RewardsType = "0", Comment = "完成活动获得积分" };
+                util.CreateScoreLs(scoreLs); //增加所有完成活动人的积分流水
             }
             if (request.CompleteStatus == 0)
                 util.CreateUserNotice(userNotice);
@@ -330,7 +342,8 @@ namespace Eagles.DomainService.Core.Activity
                 OrgId = tokens.OrgId,
                 NewsType = 13, //13 活动负责人反馈
                 Title = "活动负责人反馈",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已经反馈",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -416,7 +429,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 Status = x.Status,
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
@@ -480,7 +493,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();
