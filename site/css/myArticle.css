@@ -56,10 +56,9 @@ html, body {
           line-height: 1.472rem;
           border-bottom: 1px solid #eeeeee; }
   .myArticleBox .item {
-  	top:52px;
     padding-left: 0.74667rem;
     padding-right: 0.74667rem;
-    position: relative; }
+    }
     .myArticleBox .item > .article:not(:last-child) {
       border-bottom: 1px solid #eeeeee; }
     .myArticleBox .item > .article {
