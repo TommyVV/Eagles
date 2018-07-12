@@ -48,7 +48,7 @@ namespace Eagles.DomainService.Model.Exercises
         /// <summary>
         /// 状态;0;正常;1:禁用
         /// </summary>
-        public Status Status { get; set; }
+        public int Status { get; set; }
         /// <summary>
         /// 试卷id
         /// </summary>
@@ -66,11 +66,13 @@ namespace Eagles.DomainService.Model.Exercises
         /// <summary>
         /// 试卷类型
         /// </summary>
-        public ExercisesType TestType { get; set; }
+        public int TestType { get; set; }
 
         /// <summary>
         /// 及格奖励积分
         /// </summary>
         public int PassAwardScore { get; set; }
+
+        public int UserCount { get; set; }
     }
 }

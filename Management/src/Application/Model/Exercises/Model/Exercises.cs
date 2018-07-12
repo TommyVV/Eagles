@@ -32,7 +32,7 @@ namespace Eagles.Application.Model.Exercises.Model
         /// <summary>
         /// 
         /// </summary>
-        public ExercisesType ExercisesType { get; set; }
+        public int ExercisesType { get; set; }
 
         ///// <summary>
         ///// 来源
@@ -42,7 +42,7 @@ namespace Eagles.Application.Model.Exercises.Model
         /// <summary>
         /// 是否有积分奖励
         /// </summary>
-        public bool IsScoreAward { get; set; }
+        public int IsScoreAward { get; set; }
 
         /// <summary>
         /// 及格奖励积分
@@ -67,7 +67,7 @@ namespace Eagles.Application.Model.Exercises.Model
         /// <summary>
         /// 状态
         /// </summary>
-        public Status Status { get; set; }
+        public int Status { get; set; }
 
         /// <summary>
         /// 分钟
@@ -89,9 +89,9 @@ namespace Eagles.Application.Model.Exercises.Model
         /// </summary>
         public string HtmlDescription { get; set; }
 
-        /// <summary>
-        /// 内容 json格式 图片 文字
-        /// </summary>
-        public string Content { get; set; }
+        ///// <summary>
+        ///// 内容 json格式 图片 文字
+        ///// </summary>
+        //public string Content { get; set; }
     }
 }

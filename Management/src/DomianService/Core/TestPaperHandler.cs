@@ -193,7 +193,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.Info.BranchId,
                     EditTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
-                    HasReward = requset.Info.IsScoreAward ? 1 : 0,
+                    HasReward = requset.Info.IsScoreAward ,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
@@ -205,6 +205,7 @@ namespace Eagles.DomainService.Core
                     TestId = requset.Info.ExercisesId,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
+                    
 
                 };
 
@@ -246,9 +247,9 @@ namespace Eagles.DomainService.Core
                 info = new TbTestPaper
                 {
                     BranchId = requset.Info.BranchId,
-                    CreateTime = requset.Info.CreateTime,
+                    CreateTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
-                    HasReward = requset.Info.IsScoreAward ? 1 : 0,
+                    HasReward = requset.Info.IsScoreAward ,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
@@ -259,6 +260,7 @@ namespace Eagles.DomainService.Core
                     Status = requset.Info.Status,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
+                    
                 };
 
                 //得到新增的试卷id
@@ -332,13 +334,13 @@ namespace Eagles.DomainService.Core
             {
                 ExercisesId = info.TestId,
                 ExercisesName = info.TestName,
-                IsScoreAward = info.HasReward > 0,
+                IsScoreAward = info.HasReward ,
                 ExercisesType = info.TestType,
                 PassScore = info.PassScore,
                 SubjectScore = info.QuestionSocre,
                 Status = info.Status,
                 PassAwardScore = info.PassAwardScore,
-                Content = FormatContent(), //TODO 上传内容格式
+               // Content = FormatContent(), //TODO 上传内容格式
                 SubjectList = subjectList.Select(x => new Subject
                 {
                     Question = x.Question,
@@ -376,7 +378,7 @@ namespace Eagles.DomainService.Core
             {
                 ExercisesId = x.TestId,
                 ExercisesName = x.TestName,
-                IsScoreAward = x.HasReward > 0,
+                IsScoreAward = x.HasReward,
                 ExercisesType = x.TestType,
                 PassScore = x.PassScore,
                 SubjectScore = x.QuestionSocre,
@@ -436,11 +438,12 @@ namespace Eagles.DomainService.Core
                         ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
                         IsRight = requset.Info.IsRight,
                         OrgId = requset.OrgId,
-                        QuestionId = requset.Info.QuestionId
+                        QuestionId = requset.Info.QuestionId,
+                        AnswerId = requset.Info.OptionId
                     }
 
                 );
-                  return result < 0 ? 0 : requset.Info.QuestionId;
+                return result < 0 ? 0 : requset.Info.OptionId;
             }
             else
             {

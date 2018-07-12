@@ -258,6 +258,8 @@
     <Compile Include="App_Start\SwaggerNet.cs" />
     <Compile Include="App_Start\ValidServiceToken.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\ApiActuator.cs" />
+    <Compile Include="Common\ResponseFormat.cs" />
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SystemNewsController.cs" />

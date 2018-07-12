@@ -5,6 +5,7 @@ using Eagles.Application.Model.Goods.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -27,7 +28,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditGoods(EditGoodsRequset requset)
         {
-            return ApiActuator.Runing(() =>testHandler.EditGoods(requset));
+            return ApiActuator.Runing(requset, (requset1) =>testHandler.EditGoods(requset));
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveGoods(RemoveGoodsRequset requset)
         {
-            return ApiActuator.Runing(() =>testHandler.RemoveGoods(requset));
+            return ApiActuator.Runing(requset, (requset1) =>testHandler.RemoveGoods(requset));
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetGoodsResponse> GetGoods(GetGoodsRequest requset)
         {
-            return ApiActuator.Runing(() =>testHandler.GetGoods(requset));
+            return ApiActuator.Runing(requset, (requset1) =>testHandler.GetGoods(requset));
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetGoodsDetailResponse> GetGoodsDetail(GetGoodsDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>testHandler.GetGoodsDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>testHandler.GetGoodsDetail(requset));
         }
 
     }

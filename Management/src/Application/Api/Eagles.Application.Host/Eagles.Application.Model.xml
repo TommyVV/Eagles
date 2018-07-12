@@ -1264,11 +1264,6 @@
             html 描述
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.Content">
-            <summary>
-            内容 json格式 图片 文字
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.Exercises.Model.ExercisesDetails">
             <summary>
             

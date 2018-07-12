@@ -5,6 +5,7 @@ using Eagles.Application.Model.Organization.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditOrganization(EditOrganizationRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.EditOrganization(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.EditOrganization(requset));
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveOrganization(RemoveOrganizationRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.RemoveOrganization(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.RemoveOrganization(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetOrganizationDetailResponse> GetOrganizationDetail(GetOrganizationDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.GetOrganizationDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.GetOrganizationDetail(requset));
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetOrganizationResponse> GetOrganization(GetOrganizationRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.Organization(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.Organization(requset));
         }
     }
 }

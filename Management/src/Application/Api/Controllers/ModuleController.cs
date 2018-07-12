@@ -5,6 +5,7 @@ using Eagles.Application.Model.Column.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditColumn(EditColumnRequset requset)
         {
-             return ApiActuator.Runing(() => _moduleHandler.EditColumn(requset));
+             return ApiActuator.Runing(requset, (requset1) => _moduleHandler.EditColumn(requset));
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveColumn(RemoveColumnRequset requset)
         {
-             return ApiActuator.Runing(() => _moduleHandler.RemoveColumn(requset));
+             return ApiActuator.Runing(requset, (requset1) => _moduleHandler.RemoveColumn(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetColumnDetailResponse> GetColumnDetail(GetColumnDetailRequset requset)
         {
-             return ApiActuator.Runing(() => _moduleHandler.GetColumnDetail(requset));
+             return ApiActuator.Runing(requset, (requset1) => _moduleHandler.GetColumnDetail(requset));
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetColumnResponse> GetColumn(GetColumnRequset requset)
         {
-             return ApiActuator.Runing(() => _moduleHandler.GetColumn(requset));
+             return ApiActuator.Runing(requset, (requset1) => _moduleHandler.GetColumn(requset));
         }
     }
 }
