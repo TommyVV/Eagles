@@ -141,7 +141,7 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId ");
             dynamicParams.Add("OrgId", appId);
             dynamicParams.Add("PageIndex", pageIndexParameter);
             dynamicParams.Add("PageSize", pageSize);
-            sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime from eagles.tb_user_notice 
+            sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime,TargetUrl from eagles.tb_user_notice 
 where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbUserNotice>(sql.ToString(), dynamicParams);
         }

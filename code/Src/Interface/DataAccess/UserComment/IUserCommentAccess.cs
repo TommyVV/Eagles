@@ -12,7 +12,7 @@ namespace Eagles.Interface.DataAccess.UserComment
 
         int AuditUserComment(int commentId, int reviewStatus);
 
-        List<TbUserComment> GetUserComment(string commentType, int id, int userId);
+        List<TbUserComment> GetUserComment(string commentType, int id, int userId, int commentStatus);
 
     }
 }

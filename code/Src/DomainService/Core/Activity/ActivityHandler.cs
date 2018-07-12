@@ -108,7 +108,8 @@ namespace Eagles.DomainService.Core.Activity
             {
                 OrgId = tokens.OrgId,
                 Title = "活动发起",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已发起",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 FromUser = request.ActivityFromUser,
                 UserId = request.ActivityToUserId,
                 IsRead = 1,
@@ -173,7 +174,7 @@ namespace Eagles.DomainService.Core.Activity
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -188,6 +189,7 @@ namespace Eagles.DomainService.Core.Activity
                         throw new TransactionException("96", "必须发起人审核");
 
                     userNotice.Title = "活动审核通过";
+                    userNotice.Content = "活动已审核通过";
                     userNotice.FromUser = activityInfo.ToUserId;
                     userNotice.UserId = activityInfo.FromUser;
                     userNotice.NewsType = 12; //12 活动审核通过（上级审核通过）
@@ -204,6 +206,7 @@ namespace Eagles.DomainService.Core.Activity
                         throw new TransactionException("96", "必须负责人申请完成活动");
 
                     userNotice.Title = "活动申请完成";
+                    userNotice.Content = "负责人已发起活动申请完成";
                     if (0 == createType)
                     {
                         userNotice.FromUser = activityInfo.ToUserId;
@@ -255,7 +258,8 @@ namespace Eagles.DomainService.Core.Activity
                 OrgId = tokens.OrgId,
                 NewsType = 15, //15 活动已完成
                 Title = "活动完成",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已完成",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -338,7 +342,8 @@ namespace Eagles.DomainService.Core.Activity
                 OrgId = tokens.OrgId,
                 NewsType = 13, //13 活动负责人反馈
                 Title = "活动负责人反馈",
-                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                Content = "活动已经反馈",
+                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -424,7 +429,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 Status = x.Status,
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
@@ -488,7 +493,7 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = x.ActivityId,
                 ActivityName = x.ActivityName,
                 ActivityType = x.ActivityType,
-                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                ActivityDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 TestId = x.TestId,
                 ImageUrl = x.ImageUrl
             }).ToList();

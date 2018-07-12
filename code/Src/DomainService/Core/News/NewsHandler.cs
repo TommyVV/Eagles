@@ -86,7 +86,7 @@ namespace Eagles.DomainService.Core.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd")
                 }).ToList();
             }
             else
@@ -110,7 +110,7 @@ namespace Eagles.DomainService.Core.News
                 {
                     NewsId = x.NewsId,
                     Title = x.Title,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                     ImageUrl = x.ImageUrl,
                     ExternalUrl = x.ExternalUrl,
                     IsExternal = x.IsExternal==1,
