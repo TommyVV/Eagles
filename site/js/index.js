@@ -45,17 +45,23 @@ new CalculateScreen();
 $(window).resize(function() {
 	new CalculateScreen();
 })
-
+var token = localStorage.getItem('token');
+//var pageType=getRequest('pageType')//获取来源页面id
+//var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
+//var appId=getRequest('appId')//获取来源页面id
+var pageType=0;
+var moduleType=0;
+var appId=10000000
 //接口模块
-scrollimg(); //banner
-moduleListTitle(); //名称分类方法
-function scrollimg() {
+scrollimg(pageType,token,appId); //banner
+moduleListTitle(moduleType,appId) //名称分类方法
+function scrollimg(pageType,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"PageType": "0",
-			"Token": "string",
-			"AppId": 10000000
+			"PageType": pageType,
+			"Token": token,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollImg",
 		dataType: "json",
@@ -82,12 +88,12 @@ function scrollimg() {
 }
 
 /* 获取分类名称 */
-function moduleListTitle() {
+function moduleListTitle(moduleType,appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"ModuleType": 0,
-			"AppId": 10000000
+			"ModuleType": moduleType,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/AppModule/GetModule",
 		dataType: "json",
@@ -127,21 +133,21 @@ function moduleListTitle() {
                //获取分类下新闻列表   
 				for(var i = 0; i < moudlesIds.length; i++) {
 					//获取分类下新闻列表
-					moduleListcontent(moudlesIds[i].id, moudlesIds[i].class1, moudlesIds[i].flag)
+					moduleListcontent(moudlesIds[i].id, moudlesIds[i].class1, moudlesIds[i].flag,token,appId)
 				}
 			}
 		}
 	});
 }
 //获取新闻列表
-function moduleListcontent(moduleId, class1, flag) {
+function moduleListcontent(moduleId, class1, flag,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"ModuleId": moduleId,
 			"NewsCount": 10,
-			"Token": "string",
-			"AppId": 10000000
+			"Token": token,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
 		dataType: "json",
@@ -250,12 +256,12 @@ function navList(id) {
         }
     });
 }
-navbar()
-function navbar() {
+navbar(appId)
+function navbar(appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
 		dataType: "json",

@@ -2,23 +2,23 @@
 /* 
  1，涉及用户token的地方都需要验证
  2，提交答案时用户未登录，则跳转到登录页面，登录后 回跳回来自动提交答案，代码已写完 需要联调验证
- 
  * 
  * */
 var newsIds=getRequest('newsId')//获取来源d的新闻id
 var token = localStorage.getItem('token');
-getNewsDetail(newsIds,token); //加载页面详情
+var appId = 10000000
+addNewsViewCount(newsIds,token,appId)//更新新闻阅读量(页面一打开调用一下)
+getNewsDetail(newsIds,token,appId); //加载页面详情
 var TestId = localStorage.getItem('TestId'); //试卷ID
 //进入页面默认调用一下，为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
-submitTestPaperAnswer("1",TestId,0);
-
+submitTestPaperAnswer("1",TestId,0,token,appId);
 //点击试卷提交 手动提交答案
 $('#answer-submit').on('click', function() {
-	submitTestPaperAnswer("0", TestId, 0);
+	submitTestPaperAnswer("0", TestId, 0,token,appId);
 })
 //提交试题的答案; 
 //firstIn=1 为用户首次进入，自动提交答案 为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
-function submitTestPaperAnswer(firstIn, TestId, UseTime) {
+function submitTestPaperAnswer(firstIn, TestId, UseTime,token,appId) {
 	//存储答案数据
 	var testlist = '';
 	if(firstIn == '1') { //获取本地存储的答案信息 为了给用户提交时未登录，登录成功后再进来
@@ -34,7 +34,7 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime) {
 				"UseTime": UseTime, //试卷用时
 				"TestList": testlist,
 				"Token": token,
-				"AppId": 10000000
+				"AppId": appId
 			},
 			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
@@ -63,13 +63,13 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime) {
 }
 
 //获取新闻详情
-function getNewsDetail(newsId,token) {
+function getNewsDetail(newsId,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"NewsId": newsId,
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/News/GetNewsDetail",
 		dataType: "json",
@@ -79,8 +79,9 @@ function getNewsDetail(newsId,token) {
 			var contentBoxText = ''; //新闻正文
 			var personBoxText = ''; //浏览次数
 			var filesText = ''; //附件文件
-			TestId = data.TestId; //存储试卷ID
+			
 			if(res.Code == 00) {
+				TestId = data.TestId; //存储试卷ID
 				//新闻内容
 				contentBoxText = data.HtmlContent;
 				//浏览次数
@@ -98,11 +99,11 @@ function getNewsDetail(newsId,token) {
 				$('.person-box').append(personBoxText); //浏览人数
 				$('.file').append(filesText); //附件
 				if(data.CanStudy) { //获取学习时间
-					getStudyTime(newsId, data.Module,token); //学习时间
+					getStudyTime(newsId, data.Module,token,appId); //学习时间
 					//文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟
 					if(token) {
 						setInterval(function() {
-							editStudyTime(data.NewsId, data.Module, 1,token);
+							editStudyTime(data.NewsId, data.Module, 1,token,appId);
 						}, 60000) 
 					} else { //用户未登录 需要bootstrap的toast提示框，提示 "登录才可以累计学习时间"
 						bootoast({
@@ -115,22 +116,21 @@ function getNewsDetail(newsId,token) {
 				}
 				//获取试卷信息
 				if(data.TestId) {
-					getNewsTest(data.TestId,token)
+					getNewsTest(data.TestId,token,appId)
 				}
-
 			}
 		}
 	})
 }
 
 //获取试卷信息
-function getNewsTest(testId,token) {
+function getNewsTest(testId,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"TestId": testId,
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/TestPaper/GetTestPaper",
 		dataType: "json",
@@ -168,14 +168,14 @@ function getNewsTest(testId,token) {
 }
 
 //获取用户的学习时间
-function getStudyTime(NewsId, ModuleId,token) {
+function getStudyTime(NewsId, ModuleId,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"NewsId": NewsId,
 			"ModuleId": ModuleId,
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Study/GetStudyTime",
 		dataType: "json",
@@ -193,7 +193,7 @@ function getStudyTime(NewsId, ModuleId,token) {
 
 }
 //增加学习时间 外部需要写定时器，每分钟调取
-function editStudyTime(NewsId, ModuleId, StudyTime,token) {
+function editStudyTime(NewsId, ModuleId, StudyTime,token,appId) {
 	/*console.info('学习时间上报1分钟...');*/
 	$.ajax({
 		type: "post",
@@ -202,7 +202,7 @@ function editStudyTime(NewsId, ModuleId, StudyTime,token) {
 			"NewsId": NewsId,
 			"ModuleId": ModuleId,
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Study/EditStudyTime",
 		dataType: "json",
@@ -283,24 +283,31 @@ function getTestPaperAnswerJson() {
 				return;
 			}
 		}
-
 		//答案对象
 		testList.push(question); //问题对象
-		//
-		//		{
-		//			"QuestionId": 1,
-		//			"Answers": [{
-		//				"AnswerId": 1,
-		//				"CustomizeAnswer": ""
-		//			}, {
-		//				"AnswerId": 2,
-		//				"CustomizeAnswer": ""
-		//			}]
-		//		}
-
 	}
-
 	var testListJson = JSON.stringify(testList);
 	console.info(testListJson);
 	return testListJson;
+}
+//更新新闻阅读量
+function addNewsViewCount(NewsId,token,appId) {
+	$.ajax({
+		type: "post",
+		data: {
+			"NewsId": NewsId,
+			"Token": token,
+			"AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/News/AddNewsViewCount",
+		dataType: "json",
+		success: function(res) {
+			$('.header .study-time').html('');
+			var data = res.Result;
+			if(res.Code == 00){
+				
+			}
+		}
+	})
+
 }
