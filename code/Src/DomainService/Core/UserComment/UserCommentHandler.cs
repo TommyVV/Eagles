@@ -51,10 +51,8 @@ namespace Eagles.DomainService.Core.UserComment
                 ReviewStatus = -1
             };
             var result = userCommentAccess.EditUserComment(tbUserComment);
-            if (result > 0)
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            if (result <= 0)            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
