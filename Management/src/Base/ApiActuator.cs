@@ -18,7 +18,7 @@ namespace Eagles.Base
         public static ResponseFormat<T> Runing<T>(Func<T> run)
         {
             try
-            {
+            {               
                 return new ResponseFormat<T>(run.Invoke());
             }
             catch (TransactionException err)

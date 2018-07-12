@@ -16,7 +16,7 @@
         public int IsPublic { get; set; }
 
         /// <summary>
-        /// 活动通过/拒绝
+        /// 审核状态 0-通过 1-不通过
         /// </summary>
         public int CompleteStatus { get; set; }
 

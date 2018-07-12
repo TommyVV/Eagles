@@ -1259,24 +1259,24 @@
             创建时间
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.HtmlDescription">
+            <summary>
+            html 描述
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Exercises.Model.ExercisesDetails">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.HtmlDescription">
-            <summary>
-            html 描述
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.SubjectList">
             <summary>
             题目列表
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.ExercisesDetails.Content">
-            <summary>
-            内容 json格式 图片 文字
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Model.Option">
@@ -1334,6 +1334,26 @@
             问题id
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Answer">
+            <summary>
+            答案类型;0:默认:1:自定义
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Multiple">
+            <summary>
+            是否允许多选;0:否;1:是
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.MultipleCount">
+            <summary>
+            多选数量
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Exercises.Model.SubjectDetails">
             <summary>
             
@@ -1344,24 +1364,19 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.Answer">
+        <member name="T:Eagles.Application.Model.Exercises.Requset.EditOptionRequset">
             <summary>
-            答案类型;0:默认:1:自定义
+            
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.Multiple">
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditOptionRequset.Info">
             <summary>
-            是否允许多选;0:否;1:是
+            维护接口 传主键id 表示修改 不传表示新增
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.MultipleCount">
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditOptionRequset.OrgId">
             <summary>
-            多选数量
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.OrgId">
-            <summary>
-            机构ID
+            机构id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.EditExercisesRequset">
@@ -1382,6 +1397,11 @@
         <member name="P:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset.OptionId">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.GetExercisesDetailRequset">
@@ -1459,6 +1479,16 @@
             试卷id
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveOptionRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveOptionRequset.OptionId">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset">
             <summary>
             
@@ -1467,6 +1497,11 @@
         <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset.QuestionId">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset.ExercisesId">
+            <summary>
+            试卷id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Response.GetExercisesDetailResponse">

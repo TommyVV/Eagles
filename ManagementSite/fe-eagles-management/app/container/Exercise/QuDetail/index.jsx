@@ -13,9 +13,9 @@ import {
 } from "antd";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
-import { typeMap } from "../../../constants/config/question";
+import { typeMap } from "../../../constants/config/appconfig";
 import { getQuestionInfoById } from "../../../services/questionService";
-import { serverConfig } from "../../../constants/ServerConfigure";
+import { serverConfig } from "../../../constants/config/ServerConfigure";
 import { saveInfo, clearInfo } from "../../../actions/questionAction";
 // 引入编辑器以及编辑器样式
 import BraftEditor from "braft-editor";
@@ -133,7 +133,7 @@ class QuestionForm extends Component {
     const formItemLayoutChild = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 }
+        sm: { span: 10 }
       },
       wrapperCol: {
         xs: { span: 24 },

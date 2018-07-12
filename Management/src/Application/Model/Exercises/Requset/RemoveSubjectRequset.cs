@@ -11,9 +11,9 @@
         /// </summary>
         public int QuestionId { get; set; }
 
-        ///// <summary>
-        ///// 试卷id
-        ///// </summary>
-        //public string ExercisesId { get; set; }
+        /// <summary>
+        /// 试卷id
+        /// </summary>
+        public string ExercisesId { get; set; }
     }
 }

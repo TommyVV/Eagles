@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 用户编号
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// 用户名称

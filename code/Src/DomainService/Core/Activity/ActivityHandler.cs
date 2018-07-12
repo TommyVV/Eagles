@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.Interface.Core.Activity;
+using Eagles.Interface.Configuration;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.ActivityAccess;
 using Eagles.DomainService.Model.User;
@@ -27,11 +28,13 @@ namespace Eagles.DomainService.Core.Activity
     {
         private readonly IActivityAccess iActivityAccess;
         private readonly IUtil util;
+        private readonly IEaglesConfig configuration;
 
-        public ActivityHandler(IActivityAccess iActivityAccess, IUtil util)
+        public ActivityHandler(IActivityAccess iActivityAccess, IUtil util, IEaglesConfig configuration)
         {
             this.iActivityAccess = iActivityAccess;
             this.util = util;
+            this.configuration = configuration;
         }
 
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
@@ -99,6 +102,23 @@ namespace Eagles.DomainService.Core.Activity
             var result = iActivityAccess.CreateActivity(act);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                Title = "活动发起",
+                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                FromUser = request.ActivityFromUser,
+                UserId = request.ActivityToUserId,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == request.CreateType)
+                userNotice.NewsType = 10; //10 活动发起（上级发给下级）
+            else
+                userNotice.NewsType = 11; //11 活动申请开始（下级发给上级）
+            util.CreateUserNotice(userNotice);
             return response;
         }
 
@@ -148,25 +168,61 @@ namespace Eagles.DomainService.Core.Activity
             if (activityInfo == null)
                 throw new TransactionException(MessageCode.ActivityNotExists, MessageKey.ActivityNotExists);
             var createType = activityInfo.CreateType;
+
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+
             switch (request.Type)
             {
                 case ActivityTypeEnum.Audit:
                     //上级审核任务
+                    if (-1 != activityInfo.Status)
+                        throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
                     if (1 == createType && activityInfo.ToUserId != tokens.UserId)
                         throw new TransactionException("96", "必须发起人审核");
+
+                    userNotice.Title = "活动审核通过";
+                    userNotice.FromUser = activityInfo.ToUserId;
+                    userNotice.UserId = activityInfo.FromUser;
+                    userNotice.NewsType = 12; //12 活动审核通过（上级审核通过）
+
                     break;
                 case ActivityTypeEnum.Apply:
+                    if (0 != activityInfo.Status)
+                        throw new TransactionException(MessageCode.ActivityStatusError, MessageKey.ActivityStatusError);
                     //上级发起的活动
                     if (0 == createType && activityInfo.ToUserId != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成活动");
                     //下级发起的活动
                     else if (1 == createType && activityInfo.FromUser != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成活动");
+
+                    userNotice.Title = "活动申请完成";
+                    if (0 == createType)
+                    {
+                        userNotice.FromUser = activityInfo.ToUserId;
+                        userNotice.UserId = activityInfo.FromUser;
+                    }
+                    else
+                    {
+                        userNotice.FromUser = activityInfo.FromUser; 
+                        userNotice.UserId = activityInfo.ToUserId;
+                    }
+                    userNotice.NewsType = 14; //14 活动申请完成
+
                     break;
             }
             var result = iActivityAccess.EditActivityReview(request.Type, request.ActivityId, request.ReviewType);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            if (request.ReviewType == 0)
+                util.CreateUserNotice(userNotice);
             return response;
         }
 
@@ -188,10 +244,41 @@ namespace Eagles.DomainService.Core.Activity
             //下级发起的活动
             else if (1 == createType && activityInfo.ToUserId != tokens.UserId)
                 throw new TransactionException("96", "必须上级完成活动");
-            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus);
+            //查询活动奖励积分
+            var score = util.RewardScore("1").Score;
+            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus, score);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
-            //todo 所有参与活动的人增加积分
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                NewsType = 15, //15 活动已完成
+                Title = "活动完成",
+                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == createType)
+            {
+                userNotice.FromUser = activityInfo.FromUser;
+                userNotice.UserId = activityInfo.ToUserId;
+            }
+            else
+            {
+                userNotice.FromUser = activityInfo.ToUserId;
+                userNotice.UserId = activityInfo.FromUser;
+            }
+            //所有参与活动的人增加积分
+            var people = iActivityAccess.GetActivityJoinPeople(request.ActivityId);
+            util.BatchEditUserScore(people, score); //增加所有完成活动人的积分
+            foreach (var user in people)
+            {
+                var scoreLs = new TbUserScoreTrace() { OrgId = tokens.OrgId, UserId = user.UserId, CreateTime = DateTime.Now, Score = score, RewardsType = "0", Comment = "完成活动获得积分" };
+                util.CreateScoreLs(scoreLs); //增加所有完成活动人的积分流水
+            }
+            if (request.CompleteStatus == 0)
+                util.CreateUserNotice(userNotice);
             return response;
         }
 
@@ -245,6 +332,27 @@ namespace Eagles.DomainService.Core.Activity
             var result = iActivityAccess.EditActivityFeedBack(feeBack);
             if (result <= 0)
                  throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+            //发用户通知
+            var userNotice = new TbUserNotice()
+            {
+                OrgId = tokens.OrgId,
+                NewsType = 13, //13 活动负责人反馈
+                Title = "活动负责人反馈",
+                Content = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                IsRead = 1,
+                CreateTime = DateTime.Now
+            };
+            if (0 == createType)
+            {
+                userNotice.FromUser = activityInfo.ToUserId;
+                userNotice.UserId = activityInfo.FromUser;
+            }
+            else
+            {
+                userNotice.FromUser = activityInfo.FromUser;
+                userNotice.UserId = activityInfo.ToUserId;
+            }
+            util.CreateUserNotice(userNotice);
             return response;
         }
 

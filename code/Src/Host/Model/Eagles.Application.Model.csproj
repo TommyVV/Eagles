@@ -65,8 +65,12 @@
     <Compile Include="Enums\TaskEnum.cs" />
     <Compile Include="MessageCode.cs" />
     <Compile Include="MessageKey.cs" />
+    <Compile Include="News\AddNewsViewCount\AddNewsCountRequest.cs" />
+    <Compile Include="News\AddNewsViewCount\AddNewsViewCountResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestResponse.cs" />
     <Compile Include="News\CompleteTest\CompleteTestRequest.cs" />
+    <Compile Include="User\EditUserNoticeIsRead\EditUserNoticeIsReadRequest.cs" />
+    <Compile Include="User\EditUserNoticeIsRead\EditUserNoticeIsReadResponse.cs" />
     <Compile Include="News\GetTestPaper\AppAnswer.cs" />
     <Compile Include="News\GetTestPaper\GetTestPaperResponse.cs" />
     <Compile Include="News\GetTestPaper\GetTestPaperRequest.cs" />
@@ -201,9 +205,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="User\EditUserNoticeIsRead\" />
-    <Folder Include="User\EditViewsCount\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

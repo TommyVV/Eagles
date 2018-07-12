@@ -83,5 +83,15 @@ namespace Eagles.Application.Model.Exercises.Model
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// html 描述
+        /// </summary>
+        public string HtmlDescription { get; set; }
+
+        /// <summary>
+        /// 内容 json格式 图片 文字
+        /// </summary>
+        public string Content { get; set; }
     }
 }

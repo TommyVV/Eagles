@@ -21,10 +21,5 @@ namespace Eagles.Application.Model.News.CreateNews
         /// 新闻文章内容
         /// </summary>
         public string NewsContent { get; set; }
-
-        /// <summary>
-        /// 文章积分
-        /// </summary>
-        public int RewardsScore { get; set; }
     }
 }

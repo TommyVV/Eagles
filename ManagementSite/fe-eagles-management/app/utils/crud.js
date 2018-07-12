@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import base from "../config/base";
 // import link from '../config/link.js';
-import link from "../constants/ServerConfigure";
+import link from "../constants/config/ServerConfigure";
 
 /**
  * 重定向到login页面  防止用户修改localstoreage的值导致报错

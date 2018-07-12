@@ -80,6 +80,10 @@ namespace Eagles.DomainService.Model.Activity
         /// </summary>
         public int FromUser { get; set; }
         /// <summary>
+        /// 发起人名称
+        /// </summary>
+        public int FromUserName { get; set; }
+        /// <summary>
         /// 活动内容
         /// </summary>
         public string HtmlContent { get; set; }
@@ -104,18 +108,11 @@ namespace Eagles.DomainService.Model.Activity
         /// </summary>
         public int OrgId { get; set; }
         /// <summary>
-        /// 机构审核状态;
-        ///0:审核通过;
-        ///-1:待审核
-        ///1:审核不通过
+        /// 机构审核状态;0:审核通过; -1:待审核 1:审核不通过
         /// </summary>
         public string OrgReview { get; set; }
         /// <summary>
-        /// 状态;
-        ///-1:下级发给上级审核任务是否允许开始
-        ///0:初始状态;(上级发给下级的初始状态) 
-        ///1:活动申请完成
-        ///2.活动完成
+        /// 状态;-1:下级发给上级审核任务是否允许开始0:初始状态;(上级发给下级的初始状态) 1:活动申请完成2.活动完成
         /// </summary>
         public int Status { get; set; }
         /// <summary>
@@ -126,7 +123,10 @@ namespace Eagles.DomainService.Model.Activity
         /// 负责人Id
         /// </summary>
         public int ToUserId { get; set; }
-
+        /// <summary>
+        /// 负责人名称
+        /// </summary>
+        public string ToUserName { get; set; }
         /// <summary>
         /// 创建类型 0上级发布 1下级向上级申请  
         /// </summary>

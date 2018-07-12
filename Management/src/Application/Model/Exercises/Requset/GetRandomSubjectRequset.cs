@@ -3,7 +3,7 @@
     /// <summary>
     /// 生成习题
     /// </summary>
-    public class GetRandomSubjectRequset:OrgListRequestBase
+    public class GetRandomSubjectRequset: RequestBase
     {
         /// <summary>
         /// 随机题目数量

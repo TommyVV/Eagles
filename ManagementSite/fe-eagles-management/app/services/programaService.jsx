@@ -1,9 +1,9 @@
 import sendRequest from "../utils/requestUtil";
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
 
 const { MODULE } = serverConfig;
-// 根据id查看试卷详情
-export const getProgramaInfoById = async params => {
+// 根据id查看详情
+export const getInfoById = async params => {
   try {
     let res = await sendRequest({
       url: MODULE.MODULE_DETAIL,
@@ -11,7 +11,7 @@ export const getProgramaInfoById = async params => {
       params
     });
     let { Code, Result, Message } = res.data;
-    if (Code === "00") {
+    if (res.status === 200) {
       return Result;
     } else {
       throw new Error(`${Code} - ${Message}`);
@@ -21,8 +21,8 @@ export const getProgramaInfoById = async params => {
   }
 };
 
-// 查看试卷列表
-export const getProgramaList = async params => {
+// 查看列表
+export const getList = async params => {
   try {
     let res = await sendRequest({
       url: MODULE.MODULE_LIST,
@@ -40,22 +40,27 @@ export const getProgramaList = async params => {
   }
 };
 
-// 创建或编辑试卷
-export const createOrEditPrograma = async params => {
+// 创建或编辑
+export const createOrEdit = async params => {
   try {
     let res = await sendRequest({
       method: "post",
       url: MODULE.MODULE_EDIT,
       params
     });
-    return res.data;
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
   } catch (e) {
     throw new Error(e);
   }
 };
 
-// 删除试卷
-export const deletePrograma = async params => {
+// 删除
+export const del = async params => {
   try {
     let res = await sendRequest({
       method: "post",
@@ -63,7 +68,7 @@ export const deletePrograma = async params => {
       params
     });
     let { Code, Message } = res.data;
-    if (Code === "00") {
+    if (res.status === 200) {
       return res.data;
     } else {
       throw new Error(`${Code} - ${Message}`);

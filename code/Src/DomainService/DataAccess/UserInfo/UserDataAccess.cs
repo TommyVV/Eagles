@@ -37,6 +37,11 @@ Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Compa
 IsLeader=@IsLeader where UserId = @UserId", userInfo);
         }
 
+        public int EditUserNoticeIsRead(int newsId)
+        {
+            return dbManager.Excuted(@"update eagles.tb_user_notice set IsRead = @IsRead where NewsId = @NewsId", new {IsRead = 0, NewsId = newsId});
+        }
+
         public TbUserInfo GetUserInfo(int userId)
         {
             var userInfo = dbManager.Query<TbUserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,OriginAddress,Phone,IdNumber,Education,

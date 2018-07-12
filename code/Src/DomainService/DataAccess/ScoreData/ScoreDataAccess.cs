@@ -61,17 +61,18 @@ namespace Ealges.DomianService.DataAccess.ScoreData
             FROM `eagles`.`tb_user_score_trace` where UserId = @UserId ", new { UserId =userId});
         }
 
-        public List<TbUserRank> GetUserRank()
+        public List<TbUserRank> GetUserRank(int appId)
         {
-            var sql = @"select * from  eagles.tb_user_info  order by Score desc limit 10  ";
-            return dbManager.Query<TbUserRank>(sql);
+            var sql = @"select a.Name, b.BranchName, a.Score from eagles.tb_user_info a join tb_branch b on a.BranchId = b.BranchId
+where a.OrgId = @OrgId order by Score desc limit 10 ";
+            return dbManager.Query<TbUserRank>(sql, new { OrgId = appId });
         }
 
-        public List<TbBranchRank> GetBranchRank()
+        public List<TbBranchRank> GetBranchRank(int appId)
         {
-            var sql = @"select (@i:=@i+1) as No,b.OrgName,count(a.UserId) as UserCount,a.Score from tb_user_info a 
-join tb_org_info b on a.OrgId = b.OrgId ,(select @i:=0) as it group by b.OrgName,a.Score order by a.Score desc limit 10; ";
-            return dbManager.Query<TbBranchRank>(sql);
+            var sql = @"select b.BranchName, count(a.UserId) as UserCount, a.Score from tb_user_info a 
+join tb_branch b on a.BranchId = b.BranchId where a.OrgId = @OrgId group by b.BranchName, a.Score order by a.Score desc limit 10";
+            return dbManager.Query<TbBranchRank>(sql, new { OrgId = appId });
         }
     }
 }

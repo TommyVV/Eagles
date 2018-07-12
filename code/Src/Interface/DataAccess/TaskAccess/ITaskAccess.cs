@@ -8,13 +8,13 @@ namespace Eagles.Interface.DataAccess.TaskAccess
 {
     public interface ITaskAccess : IInterfaceBase
     {
-        int CreateTask(TbTask reqTask, int toUserId);
+        int CreateTask(TbTask reqTask, int toUserId, string toUserName);
 
         int RemoveTaskStep(int taskId, int stepId);
 
         int EditTaskAccept(TaskAcceptType type, int taskId, int reviewType);
 
-        bool EditTaskComplete(int taskId, int isPublic, int completeStatus);
+        bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int score);
         
         int EditTaskStep(ActionEnum action, TbUserTaskStep taslStep);
 

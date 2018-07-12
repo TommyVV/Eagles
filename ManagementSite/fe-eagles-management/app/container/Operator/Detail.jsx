@@ -1,59 +1,43 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Input,
-  Form,
-  message,
-  Row,
-  Col,
-  Select,
-  Avatar,
-  Icon,
-  DatePicker
-} from "antd";
+import { Button, Input, Form, message, Row, Col, Select } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/operatorService";
+// import { getAllArea } from "../../services/areaService";
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
-
 class Base extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showCrop: false //裁剪图片
-    };
   }
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          const { operator } = this.props;
+          let params = {
+            Info: {
+              ...operator,
+              ...values
+            },
+            OrgId: 10000000,
+            BranchId: 10000000
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = this.props.operator.OperId
+              ? "保存操作员成功"
+              : "创建操作员成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/operatorlist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = this.props.operator.OperId
+              ? "保存操作员失败"
+              : "创建操作员失败";
             message.error(tip);
           }
         } catch (e) {
@@ -64,74 +48,9 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
-
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { authList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -142,38 +61,55 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
+
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("systemId")(<Input />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="操作员编号">
-          {getFieldDecorator("num", {
+        {/* <FormItem {...formItemLayout} label="操作员编号">
+          {getFieldDecorator("OperId", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入操作员编号"
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入操作员名称" />)}
+        </FormItem> */}
+        <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
+          {getFieldDecorator("OperId")(<Input />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="操作员名称">
+          {getFieldDecorator("OperName", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请输入操作员姓名"
+              }
+            ]
+          })(<Input placeholder="必填，请输入操作员姓名" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="操作员密码">
-          {getFieldDecorator("password", {
+          {getFieldDecorator("Password", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入操作员密码"
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入操作员密码" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="所属权限组">
-          {getFieldDecorator("org")(
+          {getFieldDecorator("AuthorityGroupId")(
             <Select>
-              <Option value="0">党组织一</Option>
-              <Option value="1">党组织二</Option>
+              {authList.map((obj, index) => {
+                // todo
+                return (
+                  <Option value={index} key={index}>
+                    党组织一
+                  </Option>
+                );
+              })}
+              <Option value="0">党组织二</Option>
+              <Option value="2">党组织二</Option>
             </Select>
           )}
         </FormItem>
@@ -185,13 +121,13 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {!this.props.operator.OperId ? "新建" : "保存"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/project")}
+                onClick={() => hashHistory.replace("/operatorlist")}
               >
                 取消
               </Button>
@@ -205,78 +141,70 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    console.log("详情数据回显 - ", props);
+    const operator = props.operator;
     return {
-      intergralId: Form.createFormField({
-        value: ""
+      OperId: Form.createFormField({
+        value: operator.OperId
       }),
-      type: Form.createFormField({
-        org: "0"
+      OperName: Form.createFormField({
+        value: operator.OperName
+      }),
+      AuthorityGroupId: Form.createFormField({
+        value: operator.AuthorityGroupId ? operator.AuthorityGroupId + "" : "0"
+      }),
+      Password: Form.createFormField({
+        value: operator.Password
       })
     };
   }
 })(Base);
-
 class OperatorDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      authList: [],
+      operator: {}
     };
   }
 
   componentWillMount() {
     let { id } = this.props.params;
-    console.log(id);
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    if (id) {
+      this.getInfo(id); //拿详情
+    } else {
+      // this.getAreaList(); // 改成拿权限组列表 todo
+    }
   }
 
-  componentWillUnmount() {
-    // this.props.clearProjectInfo();
-  }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async OperId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getInfoById({ OperId });
+      this.setState({ operator: Info });
+      // this.getAreaList(); // 改成拿权限组列表 todo
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-
+  // 改成拿权限组列表
+  // getAreaList = async () => {
+  //   try {
+  //     const { AreaInfos } = await getAllArea();
+  //     this.setState({ AreaInfos });
+  //   } catch (e) {
+  //     message.error("获取失败");
+  //     throw new Error(e);
+  //   }
+  // };
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap
+          operator={this.state.operator}
+          authList={this.state.authList}
+        />
       </Nav>
     );
   }

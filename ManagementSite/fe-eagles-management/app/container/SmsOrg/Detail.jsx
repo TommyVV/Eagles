@@ -15,7 +15,7 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getOrgInfoById, createOrEditOrg } from "../../services/orgService";
 import { getAllArea } from "../../services/areaService";
-import { serverConfig } from "../../constants/ServerConfigure";
+import { serverConfig } from "../../constants/config/ServerConfigure";
 import { saveOrgInfo, clearInfo } from "../../actions/orgAction";
 import "./style.less";
 

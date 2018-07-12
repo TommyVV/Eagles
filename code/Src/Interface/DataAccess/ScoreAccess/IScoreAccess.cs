@@ -11,8 +11,8 @@ namespace Eagles.Interface.DataAccess.ScoreAccess
 
         List<TbUserScoreTrace> GetScoreExchangeLs(int userId);
 
-        List<TbUserRank> GetUserRank();
+        List<TbUserRank> GetUserRank(int appId);
 
-        List<TbBranchRank> GetBranchRank();
+        List<TbBranchRank> GetBranchRank(int appId);
     }
 }

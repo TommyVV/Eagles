@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.Task.GetTaskDetail
@@ -40,6 +39,11 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
         public string TaskEndDate { get; set; }
 
         /// <summary>
+        /// 创建时间
+        /// </summary>
+        public string CreateTime { get; set; }
+
+        /// <summary>
         /// 任务状态
         /// </summary>
         public int TaskStatus { get; set; }
@@ -65,9 +69,24 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
         public int InitiateUserId { get; set; }
 
         /// <summary>
+        /// 发起用户名称
+        /// </summary>
+        public string InitiateUserName { get; set; }
+
+        /// <summary>
         /// 接受用户编号
         /// </summary>
         public int AcceptUserId { get; set; }
+
+        /// <summary>
+        /// 接受用户名称
+        /// </summary>
+        public string AcceptUserName { get; set; }
+
+        /// <summary>
+        /// 创建类型 0上级发布 1下级向上级申请  
+        /// </summary>
+        public int CreateType { get; set; }
 
         /// <summary>
         /// 附件集合

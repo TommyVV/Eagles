@@ -115,6 +115,7 @@
     <Compile Include="Exercises\Model\Option.cs" />
     <Compile Include="Exercises\Model\Subject.cs" />
     <Compile Include="Exercises\Model\SubjectDetails.cs" />
+    <Compile Include="Exercises\Requset\EditOptionRequset.cs" />
     <Compile Include="Exercises\Requset\EditExercisesRequset.cs" />
     <Compile Include="Exercises\Requset\EditSubjectRequset.cs" />
     <Compile Include="Exercises\Requset\GetExercisesDetailRequset.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Exercises\Requset\GetSubjectDetailRequset.cs" />
     <Compile Include="Exercises\Requset\GetSubjectRequset.cs" />
     <Compile Include="Exercises\Requset\RemoveExercisesRequset.cs" />
+    <Compile Include="Exercises\Requset\RemoveOptionRequset.cs" />
     <Compile Include="Exercises\Requset\RemoveSubjectRequset.cs" />
     <Compile Include="Exercises\Response\GetExercisesDetailResponse.cs" />
     <Compile Include="Exercises\Response\GetExercisesResponse.cs" />

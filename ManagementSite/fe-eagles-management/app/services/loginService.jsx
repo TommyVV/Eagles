@@ -1,4 +1,4 @@
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
 import sendRequest from "../utils/requestUtil";
 /**
  * 登录

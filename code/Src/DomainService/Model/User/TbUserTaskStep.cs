@@ -16,6 +16,7 @@ namespace Eagles.DomainService.Model.User
         public int TaskId { get; set; }
         public DateTime UpdateTime { get; set; }
         public int UserId { get; set; }
+        public string Name { get; set; }
         public string Attach1 { get; set; }
         public string Attach2 { get; set; }
         public string Attach3 { get; set; }

@@ -18,7 +18,7 @@ import {
   getQuestionList,
   deleteQuestion
 } from "../../services/questionService";
-import { typeMap, stateMap } from "../../constants/config/question";
+import { typeMap, stateMap } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 

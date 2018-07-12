@@ -12,5 +12,10 @@ namespace Eagles.Application.Model.GetMenu
         /// </summary>
         public List<AppMenu> AppMenus { get; set; }
 
+        /// <summary>
+        /// 机构图片
+        /// </summary>
+        public string LogoUrl { get; set; }
+
     }
 }

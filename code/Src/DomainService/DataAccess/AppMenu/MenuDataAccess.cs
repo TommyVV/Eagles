@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Base.DataBase;
+using Eagles.DomainService.Model.App;
 using Eagles.Interface.DataAccess.Menu;
 
 namespace Ealges.DomianService.DataAccess.AppMenu
@@ -13,10 +14,10 @@ namespace Ealges.DomianService.DataAccess.AppMenu
             this.dbManager = dbManager;
         }
 
-        public List<Eagles.DomainService.Model.App.TbAppMenu> GetAppMenus(int appId)
+        public List<TbAppMenu> GetAppMenus(int appId)
         {
-            var result=dbManager.Query<Eagles.DomainService.Model.App.TbAppMenu>(@"SELECT OrgId,MenuId,MenuName,Level,ParentMenuId,TargetUrl from eagles.tb_app_menu 
-where OrgId=@OrgId ", new {OrgId = appId});
+            var result=dbManager.Query<TbAppMenu>(@"SELECT a.OrgId,a.MenuId,a.MenuName,a.Level,a.ParentMenuId,a.TargetUrl,b.Logo from eagles.tb_app_menu  a 
+inner join eagles.tb_org_info b on a.orgId=b.orgId ", new {OrgId = appId});
             return result;
         }
     }

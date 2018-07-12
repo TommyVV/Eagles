@@ -14,7 +14,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 用户id
         /// </summary>
-        public string OrgName { get; set; }
+        public string BranchName { get; set; }
         /// <summary>
         /// 是否上级
         /// </summary>

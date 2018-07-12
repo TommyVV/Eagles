@@ -1,8 +1,7 @@
 import axios from "axios";
 import { message } from "antd";
 import { hashHistory } from "react-router";
-import base from "../config/base";
-import { serverConfig } from "../constants/ServerConfigure";
+import { serverConfig } from "../constants/config/ServerConfigure";
 import Uitl from "./util";
 // import "../mock/mockData"; // 模拟本地数据
 
@@ -71,6 +70,7 @@ let getToken = () => {
     refresh_token
   };
 };
+
 /**
  * 请求url方法
  * @param  {config} config 配置 （method，url，params）

@@ -76,5 +76,14 @@ namespace Eagles.Interface.Core
         /// <param name="requset"></param>
         /// <returns></returns>
         GetRandomSubjectResponse GetRandomSubject(GetRandomSubjectRequset requset);
+
+        /// <summary>
+        /// 选项
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        int EditOption(EditOptionRequset requset);
+
+        bool RemoveOption(RemoveOptionRequset requset);
     }
 }

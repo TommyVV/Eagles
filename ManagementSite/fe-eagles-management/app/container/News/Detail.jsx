@@ -17,8 +17,8 @@ import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getNewsInfoById, createOrEditNews } from "../../services/newsService";
-import { getProgramaList } from "../../services/programaService";
-import { serverConfig } from "../../constants/ServerConfigure";
+import { getList } from "../../services/programaService";
+import { serverConfig } from "../../constants/config/ServerConfigure";
 import { saveInfo, clearInfo } from "../../actions/newsAction";
 // 引入编辑器以及编辑器样式
 import BraftEditor from "braft-editor";
@@ -58,7 +58,7 @@ class Base extends Component {
               ...this.props.news,
               ...values,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
-              EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+              EndTime: moment(EndTime, "yyyy-MM-dd").format()
               // NewsImg: this.props.news.NewsImg
             }
           };
@@ -110,7 +110,7 @@ class Base extends Component {
         const url = obj.response.Result.FileUploadResults[0].FileUrl;
         attach[`Attach${++index}`] = url;
       });
-      this.props.saveInfo({ ...this.props.news, ...attach });// todo 
+      this.props.saveInfo({ ...this.props.news, ...attach }); // todo
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -145,7 +145,7 @@ class Base extends Component {
       setFieldsValue,
       getFieldsValue
     } = this.props.form;
-    const { news, isRewardWrapper, setNews } = this.props; //是否显示试卷列表
+    const { news, isRewardWrapper, setNews, programaList } = this.props; //是否显示试卷列表
     const props = {
       name: "file",
       action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
@@ -295,10 +295,16 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="所属栏目">
-          {getFieldDecorator("programa")(
+          {getFieldDecorator("ModuleId")(
             <Select>
-              <Option value="0">栏目一</Option>
-              <Option value="1">栏目二</Option>
+              {programaList.length &&
+                programaList.map((obj, index) => {
+                  return (
+                    <Option key={index} value={obj.ColumnId + ""}>
+                      {obj.ColumnName}
+                    </Option>
+                  );
+                })}
             </Select>
           )}
         </FormItem>
@@ -385,9 +391,12 @@ const FormMap = Form.create({
       Content: Form.createFormField({
         value: news.Content
       }),
-      Category: Form.createFormField({
-        value: news.TestId <= "0" ? "0" : "1"
+      ModuleId: Form.createFormField({
+        value: news.ModuleId ? news.ModuleId + "" : ""
       })
+      // Category: Form.createFormField({
+      //   value: news.TestId <= "0" ? "0" : "1"
+      // })
     };
   }
 })(Base);
@@ -413,11 +422,11 @@ class NewsDetail extends Component {
     let { id } = this.props.params;
     if (id) {
       this.getInfo(id); //拿新闻详情
-    }else{
+    } else {
       this.props.clearInfo();
+      // 拿栏目详情
+      this.getProgramaList();
     }
-    // 拿栏目详情
-    this.getProgramaList();
   }
 
   componentWillUnmount() {
@@ -426,16 +435,18 @@ class NewsDetail extends Component {
 
   // 查询栏目列表
   getProgramaList = async () => {
-    const res = await getProgramaList();
-    console.log("getProgramaList", res.List);
-    this.setState({ programaList: res.List });
+    const { List } = await getList();
+    console.log("getProgramaList", List);
+    this.setState({ programaList: List });
   };
   // 根据id查询详情
   getInfo = async NewsId => {
     try {
+      this.getProgramaList();
       const { Info } = await getNewsInfoById({ NewsId });
       console.log("newsDetails", Info);
       this.props.saveInfo(Info);
+      // 拿栏目详情
       // 说明有试卷
       if (Info.TestId > 0) {
         // const { List } = await getQuestionList();
@@ -460,7 +471,7 @@ class NewsDetail extends Component {
   }
 
   render() {
-    const { newsDetail, isRewardWrapper } = this.state;
+    const { newsDetail, isRewardWrapper, programaList } = this.state;
 
     return (
       <Nav>
@@ -468,6 +479,7 @@ class NewsDetail extends Component {
           news={this.props.newsReducer}
           isRewardWrapper={isRewardWrapper}
           setRewardWrapper={this.setRewardWrapper.bind(this)}
+          programaList={programaList}
         />
       </Nav>
     );
