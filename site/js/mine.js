@@ -43,20 +43,23 @@ $(document).ready(function () {
         new CalculateScreen();
     })
 });
-var token=localStorage.getItem("token")
-minedel(token);
-function minedel(token){
+//var token=localStorage.getItem("token")
+var token="abc"
+var appId=10000000;
+minedel(token,appId);
+function minedel(token,appId){
 	$.ajax({
         type: "post",
 		data: {
 			  "Token": token,
-			  "AppId": 10000000
+			  "AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
         success:function(res){
-        	var data=res.Result.UserInfo;
+        	
             if(res.Code == 00){
+            	var data=res.Result.ResultUserInfo;
             	$('.main-content-top-name,.lc_name').text(data.Name);//昵称
 				$('.main-content-top-tel,.info-tel').text(data.UserId);//用户id
 				$('.head-icon').text(data.PhotoUrl);//头像
@@ -67,6 +70,42 @@ function minedel(token){
         }
 	})
 }
+getScrollNews(token,appId)
+function getScrollNews(token,appId){
+	$.ajax({
+        type: "post",
+		data: {
+			  "Token": token,
+			  "AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollNews",
+		dataType: "json",
+        success:function(res){
+        	$('#scrollobj').html('');
+            if(res.Code == 00){
+            	var data=res.Result.SystemNewsList;
+            	var divs='';
+            	for(var i=0;i<data.length;i++){
+            		divs+=''+data[i].NewsName+'';
+            	}
+            	$('#scrollobj').append(divs)
+            	setInterval("scroll(document.getElementById('scrollobj'))",20);
+            }else{
+            	
+            }
+        }
+	})
+}
+function scroll(obj){
+  var tmp=(obj.scrollLeft)++;
+  if(obj.scrollLeft==tmp){
+    obj.innerHTML += obj.innerHTML;
+  }
+  if(obj.scrollLeft>=obj.firstChild.offsetWidth){
+    obj.scrollLeft=0;
+  }
+}
+//setInterval("scroll(document.getElementById('scrollobj'))",20);
 
 
 
