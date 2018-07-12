@@ -32,7 +32,7 @@ value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,CommentTy
 
         public List<TbUserComment> GetUserComment(string commentType, int id, int userId)
         {
-            return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime from eagles.tb_user_comment 
+            return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
 where CommentType = @CommentType and Id = @Id and (ReviewStatus = 0 or UserId = @UserId) ", new { CommentType = commentType, Id = id, UserId = userId });
         }
 

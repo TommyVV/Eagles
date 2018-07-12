@@ -51,10 +51,8 @@ namespace Eagles.DomainService.Core.UserComment
                 ReviewStatus = -1
             };
             var result = userCommentAccess.EditUserComment(tbUserComment);
-            if (result > 0)
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            if (result <= 0)            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
@@ -110,7 +108,8 @@ namespace Eagles.DomainService.Core.UserComment
                 CommentTime = x.ReviewTime.ToString("yyyy-MM-dd HH:mm:ss"),
                 CommentUserId = x.UserId,
                 CommentUserName = x.UserName,
-                CommentContent = x.Content
+                CommentContent = x.Content,
+                CommentStatus = x.ReviewStatus
             }).ToList();
             if (result != null && result.Count > 0)
             {

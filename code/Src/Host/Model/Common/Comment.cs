@@ -36,5 +36,10 @@ namespace Eagles.Application.Model.Common
         /// 评论时间
         /// </summary>
         public string CommentTime { get; set; }
+
+        /// <summary>
+        /// 评论时间
+        /// </summary>
+        public int CommentStatus { get; set; }
     }
 }
