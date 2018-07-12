@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
-namespace Eagles.Application.Model.News.GetNews
+namespace Eagles.Application.Model.News.GetPublicNews
 {
     /// <summary>
     /// 文章列表查询
     /// </summary>
-    public class GetNewsResponse 
+    public class GetPublicNewsResponse
     {
         /// <summary>
         /// NewsList
