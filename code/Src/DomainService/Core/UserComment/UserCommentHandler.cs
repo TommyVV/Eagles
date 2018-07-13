@@ -100,12 +100,12 @@ namespace Eagles.DomainService.Core.UserComment
             {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
-            var result = userCommentAccess.GetUserComment(request.CommentType, request.Id, tokens.UserId);
+            var result = userCommentAccess.GetUserComment(request.CommentType, request.Id, tokens.UserId, request.CommentStatus);
             response.CommentList = result?.Select(x => new Comment
             {
                 CommentId = x.MessageId,
                 Id = x.Id,
-                CommentTime = x.ReviewTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                CommentTime = x.ReviewTime.ToString("yyyy-MM-dd"),
                 CommentUserId = x.UserId,
                 CommentUserName = x.UserName,
                 CommentContent = x.Content,

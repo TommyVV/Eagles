@@ -7,7 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Order.GetOrderLs;
 
-namespace Eagles.DomainService.Core.Score
+namespace Eagles.DomainService.Core.Order
 {
     public class OrderHandler : IOrderHandler
     {
@@ -40,7 +40,7 @@ namespace Eagles.DomainService.Core.Score
                     SmallImageUrl = x.SmallImageUrl,
                     OrderId = x.OrderId,
                     Score = x.Score,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd")
                 }).ToList();
             }
             else

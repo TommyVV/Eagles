@@ -5,6 +5,7 @@ using Eagles.Application.Model.RollImage.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditScrollImage(EditRollImageRequest requset)
         {
-            return ApiActuator.Runing(() =>_ScrollImageHandler.EditRollImages(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_ScrollImageHandler.EditRollImages(requset));
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveScrollImage(RemoveRollImageRequset requset)
         {
-            return ApiActuator.Runing(() =>_ScrollImageHandler.RemoveRollImages(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_ScrollImageHandler.RemoveRollImages(requset));
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetRollImageDetailsResponse> GetScrollImageDetail(GetRollImageDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_ScrollImageHandler.GetRollImagesDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_ScrollImageHandler.GetRollImagesDetail(requset));
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetRollImageResponse> GetScrollImage(GetRollImageRequest requset)
         {
-            return ApiActuator.Runing(() =>_ScrollImageHandler.GetRollImages(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_ScrollImageHandler.GetRollImages(requset));
         }
     }
 }

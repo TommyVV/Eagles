@@ -5,6 +5,7 @@ using Eagles.Application.Model.SystemMessage.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditSystemNews(EditSystemNewsRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.EditSystemNews(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.EditSystemNews(requset));
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveSystemNews(RemoveSystemNewsRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.RemoveSystemNews(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.RemoveSystemNews(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetSystemNewsDetailResponse> GetSystemNewsDetail(GetSystemNewsDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.GetSystemNewsDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.GetSystemNewsDetail(requset));
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetSystemNewsResponse> GetSystemNews(GetSystemNewsRequset requset)
         {
-            return ApiActuator.Runing(() =>_columnHandler.SystemNews(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_columnHandler.SystemNews(requset));
         }
     }
 }

@@ -18,5 +18,6 @@ namespace Eagles.Interface.DataAccess
         void CreateverificationInfo(Verification verification);
         int GetverificationInfo(Verification verification);
         void InsertToken(TbUserToken tbUserToken);
+        TbUserToken GetUserToken(string token, int tokenType);
     }
 }

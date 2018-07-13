@@ -30,9 +30,13 @@ value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,@CommentT
             return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = @reviewStatus where MessageId = @MessageId and ReviewStatus = -1 ", new { MessageId = messageId, ReviewStatus= reviewStatus });
         }
 
-        public List<TbUserComment> GetUserComment(string commentType, int id, int userId)
+        public List<TbUserComment> GetUserComment(string commentType, int id, int userId, int commentStatus)
         {
-            return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
+            if(commentStatus == 0)
+                return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
+where CommentType = @CommentType and Id = @Id and UserId = @UserId ", new { CommentType = commentType, Id = id, UserId = userId });
+            else
+                return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
 where CommentType = @CommentType and Id = @Id and (ReviewStatus = 0 or UserId = @UserId) ", new { CommentType = commentType, Id = id, UserId = userId });
         }
 

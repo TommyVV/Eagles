@@ -107,7 +107,8 @@ namespace Eagles.DomainService.Core.Task
             {
                 OrgId = tokens.OrgId,
                 Title = "任务发起",
-                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                Content = "任务已经发起",
+                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
                 FromUser = request.TaskFromUser,
                 UserId = request.TaskToUserId,
                 IsRead = 1,
@@ -155,7 +156,7 @@ namespace Eagles.DomainService.Core.Task
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
-                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -169,12 +170,11 @@ namespace Eagles.DomainService.Core.Task
                     //下级发起的活动才会由上级审核
                     if (1 == createType && taskInfo.UserId != tokens.UserId)
                         throw new TransactionException("96", "必须上级审核");
-
                     userNotice.Title = "任务审核通过";
+                    userNotice.Content = "任务已审核通过";
                     userNotice.FromUser = taskInfo.UserId;
                     userNotice.UserId = taskInfo.FromUser;
                     userNotice.NewsType = 22; //22 任务审核通过（上级审核任务允许开始）
-
                     break;
                 //下级接受任务
                 case TaskAcceptType.Accept:
@@ -193,8 +193,8 @@ namespace Eagles.DomainService.Core.Task
                     //下级发起的任务
                     else if (1 == createType && taskInfo.FromUser != tokens.UserId)
                         throw new TransactionException("96", "必须负责人申请完成任务");
-
-                    userNotice.Title = "活动申请完成";
+                    userNotice.Title = "任务申请完成";
+                    userNotice.Content = "任务已向上级申请完成";
                     if (0 == createType)
                     {
                         userNotice.FromUser = taskInfo.UserId;
@@ -236,8 +236,8 @@ namespace Eagles.DomainService.Core.Task
             else if (1 == createType && taskInfo.UserId != tokens.UserId)
                 throw new TransactionException("96", "必须负责人申请完成任务");
             //查询任务奖励积分
-            var score = util.RewardScore("0").Score;
-            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, request.CompleteStatus, score);
+            var rewardScore = util.RewardScore("0").Score;
+            var result = iTaskAccess.EditTaskComplete(request.TaskId, request.IsPublic, request.CompleteStatus, rewardScore, request.Score);
             if (!result)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             //发用户通知
@@ -246,7 +246,8 @@ namespace Eagles.DomainService.Core.Task
                 OrgId = tokens.OrgId,
                 NewsType = 26, //26 任务审核确认完成
                 Title = "任务完成",
-                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                Content = "任务已完成",
+                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -264,8 +265,16 @@ namespace Eagles.DomainService.Core.Task
                 userNotice.FromUser = taskInfo.UserId;
                 userNotice.UserId = taskInfo.FromUser;
             }
-            util.EditUserScore(userScore, score); //增加完成任务的人积分
-            var scoreLs = new TbUserScoreTrace() { OrgId = tokens.OrgId, UserId = tokens.UserId, CreateTime = DateTime.Now, Score = score, RewardsType = "0", Comment = "完成任务获得积分" };
+            util.EditUserScore(userScore, rewardScore); //增加完成任务的人积分
+            var scoreLs = new TbUserScoreTrace()
+            {
+                OrgId = tokens.OrgId,
+                UserId = tokens.UserId,
+                CreateTime = DateTime.Now,
+                Score = rewardScore,
+                RewardsType = "0",
+                Comment = "完成任务获得积分"
+            };
             util.CreateScoreLs(scoreLs); //增加积分的人增加积分流水
             if (request.CompleteStatus == 0)
                 util.CreateUserNotice(userNotice);
@@ -315,7 +324,8 @@ namespace Eagles.DomainService.Core.Task
                 OrgId = tokens.OrgId,
                 NewsType = 23, //23 任务负责人定制计划（新增，修改，删除）
                 Title = "任务负责人定制计划",
-                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                Content = "任务计划已定制",
+                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -386,14 +396,14 @@ namespace Eagles.DomainService.Core.Task
             var result = iTaskAccess.EditTaskFeedBack(userTaskStep);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-
             //发用户通知
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
                 NewsType = 24, //24 任务负责人反馈计划内容（新增，修改）
                 Title = "任务负责人反馈计划内容",
-                Content = configuration.EaglesConfiguration.TaskNoticeUrl,
+                Content = "任务已反馈",
+                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -451,7 +461,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 TaskFromUser = x.FromUser,
                 TaskFromUserName = x.FromUserName,
                 TaskToUser = x.UserId,
@@ -518,7 +528,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
                 TaskStatus = x.Status,
-                TaskDate = x.BeginTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                TaskDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 TaskFromUser = x.FromUser,
                 TaskToUser = x.UserId
             }).ToList();

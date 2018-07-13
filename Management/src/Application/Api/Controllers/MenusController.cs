@@ -4,7 +4,7 @@ using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
-
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -27,7 +27,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditMenus(EditMenusRequset requset)
         {
-            return ApiActuator.Runing(() => testHandler.EditMenus(requset));
+            return ApiActuator.Runing(requset, (requset1) => testHandler.EditMenus(requset));
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveMenus(RemoveMenusRequset requset)
         {
-            return ApiActuator.Runing(() => testHandler.RemoveMenus(requset));
+            return ApiActuator.Runing(requset, (requset1) => testHandler.RemoveMenus(requset));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetMenusResponse> GetMenus(GetMenusRequset requset)
         {
-            return ApiActuator.Runing(() => testHandler.GetMenus(requset));
+            return ApiActuator.Runing(requset, (requset1) => testHandler.GetMenus(requset));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetMenusDetailResponse> GetMenusDetail(GetMenusDetailRequest requset)
         {
-            return ApiActuator.Runing(() => testHandler.GetMenusDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) => testHandler.GetMenusDetail(requset));
         }
 
     }

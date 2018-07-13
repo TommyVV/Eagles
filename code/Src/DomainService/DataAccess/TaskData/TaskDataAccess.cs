@@ -66,11 +66,11 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
             return result;
         }
 
-        public bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int score)
+        public bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int rewardScore, int score)
         {
             var commandString = "";
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
+                commandString = @"update eagles.tb_task set Status = 3, Score = @Score, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
             else
                 commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
             var commands = new List<TransactionCommand>()
@@ -78,12 +78,12 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
                 new TransactionCommand()
                 {
                     CommandString = commandString,
-                    Parameter = new { IsPublic = isPublic, TaskId = taskId }
+                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score }
                 },
                 new TransactionCommand()
                 {
                     CommandString = "update tb_user_task set RewardsScore=@RewardsScore where TaskId=@TaskId",
-                    Parameter = new { RewardsScore = score, TaskId = taskId }
+                    Parameter = new { RewardsScore = rewardScore, TaskId = taskId }
                 },
             };
             return dbManager.ExcutedByTransaction(commands);

@@ -5,6 +5,7 @@ using Eagles.Application.Model.SMS.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditSMS(EditSMSRequset requset)
         {
-            return ApiActuator.Runing(() =>_SmsHandler.EditSMS(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.EditSMS(requset));
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveSMS(RemoveSMSRequset requset)
         {
-            return ApiActuator.Runing(() =>_SmsHandler.RemoveSMS(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.RemoveSMS(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetSMSDetailResponse> GetSMSDetail(GetSMSDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_SmsHandler.GetSMSDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.GetSMSDetail(requset));
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetSMSResponse> GetSMS(GetSMSRequset requset)
         {
-            return ApiActuator.Runing(() =>_SmsHandler.SMS(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.SMS(requset));
         }
     }
 }

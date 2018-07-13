@@ -8,6 +8,8 @@ namespace Eagles.Interface.DataAccess.UserArticle
     {
         int CreateArticle(TbUserNews userNews);
 
-        List<TbUserNews> GetUserNewsList(int userId, int pageIndex, int pageSize);
+        List<TbUserNews> GetUserNews(int userId, int pageIndex, int pageSize);
+        
+        List<TbUserNews> GetPblicUserNews(int userId, int pageIndex, int pageSize);
     }
 }

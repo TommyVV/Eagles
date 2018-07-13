@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Eagles.Application.Host.Common;
 using Eagles.Application.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
@@ -28,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditActivity(EditActivityTaskInfoRequset requset)
         {
-            return ApiActuator.Runing(() => _ActivityTaskHandler.EditActivity(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ActivityTaskHandler.EditActivity(requset));
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveActivity(RemoveActivityTaskRequset requset)
         {
-            return ApiActuator.Runing(() => _ActivityTaskHandler.RemoveActivity(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ActivityTaskHandler.RemoveActivity(requset));
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetActivityTaskDetailResponse> GetActivityDetail(GetActivityTaskDetailRequset requset)
         {
-            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivityDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ActivityTaskHandler.GetActivityDetail(requset));
         }
 
         /// <summary>
@@ -61,7 +62,8 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetActivityTaskResponse> GetActivity(GetActivityTaskRequset requset)
         {
-            return ApiActuator.Runing(() => _ActivityTaskHandler.GetActivity(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ActivityTaskHandler.GetActivity(requset1));
+
         }
     }
 }

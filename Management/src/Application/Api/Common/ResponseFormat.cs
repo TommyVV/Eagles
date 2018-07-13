@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Eagles.Base
+namespace Eagles.Application.Host.Common
 {
 
     /// <summary>
@@ -9,6 +9,8 @@ namespace Eagles.Base
     /// <typeparam name="T">数据类型</typeparam>
     public class ResponseFormat<T>
     {
+     
+
         /// <summary>
         /// 格式化反馈信息
         /// </summary>
