@@ -8,6 +8,7 @@ using Eagles.Application.Model.ActivityTask.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
 using Eagles.Base;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -42,12 +43,12 @@ namespace Eagles.DomainService.Core
                     AttachType2 = "",
                     AttachType3 = "",
                     AttachType4 = "",
-                    BeginTime = requset.DetailInfo.BeginTime,
+                    BeginTime = requset.DetailInfo.BeginTime.ConvertToDateTime(),
                     ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
                     BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
-                    EndTime = requset.DetailInfo.EndTime,
+                    EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
                     HtmlContent = requset.DetailInfo.Content,
                     ImageUrl = requset.DetailInfo.ImageUrl,
@@ -80,12 +81,12 @@ namespace Eagles.DomainService.Core
                     AttachType2 = "",
                     AttachType3 = "",
                     AttachType4 = "",
-                    BeginTime = requset.DetailInfo.BeginTime,
+                    BeginTime = requset.DetailInfo.BeginTime.ConvertToDateTime(),
                     ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
                     BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
-                    EndTime = requset.DetailInfo.EndTime,
+                    EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
                     HtmlContent = requset.DetailInfo.Content,
                     ImageUrl = requset.DetailInfo.ImageUrl,
@@ -142,12 +143,12 @@ namespace Eagles.DomainService.Core
                 Attach3 = detail.Attach3,
                 Attach4 = detail.Attach4,
               
-                BeginTime = detail.BeginTime,
+                BeginTime = detail.BeginTime.FormartDatetime(),
                 ActivityTaskId = detail.ActivityId,
                 //BranchId = BranchId,
                 //"" = BranchReview,
                 IsComment = detail.CanComment,
-                EndTime = detail.EndTime,
+                EndTime = detail.EndTime.FormartDatetime(),
                // 0 = FromUser,
                 Content = detail.HtmlContent,
                 ImageUrl = detail.ImageUrl,

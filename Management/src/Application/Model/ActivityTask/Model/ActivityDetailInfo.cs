@@ -12,12 +12,12 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime EndTime { get; set; }
+        public string EndTime { get; set; }
 
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTime BeginTime { get; set; }
+        public string BeginTime { get; set; }
         /// <summary>
         /// 内容 json格式 图片 文字
         /// </summary>
