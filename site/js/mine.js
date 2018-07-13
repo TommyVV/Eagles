@@ -61,7 +61,7 @@ function minedel(token,appId){
             if(res.Code == 00){
             	var data=res.Result.ResultUserInfo;
             	$('.main-content-top-name,.lc_name').text(data.Name);//昵称
-				$('.main-content-top-tel,.info-tel').text(data.UserId);//用户id
+				$('.main-content-top-tel,.info-tel').text(data.Telphone);//用户id
 				$('.head-icon').text(data.PhotoUrl);//头像
 				$('.points,.integral').html(data.Score);//积分
 				
@@ -105,7 +105,21 @@ function scroll(obj){
     obj.scrollLeft=0;
   }
 }
-//setInterval("scroll(document.getElementById('scrollobj'))",20);
+unreadMessage(token);
+function unreadMessage(token) {
+	$.ajax({
+		type: "get",
+		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token="+token+"",
+		dataType: "json",
+		success: function(res) {
+			var data = res.Result;
+			if(res.Code == 00) {
+				$('.news_list').text(data.UnreadMessageCount);
+				
+			}
+		}
+	});
+}
 
 
 
