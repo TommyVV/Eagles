@@ -107,10 +107,8 @@ namespace Eagles.DomainService.Core.Score
                     OriScore = x.OriScore
                 }).ToList();
             }
-            else
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            else            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
@@ -161,6 +159,12 @@ namespace Eagles.DomainService.Core.Score
                       j++;
                   });
             }
+            else
+            {
+                response.BranchRank = null;
+            }
+            if(userResult ==null && branckResult==null)
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
         }
     }
