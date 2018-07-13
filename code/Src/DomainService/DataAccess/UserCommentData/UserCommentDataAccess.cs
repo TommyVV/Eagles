@@ -17,7 +17,7 @@ namespace Ealges.DomianService.DataAccess.UserCommentData
         public int EditUserComment(TbUserComment userComment)
         {
             return dbManager.Excuted(@"insert into eagles.tb_user_comment(OrgId,Id,Content,Createtime,UserId,UserName,ReviewStatus,CommentType) 
-value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,CommentType)", userComment);
+value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,@CommentType)", userComment);
         }
 
         public int RemoveUserComment(int messageId, int id)

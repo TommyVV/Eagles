@@ -81,10 +81,8 @@ namespace Eagles.DomainService.Core.UserComment
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = userCommentAccess.RemoveUserComment(request.MessageId, request.Id);
-            if (result <= 0)
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            if (result <= 0)            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
@@ -101,17 +99,20 @@ namespace Eagles.DomainService.Core.UserComment
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             }
             var result = userCommentAccess.GetUserComment(request.CommentType, request.Id, tokens.UserId, request.CommentStatus);
-            response.CommentList = result?.Select(x => new Comment
-            {
-                CommentId = x.MessageId,
-                Id = x.Id,
-                CommentTime = x.ReviewTime.ToString("yyyy-MM-dd"),
-                CommentUserId = x.UserId,
-                CommentUserName = x.UserName,
-                CommentContent = x.Content,
-                CommentStatus = x.ReviewStatus
-            }).ToList();
             if (result != null && result.Count > 0)
+            {
+                response.CommentList = result?.Select(x => new Comment
+                {
+                    CommentId = x.MessageId,
+                    Id = x.Id,
+                    CommentTime = x.ReviewTime.ToString("yyyy-MM-dd"),
+                    CommentUserId = x.UserId,
+                    CommentUserName = x.UserName,
+                    CommentContent = x.Content,
+                    CommentStatus = x.ReviewStatus
+                }).ToList();
+            }
+            else
             {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             }
