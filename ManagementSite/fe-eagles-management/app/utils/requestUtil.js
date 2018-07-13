@@ -60,7 +60,10 @@ let getToken = () => {
       Token
     };
   } else {
-    return redirectLogin();
+    return {
+      Token:"11111"
+    };
+    // return redirectLogin(); // todo
   }
 
   let info = localStorage.info ? JSON.parse(localStorage.info) : {};

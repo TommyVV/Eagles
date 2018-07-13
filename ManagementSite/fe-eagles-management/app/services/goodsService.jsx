@@ -54,6 +54,7 @@ export const createOrEdit = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
+      let { Code, Message } = res.data;
       throw new Error(`${Code} - ${Message}`);
     }
   } catch (e) {
