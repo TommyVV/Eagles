@@ -197,7 +197,8 @@ function submit() {
 		//获取数据，提交数据
 		var dataJson = getTestPaperAnswerJson();
 		var UseTime = 0;
-		$.ajax({
+		window.location.href = 'examResult.html?appId='+appId+'&TestId='+TestId+'&useTime='+useTime+'&TestList='+TestList+''
+		/*$.ajax({
 			type: "post",
 			data: {
 				"TestId": testId, //试卷ID
@@ -213,7 +214,7 @@ function submit() {
 					console.info("提交成功")
 				}
 			}
-		})
+		})*/
 	}
 }
 
