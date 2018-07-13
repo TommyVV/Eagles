@@ -11,8 +11,8 @@
     <link href="./css/mescroll.min.css" rel="stylesheet">
     <style>
     	.mescroll{
-		position: fixed;
-		top: 44px;
+		position: relative;
+		top: 0;
 		bottom: 0;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
@@ -20,6 +20,8 @@
 	</head>
 	<body>
 		<div class="container">
+			<div id="top-nav" class="pc"></div>
+    	<div id="mobilenav"></div>
       <div class="row">
         <!-- 主体内容 -->
         <div class="main_content">

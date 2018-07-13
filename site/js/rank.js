@@ -1,3 +1,7 @@
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
+$('#top-nav,#mobilenav').load('./head.html')
 var token=localStorage.getItem("token");
 var AppId=10000000;
 rank(token,AppId);

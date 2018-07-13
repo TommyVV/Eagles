@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	if(!localStorage.getItem('token')){
+		window.location.href = "login.html"
+	}
+	$('#top-nav,#mobilenav').load('./head.html')
     var code = getRequest('code');
     var tip = getRequest("tip");
     if(code=='1'){

@@ -109,6 +109,7 @@
     <Compile Include="Json\IJsonSerialize.cs" />
     <Compile Include="Json\Implement\JsonSerialize.cs" />
     <Compile Include="TransactionException.cs" />
+    <Compile Include="Utility\Utility.cs" />
     <Compile Include="ValidateVode\Implement\ValidateCode.cs" />
     <Compile Include="ValidateVode\IValidateCode.cs" />
   </ItemGroup>

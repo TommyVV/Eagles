@@ -1,6 +1,11 @@
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
+$('#top-nav,#mobilenav').load('./head.html')
 var mescroll;
 var token=localStorage.getItem("token")
-var appId=10000000
+var appId=getRequest('appId');
+/*var appId=10000000*/
 $('.myNoticeBox').html('')
 mescroll = new MeScroll("mescroll", {
 	down: {

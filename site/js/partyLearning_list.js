@@ -1,17 +1,16 @@
-/*var Moduleid=getRequest('paramModuleid')//获取模块id
+$('#top-nav,#mobilenav').load('./head.html')
+var Moduleid=getRequest('paramModuleid')//获取模块id
 var ModuleType=getRequest('paramModuleType')//获取来源页面id
-var token=localStorage.getItem("token")*/
+var token=localStorage.getItem("token")
+var appId=getRequest('appId')
+//var appId=10000000
 var mescroll;
-var token="123"
-var Moduleid=3//传地址截取的值
-var ModuleType=0//传地址截取的值*/
+//var token="123"
+//var Moduleid=3//传地址截取的值
+//var ModuleType=0//传地址截取的值*/
 var module;
-partyTitle(ModuleType,Moduleid)//来源页面的分类列表
+partyTitle(ModuleType,Moduleid,appId)//来源页面的分类列表
 $('.list-bottom').html('')
-/*if(mescroll)
- {
-	mescroll.destroy();
- }*/
  mescroll = new MeScroll("mescroll", {
  	
 	down: {
@@ -37,12 +36,12 @@ function downcallback()
 function partyLearningfunc(page)
 {
 	if(page.module){
-		partyLearning(page.module,token,page);
+		partyLearning(page.module,token,page,appId);
 	}else{
-		partyLearning(Moduleid,token,page);
+		partyLearning(Moduleid,token,page,appId);
 	}
 }
-function partyLearning(moduleId,token,page) {
+function partyLearning(moduleId,token,page,appId) {
 	$.ajax({
 		type: "post",
 		data: {
@@ -51,7 +50,7 @@ function partyLearning(moduleId,token,page) {
 			"PageSize": page.size,
   			"PageIndex": page.num,
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
 		dataType: "json",
@@ -94,12 +93,12 @@ function partyLearning(moduleId,token,page) {
 	});
 }
 //分类列表的接口
-function partyTitle(ModuleType,moduleId) {
+function partyTitle(ModuleType,moduleId,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"ModuleType": ModuleType,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/AppModule/GetModule",
 		dataType: "json",
@@ -125,7 +124,7 @@ function partyTitle(ModuleType,moduleId) {
 //点击分类重新获取新分类的内容
 $('.dropdown-menu').on('click', 'li', function(e) {
 	module=$(this).attr('ids')
-	partyTitle(ModuleType,module)//来源页面的分类列表
+	partyTitle(ModuleType,module,appId)//来源页面的分类列表
 	$('.list-bottom').html('')
 	if(mescroll){
 		mescroll.destroy();

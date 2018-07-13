@@ -20,7 +20,7 @@ namespace Ealges.DomianService.DataAccess.UserTest
         public List<TbQuestEx> GetTestPaper(int testId)
         {
             return dbManager.Query<TbQuestEx>(@"select a.TestId,a.QuestionSocre,a.PassScore,a.PassAwardScore,a.LimitedTime,c.QuestionId,c.Question
-,c.Multiple,c.MultipleCount,d.AnswerId,
+,c.Multiple,c.MultipleCount,d.AnswerId,a.TestName,a.HtmlDescription,
 d.Answer,d.AnswerType,d.IsRight,d.ImageUrl ,a.UserCount
 from eagles.tb_test_paper a
 join eagles.tb_test_question b on b.TestId = a.TestId

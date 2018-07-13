@@ -1,7 +1,11 @@
+
 $(document).ready(function () {
-    $("#pc-header").load("./head.html")
+	if(!localStorage.getItem('token')){
+		window.location.href = "login.html"
+	}
+    /*$("#pc-header").load("./head.html")*/
     $('#pc-footer').load('./footer.html')
-   
+   $('#top-nav,#mobilenav').load('./head.html')
 });
 var mescroll;
 var appId=getRequest('appId');

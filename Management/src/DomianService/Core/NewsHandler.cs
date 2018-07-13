@@ -10,6 +10,7 @@ using Eagles.Application.Model.News.Requset;
 using Eagles.Application.Model.News.Response;
 using Eagles.Base;
 using Eagles.Base.Json.Implement;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.News;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -43,7 +44,7 @@ namespace Eagles.DomainService.Core
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
                     HtmlContent = requset.Info.Content,
-                    CreateTime = requset.Info.CreateTime,
+                    CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
                     Module = requset.Info.ModuleId,
                     NewsId = requset.Info.NewsId,
                     ImageUrl = requset.Info.NewsImg,
@@ -70,7 +71,7 @@ namespace Eagles.DomainService.Core
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
                     HtmlContent = requset.Info.Content,
-                    CreateTime = requset.Info.CreateTime,
+                    CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
                     Module = requset.Info.ModuleId,
                     //    NewsId = requset.DetailInfo.NewsId,
                     ImageUrl = requset.Info.NewsImg,
@@ -106,7 +107,7 @@ namespace Eagles.DomainService.Core
                 //AuditStatus = AuditStatus.审核通过,
                 AuditStatus = AuditStatus.审核通过,
                 Author = detail.Author,
-                CreateTime = detail.CreateTime,
+                CreateTime = detail.CreateTime.FormartDatetime(),
                 NewsId = detail.NewsId,
                 NewsImg = detail.ImageUrl,
                 NewsName = detail.Title,
@@ -146,7 +147,7 @@ namespace Eagles.DomainService.Core
             {
                 AuditStatus = AuditStatus.审核通过,
                 Author = x.Author,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.FormartDatetime(),
                 NewsId = x.NewsId,
                 NewsImg = x.ImageUrl,
                 NewsName = x.Title,

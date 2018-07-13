@@ -76,8 +76,8 @@
       background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
       background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818); }
 
-.mobile, .pc {
-  display: none; }
+/*.mobile, .pc {
+  display: none; }*/
 
 .pc-wrap {
   width: 1000px;

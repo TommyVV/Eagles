@@ -1,12 +1,13 @@
-
+$('#top-nav,#mobilenav').load('./head.html')
 /* 
  1，涉及用户token的地方都需要验证
  2，提交答案时用户未登录，则跳转到登录页面，登录后 回跳回来自动提交答案，代码已写完 需要联调验证
  * 
  * */
-var newsIds=getRequest('newsId')//获取来源d的新闻id
+var newsIds=getRequest('NewsId')//获取来源d的新闻id
 var token = localStorage.getItem('token');
-var appId = 10000000
+var appId = getRequest('appId');
+//var appId = 10000000
 addNewsViewCount(newsIds,token,appId)//更新新闻阅读量(页面一打开调用一下)
 getNewsDetail(newsIds,token,appId); //加载页面详情
 var TestId = localStorage.getItem('TestId'); //试卷ID

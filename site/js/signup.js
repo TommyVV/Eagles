@@ -1,3 +1,4 @@
+$('#top-nav,#mobilenav').load('./head.html')
 $('.btn-signup').on('click', function (e) {
     e.preventDefault();
     let password = $('#inputPassword').val();

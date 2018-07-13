@@ -19,8 +19,8 @@ html, body {
     background-color: #f8f8f8;
     min-height: 100%; } }
 
-.myNoticeBox {
-  padding: 0.81067rem 0.74667rem; }
+/*.myNoticeBox {
+  padding: 0.81067rem 0.74667rem; }*/
   .myNoticeBox .item {
     margin-bottom: 0.53333rem;
     padding: 0.64rem 0.74667rem 0.576rem;
