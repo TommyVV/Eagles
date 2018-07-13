@@ -55,7 +55,9 @@ namespace Eagles.DomainService.Core.UserTest
                     AnswerId = x.AnswerId,
                     Answer = x.Answer,
                     IsRight = x.IsRight,
-                    ImageUrl = x.ImageUrl
+                    ImageUrl = x.ImageUrl,
+                    UserCount = x.UserCount
+                    
                 };
                 var nowQuestion = questions.Find(y => y.QuestionId == x.QuestionId);
                 if (nowQuestion == null)
@@ -85,6 +87,7 @@ namespace Eagles.DomainService.Core.UserTest
             response.UserCount = resultTest[0].UserCount;
             response.HtmlContent = resultTest[0].HtmlDescription;
             response.TestPaperTitle = resultTest[0].TestName;
+            response.IsImageVote = resultTest[0].IsImageVote;
             return response;
         }
 

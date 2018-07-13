@@ -43,6 +43,11 @@ namespace Eagles.Application.Model.News.GetTestPaper
         public string TestPaperTitle { get; set; }
 
         /// <summary>
+        /// 是否是图片投票
+        /// </summary>
+        public bool IsImageVote { get; set; }
+
+        /// <summary>
         /// 题目List
         /// </summary>
         public List<AppQuestion> TestList { get; set; }

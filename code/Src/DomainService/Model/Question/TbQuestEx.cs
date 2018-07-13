@@ -84,5 +84,10 @@
         /// 试卷名称
         /// </summary>
         public string TestName { get; set; }
+
+        /// <summary>
+        /// 是否是图片投票
+        /// </summary>
+        public bool IsImageVote { get; set; }
     }
 }

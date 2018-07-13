@@ -35,5 +35,10 @@ namespace Eagles.Application.Model.News.GetTestPaper
         /// 选项图片
         /// </summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 答案选择人数
+        /// </summary>
+        public int UserCount { get; set; }
     }
 }
