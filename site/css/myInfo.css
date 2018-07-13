@@ -86,9 +86,11 @@ html, body {
           color: white; } }
 
 @media screen and (min-width: 768px) {
+	
   .container {
     width: 1200px;
     margin: 0 auto; }
+    .pc-values{margin-top:64px;}
   .myInfoModal {
     background-color: #f8f8f8;
     min-height: 100%;
@@ -140,9 +142,9 @@ html, body {
         height: 140px; }
         .myInfoBox .item .photo .right img {
           display: inline-block;
-          height: 114px;
-          width: 114px;
-          border-radius: 50%; }
+          height: 78px;
+          width: 78px;
+          border-radius: 50%;margin-bottom:8px; }
       .myInfoBox .item .normal {
         height: 40px; }
       .myInfoBox .item .button {
