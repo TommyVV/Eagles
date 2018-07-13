@@ -5,6 +5,7 @@ using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     public class TestPaperController : ApiController
@@ -26,7 +27,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetSubjectDetailResponse> GetSubjectDetail(GetSubjectDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.GetSubjectDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.GetSubjectDetail(requset));
         }
 
 
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveSubject(RemoveSubjectRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.RemoveSubject(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.RemoveSubject(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<int> EditSubject(EditSubjectRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.EditSubject(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.EditSubject(requset));
         }
         #endregion
 
@@ -65,7 +66,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<ResponseBase> EditExercises(EditExercisesRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.EditExercises(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.EditExercises(requset));
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveExercises(RemoveExercisesRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.RemoveExercises(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.RemoveExercises(requset));
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetExercisesDetailResponse> GetExercisesDetail(GetExercisesDetailRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.GetExercisesDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.GetExercisesDetail(requset));
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetExercisesResponse> GetExercises(GetExercisesRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.GetExercises(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.GetExercises(requset));
         }
 
         #endregion
@@ -114,7 +115,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<int> EditOption(EditOptionRequset requset)
         {
-            return ApiActuator.Runing(() => _testpaperHandler.EditOption(requset));
+            return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.EditOption(requset));
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveOption(RemoveOptionRequset requset)
         {
-            return ApiActuator.Runing(() => _testpaperHandler.RemoveOption(requset));
+            return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.RemoveOption(requset));
         }
 
       
@@ -142,7 +143,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetRandomSubjectResponse> GetRandomSubject(GetRandomSubjectRequset requset)
         {
-            return ApiActuator.Runing(() =>_testpaperHandler.GetRandomSubject(requset));
+            return ApiActuator.Runing(requset, (requset1) =>_testpaperHandler.GetRandomSubject(requset));
         }
 
     }

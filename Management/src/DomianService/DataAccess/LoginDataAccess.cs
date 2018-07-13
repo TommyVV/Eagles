@@ -70,5 +70,11 @@ VALUES
 
  ", tbUserToken);
         }
+
+        public TbUserToken GetUserToken(string token, int tokenType)
+        {
+            return dbManager.QuerySingle<TbUserToken>(@" select OrgId,BranchId,UserId,Token,CreateTime,ExpireTime,TokenType FROM eagles.tb_user_token 
+where Token=@Token AND TokenType=@TokenType", new { Token = token, TokenType = tokenType });
+        }
     }
 }

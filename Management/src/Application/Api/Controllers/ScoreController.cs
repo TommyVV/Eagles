@@ -9,6 +9,7 @@ using Eagles.Application.Model.ScoreSetUp.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -32,7 +33,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditScoreSetUp(EditScoreSetUpRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.EditScoreSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.EditScoreSetUp(requset));
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveScoreSetUp(RemoveScoreSetUpRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.RemoveScoreSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.RemoveScoreSetUp(requset));
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetScoreSetUpDetailResponse> GetScoreSetUpDetail(GetScoreSetUpDetailRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.GetScoreSetUpDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.GetScoreSetUpDetail(requset));
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetScoreSetUpResponse> GetScoreSetUp(GetScoreSetUpRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.GetScoreSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.GetScoreSetUp(requset));
         }
 
 
@@ -77,7 +78,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetScoreRankDetailResponse> GetScoreRankDetail(GetScoreRankDetailRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.GetScoreRankDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.GetScoreRankDetail(requset));
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetScoreRankResponse> GetScoreRank(GetScoreRankRequset requset)
         {
-            return ApiActuator.Runing(() => _ScoreHandler.GetScoreRank(requset));
+            return ApiActuator.Runing(requset, (requset1) => _ScoreHandler.GetScoreRank(requset));
         }
     }
 }

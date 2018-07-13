@@ -9,6 +9,7 @@ using Eagles.Application.Model.Operator.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -32,7 +33,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditOperGroup(EditAuthorityGroupRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.EditOperGroup(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.EditOperGroup(requset));
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveOperGroup(RemoveAuthorityGroupInfoRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.RemoveOperGroup(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.RemoveOperGroup(requset));
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetAuthorityGroupDetailResponse> GetOperGroupDetail(GetAuthorityGroupDetailRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.GetOperGroupDetail(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetOperGroupDetail(requset));
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetAuthorityGroupResponse> GetOperGroupList(GetAuthorityGroupRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.GetOperGroupList(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetOperGroupList(requset));
         }
 
 
@@ -77,7 +78,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetAuthorityGroupSetUpResponse> GetAuthorityGroupSetUp(GetAuthorityGroupSetUpRequest requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.GetAuthorityGroupSetUp(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetAuthorityGroupSetUp(requset));
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditAuthorityGroupSetUp(EditAuthorityGroupSetUpRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.EditAuthorityGroupSetUp(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.EditAuthorityGroupSetUp(requset));
         }
     }
 }

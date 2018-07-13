@@ -5,6 +5,7 @@ using Eagles.Application.Model.PartyMember.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditPartyMember(EditUserInfoDetailsRequest requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.EditUserInfoDetails(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.EditUserInfoDetails(requset));
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemovePartyMember(RemoveUserInfoDetailsRequest requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.RemoveUserInfoDetails(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.RemoveUserInfoDetails(requset));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetUserInfoDetailResponse> GetPartyMemberDetail(GetUserInfoDetailRequest requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.GetUserInfoDetail(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.GetUserInfoDetail(requset));
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetPartyMemberResponse> GetPartyMember(GetPartyMemberRequest requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.GetPartyMemberList(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.GetPartyMemberList(requset));
         }
 
 
@@ -74,7 +75,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.RemoveAuthorityUserSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.RemoveAuthorityUserSetUp(requset));
         }
 
 
@@ -86,7 +87,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetAuthorityUserSetUpResponse> GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.GetAuthorityUserSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.GetAuthorityUserSetUp(requset));
         }
 
 
@@ -98,7 +99,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
         {
-            return ApiActuator.Runing(() => _partyMemberHandler.CreateAuthorityUserSetUp(requset));
+            return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.CreateAuthorityUserSetUp(requset));
         }
     }
 }

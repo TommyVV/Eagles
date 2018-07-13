@@ -5,6 +5,7 @@ using Eagles.Base;
 using Eagles.DomainService.Core.FileUpload;
 using Eagles.Interface.Core.FileUpload;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
             //set allow post 
             
             HttpContext.Current.Response.Headers.Add("Allow", "POST");
-            return ApiActuator.Runing(() => fileUpload.Process());
+            return ApiActuator.Runing(new object(), (requset1) => fileUpload.Process());
         }
     }
 }

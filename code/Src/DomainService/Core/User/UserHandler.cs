@@ -238,9 +238,10 @@ namespace Eagles.DomainService.Core.User
                     Title = x.Title,
                     Content = x.Content,
                     IsRead = x.IsRead,
-                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                     UserId = x.UserId,
-                    FromUser = x.FromUser
+                    FromUser = x.FromUser,
+                    TargetUrl = x.TargetUrl
                 }).ToList();
             }
             else

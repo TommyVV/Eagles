@@ -22,8 +22,8 @@ namespace Ealges.DomianService.DataAccess.Util
         public int CreateUserNotice(TbUserNotice userNotice)
         {
             //增加用户通知
-            return dbManager.Excuted(@"insert into `eagles`.`tb_user_notice`(`OrgId`,`NewsType`,`Title`,`UserId`,`Content`,`IsRead`,`FromUser`,`CreateTime`)
-VALUES (@OrgId,@NewsType,@Title,@UserId,@Content,@IsRead,@FromUser,@CreateTime) ;", userNotice);
+            return dbManager.Excuted(@"insert into `eagles`.`tb_user_notice`(`OrgId`,`NewsType`,`Title`,`UserId`,`Content`,`IsRead`,`FromUser`,`CreateTime`,`TargetUrl`)
+VALUES (@OrgId,@NewsType,@Title,@UserId,@Content,@IsRead,@FromUser,@CreateTime,@TargetUrl) ;", userNotice);
         }
 
         public int CreateScoreLs(TbUserScoreTrace userScoreTrace)

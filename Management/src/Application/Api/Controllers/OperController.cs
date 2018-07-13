@@ -5,6 +5,7 @@ using Eagles.Application.Model.Operator.Response;
 using Eagles.Base;
 using Eagles.Interface.Core;
 
+using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> EditOperator(EditOperatorRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.EditOper(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.EditOper(requset));
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<bool> RemoveOperator(RemoveOperatorRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.RemoveOper(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.RemoveOper(requset));
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetOperatorDetailResponse> GetOperatorDetail(GetOperatorDetailRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.GetOperDetail(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetOperDetail(requset));
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<GetOperatorResponse> GetOperator(GetOperatorRequset requset)
         {
-             return ApiActuator.Runing(() =>_OperatorHandler.GetOperList(requset));
+             return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetOperList(requset));
         }
     }
 }

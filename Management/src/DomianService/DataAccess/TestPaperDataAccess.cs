@@ -203,21 +203,26 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
         public int EditExercises(TbTestPaper info)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_test_paper`
-            SET
-                `OrgId` = @OrgId,
-                `BranchId` = @BranchId,
-                `TestName` = @TestName,
-                `HasReward` = @HasReward,
-                `QuestionSocre` = @QuestionSocre,
-                `PassScore` = @PassScore,
-                `HasLimitedTime` = @HasLimitedTime,
-                `LimitedTime` = @LimitedTime,
-                `HtmlDescription` = @HtmlDescription,
-                `OperId` = @OperId,
-                `CreateTime` = @CreateTime,
-                `EditTime` = @EditTime,
-                `Status` = @Status
-                WHERE `TestId` = @TestId;
+SET
+`OrgId` = @OrgId,
+`BranchId` = @BranchId,
+`TestId` = @TestId,
+`TestName` = @TestName,
+`HasReward` = @HasReward,
+`QuestionSocre` = @QuestionSocre,
+`PassScore` = @PassScore,
+`HasLimitedTime` = @HasLimitedTime,
+`LimitedTime` = @LimitedTime,
+`HtmlDescription` = @HtmlDescription,
+`OperId` = @OperId,
+`EditTime` = @EditTime,
+`Status` = @Status,
+`TestType` = @TestType,
+`PassAwardScore` = @PassAwardScore,
+`UserCount` = @UserCount
+WHERE 
+`TestId` = @TestId
+
             ", info);
         }
 
@@ -237,7 +242,10 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
 `OperId`,
 `CreateTime`,
 `EditTime`,
-`Status`)
+`Status`,
+`TestType`,
+`PassAwardScore`,
+`UserCount`)
 VALUES
 (@OrgId,
 @BranchId,
@@ -250,9 +258,13 @@ VALUES
 @LimitedTime,
 @HtmlDescription,
 @OperId,
-@CreateTime,
-@EditTime,
-@Status);
+now(),
+now(),
+@Status,
+@TestType,
+@PassAwardScore,
+@UserCount);
+
 
 select last_insert_id(); 
 ", info);
