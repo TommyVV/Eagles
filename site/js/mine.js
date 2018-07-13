@@ -1,9 +1,8 @@
-$(document).ready(function () {
+$('#top-nav,#mobilenav').html('')
+$('#top-nav,#mobilenav').load('./head.html')
 	if(!localStorage.getItem('token')){
 		window.location.href = "login.html"
 	}
-	
-	$('#pc-header,#mobilenav').load('./head.html')
     //积分换购
     $("#point-part").click(function () {
         window.location.href = 'exchange.html?appId='+appId+''
@@ -11,6 +10,19 @@ $(document).ready(function () {
     //兑换记录
     $("#record").click(function () {
         window.location.href = 'exchangeRecord.html?appId='+appId+''
+    });
+    //我的文章
+    $(".lw_acile").click(function () {
+        window.location.href = 'myArticle.html?appId='+appId+''
+    });
+    //我的文章
+    $(".lw_muscore").click(function () {
+        window.location.href = 'rank.html?appId='+appId+''
+    });
+    
+    //我的通知
+    $(".lw_news").click(function () {
+        window.location.href = 'myNotice.html?appId='+appId+''
     });
     //我的任务
     $("#task").click(function () {
@@ -23,11 +35,8 @@ $(document).ready(function () {
         }
         init() {
             if (!this.isMobile) {
-                $('.mobile').hide();
+               $('.mobile').hide();
                 $('.pc').show();
-                $('#top-nav').load('head.html', () => {
-
-                })
                 $('#left-nav').load('leftNav.html', () => {
 
                 })
@@ -47,7 +56,8 @@ $(document).ready(function () {
     $(window).resize(function () {
         new CalculateScreen();
     })
-});
+
+
 //var token=localStorage.getItem("token")
 var token=localStorage.getItem('token')
 //var appId=getRequest('appId');

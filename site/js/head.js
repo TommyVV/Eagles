@@ -1,33 +1,11 @@
-(function ($) {
-    let queryStr = window.location.search.substring(1);
-    if (!queryStr) return;
-    let queryStrArr = queryStr.split('&');
-    let query = {};
-    let pages = { index: 0, partyLearning: 1, partyWork: 2, mine: 3 };
-    queryStrArr.forEach((i) => {
-        let queryArr = i.split('=');
-        query[queryArr[0]] = queryArr[1];
-    })
-    $('#level-one > li').removeClass('active').eq(pages[query.page]).addClass('active');
-    $('.navbar-right .glyphicon-search').on('click', function() {
-	$('.navbar-header').hide();
-	$('.search-modal').css('display', 'flex').show();
-})
-$('#search-cancle').on('click', function() {
-	$('.navbar-header').show();
-	$('.search-modal').hide();
-})
-$('.collapsed').click(function(){
-	console.log(8)
-	$('.operate').show();
-})
 
-$('.navbar-search .search-cancle').on('click', function() {
-	$('.navbar-right .glyphicon-search').show();
-	$('.navbar-search').hide();
+$('.navbar-header').on('click', '.collapsed', function(e) {
+	if($('.operate').is(':hidden')){
+		$('.operate').show();
+	}else{
+		$('.operate').hide();
+	}
 })
-/*$("[data-toggle='popover']").popover();*/
-})(jQuery)
 
 //导航切换
 function pcnavList(id) {
