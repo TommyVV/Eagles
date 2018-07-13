@@ -83,6 +83,8 @@ namespace Eagles.DomainService.Core.UserTest
             response.LimitedTime = resultTest[0].LimitedTime;
             response.TestList = questions;
             response.UserCount = resultTest[0].UserCount;
+            response.HtmlContent = resultTest[0].HtmlDescription;
+            response.TestPaperTitle = resultTest[0].TestName;
             return response;
         }
 

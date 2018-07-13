@@ -33,6 +33,16 @@ namespace Eagles.Application.Model.News.GetTestPaper
         public int UserCount { get; set; }
 
         /// <summary>
+        /// html内容
+        /// </summary>
+        public string HtmlContent { get; set; }
+
+        /// <summary>
+        /// 试卷标题
+        /// </summary>
+        public string TestPaperTitle { get; set; }
+
+        /// <summary>
         /// 题目List
         /// </summary>
         public List<AppQuestion> TestList { get; set; }

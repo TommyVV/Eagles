@@ -74,5 +74,15 @@
         /// 用户参与次数
         /// </summary>
         public int UserCount { get; set; }
+
+        /// <summary>
+        /// 试卷描述
+        /// </summary>
+        public string HtmlDescription { get; set; }
+
+        /// <summary>
+        /// 试卷名称
+        /// </summary>
+        public string TestName { get; set; }
     }
 }
