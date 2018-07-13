@@ -1,10 +1,16 @@
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
+$('#top-nav,#mobilenav').load('./head.html')
 var NewsTypes=getRequest('NewsType');
-//var token=localStorage.getItem("token")
-var token="abc";
+var appId=getRequest('appId');
+var token=localStorage.getItem("token")
+//var token="abc";
 var mescroll;
 var check_value;
 var zlValue;
 var bqValue;
+var dyValue;
 $('.item').html('')
 mescroll = new MeScroll("mescroll", {
 	down: {
@@ -31,25 +37,30 @@ function partyLearningfunc(page)
 	
 	if(page.check_value){
 		if(check_value == zlValue) {
-	    	myAricle(0,token,page);
+	    	myAricle(0,token,page,appId);
 	    }else if(check_value == bqValue) {
-	    	myAricle(2,token,page);
+	    	myAricle(2,token,page,appId);
+	    }else if(check_value == dyValue){
+	    	myAricle(3,token,page,appId);
 	    }else {
-	    	myAricle(1,token,page);
+	    	myAricle(1,token,page,appId);
 	    }
 	}else{
 		if(NewsTypes==undefined){
 			$('.select_txt').text("文章");
-			myAricle(0,token,page);
+			myAricle(0,token,page,appId);
 		}else if(NewsTypes==0){
 			$('.select_txt').text("文章");
-			myAricle(0,token,page);
+			myAricle(0,token,page,appId);
 		}else if(NewsTypes==1){
 			$('.select_txt').text("心得体会");
-			myAricle(1,token,page);
+			myAricle(1,token,page,appId);
 		}else if(NewsTypes==2){
 			$('.select_txt').text("会议");
-			myAricle(2,token,page);
+			myAricle(2,token,page,appId);
+		}else if(NewsTypes==3){
+			$('.select_txt').text("党员申请书");
+			myAricle(3,token,page,appId);
 		}
 	}
 	
@@ -65,13 +76,13 @@ $(document).click(function(event){
     $('.option').hide();                                    
 });
 
-function myAricle(NewsType,token,page) {
+function myAricle(NewsType,token,page,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"NewsType": NewsType,
 			"Token": token,
-			"AppId": 10000000,
+			"AppId": appId,
 			"PageSize": page.size,
   		  	"PageIndex": page.num
 		},
@@ -111,6 +122,7 @@ $('.option').on('click', 'li', function(e) {
     check_value=$(this).text();
     zlValue = $('.option li:eq(1)').html();
     bqValue = $('.option li:eq(2)').html();
+    dyValue = $('.option li:eq(3)').html();
     $(this).parent().siblings(".select_txt").text(check_value);
     $("#select_value").val(check_value);
     $('.item').html('')

@@ -12,8 +12,8 @@
     <link href="./css/mescroll.min.css" rel="stylesheet">
     <style>
     	.mescroll{
-		position: fixed;
-		top: 44px;
+		position: relative;
+		top: 16px;
 		bottom: 0;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
@@ -21,9 +21,11 @@
 </head>
 
 <body>
+	<div id="top-nav" class="pc"></div>
+    <div id="mobilenav"></div>
     <div class="container">
         <!-- 我的通知页 -->
-        <div class="row myNoticeModal mescroll" id="mescroll">
+        <div class="myNoticeModal mescroll" id="mescroll">
             <div class="col-md-offset-3 col-md-6 myNoticeBox">
                 
             </div>

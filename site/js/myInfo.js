@@ -1,13 +1,21 @@
-$('#pc-header').load('./head.html')
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
+$('#top-nav,#mobilenav').load('head.html')
 $('#pc-footer').load('./footer.html')
-var token="abc"
-myInfo(token)//个人信息
-function myInfo(token){
+var appId=getRequest('appId');
+var token=localStorage.getItem("token")
+myInfo(token,appId)//个人信息
+$('.img_float').click(function(){
+	console.log(8)
+	$('.operate').show();
+})
+function myInfo(token,appId){
 	$.ajax({
         type: "post",
 		data: {
 			  "Token": token,
-			  "AppId": 10000000
+			  "AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
@@ -93,7 +101,7 @@ $('#fileupload').fileupload({
 		data: {
 			   "RequestUserInfo":JSON.stringify(RequestUserInfo),
 			  "Token": token,
-			  "AppId": 10000000
+			  "AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",

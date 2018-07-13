@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    $("#pc-header").load("./head.html")
+	if(!localStorage.getItem('token')){
+		window.location.href = "login.html"
+	}
+	$('#top-nav,#mobilenav').load('./head.html')
     $('#pc-footer').load('./footer.html')
     var winWidth = document.body.clientWidth;
     if (winWidth <= 768) {
@@ -7,20 +10,18 @@ $(document).ready(function () {
         var marginLeft = (winWidth - parseInt(winWidth / goodsItemWidth) * goodsItemWidth) / 2;
         $('.goods-area').css('padding-left', marginLeft + 'px');
     }
-
-    
-
 });
+var appId=getRequest('appId');
  $(".search-btn").click(function () {
-    exchange();
+    exchange(appId);
  });
-exchange();//积分兑换接口
-function exchange() {
+exchange(appId);//积分兑换接口
+function exchange(appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"ProductName": $('.search-input').val(),
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Product/GetProduct",
 		dataType: "json",
@@ -43,6 +44,6 @@ function exchange() {
 }
 //去看看
     $('.goods-area').on('click', '.item-btn', function(e) {
-    		var pro=$(this).attr('urls');
-        window.location.href = 'goodsDetail.html?productId='+pro+'';
+    	var pro=$(this).attr('urls');
+        window.location.href = 'goodsDetail.html?productId='+pro+'&appId='+appId+'';
     });

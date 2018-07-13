@@ -1,4 +1,8 @@
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+$('#top-nav,#mobilenav').load('./head.html')
 //文章发布
 var token=localStorage.getItem("token")
 //var appId=localStorage.getItem("token")

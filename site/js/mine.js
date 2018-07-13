@@ -1,11 +1,16 @@
 $(document).ready(function () {
+	if(!localStorage.getItem('token')){
+		window.location.href = "login.html"
+	}
+	
+	$('#pc-header,#mobilenav').load('./head.html')
     //积分换购
     $("#point-part").click(function () {
-        window.location.href = 'exchange.html'
+        window.location.href = 'exchange.html?appId='+appId+''
     });
     //兑换记录
     $("#record").click(function () {
-        window.location.href = "exchangeRecord.html"
+        window.location.href = 'exchangeRecord.html?appId='+appId+''
     });
     //我的任务
     $("#task").click(function () {
@@ -44,8 +49,9 @@ $(document).ready(function () {
     })
 });
 //var token=localStorage.getItem("token")
-var token="abc"
-var appId=10000000;
+var token=localStorage.getItem('token')
+//var appId=getRequest('appId');
+var appId=10000000
 minedel(token,appId);
 function minedel(token,appId){
 	$.ajax({

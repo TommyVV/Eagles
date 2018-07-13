@@ -1,3 +1,7 @@
+if(!localStorage.getItem('token')){
+	window.location.href = "login.html"
+}
+$('#top-nav,#mobilenav').load('./head.html')
 var TestId=getRequest('TestId')
 var TestList=getRequest('TestList')
 var UseTime=getRequest('UseTime')
