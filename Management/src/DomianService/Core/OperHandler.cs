@@ -86,7 +86,7 @@ namespace Eagles.DomainService.Core
                 Status = detail.Status,
                  Password=detail.Password,
                 AuthorityGroupId = detail.GroupId,
-                CreateTime = detail.CreateTime,
+                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
                 OperId = detail.OperId,
                 OperName = detail.OperName,
                 
@@ -108,7 +108,7 @@ namespace Eagles.DomainService.Core
             response.TotalCount = totalCount;
             response.List = list.Select(x => new Operator
             {
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                 OperId = x.OperId,
                 OperName = x.OperName,
                // AuthorityGroupName="",

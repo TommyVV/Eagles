@@ -21,7 +21,7 @@ namespace Eagles.Application.Model.Organization.Model
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 省id

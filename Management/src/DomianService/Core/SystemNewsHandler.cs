@@ -38,7 +38,7 @@ namespace Eagles.DomainService.Core
                     NewsContent = requset.Info.NewsContent,
                     NewsName = requset.Info.NewsName,
                     NewsType = requset.Info.NewsType,
-                    NoticeTime = requset.Info.NoticeTime,
+                    NoticeTime = Convert.ToDateTime(requset.Info.NoticeTime),
                     OperId = requset.Info.OperId,
                     RepeatTime = requset.Info.RepeatTime,
                     Status = requset.Info.Status
@@ -57,7 +57,7 @@ namespace Eagles.DomainService.Core
                     NewsContent = requset.Info.NewsContent,
                     NewsName = requset.Info.NewsName,
                     NewsType = requset.Info.NewsType,
-                    NoticeTime = requset.Info.NoticeTime,
+                    NoticeTime = Convert.ToDateTime(requset.Info.NoticeTime),
                     OperId = requset.Info.OperId,
                     RepeatTime = requset.Info.RepeatTime,
                     Status = requset.Info.Status
@@ -91,7 +91,7 @@ namespace Eagles.DomainService.Core
                 NewsContent = x.NewsContent,
                 NewsName = x.NewsName,
                 NewsType = x.NewsType,
-                NoticeTime = x.NoticeTime,
+                NoticeTime = x.NoticeTime.ToString("yyyy-MM-dd"),
                 OperId = x.OperId,
                 RepeatTime = x.RepeatTime,
                 Status = x.Status
@@ -116,7 +116,7 @@ namespace Eagles.DomainService.Core
                 NewsContent = detail.NewsContent,
                 NewsName = detail.NewsName,
                 NewsType = detail.NewsType,
-                NoticeTime = detail.NoticeTime,
+                NoticeTime = detail.NoticeTime.ToString("yyyy-MM-dd"),
                 OperId = detail.OperId,
                 RepeatTime = detail.RepeatTime,
                 Status = detail.Status

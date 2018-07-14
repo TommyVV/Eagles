@@ -3,14 +3,40 @@ $(document).ready(function () {
 		window.location.href = "login.html"
 	}
 	$('#pc-header,#mobilenav').load('./head.html')
-    $(".sub-btn").click(function () {
-        window.location.href = "exchangeResult.html?code=1";
-    });
+    
 });
 var token=localStorage.getItem("token")
 var appId=getRequest('appId');
 var productId=getRequest('productId')//获取产品
 goodDetal(productId,appId)
+$(".sub-btn").click(function () {
+	$.ajax({
+		type: "post",
+		data: {
+			 "ProductId": productIds,
+			 //"ProductId": $('.overview-props-price span').text(),
+			  "Count": $('.num span').text(),
+			  "Address": "string",
+			  "Province": "string",
+			  "City": "string",
+			  "District": "string",
+			  "Token": token,
+			  "AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/Score/AppScoreExchange",
+		dataType: "json",
+		success: function(res) {
+			//$('.goods-area').html('')
+			var data = res.Result;
+			if(res.Code == 00) {
+				window.location.href = "exchangeResult.html?code=1";
+			}else{
+				window.location.href = "exchangeResult.html?code=0";
+			}
+		}
+	});
+    
+});
 function goodDetal(productIds,appId) {
 	$.ajax({
 		type: "post",

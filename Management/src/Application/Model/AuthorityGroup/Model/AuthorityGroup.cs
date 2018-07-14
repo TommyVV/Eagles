@@ -26,7 +26,7 @@ namespace Eagles.Application.Model.AuthorityGroup.Model
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         ///// <summary>
         ///// 机构名称

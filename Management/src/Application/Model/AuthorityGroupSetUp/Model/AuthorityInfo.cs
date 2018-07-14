@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.AuthorityGroupSetUp.Model
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime EditTime { get; set; }
+        public string EditTime { get; set; }
         /// <summary>
         /// 功能id
         /// </summary>

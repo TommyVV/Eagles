@@ -43,7 +43,7 @@
     text-align: right;
     color: #949494;
     font-size: 0.512rem;
-    padding: 0.768rem 0;
+    padding: 0.869rem 0;
     border-bottom: 1px solid #eee;
     }
     .main_content .header .author-box .study-time {
@@ -111,7 +111,7 @@
       content: "";
       display: inline-block;
       height: 12px;
-      margin: 2px;
+      margin: 1px;
       width: 12px; }
     .footer .content .answer .demo--checkbox.demo--radioInput, .footer .content .answer .demo--radio:checked + .demo--checkbox.demo--radioInput:after {
       border-radius: 0; }

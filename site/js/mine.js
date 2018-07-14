@@ -106,15 +106,15 @@ function getScrollNews(token,appId){
         success:function(res){
         	$('#scrollobj').html('');
             if(res.Code == 00){
-            	var data=res.Result.SystemNewsList;
-            	var divs='';
-            	for(var i=0;i<data.length;i++){
-            		divs+=''+data[i].NewsName+'';
-            	}
-            	$('#scrollobj').append(divs)
-            	setInterval("scroll(document.getElementById('scrollobj'))",20);
+	            	var data=res.Result.SystemNewsList;
+	            	var divs='';
+	            	for(var i=0;i<data.length;i++){
+	            		divs+=''+data[i].NewsName+'';
+	            	}
+	            	$('#scrollobj').append(divs)
+	            	setInterval("scroll(document.getElementById('scrollobj'))",20);
             }else{
-            	
+            		$('#scrollobj').hide()
             }
         }
 	})
