@@ -9,11 +9,11 @@ var token=localStorage.getItem("token")
 var appId=getRequest('appId');
 var productId=getRequest('productId')//获取产品
 goodDetal(productId,appId)
-$(".sub-btn").click(function () {
+$(".sub-btn,.overview-props-btn").click(function () {
 	$.ajax({
 		type: "post",
 		data: {
-			 "ProductId": productIds,
+			 "ProductId": productId,
 			 //"ProductId": $('.overview-props-price span').text(),
 			  "Count": $('.num span').text(),
 			  "Address": "string",
