@@ -8,11 +8,13 @@ import orgReducer from "./orgReducer";
 import newsReducer from "./newsReducer";
 import questionReducer from "./questionReducer";
 import programaReducer from "./programaReducer";
+import exReducer from "./exReducer";
 
 const reducer = combineReducers({
   appReducer,
   userReducer,
   questionReducer,
+  exReducer,
   programaReducer,
   goodsReducer,
   orgReducer,

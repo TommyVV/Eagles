@@ -13,6 +13,11 @@ const questionType = {
   SAVE_INFO: "SAVE_INFO", //保存详情
   CLEAR_INFO: "CLEAR_INFO" // 清空详情
 };
+// 习题
+const exType = {
+  SAVE_INFO: "SAVE_INFO", //保存详情
+  CLEAR_INFO: "CLEAR_INFO" // 清空详情
+};
 // 商品
 const goodsType = {
   SAVE_INFO: "SAVE_INFO", //保存商品详情
@@ -38,6 +43,7 @@ export const actionType = {
   appType,
   userType,
   questionType,
+  exType,
   goodsType,
   programaType,
   orgType,

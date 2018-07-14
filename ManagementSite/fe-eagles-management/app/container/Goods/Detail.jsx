@@ -17,6 +17,7 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/goodsService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
+import { fileSize } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/goodsAction";
 // 引入编辑器以及编辑器样式
 import BraftEditor from "braft-editor";
@@ -89,15 +90,17 @@ class Base extends Component {
     // console.log('上传图片记录表单数据 - ', values, this.props.share)
   };
   beforeUpload(file) {
-    const isJPG = file.type === "image/jpeg";
-    if (!isJPG) {
-      message.error("只能上传图片!");
+    const reg = /^image\/(png|jpeg|jpg)$/;
+    const type = file.type;
+    const isImage = reg.test(type);
+    if (!isImage) {
+      message.error('只支持格式为png,jpeg和jpg的图片!');
     }
-    const isLt5M = file.size / 1024 / 1024 < 5;
-    if (!isLt5M) {
-      message.error("图片必须小于5M!");
+
+    if (file.size > fileSize) {
+      message.error("图片必须小于10M");
     }
-    return isJPG && isLt5M;
+    return isImage && file.size <=fileSize;
   }
   // 商品缩略图 或者  详情图
   onChangeImage = (imageTitle, info) => {
@@ -165,11 +168,11 @@ class Base extends Component {
       initialContent: goods.Content,
       media: {
         validateFn: file => {
-          return file.size < 1024 * 1024 * 5;
+          return file.size < fileSize;
         },
-        uploadFn: async  (file) => {
+        uploadFn: async file => {
           // const res=await uploadFile(file);
-          debugger
+          debugger;
         }
       },
       onChange: (Content, info) => {

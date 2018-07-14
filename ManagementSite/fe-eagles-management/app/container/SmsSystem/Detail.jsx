@@ -16,6 +16,7 @@ import { hashHistory } from "react-router";
 import { getOrgInfoById, createOrEditOrg } from "../../services/orgService";
 import { getAllArea } from "../../services/areaService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
+import { fileSize } from "../../constants/config/appconfig";
 import { saveOrgInfo, clearInfo } from "../../actions/orgAction";
 import "./style.less";
 
@@ -94,15 +95,17 @@ class Base extends Component {
     return areaParam;
   }
   beforeUpload(file) {
-    const isJPG = file.type === "image/jpeg";
-    if (!isJPG) {
-      message.error("只能上传图片!");
+    const reg = /^image\/(png|jpeg|jpg)$/;
+    const type = file.type;
+    const isImage = reg.test(type);
+    if (!isImage) {
+      message.error("只支持格式为png,jpeg和jpg的图片!");
     }
-    const isLt5M = file.size / 1024 / 1024 < 5;
-    if (!isLt5M) {
-      message.error("图片必须小于5M!");
+
+    if (file.size > fileSize) {
+      message.error("图片必须小于10M");
     }
-    return isJPG && isLt5M;
+    return isImage && file.size <= fileSize;
   }
   onChange(value) {
     // 保存数据

@@ -24,8 +24,6 @@ class Base extends Component {
               ...operator,
               ...values
             },
-            OrgId: 10000000,
-            BranchId: 10000000
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
