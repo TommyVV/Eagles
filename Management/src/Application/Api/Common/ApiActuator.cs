@@ -31,16 +31,20 @@ namespace Eagles.Application.Host.Common
         /// <param name="data"></param>
         /// <param name="run">执行</param>
         /// <returns>返回格式化数据</returns>
-        public static ResponseFormat<TResult> Runing<TResult, T>(T data, Func<T, TResult> run)
+        public static ResponseFormat<TResult> Runing<TResult, T>(T data, Func<T, TResult> run,bool needCheckToken=true)
         {
             try
             {
-                var Requset = json.SerializeObject(data);
-                var RequsetData = json.Deserialize<Dictionary<string, object>>(Requset);
-                var token = RequsetData["Token"].ToString();
-                var info = dataAccess.GetUserToken(token, 1);
-                if (info == null || info.UserId <= 0)
-                    throw new TransactionException("500", "token校验失败");
+                if (needCheckToken)
+                {
+                    var Requset = json.SerializeObject(data);
+                    var RequsetData = json.Deserialize<Dictionary<string, object>>(Requset);
+                    var token = RequsetData["Token"].ToString();
+                    var info = dataAccess.GetUserToken(token, 1);
+                    if (info == null || info.UserId <= 0)
+                        throw new TransactionException("500", "token校验失败");
+                }
+              
                 // var aa = (object)run.Target;
                 return new ResponseFormat<TResult>(run.Invoke(data));
             }
