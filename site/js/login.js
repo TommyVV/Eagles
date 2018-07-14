@@ -35,9 +35,9 @@ $('.btn-login').on('click', function (e) {
 				if($.trim(prevLink)==''){
 					parent.location.href = 'mine.html?appId='+appId+'';
 				}else{
-					if(prevLink.indexOf('http://51service.xyz/')==-1){	//来自其它站点
-						parent.location.href = 'mine.html?appId='+appId+''
-					}
+//					if(prevLink.indexOf('http://51service.xyz/')==-1){	//来自其它站点
+//						parent.location.href = 'mine.html?appId='+appId+''
+//					}
 					if(prevLink.indexOf('signup.html')!=-1){		//来自注册页面
 						parent.location.href = 'signup.html';
 					}
