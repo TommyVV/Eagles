@@ -9,21 +9,25 @@ import {
   Col,
   Select,
   Checkbox,
+  Modal,
   Table
 } from "antd";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
 import { typeMap } from "../../../constants/config/appconfig";
-import { getQuestionInfoById } from "../../../services/questionService";
+import {
+  getQuestionInfoById,
+  createOrEditQuestion
+} from "../../../services/questionService";
+import { delRelation, random } from "../../../services/exerciseService";
 import { serverConfig } from "../../../constants/config/ServerConfigure";
 import { saveInfo, clearInfo } from "../../../actions/questionAction";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const TextArea = Input.TextArea;
+const confirm = Modal.confirm;
 @connect(
   state => {
     return {
@@ -36,10 +40,7 @@ const Option = Select.Option;
 class QuestionForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isRewardWrapper: false,
-      isShowInput: false
-    };
+    this.state = {};
   }
 
   handleSubmit = e => {
@@ -48,27 +49,29 @@ class QuestionForm extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
+          let { Subject } = this.props.info;
+          let idList = [];
+          Subject.forEach(v => {
+            idList.push(v.QuestionId);
           });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          let params = {
+            Info: {
+              ...this.props.info.Info,
+              ...values
+            },
+            Subject: idList
+          };
+          let { Code } = await createOrEditQuestion(params);
+          if (Code === "00") {
+            let tip = this.props.info.Info.ExercisesId
+              ? "保存成功"
+              : "创建成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/questionlist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = this.props.info.Info.ExercisesId
+              ? "保存失败"
+              : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -95,39 +98,106 @@ class QuestionForm extends Component {
     const { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
     this.props.saveInfo({
-      ...values,
-      IsScoreAward: value == "1" ? true : false
+      Info: {
+        ...values,
+        IsScoreAward: value
+      }
     });
   };
-  change = e => {
+  change = value => {
     const { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
     this.props.saveInfo({
-      ...values,
-      HasLimitedTime: e.target.checked
+      Info: {
+        ...values,
+        HasLimitedTime: value
+      }
     });
   };
-
+  // 删除
+  handleDelete = async (ExercisesId, QuestionId) => {
+    confirm({
+      title: `是否确认删除?`,
+      okText: "确认",
+      cancelText: "取消",
+      onOk: async () => {
+        const { getFieldsValue } = this.props.form;
+        let { Subject } = this.props.info;
+        let values = getFieldsValue();
+        const _this = this;
+        // 删除本地的习题
+        function delSubject(Subject) {
+          // let newSubject = Subject.splice(
+          //   Subject.findIndex(item => item.QuestionId === QuestionId),
+          //   1
+          // );
+          let newSubject = Subject.filter(function(v) {
+            return v.QuestionId != QuestionId;
+          });
+          _this.props.saveInfo({
+            Info: {
+              ...values
+            },
+            Subject: newSubject
+          });
+        }
+        if (!ExercisesId) {
+          delSubject(Subject);
+          message.success(`删除成功`);
+        } else {
+          try {
+            let { Code } = await delRelation({ ExercisesId, QuestionId });
+            if (Code === "00") {
+              delSubject(Subject);
+              message.success(`删除成功`);
+            } else {
+              message.error(`删除失败`);
+            }
+          } catch (e) {
+            throw new Error(e);
+          }
+        }
+      }
+    });
+  };
+  // 随机生成习题
+  randomFn = async ExercisesId => {
+    try {
+      const { getFieldsValue } = this.props.form;
+      let values = getFieldsValue();
+      if (!values.LimitedTime) {
+        message.error(`请输入随机生成题目数量`);
+        return;
+      }
+      let { SubjectList } = await random({
+        ExercisesId,
+        RandomSubjectSum: values.LimitedTime
+      });
+      console.log("List - ", SubjectList);
+      SubjectList.forEach(v => {
+        v.key = v.QuestionId;
+      });
+      this.props.saveInfo({
+        Info: {
+          ...values
+        },
+        Subject: SubjectList
+      });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { question } = this.props;
-    const { isShowInput } = this.state;
+    const { Info, Subject } = this.props.info;
+    console.log("渲染习题列表：", Subject);
     const formItemLayout = {
       labelCol: {
-        xl: { span: 2 }
+        xl: { span: 3 }
       },
       wrapperCol: {
-        xl: { span: 8 }
-      }
-    };
-    const formItemLayoutContent = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 2 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 19 }
+        xl: { span: 6 }
       }
     };
     const formItemLayoutChild = {
@@ -143,57 +213,36 @@ class QuestionForm extends Component {
     const columns = [
       {
         title: "题目",
-        dataIndex: "exTitle"
+        dataIndex: "Question"
       },
       {
         title: "类型",
-        dataIndex: "exType"
+        dataIndex: "Multiple",
+        render: text => <span>{text == "0" ? "单选" : "多选"}</span>
       },
       {
         title: "操作",
-        dataIndex: "operate",
-        render: () => (
+        render: obj => (
           <span>
-            <a href="javascript:;">删除</a>
-            <a href="javascript:;" style={{ paddingLeft: "24px" }}>
+            <a
+              onClick={() =>
+                hashHistory.replace(`/exercise/detail/${obj.QuestionId}`)
+              }
+            >
               编辑
+            </a>
+            <a
+              onClick={() =>
+                this.handleDelete(Info.ExercisesId, obj.QuestionId)
+              }
+              style={{ paddingLeft: "24px" }}
+            >
+              删除
             </a>
           </span>
         )
       }
     ];
-
-    const data = [
-      {
-        key: "1",
-        exTitle: "问题a",
-        exType: "单选"
-      },
-      {
-        key: "2",
-        exTitle: "问题b",
-        exType: "复选"
-      },
-      {
-        key: "3",
-        exTitle: "问题c",
-        exType: "单选"
-      }
-    ];
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      initialContent: question.Content,
-
-      uploadImgShowBase64: false, // 是否使用base64
-      uploadImgServer: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD, // 图片上传到自己的服务器，自己需要自定义方法，todo
-      onChange: Content => {
-        setFieldsValue({ Content });
-        console.log("新闻内容：", getFieldsValue());
-      }
-      // onRawChange: this.handleRawChange
-    };
     return (
       <div className="create_pro_form">
         <Form onSubmit={this.handleSubmit}>
@@ -224,15 +273,18 @@ class QuestionForm extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="来源">
-            {getFieldDecorator("Source")(
-              <Input placeholder="请输入试卷来源" />
-            )}
+            {getFieldDecorator("source", {
+              rules: [
+                {
+                  required: true,
+                  message: "必填，请输入试卷来源"
+                }
+              ]
+            })(<Input placeholder="请输入试卷来源" />)}
           </FormItem>
-          <FormItem {...formItemLayoutContent} label="内容">
-            {getFieldDecorator("Content")(
-              <div className="editor-wrap">
-                <BraftEditor {...editorProps} />
-              </div>
+          <FormItem {...formItemLayout} label="内容">
+            {getFieldDecorator("HtmlDescription")(
+              <TextArea rows={4} placeholder="请输入试卷内容" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否积分奖励">
@@ -245,10 +297,10 @@ class QuestionForm extends Component {
           </FormItem>
           <div
             style={{
-              display: question.IsScoreAward ? "block" : "none",
+              display: Info.IsScoreAward == "1" ? "block" : "none",
               border: "1px solid #e8e8e8",
               borderRadius: "4px",
-              padding: "24px",
+              paddingTop: "24px",
               marginBottom: "24px",
               width: "90%"
             }}
@@ -270,34 +322,35 @@ class QuestionForm extends Component {
                 </FormItem>
               </Col>
             </Row>
-            <Row gutter={24}>
-              <Col span={7} key={4} style={{ display: "block" }}>
-                <Checkbox
-                  onChange={this.change.bind(this)}
-                  checked={question.HasLimitedTime}
-                >
-                  随机生成题目
-                </Checkbox>
-                <FormItem
-                  {...formItemLayoutChild}
-                  label="随机生成题目数量"
-                  style={{ display: isShowInput ? "block" : "none" }}
-                >
-                  {getFieldDecorator(`exCount`)(<Input />)}
-                </FormItem>
-              </Col>
-            </Row>
           </div>
+          <FormItem {...formItemLayout} label="是否随机生成题目">
+            {getFieldDecorator("HasLimitedTime")(
+              <Select onChange={this.change.bind(this)}>
+                <Option value="0">否</Option>
+                <Option value="1">是</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="随机生成题目数量"
+            style={{
+              display: Info.HasLimitedTime == "1" ? "block" : "none"
+            }}
+          >
+            {getFieldDecorator(`LimitedTime`)(<Input />)}
+          </FormItem>
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={Subject}
             bordered
             style={{ width: "90%" }}
+            locale={{ emptyText: "暂无数据" }}
             title={() => (
               <Row gutter={24}>
-                <Col span={4}>题目列表</Col>
+                <Col span={4}>习题列表</Col>
 
-                <Col span={2} offset={9}>
+                <Col span={2} offset={7}>
                   <Button
                     className="btn"
                     onClick={() => hashHistory.replace("/exercise/detail")}
@@ -308,12 +361,14 @@ class QuestionForm extends Component {
                 <Col
                   span={2}
                   offset={1}
-                  style={{ display: isShowInput ? "block" : "none" }}
+                  style={{
+                    display: Info.HasLimitedTime == "1" ? "block" : "none"
+                  }}
                 >
                   <Button
                     className="btn btn--primary"
                     type="primary"
-                    onClick={() => hashHistory.replace("/project")}
+                    onClick={() => this.randomFn(Info.ExercisesId)}
                   >
                     生成
                   </Button>
@@ -329,7 +384,7 @@ class QuestionForm extends Component {
                   className="btn btn--primary"
                   type="primary"
                 >
-                  {this.props.question.ExercisesId === "" ? "新建" : "保存"}
+                  {this.props.info.Info.ExercisesId ? "保存" : "新建"}
                 </Button>
               </Col>
               <Col>
@@ -350,41 +405,41 @@ class QuestionForm extends Component {
 
 const QuestionFormMap = Form.create({
   mapPropsToFields: props => {
-    const question = props.question;
-    console.log("数据回显：", question);
+    const { Info } = props.info;
+    console.log("数据回显：", Info);
     return {
       ExercisesId: Form.createFormField({
-        value: question.ExercisesId
+        value: Info.ExercisesId
       }),
       ExercisesName: Form.createFormField({
-        value: question.ExercisesName
+        value: Info.ExercisesName
       }),
       ExercisesType: Form.createFormField({
-        value: question.ExercisesType + ""
+        value: Info.ExercisesType + ""
       }),
-      Source: Form.createFormField({
-        value: question.Source
+      source: Form.createFormField({
+        value: Info.source
       }),
-      Content: Form.createFormField({
-        value: question.Content
+      HtmlDescription: Form.createFormField({
+        value: Info.HtmlDescription
       }),
       IsScoreAward: Form.createFormField({
-        value: question.IsScoreAward ? "1" : "0"
+        value: Info.IsScoreAward == "1" ? "1" : "0"
       }),
       PassAwardScore: Form.createFormField({
-        value: question.PassAwardScore
+        value: Info.PassAwardScore
       }),
       SubjectScore: Form.createFormField({
-        value: question.SubjectScore
+        value: Info.SubjectScore
       }),
       PassScore: Form.createFormField({
-        value: question.PassScore
+        value: Info.PassScore
       }),
       HasLimitedTime: Form.createFormField({
-        value: question.HasLimitedTime
+        value: Info.HasLimitedTime == "1" ? "1" : "0"
       }),
       LimitedTime: Form.createFormField({
-        value: question.LimitedTime
+        value: Info.LimitedTime
       })
     };
   }
@@ -425,7 +480,7 @@ export default class QuestionDetail extends Component {
   render() {
     return (
       <Nav>
-        <QuestionFormMap question={this.props.questionReducer} />
+        <QuestionFormMap info={this.props.questionReducer} />
       </Nav>
     );
   }

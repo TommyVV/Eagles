@@ -28,8 +28,8 @@ namespace Eagles.Application.Host.Controllers
         /// <returns></returns>
         [HttpPost]
         public ResponseFormat<LoginResponse> Login(LoginRequset requset)
-        {
-            return ApiActuator.Runing(requset, (requset1) => testHandler.Login(requset));
+        {          
+            return ApiActuator.Runing(() => testHandler.Login(requset));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<string> VerificationCode(Verification requset)
         {
-            return ApiActuator.Runing(requset, (requset1) =>  testHandler.VerificationCode(requset));
+            return ApiActuator.Runing(() => testHandler.VerificationCode(requset));
         }
 
     }

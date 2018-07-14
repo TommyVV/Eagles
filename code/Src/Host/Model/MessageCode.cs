@@ -44,7 +44,9 @@
 
         public static readonly string RepeatJoin = "54";
 
-        public static readonly string ExpireValidateCode = "53";
+        public static readonly string TestNotExists = "55";
+
+        public static readonly string ExpireValidateCode = "56";
 
         public static readonly string TaskNotExists = "61";
 

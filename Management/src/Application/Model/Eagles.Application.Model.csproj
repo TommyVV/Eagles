@@ -180,6 +180,14 @@
     <Compile Include="Operator\Requset\RemoveOperatorRequset.cs" />
     <Compile Include="Operator\Response\GetOperatorDetailResponse.cs" />
     <Compile Include="Operator\Response\GetOperatorResponse.cs" />
+    <Compile Include="Branch\Model\Branch.cs" />
+    <Compile Include="Branch\Model\BranchDetail.cs" />
+    <Compile Include="Branch\Requset\EditBranchRequset.cs" />
+    <Compile Include="Branch\Requset\GetBranchDetailRequset.cs" />
+    <Compile Include="Branch\Requset\GetBranchRequset.cs" />
+    <Compile Include="Branch\Requset\RemoveBranchRequset.cs" />
+    <Compile Include="Branch\Response\GetBranchDetailResponse.cs" />
+    <Compile Include="Branch\Response\GetBranchResponse.cs" />
     <Compile Include="Organization\Model\Organization.cs" />
     <Compile Include="Organization\Model\OrganizationDetail.cs" />
     <Compile Include="Organization\Requset\EditOrganizationRequset.cs" />

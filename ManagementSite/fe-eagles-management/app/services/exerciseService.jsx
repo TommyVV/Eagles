@@ -80,3 +80,39 @@ export const del = async params => {
     throw new Error(e);
   }
 };
+// 删除试卷和习题的关系
+export const delRelation = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: EXERCISE.DELETE_RELATION,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+// 随机生成习题列表
+export const random = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: EXERCISE.RANDOM,
+      params
+    });
+    let { Code, Message, Result } = res.data;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { SubjectList: [] };
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};

@@ -87,7 +87,7 @@ const IMAGE = {
 };
 //todo  试卷（接口注释有问题）
 const TESTPAPER = {
-  TESTPAPER_EDIT: "/api/TestPaper/EditSubject", //编辑试卷
+  TESTPAPER_EDIT: "/api/TestPaper/EditExercises", //编辑试卷
   TESTPAPER_DELETE: "/api/TestPaper/RemoveExercises", //删除试卷
   TESTPAPER_LIST: "/api/TestPaper/GetExercises", //试卷列表
   TESTPAPER_DETAIL: "/api/TestPaper/GetExercisesDetail" //试卷详情
@@ -96,8 +96,10 @@ const TESTPAPER = {
 const EXERCISE = {
   EDIT: "/api/TestPaper/EditSubject", //编辑习题
   DELETE: "/api/TestPaper/RemoveExercises", //删除习题
+  DELETE_RELATION: "/api/TestPaper/RemoveSubject", //删除习题与试卷的关系
   LIST: "/api/TestPaper/GetExercises", //试卷习题
-  DETAIL: "/api/TestPaper/GetExercisesDetail" //试卷习题
+  DETAIL: "/api/TestPaper/GetExercisesDetail", //试卷习题
+  RANDOM: "/api/TestPaper/GetRandomSubject", //习题随机生成
 };
 // 党员
 const EDITPARTYMEMBER = {

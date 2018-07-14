@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Eagles.Base.DataBase;
-using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.User;
 using Eagles.DomainService.Model.Question;
 using Eagles.Interface.DataAccess.UserTest;
@@ -19,9 +17,8 @@ namespace Ealges.DomianService.DataAccess.UserTest
 
         public List<TbQuestEx> GetTestPaper(int testId)
         {
-            return dbManager.Query<TbQuestEx>(@"select a.TestId,a.QuestionSocre,a.PassScore,a.PassAwardScore,a.LimitedTime,c.QuestionId,c.Question
-,c.Multiple,c.MultipleCount,d.AnswerId,a.TestName,a.HtmlDescription,
-d.Answer,d.AnswerType,d.IsRight,d.ImageUrl ,a.UserCount
+            return dbManager.Query<TbQuestEx>(@"select a.TestId,a.QuestionSocre,a.PassScore,a.PassAwardScore,a.LimitedTime,c.QuestionId,c.Question,
+c.Multiple,c.MultipleCount,d.AnswerId,a.TestName,a.HtmlDescription,a.IsImageVote,d.Answer,d.AnswerType,d.IsRight,d.ImageUrl ,a.UserCount
 from eagles.tb_test_paper a
 join eagles.tb_test_question b on b.TestId = a.TestId
 join eagles.tb_question c on c.QuestionId = b.QuestionId
@@ -31,8 +28,8 @@ where a.TestId = @TestId ", new { TestId = testId });
 
         public TbTestPaper GetTestPaperInfo(int testId)
         {
-            return dbManager.QuerySingle<TbTestPaper>(@"select TestId,TestName,HasReward,QuestionSocre,PassScore,HasLimitedTime,LimitedTime,HtmlDescription ,UserCount, TestType
-from eagles.tb_test_paper where TestId=@TestId And Status=0 ", new { TestId = testId });
+            return dbManager.QuerySingle<TbTestPaper>(@"select TestId,TestName,HasReward,QuestionSocre,PassScore,HasLimitedTime,LimitedTime,HtmlDescription,UserCount,TestType
+from eagles.tb_test_paper where TestId=@TestId ", new { TestId = testId });
         }
 
         public List<TbQuestAnswer> GetTestRightAnswer(int testId, int isRight)

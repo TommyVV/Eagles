@@ -76,8 +76,8 @@ const Utils = {
     let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
     let { OrgId, BranchId } = Info;
     return {
-      OrgId,
-      BranchId
+      OrgId:"10000000",
+      BranchId:"10000000"
     };
   },
   /**

@@ -1,10 +1,23 @@
 import { actionType } from "../constants/ActionType/pc";
 
-const info = {
-  ExercisesType: 0
+const question = {
+  Info: {
+    ExercisesId: "",
+    ExercisesName: "",
+    ExercisesType: "0",
+    source: "",
+    HtmlDescription: "",
+    IsScoreAward: "0",
+    PassAwardScore: "",
+    SubjectScore: "",
+    PassScore: "",
+    HasLimitedTime: "0",
+    LimitedTime: ""
+  },
+  Subject: []
 };
 
-const questionReducer = (state = info, action) => {
+const questionReducer = (state = question, action) => {
   switch (action.type) {
     case actionType.questionType.SAVE_INFO:
       return {
@@ -12,7 +25,7 @@ const questionReducer = (state = info, action) => {
         ...action.payload
       };
     case actionType.questionType.CLEAR_INFO:
-      return { ...info };
+      return { ...question };
     default:
       return state;
   }

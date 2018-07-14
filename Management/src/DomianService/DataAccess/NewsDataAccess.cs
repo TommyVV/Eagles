@@ -174,8 +174,17 @@ SET
 `ViewCount` = @ViewCount,
 `ReviewId` = @ReviewId,
 `CanStudy` = @CanStudy,
-`ImageUrl` = @ImageUrl
-WHERE `NewsId` = @NewsId;
+`ImageUrl` = @ImageUrl,
+`IsExternal` = @IsExternal: 0}>,
+`ExternalUrl` = @ExternalUrl,
+`NewsType` = @NewsType,
+`AttachName1` = @AttachName1,
+`AttachName2` = @AttachName2,
+`AttachName3` = @AttachName3,
+`AttachName4` = @AttachName4
+WHERE `
+`NewsId` = @NewsId
+
 
  ", mod);
         }
@@ -211,7 +220,14 @@ WHERE `NewsId` = @NewsId;
 `ViewCount`,
 `ReviewId`,
 `CanStudy`,
-`ImageUrl`)
+`ImageUrl`,
+`IsExternal`,
+`ExternalUrl`,
+`NewsType`,
+`AttachName1`,
+`AttachName2`,
+`AttachName3`,
+`AttachName4`)
 VALUES
 (@OrgId,
 @NewsId,
@@ -241,7 +257,15 @@ VALUES
 @ViewCount,
 @ReviewId,
 @CanStudy,
-@ImageUrl);
+@ImageUrl,
+@IsExternal,
+@ExternalUrl,
+@NewsType,
+@AttachName1,
+@AttachName2,
+@AttachName3,
+@AttachName4);
+
 
 ", mod);
 

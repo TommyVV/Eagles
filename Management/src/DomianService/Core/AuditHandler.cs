@@ -68,7 +68,7 @@ namespace Eagles.DomainService.Core
                 AuditId = x.ReviewId,
                 // AuditName=x.
                 AuditStatus = x.ReviewStatus,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                 Id = x.NewsId,
                 NewsType = x.NewsType,
                 UserId = x.OperId,

@@ -93,7 +93,7 @@ namespace Eagles.DomainService.Core
             {
                 Address = x.Address,
                 City = x.City,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                 District = x.District,
                 OrgId = x.OrgId,
                 OrgName = x.OrgName,
@@ -116,7 +116,7 @@ namespace Eagles.DomainService.Core
             {
                 Address = detail.Address,
                 City = detail.City,
-                CreateTime = detail.CreateTime,
+                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
                 District = detail.District,
                 OrgId = detail.OrgId,
                 OrgName = detail.OrgName,

@@ -26,7 +26,17 @@ namespace Eagles.DomainService.Model.News
         /// <summary>
         /// 附件5
         /// </summary>
-        public string Attach5 { get; set; }
+       // public string Attach5 { get; set; }
+
+
+        public string AttachName1 { get; set; }
+
+        public string AttachName2 { get; set; }
+
+        public string AttachName3 { get; set; }
+
+        public string AttachName4 { get; set; }
+
         /// <summary>
         /// 作者
         /// </summary>
@@ -109,8 +119,8 @@ namespace Eagles.DomainService.Model.News
         public string Source { get; set; }
         /// <summary>
         /// 状态;
-       /// 0:正常 
-       /// -1:待审核;'
+        /// 0:正常 
+        /// -1:待审核;'
         /// </summary>
         public string Status { get; set; }
         /// <summary>
@@ -134,5 +144,8 @@ namespace Eagles.DomainService.Model.News
         /// 是否有url
         /// </summary>
         public int IsExternal { get; set; }
+        
+        public int NewsType { get; set; }
+
     }
 }

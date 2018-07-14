@@ -1,7 +1,8 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/config/ServerConfigure";
-
+import Util from "../utils/util";
 const { TESTPAPER } = serverConfig;
+
 // 根据id查看试卷详情
 export const getQuestionInfoById = async params => {
   try {
@@ -43,9 +44,11 @@ export const getQuestionList = async params => {
 // 创建或编辑试卷
 export const createOrEditQuestion = async params => {
   try {
+    const user = Util.getOrgIdAndBranchId();
+    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
-      url: PROJECT.UPDATE,
+      url: TESTPAPER.TESTPAPER_EDIT,
       params
     });
     return res.data;
@@ -57,15 +60,17 @@ export const createOrEditQuestion = async params => {
 // 删除试卷
 export const deleteQuestion = async params => {
   try {
+    const user = Util.getOrgIdAndBranchId();
+    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: TESTPAPER.TESTPAPER_DELETE,
       params
     });
-    let { Code, Message } = res.data;
-    if (Code === "00") {
+    if (res.status === 200) {
       return res.data;
     } else {
+      let { Code,  Message } = res.data;
       throw new Error(`${Code} - ${Message}`);
     }
   } catch (e) {

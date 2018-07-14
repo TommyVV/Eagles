@@ -29,7 +29,7 @@ namespace Eagles.Application.Model.SMSOrg.Model
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 最后修改人

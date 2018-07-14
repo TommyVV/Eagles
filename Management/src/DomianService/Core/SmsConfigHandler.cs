@@ -27,8 +27,6 @@ namespace Eagles.DomainService.Core
 
         public bool EditSMS(EditSMSRequset requset)
         {
-
-
             SmsConfig mod;
             var now = DateTime.Now;
             if (requset.Info.VendorId > 0)
@@ -37,7 +35,7 @@ namespace Eagles.DomainService.Core
                 {
                     AppId = requset.Info.AppId,
                     AppKey = requset.Info.AppKey,
-                    CreateTime = requset.Info.CreateTime,
+                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
                     MaxCount = requset.Info.MaxCount,
                     Priority = requset.Info.Priority,
                     SendCount = requset.Info.SendCount,
@@ -49,8 +47,6 @@ namespace Eagles.DomainService.Core
                 };
 
                 return dataAccess.EditSMS(mod) > 0;
-
-
             }
             else
             {
@@ -58,7 +54,7 @@ namespace Eagles.DomainService.Core
                 {
                     AppId = requset.Info.AppId,
                     AppKey = requset.Info.AppKey,
-                    CreateTime = requset.Info.CreateTime,
+                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
                     MaxCount = requset.Info.MaxCount,
                     Priority = requset.Info.Priority,
                     SendCount = requset.Info.SendCount,
@@ -95,7 +91,7 @@ namespace Eagles.DomainService.Core
             {
                 AppId = x.AppId,
                 AppKey = x.AppKey,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                 MaxCount = x.MaxCount,
                 Priority = x.Priority,
                 SendCount = x.SendCount,
@@ -122,7 +118,7 @@ namespace Eagles.DomainService.Core
             {
                 AppId = detail.AppId,
                 AppKey = detail.AppKey,
-                CreateTime = detail.CreateTime,
+                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
                 MaxCount = detail.MaxCount,
                 Priority = detail.Priority,
                 SendCount = detail.SendCount,

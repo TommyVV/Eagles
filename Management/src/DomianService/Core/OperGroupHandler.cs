@@ -96,7 +96,7 @@ namespace Eagles.DomainService.Core
                 AuthorityGroupId = detail.GroupId,
                 AuthorityGroupName = detail.GroupName,
                 OrgId = detail.OrgId,
-                CreateTime = detail.CreateTime,
+                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
             };
             return response;
         }
@@ -117,7 +117,7 @@ namespace Eagles.DomainService.Core
                 AuthorityGroupId = x.GroupId,
                 AuthorityGroupName = x.GroupName,
                 OrgId = x.OrgId,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
             }).ToList();
             return response;
         }

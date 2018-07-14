@@ -19,10 +19,17 @@ $('#top-nav,#mobilenav').load('./head.html')
     $(".lw_muscore").click(function () {
         window.location.href = 'rank.html?appId='+appId+''
     });
-    
+    //我的文章
+    $(".a_tz").click(function () {
+        window.location.href = 'myInfo.html?appId='+appId+''
+    });
     //我的通知
     $(".lw_news").click(function () {
         window.location.href = 'myNotice.html?appId='+appId+''
+    });
+    //
+    $("#pushace").click(function () {
+        window.location.href = 'publishArticle.html?appId='+appId+''
     });
     //我的任务
     $("#task").click(function () {
@@ -99,15 +106,15 @@ function getScrollNews(token,appId){
         success:function(res){
         	$('#scrollobj').html('');
             if(res.Code == 00){
-            	var data=res.Result.SystemNewsList;
-            	var divs='';
-            	for(var i=0;i<data.length;i++){
-            		divs+=''+data[i].NewsName+'';
-            	}
-            	$('#scrollobj').append(divs)
-            	setInterval("scroll(document.getElementById('scrollobj'))",20);
+	            	var data=res.Result.SystemNewsList;
+	            	var divs='';
+	            	for(var i=0;i<data.length;i++){
+	            		divs+=''+data[i].NewsName+'';
+	            	}
+	            	$('#scrollobj').append(divs)
+	            	setInterval("scroll(document.getElementById('scrollobj'))",20);
             }else{
-            	
+            		$('#scrollobj').hide()
             }
         }
 	})

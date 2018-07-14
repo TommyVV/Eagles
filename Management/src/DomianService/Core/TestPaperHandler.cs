@@ -348,7 +348,7 @@ namespace Eagles.DomainService.Core
                 }).ToList(),
                 LimitedTime = info.LimitedTime,
                 HasLimitedTime = info.HasLimitedTime > 0,
-                CreateTime = info.CreateTime,
+                CreateTime = info.CreateTime.ToString("yyyy-MM-dd"),
                 HtmlDescription = info.HtmlDescription,
 
             };
@@ -386,7 +386,7 @@ namespace Eagles.DomainService.Core
                 PassAwardScore = x.PassAwardScore,
                 LimitedTime = x.LimitedTime,
                 HasLimitedTime = x.HasLimitedTime > 0,
-                CreateTime = x.CreateTime,
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
             }).ToList();
 
             return response;

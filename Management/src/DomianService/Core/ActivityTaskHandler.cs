@@ -8,6 +8,7 @@ using Eagles.Application.Model.ActivityTask.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
 using Eagles.Base;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -47,7 +48,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.BranchId,
                     BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
-                    EndTime = requset.DetailInfo.EndTime,
+                    EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
                     HtmlContent = requset.DetailInfo.Content,
                     ImageUrl = requset.DetailInfo.ImageUrl,
@@ -85,7 +86,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.BranchId,
                     BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
-                    EndTime = requset.DetailInfo.EndTime,
+                    EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
                     HtmlContent = requset.DetailInfo.Content,
                     ImageUrl = requset.DetailInfo.ImageUrl,
@@ -147,7 +148,7 @@ namespace Eagles.DomainService.Core
                 //BranchId = BranchId,
                 //"" = BranchReview,
                 IsComment = detail.CanComment,
-                EndTime = detail.EndTime,
+                EndTime = detail.EndTime.FormartDatetime(),
                // 0 = FromUser,
                 Content = detail.HtmlContent,
                 ImageUrl = detail.ImageUrl,

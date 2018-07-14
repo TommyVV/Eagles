@@ -46,6 +46,8 @@
 
         public static readonly string RepeatJoin = "重复参与活动";
 
+        public static readonly string TestNotExists = "试题不存在";
+
         public static readonly string TaskNotExists = "任务不存在";
 
         public static readonly string TaskStatusError = "任务状态不正确";
