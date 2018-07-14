@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.News.Model
 {
@@ -48,8 +49,18 @@ namespace Eagles.Application.Model.News.Model
         public string Attach2 { get; set; }
         public string Attach3 { get; set; }
         public string Attach4 { get; set; }
-        public string Attach5 { get; set; }
+       // public string Attach5 { get; set; }
 
+
+        public string AttachName1 { get; set; }
+
+        public string AttachName2 { get; set; }
+
+        public string AttachName3 { get; set; }
+
+        public string AttachName4 { get; set; }
+        //
+        // public List<Attachment> Attach { get; set; }
         /// <summary>
         /// 外部链接url
         /// </summary>
@@ -58,5 +69,9 @@ namespace Eagles.Application.Model.News.Model
         /// 是否有url
         /// </summary>
         public int IsExternal { get; set; }
+
+        public int NewsType { get; set; }
     }
+
+
 }

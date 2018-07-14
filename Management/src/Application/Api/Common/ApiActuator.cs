@@ -55,5 +55,31 @@ namespace Eagles.Application.Host.Common
                 return new ResponseFormat<TResult>(default(TResult), "500", err.Message);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="run"></param>
+        /// <returns></returns>
+
+        public static ResponseFormat<T> Runing<T>( Func<T> run)
+        {
+            try
+            {
+                return new ResponseFormat<T>(run.Invoke());
+            }
+            catch (TransactionException err)
+            {
+                Logger.LoggerInfo(err.ToString());
+                return new ResponseFormat<T>(default(T), err.ErrorCode, err.ErrorMessage);
+            }
+            catch (Exception err)
+            {
+                Logger.LoggerError(err.ToString());
+                return new ResponseFormat<T>(default(T), "500", err.Message);
+            }
+        }
     }
 }

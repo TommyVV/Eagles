@@ -2332,6 +2332,116 @@
             集合
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Branch.Model.Branch">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgName">
+            <summary>
+            机构name
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchId">
+            <summary>
+            支部id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchName">
+            <summary>
+            支部名称
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Model.BranchDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.BranchDesc">
+            <summary>
+            支部描述
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Requset.EditBranchRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Requset.EditBranchRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Requset.GetBranchDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchDetailRequset.BranchId">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Requset.GetBranchRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchRequset.OrgId">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchRequset.BranchId">
+            <summary>
+            凭证
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Requset.RemoveBranchRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Requset.RemoveBranchRequset.BranchId">
+            <summary>
+            机构ID
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Response.GetBranchDetailResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Response.GetBranchDetailResponse.Info">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Branch.Response.GetBranchResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Response.GetBranchResponse.TotalCount">
+            <summary>
+            总条数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Branch.Response.GetBranchResponse.List">
+            <summary>
+            集合
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Organization.Model.Organization">
             <summary>
             

@@ -5,7 +5,7 @@ namespace Eagles.DomainService.Model.Org
     /// <summary>
     /// TB_BRANCH
     /// </summary>
-    public class Branch
+    public class TbBranch
     {
         public string BranchDesc { get; set; }
         public int BranchId { get; set; }

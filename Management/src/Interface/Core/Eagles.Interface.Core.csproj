@@ -48,6 +48,7 @@
     <Compile Include="IModuleHandler.cs" />
     <Compile Include="IOperGroupHandler.cs" />
     <Compile Include="IOperHandler.cs" />
+    <Compile Include="IBranchHandler.cs" />
     <Compile Include="ISmsConfigHandler.cs" />
     <Compile Include="IRewardScoreHandler.cs" />
     <Compile Include="IScoreHandler.cs" />

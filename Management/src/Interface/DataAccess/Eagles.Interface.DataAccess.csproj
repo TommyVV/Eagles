@@ -45,6 +45,7 @@
     <Compile Include="IColumnDataAccess.cs" />
     <Compile Include="ILoginDataAccess.cs" />
     <Compile Include="IOperGroupDataAccess.cs" />
+    <Compile Include="IBranchDataAccess.cs" />
     <Compile Include="IRewardScoreDataAccess.cs" />
     <Compile Include="IScoreDataAccess.cs" />
     <Compile Include="IScrollImageDataAccess.cs" />
