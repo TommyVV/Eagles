@@ -1,5 +1,5 @@
-$('#pc-header,#mobilenav').load('./head.html')
-$('#pc-footer').load('./footer.html')
+$('#pc-header,#mobilenav').load('head.html')
+$('#pc-footer').load('footer.html')
 class CalculateScreen {
 	constructor() {
 		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -9,15 +9,15 @@ class CalculateScreen {
 		if(!this.isMobile) {
 			$('.mobile').hide();
 			$('.pc').show();
-			$('#top-nav').load('head.html', () => {
-
-			})
+//			$('#top-nav').load('head.html', () => {
+//
+//			})
 			$('#left-nav').load('leftNav.html', () => {
 
 			})
-			$('#footer').load('footer.html', () => {
-
-			})
+//			$('#footer').load('footer.html', () => {
+//
+//			})
 			$('body').css('background-color', 'rgb(248,248,248)');
 		} else {
 			$('.mobile').show();
