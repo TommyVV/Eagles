@@ -96,26 +96,19 @@ namespace Eagles.DomainService.Core.UserTest
             var response = new CompleteTestResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
-
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
-
             //查询用户是否已经回答过该试题
             var userTest = testDa.GetUserTest(request.TestId, userInfo.UserId);
             if (userTest != null)
-            {
                 throw new TransactionException(MessageCode.RepeatJoin, MessageKey.RepeatJoin);
-            }
-
             int testScore = 0; //答题分数
             //查询TB_TEST_PAPER
             var testPaper = testDa.GetTestPaperInfo(request.TestId);
+            if(testPaper == null)
+                throw new TransactionException(MessageCode.TestNotExists, MessageKey.TestNotExists);
             var passScore = testPaper.PassScore; //及格分数
             var questionSocre = testPaper.QuestionSocre; //每题分值
             var passAwardScore = testPaper.PassAwardScore; //及格奖励积分
