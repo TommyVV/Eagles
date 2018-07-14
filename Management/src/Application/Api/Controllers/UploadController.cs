@@ -29,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
             //set allow post 
             
             HttpContext.Current.Response.Headers.Add("Allow", "POST");
-            return ApiActuator.Runing(new object(), (requset1) => fileUpload.Process());
+            return ApiActuator.Runing(new object(), (requset1) => fileUpload.Process(),false);
         }
     }
 }
