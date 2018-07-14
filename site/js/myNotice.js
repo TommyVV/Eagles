@@ -3,7 +3,7 @@ if(!localStorage.getItem('token')){
 }
 $('#top-nav,#mobilenav').load('./head.html')
 var mescroll;
-var token=localStorage.getItem("token")
+var token=localStorage.getItem('token')
 var appId=getRequest('appId');
 /*var appId=10000000*/
 $('.myNoticeBox').html('')
@@ -50,12 +50,13 @@ function noticeList(token,appId,page) {
 				if(res.Result.NoticeList!=''||res.Result.NoticeList!=null){
 					var noticeList = ''; //移动端标点
 					var news='';
-					if(data.NoticeList[i].IsRead==1){
+					
+					for(var i = 0; i < data.NoticeList.length; i++) {
+						if(data.NoticeList[i].IsRead==1){
 						news=''
-					}else if(data.NoticeList[i].IsRead==0){
+					}else if(data.NoticeList[i].IsRead=0){
 						news='<span class="new">New</span>'
 					}
-					for(var i = 0; i < data.NoticeList.length; i++) {
 						noticeList += '<div class="item"><div class="title">'+data.NoticeList[i].Title+'</div>'+
 	                    '<div class="content overflow-two-line">'+data.NoticeList[i].Content +'</div>'+
 	                    '<div class="time">'+data.NoticeList[i].CreateTime  +'</div>'+
