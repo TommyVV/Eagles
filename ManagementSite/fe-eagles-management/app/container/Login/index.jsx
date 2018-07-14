@@ -27,7 +27,8 @@ class LoginForm extends React.Component {
     this.setState({ loading: true });
     const { Result, Code, Message } = await login({
       Account: values.Account,
-      Password: md5(values.Password)
+      // Password: md5(values.Password)
+      Password: values.Password
     });
     this.setState({ loading: false });
     if (Code == "00") {
@@ -36,17 +37,24 @@ class LoginForm extends React.Component {
       // 密码错误次数超限，出现验证码
       if (IsVerificationCode) {
       } else {
-        // todo 把用户信息这两个字段写死
         let info = {
-          Token,
-          hasLogin: true,
-          OrgId: "0",
-          BranchId: "0"
+          Token
         };
-        localStorage.info = JSON.stringify({
-          ...info
-        });
-        hashHistory.replace("/home");
+        let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
+        let { returnUrl } = Info;
+        if (returnUrl) {
+          localStorage.clear();
+          localStorage.info = JSON.stringify({
+            ...info
+          });
+          hashHistory.replace(returnUrl);
+        }else{
+          localStorage.clear();
+          localStorage.info = JSON.stringify({
+            ...info
+          });
+          hashHistory.replace("/home");
+        }
       }
     } else {
       this.setState({ errMsg: Message });

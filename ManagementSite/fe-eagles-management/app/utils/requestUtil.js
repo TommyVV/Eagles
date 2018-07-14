@@ -10,10 +10,18 @@ import Uitl from "./util";
  * @return {undefined} 没有返回值
  */
 function redirectLogin() {
-  localStorage.clear();
   if (location.pathname.indexOf("/login") > -1) {
     return;
   } else {
+    let { hash } = window.location;
+    let index = hash.indexOf("?");
+    const current = hash.slice(1, index);
+    let info = {
+      returnUrl: current
+    };
+    localStorage.info = JSON.stringify({
+      ...info
+    });
     hashHistory.replace("/login");
   }
 }
@@ -50,9 +58,6 @@ let refreshToken = async refresh => {
  * @return {string} token和refresh
  */
 let getToken = () => {
-  if (location.hash === "#/login") {
-    return {};
-  }
   let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
   let { Token } = Info;
   if (Token) {
@@ -60,10 +65,7 @@ let getToken = () => {
       Token
     };
   } else {
-    return {
-      Token:"11111"
-    };
-    // return redirectLogin(); // todo
+    return redirectLogin();
   }
 
   let info = localStorage.info ? JSON.parse(localStorage.info) : {};
@@ -80,10 +82,11 @@ let getToken = () => {
  * @return {json}        数据列表
  */
 async function request({ method = "get", url, params }) {
-  const Token = await getToken();
-  params = { ...params, ...Token };
+  if (url.indexOf(serverConfig.LOGIN.LOGIN) < 0) {
+    const Token = await getToken();
+    params = { ...params, ...Token };
+  }
   try {
-    console.log("curd - params", params);
     let res = await axios({
       method: method,
       url: `${serverConfig.API_SERVER}${url}`,
@@ -91,7 +94,7 @@ async function request({ method = "get", url, params }) {
       params: method === "get" ? params : "", // get请求的数据
       data: params // post请求的数据
     });
-    console.log(res);
+    console.log("params and response", params, res);
     return res;
   } catch (e) {
     console.log(e);
@@ -107,18 +110,17 @@ async function request({ method = "get", url, params }) {
 export default async config => {
   try {
     let res = await request(config); // 首次请求
-    let { code } = res.data;
-    if (code === -1) {
+    let { Code } = res.data;
+    if (Code === -1) {
       message.error(res.data.message); //系统错误
       throw new Error(res.data.message); //直接抛出错误
     }
-    if (code === "4003") {
-      // let { refresh_token } = await getToken();
+    // oken过期
+    if (Code === "M20") {
       // message==='token已过期'
-      // await refreshToken(refresh_token); //刷新token
-      return request(config); // 再次重新请求
+      return redirectLogin(); //重定向到login页面
     }
-    if (code === "4002") {
+    if (Code === "4002") {
       // message==='token不合法'
       return redirectLogin(); //重定向到login页面
     }
