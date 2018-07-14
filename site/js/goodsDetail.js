@@ -2,7 +2,7 @@ $(document).ready(function () {
 	if(!localStorage.getItem('token')){
 		window.location.href = "login.html"
 	}
-	$('#pc-header,#mobilenav').load('./head.html')
+	$('#top-nav,#mobilenav').load('head.html')
     
 });
 var token=localStorage.getItem("token")
@@ -29,9 +29,9 @@ $(".sub-btn").click(function () {
 			//$('.goods-area').html('')
 			var data = res.Result;
 			if(res.Code == 00) {
-				window.location.href = "exchangeResult.html?code=1";
+				window.location.href = "exchangeResult.html?code=1&tip=商品兑换成功";
 			}else{
-				window.location.href = "exchangeResult.html?code=0";
+				window.location.href = "exchangeResult.html?code=0&tip=商品兑换失败";
 			}
 		}
 	});
