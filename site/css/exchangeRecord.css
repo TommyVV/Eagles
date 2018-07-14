@@ -1,4 +1,10 @@
 @media screen and (max-width: 768px) {
+	.mescroll{
+			position: fixed;
+			top: 40px;
+			bottom: 0;
+			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
+		}
   #pc-header {
     display: none; }
   #pc-footer {
@@ -38,6 +44,15 @@
         bottom: 3px; } }
 
 @media screen and (min-width: 768px) {
+	.conmid_rs{
+		width: 100%;min-height: 200px;height: auto;
+	}
+	.mescroll{
+			position: fixed;
+			top: 135px;
+			bottom: 0;
+			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
+		}
   .dj-title {
     width: 1000px;
     height: 32px;
