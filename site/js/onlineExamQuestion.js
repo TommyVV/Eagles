@@ -197,7 +197,7 @@ function submit() {
 		//获取数据，提交数据
 		var dataJson = getTestPaperAnswerJson();
 		var UseTime = 0;
-		window.location.href = 'examResult.html?appId='+appId+'&TestId='+TestId+'&useTime='+useTime+'&TestList='+TestList+''
+		window.location.href = 'examResult.html?appId='+appId+'&TestId='+testId+'&useTime='+useTime+'&TestList='+dataJson+''
 		/*$.ajax({
 			type: "post",
 			data: {
