@@ -9,10 +9,12 @@ $(document).ready(function(){
         $(".result-des").html(tip);
         $(".result-bg").addClass("result-success");
         $(".glyphicon").addClass("glyphicon-ok icon");
+        $('.result-des').html('兑换成功')
     }else{
         $(".result-des").html(tip);
         $(".result-bg").addClass("result-fail");        
         $(".glyphicon").addClass("glyphicon-remove icon");
+        $('.result-des').html('兑换失败')
     }
     console.log('code---',code);
 });
