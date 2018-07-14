@@ -4,7 +4,7 @@ $('#top-nav,#mobilenav').load('./head.html')
  2，提交答案时用户未登录，则跳转到登录页面，登录后 回跳回来自动提交答案，代码已写完 需要联调验证
  * 
  * */
-var newsIds = getRequest('newsId') //获取来源d的新闻id
+var newsIds = getRequest('NewsId') //获取来源d的新闻id
 var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 //var appId = 10000000
