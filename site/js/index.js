@@ -169,28 +169,28 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 					}
 					//PC代码 右边列表页
 					if(flag == 'right') { 
-						pclistriht += '<div class="top">' + '<img src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '" />' +
+						pclistriht += '<a href="' + externalUrl + '"><div class="top">' + '<img src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '" />' +
 							'<div class="top-overview"><div class="top-overview-title">' + data.NewsInfos[i].Title + '</div>' +
 							'<span class="top-overview-date">' + data.NewsInfos[i].CreateTime + '</span>' +
 							'</div></div>' +
-							'<p class="article">' + data.NewsInfos[i].Title + '</p>';
+							'<p class="article">' + data.NewsInfos[i].Title + '</p></a>';
 					} else if(flag == 'left') {
 						if(i < 1) { //PC代码 左边列表页 大图
-							pccontenone += '<div class="top">' +
+							pccontenone += '<a href="' + externalUrl + '"><div class="top">' +
 								'<img src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '" />' +
 								'<div class="top-overview">' +
 								'<div class="top-overview-title overflow-two-line">' + data.NewsInfos[i].Title + '</div>' +
 								'<div class="top-overview-article">' + data.NewsInfos[i].Title + '</div>' +
 								'<span class="top-overview-date">' + data.NewsInfos[i].CreateTime + '</span>' +
 								'</div>' +
-								'</div>';
+								'</div></a>';
 						}
 						if(i >= 1) { //PC代码 左边列表页 小图列表
-							pccontentwo += '<li><img src="' + data.NewsInfos[i].ImageUrl + '" alt="" />' +
-								'<div class="overview">' +
+							pccontentwo += '<li><a href="' + externalUrl + '"><img src="' + data.NewsInfos[i].ImageUrl + '" alt="" /></a>' +
+								'<div class="overview"><a href="' + externalUrl + '">' +
 								'<div class="overview-title overflow-two-line">' + data.NewsInfos[i].Title + '</div>' +
 								'<div></div><span class="overview-date">' + data.NewsInfos[i].CreateTime + '</span>' +
-								'</div></li>';
+								'</a></div></li>';
 						}
 					}
 				}
