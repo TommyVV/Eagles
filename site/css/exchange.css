@@ -60,7 +60,7 @@ body {
     border-top: 0.21333rem solid #F8F8F8; }
   .goods-item {
     float: left;
-    margin: 0.21333rem;
+    margin: 0.21333rem 0 0.21333rem 0.61333rem;
     width: 7.04rem;
     height: 10.51733rem;
     background: white; }
