@@ -192,13 +192,15 @@
 
 }
 @media screen and (min-width: 768px) {
+	#top-nav{position: relative;z-index: 99;}
+	
 	.navbar-fixed-top,#mobilenav{display: none;}
 	.pc-nav {
   width: 100%;
   border: 1px solid #E0E0E0;
   height: 90px;
   font-size: 16px;
-  margin-bottom: 12px; }
+   }
   .pc-nav-wrap {
   	background: #fff;
     display: flex;
