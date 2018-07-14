@@ -68,6 +68,7 @@ function myInfo(token,appId){
 $('.lg_left').click(function(){
 	$(this).siblings().find('label').hide()
 	$(this).siblings().find('input').show()
+	$(this).siblings().find('input').focus();
 })
 $('#fileupload').fileupload({
     dataType: 'json',

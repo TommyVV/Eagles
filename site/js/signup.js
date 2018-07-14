@@ -100,9 +100,9 @@ function loginIn(account,UserPwd){
 				if($.trim(prevLink)==''){
 					location.href = 'index.html';
 				}else{
-					if(prevLink.indexOf('http://51service.xyz/')==-1){	//来自其它站点
-						location.href = 'index.html';
-					}
+//					if(prevLink.indexOf('http://51service.xyz/')==-1){	//来自其它站点
+//						location.href = 'index.html';
+//					}
 					location.href = prevLink;
 				}
 
