@@ -67,15 +67,15 @@ function partyLearning(moduleId,token,page,appId) {
 						} else {
 							externalUrl = 'partyLearning_detail.html' //详情页
 						}
-						learningList+='<div class="media">'+
+						learningList+='<div class="media"><a href="'+externalUrl+'?newsId='+data.NewsInfos[i].NewsId+'&appId='+appId+'">'+
 	                  '<div class="media-left">'+
-	                    '<a href="'+externalUrl+'?newsId='+data.NewsInfos[i].NewsId+'"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>'+
+	                    '<img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '">'+
 	                  '</div>'+
 	                  '<div class="media-body">'+
 	                    '<h4 class="media-heading">' + data.NewsInfos[i].Title + '</h4>'+
 	                    '<span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>'+
 	                  '</div>'+
-	                '</div>'
+	                '</a></div>'
 					}
 					mescroll.endSuccess(data.NewsInfos.length);
 					$('.list-bottom').append(learningList)//新闻列表

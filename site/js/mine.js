@@ -19,10 +19,17 @@ $('#top-nav,#mobilenav').load('./head.html')
     $(".lw_muscore").click(function () {
         window.location.href = 'rank.html?appId='+appId+''
     });
-    
+    //我的文章
+    $(".a_tz").click(function () {
+        window.location.href = 'myInfo.html?appId='+appId+''
+    });
     //我的通知
     $(".lw_news").click(function () {
         window.location.href = 'myNotice.html?appId='+appId+''
+    });
+    //
+    $("#pushace").click(function () {
+        window.location.href = 'publishArticle.html?appId='+appId+''
     });
     //我的任务
     $("#task").click(function () {

@@ -108,10 +108,11 @@ $('#fileupload').fileupload({
         success:function(res){
         	
             if(res.Code == 00){
-            	if(res.Result!=''&&res.Result!=null){
-            		
-				window.location.reload()
-            	}
+            	window.location.href='mine.html'
+//          	if(res.Result!=''&&res.Result!=null){
+//          		
+//				window.location.reload()
+//          	}
             }
         }
 	})
