@@ -16,8 +16,8 @@ namespace Ealges.DomianService.DataAccess.UserArticle
 
         public int CreateArticle(TbUserNews userNews)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_news (OrgId,BranchId,NewsId,UserId,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,OrgReview,BranchReview)
-values (@OrgId,@BranchId,@NewsId,@UserId,@Title,@HtmlContent,@NewsType,@Status,@CreateTime,@ViewsCount,@RewardsScore,@ReviewId,@OrgReview,@BranchReview) ", userNews);
+            return dbManager.Excuted(@"insert into eagles.tb_user_news (OrgId,BranchId,NewsId,UserId,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,OrgReview,BranchReview,IsPublic)
+values (@OrgId,@BranchId,@NewsId,@UserId,@Title,@HtmlContent,@NewsType,@Status,@CreateTime,@ViewsCount,@RewardsScore,@ReviewId,@OrgReview,@BranchReview,@IsPublic) ", userNews);
         }
 
         public List<TbUserNews> GetUserNews(int userId, int pageIndex = 1, int pageSize = 10)
@@ -33,7 +33,7 @@ new { UserId =  userId , PageIndex = pageIndexParameter, PageSize = pageSize });
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             var userNews = dbManager.Query<TbUserNews>(@"select OrgId,BranchId,NewsId,UserId,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,
-OrgReview,BranchReview from eagles.tb_user_news where Status = 0 and OrgReview = 0 and BranchReview = 0 limit @PageIndex, @PageSize ",
+OrgReview,BranchReview from eagles.tb_user_news where Status = 0 and IsPublic = 0 and OrgReview = 0 and BranchReview = 0 limit @PageIndex, @PageSize ",
                 new { UserId = userId, PageIndex = pageIndexParameter, PageSize = pageSize });
             return userNews;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using Eagles.Application.Model.Enums;
+﻿using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.Common
 {
@@ -37,5 +36,10 @@ namespace Eagles.Application.Model.Common
         /// 阅读数量
         /// </summary>
         public int ViewsCount { get; set; }
+
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public int IsPublic { get; set; }
     }
 }

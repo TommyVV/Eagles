@@ -21,5 +21,10 @@ namespace Eagles.Application.Model.News.CreateNews
         /// 新闻文章内容
         /// </summary>
         public string NewsContent { get; set; }
+
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public int IsPublic { get; set; }
     }
 }

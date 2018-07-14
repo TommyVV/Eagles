@@ -56,6 +56,7 @@ namespace Eagles.DomainService.Core.News
                 Title = request.NewsTitle,
                 HtmlContent = request.NewsContent,
                 NewsType = request.NewsType,
+                IsPublic = request.IsPublic,
                 Status = "-1",
                 CreateTime = DateTime.Now,
                 RewardsScore = score.Score,

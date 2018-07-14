@@ -460,6 +460,7 @@ namespace Eagles.DomainService.Core.Task
             {
                 TaskId = x.TaskId,
                 TaskeName = x.TaskName,
+                TaskContent = x.TaskContent,
                 TaskStatus = x.Status,
                 TaskDate = x.BeginTime.ToString("yyyy-MM-dd"),
                 TaskFromUser = x.FromUser,
