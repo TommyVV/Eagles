@@ -1,4 +1,4 @@
-$('#pc-header,#mobilenav').load('head.html')
+$('#top-nav,#mobilenav').load('head.html')
 $('#pc-footer').load('footer.html')
 class CalculateScreen {
 	constructor() {
