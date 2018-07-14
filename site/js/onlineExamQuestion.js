@@ -1,13 +1,16 @@
 //----------------------------NEW --------------------------
 $('#top-nav,#mobilenav').load('head.html')
-if(!localStorage.getItem('token')){
+if(!localStorage.getItem('token')) {
 	window.location.href = "login.html"
 }
-var testId = 0; //试卷的ID
+var token=localStorage.getItem('token')
+var testId=getRequest('testId')//获取模块id
+var appId=getRequest('appId')//获取模块id
+//var testId = 35; //试卷的ID
 var counttime = 0; //试卷剩余时间
 var limitedTime = 0; //试卷规定做题时间
 
-getNewsTest(39, "string");
+getNewsTest(testId,token,appId);
 
 $(function() {
 	daojishi(); //开始倒计时
@@ -15,7 +18,7 @@ $(function() {
 
 //点击查看答题卡
 $('#num-modal').on('click', () => {
-    $('.ques-modal-span').css('background', ''); //背景颜色先恢复为空
+	$('.ques-modal-span').css('background', ''); //背景颜色先恢复为空
 	$('#ques-modal').show(); //模态框展示
 	$('#ques-modal-wrap').removeClass('list-hide').addClass('list-show'); //答题卡展示
 
@@ -44,13 +47,13 @@ $('.ques-modal').on('click', function() {
 })
 
 //获取试卷信息
-function getNewsTest(testId, token) {
+function getNewsTest(testId, token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"TestId": testId,
-			"Token": "string",
-			"AppId": 10000000
+			"Token": token,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/TestPaper/GetTestPaper",
 		dataType: "json",
@@ -58,7 +61,7 @@ function getNewsTest(testId, token) {
 			if(res.Code == 00) {
 				data = res.Result;
 				counttime = data.LimitedTime * 60; //试卷规定时间
-                limitedTime = data.LimitedTime;
+				limitedTime = data.LimitedTime;
 				var num = 0;
 				for(var i = 0; i < data.TestList.length; i++) {
 					num += 1;
@@ -76,12 +79,17 @@ function getNewsTest(testId, token) {
 						} else if(data.TestList[i].Multiple == '1') { //多选
 							inputType = 'checkbox';
 						}
-						if(data.TestList[i].AnswerType == '1') { //自定义文本框
+						if(data.TestList[i].AnswerList[j].AnswerType == '1') { //自定义文本框
 							inputType = 'text';
+							//答案的HTML
+							answerHtmlTemp += '<div class="ques-content-options-list"><label><span class="ques-content-options-list-option"><span></span></span><span class="ques-content-options-list-explain">' + answerModel.Answer + ' </span><input type="' + inputType + '" name="ques' + num + '" AnswerId=' + answerModel.AnswerId + '></label></div>';
+							answerHtml += answerHtmlTemp + '</div>'; // 答案
+						} else {
+							//答案的HTML
+							answerHtmlTemp += '<div class="ques-content-options-list"><label><span class="ques-content-options-list-option"><input hidden type="' + inputType + '" name="ques' + num + '" AnswerId=' + answerModel.AnswerId + '><span></span></span><span class="ques-content-options-list-explain">' + answerModel.Answer + ' </span></label></div>';
+							answerHtml += answerHtmlTemp + '</div>'; // 答案
 						}
-						//答案的HTML
-						answerHtmlTemp += '<div class="ques-content-options-list"><label><span class="ques-content-options-list-option"><input hidden type="' + inputType + '" name="ques' + num + '" AnswerId=' + answerModel.AnswerId + '><span></span></span><span class="ques-content-options-list-explain">' + answerModel.Answer + ' </span></label></div>';
-						answerHtml += answerHtmlTemp + '</div>'; // 答案
+
 						answerHtmlAll += answerHtml;
 					}
 
@@ -94,6 +102,7 @@ function getNewsTest(testId, token) {
 				}
 				$('.ques-totalCount').append(num); //总题目数
 				showQues($('#question1'));
+				//$('.ques-content-options-list-option input[type="text"]').addClass('inptext')
 			}
 		}
 	})
@@ -186,35 +195,38 @@ function getShowQuestElement() {
 
 //页面提交
 $('#submit').on('click', function() {
-	submit();
+	submit(testId,token,appId);
 })
 
 //提交试卷
-function submit() {
+function submit(testId,token,appId) {
 
 	var useTime = Math.ceil(limitedTime - (counttime / 60));
 	if(judgeMultiplecount()) { //校验当前题如果是多选 选择的答案是否超过规定数量，返回TURE为正常，FALSE为超过了
 		//获取数据，提交数据
 		var dataJson = getTestPaperAnswerJson();
 		var UseTime = 0;
-		window.location.href = 'examResult.html?appId='+appId+'&TestId='+testId+'&useTime='+useTime+'&TestList='+dataJson+''
-		/*$.ajax({
+
+		$.ajax({
 			type: "post",
 			data: {
 				"TestId": testId, //试卷ID
 				"UseTime": useTime, //试卷用时,用试卷规定时间减去剩余时间
 				"TestList": dataJson,
-				"Token": "fc00f243e43049f09b37b49f7802ed98",
-				"AppId": 10000000
+				"Token": token,
+				"AppId": appId
 			},
 			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function(res) {
 				if(res.Code == 00) {
 					console.info("提交成功")
+										window.location.href = 'examResult.html?appId='+appId+'&TestId='+testId+'&useTime='+useTime+'&TestList='+dataJson+''
+				} else {
+
 				}
 			}
-		})*/
+		})
 	}
 }
 
@@ -301,7 +313,7 @@ function daojishi() {
 	} else { //倒计时结束，自动交卷
 		window.clearTimeout(vartt);
 		window.confirm("考试时间结束,请单击提交");
-		submit(); //提交答案
+		submit(testId,token,appId); //提交答案
 	}
 
 }
