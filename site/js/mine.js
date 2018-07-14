@@ -27,6 +27,10 @@ $('#top-nav,#mobilenav').load('./head.html')
     $(".lw_news").click(function () {
         window.location.href = 'myNotice.html?appId='+appId+''
     });
+    //
+    $("#pushace").click(function () {
+        window.location.href = 'publishArticle.html?appId='+appId+''
+    });
     //我的任务
     $("#task").click(function () {
         window.location.href = "task.html"
