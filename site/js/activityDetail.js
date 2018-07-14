@@ -1,23 +1,24 @@
-$(document).ready(function () {
-    var token = getCookie('token');
-    var userId = getCookie('userId');
+$(document).ready(function() {
+    var token = getCookie("token");
+    var userId = getCookie("userId");
     var appId = getRequest("appId");
     var activityId = getRequest("activityId");
+    var userType = 1;
     //查询活动详情
     getActivityDetail();
 
     //查询活动详情
     function getActivityDetail() {
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/GetActivityDetail',
+            type: "POST",
+            url: DOMAIN + "/api/Activity/GetActivityDetail",
             data: {
-                "ActivityId": activityId,
-                "Token": token,
-                "AppId": appId
+                ActivityId: activityId,
+                Token: token,
+                AppId: appId
             },
-            success: function (data) {
-                console.log('getActivityDetail---', data);
+            success: function(data) {
+                console.log("getActivityDetail---", data);
                 if (data.Code == "00") {
                     var result = data.Result;
                     $(".main_content").html(showContent(result));
@@ -25,13 +26,17 @@ $(document).ready(function () {
                     var status = result.ActivityStatus;
                     userActivityStatus(result);
                     //展开折叠报名人数
-                    $(".open-names").click(function () {
-                        console.log($(".name-flag").attr("class"))
+                    $(".open-names").click(function() {
+                        console.log($(".name-flag").attr("class"));
                         if ($(".name-flag").hasClass("glyphicon-menu-left")) {
-                            $(".name-flag").removeClass("glyphicon-menu-left").addClass("glyphicon-menu-down");
+                            $(".name-flag")
+                                .removeClass("glyphicon-menu-left")
+                                .addClass("glyphicon-menu-down");
                             $(".names").show();
                         } else {
-                            $(".name-flag").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-left");
+                            $(".name-flag")
+                                .removeClass("glyphicon-menu-down")
+                                .addClass("glyphicon-menu-left");
                             $(".names").hide();
                         }
                     });
@@ -39,7 +44,7 @@ $(document).ready(function () {
                     alert(data.Code, data.Message);
                 }
             }
-        })
+        });
     }
     //判断当前用户的活动状态
     function userActivityStatus(result) {
@@ -55,12 +60,12 @@ $(document).ready(function () {
                 //如果当前是上级，审核
                 $("#btn-area").html(`<div class="pass">通过</div>
                 <div class="nopass">不通过</div>`);
-                // Type  01-上级审核任务 02-下级接受任务 03-下级申请完成 
-                // ReviewType  审核状态 0-通过 1-不通过 
-                $(".pass").click(function () {
+                // Type  01-上级审核任务 02-下级接受任务 03-下级申请完成
+                // ReviewType  审核状态 0-通过 1-不通过
+                $(".pass").click(function() {
                     editActivityReview(1, 0);
                 });
-                $(".nopass").click(function () {
+                $(".nopass").click(function() {
                     editActivityReview(1, 1);
                 });
             }
@@ -68,7 +73,7 @@ $(document).ready(function () {
             //下级创建
             var exist = false;
             if (joinList) {
-                var resultArray = joinList.find(function (element) {
+                var resultArray = joinList.find(function(element) {
                     return element.UserId == userId;
                 });
                 if (resultArray) {
@@ -77,148 +82,182 @@ $(document).ready(function () {
             }
             if (!exist) {
                 $("#btn-area").html(`<div class="sub-btn">我要报名</div>`);
-                $(".sub-btn").click(function () {
+                $(".sub-btn").click(function() {
                     editActivityJoin();
                 });
             } else {
                 //上级发起任务
-                if ((createType == 0 && acceptUserId == userId) || (createType == 1 && initiateUserId == userId)) {
+                if (
+                    (createType == 0 && acceptUserId == userId) ||
+                    (createType == 1 && initiateUserId == userId)
+                ) {
                     $("#btn-area").html(`<div class="sub-btn">我要反馈</div>`);
-                    $(".sub-btn").click(function () {
-                        window.location.href = "feedBack.html?appId=" + appId + "&activityId=" + activityId
+                    $(".sub-btn").click(function() {
+                        window.location.href =
+                            "feedBack.html?appId=" + appId + "&activityId=" + activityId;
                     });
                 }
             }
         } else if (status == 1) {
             //申请完成
-            if ((createType == 0 && initiateUserId == userId) || (createType == 1 && acceptUserId == userId)) {
+            if (
+                (createType == 0 && initiateUserId == userId) ||
+                (createType == 1 && acceptUserId == userId)
+            ) {
                 //查询反馈信息
-                GetActivityFeedBack();
+                GetActivityFeedBack(1);
             }
-        }else if(status==2){
+        } else if (status == 2) {
             //活动完成
+            //1）查询反馈信息
+            GetActivityFeedBack(2);
+            //评论区域
+            if (
+                (createType == "0" && userId == initiateUserId) ||
+                (createType == "1" && userId == acceptUserId)
+            ) {
+                //上级登录
+                userType = 0;
+            }
+            var comment = new Comment({
+                commentType: "1",
+                id: activityId,
+                userType: userType,
+                appId: appId,
+                token: token,
+                userId: userId
+            });
+            comment.getUserComment();
         }
     }
     //参与活动
     function editActivityJoin() {
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/EditActivityJoin',
+            type: "POST",
+            url: DOMAIN + "/api/Activity/EditActivityJoin",
             data: {
-                "ActivityId": activityId,
-                "Token": token,
-                "AppId": appId
+                ActivityId: activityId,
+                Token: token,
+                AppId: appId
             },
-            success: function (data) {
-                console.log('EditActivityJoin---', data);
+            success: function(data) {
+                console.log("EditActivityJoin---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
-        })
+        });
     }
     //审核任务
     function editActivityReview(type, rType) {
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/EditActivityReview',
+            type: "POST",
+            url: DOMAIN + "/api/Activity/EditActivityReview",
             data: {
-                "Type": type,
-                "ActivityId": activityId,
-                "ReviewType": rType,
-                "Token": token,
-                "AppId": appId
+                Type: type,
+                ActivityId: activityId,
+                ReviewType: rType,
+                Token: token,
+                AppId: appId
             },
-            success: function (data) {
-                console.log('EditActivityReview---', data);
+            success: function(data) {
+                console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
-        })
+        });
     }
     //活动反馈查询
-    function GetActivityFeedBack() {
+    function GetActivityFeedBack(status) {
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/GetActivityFeedBack',
+            type: "POST",
+            url: DOMAIN + "/api/Activity/GetActivityFeedBack",
             data: {
-                "ActivityId": activityId,
-                "Token": token,
-                "AppId": appId
+                ActivityId: activityId,
+                Token: token,
+                AppId: appId
             },
-            success: function (data) {
-                console.log('GetActivityFeedBack---', data);
+            success: function(data) {
+                console.log("GetActivityFeedBack---", data);
                 if (data.Code == "00") {
-                    $(".activity-content").html(showActivityResult(data.Result.FeedBackList));
-                    $(".pass").click(function () {
-                        editActivityComplete(0);
-                    });
-                    $(".nopass").click(function () {
-                        editActivityReview(1);
-                    });
+                    showActivityResult(data.Result, status);
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
-        })
+        });
     }
-    //活动完成 
+    //活动完成
     function editActivityComplete(type) {
         var data = {
-            "ActivityId": activityId,
-            "CompleteStatus": type,
-            "Token": token,
-            "AppId": appId
-          };
-        console.log(data,JSON.stringify(data));
+            ActivityId: activityId,
+            CompleteStatus: type,
+            Token: token,
+            AppId: appId
+        };
+        console.log(data, JSON.stringify(data));
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/EditActivityComplete',
+            type: "POST",
+            url: DOMAIN + "/api/Activity/EditActivityComplete",
             data: data,
-            success: function (data) {
-                console.log('EditActivityComplete---', data);
+            success: function(data) {
+                console.log("EditActivityComplete---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
-        })
+        });
     }
     //活动结果展示
-    function showActivityResult(list) {
+    function showActivityResult(result, status) {
+        //status 1 申请完成 2 完成
+        var list = result.FeedBackList;
         var str = `<div class="title">活动结果</div>`;
-        list.forEach(function (element) {
+        list.forEach(function(element) {
             str += ` <div class="content">${element.UserFeedBack}</div>
             <div class="attaches">
                 ${attachmentList(element.AttachList)}
             </div>
-            <div class="result-time">2018-05-08</div>
-            <div class="pub-area">
-                <div class="item">
-                    <span class="glyphicon glyphicon-record"></span>不公示
-                </div>
-                <div class="item">
-                    <span class="glyphicon glyphicon-record"></span>公示到小组
-                </div>
-                <div class="item">
-                    <span class="glyphicon glyphicon-record"></span>公示到支部
-                </div>
-                <div class="item">
-                    <span class="glyphicon glyphicon-record"></span>公示到组织
-                </div>
-            </div>`;
+            <div class="result-time">${result.DateTime.substr(0,10)}</div>`;
         });
-        str += `<div class="activity-result">
-                    <div class="pass">通过</div>
-                    <div class="nopass">不通过</div>
-                </div>`;
-        return str;
+        if (status == 1) {
+            str += `<div class="pub-area">
+                    <div class="item">
+                        <span class="glyphicon glyphicon-record"></span>不公示
+                    </div>
+                    <div class="item">
+                        <span class="glyphicon glyphicon-record"></span>公示到小组
+                    </div>
+                    <div class="item">
+                        <span class="glyphicon glyphicon-record"></span>公示到支部
+                    </div>
+                    <div class="item">
+                        <span class="glyphicon glyphicon-record"></span>公示到组织
+                    </div>
+                </div>
+                <div class="activity-result">
+                        <div class="pass">通过</div>
+                        <div class="nopass">不通过</div>
+                    </div>`;
+            $(".activity-content").html(str);
+            $(".activity-content .pass").click(function() {
+                console.log("111111");
+                editActivityComplete(0);
+            });
+            $(".nopass").click(function() {
+                editActivityComplete(1);
+            });
+        } else {
+            $(".activity-content").html(str);
+        }
+
     }
     //活动详情展示
     function showContent(data) {
@@ -229,16 +268,22 @@ $(document).ready(function () {
                     <p class="content">${data.ActivityContent}
                     </p>
                     <p class="content">
-                        <img src="${data.ActivityImageUrl}" class="img-responsive" alt="">
-                    </p>
-                    <p class="content">
+                        <img src="${
+            data.ActivityImageUrl
+            }" class="img-responsive" alt="">
                     </p>
                     ${attachmentList(data.AttachmentList)}
                     <div id="btn-area"></div>
                 </div>
-                <div class="sign-up-area" style="display:${data.ActivityStatus > 0 ? 'none' : 'block'}">
+                <div class="sign-up-area" style="display:${
+            data.ActivityStatus > 0 ? "none" : "block"
+            }">
                     <div class="area-title">
-                        <span>已报名人员(${data.ActivityJoinPeopleList ? data.ActivityJoinPeopleList.length : 0})</span>
+                        <span>已报名人员(${
+            data.ActivityJoinPeopleList
+                ? data.ActivityJoinPeopleList.length
+                : 0
+            })</span>
                         <span class="open-names">展开
                             <span class="name-flag glyphicon glyphicon-menu-left"></span>
                         </span>
@@ -254,11 +299,37 @@ $(document).ready(function () {
         var str = ``;
         if (list) {
             list.forEach(element => {
-                str += `<div>${element.Name}</div>`
-            });
+                str += `<div>${element.Name}</div>`;
+        });
         }
         return str;
     }
+    class CalculateScreen {
+        constructor() {
+            this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+                navigator.userAgent
+            );
+            this.init();
+        }
+        init() {
+            if (!this.isMobile) {
+                $(".mobile").hide();
+                $(".pc").show();
+                $("#top-nav").load("head.html", () => { });
+                $("#footer").load("footer.html", () => { });
+                $("body").css("background-color", "rgb(248,248,248)");
+                $(".container").addClass('pc-wrap');
+            } else {
+                $(".mobile").show();
+                $(".pc").hide();
+                $("body").css("background-color", "#fff");
+                $(".container").removeClass('pc-wrap');
+            }
+        }
+    }
+    new CalculateScreen();
 
+    $(window).resize(function () {
+        new CalculateScreen();
+    });
 });
-

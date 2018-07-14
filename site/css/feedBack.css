@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+
+.plan-area {
+  margin: 0 0.768rem; }
+  .plan-area .plan-text {
+    margin-top: 0.8533333333rem;
+    height: 8.0426666667rem;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #EEEEEE;
+    outline: none;
+    resize: none;
+    font-size: 0.64rem; }
+  .plan-area .img-area {
+    margin-top: 0.96rem; }
+    .plan-area .img-area .title {
+      font-size: 0.512rem;
+      height: 1.1093333333rem;
+      line-height: 1.1093333333rem;
+      color: #949494; }
+    .plan-area .img-area .imgs {
+      width: 100%; }
+      .plan-area .img-area .imgs .img-wrap {
+        width: calc(25% - 15px); }
+        .plan-area .img-area .imgs .img-wrap .img-container {
+          width: 100%;
+          height: 0px;
+          padding-bottom: 65.4%;
+          overflow: hidden;
+          margin: 0;
+          position: relative;
+          background-color: #E7E7E7;
+          color: white;
+          text-align: center; }
+          .plan-area .img-area .imgs .img-wrap .img-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%; }
+          .plan-area .img-area .imgs .img-wrap .img-container .add {
+            font-size: 80%;
+            position: absolute;
+            height: 100%;
+            display: table;
+            width: 100%; }
+            .plan-area .img-area .imgs .img-wrap .img-container .add div {
+              font-size: 1.28rem;
+              display: table-cell;
+              vertical-align: middle; }
+          .plan-area .img-area .imgs .img-wrap .img-container input {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0; }
+  .plan-area .pub-area {
+    margin-top: 1.7066666667rem;
+    font-size: 0.64rem; }
+    .plan-area .pub-area .glyphicon {
+      color: #E51A1A;
+      font-size: 0.6826666667rem; }
+  .plan-area .sub-btn {
+    margin-top: 3.0293333333rem; }
+
+/*# sourceMappingURL=feedBack.css.map */

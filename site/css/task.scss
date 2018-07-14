@@ -91,6 +91,9 @@
         .name-label{
             font-size: 24px;
         }
+        .type-label{
+            margin-left: 50px;
+        }
         .select{
             width:118px;
             height:30px;
@@ -102,7 +105,7 @@
             color:#949494;
             align-items: center;
             padding:0 14px 0 18px;
-            &-name{
+            &-name,&-type{
                 flex:1;
             }
             i{

@@ -1,22 +1,25 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
-
+    font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
-.bg-color{
+
+.bg-color {
     background-color: #f8f8f8;
 }
-.line-color{
-    background: -moz-linear-gradient(to bottom right, #F14747, #BD1818);
-    background: -webkit-linear-gradient(to bottom right, #F14747, #BD1818);
-    background: -o-linear-gradient(to bottom right, #F14747, #BD1818);
-    background: -ms-linear-gradient(to bottom right, #F14747, #BD1818);
-    background: linear-gradient(to bottom right, #f27575, #E94040, #BD1818);
+
+.line-color {
+    background: -moz-linear-gradient(to bottom right, #f14747, #bd1818);
+    background: -webkit-linear-gradient(to bottom right, #f14747, #bd1818);
+    background: -o-linear-gradient(to bottom right, #f14747, #bd1818);
+    background: -ms-linear-gradient(to bottom right, #f14747, #bd1818);
+    background: linear-gradient(to bottom right, #f27575, #e94040, #bd1818);
 }
-.hide{
+
+.hide {
     display: none;
 }
+
 .sub-btn {
     width: 70%;
     margin-left: 15%;
@@ -27,13 +30,55 @@
     line-height: 1.792rem;
     color: white;
     border-radius: 0.1706666667rem;
-    background-color: #EE2F2F; 
-    letter-spacing: 5px;}
+    background-color: #ee2f2f;
+    letter-spacing: 5px;
+}
 
 .file {
     padding-top: 0.64rem;
 }
-    
+
 .file .glyphicon {
-    color: #65BBDE;
+    color: #65bbde;
+}
+
+@media screen and (min-width: 1024px) {
+    .weui-dialog {
+        max-width: 80% !important;
+        width: 80%;
+    }
+}
+
+.alert .weui-dialog__bd textarea {
+    height: 200px;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #eeeeee;
+    outline: none;
+    resize: none;
+    font-size: 0.64rem;
+}
+
+.alert .tip {
+    color: red;
+}
+.mobile, .pc {
+    display: none;
+}
+.pc-wrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+.pc-nav-wrap .logo{
+    text-align: left;
+}
+
+.flag-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.flag-area .pub-flag {
+    width: 20px;
+    height: 20px;
 }
