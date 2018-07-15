@@ -81,7 +81,8 @@ namespace Eagles.DomainService.Core
                 District = detail.District,
                 Province = detail.Province,
                 Score = detail.Score,
-                OrderStatus = detail.OrderStatus
+                OrderStatus = detail.OrderStatus,
+                ExpressId=detail.ExpressId
             };
             return response;
         }
@@ -102,7 +103,9 @@ namespace Eagles.DomainService.Core
                 GoodsName = x.ProdName,
                 PlaceTime = x.CreateTime.FormartDatetime(),
                 OrderStatus = x.OrderStatus,
-                ExpressId = x.ExpressId
+                ExpressId = x.ExpressId,
+                Count=x.Count,
+                Score=x.Score
             }).ToList();
             return response;
         }
