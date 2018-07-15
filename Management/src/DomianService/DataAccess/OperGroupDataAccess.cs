@@ -10,7 +10,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {
-    public class OperGroupDataAccess: IOperGroupDataAccess
+    public class OperGroupDataAccess : IOperGroupDataAccess
     {
         private readonly IDbManager dbManager;
 
@@ -56,7 +56,7 @@ VALUES
             return dbManager.Excuted(@"  
  DELETE FROM `eagles`.`tb_oper_group`
 WHERE GroupId=@GroupId
-", new {GroupId = requset.AuthorityGroupId});
+", new { GroupId = requset.AuthorityGroupId });
         }
 
         public TbOperGroup GetOperGroupDetail(GetAuthorityGroupDetailRequset requset)
@@ -87,7 +87,7 @@ FROM `eagles`.`tb_oper_group`
             {
                 parameter.Append(" and  OrgId = @OrgId ");
                 dynamicParams.Add("OrgId", requset.OrgId);
-            } 
+            }
 
             if (requset.StartTime != null)
             {
@@ -106,7 +106,7 @@ FROM `eagles`.`tb_oper_group`
                 parameter.Append(" and GroupName = @GroupName ");
                 dynamicParams.Add("GroupName", requset.AuthorityName);
             }
-            
+
 
             sql.AppendFormat(@" SELECT `tb_oper_group`.`OrgId`,
     `tb_oper_group`.`GroupId`,
@@ -120,27 +120,14 @@ FROM `eagles`.`tb_oper_group`
             return dbManager.Query<TbOperGroup>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbAuthority> GetAuthorityGroupSetUp(GetAuthorityGroupSetUpRequest requset)
+        public List<TbAuthority> GetAuthorityGroupSetUp(int groupId )
         {
 
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
-
-            if (requset.GroupId > 0)
-            {
-                parameter.Append(" and  GroupId = @GroupId ");
-                dynamicParams.Add("GroupId", requset.GroupId);
-            }
-
-
-
+            parameter.Append(" and  GroupId = @GroupId ");
+            dynamicParams.Add("GroupId", groupId);
             sql.AppendFormat(@" SELECT `tb_authority`.`OrgId`,
     `tb_authority`.`GroupId`,
     `tb_authority`.`FunCode`,
