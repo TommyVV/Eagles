@@ -20,6 +20,10 @@ namespace Eagles.DomainService.Model.User
         /// </summary>
         public int BranchId { get; set; }
         /// <summary>
+        /// 支部名称
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
         /// 市
         /// </summary>
         public string City { get; set; }
@@ -66,7 +70,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 正式党员日期
         /// </summary>
-        public string MemberTime { get; set; }
+        public DateTime MemberTime { get; set; }
         /// <summary>
         /// 党员类型;0:党员;1:预备党员'
         /// </summary>
@@ -87,6 +91,11 @@ namespace Eagles.DomainService.Model.User
         /// 组织id
         /// </summary>
         public int OrgId { get; set; }
+        /// <summary>
+        /// 组织名称
+        /// </summary>
+        public string OrgName { get; set; }
+
         /// <summary>
         /// 籍贯
         /// </summary>
@@ -110,7 +119,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 预备党员日期
         /// </summary>
-        public string PreMemberTime { get; set; }
+        public DateTime PreMemberTime { get; set; }
         /// <summary>
         /// 省
         /// </summary>

@@ -40,12 +40,11 @@ namespace Eagles.DomainService.Core.User
             var response = new EditUserResponse();
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
             var reqUserInfo = request.RequestUserInfo;
             var userInfo = new TbUserInfo()
             {
+                UserId = tokens.UserId,
                 PhotoUrl = reqUserInfo.PhotoUrl,
                 Name = reqUserInfo.Name,
                 Sex = reqUserInfo.Gender,
@@ -56,14 +55,11 @@ namespace Eagles.DomainService.Core.User
                 Ethnic = reqUserInfo.Ethnic,
                 Dept = reqUserInfo.Department,
                 Company = reqUserInfo.Employer,
-                Origin = reqUserInfo.Origin,
-                UserId = reqUserInfo.UserId
+                Origin = reqUserInfo.Origin
             };
             var result = userInfoAccess.EditUser(userInfo);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
         
@@ -190,30 +186,32 @@ namespace Eagles.DomainService.Core.User
             var result = userInfoAccess.GetUserInfo(tokens.UserId);
             if (result == null)
                 throw new TransactionException("01", "用户信息不存在");
-            var userInfo = new UserInfo
+            var userInfo = new ResUser
             {
+                UserId = result.UserId,
                 Name = result.Name,
-                Gender = result.Sex,
-                Birth = result.Birthday.ToLocalTime(),
+                Gender = result.Sex == 0 ? "男" : "女",
+                Birth = result.Birthday.ToString("yyyy-MM-dd"),
                 Telphone = result.Phone,
                 Address = result.Address,
                 Origin = result.Origin,
                 OriginAddress = result.OriginAddress,
                 Ethnic = result.Ethnic,
-                Branch = result.BranchId,
+                Branch = result.BranchName,
                 Department = result.Dept,
                 Education = result.Education,
                 School = result.School,
                 IdCard = result.IdNumber,
                 Employer = result.Company,
-                PrepPartyDate = result.PreMemberTime,
-                FormalPartyDat = result.MemberTime,
-                PartyType = result.MemberType,
+                PrepPartyDate = result.PreMemberTime.ToString("yyyy-MM-dd"),
+                FormalPartyDat = result.MemberTime.ToString("yyyy-MM-dd"),
+                PartyType = result.MemberType == 0 ? "党员" : "预备党员",
                 Provice = result.Provice,
                 City = result.City,
                 District = result.District,
                 PhotoUrl = result.PhotoUrl,
-                Score = result.Score
+                Score = result.Score,
+                MyOrganization = result.OrgName
             };
             response.ResultUserInfo = userInfo;
             return response;
