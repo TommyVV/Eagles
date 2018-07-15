@@ -95,7 +95,6 @@ SET
 `City` = @City,
 `District` = @District,
 `Address` = @Address,
-`CreateTime` = @CreateTime,
 `EditTime` = @EditTime,
 `OperId` = @OperId,
 `Logo` = @Logo

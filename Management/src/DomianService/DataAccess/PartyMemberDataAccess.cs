@@ -223,30 +223,42 @@ VALUES
 
             if (request.StartTime != null)
             {
-                parameter.Append(" and CreateTime <= @StartTime ");
+                parameter.Append(" and CreateTime >= @StartTime ");
                 dynamicParams.Add("StartTime", request.StartTime);
             }
 
             if (request.EndTime != null)
             {
-                parameter.Append(" and CreateTime >= @EndTime ");
+                parameter.Append(" and CreateTime <= @EndTime ");
                 dynamicParams.Add("EndTime", request.EndTime);
             }
 
-            totalCount = 0;
+
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_user_info`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (request.PageNumber - 1) * request.PageSize);
+            dynamicParams.Add("pageNum", request.PageNumber);
+            dynamicParams.Add("pageSize", request.PageSize);
+
+
             sql.AppendFormat(@" SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`BranchId`,
     `tb_user_info`.`UserId`,
     `tb_user_info`.`Password`,
     `tb_user_info`.`Name`,
     `tb_user_info`.`Sex`,
-    `tb_user_info`.`Ethinc`,
+    `tb_user_info`.`Ethnic`,
     `tb_user_info`.`Birthday`,
     `tb_user_info`.`Origin`,
     `tb_user_info`.`OriginAddress`,
     `tb_user_info`.`Phone`,
     `tb_user_info`.`IdNumber`,
-    `tb_user_info`.`Eduction`,
+    `tb_user_info`.`Education`,
     `tb_user_info`.`School`,
     `tb_user_info`.`Provice`,
     `tb_user_info`.`City`,
@@ -267,10 +279,14 @@ VALUES
     `tb_user_info`.`OperId`,
     `tb_user_info`.`IsCustomer`,
     `tb_user_info`.`Score`,
-    `tb_user_info`.`IsLeader`
-FROM `eagles`.`tb_user_info`  where 1=1  {0}  
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
+FROM `eagles`.`tb_user_info`  where 1=1  {0}    order by CreateTime desc limit  @pageStart ,@pageSize;
  ", parameter);
 
+
+           
             return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
            // throw new NotImplementedException();
         }

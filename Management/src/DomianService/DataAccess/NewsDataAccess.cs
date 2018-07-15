@@ -171,7 +171,6 @@ SET
 `Author` = @Author,
 `Source` = @Source,
 `Module` = @Module,
-`Status` = @Status,
 `BeginTime` = @BeginTime,
 `EndTime` = @EndTime,
 `TestId` = @TestId,

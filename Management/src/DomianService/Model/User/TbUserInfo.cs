@@ -149,6 +149,16 @@ namespace Eagles.DomainService.Model.User
         /// </summary>
         public double LockingTime { get; set; }
 
-      //  public string Ethinc { get; set; }
+        //  public string Ethinc { get; set; }
+
+
+
+
+
+
+
+
+
+      
     }
 }
