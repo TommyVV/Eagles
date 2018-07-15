@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Eagles.Application.Model.AuthorityGroupSetUp.Requset
+﻿namespace Eagles.Application.Model.AuthorityGroupSetUp.Requset
 {
-    public class GetAuthorityGroupSetUpRequest : OrgRequestBase
+    public class GetAuthorityGroupSetUpRequest : RequestBase
     {
         /// <summary>
         /// 权限组编号

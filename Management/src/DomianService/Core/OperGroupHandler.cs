@@ -164,18 +164,8 @@ namespace Eagles.DomainService.Core
             {
             };
 
-            //get user group 
-            var userInfo=cacheHelper.GetData<TbUserToken>(requset.Token);
-            var operInfo=OperdataAccess.GetOperDetail(userInfo.UserId);
-            if (operInfo == null)
-            {
-                throw new TransactionException("M01", "无业务数据");
-
-            }
-
-            requset.GroupId = operInfo.GroupId;
-            requset.OrgId = operInfo.OrgId;
-            List<TbAuthority> list = dataAccess.GetAuthorityGroupSetUp(requset) ?? new List<TbAuthority>();
+           
+            List<TbAuthority> list = dataAccess.GetAuthorityGroupSetUp(requset.GroupId) ?? new List<TbAuthority>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
@@ -184,6 +174,30 @@ namespace Eagles.DomainService.Core
                 FunCode = x.FunCode,
                 CreateTime = x.CreateTime,
             }).ToList();
+            return response;
+        }
+
+        public GetAuthorityGroupSetUpResponse GetAuthorityByToken(RequestBase request)
+        {
+            //get user group 
+            var userInfo = cacheHelper.GetData<TbUserToken>(request.Token);
+            var operInfo = OperdataAccess.GetOperDetail(userInfo.UserId);
+            if (operInfo == null)
+            {
+                throw new TransactionException("M01", "无业务数据");
+
+            }
+            var list = dataAccess.GetAuthorityGroupSetUp(operInfo.GroupId) ?? new List<TbAuthority>();
+
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
+            var response = new GetAuthorityGroupSetUpResponse
+            {
+                List = list.Select(x => new AuthorityInfo
+                {
+                    FunCode = x.FunCode,
+                    CreateTime = x.CreateTime,
+                }).ToList()
+            };
             return response;
         }
     }
