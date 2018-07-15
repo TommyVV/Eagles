@@ -128,3 +128,9 @@ function navbar(appId) {
 		}
 	});
 }
+$('.sk_sps').on('click', function(e) {
+	window.location.href = 'myNotice.html?appId=' + appId + '';
+})
+$('.main-topf').on('click', function(e) {
+	window.location.href = 'index.html?appId=' + appId + '';
+})

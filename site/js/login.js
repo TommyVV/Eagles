@@ -30,10 +30,22 @@ $('.btn-login').on('click', function(e) {
 	let account = $('#inputUser').val(); //用户名
 	//let captcha = $('#inputCaptcha').val();
 	if(!account) {
-		alert('请输入账号');
+		bootoast({
+					message: '请输入账号',
+					type: 'warning',
+					position: 'toast-top-center',
+					timeout: 3
+				});
+		
 		return;
 	} else if(!password) {
-		alert('请输入密码');
+		bootoast({
+					message: '请输入密码',
+					type: 'warning',
+					position: 'toast-top-center',
+					timeout: 3
+				});
+		
 		return;
 	}
 	//var hash = hex_md5(password);
@@ -59,11 +71,18 @@ $('.btn-login').on('click', function(e) {
 					parent.location.href = 'mine.html?appId=' + appId + '';
 				} else {
 					if(prevLink.indexOf('signup.html') != -1) { //来自注册页面
-						parent.location.href = 'signup.html?appId=' + appId + ''';
+						parent.location.href = 'signup.html?appId=' + appId + '';
 					}
 					parent.location.href = prevLink;
 				}
 
+			}else{
+				bootoast({
+					message: ''+res.Message+'',
+					type: 'warning',
+					position: 'toast-top-center',
+					timeout: 3
+				});
 			}
 		}
 	})
