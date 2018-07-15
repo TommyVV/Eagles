@@ -50,9 +50,9 @@ function goodDetal(productIds, appId) {
 			var data = res.Result;
 			if(res.Code == 00) {
 				$('.ld_img,.goods-img').attr('src', data.ProductImgUrl);
-				$('.overview-props-name').text(data.ProductName);
+				$('.overview-props-name,.goods-title').text(data.ProductName);
 				$('.overview-props-count span,.num span').text(data.PeopleCount);
-				$('.overview-props-price span').text(data.ProductScore + '积分');
+				$('.overview-props-price span').text(data.Price);
 				$('.points').html(data.ProductScore + '积分换购'); //移动端
 				$('.overview-props-date span,.time span').text(data.ProductBeginTime);
 				$('.detail p,.detail-content').html(data.ProductDescrption) //文章列表
