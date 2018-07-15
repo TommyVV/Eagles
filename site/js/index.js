@@ -1,4 +1,4 @@
-$('#pc-header,#mobilenav').load('head.html')
+$('#top-nav,#mobilenav').load('head.html')
 $('#pc-footer').load('footer.html')
 class CalculateScreen {
 	constructor() {
@@ -32,12 +32,10 @@ $(window).resize(function() {
 	new CalculateScreen();
 })
 var token = localStorage.getItem('token');
-//var pageType=getRequest('pageType')//获取来源页面id
-//var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
-//var appId=getRequest('appId')//获取来源页面id
-var pageType=0;
-var moduleType=0;
-var appId=10000000
+var pageType=getRequest('pageType')//获取来源页面id
+var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
+var appId=getRequest('appId')//获取来源页面id
+
 //接口模块
 scrollimg(pageType,token,appId); //banner
 moduleListTitle(moduleType,appId) //名称分类方法

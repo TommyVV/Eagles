@@ -65,9 +65,9 @@ function partyLearning(moduleId,token,page,appId) {
 						if(data.NewsInfos[i].IsExternal == true) {
 							externalUrl = data.NewsInfos[i].ExternalUrl
 						} else {
-							externalUrl = 'partyLearning_detail.html' //详情页
+							externalUrl = 'partyLearning_detail.html?NewsId='+data.NewsInfos[i].NewsId+'&appId='+appId+'' //详情页
 						}
-						learningList+='<div class="media"><a href="'+externalUrl+'?newsId='+data.NewsInfos[i].NewsId+'&appId='+appId+'">'+
+						learningList+='<div class="media"><a href="'+externalUrl+'">'+
 	                  '<div class="media-left">'+
 	                    '<img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '">'+
 	                  '</div>'+

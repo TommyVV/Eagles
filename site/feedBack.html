@@ -7,16 +7,19 @@
     <meta name="hotcss" content="initial-dpr=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="css/common/common.css">
-    <link rel="stylesheet" href="css/taskPlanEdit.css">
+    <link rel="stylesheet" href="css/feedBack.css">
     <title>反馈信息</title>
 </head>
 
 <body>
+    <div id="top-nav" class="pc"></div>
     <div class="container">
         <div class="row">
             <div class="plan-area">
-                <textarea class="plan-text" placeholder="快让大家知道你的任务进度吧~" name="" id="content" cols="30" rows="10"></textarea>
+                <textarea class="plan-text" placeholder="" name="" id="content" cols="30" rows="10"></textarea>
                 <div class="img-area">
                     <div class="title">附件上传</div>
                     <input type="file" id="fileupload">
@@ -24,31 +27,33 @@
 
                     </div>
                     <!-- <div class="imgs">
-                        <div class='img-wrap'>
-                            <div class="img-container">
-                                <div class="add">
-                                    <div>+</div>
+                            <div class='img-wrap'>
+                                <div class="img-container">
+                                    <div class="add">
+                                        <div>+</div>
+                                    </div>
+                                    <input type="file" id="fileupload">
                                 </div>
-                                <input type="file" id="fileupload">
                             </div>
-                        </div>
-                    </div> -->
+                        </div> -->
                 </div>
-                <div class="pub-area">
-                    <span class="glyphicon glyphicon-record"></span>申请公开
+                <div class="pub-area flag-area">
+                    <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
                 </div>
-                <div class="sub-btn">反馈并完成</div>
+                <div class="sub-btn"></div>
             </div>
         </div>
     </div>
+    <div class="footer pc" id="footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
     <script src="thirdparty/jquery.ui.widget.js"></script>
     <script src="thirdparty/jquery.iframe-transport.js"></script>
     <script src="thirdparty/jquery.fileupload.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/feedBack.js"></script>
+    <script src="js/feedBack.js?v=123"></script>
 </body>
 
 </html>

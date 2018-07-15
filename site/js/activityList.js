@@ -9,9 +9,10 @@ $(document).ready(function () {
     $(".activity-cate").click(function () {
         var id = $(this).attr('id');
         if (id != currentItemType) {
-            currentItemType=id;
+            currentItemType = id;
             $(".activity-cate").find("span").removeClass("select");
             $(this).find("span").addClass("select");
+            $(".item").html('');
             getActivityList(id);
         }
 
@@ -25,9 +26,9 @@ $(document).ready(function () {
             data: {
                 "ActivityType": type,
                 "ActivityPage": 0,
-                "Token":token,
+                "Token": token,
                 "AppId": appId
-              },
+            },
             success: function (data) {
                 console.log('GetActivityList---', data);
                 if (data.Code == "00") {
@@ -36,37 +37,34 @@ $(document).ready(function () {
                     //给每列数据绑定事件
                     $(".article").click(function () {
                         var par = $(this).attr('id');
-                        var tmpArray = par.split('_');
+                        var tmpArray = par.split('-');
                         console.log(tmpArray);
                         var id = tmpArray[0];
                         var type = tmpArray[1];
-                        if(type=='0'){
+                        var testId = tmpArray[2];
+                        if (type == '0') {
                             //报名活动
-                            window.location.href = "activityDetail.html?appId="+appId+"&activityId=" + id;
-                        }else if(type=='1'){
+                            window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
+                        } else if (type == '1') {
                             //投票活动
-                        }else if(type=='2'){
+                            window.location.href = "vote.html?appId=" + appId + "&voteId=" + testId;
+                        } else if (type == '2') {
                             //问卷调查
                         }
                     });
+                } else if (data.Code == '10') {
+                    $(".item").html('暂无数据');
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
         })
     }
-
-});
-
-
-
-
-
-//处理返回数据
-function dealReturnList(list) {
-    var content = '';
-    list.forEach(element => {
-        content += `<div class="article" id="${element.ActivityId}_${element.ActivityType}">
+    //处理返回数据
+    function dealReturnList(list) {
+        var content = '';
+        list.forEach(element => {
+            content += `<div class="article" id="${element.ActivityId}-${element.ActivityType}-${element.TestId}">
                     <div class="left">
                         <img src="${element.ImgUrl}"
                             alt="">
@@ -76,10 +74,40 @@ function dealReturnList(list) {
                             ${element.ActivityName}
                         </div>
                         <div class="date">
-                            ${element.ActivityDate.substr(0,10)}
+                            ${element.ActivityDate.substr(0, 10)}
                         </div>
                     </div>
                 </div>`;
+        });
+        return content;
+    }
+    class CalculateScreen {
+        constructor() {
+            this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+                navigator.userAgent
+            );
+            this.init();
+        }
+        init() {
+            if (!this.isMobile) {
+                $(".mobile").hide();
+                $(".pc").show();
+                $("#top-nav").load("head.html", () => { });
+                $("#footer").load("footer.html", () => { });
+                $("body").css("background-color", "rgb(248,248,248)");
+                $(".container").addClass('pc-wrap');
+            } else {
+                $(".mobile").show();
+                $(".pc").hide();
+                $("body").css("background-color", "#fff");
+                $(".container").removeClass('pc-wrap');
+            }
+        }
+    }
+    new CalculateScreen();
+
+    $(window).resize(function () {
+        new CalculateScreen();
     });
-    return content;
-}
+
+});

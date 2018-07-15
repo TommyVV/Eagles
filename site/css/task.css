@@ -82,6 +82,8 @@
     margin-bottom: 10px; }
     .pc-wrap .assign .name-label {
       font-size: 24px; }
+    .pc-wrap .assign .type-label {
+      margin-left: 50px; }
     .pc-wrap .assign .select {
       width: 118px;
       height: 30px;
@@ -93,7 +95,7 @@
       color: #949494;
       align-items: center;
       padding: 0 14px 0 18px; }
-      .pc-wrap .assign .select-name {
+      .pc-wrap .assign .select-name, .pc-wrap .assign .select-type {
         flex: 1; }
       .pc-wrap .assign .select i {
         font-size: 8px; }

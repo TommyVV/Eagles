@@ -40,6 +40,10 @@
                 padding-top: px2rem(30);
                 .flag {
                     width: 30px;
+                    img{
+                        width:20px;
+                        height: 20px;
+                    }
                 }
                 .c-area {
                     width: calc(100% - 30px);
@@ -59,7 +63,7 @@
                         background-color: #E9E9E9;
                         border-radius: px2rem(15);
                         .in-ratio {
-                            width: 30%;
+                            width: 0%;
                             height: 100%;
                             background-color: #86C8EB;
                             font-size: px2rem(24);
@@ -67,6 +71,7 @@
                             color: white;
                             text-align: center;
                             line-height: px2rem(30);
+                            text-indent: 0.2rem;
                         }
                     }
                 }
@@ -85,9 +90,16 @@
                 display: flex;
                 flex-direction: column;
                 .option-name {
-                    text-align: center;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    img{
+                        width:20px;
+                        height: 20px;
+                    }
                 }
-                img {
+                .a-img {
                     margin-top: px2rem(10);
                     width: px2rem(240);
                     height: px2rem(240);
@@ -99,7 +111,7 @@
                     background-color: #E9E9E9;
                     border-radius: px2rem(15);
                     .in-ratio {
-                        width: 30%;
+                        width:0%;
                         height: 100%;
                         background-color: #86C8EB;
                         border-radius: px2rem(10);

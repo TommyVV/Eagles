@@ -23,8 +23,11 @@
       padding: 0 0.4266666667rem; }
       .plan-item .item-opers .oper .glyphicon {
         padding-right: 2px; }
-    .plan-item .item-opers .oper-re {
+    .plan-item .item-opers .feedback {
       color: #F24848; }
+
+.btn-area {
+  margin-top: 1.472rem; }
 
 .plan-add {
   margin-top: 1.472rem;
@@ -34,5 +37,25 @@
     color: #F24848; }
   .plan-add .text {
     font-size: 0.768rem; }
+
+.alert-overlayer {
+  background: yellow;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+  .alert-overlayer .alert {
+    padding-top: 20%;
+    width: 70%;
+    margin-left: 15%;
+    background: pink;
+    height: 60%; }
+
+.plan-tip {
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  margin-top: 40px; }
 
 /*# sourceMappingURL=taskPlan.css.map */
