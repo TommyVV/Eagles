@@ -17,7 +17,7 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbBranch> GetBranchList(GetBranchRequset requset)
+        public List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -29,20 +29,31 @@ namespace Ealges.DomianService.DataAccess
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+         
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_branch`  where 1=1  {0} ;
+ ", parameter);
+            totalcount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
 
 
-            sql.AppendFormat(@"  SELECT `tb_branch`.`OrgId`,
+
+
+            sql.AppendFormat(@" SELECT `tb_branch`.`OrgId`,
     `tb_branch`.`BranchId`,
     `tb_branch`.`BranchName`,
     `tb_branch`.`BranchDesc`,
     `tb_branch`.`CreateTime`
-FROM `eagles`.`tb_branch`  where 1=1  {0}  
+FROM `eagles`.`tb_branch`  where 1=1    {0}  order by BranchId desc limit  @pageStart ,@pageSize
  ", parameter);
+
+
+
 
             return dbManager.Query<TbBranch>(sql.ToString(), dynamicParams);
         }

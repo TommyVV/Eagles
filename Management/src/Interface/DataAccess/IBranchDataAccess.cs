@@ -11,7 +11,7 @@ namespace Eagles.Interface.DataAccess
         int EditBranch(TbBranch mod);
         int CreateBranch(TbBranch mod);
         int RemoveBranch(RemoveBranchRequset requset);
-        List<TbBranch> GetBranchList(GetBranchRequset requset);
+        List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount);
         TbBranch GetBranchDetail(GetBranchDetailRequset requset);
     }
 }

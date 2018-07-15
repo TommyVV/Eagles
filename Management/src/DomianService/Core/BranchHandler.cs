@@ -29,7 +29,7 @@ namespace Eagles.DomainService.Core
 
             TbBranch mod;
             var now = DateTime.Now;
-            if (requset.Info.OrgId > 0)
+            if (requset.Info.BranchId > 0)
             {
                 mod = new TbBranch
                 {
@@ -78,13 +78,13 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
 
             };
-            List<TbBranch> list = dataAccess.GetBranchList(requset) ?? new List<TbBranch>();
+            List<TbBranch> list = dataAccess.GetBranchList(requset,out int totalcount) ?? new List<TbBranch>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
 
             var orgInfo = OrganizationdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
-
+            response.TotalCount = totalcount;
             response.List = list.Select(x => new Branch
             {
                 BranchName = x.BranchName,
