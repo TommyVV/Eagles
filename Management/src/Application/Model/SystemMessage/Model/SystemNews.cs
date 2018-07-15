@@ -19,7 +19,7 @@ namespace Eagles.Application.Model.SystemMessage.Model
         /// <summary>
         /// 提示日期
         /// </summary>
-        public DateTime NoticeTime { get; set; }
+        public string NoticeTime { get; set; }
         /// <summary>
         /// 状态
         /// </summary>

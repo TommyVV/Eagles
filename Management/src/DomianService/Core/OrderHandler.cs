@@ -73,7 +73,7 @@ namespace Eagles.DomainService.Core
                 Address = detail.Address,
                 OrderId = detail.OrderId,
                 GoodsName = detail.ProdName,
-                PlaceTime = detail.CreateTime,
+                PlaceTime = detail.CreateTime.ToString("yyyy-MM-dd"),
                 UserName = userInfo.Name,
                 City = detail.City,
                 Count = detail.Count,
@@ -99,7 +99,7 @@ namespace Eagles.DomainService.Core
                 Address = x.Address,
                 OrderId = x.OrderId,
                 GoodsName = x.ProdName,
-                PlaceTime = x.CreateTime,
+                PlaceTime = x.CreateTime.ToString("yyyy-MM-dd"),
                 OrderStatus=x.OrderStatus
             }).ToList();
             return response;

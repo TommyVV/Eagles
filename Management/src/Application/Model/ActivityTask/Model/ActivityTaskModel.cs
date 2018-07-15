@@ -37,7 +37,7 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public string CreateTime { get; set; }
 
         /// <summary>
         /// 审核状态

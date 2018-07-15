@@ -17,7 +17,7 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// <summary>
         /// 开始时间
         /// </summary>
-        public string BeginTime { get; set; }
+        public DateTime BeginTime { get; set; }
         /// <summary>
         /// 内容 json格式 图片 文字
         /// </summary>
