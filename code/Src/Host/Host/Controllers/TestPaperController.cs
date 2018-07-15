@@ -1,8 +1,9 @@
 ﻿using System.Web.Http;
 using Eagles.Base;
 using Eagles.Interface.Core.UserTest;
-using Eagles.Application.Model.News.CompleteTest;
-using Eagles.Application.Model.News.GetTestPaper;
+using Eagles.Application.Model.TestPaper.CompleteTest;
+using Eagles.Application.Model.TestPaper.GetTestPaper;
+using Eagles.Application.Model.TestPaper.GetIsJoinTest;
 
 namespace Eagles.Application.Host.Controllers
 {
@@ -39,6 +40,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<CompleteTestResponse> TestPaperAnswer(CompleteTestRequest request)
         {
             return ApiActuator.Runing(() => userTestHandler.CompleteTest(request));
+        }
+
+        /// <summary>
+        /// 查询用户是否可以回答该试卷
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetIsJoinTestResponse> GetIsJoinTest(GetIsJoinTestRequest request)
+        {
+            return ApiActuator.Runing(() => userTestHandler.GetIsJoinTest(request));
         }
     }
 }

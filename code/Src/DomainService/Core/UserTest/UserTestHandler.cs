@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Linq;
+using Eagles.Base.Json;
 using System.Collections.Generic;
 using Eagles.Base;
 using Eagles.DomainService.Model.User;
+using Eagles.DomainService.Core.Utility;
+using Eagles.DomainService.Model.Question;
 using Eagles.Interface.Core.UserTest;
 using Eagles.Interface.DataAccess.Util;
 using Eagles.Interface.DataAccess.UserTest;
 using Eagles.Application.Model;
-using Eagles.Application.Model.Common;
 using Eagles.Application.Model.Enums;
-using Eagles.Application.Model.News.CompleteTest;
-using Eagles.Application.Model.News.GetTestPaper;
-using Eagles.Base.Json;
-using Eagles.DomainService.Core.Utility;
-using Eagles.DomainService.Model.Question;
+using Eagles.Application.Model.Common;
+using Eagles.Application.Model.TestPaper.CompleteTest;
+using Eagles.Application.Model.TestPaper.GetTestPaper;
+using Eagles.Application.Model.TestPaper.GetIsJoinTest;
 
 namespace Eagles.DomainService.Core.UserTest
 {
@@ -227,6 +228,24 @@ namespace Eagles.DomainService.Core.UserTest
             {
                 WriteScoreLs(tokens.UserId, passAwardScore, userInfo.Score);
             }
+            return response;
+        }
+
+        public GetIsJoinTestResponse GetIsJoinTest (GetIsJoinTestRequest request)
+        {
+            var response = new GetIsJoinTestResponse();
+            var tokens = util.GetUserId(request.Token, 0);
+            if (tokens == null || tokens.UserId <= 0)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            var userInfo = util.GetUserInfo(tokens.UserId);
+            if (userInfo == null)
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            //查询用户是否已经回答过该试题
+            var userTest = testDa.GetUserTest(request.TestId, userInfo.UserId);
+            if (userTest != null)
+                response.IsJoin = 0;
+            else
+                response.IsJoin = 1;
             return response;
         }
 
