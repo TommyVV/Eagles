@@ -1,11 +1,12 @@
 //----------------------------NEW --------------------------
-$('#top-nav,#mobilenav').load('head.html')
-if(!localStorage.getItem('token')) {
-	window.location.href = "login.html"
-}
 var token=localStorage.getItem('token')
 var testId=getRequest('testId')//获取模块id
 var appId=getRequest('appId')//获取模块id
+$('#top-nav,#mobilenav').load('head.html')
+if(!localStorage.getItem('token')) {
+	window.location.href = 'login.html?appId=' + appId + '';
+}
+
 //var testId = 35; //试卷的ID
 var counttime = 0; //试卷剩余时间
 var limitedTime = 0; //试卷规定做题时间

@@ -32,7 +32,7 @@ html, body {
     text-align: center; }
 
 .form-horizontal {
-  padding: 3.392rem 1.6rem 0rem 1.6rem; }
+  padding: 3.392rem 0.6rem 0rem 0.6rem; }
   .form-horizontal .form-group {
     position: relative;
     margin-left: 0;
@@ -66,14 +66,14 @@ html, body {
       display: inline-block;
       box-sizing: border-box;
       width: 4.25333rem;
-      height: 0.85333rem;
+      height: 1.35333rem;
       right: 0.42667rem;
       bottom: 0.27733rem;
-      line-height: 0.85333rem;
+      line-height:1.35333rem;
       border-radius: 0.21333rem;
       color: #fff;
-      background-color: #b5b5b5;
-      font-size: 0.64rem;
+      background-color: #13AEFF;
+      font-size: 0.64rem;border:none;
       text-align: center; }
     .form-horizontal .form-group .btn-signup {
       display: block;
