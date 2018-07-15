@@ -39,5 +39,7 @@ namespace Eagles.Interface.Core
         /// <param name="requset"></param>
         /// <returns></returns>
         GetMenusResponse GetMenus(GetMenusRequset requset);
+
+        GetSubordinateResponse GetSubordinate(GetSubordinateRequset requset);
     }
 }

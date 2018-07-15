@@ -1047,11 +1047,6 @@
             数量
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.CreateTime">
-            <summary>
-            创建时间
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.Score">
             <summary>
             支付积分
@@ -1399,7 +1394,7 @@
             维护接口 传主键id 表示修改 不传表示新增
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset.OptionId">
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset.Option">
             <summary>
             
             </summary>
@@ -2061,6 +2056,16 @@
             菜单级别 
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Menus.Requset.GetSubordinateRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Menus.Requset.GetSubordinateRequset.MenuId">
+            <summary>
+            级菜单名称
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Menus.Requset.RemoveMenusRequset">
             <summary>
             
@@ -2096,64 +2101,24 @@
             集合
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.News.Requset.ImportNewRequset">
+        <member name="T:Eagles.Application.Model.Menus.Response.GetSubordinateResponse">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.News.Requset.ImportNewRequset.Info">
+        <member name="P:Eagles.Application.Model.News.Model.ExternalNew.ExternalUrl">
             <summary>
-            维护接口 传主键id 表示修改 不传表示新增
+            外部链接url
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.News.Requset.EditNewRequset">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.EditNewRequset.Info">
-            <summary>
-            维护接口 传主键id 表示修改 不传表示新增
-            </summary>
-        </member>
-        <member name="T:Eagles.Application.Model.News.Requset.GetNewDetailRequset">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.GetNewDetailRequset.NewsId">
+        <member name="P:Eagles.Application.Model.News.Model.ExternalNew.NewsName">
             <summary>
             新闻名字
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.News.Requset.GetNewRequset">
+        <member name="P:Eagles.Application.Model.News.Model.ExternalNew.NewsImg">
             <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.UserId">
-            <summary>
-            作者id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsName">
-            <summary>
-            新闻名字
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsType">
-            <summary>
-            新闻类型
-            </summary>
-        </member>
-        <member name="T:Eagles.Application.Model.News.Requset.RemoveNewRequset">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Requset.RemoveNewRequset.NewsId">
-            <summary>
-            新闻id
+            新闻图片
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.News.Model.New">
@@ -2259,6 +2224,66 @@
         <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsLearning">
             <summary>
             是学习心得
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.ImportNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.ImportNewRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.EditNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.EditNewRequset.Info">
+            <summary>
+            维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.GetNewDetailRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewDetailRequset.NewsId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.GetNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.UserId">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsName">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.GetNewRequset.NewsType">
+            <summary>
+            新闻类型
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Requset.RemoveNewRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Requset.RemoveNewRequset.NewsId">
+            <summary>
+            新闻id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.News.Response.GetNewDetailResponse">

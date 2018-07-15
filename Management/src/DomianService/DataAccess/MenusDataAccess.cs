@@ -81,7 +81,7 @@ FROM `eagles`.`tb_app_menu`
             return dbManager.QuerySingle<TbAppMenu>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbAppMenu> GetMenusList(GetMenusRequset requset,out int totalCount)
+        public List<TbAppMenu> GetMenusList(GetMenusRequset requset, out int totalCount)
         {
 
             var sql = new StringBuilder();
@@ -106,7 +106,7 @@ FROM `eagles`.`tb_app_menu`
                 dynamicParams.Add("MenuLevel", (int)requset.MenuLevel);
             }
 
-           
+
             sql.AppendFormat(@"SELECT count(*)
 FROM `eagles`.`tb_app_menu`  where 1=1  {0} 
  ", parameter);
@@ -131,6 +131,34 @@ FROM `eagles`.`tb_app_menu`
  ", parameter);
 
             return dbManager.Query<TbAppMenu>(sql.ToString(), dynamicParams);
+        }
+
+        public List<TbAppMenu> GetSubordinate(GetSubordinateRequset requset)
+        {
+
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            if (requset.MenuId > 0)
+            {
+                parameter.Append(" and  ParentMenuId = @ParentMenuId ");
+                dynamicParams.Add("ParentMenuId", requset.MenuId);
+            }
+
+
+            sql.AppendFormat(@" SELECT `tb_app_menu`.`OrgId`,
+    `tb_app_menu`.`MenuId`,
+    `tb_app_menu`.`MenuName`,
+    `tb_app_menu`.`Level`,
+    `tb_app_menu`.`ParentMenuId`,
+    `tb_app_menu`.`TargetUrl`
+FROM `eagles`.`tb_app_menu` 
+  where  1=1  {0}  
+ ", parameter);
+
+            return dbManager.Query<TbAppMenu>(sql.ToString(), dynamicParams);
+
         }
     }
 }
