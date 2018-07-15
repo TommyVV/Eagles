@@ -1,15 +1,16 @@
-﻿using Eagles.Application.Model.News.Model;
+﻿using System.Collections.Generic;
+using Eagles.Application.Model.News.Model;
 
 namespace Eagles.Application.Model.News.Requset
 {
     /// <summary>
     /// 
     /// </summary>
-    public class EditNewRequset:ORequest
+    public  class ImportNewRequset
     {
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增
         /// </summary>
-        public NewDetail Info { get; set; }
+        public List<NewDetail> Info { get; set; }
     }
 }

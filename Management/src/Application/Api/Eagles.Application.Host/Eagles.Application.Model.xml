@@ -1037,6 +1037,11 @@
             下单时间
              </summary>
         </member>
+        <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.ExpressId">
+            <summary>
+            快递id
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.DeliverGoods.Model.DeliverGoods.Count">
             <summary>
             数量
@@ -1454,6 +1459,16 @@
             
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.GetSubjectListRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectListRequset.Question">
+            <summary>
+            问题
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.GetSubjectRequset">
             <summary>
             
@@ -1480,6 +1495,16 @@
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveOptionRequset.OptionId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveSubjectInfoRequset">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveSubjectInfoRequset.QuestionId">
             <summary>
             
             </summary>
@@ -1542,6 +1567,21 @@
         <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectDetailResponse.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Exercises.Response.GetSubjectListResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectListResponse.List">
+            <summary>
+            题目列表
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Response.GetSubjectListResponse.TotalCount">
+            <summary>
+            总条数
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Response.GetSubjectResponse">
@@ -2056,104 +2096,14 @@
             集合
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.News.Model.New">
-            <summary>
-            新闻信息
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.NewsId">
-            <summary>
-            新闻名字
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.NewsName">
-            <summary>
-            新闻名字
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.Author">
-            <summary>
-            作者id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.NewsImg">
-            <summary>
-            新闻图片
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.Source">
-            <summary>
-            来源
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.CreateTime">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.AuditStatus">
-            <summary>
-            审核状态
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.UserName">
-            <summary>
-            姓名
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.New.OrgId">
-            <summary>
-            机构id
-            </summary>
-        </member>
-        <member name="T:Eagles.Application.Model.News.Model.NewDetail">
+        <member name="T:Eagles.Application.Model.News.Requset.ImportNewRequset">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.EndTime">
+        <member name="P:Eagles.Application.Model.News.Requset.ImportNewRequset.Info">
             <summary>
-            生效时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.StarTime">
-            <summary>
-            生效时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Content">
-            <summary>
-            内容 json格式 图片 文字
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.TestId">
-            <summary>
-            习题id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ModuleId">
-            <summary>
-            栏目id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Category">
-            <summary>
-            分类
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Attach1">
-            <summary>
-            附件 json格式
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ExternalUrl">
-            <summary>
-            外部链接url
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsExternal">
-            <summary>
-            是否有url
+            维护接口 传主键id 表示修改 不传表示新增
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.News.Requset.EditNewRequset">
@@ -2204,6 +2154,111 @@
         <member name="P:Eagles.Application.Model.News.Requset.RemoveNewRequset.NewsId">
             <summary>
             新闻id
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Model.New">
+            <summary>
+            新闻信息
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsId">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsName">
+            <summary>
+            新闻名字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.Author">
+            <summary>
+            作者id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.NewsImg">
+            <summary>
+            新闻图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.AuditStatus">
+            <summary>
+            审核状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.New.UserName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.News.Model.NewDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.EndTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.StarTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.TestId">
+            <summary>
+            习题id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ModuleId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.Attach1">
+            <summary>
+            附件 json格式
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.ExternalUrl">
+            <summary>
+            外部链接url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsExternal">
+            <summary>
+            是否有url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsClass">
+            <summary>
+            有课件
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsImage">
+            <summary>
+            有图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.NewDetail.IsLearning">
+            <summary>
+            是学习心得
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.News.Response.GetNewDetailResponse">

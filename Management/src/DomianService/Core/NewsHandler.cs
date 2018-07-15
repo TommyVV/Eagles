@@ -31,7 +31,7 @@ namespace Eagles.DomainService.Core
         {
 
             TbNews mod;
-
+            var now = DateTime.Now;
             if (requset.Info.NewsId > 0)
             {
                 mod = new TbNews
@@ -48,7 +48,7 @@ namespace Eagles.DomainService.Core
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
                     HtmlContent = requset.Info.Content,
-                    CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
+                  //  CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
                     Module = requset.Info.ModuleId,
                     NewsId = requset.Info.NewsId,
                     ImageUrl = requset.Info.NewsImg,
@@ -56,9 +56,19 @@ namespace Eagles.DomainService.Core
                     NewsType = requset.Info.NewsType,
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
-                    OrgId = requset.Info.OrgId,
-                    
-                    
+                    OrgId = requset.OrgId,
+                    CanStudy=requset.Info.CanStudy,
+                    ExternalUrl=requset.Info.ExternalUrl,
+                    IsAttach=requset.Info.IsAttach,
+                    IsClass=requset.Info.IsClass,
+                    IsExternal=requset.Info.IsExternal,
+                    IsImage=requset.Info.IsImage,
+                    IsLearning=requset.Info.IsLearning,
+                    IsText=requset.Info.IsLearning,
+                    IsVideo =requset.Info.IsVideo,
+                    OperId=0,
+                    ShortDesc=requset.Info.ShortDesc,
+                    Status="0",
                 };
 
                 return dataAccess.EditNews(mod) > 0;
@@ -72,22 +82,35 @@ namespace Eagles.DomainService.Core
                     Attach2 = requset.Info.Attach2,
                     Attach3 = requset.Info.Attach3,
                     Attach4 = requset.Info.Attach4,
-                    Author = requset.Info.Author,
-                    BeginTime = requset.Info.StarTime,
-                    EndTime = requset.Info.EndTime,
-                    HtmlContent = requset.Info.Content,
-                    CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
-                    Module = requset.Info.ModuleId,
-                    ImageUrl = requset.Info.NewsImg,
-                    Title = requset.Info.NewsName,
-                    Source = requset.Info.Source,
-                    TestId = requset.Info.TestId,
-                    OrgId = requset.Info.OrgId,
-                    NewsType = requset.Info.NewsType,
                     AttachName1 = requset.Info.AttachName1,
                     AttachName2 = requset.Info.AttachName2,
                     AttachName3 = requset.Info.AttachName3,
                     AttachName4 = requset.Info.AttachName4,
+                    Author = requset.Info.Author,
+                    BeginTime = requset.Info.StarTime,
+                    EndTime = requset.Info.EndTime,
+                    HtmlContent = requset.Info.Content,
+                    CreateTime = now,
+                    Module = requset.Info.ModuleId,
+                    NewsId = requset.Info.NewsId,
+                    ImageUrl = requset.Info.NewsImg,
+                    Title = requset.Info.NewsName,
+                    NewsType = requset.Info.NewsType,
+                    Source = requset.Info.Source,
+                    TestId = requset.Info.TestId,
+                    OrgId = requset.OrgId,
+                    CanStudy = requset.Info.CanStudy,
+                    ExternalUrl = requset.Info.ExternalUrl,
+                    IsAttach = requset.Info.IsAttach,
+                    IsClass = requset.Info.IsClass,
+                    IsExternal = requset.Info.IsExternal,
+                    IsImage = requset.Info.IsImage,
+                    IsLearning = requset.Info.IsLearning,
+                    IsText = requset.Info.IsLearning,
+                    IsVideo = requset.Info.IsVideo,
+                    OperId = 0,
+                    ShortDesc = requset.Info.ShortDesc,
+                    
                 };
 
                 return dataAccess.CreateNews(mod) > 0;
@@ -126,7 +149,7 @@ namespace Eagles.DomainService.Core
                 ModuleId = detail.Module,
                 TestId = detail.TestId,
                 Content = detail.HtmlContent,
-                OrgId = detail.OrgId,
+                //OrgId = detail.OrgId,
                 ExternalUrl = detail.ExternalUrl,
                 IsExternal = detail.IsExternal,
                 AttachName1 = detail.AttachName1,
@@ -164,10 +187,41 @@ namespace Eagles.DomainService.Core
                 NewsName = x.Title,
                 // NewsType=NewsType.
                 Source = x.Source,
-                OrgId = x.OrgId,
+                //OrgId = x.OrgId,
 
             }).ToList();
             return response;
+        }
+
+        public bool ImportNews(ImportNewRequset requset)
+        {
+
+
+            List<TbNews> mod = requset.Info.Select(x=> new TbNews
+            {
+                Attach1 = x.Attach1,
+                Attach2 = x.Attach2,
+                Attach3 = x.Attach3,
+                Attach4 = x.Attach4,
+                Author = x.Author,
+                BeginTime = x.StarTime,
+                EndTime = x.EndTime,
+                HtmlContent = x.Content,
+                CreateTime = x.CreateTime.ConvertToDateTime(),
+                Module = x.ModuleId,
+                ImageUrl = x.NewsImg,
+                Title = x.NewsName,
+                Source = x.Source,
+                TestId = x.TestId,
+              //  OrgId = x.OrgId,
+                NewsType = x.NewsType,
+                AttachName1 = x.AttachName1,
+                AttachName2 = x.AttachName2,
+                AttachName3 = x.AttachName3,
+                AttachName4 = x.AttachName4,
+            }).ToList();
+
+            return dataAccess.ImportNews(mod) > 0;
         }
     }
 }

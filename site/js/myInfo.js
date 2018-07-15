@@ -1,30 +1,32 @@
-if(!localStorage.getItem('token')){
-	window.location.href = "login.html"
+var appId = getRequest('appId');
+var token = localStorage.getItem("token")
+if(!localStorage.getItem('token')) {
+	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('head.html')
 $('#pc-footer').load('./footer.html')
-var appId=getRequest('appId');
-var token=localStorage.getItem("token")
-myInfo(token,appId)//个人信息
-$('.img_float').click(function(){
+
+myInfo(token, appId) //个人信息
+$('.img_float').click(function() {
 	console.log(8)
 	$('.operate').show();
 })
-function myInfo(token,appId){
+
+function myInfo(token, appId) {
 	$.ajax({
-        type: "post",
+		type: "post",
 		data: {
-			  "Token": token,
-			  "AppId": appId
+			"Token": token,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
-        success:function(res){
-        	
-            if(res.Code == 00){
-            	if(res.Result!=''&&res.Result!=null){
-            		var data=res.Result.ResultUserInfo;
-            		$('#ld_img,.head-pic').attr('src',data.PhotoUrl); 
+		success: function(res) {
+
+			if(res.Code == 00) {
+				if(res.Result != '' && res.Result != null) {
+					var data = res.Result.ResultUserInfo;
+					$('#ld_img,.head-pic').attr('src', data.PhotoUrl);
 					$('.ld_name').text(data.Name);
 					$('.ld_sex').text(data.Gender);
 					$('.ld_h').text(data.Ethnic);
@@ -57,64 +59,61 @@ function myInfo(token,appId){
 					$('.ld_phoneinput').val(data.Telphone)
 					$('.ld_bjyinput').val(data.Employer)
 					$('.ld_dakinput').val(data.Department)
-					
-					
-					
-            	}
-            }
-        }
+
+				}
+			}
+		}
 	})
 }
-$('.lg_left').click(function(){
+$('.lg_left').click(function() {
 	$(this).siblings().find('label').hide()
 	$(this).siblings().find('input').show()
 	$(this).siblings().find('input').focus();
 })
 $('#fileupload').fileupload({
-    dataType: 'json',
-    url: "http://51service.xyz/Eagles/api/Upload/UploadFile",//文件的后台接受地址
-    //设置进度条
-    progressall: function (e, data) {
-    },
-    //上传完成之后的操作，显示在img里面
-    done: function (e, data){
-    	
-    		$("#ld_img").attr("src", data.result.Result.FileUploadResults[0].FileUrl);
-    }
+	dataType: 'json',
+	url: "http://51service.xyz/Eagles/api/Upload/UploadFile", //文件的后台接受地址
+	//设置进度条
+	progressall: function(e, data) {},
+	//上传完成之后的操作，显示在img里面
+	done: function(e, data) {
+
+		$("#ld_img").attr("src", data.result.Result.FileUploadResults[0].FileUrl);
+	}
 });
- $('.confirmBtn').on('click', function(){
- 	var RequestUserInfo={};
- 	
- 	RequestUserInfo.PhotoUrl=$('#ld_img').attr('src');
- 	RequestUserInfo.Name=$('.ld_nameinput').val();
- 	RequestUserInfo.Gender=$('.ld_sexinput').val();
- 	RequestUserInfo.Ethnic=$('.ld_hinput').val()
- 	RequestUserInfo.Birth=$('.ld_datasinput').val()
- 	RequestUserInfo.Origin=$('.ld_desinput').val()
- 	RequestUserInfo.OriginAddress=$('.ld_chengsinput').val()
- 	RequestUserInfo.Address=$('.ld_czdsinput').val()
- 	RequestUserInfo.Telphone=$('.ld_phoneinput').val()
- 	RequestUserInfo.Employer=$('.ld_bjyinput').val()
- 	RequestUserInfo.Department=$('.ld_dakinput').val()
- 	
- 	$.ajax({
-        type: "post",
+$('.confirmBtn').on('click', function() {
+	var RequestUserInfo = {};
+
+	RequestUserInfo.PhotoUrl = $('#ld_img').attr('src');
+	RequestUserInfo.Name = $('.ld_nameinput').val();
+	RequestUserInfo.Gender = $('.ld_sexinput').val();
+	RequestUserInfo.Ethnic = $('.ld_hinput').val()
+	RequestUserInfo.Birth = $('.ld_datasinput').val()
+	RequestUserInfo.Origin = $('.ld_desinput').val()
+	RequestUserInfo.OriginAddress = $('.ld_chengsinput').val()
+	RequestUserInfo.Address = $('.ld_czdsinput').val()
+	RequestUserInfo.Telphone = $('.ld_phoneinput').val()
+	RequestUserInfo.Employer = $('.ld_bjyinput').val()
+	RequestUserInfo.Department = $('.ld_dakinput').val()
+
+	$.ajax({
+		type: "post",
 		data: {
-			   "RequestUserInfo":JSON.stringify(RequestUserInfo),
-			  "Token": token,
-			  "AppId": appId
+			"RequestUserInfo": JSON.stringify(RequestUserInfo),
+			"Token": token,
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
-        success:function(res){
-        	
-            if(res.Code == 00){
-            	window.location.href='mine.html'
-//          	if(res.Result!=''&&res.Result!=null){
-//          		
-//				window.location.reload()
-//          	}
-            }
-        }
+		success: function(res) {
+
+			if(res.Code == 00) {
+				window.location.href = 'mine.html'
+				//          	if(res.Result!=''&&res.Result!=null){
+				//          		
+				//				window.location.reload()
+				//          	}
+			}
+		}
 	})
- })
+})

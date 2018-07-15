@@ -1,17 +1,18 @@
+var token = localStorage.getItem("token");
+var appId = getRequest('appId');
 if(!localStorage.getItem('token')) {
-	window.location.href = "login.html"
+	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-var token = localStorage.getItem("token");
-var AppId = 10000000;
-rank(token, AppId);
 
-function rank(token, AppId) {
+rank(token, appId);
+
+function rank(token, appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"Token": token,
-			"AppId": AppId
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Score/GetScoreRank",
 		dataType: "json",

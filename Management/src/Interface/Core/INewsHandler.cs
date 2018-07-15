@@ -34,5 +34,7 @@ namespace Eagles.Interface.Core
         /// <param name="requset"></param>
         /// <returns></returns>
         GetNewResponse GetNews(GetNewRequset requset);
+
+        bool ImportNews(ImportNewRequset requset);
     }
 }

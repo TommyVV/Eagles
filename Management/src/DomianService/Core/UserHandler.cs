@@ -39,7 +39,7 @@ namespace Eagles.DomainService.Core
             //  //得到试卷 + 习题的关系
             List<TbUserInfo> list = dataAccess.GetUserInfoList(request, out int totalCount);
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
@@ -61,11 +61,11 @@ namespace Eagles.DomainService.Core
 
             var response = new GetUserInfoDetailResponse
             {
-               
+
             };
             TbUserInfo detail = dataAccess.GetUserInfoDetail(request);
 
-            if (detail == null) throw new TransactionException("M01","无业务数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(new List<int> { detail.OrgId });
 
@@ -85,7 +85,7 @@ namespace Eagles.DomainService.Core
                 GraduateSchool = detail.School,
                 IdCard = detail.IdNumber,
                 // IsMoney=detail.
-              //  Nation = detail.Ethnic,
+                //  Nation = detail.Ethnic,
                 NativePlace = detail.Origin,
                 OrgId = detail.OrgId,
                 Picture = detail.NickPhotoUrl,
@@ -121,7 +121,7 @@ namespace Eagles.DomainService.Core
         public bool EditUserInfoDetails(EditUserInfoDetailsRequest request)
         {
 
-           
+
 
             TbUserInfo mod;
 
@@ -164,9 +164,9 @@ namespace Eagles.DomainService.Core
                     Status = request.Info.Status,
                 };
 
-               return dataAccess.EditUserInfo(mod)>0;
+                return dataAccess.EditUserInfo(mod) > 0;
 
-              
+
             }
             else
             {
@@ -208,9 +208,9 @@ namespace Eagles.DomainService.Core
                     Status = request.Info.Status,
                 };
 
-                return dataAccess.CreateUserInfo(mod)>0;
+                return dataAccess.CreateUserInfo(mod) > 0;
 
-               
+
             }
 
         }
@@ -219,7 +219,7 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetAuthorityUserSetUpResponse
             {
-                
+
             };
             //  用户列表
             List<TbUserInfo> list = dataAccess.GetUserInfoList(requset, out int totalCount);
@@ -227,14 +227,14 @@ namespace Eagles.DomainService.Core
             //获取用户下级权限
             List<TbUserRelationship> userSetUp = dataAccess.GetAuthorityUserSetUp(requset.UserId);
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             //机构信息
             var orgList = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
 
             response.TotalCount = totalCount;
 
-           var userChecklist =  list.Select(x => new UserInfoCheck
+            var userChecklist = list.Select(x => new UserInfoCheck
             {
                 OrgName = orgList.First(o => o.OrgId == x.OrgId).OrgName,
                 Phone = x.Phone,
@@ -289,9 +289,9 @@ namespace Eagles.DomainService.Core
                 SubUserId = x
             }).ToList();
 
-           return dataAccess.RemoveAuthorityUserSetUp(list)>0;
+            return dataAccess.RemoveAuthorityUserSetUp(list) > 0;
 
-            
+
         }
     }
 }

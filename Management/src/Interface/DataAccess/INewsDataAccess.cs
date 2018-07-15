@@ -12,5 +12,6 @@ namespace Eagles.Interface.DataAccess
         int RemoveNews(RemoveNewRequset requset);
         int EditNews(TbNews mod);
         int CreateNews(TbNews mod);
+        int ImportNews(List<TbNews> mod);
     }
 }

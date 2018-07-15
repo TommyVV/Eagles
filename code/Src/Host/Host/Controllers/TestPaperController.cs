@@ -15,6 +15,10 @@ namespace Eagles.Application.Host.Controllers
     {
         private IUserTestHandler userTestHandler;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userTestHandler"></param>
         public TestPaperController(IUserTestHandler userTestHandler)
         {
             this.userTestHandler = userTestHandler;

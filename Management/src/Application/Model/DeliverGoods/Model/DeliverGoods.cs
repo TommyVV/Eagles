@@ -30,6 +30,12 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         /// </summary>
         public string PlaceTime { get; set; }
 
+
+
+        /// <summary>
+        /// 快递id
+        /// </summary>
+        public string ExpressId { get; set; }
         ///// <summary>
         ///// 
         ///// </summary>
@@ -40,7 +46,7 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         ///// </summary>
         //public string  Remark { get; set; }
 
-     
+
         /// <summary>
         /// 数量
         /// </summary>

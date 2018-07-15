@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Login.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class LoginRequset: OrgRequest
+    public class LoginRequset: ORequest
     {
         /// <summary>
         /// 密码

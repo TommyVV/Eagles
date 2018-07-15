@@ -29,16 +29,12 @@ namespace Eagles.DomainService.Core.UserComment
         {
             var response = new EditUserCommentResponse();
             var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
-                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
+            if (tokens == null || tokens.UserId <= 0)            
+                throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);            
             var userId = request.CommentUserId; //评论人
             var userInfo = util.GetUserInfo(userId);
             if (userInfo == null)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
             var tbUserComment = new TbUserComment()
             {
                 OrgId = tokens.OrgId,
@@ -60,15 +56,18 @@ namespace Eagles.DomainService.Core.UserComment
         {
             var response = new AuditUserCommentResponse();
             var tokens = util.GetUserId(request.Token, 0);
-            if (tokens == null || tokens.UserId <= 0)
-            {
+            if (tokens == null || tokens.UserId <= 0)            
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
-            var result = userCommentAccess.AuditUserComment(request.CommentId, request.ReviewStatus);
-            if (result <= 0)
+            var tbUserComment = new TbUserComment()
             {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+                MessageId = request.CommentId,
+                ReviewStatus = request.ReviewStatus,
+                ReviewUser = tokens.UserId,
+                ReviewTime = DateTime.Now
+            };
+            var result = userCommentAccess.AuditUserComment(tbUserComment);
+            if (result <= 0)            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
@@ -95,9 +94,7 @@ namespace Eagles.DomainService.Core.UserComment
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
-            {
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
-            }
             var result = userCommentAccess.GetUserComment(request.CommentType, request.Id, tokens.UserId, request.CommentStatus);
             if (result != null && result.Count > 0)
             {
@@ -112,10 +109,8 @@ namespace Eagles.DomainService.Core.UserComment
                     CommentStatus = x.ReviewStatus
                 }).ToList();
             }
-            else
-            {
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
+            else            
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
             return response;
         }
 
