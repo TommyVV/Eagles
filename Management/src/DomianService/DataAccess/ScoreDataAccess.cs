@@ -14,6 +14,12 @@ namespace Ealges.DomianService.DataAccess
     public class ScoreDataAccess: IScoreDataAccess
     {
         private readonly IDbManager dbManager;
+
+        public ScoreDataAccess(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
+
         public int EditScoreSetUp(TbRewardScore mod)
         {
             return dbManager.Excuted(@"UPDATE `eagles`.`tb_reward_score`

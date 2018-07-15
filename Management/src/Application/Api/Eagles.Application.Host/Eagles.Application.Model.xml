@@ -2452,16 +2452,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchRequset.OrgId">
-            <summary>
-            凭证
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchRequset.BranchId">
-            <summary>
-            凭证
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.Branch.Requset.RemoveBranchRequset">
             <summary>
             

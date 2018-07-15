@@ -15,6 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getNewsList, deleteNews } from "../../services/newsService";
+import moment from "moment";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -23,18 +24,28 @@ const confirm = Modal.confirm;
 class SearchForm extends Component {
   handleSearch = e => {
     e.preventDefault();
+    const _this = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
       let params = {
-        ...this.getListConfig,
+        ..._this.props.getListConfig,
         ...values
       };
-      this.getCurrentList(params);
+      const getCurrentList = this.props.getCurrentList;
+      getCurrentList(params);
     });
   };
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    let params = {
+      ...this.props.getListConfig,
+      ...values
+    };
+    const getCurrentList = this.props.getCurrentList;
+    getCurrentList(params);
   };
 
   render() {
@@ -47,26 +58,15 @@ class SearchForm extends Component {
       >
         <Row gutter={24}>
           <Col span={5} key={1}>
-            <FormItem label="作者">
-              {getFieldDecorator("title")(
-                <Select>
-                  <Option value="0">小李</Option>
-                  <Option value="1">小王</Option>
-                  <Option value="2">张三</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col span={5} key={5}>
             <FormItem label="标题">
-              {getFieldDecorator(`goods`)(<Input />)}
+              {getFieldDecorator(`NewsName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={8} key={3}>
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("startTime")(
+                  {getFieldDecorator("StarTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
@@ -84,7 +84,7 @@ class SearchForm extends Component {
               </Col>
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("endTime")(
+                  {getFieldDecorator("EndTime")(
                     <DatePicker placeholder="结束时间" />
                   )}
                 </FormItem>
@@ -114,13 +114,17 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    // const project = props.project;
+    const config = props.getListConfig;
+    console.log(config);
     return {
-      title: Form.createFormField({
-        value: "0"
+      NewsName: Form.createFormField({
+        value: config.NewsName
       }),
-      state: Form.createFormField({
-        value: "0"
+      StarTime: Form.createFormField({
+        value: config.StarTime ? moment(config.StarTime, "YYYY-MM-dd") : null
+      }),
+      EndTime: Form.createFormField({
+        value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
       })
     };
   }
@@ -164,7 +168,7 @@ class NewsList extends React.Component {
       {
         title: "发布时间",
         dataIndex: "CreateTime",
-        render: text => <span>{new Date(text).format("yyyy-MM-DD")}</span>
+        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
         title: "操作",
@@ -189,10 +193,9 @@ class NewsList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      UserId: "",
       NewsName: "",
-      StartTime: "2018-06-01T01:37:09.235Z",
-      EndTime: "2018-07-03T01:37:09.235Z"
+      StarTime: "",
+      EndTime: ""
     };
   }
   componentWillMount() {
@@ -206,14 +209,14 @@ class NewsList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
     try {
       let { List, TotalCount } = await getNewsList(params);
-      console.log("projectList - ", List);
+      console.log("List - ", List);
       List.forEach(v => {
         v.key = v.NewsId;
       });
-      this.setState({ newsList: List, current: PageNumber });
+      this.getListConfig = params; // 保存搜索的数据
+      this.setState({ newsList: List, current: params.PageNumber });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -224,7 +227,7 @@ class NewsList extends React.Component {
   updatePageConfig(totalSize) {
     let pageConfig = {
       total: totalSize,
-      PageSize: this.getListConfig.PageSize,
+      pageSize: this.getListConfig.PageSize,
       current: this.state.current,
       onChange: async (page, pagesize) => {
         this.getCurrentList({
@@ -235,38 +238,6 @@ class NewsList extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
   // 删除项目
   handleDelete = async NewsId => {
     console.log(NewsId);
@@ -320,7 +291,10 @@ class NewsList extends React.Component {
     };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList}
+          getListConfig={this.getListConfig}
+        />
         <Table
           dataSource={newsList}
           columns={this.columns}
@@ -343,9 +317,7 @@ class NewsList extends React.Component {
           </Col> */}
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/news/detail`)}>
-                新增
-              </a>
+              <a onClick={() => hashHistory.replace(`/news/detail`)}>新增</a>
             </Button>
           </Col>
         </Row>

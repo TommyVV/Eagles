@@ -93,7 +93,7 @@ namespace Eagles.DomainService.Core
 
             response.Info = new ScoreSetUpInfo
             {
-                Keyword = detail.KeyWord.Split(',').ToList(),
+                Keyword = string.IsNullOrWhiteSpace(detail.KeyWord) ? new List<string>() : detail.KeyWord.Split(',').ToList(),
                 //  OperationType = detail.OrgId,
                 // KeyWord = string.Join(",", requset.Info.Keyword.ToArray()),
                 LearnTime = detail.LearnTime,
@@ -122,7 +122,7 @@ namespace Eagles.DomainService.Core
             response.TotalCount = totalCount;
             response.List = list.Select(x => new ScoreSetUpInfo
             {
-                Keyword = x.KeyWord.Split(',').ToList(),
+                Keyword = string.IsNullOrWhiteSpace(x.KeyWord)?new List<string>(): x.KeyWord.Split(',').ToList(),
                 //  OperationType = detail.OrgId,
                 // KeyWord = string.Join(",", requset.Info.Keyword.ToArray()),
                 LearnTime = x.LearnTime,
@@ -184,6 +184,7 @@ namespace Eagles.DomainService.Core
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new ScoreRankInfo
             {
                 Score = x.Score,

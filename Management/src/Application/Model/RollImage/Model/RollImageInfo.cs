@@ -36,5 +36,7 @@ namespace Eagles.Application.Model.RollImage.Model
         /// 滚动图片url
         /// </summary>
         public string Img { get; set; }
+
+        public string TargetUrl { get; set; }
     }
 }

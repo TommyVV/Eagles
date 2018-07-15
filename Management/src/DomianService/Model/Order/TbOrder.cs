@@ -73,5 +73,8 @@ namespace Eagles.DomainService.Model.Order
         /// 省
         /// </summary>
         public int UserId { get; set; }
+
+
+
     }
 }

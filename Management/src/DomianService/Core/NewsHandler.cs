@@ -68,7 +68,7 @@ namespace Eagles.DomainService.Core
                     IsVideo =requset.Info.IsVideo,
                     OperId=0,
                     ShortDesc=requset.Info.ShortDesc,
-                    Status="0",
+                   // Status=0,
                 };
 
                 return dataAccess.EditNews(mod) > 0;
@@ -110,7 +110,7 @@ namespace Eagles.DomainService.Core
                     IsVideo = requset.Info.IsVideo,
                     OperId = 0,
                     ShortDesc = requset.Info.ShortDesc,
-                    
+                    Status = "0",
                 };
 
                 return dataAccess.CreateNews(mod) > 0;

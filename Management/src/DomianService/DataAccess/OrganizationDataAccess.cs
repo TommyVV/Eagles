@@ -95,7 +95,6 @@ SET
 `City` = @City,
 `District` = @District,
 `Address` = @Address,
-`CreateTime` = @CreateTime,
 `EditTime` = @EditTime,
 `OperId` = @OperId,
 `Logo` = @Logo
@@ -153,7 +152,7 @@ VALUES
     `tb_org_info`.`Logo`
 FROM `eagles`.`tb_org_info`  where  OrgId  in @OrgId
  ");
-            dynamicParams.Add("OrgId", new {OrgId = list.ToArray()});
+            dynamicParams.Add("OrgId",   list.ToArray());
 
             return dbManager.Query<TbOrgInfo>(sql.ToString(), dynamicParams);
 

@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.RollImage.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class EditRollImageRequest:OrgRequestBase
+    public class EditRollImageRequest: ORequest
     {
         /// <summary>
         /// 页面ID

@@ -9,6 +9,7 @@ using Eagles.Application.Model.DeliverGoods.Requset;
 using Eagles.Application.Model.DeliverGoods.Response;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Base;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Order;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -73,14 +74,15 @@ namespace Eagles.DomainService.Core
                 Address = detail.Address,
                 OrderId = detail.OrderId,
                 GoodsName = detail.ProdName,
-                PlaceTime = detail.CreateTime.ToString("yyyy-MM-dd"),
+                PlaceTime = detail.CreateTime.FormartDatetime(),
                 UserName = userInfo.Name,
                 City = detail.City,
                 Count = detail.Count,
                 District = detail.District,
                 Province = detail.Province,
                 Score = detail.Score,
-                OrderStatus = detail.OrderStatus
+                OrderStatus = detail.OrderStatus,
+                ExpressId=detail.ExpressId
             };
             return response;
         }
@@ -99,9 +101,11 @@ namespace Eagles.DomainService.Core
                 Address = x.Address,
                 OrderId = x.OrderId,
                 GoodsName = x.ProdName,
-                PlaceTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                PlaceTime = x.CreateTime.FormartDatetime(),
                 OrderStatus = x.OrderStatus,
-                ExpressId = x.ExpressId
+                ExpressId = x.ExpressId,
+                Count=x.Count,
+                Score=x.Score
             }).ToList();
             return response;
         }

@@ -44,8 +44,8 @@ export const getNewsList = async params => {
 // 创建或编辑新闻
 export const createOrEditNews = async params => {
   try {
-    const user = Util.getOrgIdAndBranchId();
-    params = { ...params, ...user };
+    // const user = Util.getOrgIdAndBranchId();
+    // params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: NEWS.NEWS_EDIT,

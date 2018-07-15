@@ -51,10 +51,10 @@ namespace Eagles.Application.Model.DeliverGoods.Model
         /// 数量
         /// </summary>
         public int Count { get; set; }
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public string CreateTime { get; set; }
+        ///// <summary>
+        ///// 创建时间
+        ///// </summary>
+        //public string CreateTime { get; set; }
        
 
         /// <summary>
