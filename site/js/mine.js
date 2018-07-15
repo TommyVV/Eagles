@@ -44,7 +44,11 @@ var appId=getRequest('appId');
     });
     //我的文章
     $(".lw_acile,.fb_wz").click(function () {
-        window.location.href = 'myArticle.html?appId='+appId+''
+        window.location.href = 'myArticle.html?appId='+appId+'&NewsType=0'
+    });
+    //我的会议
+    $("#myhuiyi").click(function () {
+        window.location.href = 'myArticle.html?appId='+appId+'&NewsType=2'
     });
     //我的积分
     $(".lw_muscore").click(function () {
@@ -72,7 +76,7 @@ var appId=getRequest('appId');
     });
     //发布任务
     $("#f_rw,.fb_wrw").click(function () {
-        window.location.href = 'publishTask..html?appId='+appId+'&type=0'
+        window.location.href = 'publishTask.html?appId='+appId+'&type=1'
     });
     //我的任务
     $("#task,.fb_one").click(function () {
