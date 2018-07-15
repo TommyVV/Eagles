@@ -85,5 +85,7 @@ namespace Eagles.Interface.Core
         int EditOption(EditOptionRequset requset);
 
         bool RemoveOption(RemoveOptionRequset requset);
+        bool RemoveSubjectInfo(RemoveSubjectInfoRequset requset);
+        GetSubjectListResponse GetSubjectList(GetSubjectListRequset requset);
     }
 }

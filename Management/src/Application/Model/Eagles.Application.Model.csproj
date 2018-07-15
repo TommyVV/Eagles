@@ -122,14 +122,17 @@
     <Compile Include="Exercises\Requset\GetExercisesRequset.cs" />
     <Compile Include="Exercises\Requset\GetRandomSubjectRequset.cs" />
     <Compile Include="Exercises\Requset\GetSubjectDetailRequset.cs" />
+    <Compile Include="Exercises\Requset\GetSubjectListRequset.cs" />
     <Compile Include="Exercises\Requset\GetSubjectRequset.cs" />
     <Compile Include="Exercises\Requset\RemoveExercisesRequset.cs" />
     <Compile Include="Exercises\Requset\RemoveOptionRequset.cs" />
+    <Compile Include="Exercises\Requset\RemoveSubjectInfoRequset.cs" />
     <Compile Include="Exercises\Requset\RemoveSubjectRequset.cs" />
     <Compile Include="Exercises\Response\GetExercisesDetailResponse.cs" />
     <Compile Include="Exercises\Response\GetExercisesResponse.cs" />
     <Compile Include="Exercises\Response\GetRandomSubjectResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectDetailResponse.cs" />
+    <Compile Include="Exercises\Response\GetSubjectListResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectResponse.cs" />
     <Compile Include="Goods\Model\Goods.cs" />
     <Compile Include="Goods\Model\GoodsDetail.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Menus\Requset\RemoveMenusRequset.cs" />
     <Compile Include="Menus\Response\GetMenusDetailResponse.cs" />
     <Compile Include="Menus\Response\GetMenusResponse.cs" />
+    <Compile Include="News\Requset\ImportNewRequset.cs" />
     <Compile Include="News\Model\New.cs" />
     <Compile Include="News\Model\NewDetail.cs" />
     <Compile Include="News\Requset\EditNewRequset.cs" />

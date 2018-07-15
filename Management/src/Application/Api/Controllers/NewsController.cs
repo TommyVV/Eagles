@@ -32,6 +32,17 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
+        /// 导入 新闻
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<bool> ImportNews(ImportNewRequset requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => testHandler.ImportNews(requset));
+        }
+
+        /// <summary>
         ///  新闻 栏目
         /// </summary>
         /// <param name="requset"></param>

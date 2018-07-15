@@ -93,13 +93,13 @@ namespace Eagles.DomainService.Core
                 OrgId = detail.OrgId,
                 MenuName = detail.MenuName,
                 ParentId = detail.ParentMenuId,
-                OrgName= orgdetail?.OrgName
+                OrgName = orgdetail?.OrgName
                 // Category=detail.ViewCount
             };
             return response;
         }
 
-      
+
 
         public GetMenusResponse GetMenus(GetMenusRequset requset)
         {
@@ -111,6 +111,8 @@ namespace Eagles.DomainService.Core
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
+            var orginfo = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
+
             response.TotalCount = totalCount;
             response.List = list.Select(x => new Menus
             {
@@ -119,7 +121,8 @@ namespace Eagles.DomainService.Core
                 MenuLink = x.TargetUrl,
                 OrgId = x.OrgId,
                 MenuName = x.MenuName,
-                ParentId = x.ParentMenuId
+                ParentId = x.ParentMenuId,
+                OrgName = orginfo.First(f => f.OrgId == x.OrgId).OrgName
             }).ToList();
             return response;
         }
