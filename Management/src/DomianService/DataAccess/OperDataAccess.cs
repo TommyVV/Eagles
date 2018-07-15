@@ -63,7 +63,7 @@ VALUES
 ", new { requset.OperId });
         }
 
-        public TbOper GetOperDetail(GetOperatorDetailRequset requset)
+        public TbOper GetOperDetail(int  operId)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -78,7 +78,7 @@ VALUES
 FROM `eagles`.`tb_oper`
   where OperId=@OperId;
  ");
-            dynamicParams.Add("OperId", requset.OperId);
+            dynamicParams.Add("OperId", operId);
 
             return dbManager.QuerySingle<TbOper>(sql.ToString(), dynamicParams);
         }
