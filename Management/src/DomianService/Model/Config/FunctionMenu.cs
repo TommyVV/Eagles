@@ -8,31 +8,31 @@ namespace Eagles.DomainService.Model.Config
     [XmlPath("/Configuration/FunctionMenu.xml")]
     public class FunctionMenu
     {
-        public List<Node> Nodes { get; set; }
+        [XmlElement]
+        public List<Node> MenuNodes { get; set; }
     }
-
    
     public class Node
     {
-        //[XmlAttribute("Priority")]
-        //public string Priority { get; set; }
+        [XmlAttribute]
+        public string Priority { get; set; }
 
-        //[XmlAttribute("Name")]
-        //public string Name { get; set; }
+        [XmlAttribute]
+        public string Name { get; set; }
 
-        [XmlElement("Menu")]
-        public List<Menu> Menus { get; set; }
+        [XmlElement]
+        public List<Menu> Menu { get; set; }
     }
 
     public class Menu
     {
-        [XmlAttribute("Priority")]
+        [XmlAttribute]
         public string Priority { get; set; }
 
-        [XmlAttribute("Name")]
+        [XmlAttribute]
         public string Name { get; set; }
 
-        [XmlAttribute("FunCode")]
+        [XmlAttribute]
         public string FunCode { get; set; }
     }
 

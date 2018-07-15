@@ -25,19 +25,20 @@ value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,@CommentT
             return dbManager.Excuted("delete from tb_user_comment where MessageId = @MessageId and Id = @Id ", new {MessageId = messageId, Id = id});
         }
 
-        public int AuditUserComment(int messageId, int reviewStatus)
+        public int AuditUserComment(TbUserComment userComment)
         {
-            return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = @reviewStatus where MessageId = @MessageId and ReviewStatus = -1 ", new { MessageId = messageId, ReviewStatus= reviewStatus });
+            return dbManager.Excuted("update eagles.tb_user_comment set ReviewStatus = @reviewStatus, ReviewUser = @ReviewUser, ReviewTime = @ReviewTime where MessageId = @MessageId and ReviewStatus = -1 ", userComment);
         }
 
         public List<TbUserComment> GetUserComment(string commentType, int id, int userId, int commentStatus)
         {
-            if(commentStatus == 0)
+            if (commentStatus == 0)
                 return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
-where CommentType = @CommentType and Id = @Id and UserId = @UserId ", new { CommentType = commentType, Id = id, UserId = userId });
+where CommentType = @CommentType and Id = @Id ", new { CommentType = commentType, Id = id });
             else
                 return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
-where CommentType = @CommentType and Id = @Id and (ReviewStatus = 0 or UserId = @UserId) ", new { CommentType = commentType, Id = id, UserId = userId });
+where UserId in (select UserId from eagles.tb_user_comment where UserId = @UserId and (ReviewStatus = 0 or ReviewStatus = -1)) 
+and CommentType = @CommentType and Id = @Id and ReviewStatus <> 1 ", new { CommentType = commentType, Id = id, UserId = userId });
         }
 
     }

@@ -1,6 +1,5 @@
-﻿<!-- FunCode 定义规则，funcode 不能重复-->
-<Menus>
-  <Nodes Priority="1" Name="用户管理">
+﻿<Menus>
+  <MenuNodes Priority="1" Name="用户管理">
     <Menu Priority="1" Name="党员导入" FunCode="U001"></Menu>
     <Menu Priority="2" Name="党员新闻1" FunCode="U002"></Menu>
     <Menu Priority="3" Name="党员新闻2" FunCode="U003"></Menu>
@@ -8,9 +7,9 @@
     <Menu Priority="5" Name="党员新闻4" FunCode="U005"></Menu>
     <Menu Priority="6" Name="党员新闻5" FunCode="U006"></Menu>
     <Menu Priority="7" Name="党员新闻6" FunCode="U007"></Menu>
-  </Nodes>
-  <Nodes Priority="1" Name="机构管理">
+  </MenuNodes>
+  <MenuNodes Priority="1" Name="机构管理">
     <Menu Priority="1" Name="机构新增" FunCode="M001"></Menu>
     <Menu Priority="2" Name="机构查询1" FunCode="M002"></Menu>
-  </Nodes>
+  </MenuNodes>
 </Menus>

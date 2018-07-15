@@ -21,7 +21,7 @@
         public int UserId { get; set; }
 
         /// <summary>
-        /// 评论状态 0-全部 1-审核通过
+        /// 评论状态 0-全部 1-审核通过(包含自己)
         /// </summary>
         public int CommentStatus { get; set; }
     }
