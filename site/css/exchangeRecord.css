@@ -20,7 +20,7 @@
     background-color: white;
     height: 6.4rem;
     position: relative;
-    border-top: 0.85333rem solid #f8f8f8;
+    /*border-top: 0.85333rem solid #f8f8f8;*/
     padding: 0.64rem 0.64rem 0 0.64rem; }
     .record-item .orderNum {
       display: none; }
