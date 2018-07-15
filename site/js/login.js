@@ -1,8 +1,7 @@
-
-
 var appId = getRequest('appId');
 //var appId = 10000000
 navbar(appId)
+
 function navbar(appId) {
 	$.ajax({
 		type: "post",
@@ -14,14 +13,14 @@ function navbar(appId) {
 		success: function(res) {
 			var data = res.Result;
 			if(res.Code == 00) {
-				$('#login_logo').attr("src",data.LogoUrl)
+				$('#login_logo').attr("src", data.LogoUrl)
 			}
 		}
 	});
 }
 
 $('.login-zc').on('click', function(e) {
-	window.location.href="signup.html?appId="+appId
+	window.location.href = "signup.html?appId=" + appId
 })
 //登录
 $('.btn-login').on('click', function(e) {
@@ -31,21 +30,19 @@ $('.btn-login').on('click', function(e) {
 	//let captcha = $('#inputCaptcha').val();
 	if(!account) {
 		bootoast({
-					message: '请输入账号',
-					type: 'warning',
-					position: 'toast-top-center',
-					timeout: 3
-				});
-		
+			message: '请输入账号',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 3
+		});
 		return;
 	} else if(!password) {
 		bootoast({
-					message: '请输入密码',
-					type: 'warning',
-					position: 'toast-top-center',
-					timeout: 3
-				});
-		
+			message: '请输入密码',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 3
+		});
 		return;
 	}
 	//var hash = hex_md5(password);
@@ -76,9 +73,9 @@ $('.btn-login').on('click', function(e) {
 					parent.location.href = prevLink;
 				}
 
-			}else{
+			} else {
 				bootoast({
-					message: ''+res.Message+'',
+					message: '' + res.Message + '',
 					type: 'warning',
 					position: 'toast-top-center',
 					timeout: 3
