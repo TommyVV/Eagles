@@ -22,5 +22,6 @@ namespace Eagles.DomainService.Model.User
         public string Title { get; set; }
         public int UserId { get; set; }
         public int ViewsCount { get; set; }
+        public int IsPublic { get; set; }
     }
 }

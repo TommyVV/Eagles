@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Eagles.Application.Model.Common
 {
     /// <summary>
@@ -16,6 +15,11 @@ namespace Eagles.Application.Model.Common
         /// 任务名称
         /// </summary>
         public string TaskeName { get; set; }
+
+        /// <summary>
+        /// 任务内容
+        /// </summary>
+        public string TaskContent { get; set; }
 
         /// <summary>
         /// 任务日期
