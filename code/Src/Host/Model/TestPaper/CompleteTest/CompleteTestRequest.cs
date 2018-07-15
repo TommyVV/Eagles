@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
-namespace Eagles.Application.Model.News.CompleteTest
+namespace Eagles.Application.Model.TestPaper.CompleteTest
 {
     /// <summary>
     /// 试卷完成接口
     /// </summary>
-    public class CompleteTestRequest :RequestBase
+    public class CompleteTestRequest : RequestBase
     {
         /// <summary>
         /// 试卷Id
