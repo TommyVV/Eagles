@@ -3,6 +3,8 @@ $('#top-nav,#mobilenav').load('./head.html')
 	if(!localStorage.getItem('token')){
 		window.location.href = "login.html"
 	}
+	var token=localStorage.getItem('token')
+var appId=getRequest('appId');
    
     class CalculateScreen {
         constructor() {
@@ -13,7 +15,7 @@ $('#top-nav,#mobilenav').load('./head.html')
             if (!this.isMobile) {
                $('.mobile').hide();
                 $('.pc').show();
-                $('#left-nav').load('leftNav.html', () => {
+                $('#left-nav').load('leftNav.html?appId='+appId+'', () => {
 
                 })
                 $('#footer').load('footer.html', () => {
@@ -32,8 +34,7 @@ $('#top-nav,#mobilenav').load('./head.html')
     $(window).resize(function () {
         new CalculateScreen();
     })
-var token=localStorage.getItem('token')
-var appId=getRequest('appId');
+
  //积分换购
     $("#point-part").click(function () {
         window.location.href = 'exchange.html?appId='+appId+''
