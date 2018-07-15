@@ -3,9 +3,8 @@ $(document).ready(function () {
 	if(!localStorage.getItem('token')){
 		window.location.href = "login.html"
 	}
-    /*$("#pc-header").load("./head.html")*/
     $('#pc-footer').load('./footer.html')
-   $('#top-nav,#mobilenav').load('./head.html')
+    $('#top-nav,#mobilenav').load('./head.html')
 });
 var mescroll;
 var appId=getRequest('appId');
@@ -55,12 +54,12 @@ function exchangeRecord(token,appId,page) {
 				var exchangeRecord = ''; 
 				if(res.Result.OrderList!=''||res.Result.OrderList!=null){
 					for(var i = 0; i < data.OrderList.length; i++) {
-						exchangeRecord+='<div class="record-item"><div class="orderNum">订单编号<span>'+data.ScoreList[i].ProdId+'</span></div>'+
-	            		'<img src="'+data.ScoreList[i].SmallImageUrl +'" alt="">'+
+						exchangeRecord+='<div class="record-item"><div class="orderNum">订单编号<span>'+data.OrderList[i].ProdId+'</span></div>'+
+	            		'<img src="'+data.OrderList[i].SmallImageUrl +'" alt="">'+
 	            		'<div class="record-content">'+
-	                '<div class="item-title">'+data.ScoreList[i].ProdName +'</div>'+
-	                '<div class="point">'+data.ScoreList[i].Score +'积分</div>'+
-	                '<div class="item-time"><span>兑换时间 : </span>'+data.ScoreList[i].CreateTime  +'</div>'+
+	                '<div class="item-title">'+data.OrderList[i].ProdName +'</div>'+
+	                '<div class="point">'+data.OrderList[i].Score +'积分</div>'+
+	                '<div class="item-time"><span>兑换时间 : </span>'+data.OrderList[i].CreateTime  +'</div>'+
 			            '</div></div>';
 					}
 					mescroll.endSuccess(data.OrderList.length);
