@@ -71,7 +71,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 管理员群组功能 
+        /// 查询管理组所有用的权限 
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -81,16 +81,7 @@ namespace Eagles.Application.Host.Controllers
              return ApiActuator.Runing(requset, (requset1) =>_OperatorHandler.GetAuthorityGroupSetUp(requset));
         }
 
-        /// <summary>
-        /// 管理员群组功能 
-        /// </summary>
-        /// <param name="requset"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<GetAuthorityGroupSetUpResponse> GetAuthorityByToken(RequestBase requset)
-        {
-            return ApiActuator.Runing(requset, (requset1) => _OperatorHandler.GetAuthorityByToken(requset));
-        }
+        
 
         /// <summary>
         /// 管理员群组功能 编辑
