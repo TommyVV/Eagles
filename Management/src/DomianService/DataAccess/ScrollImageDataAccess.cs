@@ -27,7 +27,8 @@ namespace Ealges.DomianService.DataAccess
 SET
 `OrgId` = @OrgId,
 `PageType` = @PageType,
-`ImageUrl` = @ImageUrl
+`ImageUrl` = @ImageUrl,
+`TargetUrl` = @TargetUrl
 WHERE `Id` = @Id
 
 ", mod);
@@ -35,66 +36,19 @@ WHERE `Id` = @Id
 
         public int CreateRollImages(TbScrollImage mod)
         {
-            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_news`
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_scroll_image`
 (`OrgId`,
-`NewsId`,
-`ShortDesc`,
-`Title`,
-`HtmlContent`,
-`Author`,
-`Source`,
-`Module`,
-`Status`,
-`BeginTime`,
-`EndTime`,
-`TestId`,
-`Attach1`,
-`Attach2`,
-`Attach3`,
-`Attach4`,
-`Attach5`,
-`OperId`,
-`CreateTime`,
-`IsImage`,
-`IsVideo`,
-`IsAttach`,
-`IsClass`,
-`IsLearning`,
-`IsText`,
-`ViewCount`,
-`ReviewId`,
-`CanStudy`,
-`ImageUrl`)
+`Id`,
+`PageType`,
+`ImageUrl`,
+`TargetUrl`)
 VALUES
 (@OrgId,
-@NewsId,
-@ShortDesc,
-@Title,
-@HtmlContent,
-@Author,
-@Source,
-@Module,
-@Status,
-@BeginTime,
-@EndTime,
-@TestId,
-@Attach1,
-@Attach2,
-@Attach3,
-@Attach4,
-@Attach5,
-@OperId,
-@CreateTime,
-@IsImage,
-@IsVideo,
-@IsAttach,
-@IsClass,
-@IsLearning,
-@IsText,
-@ViewCount,
-@ReviewId,
-@CanStudy,
-@ImageUrl);
+@Id,
+@PageType,
+@ImageUrl,
+@TargetUrl);
+
 
 ", mod);
         }
@@ -115,7 +69,8 @@ WHERE
             sql.Append(@" SELECT `tb_scroll_image`.`OrgId`,
     `tb_scroll_image`.`Id`,
     `tb_scroll_image`.`PageType`,
-    `tb_scroll_image`.`ImageUrl`
+    `tb_scroll_image`.`ImageUrl`,
+    `tb_scroll_image`.`TargetUrl`
 FROM `eagles`.`tb_scroll_image`
   where Id=@Id;
  ");
@@ -124,7 +79,7 @@ FROM `eagles`.`tb_scroll_image`
             return dbManager.QuerySingle<TbScrollImage>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset)
+        public List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset ,out int totalCount)
         {
 
             var sql = new StringBuilder();
@@ -142,14 +97,29 @@ FROM `eagles`.`tb_scroll_image`
                 parameter.Append(" and OrgId = @OrgId ");
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
- 
-            sql.AppendFormat(@" SELECT `tb_scroll_image`.`OrgId`,
-    `tb_scroll_image`.`Id`,
-    `tb_scroll_image`.`PageType`,
-    `tb_scroll_image`.`ImageUrl`
-FROM `eagles`.`tb_scroll_image`
-FROM `eagles`.`tb_user_info`  where 1=1  {0}  
+
+
+
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_scroll_image`  where 1=1  {0} ;
  ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+            sql.AppendFormat(@" SELECT `tb_scroll_image`.`OrgId`,
+                `tb_scroll_image`.`Id`,
+                `tb_scroll_image`.`PageType`,
+                `tb_scroll_image`.`ImageUrl`
+            FROM `eagles`.`tb_scroll_image`  where 1 = 1  {0} order by Id desc limit  @pageStart ,@pageSize
+ ", parameter);
+
+
+          
 
             return dbManager.Query<TbScrollImage>(sql.ToString(), dynamicParams);
         }

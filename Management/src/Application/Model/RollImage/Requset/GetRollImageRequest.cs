@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetRollImageRequest : OrgRequestBase
+    public class GetRollImageRequest : ListRequestBase
     {
         /// <summary>
         /// 页面ID

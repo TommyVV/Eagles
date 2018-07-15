@@ -15,6 +15,6 @@ namespace Eagles.Interface.DataAccess
         int EditRollImages(TbScrollImage mod);
         int RemoveRollImages(RemoveRollImageRequset requset);
         TbScrollImage GetRollImagesDetail(GetRollImageDetailRequset requset);
-        List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset);
+        List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset, out int totalCount);
     }
 }

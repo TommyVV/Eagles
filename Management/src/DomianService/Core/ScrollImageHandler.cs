@@ -38,7 +38,8 @@ namespace Eagles.DomainService.Core
                     Id = requset.Info.Id,
                     ImageUrl = requset.Info.Img,
                     OrgId = requset.OrgId,
-                    PageType = requset.PageId
+                    PageType = requset.PageId,
+                    TargetUrl=requset.Info.TargetUrl
                 };
 
                 return dataAccess.EditRollImages(mod)>0;
@@ -52,7 +53,8 @@ namespace Eagles.DomainService.Core
                    
                     ImageUrl = requset.Info.Img,
                     OrgId = requset.OrgId,
-                    PageType = requset.PageId
+                    PageType = requset.PageId,
+                    TargetUrl = requset.Info.TargetUrl
                 };
 
                 return dataAccess.CreateRollImages(mod)>0;
@@ -85,7 +87,8 @@ namespace Eagles.DomainService.Core
                 Img = detail.ImageUrl,
                 OrgId = detail.OrgId,
                 Id = detail.Id,
-                PageId = detail.PageType
+                PageId = detail.PageType,
+                TargetUrl=detail.TargetUrl
             };
             return response;
         }
@@ -97,16 +100,17 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
                
             };
-            List<TbScrollImage> list = dataAccess.GetRollImagesList(requset) ?? new List<TbScrollImage>();
+            List<TbScrollImage> list = dataAccess.GetRollImagesList(requset, out int totalCount) ?? new List<TbScrollImage>();
 
             if (list.Count == 0) throw new TransactionException("M01","无业务数据");
-
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new RollImageInfo
             {
                 Img = x.ImageUrl,
                 OrgId = x.OrgId,
                 Id = x.Id,
-                PageId = x.PageType
+                PageId = x.PageType,
+                TargetUrl=x.TargetUrl
                 //AuditStatus = AuditStatus.审核通过,
                 //Author = x.Author,
                 //CreateTime = x.CreateTime,
