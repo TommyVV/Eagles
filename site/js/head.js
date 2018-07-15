@@ -1,3 +1,10 @@
+$(function() {
+   // console.info(window.location.href);
+	var appId = getRequest('appId') //获取来源页面['0', '1', '2', '3']
+	console.info(appId);
+	navbar(appId)
+})
+
 $('.navbar-header').on('click', '.collapsed', function(e) {
 	if($('.operate').is(':hidden')) {
 		$('.operate').show();
@@ -75,8 +82,6 @@ function navListm(id) {
 		}
 	});
 }
-var appId = 10000000
-navbar(appId)
 
 function navbar(appId) {
 	$.ajax({
@@ -123,4 +128,3 @@ function navbar(appId) {
 		}
 	});
 }
-
