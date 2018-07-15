@@ -52,7 +52,7 @@ $("#myhuiyi").click(function() {
 	window.location.href = 'myArticle.html?appId=' + appId + '&NewsType=2'
 });
 //我的积分
-$(".lw_muscore").click(function() {
+$(".lw_muscore,#myscroce").click(function() {
 	window.location.href = 'rank.html?appId=' + appId + ''
 });
 //我的文章
