@@ -61,17 +61,17 @@ function navListm(id) {
 	$obj.find("h4").click(function() {
 		var $div = $(this).siblings(".list-item");
 		if($(this).parent().hasClass("selected")) {
-			$div.slideUp(600);
+			$div.slideUp(1);
 			$(this).parent().removeClass("selected");
 		}
 		if($div.is(":hidden")) {
-			$("#J_navlist li").find(".list-item").slideUp(600);
+			$("#J_navlist li").find(".list-item").slideUp(1);
 			$("#J_navlist li").removeClass("selected");
 			$(this).parent().addClass("selected");
-			$div.slideDown(600);
+			$div.slideDown(1);
 
 		} else {
-			$div.slideUp(600);
+			$div.slideUp(1);
 		}
 	});
 }
@@ -123,3 +123,4 @@ function navbar(appId) {
 		}
 	});
 }
+
