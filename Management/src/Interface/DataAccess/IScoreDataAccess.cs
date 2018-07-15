@@ -17,6 +17,6 @@ namespace Eagles.Interface.DataAccess
         TbRewardScore GetScoreSetUpDetail(GetScoreSetUpDetailRequset requset);
         List<TbRewardScore> GetScoreSetUps(GetScoreSetUpRequset requset, out int totalCount);
 
-
+        List<TbUserScoreTrace> GetScoreTrace(int requsetUserId);
     }
 }

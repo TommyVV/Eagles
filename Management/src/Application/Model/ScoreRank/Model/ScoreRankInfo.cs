@@ -21,10 +21,10 @@ namespace Eagles.Application.Model.ScoreRank.Model
         /// 积分
         /// </summary>
         public int Score { get; set; }
-        /// <summary>
-        /// 用户使用积分
-        /// </summary>
-        public string UseScore { get; set; }
+        ///// <summary>
+        ///// 用户使用积分
+        ///// </summary>
+        //public string UseScore { get; set; }
 
         /// <summary>
         /// 用户身份

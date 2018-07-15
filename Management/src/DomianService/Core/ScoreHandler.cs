@@ -12,6 +12,7 @@ using Eagles.Application.Model.ScoreSetUp.Model;
 using Eagles.Application.Model.ScoreSetUp.Requset;
 using Eagles.Application.Model.ScoreSetUp.Response;
 using Eagles.Base;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Score;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
@@ -46,7 +47,7 @@ namespace Eagles.DomainService.Core
                     RewardId = requset.Info.ScoreSetUpId,
                     RewardType = requset.Info.RewardType,
                     Score = requset.Info.Score,
-                    WordCount = requset.Info.ScoreCount,
+                    WordCount = requset.Info.WordCount,
 
                 };
 
@@ -65,7 +66,7 @@ namespace Eagles.DomainService.Core
                     RewardId = requset.Info.ScoreSetUpId,
                     RewardType = requset.Info.RewardType,
                     Score = requset.Info.Score,
-                    WordCount = requset.Info.ScoreCount,
+                    WordCount = requset.Info.WordCount,
 
                 };
                 return dataAccess.CreateScoreSetUp(mod) > 0;
@@ -149,18 +150,20 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
-            response.Info = new ScoreRankInfoDetails
-            {
-                Score = detail.Score,
-                UserId = detail.UserId,
-                UserIdentity = detail.MemberType,
-                UserName = detail.Name,
-                UseScore = "",
-                CreateTime = detail.CreateTime,
-                //ScoreRecord=
-            };
-            return response;
 
+            List<TbUserScoreTrace> list = dataAccess.GetScoreTrace(requset.UserId);
+
+            response.Info = list.Select(x => new UserScoreTrace
+            {
+                Comment = x.Comment,
+                CreateTime = x.CreateTime.FormartDatetime(),
+                OrgId = x.OrgId,
+                OriScore = x.OriScore,
+                RewardsType = x.RewardsType,
+                Score = x.Score,
+                TraceId = x.TraceId
+            }).ToList();
+            return response;
         }
 
         public GetScoreRankResponse GetScoreRank(GetScoreRankRequset requset)
@@ -191,7 +194,7 @@ namespace Eagles.DomainService.Core
                 UserId = x.UserId,
                 UserIdentity = x.MemberType,
                 UserName = x.Name,
-                UseScore = ""
+               // UseScore = ""
 
             }).ToList();
             return response;
