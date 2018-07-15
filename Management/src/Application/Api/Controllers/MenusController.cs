@@ -53,6 +53,17 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
+        /// 获取下级菜单
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetSubordinateResponse> GetSubordinate(GetSubordinateRequset requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => testHandler.GetSubordinate(requset));
+        }
+
+        /// <summary>
         ///  菜单 详情
         /// </summary>
         /// <param name="requset"></param>

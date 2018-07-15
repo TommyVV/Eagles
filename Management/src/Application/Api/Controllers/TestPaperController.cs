@@ -145,27 +145,27 @@ namespace Eagles.Application.Host.Controllers
         #region 选项
 
 
-        /// <summary>
-        /// 编辑选项
-        /// </summary>
-        /// <param name="requset"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<int> EditOption(EditOptionRequset requset)
-        {
-            return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.EditOption(requset));
-        }
+        ///// <summary>
+        ///// 编辑选项
+        ///// </summary>
+        ///// <param name="requset"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ResponseFormat<int> EditOption(EditOptionRequset requset)
+        //{
+        //    return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.EditOption(requset));
+        //}
 
-        /// <summary>
-        /// 删除选项
-        /// </summary>
-        /// <param name="requset"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<bool> RemoveOption(RemoveOptionRequset requset)
-        {
-            return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.RemoveOption(requset));
-        }
+        ///// <summary>
+        ///// 删除选项
+        ///// </summary>
+        ///// <param name="requset"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ResponseFormat<bool> RemoveOption(RemoveOptionRequset requset)
+        //{
+        //    return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.RemoveOption(requset));
+        //}
 
 
 

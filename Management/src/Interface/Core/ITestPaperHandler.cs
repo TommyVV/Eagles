@@ -82,9 +82,9 @@ namespace Eagles.Interface.Core
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
-        int EditOption(EditOptionRequset requset);
+       // int EditOption(EditOptionRequset requset);
 
-        bool RemoveOption(RemoveOptionRequset requset);
+      //  bool RemoveOption(RemoveOptionRequset requset);
         bool RemoveSubjectInfo(RemoveSubjectInfoRequset requset);
         GetSubjectListResponse GetSubjectList(GetSubjectListRequset requset);
     }

@@ -126,5 +126,28 @@ namespace Eagles.DomainService.Core
             }).ToList();
             return response;
         }
+
+        public GetSubordinateResponse GetSubordinate(GetSubordinateRequset requset)
+        {
+            var response = new GetSubordinateResponse
+            {
+
+            };
+
+            List<TbAppMenu> list = dataAccess.GetSubordinate(requset) ?? new List<TbAppMenu>();
+
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
+            response.List = list.Select(x => new Menus
+            {
+                MenuId = x.MenuId,
+                MenuLevel = x.Level,
+                MenuLink = x.TargetUrl,
+                OrgId = x.OrgId,
+                MenuName = x.MenuName,
+                ParentId = x.ParentMenuId,
+            }).ToList();
+            return response;
+            
+        }
     }
 }

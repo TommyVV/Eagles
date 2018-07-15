@@ -16,7 +16,7 @@ namespace Eagles.Application.Model.Exercises.Requset
         /// <summary>
         /// 
         /// </summary>
-        public List<int> OptionId { get; set; }
+        public List<Option> Option { get; set; }
 
     }
 }

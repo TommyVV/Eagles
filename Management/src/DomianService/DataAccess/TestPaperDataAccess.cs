@@ -413,7 +413,7 @@ FROM `eagles`.`tb_quest_anwser`  WHERE QuestionId in @QuestionId;
 WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
         }
 
-        public int CreateOption(TbQuestAnswer optionList)
+        public int CreateOption(List<TbQuestAnswer> optionList)
         {
             return dbManager.ExecuteScalar<int>(@"INSERT INTO `eagles`.`tb_quest_anwser`
 (`OrgId`,
@@ -523,10 +523,16 @@ FROM `eagles`.`tb_question`  where QuestionId not IN  @QuestionId   ORDER BY ran
             return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
         }
 
+        public int RemoveOption(List<int> requset)
+        {
+            return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_quest_anwser`
+WHERE AnswerId in @AnswerId;", new { AnswerId = requset.ToArray() });
+        }
+
         public int RemoveOption(RemoveOptionRequset requset)
         {
             return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_quest_anwser`
-WHERE AnswerId=@AnswerId;", new { AnswerId = requset.OptionId });
+WHERE AnswerId = @AnswerId;", new { AnswerId = requset.OptionId });
         }
 
         public void UpdataOption(int infoQuestionId, List<int> requsetOptionId)

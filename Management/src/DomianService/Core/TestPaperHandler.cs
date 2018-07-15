@@ -111,25 +111,27 @@ namespace Eagles.DomainService.Core
                 //var optionList = dataAccess.GetOptionList( new List<int>{requset.Info.QuestionId});
 
 
+                dataAccess.RemoveOption(requset.Option.Select(x => x.OptionId).ToList());
+
                 ////todo 事务修改 批量修改选项信息
-                // dataAccess.CreateOption(requset.Info.OptionList.Select(x =>
-                //    new TbQuestAnswer
-                //    {
-                //        Answer = x.OptionName,
-                //        AnswerType = x.AnswerType,
-                //        ImageUrl = x.IsImg ? x.Img : string.Empty,
-                //        IsRight = x.IsRight,
-                //        OrgId = requset.Info.OrgId,
-                //        QuestionId = requset.Info.QuestionId,
-                //        AnswerId = x.OptionId
-                //    }).ToList());
+                dataAccess.CreateOption(requset.Option.Select(x =>
+                   new TbQuestAnswer
+                   {
+                       Answer = x.OptionName,
+                       AnswerType = x.AnswerType,
+                       ImageUrl = x.IsImg ? x.Img : string.Empty,
+                       IsRight = x.IsRight,
+                       OrgId = requset.Info.OrgId,
+                       QuestionId = requset.Info.QuestionId,
+                       AnswerId = x.OptionId
+                   }).ToList());
 
                 int result = dataAccess.EditSubject(info);
 
-                if (requset.OptionId.Count > 0)
-                {
-                    dataAccess.UpdataOption(info.QuestionId, requset.OptionId);
-                }
+                //if (requset.OptionId.Count > 0)
+                //{
+                //    dataAccess.UpdataOption(info.QuestionId, requset.OptionId);
+                //}
 
                 return result < 0 ? 0 : requset.Info.QuestionId;
             }
@@ -146,10 +148,17 @@ namespace Eagles.DomainService.Core
 
                 var questionId = dataAccess.CreateSubject(info);
 
-                if (requset.OptionId.Count > 0)
-                {
-                    dataAccess.UpdataOption(info.QuestionId, requset.OptionId);
-                }
+                dataAccess.CreateOption(requset.Option.Select(x =>
+                    new TbQuestAnswer
+                    {
+                        Answer = x.OptionName,
+                        AnswerType = x.AnswerType,
+                        ImageUrl = x.IsImg ? x.Img : string.Empty,
+                        IsRight = x.IsRight,
+                        OrgId = requset.Info.OrgId,
+                        QuestionId = requset.Info.QuestionId,
+                        AnswerId = x.OptionId
+                    }).ToList());
                 ////todo 事务添加 批量新增选项信息
                 //dataAccess.CreateOption(requset.Info.OptionList.Select(x => new TbQuestAnswer
                 //{
@@ -428,41 +437,46 @@ namespace Eagles.DomainService.Core
 
         public int EditOption(EditOptionRequset requset)
         {
-            if (requset.Info.OptionId > 0)
-            {
-                var result = dataAccess.EditOption(
-                    new TbQuestAnswer
-                    {
-                        Answer = requset.Info.OptionName,
-                        AnswerType = requset.Info.AnswerType,
-                        ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
-                        IsRight = requset.Info.IsRight,
-                        OrgId = requset.OrgId,
-                        QuestionId = requset.Info.QuestionId,
-                        AnswerId = requset.Info.OptionId
-                    }
-
-                );
-                return result < 0 ? 0 : requset.Info.OptionId;
-            }
-            else
-            {
-                var result = dataAccess.CreateOption(
-                    new TbQuestAnswer
-                    {
-                        Answer = requset.Info.OptionName,
-                        AnswerType = requset.Info.AnswerType,
-                        ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
-                        IsRight = requset.Info.IsRight,
-                        OrgId = requset.OrgId,
-                        QuestionId = requset.Info.QuestionId
-                    });
-
-                return result;
-            }
-
-
+            throw new NotImplementedException();
         }
+
+        //public int EditOption(EditOptionRequset requset)
+        //{
+        //    if (requset.Info.OptionId > 0)
+        //    {
+        //        var result = dataAccess.EditOption(
+        //            new TbQuestAnswer
+        //            {
+        //                Answer = requset.Info.OptionName,
+        //                AnswerType = requset.Info.AnswerType,
+        //                ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
+        //                IsRight = requset.Info.IsRight,
+        //                OrgId = requset.OrgId,
+        //                QuestionId = requset.Info.QuestionId,
+        //                AnswerId = requset.Info.OptionId
+        //            }
+
+        //        );
+        //        return result < 0 ? 0 : requset.Info.OptionId;
+        //    }
+        //    else
+        //    {
+        //        var result = dataAccess.CreateOption(
+        //            new TbQuestAnswer
+        //            {
+        //                Answer = requset.Info.OptionName,
+        //                AnswerType = requset.Info.AnswerType,
+        //                ImageUrl = requset.Info.IsImg ? requset.Info.Img : string.Empty,
+        //                IsRight = requset.Info.IsRight,
+        //                OrgId = requset.OrgId,
+        //                QuestionId = requset.Info.QuestionId
+        //            });
+
+        //        return result;
+        //    }
+
+
+        //}
 
         public bool RemoveOption(RemoveOptionRequset requset)
         {

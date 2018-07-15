@@ -48,7 +48,7 @@ namespace Eagles.DomainService.Core
                     BeginTime = requset.Info.StarTime,
                     EndTime = requset.Info.EndTime,
                     HtmlContent = requset.Info.Content,
-                  //  CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
+                    //  CreateTime = requset.Info.CreateTime.ConvertToDateTime(),
                     Module = requset.Info.ModuleId,
                     NewsId = requset.Info.NewsId,
                     ImageUrl = requset.Info.NewsImg,
@@ -57,18 +57,18 @@ namespace Eagles.DomainService.Core
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
                     OrgId = requset.OrgId,
-                    CanStudy=requset.Info.CanStudy,
-                    ExternalUrl=requset.Info.ExternalUrl,
-                    IsAttach=requset.Info.IsAttach,
-                    IsClass=requset.Info.IsClass,
-                    IsExternal=requset.Info.IsExternal,
-                    IsImage=requset.Info.IsImage,
-                    IsLearning=requset.Info.IsLearning,
-                    IsText=requset.Info.IsLearning,
-                    IsVideo =requset.Info.IsVideo,
-                    OperId=0,
-                    ShortDesc=requset.Info.ShortDesc,
-                   // Status=0,
+                    CanStudy = requset.Info.CanStudy,
+                    ExternalUrl = requset.Info.ExternalUrl,
+                    IsAttach = requset.Info.IsAttach,
+                    IsClass = requset.Info.IsClass,
+                    IsExternal = requset.Info.IsExternal,
+                    IsImage = requset.Info.IsImage,
+                    IsLearning = requset.Info.IsLearning,
+                    IsText = requset.Info.IsLearning,
+                    IsVideo = requset.Info.IsVideo,
+                    OperId = 0,
+                    ShortDesc = requset.Info.ShortDesc,
+                    // Status=0,
                 };
 
                 return dataAccess.EditNews(mod) > 0;
@@ -195,30 +195,15 @@ namespace Eagles.DomainService.Core
 
         public bool ImportNews(ImportNewRequset requset)
         {
+            var now = DateTime.Now;
 
-
-            List<TbNews> mod = requset.Info.Select(x=> new TbNews
+            List<TbNews> mod = requset.Info.Select(x => new TbNews
             {
-                Attach1 = x.Attach1,
-                Attach2 = x.Attach2,
-                Attach3 = x.Attach3,
-                Attach4 = x.Attach4,
-                Author = x.Author,
-                BeginTime = x.StarTime,
-                EndTime = x.EndTime,
-                HtmlContent = x.Content,
-                CreateTime = x.CreateTime.ConvertToDateTime(),
-                Module = x.ModuleId,
                 ImageUrl = x.NewsImg,
                 Title = x.NewsName,
-                Source = x.Source,
-                TestId = x.TestId,
-              //  OrgId = x.OrgId,
-                NewsType = x.NewsType,
-                AttachName1 = x.AttachName1,
-                AttachName2 = x.AttachName2,
-                AttachName3 = x.AttachName3,
-                AttachName4 = x.AttachName4,
+                ExternalUrl = x.ExternalUrl,
+                IsExternal = 1,
+                CreateTime = now
             }).ToList();
 
             return dataAccess.ImportNews(mod) > 0;
