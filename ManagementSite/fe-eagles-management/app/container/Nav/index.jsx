@@ -45,9 +45,7 @@ export default class App extends React.Component {
     });
   };
   render() {
-    const { fetchList, search } = this.props;
     let { current, sub } = this.state;
-    console.log(this.state.current);
     return (
       <Layout>
         <Sider

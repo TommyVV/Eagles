@@ -19,7 +19,7 @@ import { hashHistory } from "react-router";
 import { getNewsInfoById, createOrEditNews } from "../../services/newsService";
 import { getList } from "../../services/programaService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
-import { fileSize } from "../../constants/config/appconfig";
+import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/newsAction";
 // 引入编辑器以及编辑器样式
 import BraftEditor from "braft-editor";
@@ -93,13 +93,13 @@ class Base extends Component {
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {
-      message.error('只支持格式为png,jpeg和jpg的图片!');
+      message.error("只支持格式为png,jpeg和jpg的图片!");
     }
 
     if (file.size > fileSize) {
       message.error("图片必须小于10M");
     }
-    return isImage && file.size <=fileSize;
+    return isImage && file.size <= fileSize;
   }
   // 上传新闻的附件
   handleChange = info => {
@@ -118,13 +118,21 @@ class Base extends Component {
       message.error(`${info.file.name} 上传失败`);
     }
   };
-  rewardHandleChange = value => {
-    const { setRewardWrapper } = this.props; //是否显示试卷列表
-    // this.props.form.setFieldsValue({
-    //   isTest: value,
-    //   TestId: value == "0" ? "0" : ""
-    // });
-    setRewardWrapper(value == "1" ? true : false);
+  // 是否有试卷
+  change = (attr, value) => {
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      ...values,
+      [attr]: value,
+      TestId: value == "0" ? "" : values.TestId
+    });
+  };
+  // 选分类
+  changeBox = (attr, e) => {
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({ ...values, [attr]: e.target.checked ? "1" : "0" });
   };
   // 新闻封面
   onChangeImage = info => {
@@ -148,7 +156,7 @@ class Base extends Component {
       setFieldsValue,
       getFieldsValue
     } = this.props.form;
-    const { news, isRewardWrapper, setNews, programaList } = this.props; //是否显示试卷列表
+    const { news, programaList } = this.props; //是否显示试卷列表
     const props = {
       name: "file",
       action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
@@ -192,11 +200,49 @@ class Base extends Component {
       height: 300,
       contentFormat: "html",
       initialContent: news.Content,
-      uploadImgShowBase64: false, // 是否使用base64
-      uploadImgServer: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD, // 图片上传到自己的服务器，自己需要自定义方法，todo
+      placeholder: "必填，请输入新闻内容",
       onChange: Content => {
         setFieldsValue({ Content });
         console.log("新闻内容：", getFieldsValue());
+      },
+      media: {
+        validateFn: file => {
+          return file.size < fileSize;
+        },
+        uploadFn: async param => {
+          // const res=await uploadFile(file);
+          console.log(param);
+          let formData = new FormData();
+          formData.append("file", param.file);
+          var request = new XMLHttpRequest();
+          request.open(
+            "POST",
+            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
+          );
+          request.send(formData);
+          request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+              let { Result } = JSON.parse(request.responseText);
+              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
+              // 上传成功后调用param.success并传入上传后的文件地址
+              param.success({
+                url: FileUrl,
+                meta: {
+                  id: FileId,
+                  title: FileName,
+                  alt: FileName,
+                  loop: false, // 指定音视频是否循环播放
+                  autoPlay: false, // 指定音视频是否自动播放
+                  controls: false // 指定音视频是否显示控制栏
+                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
+                }
+              });
+            }
+          };
+        },
+        onInsert: files => {
+          console.log(files);
+        }
       }
       // onRawChange: this.handleRawChange
     };
@@ -209,16 +255,35 @@ class Base extends Component {
           {getFieldDecorator("NewsName", {
             rules: [
               {
-                required: true
+                required: true,
+                message: "必填，请输入标题"
               }
             ]
           })(<Input placeholder="必填，请输入标题" />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="类型">
+          {getFieldDecorator("NewsType")(
+            <Select>
+              <Option value="0">新闻</Option>
+              <Option value="1">会议</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="作者">
+          {getFieldDecorator("Author", {
+            rules: [
+              {
+                required: true
+              }
+            ]
+          })(<Input placeholder="必填，请输入作者" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="来源">
           {getFieldDecorator("Source", {
             rules: [
               {
-                required: true
+                required: true,
+                message: "必填，请输入来源"
               }
             ]
           })(<Input placeholder="必填，请输入新闻来源" />)}
@@ -277,7 +342,7 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="是否有试卷">
           {getFieldDecorator("isTest")(
-            <Select onChange={this.rewardHandleChange}>
+            <Select onChange={this.change.bind(this, "isTest")}>
               <Option value="0">否</Option>
               <Option value="1">是</Option>
             </Select>
@@ -287,13 +352,13 @@ class Base extends Component {
           {...formItemLayout}
           label="试卷选择"
           style={{
-            display: isRewardWrapper ? "block" : "none"
+            display: news.isTest == "1" ? "block" : "none"
           }}
         >
           {getFieldDecorator("TestId")(
             <Select>
-              <Option value="0">试卷一</Option>
-              <Option value="1">试卷二</Option>
+              <Option value="1">试卷一</Option>
+              <Option value="2">试卷二</Option>
             </Select>
           )}
         </FormItem>
@@ -312,27 +377,68 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="分类">
-          {getFieldDecorator("classify")(
-            <Checkbox.Group style={{ width: "100%" }}>
-              <Row>
-                <Col span={8}>
-                  <Checkbox value="A">新闻</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="B">直播</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="C">C</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="D">D</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="E">E</Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          )}
+          <Row>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsImage == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsImage")}
+              >
+                有图片
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsVideo == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsVideo")}
+              >
+                有视频
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsAttach == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsAttach")}
+              >
+                有附件
+              </Checkbox>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsClass == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsClass")}
+              >
+                有课件
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsLearning == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsLearning")}
+              >
+                是学习心得
+              </Checkbox>
+            </Col>
+            <Col span={8}>
+              <Checkbox
+                checked={news.IsText == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "IsText")}
+              >
+                是文章
+              </Checkbox>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={8}>
+              <Checkbox
+                checked={news.CanStudy == "1" ? true : false}
+                onChange={this.changeBox.bind(this, "CanStudy")}
+              >
+                有否允许学习
+              </Checkbox>
+            </Col>
+          </Row>
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
           <Upload {...props}>
@@ -376,6 +482,12 @@ const FormMap = Form.create({
       NewsName: Form.createFormField({
         value: news.NewsName
       }),
+      NewsType: Form.createFormField({
+        value: news.NewsType ? news.NewsType + "" : "0"
+      }),
+      Author: Form.createFormField({
+        value: news.Author
+      }),
       Source: Form.createFormField({
         value: news.Source
       }),
@@ -386,10 +498,10 @@ const FormMap = Form.create({
         value: news.EndTime ? moment(news.EndTime, "YYYY-MM-DD") : null
       }),
       isTest: Form.createFormField({
-        value: isRewardWrapper ? "1" : "0"
+        value: news.isTest ? news.isTest + "" : "0"
       }),
       TestId: Form.createFormField({
-        value: news.TestId <= 0 ? "" : news.TestId
+        value: news.TestId ? news.TestId + "" : ""
       }),
       Content: Form.createFormField({
         value: news.Content
@@ -416,8 +528,7 @@ class NewsDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      programaList: [], // 栏目列表
-      isRewardWrapper: false // 是否显示试卷
+      programaList: [] // 栏目列表
     };
   }
 
@@ -433,7 +544,7 @@ class NewsDetail extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.clearProjectInfo();
+    this.props.clearInfo();
   }
 
   // 查询栏目列表
@@ -446,8 +557,12 @@ class NewsDetail extends Component {
   getInfo = async NewsId => {
     try {
       this.getProgramaList();
-      const { Info } = await getNewsInfoById({ NewsId });
+      let { Info } = await getNewsInfoById({ NewsId });
       console.log("newsDetails", Info);
+      Info = {
+        ...Info,
+        isTest: Info.TestId ? "1" : "0"
+      };
       this.props.saveInfo(Info);
       // 拿栏目详情
       // 说明有试卷
@@ -458,32 +573,17 @@ class NewsDetail extends Component {
         // const { List } = await getQuestionList();
         // console.log(List);
       }
-      this.setState({
-        newsDetail: Info,
-        isRewardWrapper: Info.TestId > 0 ? true : false
-      });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-  setRewardWrapper(isRewardWrapper) {
-    this.setState({
-      isRewardWrapper
-    });
-  }
 
   render() {
-    const { newsDetail, isRewardWrapper, programaList } = this.state;
-
+    const { programaList } = this.state;
     return (
       <Nav>
-        <FormMap
-          news={this.props.newsReducer}
-          isRewardWrapper={isRewardWrapper}
-          setRewardWrapper={this.setRewardWrapper.bind(this)}
-          programaList={programaList}
-        />
+        <FormMap news={this.props.newsReducer} programaList={programaList} />
       </Nav>
     );
   }
