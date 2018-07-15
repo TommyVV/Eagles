@@ -4,7 +4,7 @@ namespace Eagles.Application.Model.ScoreSetUp.Requset
 {
     public class GetScoreSetUpRequset : OrgListRequestBase
     {
-        public OperationType OperationType { get; set; }
+        public OperationType RewardType { get; set; }
 
     }
 }
