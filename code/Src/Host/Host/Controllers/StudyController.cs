@@ -14,6 +14,10 @@ namespace Eagles.Application.Host.Controllers
     {
         private IStudyHandler iStudyHandler;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="iStudyHandler"></param>
         public StudyController(IStudyHandler iStudyHandler)
         {
             this.iStudyHandler = iStudyHandler;

@@ -20,7 +20,6 @@ import {
   createOrEditQuestion
 } from "../../../services/questionService";
 import { delRelation, random } from "../../../services/exerciseService";
-import { serverConfig } from "../../../constants/config/ServerConfigure";
 import { saveInfo, clearInfo } from "../../../actions/questionAction";
 import "./style.less";
 

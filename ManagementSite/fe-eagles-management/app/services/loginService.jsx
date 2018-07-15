@@ -8,6 +8,7 @@ export const login = async params => {
   try {
     const res = await sendRequest({
       url: serverConfig.LOGIN.LOGIN,
+      method:"post",
       params: { ...params }
     });
     if (res.status === 200) {

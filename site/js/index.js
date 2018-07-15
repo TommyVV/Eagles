@@ -1,5 +1,9 @@
-$('#top-nav,#mobilenav').load('head.html')
-$('#pc-footer').load('footer.html')
+
+var token = localStorage.getItem('token');
+var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
+var appId=getRequest('appId');
+$('#top-nav,#mobilenav').load('head.html');
+$('#pc-footer').load('footer.html');
 class CalculateScreen {
 	constructor() {
 		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -31,19 +35,16 @@ new CalculateScreen();
 $(window).resize(function() {
 	new CalculateScreen();
 })
-var token = localStorage.getItem('token');
-var pageType=getRequest('pageType')//获取来源页面id
-var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
-var appId=getRequest('appId')//获取来源页面id
+
 
 //接口模块
-scrollimg(pageType,token,appId); //banner
+scrollimg(moduleType,token,appId); //banner
 moduleListTitle(moduleType,appId) //名称分类方法
-function scrollimg(pageType,token,appId) {
+function scrollimg(moduleType,token,appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"PageType": pageType,
+			"PageType": moduleType,
 			"Token": token,
 			"AppId": appId
 		},
@@ -155,14 +156,14 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 					if(i < 2) { 
 						contentone += '<div class="media col-xs-6">' +
 							'<div class="media-top"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-							'</div><div class="media-body"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-							'</div>' +
+							'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+							'</a></div>' +
 							'</div>';
 					} else if(i >= 2) {
 						contenttwo += '<div class="media">' +
 							'<div class="media-left"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-							'</div><div class="media-body"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-							'</div>' +
+							'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+							'</a></div>' +
 							'</div>';
 					}
 					//PC代码 右边列表页

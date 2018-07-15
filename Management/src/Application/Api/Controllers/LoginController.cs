@@ -3,7 +3,6 @@ using Eagles.Application.Host.Common;
 using Eagles.Application.Model.Login.Model;
 using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Login.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -28,7 +27,7 @@ namespace Eagles.Application.Host.Controllers
         /// <returns></returns>
         [HttpPost]
         public ResponseFormat<LoginResponse> Login(LoginRequset requset)
-        {          
+        {
             return ApiActuator.Runing(() => testHandler.Login(requset));
         }
 

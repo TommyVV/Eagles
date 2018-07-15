@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DataBaseConfiguration.cs" />
     <Compile Include="EaglesConfig.cs" />
+    <Compile Include="MenuConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +58,9 @@
       <Project>{2F5808BE-CDB2-49E5-976A-30A9016B9BC2}</Project>
       <Name>Eagles.DomainService.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

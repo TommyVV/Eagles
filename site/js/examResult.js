@@ -1,15 +1,13 @@
-if(!localStorage.getItem('token')){
-	window.location.href = "login.html"
-}
-$('#top-nav,#mobilenav').load('./head.html')
-if(!localStorage.getItem('token')){
-	window.location.href = "login.html"
-}
 var TestId=getRequest('TestId')
 var TestList=getRequest('TestList')
 var UseTime=getRequest('useTime')
 var token=localStorage.getItem("token")
 var appId=getRequest('appId')
+if(!localStorage.getItem('token')){
+	window.location.href = 'login.html?appId='+appId+'';
+}
+$('#top-nav,#mobilenav').load('./head.html')
+
 examResult(TestId,TestList,token,appId);
 function examResult(TestId,UseTime,TestList,token,appId) {
 	$.ajax({

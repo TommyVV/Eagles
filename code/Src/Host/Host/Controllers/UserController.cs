@@ -23,6 +23,11 @@ namespace Eagles.Application.Host.Controllers
         private IUserHandler userHandler;
         private INewsHandler newsHandler;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userHandler"></param>
+        /// <param name="newsHandler"></param>
         public UserController(IUserHandler userHandler, INewsHandler newsHandler)
         {
             this.userHandler = userHandler;

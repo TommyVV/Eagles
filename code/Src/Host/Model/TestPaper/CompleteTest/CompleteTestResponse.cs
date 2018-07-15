@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Eagles.Application.Model.Common;
 
-namespace Eagles.Application.Model.News.CompleteTest
+namespace Eagles.Application.Model.TestPaper.CompleteTest
 {
     /// <summary>
     /// 试卷完成接口

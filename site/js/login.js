@@ -1,9 +1,7 @@
-$(document).ready(function() {
-	$('#top-nav,#mobilenav').load('head.html');
-})
 
-//var appId = getRequest('appId');
-var appId = 10000000
+
+var appId = getRequest('appId');
+//var appId = 10000000
 navbar(appId)
 function navbar(appId) {
 	$.ajax({
@@ -21,6 +19,10 @@ function navbar(appId) {
 		}
 	});
 }
+
+$('.login-zc').on('click', function(e) {
+	window.location.href="signup.html?appId="+appId
+})
 //登录
 $('.btn-login').on('click', function(e) {
 	e.preventDefault();
@@ -40,7 +42,7 @@ $('.btn-login').on('click', function(e) {
 		data: {
 			"Phone": account,
 			"UserPwd": password,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/Login",
 		dataType: "json",
@@ -56,11 +58,8 @@ $('.btn-login').on('click', function(e) {
 				if($.trim(prevLink) == '') {
 					parent.location.href = 'mine.html?appId=' + appId + '';
 				} else {
-					//					if(prevLink.indexOf('http://51service.xyz/')==-1){	//来自其它站点
-					//						parent.location.href = 'mine.html?appId='+appId+''
-					//					}
 					if(prevLink.indexOf('signup.html') != -1) { //来自注册页面
-						parent.location.href = 'signup.html';
+						parent.location.href = 'signup.html?appId=' + appId + ''';
 					}
 					parent.location.href = prevLink;
 				}

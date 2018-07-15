@@ -534,7 +534,7 @@ export default class App extends React.Component {
               </span>
               <span
                 className="header-back"
-                onClick={() => hashHistory.goBack()}
+                onClick={() => hashHistory.replace("/login")}
               >
                 退出
               </span>
