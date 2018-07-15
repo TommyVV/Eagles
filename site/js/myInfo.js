@@ -108,7 +108,7 @@ $('.confirmBtn').on('click', function() {
 		success: function(res) {
 
 			if(res.Code == 00) {
-				window.location.href = 'mine.html'
+				window.location.href = 'mine.html?appId='+appId+''
 				//          	if(res.Result!=''&&res.Result!=null){
 				//          		
 				//				window.location.reload()
