@@ -203,7 +203,8 @@ namespace Eagles.DomainService.Core
                 Title = x.NewsName,
                 ExternalUrl = x.ExternalUrl,
                 IsExternal = 1,
-                CreateTime = now
+                CreateTime = now,
+                Source =x.Source
             }).ToList();
 
             return dataAccess.ImportNews(mod) > 0;

@@ -22,5 +22,10 @@ namespace Eagles.Application.Model.News.Model
         /// 新闻图片
         /// </summary>
         public string NewsImg { get; set; }
+
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public string Source { get; set; }
     }
 }
