@@ -182,6 +182,63 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
             });
         }
 
+        public List<TbQuestion> GetSubjectList(GetSubjectListRequset requset, out int i)
+        {
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            if (requset.OrgId > 0)
+            {
+                parameter.Append(" and  OrgId = @OrgId ");
+                dynamicParams.Add("OrgId", requset.OrgId);
+            }
+
+
+
+            if (!string.IsNullOrWhiteSpace(requset.Question))
+            {
+                parameter.Append(" and TestName = @TestName ");
+                dynamicParams.Add("TestName", requset.Question);
+            }
+
+         
+            if (requset.StartTime != null)
+            {
+                parameter.Append(" and CreateTime >= @StartTime ");
+                dynamicParams.Add("StartTime", requset.StartTime);
+            }
+
+            if (requset.EndTime != null)
+            {
+                parameter.Append(" and CreateTime <= @EndTime ");
+                dynamicParams.Add("EndTime", requset.EndTime);
+            }
+
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_question`  where 1=1  {0} 
+ ", parameter);
+            i = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+
+            sql.AppendFormat(@"SELECT `tb_question`.`OrgId`,
+    `tb_question`.`QuestionId`,
+    `tb_question`.`Question`,
+    `tb_question`.`AnswerType`,
+    `tb_question`.`Multiple`,
+    `tb_question`.`MultipleCount`
+FROM `eagles`.`tb_question`  where 1=1  {0} order by QuestionId desc limit  @pageStart ,@pageNum;
+ ", parameter);
+
+            return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
+        }
+
         public bool RemoveExercisesSubjectRelationship(RemoveSubjectRequset requset)
         {
             return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
@@ -422,10 +479,29 @@ VALUES
 @QuestionId);", list);
         }
 
-        public int RemoveTestQuestionRelationshipByQuestionId(int questionId)
+        public bool RemoveTestQuestionRelationshipByQuestionId(int questionId)
         {
-            return dbManager.Excuted(@" DELETE FROM `eagles`.`tb_test_question`
-WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
+
+            return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
+            {
+                new TransactionCommand()
+                {
+                    CommandString =
+                        @"DELETE FROM `eagles`.`tb_test_question`  WHERE QuestionId=@QuestionId",
+                    Parameter = new {QuestionId = questionId}
+                },
+                new TransactionCommand()
+                {
+                    CommandString = @"DELETE FROM `eagles`.`tb_quest_anwser` WHERE QuestionId=@QuestionId;",
+                    Parameter = new {QuestionId = questionId}
+                },
+                new TransactionCommand()
+                {
+                    CommandString = @"DELETE FROM `eagles`.`tb_question` WHERE QuestionId=@QuestionId;",
+                    Parameter = new {QuestionId = questionId}
+                },
+            });
+
         }
 
         public List<TbQuestion> GetRandomSubject(List<int> list, int count)

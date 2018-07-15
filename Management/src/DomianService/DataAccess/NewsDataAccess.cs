@@ -17,10 +17,9 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbNews> GetNewsList(GetNewRequset requset,out int totalCount)
+        public List<TbNews> GetNewsList(GetNewRequset requset, out int totalCount)
         {
             var sql = new StringBuilder();
-            var sqlTotal = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
@@ -42,16 +41,34 @@ namespace Ealges.DomianService.DataAccess
                 dynamicParams.Add("Title", requset.NewsName);
             }
 
+            if (requset.StartTime != null)
+            {
+                parameter.Append(" and CreateTime >= @StartTime ");
+                dynamicParams.Add("StartTime", requset.StartTime);
+            }
+
+            if (requset.EndTime != null)
+            {
+                parameter.Append(" and CreateTime <= @EndTime ");
+                dynamicParams.Add("EndTime", requset.EndTime);
+            }
+
             //if (requset.Status > 0)
             //{
             //    parameter.Append(" and Status = @Status ");
             //    dynamicParams.Add("Status", (int)requset.Status);
             //}
 
-            sqlTotal.AppendFormat(@"SELECT count(1)
+            sql.AppendFormat(@"SELECT count(1)
 FROM `eagles`.`tb_news`  where 1=1  {0} ;
  ", parameter);
-            totalCount = dbManager.ExecuteScalar<int>(sqlTotal.ToString(), dynamicParams);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
 
             sql.AppendFormat(@" SELECT `tb_news`.`OrgId`,
     `tb_news`.`NewsId`,
@@ -82,8 +99,8 @@ FROM `eagles`.`tb_news`  where 1=1  {0} ;
     `tb_news`.`ReviewId`,
     `tb_news`.`CanStudy`,
     `tb_news`.`ImageUrl`
-FROM `eagles`.`tb_news`
-  where  1=1  {0}  
+FROM `eagles`.`tb_news` 
+  where  1=1  {0}  order by CreateTime desc limit  @pageStart ,@pageSize
  ", parameter);
 
             return dbManager.Query<TbNews>(sql.ToString(), dynamicParams);
@@ -129,7 +146,7 @@ FROM `eagles`.`tb_news`
 FROM `eagles`.`tb_news`
   where NewsId=@NewsId;
  ");
-            dynamicParams.Add("NewsId", requset.NewsId );
+            dynamicParams.Add("NewsId", requset.NewsId);
 
             return dbManager.QuerySingle<TbNews>(sql.ToString(), dynamicParams);
 
@@ -140,7 +157,7 @@ FROM `eagles`.`tb_news`
 
             return dbManager.Excuted(@" DELETE FROM `eagles`.`tb_news` where
                 `NewsId` = @NewsId;
-", new {requset.NewsId});
+", new { requset.NewsId });
         }
 
         public int EditNews(TbNews mod)
@@ -162,7 +179,6 @@ SET
 `Attach2` = @Attach2,
 `Attach3` = @Attach3,
 `Attach4` = @Attach4,
-`Attach5` = @Attach5,
 `OperId` = @OperId,
 `CreateTime` = @CreateTime,
 `IsImage` = @IsImage,
@@ -175,15 +191,16 @@ SET
 `ReviewId` = @ReviewId,
 `CanStudy` = @CanStudy,
 `ImageUrl` = @ImageUrl,
-`IsExternal` = @IsExternal: 0}>,
+`IsExternal` = @IsExternal,
 `ExternalUrl` = @ExternalUrl,
 `NewsType` = @NewsType,
 `AttachName1` = @AttachName1,
 `AttachName2` = @AttachName2,
 `AttachName3` = @AttachName3,
 `AttachName4` = @AttachName4
-WHERE `
+WHERE 
 `NewsId` = @NewsId
+
 
 
  ", mod);
@@ -208,7 +225,6 @@ WHERE `
 `Attach2`,
 `Attach3`,
 `Attach4`,
-`Attach5`,
 `OperId`,
 `CreateTime`,
 `IsImage`,
@@ -245,7 +261,89 @@ VALUES
 @Attach2,
 @Attach3,
 @Attach4,
-@Attach5,
+@OperId,
+@CreateTime,
+@IsImage,
+@IsVideo,
+@IsAttach,
+@IsClass,
+@IsLearning,
+@IsText,
+@ViewCount,
+@ReviewId,
+@CanStudy,
+@ImageUrl,
+@IsExternal,
+@ExternalUrl,
+@NewsType,
+@AttachName1,
+@AttachName2,
+@AttachName3,
+@AttachName4);
+
+
+
+", mod);
+
+        }
+
+        public int ImportNews(List<TbNews> mod)
+        {
+
+
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_news`
+(`OrgId`,
+`NewsId`,
+`ShortDesc`,
+`Title`,
+`HtmlContent`,
+`Author`,
+`Source`,
+`Module`,
+`Status`,
+`BeginTime`,
+`EndTime`,
+`TestId`,
+`Attach1`,
+`Attach2`,
+`Attach3`,
+`Attach4`,
+`OperId`,
+`CreateTime`,
+`IsImage`,
+`IsVideo`,
+`IsAttach`,
+`IsClass`,
+`IsLearning`,
+`IsText`,
+`ViewCount`,
+`ReviewId`,
+`CanStudy`,
+`ImageUrl`,
+`IsExternal`,
+`ExternalUrl`,
+`NewsType`,
+`AttachName1`,
+`AttachName2`,
+`AttachName3`,
+`AttachName4`)
+VALUES
+(@OrgId,
+@NewsId,
+@ShortDesc,
+@Title,
+@HtmlContent,
+@Author,
+@Source,
+@Module,
+@Status,
+@BeginTime,
+@EndTime,
+@TestId,
+@Attach1,
+@Attach2,
+@Attach3,
+@Attach4,
 @OperId,
 @CreateTime,
 @IsImage,
@@ -268,6 +366,7 @@ VALUES
 
 
 ", mod);
+
 
         }
     }

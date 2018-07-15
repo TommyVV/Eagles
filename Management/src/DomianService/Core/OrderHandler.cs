@@ -32,7 +32,7 @@ namespace Eagles.DomainService.Core
 
 
 
-            if (requset.OrderInfo.Count > 0 )
+            if (requset.OrderInfo.Count > 0)
             {
                 var mod = requset.OrderInfo.Select(x => new TbOrder
                 {
@@ -79,8 +79,8 @@ namespace Eagles.DomainService.Core
                 Count = detail.Count,
                 District = detail.District,
                 Province = detail.Province,
-                Score=detail.Score,
-                OrderStatus=detail.OrderStatus
+                Score = detail.Score,
+                OrderStatus = detail.OrderStatus
             };
             return response;
         }
@@ -100,7 +100,8 @@ namespace Eagles.DomainService.Core
                 OrderId = x.OrderId,
                 GoodsName = x.ProdName,
                 PlaceTime = x.CreateTime.ToString("yyyy-MM-dd"),
-                OrderStatus=x.OrderStatus
+                OrderStatus = x.OrderStatus,
+                ExpressId = x.ExpressId
             }).ToList();
             return response;
         }

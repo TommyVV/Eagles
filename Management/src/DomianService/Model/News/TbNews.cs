@@ -147,5 +147,8 @@ namespace Eagles.DomainService.Model.News
         
         public int NewsType { get; set; }
 
+
+
+
     }
 }

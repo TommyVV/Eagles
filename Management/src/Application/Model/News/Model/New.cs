@@ -55,9 +55,9 @@ namespace Eagles.Application.Model.News.Model
         /// </summary>
         public  string UserName { get; set; }
 
-        /// <summary>
-        /// 机构id
-        /// </summary>
-        public int OrgId { get; set; }
+        ///// <summary>
+        ///// 机构id
+        ///// </summary>
+        //public int OrgId { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace Eagles.DomainService.Core
         public GetOperatorDetailResponse GetOperDetail(GetOperatorDetailRequset requset)
         {
             var response = new GetOperatorDetailResponse();
-            TbOper detail = dataAccess.GetOperDetail(requset);
+            TbOper detail = dataAccess.GetOperDetail(Convert.ToInt32(requset.OperId));
 
             if (detail == null) throw new TransactionException("M01","无业务数据");
 

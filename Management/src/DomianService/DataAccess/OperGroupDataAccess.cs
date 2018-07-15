@@ -133,7 +133,7 @@ FROM `eagles`.`tb_oper_group`
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-            if (requset.OrgId > 0)
+            if (requset.GroupId > 0)
             {
                 parameter.Append(" and  GroupId = @GroupId ");
                 dynamicParams.Add("GroupId", requset.GroupId);
@@ -147,7 +147,7 @@ FROM `eagles`.`tb_oper_group`
     `tb_authority`.`OperId`,
     `tb_authority`.`CreateTime`,
     `tb_authority`.`EditTime`
-FROM `eagles`.`tb_authority`;
+FROM `eagles`.`tb_authority`
   where  1=1  {0}  
  ", parameter);
 

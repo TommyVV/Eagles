@@ -6,6 +6,7 @@ using Eagles.Application.Model.Organization.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
 using Eagles.Base;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Org;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
@@ -61,6 +62,7 @@ namespace Eagles.DomainService.Core
                     //EditTime = now,
                     Logo = requset.Info.Logo,
                     OperId = 0,
+                    
                 };
                 return dataAccess.CreateOrganization(mod) > 0;
 
@@ -93,7 +95,7 @@ namespace Eagles.DomainService.Core
             {
                 Address = x.Address,
                 City = x.City,
-                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                CreateTime = x.CreateTime.FormartDatetime(),
                 District = x.District,
                 OrgId = x.OrgId,
                 OrgName = x.OrgName,
@@ -116,11 +118,14 @@ namespace Eagles.DomainService.Core
             {
                 Address = detail.Address,
                 City = detail.City,
-                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
+                CreateTime = detail.CreateTime.FormartDatetime(),
                 District = detail.District,
                 OrgId = detail.OrgId,
                 OrgName = detail.OrgName,
                 Province = detail.Province,
+                Logo=detail.Logo,
+                EditTime=detail.EditTime,
+                OperId=detail.OperId
             };
             return response;
         }

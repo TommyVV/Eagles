@@ -193,7 +193,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.Info.BranchId,
                     EditTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
-                    HasReward = requset.Info.IsScoreAward ,
+                    HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
@@ -205,14 +205,14 @@ namespace Eagles.DomainService.Core
                     TestId = requset.Info.ExercisesId,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
-                    
+
 
                 };
 
                 int result = dataAccess.EditExercises(info);
 
 
-               
+
 
                 List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
@@ -223,7 +223,7 @@ namespace Eagles.DomainService.Core
 
                 dataAccess.RemoveExercisesRelationship(new RemoveExercisesRequset
                 {
-                    ExercisesId= requset.Info.ExercisesId
+                    ExercisesId = requset.Info.ExercisesId
                 });
                 //创建题目试卷 关系
                 dataAccess.CreateTestQuestionRelationship(list);
@@ -249,7 +249,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.Info.BranchId,
                     CreateTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
-                    HasReward = requset.Info.IsScoreAward ,
+                    HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
@@ -260,7 +260,7 @@ namespace Eagles.DomainService.Core
                     Status = requset.Info.Status,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
-                    
+
                 };
 
                 //得到新增的试卷id
@@ -334,13 +334,13 @@ namespace Eagles.DomainService.Core
             {
                 ExercisesId = info.TestId,
                 ExercisesName = info.TestName,
-                IsScoreAward = info.HasReward ,
+                IsScoreAward = info.HasReward,
                 ExercisesType = info.TestType,
                 PassScore = info.PassScore,
                 SubjectScore = info.QuestionSocre,
                 Status = info.Status,
                 PassAwardScore = info.PassAwardScore,
-               // Content = FormatContent(), //TODO 上传内容格式
+                // Content = FormatContent(), //TODO 上传内容格式
                 SubjectList = subjectList.Select(x => new Subject
                 {
                     Question = x.Question,
@@ -466,7 +466,39 @@ namespace Eagles.DomainService.Core
 
         public bool RemoveOption(RemoveOptionRequset requset)
         {
-           return  dataAccess.RemoveOption(requset)>0;
+            return dataAccess.RemoveOption(requset) > 0;
+        }
+
+        public bool RemoveSubjectInfo(RemoveSubjectInfoRequset requset)
+        {
+            return dataAccess.RemoveTestQuestionRelationshipByQuestionId(requset.QuestionId);
+        }
+
+        public GetSubjectListResponse GetSubjectList(GetSubjectListRequset requset)
+        {
+
+            var response = new GetSubjectListResponse
+            {
+                TotalCount = 0,
+                List = new List<Subject>(),
+            };
+            var list = dataAccess.GetSubjectList(requset, out int toltalcount) ?? new List<TbQuestion>();
+
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
+
+            response.TotalCount = toltalcount;
+            response.List = list.Select(x => new Subject
+            {
+                Question = x.Question,
+                QuestionId = x.QuestionId,
+                Answer = x.AnswerType,
+                Multiple = x.Multiple,
+                MultipleCount = x.MultipleCount,
+                OrgId = x.OrgId
+            }).ToList();
+
+            return response;
+
         }
     }
 }
