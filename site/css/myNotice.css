@@ -13,8 +13,7 @@ html, body {
 		.mescroll{
 		position: fixed;
 		top: 31px;
-		bottom: 0;
-		left: 0;
+		bottom: 10px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
   .myNoticeModal {

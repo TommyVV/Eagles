@@ -4,7 +4,7 @@
   font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
 
 html, body {
-  height: 100%; }
+  min-height: 100%; }
 
 .container {
   height: 100%; }
@@ -15,9 +15,12 @@ html, body {
     height: 100%; } }
 
 @media screen and (min-width: 768px) {
+	.container{width:100%;padding: 0;}
   .signupModal {
+  	width:100%;
+    background: url(../icons/er.jpeg)no-repeat;
     background-color: #fff;
-    height: 100%; } }
+    height: 100%;padding-top:140px;padding-bottom:100px; } }
 
 .signupBox {
   background-color: #f8f8f8; }
