@@ -233,6 +233,7 @@
     <Compile Include="RollImage\Response\GetRollImageResponse.cs" />
     <Compile Include="ScoreRank\Model\ScoreRankInfo.cs" />
     <Compile Include="ScoreRank\Model\ScoreRankInfoDetails.cs" />
+    <Compile Include="ScoreRank\Model\UserScoreTrace.cs" />
     <Compile Include="ScoreRank\Requset\GetScoreRankDetailRequset.cs" />
     <Compile Include="ScoreRank\Requset\GetScoreRankRequset.cs" />
     <Compile Include="ScoreRank\Response\GetScoreRankDetailResponse.cs" />

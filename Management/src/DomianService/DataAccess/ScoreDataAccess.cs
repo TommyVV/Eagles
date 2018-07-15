@@ -139,5 +139,26 @@ FROM `eagles`.`tb_reward_score`  where 1=1  {0}
 
             
         }
+
+        public List<TbUserScoreTrace> GetScoreTrace(int requsetUserId)
+        {
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_user_score_trace`.`OrgId`,
+    `tb_user_score_trace`.`UserId`,
+    `tb_user_score_trace`.`TraceId`,
+    `tb_user_score_trace`.`CreateTime`,
+    `tb_user_score_trace`.`Score`,
+    `tb_user_score_trace`.`RewardsType`,
+    `tb_user_score_trace`.`Comment`,
+    `tb_user_score_trace`.`OriScore`
+FROM `eagles`.`tb_user_score_trace`
+  where UserId=@UserId;
+ ");
+            dynamicParams.Add("UserId", requsetUserId);
+
+            return dbManager.Query<TbUserScoreTrace>(sql.ToString(), dynamicParams);
+        }
     }
 }

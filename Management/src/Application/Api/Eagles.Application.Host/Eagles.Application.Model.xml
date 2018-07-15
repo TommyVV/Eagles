@@ -2121,6 +2121,11 @@
             新闻图片
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.News.Model.ExternalNew.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.News.Model.New">
             <summary>
             新闻信息
@@ -3179,11 +3184,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.EditRollImageRequest.PageId">
-            <summary>
-            页面ID
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.RollImage.Requset.EditRollImageRequest.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
@@ -3254,11 +3254,6 @@
             积分
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UseScore">
-            <summary>
-            用户使用积分
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfo.UserIdentity">
             <summary>
             用户身份
@@ -3282,6 +3277,57 @@
         <member name="P:Eagles.Application.Model.ScoreRank.Model.ScoreRankInfoDetails.OperationType">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.Comment">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.OrgId">
+            <summary>
+            组织id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.OriScore">
+            <summary>
+            原积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.RewardsType">
+             <summary>
+             积分奖励类型;
+            00:发表文章奖励
+            01:文章字数奖励
+            02:文章关键字奖励
+            10:参加活动奖励
+            11:活动分享到支部奖励
+            12:活动分享到组织奖励
+            20:任务完成奖励
+            21:任务分享到支部奖励
+            22:任务分享到组织奖励
+            30:会议文章奖励
+            40:心得体会类型奖励
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.Score">
+            <summary>
+            获得积分
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.TraceId">
+            <summary>
+            流水号
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankDetailRequset">
@@ -3334,11 +3380,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.OperationType">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreSetUpId">
             <summary>
             
@@ -3349,19 +3390,9 @@
             积分奖励值
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Status">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Keyword">
             <summary>
             文章类型 奖励关键字
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreCount">
-            <summary>
-            可获取积分次数
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.LearnTime">

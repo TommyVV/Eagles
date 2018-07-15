@@ -114,7 +114,8 @@ FROM `eagles`.`tb_scroll_image`  where 1=1  {0} ;
             sql.AppendFormat(@" SELECT `tb_scroll_image`.`OrgId`,
                 `tb_scroll_image`.`Id`,
                 `tb_scroll_image`.`PageType`,
-                `tb_scroll_image`.`ImageUrl`
+                `tb_scroll_image`.`ImageUrl`,
+                `tb_scroll_image`.`TargetUrl`
             FROM `eagles`.`tb_scroll_image`  where 1 = 1  {0} order by Id desc limit  @pageStart ,@pageSize
  ", parameter);
 
