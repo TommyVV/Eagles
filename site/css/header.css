@@ -40,24 +40,24 @@
     .img_float img{display: inline-block;width: 87%;height: 1rem;overflow: hidden;}
     .operate{display: none;position:absolute;top:31px;left:0;background: #fff;width:100%;height: auto;}
 .operate ul li { display:inline; }
-.operate ul li .list-item a { /*background:url(../icons/bg1.png) no-repeat 200px 18px;*/ padding-left:30px; text-decoration:none; font-size:14px; color:#555; display:block;  height:28px;  line-height:28px; border-bottom:1px dotted #d2d2d2; }
+.operate ul li .list-item a { /*background:url(../icons/bg1.png) no-repeat 200px 18px;*/ padding-left:8px; text-decoration:none; font-size:14px; color:#999; display:block;  height:28px;  line-height:28px; border-bottom:1px dotted #d2d2d2; }
 .operate ul li a.noline { border-bottom:none; }
 /*.operate ul li a:hover{ color:#8caf00; }*/
 /*.operate ul li a.selected:hover { color:#fff; }*/
 .operate ul li .selected { background-color:#8caf00;  background-position:200px -9px; color:#fff; }
-.operate ul li { border-bottom:1px dotted #d2d2d2; display:inline-block; width:100%; position: relative; min-height:26px; _height:43px; z-index: 10; zoom:1 }
-.operate ul li h4 { cursor:pointer;line-height:28px;margin:4px 0; /*background:url(../icons/bg3.png) no-repeat 200px 18px; */padding-left:30px; text-decoration:none; font-size:14px; color:#555; display:block; font-weight:normal; }
+.operate ul li { border-bottom:1px dotted #d2d2d2; display:inline-block; width:87%; position: relative;left:18px; min-height:26px; _height:43px; z-index: 10; zoom:1 }
+.operate ul li h4 { cursor:pointer;line-height:28px;margin:4px 0; /*background:url(../icons/bg3.png) no-repeat 200px 18px; */padding-left:2px; text-decoration:none; font-size:14px; color:#555; display:block; font-weight:normal; }
 .operate ul li.noline { border-bottom:none; }
 /*.operate ul li h4:hover { color:#8caf00; text-decoration:underline; }*/
-.operate ul li.selected h4 { background:url(../icons/class_down@2x.png) no-repeat 31% center;border-bottom:1px dotted #d2d2d2; }
+.operate ul li.selected h4 {border-bottom:1px dotted #d2d2d2; }
 .operate ul li h4 a {color: #555; }
 .operate ul li .on a { color:#8caf00; font-weight:bold; }
 .operate ul li .none{display: none;}
 /*.operate ul li a:hover { color:#8caf00; text-decoration:underline; }*/
 .bg-color { background-color:#8caf00; }
-.operate li .list-item { padding:5px 0 0 0; position:relative; zoom:1 }
+.operate li .list-item { position:relative; zoom:1 }
 .operate li .list-item p { padding-left:8px; /*background:url(../icons/ico_li.png) no-repeat 60px center;*/margin-bottom:0; }
-.operate li .list-item a { background:none;  border:none; color: #333333; display:block; height:32px; line-height: 32px; margin: 0 -1px 0 1px; padding-left: 60px;  position: relative; text-decoration: none; font-size:12px; }
+.operate li .list-item a { background:none;  border:none; color: #333333; display:block; height:32px; line-height: 32px; margin: 0 -1px 0 1px; padding-left: 8px;  position: relative; text-decoration: none; font-size:12px; }
 .left-sider .operate { border:1px solid #eaeaea;  zoom:1 }
 .left-sider .ser-online a { /*background:url(../icons/bg_ser_online.jpg) no-repeat 0 0; */margin-top:10px; height:75px; border:1px solid #eaeaea; display:block; }
 /* banner pc新加的样式*/
@@ -192,13 +192,15 @@
 
 }
 @media screen and (min-width: 768px) {
+	#top-nav{position: relative;z-index: 99;}
+	
 	.navbar-fixed-top,#mobilenav{display: none;}
 	.pc-nav {
   width: 100%;
   border: 1px solid #E0E0E0;
   height: 90px;
   font-size: 16px;
-  margin-bottom: 12px; }
+   }
   .pc-nav-wrap {
   	background: #fff;
     display: flex;

@@ -120,17 +120,22 @@
     margin-top: 0.42667rem; }
     .lb_imgb img{display: inline-block;width:24px;height: 24px;margin-right:8px;}
     @media screen and (max-width: 768px) {
+    	.main_content .list-box .list-body{padding-top:64px}
     			.mescroll{
 		position: fixed;
-		top: 71px;
-		bottom: 0;
+		top: 10px;
+		bottom: 10px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
     }
     @media screen and (min-width: 768px) {
+    	.pc-nav{margin-bottom: 0;}
+    	.main_content .list-box .list-body{padding-top:138px}
     	.mescroll{
+    		
+    		padding-top:100px;
 		position: fixed;
-		top: 160px;
+		top: 10px;
 		bottom: 0;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/}
 

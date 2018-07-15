@@ -13,8 +13,10 @@ import {
 import { connect } from "react-redux";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
+import { typeMap } from "../../../constants/config/appconfig";
+import { getInfoById, createOrEdit } from "../../../services/exerciseService";
+import { saveInfo, clearInfo } from "../../../actions/exAction";
 import "./style.less";
-import WrappedDynamicFieldSet from "../../../components/Common/AddField/AddEx";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -25,7 +27,7 @@ const Option = Select.Option;
       user: state.userReducer
     };
   },
-  {}
+  { saveInfo }
 )
 class Base extends Component {
   constructor(props) {
@@ -85,22 +87,25 @@ class Base extends Component {
       [attr]: false
     });
   };
-
+  change = (attr, value) => {
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      Info: {
+        ...values,
+        [attr]: value
+      }
+    });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {
-      showDemandList,
-      basicData,
-      membersData,
-      showMemberList
-    } = this.state;
-    console.log("members - ", this.props);
+    const { Info } = this.props.info;
     const formItemLayout = {
       labelCol: {
         xl: { span: 2 }
       },
       wrapperCol: {
-        xl: { span: 12 }
+        xl: { span: 6 }
       }
     };
     const tailFormItemLayout = {
@@ -115,37 +120,42 @@ class Base extends Component {
       <div className="create_pro_form">
         <Form onSubmit={this.handleSubmit}>
           <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-            {getFieldDecorator("projectId")(<Input />)}
+            {getFieldDecorator("QuestionId")(<Input />)}
           </FormItem>
           <FormItem {...formItemLayout} label="题目名称">
-            {getFieldDecorator("projectName", {
+            {getFieldDecorator("Question", {
               rules: [
                 {
                   required: true,
-                  message: "必填，20字以内!",
-                  pattern: /^(?!.{21}|\s*$)/g
+                  message: "必填，请输入题目名称"
                 }
               ]
-            })(<Input placeholder="必填，20字以内" />)}
+            })(<Input placeholder="必填，请输入题目名称" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="类型">
-            {getFieldDecorator("exType")(
-              <Select>
+          <FormItem {...formItemLayout} label="题目类型">
+            {getFieldDecorator("Multiple")(
+              <Select onChange={this.change.bind(this, "Multiple")}>
                 <Option value="0">单选</Option>
-                <Option value="1">复选</Option>
+                <Option value="1">多选</Option>
               </Select>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="">
-            {getFieldDecorator("projectName", {
-              rules: [
-                {
-                  required: true,
-                  message: "必填，20字以内!",
-                  pattern: /^(?!.{21}|\s*$)/g
-                }
-              ]
-            })(<WrappedDynamicFieldSet />)}
+          <FormItem
+            {...formItemLayout}
+            label="多选数量"
+            style={{ display: Info.Multiple == "1" ? "block" : "none" }}
+          >
+            {getFieldDecorator("MultipleCount")(
+              <Input placeholder="请输入多选数量" />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="是否投票">
+            {getFieldDecorator("isRight")(
+              <Select onChange={this.change.bind(this, "isRight")}>
+                <Option value="0">否</Option>
+                <Option value="1">是</Option>
+              </Select>
+            )}
           </FormItem>
           <FormItem>
             <Row type="flex" justify="center" className="edit" gutter={24}>
@@ -155,13 +165,13 @@ class Base extends Component {
                   className="btn btn--primary"
                   type="primary"
                 >
-                  {this.props.project.projectId === "" ? "新建" : "保存"}
+                  {this.props.info.Info.QuestionId ? "保存" : "新建"}
                 </Button>
               </Col>
               <Col>
                 <Button
                   className="btn"
-                  onClick={() => hashHistory.replace("/project")}
+                  onClick={() => hashHistory.replace("/exerciselist")}
                 >
                   取消
                 </Button>
@@ -177,16 +187,19 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    const { Info } = props.info;
     return {
-      projectId: Form.createFormField({
-        value: project.basicData ? project.basicData.id : ""
+      QuestionId: Form.createFormField({
+        value: Info.QuestionId
       }),
-      exType: Form.createFormField({
-        value: 0
+      Multiple: Form.createFormField({
+        value: Info.Multiple ? Info.Multiple + "" : "0"
       }),
-      projectName: Form.createFormField({
-        value: project.basicData ? project.basicData.projectName : ""
+      MultipleCount: Form.createFormField({
+        value: Info.MultipleCount
+      }),
+      isRight: Form.createFormField({
+        value: Info.isRight ? Info.isRight + "" : "0"
       })
     };
   }
@@ -195,10 +208,11 @@ const FormMap = Form.create({
 @connect(
   state => {
     return {
-      user: state.userReducer
+      user: state.userReducer,
+      exReducer: state.exReducer
     };
   },
-  {  }
+  { clearInfo }
 )
 class QuestionDetail extends Component {
   constructor(props) {
@@ -207,57 +221,28 @@ class QuestionDetail extends Component {
       projectDetails: {} //项目详情
     };
   }
-
   componentWillMount() {
-    // let { projectId } = this.props.params;
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
-  }
-
-  componentWillUnmount() {
-    this.props.clearProjectInfo();
+    let { id } = this.props.params;
+    if (id) {
+      this.getInfo(id); //拿详情
+    } else {
+      this.props.clearInfo();
+    }
   }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async id => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getInfoById();
+      this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap info={this.props.exReducer} />
       </Nav>
     );
   }

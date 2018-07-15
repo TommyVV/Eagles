@@ -264,8 +264,6 @@ class SendList extends React.Component {
   handleOk = async () => {
     try {
       const { currentId, fields } = this.state;
-      debugger;
-
       let { Code } = await edit({
         OrderInfo: [
           {
