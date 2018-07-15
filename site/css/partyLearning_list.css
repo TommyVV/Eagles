@@ -120,13 +120,14 @@
     margin-top: 0.42667rem; }
     .lb_imgb img{display: inline-block;width:24px;height: 24px;margin-right:8px;}
     @media screen and (max-width: 768px) {
-    	.main_content .list-box .list-body{padding-top:64px}
+    	.main_content .list-box .list-body{padding-top:76px}
     			.mescroll{
 		position: fixed;
 		top: 10px;
 		bottom: 10px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
+	.dropdown-menu{margin-top: 0;padding:0}
     }
     @media screen and (min-width: 768px) {
     	.pc-nav{margin-bottom: 0;}

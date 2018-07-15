@@ -59,7 +59,7 @@ $('.btn-signup').on('click', function(e) {
 var timer;
 $(".btn-cap").click(function() {
 	var phone = $('#inputUser').val();
-	if(phone == "" || phone == undefined || phone == null) {
+	if(phone == "" || phone == undefined || phone == null||phone.length != 11) {
 		bootoast({
 			message: '请输入有效的手机号！',
 			type: 'warning',
@@ -80,21 +80,23 @@ $(".btn-cap").click(function() {
 			if(res.Code == 00) {
 				$('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
 				$('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
-				var time = 60
-				$('.btn-cap').text(time);
+				var time = 5
+				$('.btn-cap').text(''+time+'s重新获取');
+				
 				$('.btn-cap').css("background","#D6D6D6")
+				$(this).attr("disabled", "disabled");
 				timer = setInterval(function() {
 					time--;
-					$('.btn-cap').text(time)
+					$('.btn-cap').text(''+time+'s重新获取');
 					if(time <= 0) {
 						clearInterval(timer);
-						time = 60;
+						time = 5;
 						$(".btn-cap").text('获取验证码');
 						$('.btn-cap').css("background","#13AEFF")
 						$(".btn-cap").removeAttr("disabled");
 					}
 				}, 1000)
-				$('.btn-cap').removeAttr("disabled");
+				//$('.btn-cap').removeAttr("disabled");
 				return
 			} else {
 				bootoast({
