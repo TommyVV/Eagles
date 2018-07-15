@@ -38,8 +38,8 @@ namespace Eagles.DomainService.Core
                     Id = requset.Info.Id,
                     ImageUrl = requset.Info.Img,
                     OrgId = requset.OrgId,
-                    PageType = requset.PageId,
-                    TargetUrl=requset.Info.TargetUrl
+                    PageType = requset.Info.PageId,
+                    TargetUrl =requset.Info.TargetUrl
                 };
 
                 return dataAccess.EditRollImages(mod)>0;
@@ -53,7 +53,7 @@ namespace Eagles.DomainService.Core
                    
                     ImageUrl = requset.Info.Img,
                     OrgId = requset.OrgId,
-                    PageType = requset.PageId,
+                    PageType = requset.Info.PageId,
                     TargetUrl = requset.Info.TargetUrl
                 };
 

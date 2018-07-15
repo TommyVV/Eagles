@@ -5,6 +5,7 @@
 			bottom: 0;
 			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 		}
+		.conmid_rs{width: 100%;min-height: 100%;overflow:hidden;background: #f8f8f8;}
   #pc-header {
     display: none; }
   #pc-footer {
@@ -14,12 +15,13 @@
   .dj-container {
     padding: 0px 17.5px; }
   .record-item {
+  	margin-bottom:10px;
     width: 100%;
     background-color: white;
     height: 6.4rem;
     position: relative;
-    border-top: 0.85333rem solid #f8f8f8;
-    padding: 0.64rem; }
+    /*border-top: 0.85333rem solid #f8f8f8;*/
+    padding: 0.64rem 0.64rem 0 0.64rem; }
     .record-item .orderNum {
       display: none; }
     .record-item img {
@@ -45,12 +47,12 @@
 
 @media screen and (min-width: 768px) {
 	.conmid_rs{
-		width: 100%;min-height: 200px;height: auto;
+		width: 100%;min-height: 360px;height: auto;
 	}
 	.mescroll{
 			position: fixed;
 			top: 135px;
-			bottom: 0;
+			bottom: 246px;
 			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 		}
   .dj-title {

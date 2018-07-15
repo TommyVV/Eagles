@@ -1,4 +1,5 @@
-﻿using Eagles.Application.Model.ScoreRank.Model;
+﻿using System.Collections.Generic;
+using Eagles.Application.Model.ScoreRank.Model;
 
 namespace Eagles.Application.Model.ScoreRank.Response
 {
@@ -10,6 +11,6 @@ namespace Eagles.Application.Model.ScoreRank.Response
         /// <summary>
         /// 
         /// </summary>
-        public ScoreRankInfoDetails Info { get; set; }
+        public List<UserScoreTrace> Info { get; set; }
     }
 }

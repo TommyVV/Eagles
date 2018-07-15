@@ -116,6 +116,7 @@ html, body {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 90;
   width: 100%;
 }
 .mod_select .select_box {
@@ -147,11 +148,10 @@ html, body {
 	z-index:99;
   display: none;
   position: absolute;
-  top: 40px;
-  left: -2px;
+  top: 36px;
+  left: 0px;
   width: 100%;
   background-color: #fff;
-  border-bottom: 1px solid #ccc;
   border-top: 0;
 }
 .mod_select .select_box .option li {
@@ -161,5 +161,4 @@ html, body {
   font-size: 16px;
   height: 40px;line-height: 40px;
   cursor: pointer;
-  margin-bottom:10px;
 }

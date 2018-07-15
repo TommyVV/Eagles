@@ -32,7 +32,7 @@ function exchange(appId) {
 				for(var i = 0; i < data.ProductList.length; i++) {
 					exchange += '<div class="goods-item"><img src="' + data.ProductList[i].ProductImageUrl + '" alt="">' +
 						'<div class="item-title">' + data.ProductList[i].ProductName + '</div>' +
-						'<div class="item-point">' + data.ProductList[i].ProductScore + '</div>' +
+						'<div class="item-point">积分:' + data.ProductList[i].ProductScore + '</div>' +
 						'<div class="item-btn" urls="' + data.ProductList[i].ProductId + '">去看看</div>' +
 						'</div>';
 				}

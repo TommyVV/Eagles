@@ -56,17 +56,24 @@ function scrollimg(moduleType,token,appId) {
 				var limobile = ''; //移动端标点
 				var divs = ''; //移动端图片
 				var pclicon = '';
-				for(var i = 0; i < data.ImageList.length; i++) {
-					limobile += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>';
-					divs += '<div class="item"><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" alt=""></a><div class="carousel-caption"></div></div>';
-					pclicon += '<li><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" /> </a></li>'
+				if(data.ImageList!=null){
+					for(var i = 0; i < data.ImageList.length; i++) {
+							limobile += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>';
+							divs += '<div class="item"><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" alt=""></a><div class="carousel-caption"></div></div>';
+							pclicon += '<li><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" /> </a></li>'
+						}
+						$('#carousel-example-generic .carousel-indicators').append(limobile);
+						$('#carousel-example-generic .carousel-inner').append(divs);
+						$('#focus_m ul').append(pclicon);
+						focusRun.init();
+						$('#carousel-example-generic .carousel-indicators li:eq(0)').addClass('active');
+						$('.item:eq(0)').addClass('active');
+				}else{
+					$('.pc-wrap-banner,.carousel-box').hide()
 				}
-				$('#carousel-example-generic .carousel-indicators').append(limobile);
-				$('#carousel-example-generic .carousel-inner').append(divs);
-				$('#focus_m ul').append(pclicon);
-				focusRun.init();
-				$('#carousel-example-generic .carousel-indicators li:eq(0)').addClass('active');
-				$('.item:eq(0)').addClass('active');
+				
+			}else{
+				$('.pc-wrap-banner,.carousel-box').hide()
 			}
 		}
 	});

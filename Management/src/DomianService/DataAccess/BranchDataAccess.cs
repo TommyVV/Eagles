@@ -89,7 +89,7 @@ SET
 `BranchName` =@BranchName,
 `BranchDesc` =@BranchDesc,
 `CreateTime` =@CreateTime
-WHERE `
+WHERE 
 `BranchId` =@BranchId
 
 ", mod);

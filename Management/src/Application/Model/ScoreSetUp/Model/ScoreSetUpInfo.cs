@@ -12,7 +12,7 @@ namespace Eagles.Application.Model.ScoreSetUp.Model
         /// <summary>
         /// 
         /// </summary>
-        public OperationType OperationType { get; set; }
+       // public OperationType OperationType { get; set; }
 
         /// <summary>
         /// 
@@ -28,7 +28,7 @@ namespace Eagles.Application.Model.ScoreSetUp.Model
         /// <summary>
         /// 
         /// </summary>
-        public Status Status { get; set; }
+    //    public Status Status { get; set; }
 
         /// <summary>
         /// 文章类型 奖励关键字
@@ -38,7 +38,7 @@ namespace Eagles.Application.Model.ScoreSetUp.Model
         /// <summary>
         /// 可获取积分次数
         /// </summary>
-        public int ScoreCount { get; set; }
+     //   public int ScoreCount { get; set; }
 
         /// <summary>
         /// 学习时间
