@@ -106,7 +106,8 @@
       width: 16px;
       line-height: 1; }
     .footer .content .answer .demo--radio:checked + .demo--radioInput:after {
-      background-color: #57ad68;
+      background-color: #E51A1A;
+      border:1px solid #E51A1A;
       border-radius: 100%;
       content: "";
       display: inline-block;

@@ -51,6 +51,13 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime, token, appId) {
 					});
 					//刷新当前页面,为了清空选中的答案
 					window.location.reload();
+				}else{
+						bootoast({
+						message: '试卷提交失败,请稍后再试',
+						type: 'danger',
+						position: 'toast-top-center',
+						timeout: 2
+					});
 				}
 
 			}
@@ -91,7 +98,10 @@ function getNewsDetail(newsId, token, appId) {
 				personBoxText = '<span>' + data.ViewCount + '</span>'
 				//添加附件
 				for(var j = 0; j < data.Attach.length; j++) {
-					filesText += ' <p><span class="glyphicon glyphicon-file" aria-hidden="true"></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>'
+
+					if(data.Attach[j].AttachName) {
+						filesText += ' <p><span class="glyphicon glyphicon-file" aria-hidden="true"></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
+					}
 				}
 				//头部内容
 				$('.header .title').append(data.Title); //标题
@@ -161,7 +171,7 @@ function getNewsTest(testId, token, appId) {
 							}
 						} else if(data[i].AnswerList[j].AnswerType == 1) { //选项是文本框
 							//写文本框的代码
-							answerLabel += '<label class="demo--label">' + data[i].AnswerList[j].Answer + ' <input class="demo-text" style="width:100px;display:inline-block;" type="text"  AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + ' name="question-' + data[i].QuestionId + ' " /></label>';
+							answerLabel += '<label class="demo--label">' + data[i].AnswerList[j].Answer + ' <input class="demo-text" style="width:100px;display:inline-block;border:1px solid #ccc;" type="text"  AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + ' name="question-' + data[i].QuestionId + ' " /></label>';
 						}
 					}
 					question += answerLabel + '</div></div>';
@@ -234,20 +244,21 @@ function getTestPaperAnswerJson() {
 		//获取答案中的自定义文本输入框框
 		var textAnswer = $(questions[i]).children('.answer').find('input[type=text]');
 		if(textAnswer) {
-			if(textAnswer.val() == '') { //自定义文本框没有作答,弹出提示
-				bootoast({
-					message: '有题目的自定义文本框没有填写内容,请填写后再提交!',
-					type: 'warning',
-					position: 'toast-top-center',
-					timeout: 2
-				});
-				return;
+			if(textAnswer.val() == '') { //自定义文本框没有作答,弹出提示, 需求不提示
+				//				bootoast({
+				//					message: '有题目的自定义文本框没有填写内容,请填写后再提交!',
+				//					type: 'warning',
+				//					position: 'toast-top-center',
+				//					timeout: 2
+				//				});
+				//				return;
+			} else { //不为空
+				var tempAnswers1 = {}; //存储临时的答案ID
+				tempAnswers1.AnswerId = textAnswer.attr('answerid'); //文本框答案ID
+				tempAnswers1.CustomizeAnswer = textAnswer.val(); //文本框内
+				if(JSON.stringify(tempAnswers1) != "{}") //判断对象不为空时添加 避免添加空对象
+					question.Answers.push(tempAnswers1);
 			}
-			var tempAnswers1 = {}; //存储临时的答案ID
-			tempAnswers1.AnswerId = textAnswer.attr('answerid'); //文本框答案ID
-			tempAnswers1.CustomizeAnswer = textAnswer.val(); //文本框内
-			if(JSON.stringify(tempAnswers1) != "{}") //判断对象不为空时添加 避免添加空对象
-				question.Answers.push(tempAnswers1);
 		}
 		if(multiple == 0) { //单选
 			var tempAnswers2 = {}; //存储临时的答案ID
@@ -283,7 +294,7 @@ function getTestPaperAnswerJson() {
 
 				if(answerCheckboxs.length > multiplecount) {
 					bootoast({
-						message: '第'+ (i+1) +'题最多只能选择'+ multiplecount +'个答案,请修改后在提交!',
+						message: '第' + (i + 1) + '题最多只能选择' + multiplecount + '个答案,请修改后在提交!',
 						type: 'warning',
 						position: 'toast-top-center',
 						timeout: 2

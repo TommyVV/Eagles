@@ -20,6 +20,8 @@ function rank(token, appId) {
 			$('#t_bodys,#t_bodystwo').html('')
 			var data = res.Result;
 			if(res.Code == 00) {
+				console.info('22');
+
 				var rankdy = '';
 				var rankzb = '';
 				if(data.UserRank != '' && data.UserRank != null)
@@ -51,38 +53,40 @@ function rank(token, appId) {
 						}
 
 					}
-			}
-			if(data.BranchRank != '' && data.BranchRank != null)
-				for(var i = 0; i < data.BranchRank.length; i++) {
-					var imgs = '';
-					if(data.BranchRank[i].Rank == 1) {
-						imgs = '<img src="icons/gold@2x.png" alt="">';
-					} else if(data.BranchRank[i].Rank == 2) {
-						imgs = '<img src="icons/silver@2x.png" alt="">';
-					} else if(data.BranchRank[i].Rank == 3) {
-						imgs = '<img src="icons/copper@2x.png" alt="">';
-					}
 
-					if(i < 3) {
-						rankzb += '<tr class="list">' +
-							'<td>' + imgs + '</td>' +
-							'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
-							'<td>' + data.BranchRank[i].UserCount + '</td>' +
-							'<td>' + data.BranchRank[i].Score + '</td>' +
-							'</tr>';
-					} else if(i >= 3) {
-						rankzb += '<tr class="list">' +
-							'<td>' + data.BranchRank[i].Rank + '</td>' +
-							'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
-							'<td>' + data.BranchRank[i].UserCount + '</td>' +
-							'<td>' + data.BranchRank[i].Score + '</td>' +
-							'</tr>';
-					}
+				if(data.BranchRank != '' && data.BranchRank != null) {
+					for(var i = 0; i < data.BranchRank.length; i++) {
+						var imgs = '';
+						if(data.BranchRank[i].Rank == 1) {
+							imgs = '<img src="icons/gold@2x.png" alt="">';
+						} else if(data.BranchRank[i].Rank == 2) {
+							imgs = '<img src="icons/silver@2x.png" alt="">';
+						} else if(data.BranchRank[i].Rank == 3) {
+							imgs = '<img src="icons/copper@2x.png" alt="">';
+						}
 
+						if(i < 3) {
+							rankzb += '<tr class="list">' +
+								'<td>' + imgs + '</td>' +
+								'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
+								'<td>' + data.BranchRank[i].UserCount + '</td>' +
+								'<td>' + data.BranchRank[i].Score + '</td>' +
+								'</tr>';
+						} else if(i >= 3) {
+							rankzb += '<tr class="list">' +
+								'<td>' + data.BranchRank[i].Rank + '</td>' +
+								'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
+								'<td>' + data.BranchRank[i].UserCount + '</td>' +
+								'<td>' + data.BranchRank[i].Score + '</td>' +
+								'</tr>';
+						}
+
+					}
 				}
 
-			$('#t_bodys').append(rankdy); //文章列表
-			$('#t_bodystwo').append(rankzb); //文章列表
+				$('#t_bodys').append(rankdy); //文章列表
+				$('#t_bodystwo').append(rankzb); //文章列表
+			}
 		}
 
 	})
