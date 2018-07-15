@@ -14,8 +14,8 @@ namespace Eagles.Application.Model.Export
         public string ExportSql { get; set; }
 
         /// <summary>
-        /// 列名
+        /// 列名(以,隔开)
         /// </summary>
-        public List<string> ColumnName { get; set; }
+        public string ColumnName { get; set; }
     }
 }

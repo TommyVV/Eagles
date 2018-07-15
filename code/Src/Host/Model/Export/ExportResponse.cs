@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.Export
         /// <summary>
         /// 生成路径
         /// </summary>
-        public string FileUrl { get; set; }
+        public string ExportFilePath { get; set; }
     }
 }
