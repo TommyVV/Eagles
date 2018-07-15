@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DataBaseConfiguration.cs" />
     <Compile Include="EaglesConfig.cs" />
+    <Compile Include="MenuConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

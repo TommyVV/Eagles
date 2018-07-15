@@ -49,6 +49,7 @@
     <Compile Include="Authority\TbAuthority.cs" />
     <Compile Include="Config\DataBaseConfig.cs" />
     <Compile Include="Config\EaglesConfiguration.cs" />
+    <Compile Include="Config\FunctionMenu.cs" />
     <Compile Include="Config\SmsConfig.cs" />
     <Compile Include="Exercises\TbQuestAnswer.cs" />
     <Compile Include="Exercises\TbQuestEx.cs" />
