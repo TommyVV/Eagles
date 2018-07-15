@@ -7,7 +7,7 @@ namespace Eagles.Base.Configuration.Implement
 {
     public class ConfigurationManager : IConfigurationManager
     {
-        public T GetConfiguration<T>()
+        public T GetConfiguration<T>() where T:class 
         {
             var path=GetConfigPath<T>();
             var realpath = AppDomain.CurrentDomain.BaseDirectory+path;
@@ -50,5 +50,7 @@ namespace Eagles.Base.Configuration.Implement
             }
 
         }
+
+      
     }
 }

@@ -10,6 +10,7 @@ using Eagles.Interface.DataAccess;
 using Ealges.DomianService.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Eagles.Base.Cache;
 using Eagles.Base.Cache.Implement;
 
@@ -22,10 +23,10 @@ namespace Eagles.Application.Host.Common
     {
         private static readonly ILogger Logger = new Logger();
         private static readonly IJsonSerialize json = new JsonSerialize();
-        private static readonly IConfigurationManager configuration = new Base.Configuration.Implement.ConfigurationManager();
+        private static readonly IConfigurationManager configuration = new Eagles.Base.Configuration.Implement.ConfigurationManager();
         private static readonly IDbManager dbManager = new DbManager(configuration, Logger);
         private static readonly ILoginDataAccess dataAccess = new LoginDataAccess(dbManager);
-        private static readonly ICacheHelper cacheHelper=new CacheHelper();
+        private static readonly ICacheHelper cacheHelper = new CacheHelper();
 
         /// <summary>
         /// 逻辑调用执行器
@@ -36,7 +37,7 @@ namespace Eagles.Application.Host.Common
         /// <param name="run">执行</param>
         /// <param name="needCheckToken"></param>
         /// <returns>返回格式化数据</returns>
-        public static ResponseFormat<TResult> Runing<TResult, T>(T data, Func<T, TResult> run,bool needCheckToken=true)
+        public static ResponseFormat<TResult> Runing<TResult, T>(T data, Func<T, TResult> run, bool needCheckToken = true)
         {
             try
             {
@@ -54,10 +55,10 @@ namespace Eagles.Application.Host.Common
                     {
                         throw new TransactionException("500", "token校验失败");
                     }
-                    cacheHelper.SetData(token.ToString(),info);
+                    cacheHelper.SetData(token.ToString(), info);
 
                 }
-              
+
                 // var aa = (object)run.Target;
                 return new ResponseFormat<TResult>(run.Invoke(data));
             }
@@ -81,7 +82,7 @@ namespace Eagles.Application.Host.Common
         /// <param name="run"></param>
         /// <returns></returns>
 
-        public static ResponseFormat<T> Runing<T>( Func<T> run)
+        public static ResponseFormat<T> Runing<T>(Func<T> run)
         {
             try
             {

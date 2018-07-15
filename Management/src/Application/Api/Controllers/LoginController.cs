@@ -3,9 +3,6 @@ using Eagles.Application.Host.Common;
 using Eagles.Application.Model.Login.Model;
 using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Login.Response;
-using Eagles.Base;
-using Eagles.Base.Cache;
-using Eagles.Interface.Configuration;
 using Eagles.Interface.Core;
 
 namespace Eagles.Application.Host.Controllers
@@ -17,12 +14,9 @@ namespace Eagles.Application.Host.Controllers
     {
         private readonly ILoginHandler testHandler;
 
-        private readonly IMenuConfiguration config;
-
-        public LoginController(ILoginHandler testHandler, IMenuConfiguration config)
+        public LoginController(ILoginHandler testHandler)
         {
             this.testHandler = testHandler;
-            this.config = config;
         }
 
 
@@ -34,7 +28,6 @@ namespace Eagles.Application.Host.Controllers
         [HttpPost]
         public ResponseFormat<LoginResponse> Login(LoginRequset requset)
         {
-            var a = config.FunctionMenu;
             return ApiActuator.Runing(() => testHandler.Login(requset));
         }
 

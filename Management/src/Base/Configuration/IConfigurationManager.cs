@@ -2,6 +2,6 @@
 {
     public interface IConfigurationManager:IInterfaceBase
     {
-        T GetConfiguration<T>();
+        T GetConfiguration<T>() where T : class;
     }
 }
