@@ -81,8 +81,8 @@ var appId=getRequest('appId');
         window.location.href = 'publishTask.html?appId='+appId+'&type=1'
     });
     //我的任务
-    $("#task,.fb_one").click(function () {
-        window.location.href = "task.html?appId=10000000"
+    $("#task").click(function () {
+        window.location.href = 'task.html?appId='+appId+''
     });
 minedel(token,appId);
 function minedel(token,appId){
