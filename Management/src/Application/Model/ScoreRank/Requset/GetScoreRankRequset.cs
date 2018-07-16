@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class GetScoreRankRequset : RequestBase
+    public class GetScoreRankRequset : OrgListRequestBase
     {
 
         /// <summary>

@@ -74,20 +74,21 @@ FROM `eagles`.`tb_user_info`
 
         public int EditUserInfo(TbUserInfo info)
         {
-            return dbManager.Excuted(@"UPDATE `eagles`.`tb_user_info`
+            return dbManager.Excuted(@"
+UPDATE `eagles`.`tb_user_info`
 SET
 `OrgId` = @OrgId,
 `BranchId` = @BranchId,
 `Password` = @Password,
 `Name` = @Name,
 `Sex` = @Sex,
-`Ethinc` = @Ethinc,
+`Ethnic` = @Ethnic,
 `Birthday` = @Birthday,
 `Origin` = @Origin,
 `OriginAddress` = @OriginAddress,
 `Phone` = @Phone,
 `IdNumber` = @IdNumber,
-`Eduction` = @Eduction,
+`Education` = @Education,
 `School` = @School,
 `Provice` = @Provice,
 `City` = @City,
@@ -109,7 +110,9 @@ SET
 `IsCustomer` = @IsCustomer,
 `Score` = @Score,
 `IsLeader` = @IsLeader
-WHERE `UserId` = @UserId;
+WHERE 
+`UserId` = @UserId
+
 ", info);
             
         }
@@ -123,13 +126,13 @@ WHERE `UserId` = @UserId;
 `Password`,
 `Name`,
 `Sex`,
-`Ethinc`,
+`Ethnic`,
 `Birthday`,
 `Origin`,
 `OriginAddress`,
 `Phone`,
 `IdNumber`,
-`Eduction`,
+`Education`,
 `School`,
 `Provice`,
 `City`,
@@ -158,13 +161,13 @@ VALUES
 @Password,
 @Name,
 @Sex,
-@Ethinc,
+@Ethnic,
 @Birthday,
 @Origin,
 @OriginAddress,
 @Phone,
 @IdNumber,
-@Eduction,
+@Education,
 @School,
 @Provice,
 @City,
@@ -186,6 +189,7 @@ VALUES
 @IsCustomer,
 @Score,
 @IsLeader);
+
 
 
 ", info);

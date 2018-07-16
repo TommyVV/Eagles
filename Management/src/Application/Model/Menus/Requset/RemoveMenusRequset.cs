@@ -6,7 +6,7 @@
     public class RemoveMenusRequset : RequestBase
     {
         /// <summary>
-        /// 菜单id
+        /// 级菜单名称
         /// </summary>
         public int MenuId { get; set; }
     }

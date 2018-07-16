@@ -13,7 +13,7 @@ using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// 积分设置
+    /// Score
     /// </summary>
     public class ScoreController : ApiController
     {
@@ -26,7 +26,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 编辑/新增积分设置
+        /// 编辑 积分
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>

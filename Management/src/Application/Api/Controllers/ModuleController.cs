@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
+using Eagles.Base;
 using Eagles.Interface.Core;
 
 using Eagles.Application.Host.Common;
@@ -18,8 +20,10 @@ namespace Eagles.Application.Host.Controllers
             this._moduleHandler = moduleHandler;
         }
 
+
+
         /// <summary>
-        ///  新增/编辑栏目
+        /// 编辑 栏目
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -30,7 +34,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 删除栏目
+        /// 删除 栏目
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -41,7 +45,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 栏目详情
+        /// 栏目 详情
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -52,7 +56,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 栏目列表
+        /// 栏目 列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>

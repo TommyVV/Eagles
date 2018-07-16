@@ -1,4 +1,10 @@
-﻿namespace Eagles.Application.Model.Menus.Requset
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Eagles.Application.Model.Menus.Requset
 {
 
     /// <summary>
@@ -7,7 +13,7 @@
     public class GetSubordinateRequset : RequestBase
     {
         /// <summary>
-        /// 菜单id
+        /// 级菜单名称
         /// </summary>
         public int MenuId { get; set; }
     }

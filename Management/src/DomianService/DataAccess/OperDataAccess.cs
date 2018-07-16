@@ -12,7 +12,7 @@ using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {
-   public class OperDataAccess: IOperDataAccess
+    public class OperDataAccess : IOperDataAccess
     {
         private readonly IDbManager dbManager;
 
@@ -63,7 +63,7 @@ VALUES
 ", new { requset.OperId });
         }
 
-        public TbOper GetOperDetail(int  operId)
+        public TbOper GetOperDetail(int operId)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -83,7 +83,7 @@ FROM `eagles`.`tb_oper`
             return dbManager.QuerySingle<TbOper>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbOper> GetOperList(GetOperatorRequset requset,out int totalCount)
+        public List<TbOper> GetOperList(GetOperatorRequset requset, out int totalCount)
         {
 
             var sql = new StringBuilder();
@@ -96,7 +96,7 @@ FROM `eagles`.`tb_oper`
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-         
+
 
             if (requset.StartTime != null)
             {
@@ -118,7 +118,7 @@ FROM `eagles`.`tb_oper`  where 1=1  {0} ;
             sql.Clear();
 
             dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
-            dynamicParams.Add("pageNum", requset.PageNumber);          
+            dynamicParams.Add("pageNum", requset.PageNumber);
             dynamicParams.Add("pageSize", requset.PageSize);
 
 
@@ -157,7 +157,7 @@ FROM `eagles`.`tb_oper`
             return dbManager.Query<TbOper>(sql.ToString(), dynamicParams).Count;
         }
 
-        public TbOper GetOperInfo(LoginRequset requset)
+        public TbOper GetOperInfo(string account)
         {
             return dbManager.QuerySingle<TbOper>(@" SELECT `tb_oper`.`OrgId`,
     `tb_oper`.`OperId`,
@@ -170,7 +170,7 @@ FROM `eagles`.`tb_oper`
     `tb_oper`.`LockingTime`
 FROM `eagles`.`tb_oper`
 WHERE `OperName` = @OperName;
- ", new {OperName = requset.Account});
+ ", new { OperName = account });
 
         }
     }

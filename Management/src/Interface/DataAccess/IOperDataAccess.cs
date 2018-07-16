@@ -18,6 +18,6 @@ namespace Eagles.Interface.DataAccess
         TbOper GetOperDetail(int operId);
         List<TbOper> GetOperList(GetOperatorRequset requset,out int totalCount);
         int GetOperListByAuthorityGroupId(int requsetAuthorityGroupId);
-        TbOper GetOperInfo(LoginRequset requset);
+        TbOper GetOperInfo(string requset);
     }
 }

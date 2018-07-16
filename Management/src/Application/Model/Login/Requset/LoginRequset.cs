@@ -1,9 +1,11 @@
-﻿namespace Eagles.Application.Model.Login.Requset
+﻿using Eagles.Application.Model.Enums;
+
+namespace Eagles.Application.Model.Login.Requset
 {
     /// <summary>
     /// 
     /// </summary>
-    public class LoginRequset: ORequest
+    public class LoginRequset
     {
         /// <summary>
         /// 密码
@@ -12,15 +14,24 @@
         public string Password { get; set; }
 
         /// <summary>
-        /// 用户名
+        /// 账号
         /// </summary>
         /// <returns></returns>
         public string Account { get; set; }
 
         /// <summary>
-        /// 验证码（暂时不用）
+        /// 验证码 
         /// </summary>
         public string VerificationCode { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int OrgId { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public LoginType LoginType { get; set; }
 
     }
 }

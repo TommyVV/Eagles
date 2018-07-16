@@ -2,12 +2,9 @@
 
 namespace Eagles.Application.Model.ScoreSetUp.Requset
 {
-    public class GetScoreSetUpRequset : ListRequestBase
+    public class GetScoreSetUpRequset : OrgListRequestBase
     {
-        /// <summary>
-        /// 积分奖励类型
-        /// </summary>
-        public int OperationType { get; set; }
+        public OperationType RewardType { get; set; }
 
     }
 }

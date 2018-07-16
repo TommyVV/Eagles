@@ -108,10 +108,10 @@ FROM `eagles`.`tb_reward_score`
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OperationType > 0)
+            if (requset.RewardType >= 0)
             {
                 parameter.Append(" and RewardType = @RewardType ");
-                dynamicParams.Add("RewardType", requset.OperationType);
+                dynamicParams.Add("RewardType", requset.RewardType);
             }
 
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
@@ -128,8 +128,18 @@ FROM `eagles`.`tb_reward_score`
             }
 
 
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_reward_score`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
 
-            totalCount = 0;
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+
             sql.AppendFormat(@" SELECT `tb_reward_score`.`RewardId`,
     `tb_reward_score`.`OrgId`,
     `tb_reward_score`.`BranchId`,
@@ -138,8 +148,11 @@ FROM `eagles`.`tb_reward_score`
     `tb_reward_score`.`keyWord`,
     `tb_reward_score`.`LearnTime`,
     `tb_reward_score`.`WordCount`
-FROM `eagles`.`tb_reward_score`  where 1=1  {0}  
+FROM `eagles`.`tb_reward_score`  where 1=1  {0}      order by RewardId desc limit  @pageStart ,@pageSize;
  ", parameter);
+
+
+        
 
             return dbManager.Query<TbRewardScore>(sql.ToString(), dynamicParams);
 

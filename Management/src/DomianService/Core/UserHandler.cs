@@ -104,7 +104,7 @@ namespace Eagles.DomainService.Core
                 //    OperId=detail.OperId,
                 EditTime = detail.EditTime,
                 MemberStatus = detail.MemberStatus,
-
+                Nation=detail.Ethnic
                 //UserStatus=detail.IsCustomer
             };
             return response;
@@ -162,6 +162,9 @@ namespace Eagles.DomainService.Core
                     PhotoUrl = request.Info.PhotoUrl,
                     Provice = request.Info.Provice,
                     Status = request.Info.Status,
+                    Ethnic = request.Info.Nation,
+                    IsLeader = 0,
+                    Score = 0,
                 };
 
                 return dataAccess.EditUserInfo(mod) > 0;
@@ -198,7 +201,7 @@ namespace Eagles.DomainService.Core
                     CreateTime = DateTime.Now,
                     Dept = request.Info.Dept,
                     District = request.Info.District,
-                    //   EditTime = DateTime.Now,
+                    EditTime = DateTime.Now,
                     MemberStatus = request.Info.MemberStatus,
                     MemberType = request.Info.UserStatus,
                     OperId = 0,
@@ -206,6 +209,9 @@ namespace Eagles.DomainService.Core
                     PhotoUrl = request.Info.PhotoUrl,
                     Provice = request.Info.Provice,
                     Status = request.Info.Status,
+                    Ethnic = request.Info.Nation,
+                    IsLeader=0,
+                    Score=0,
                 };
 
                 return dataAccess.CreateUserInfo(mod) > 0;

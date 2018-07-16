@@ -11,7 +11,7 @@ namespace Eagles.Application.Model.Column.Requset
         /// <summary>
         /// 任务/活动 名字
         /// </summary>
-        public int ModulType { get; set; }
+        public string ColumnName { get; set; }
 
         /// <summary>
         /// 状态

@@ -6,26 +6,30 @@ using Eagles.Application.Model.Organization.Model;
 using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.Organization.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Org;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-   public  class OrganizationHandler : IOrganizationHandler
+    public class OrganizationHandler : IOrganizationHandler
     {
         private readonly IOrganizationDataAccess dataAccess;
 
-
-        public OrganizationHandler(IOrganizationDataAccess dataAccess)
+        private readonly ICacheHelper Cache;
+        public OrganizationHandler(IOrganizationDataAccess dataAccess, ICacheHelper cache)
         {
             this.dataAccess = dataAccess;
+            Cache = cache;
         }
 
         public bool EditOrganization(EditOrganizationRequset requset)
         {
 
+            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             TbOrgInfo mod;
             var now = DateTime.Now;
@@ -37,11 +41,10 @@ namespace Eagles.DomainService.Core
                     Province = requset.Info.Province,
                     OrgName = requset.Info.OrgName,
                     City = requset.Info.City,
-                    //     CreateTime= now,
                     District = requset.Info.District,
                     EditTime = now,
                     Logo = requset.Info.Logo,
-                    OperId = 0,
+                    OperId = tokenInfo.UserId,
                     OrgId = requset.Info.OrgId
                 };
 
@@ -61,8 +64,8 @@ namespace Eagles.DomainService.Core
                     District = requset.Info.District,
                     //EditTime = now,
                     Logo = requset.Info.Logo,
-                    OperId = 0,
-                    
+                    OperId = tokenInfo.UserId,
+
                 };
                 return dataAccess.CreateOrganization(mod) > 0;
 
@@ -73,11 +76,7 @@ namespace Eagles.DomainService.Core
 
         public bool RemoveOrganization(RemoveOrganizationRequset requset)
         {
-            
-       
-            return dataAccess.RemoveOrganization(requset)>0;
-
-           
+            return dataAccess.RemoveOrganization(requset) > 0;
         }
 
         public GetOrganizationResponse Organization(GetOrganizationRequset requset)
@@ -85,12 +84,13 @@ namespace Eagles.DomainService.Core
             var response = new GetOrganizationResponse
             {
                 TotalCount = 0,
-                
+
             };
-            List<TbOrgInfo> list = dataAccess.GetOrganizationList(requset) ?? new List<TbOrgInfo>();
+            List<TbOrgInfo> list = dataAccess.GetOrganizationList(requset, out int totalCount) ?? new List<TbOrgInfo>();
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new Organization
             {
                 Address = x.Address,
@@ -108,11 +108,11 @@ namespace Eagles.DomainService.Core
         {
             var response = new GetOrganizationDetailResponse
             {
-                
+
             };
             TbOrgInfo detail = dataAccess.GetOrganizationDetail(requset);
 
-            if (detail == null) throw new TransactionException("M01","无业务数据");
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
 
             response.Info = new OrganizationDetail
             {
@@ -123,9 +123,9 @@ namespace Eagles.DomainService.Core
                 OrgId = detail.OrgId,
                 OrgName = detail.OrgName,
                 Province = detail.Province,
-                Logo=detail.Logo,
-                EditTime=detail.EditTime,
-                OperId=detail.OperId
+                Logo = detail.Logo,
+                EditTime = detail.EditTime,
+                OperId = detail.OperId
             };
             return response;
         }
