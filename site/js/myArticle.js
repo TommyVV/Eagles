@@ -149,3 +149,12 @@ $('.option').on('click', 'li', function(e) {
 	});
 
 });
+$(".select_box").click(function () {
+        if ($(this).find(".glyphicon").hasClass("glyphicon-menu-down")) {
+            $(this).find(".glyphicon").removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
+            //$(".peop-list").removeClass("hide");
+        } else {
+            $(this).find(".glyphicon").removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
+            //$(".peop-list").addClass("hide");
+        }
+    });

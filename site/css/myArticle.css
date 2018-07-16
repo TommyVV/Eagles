@@ -127,10 +127,10 @@ html, body {
 }
 .mod_select .select_box .select_txt {
   display: inline-block;
-  width: 100%;
+  /*width: 100%;*/
   height: 36px;
   padding-left: 28px;
-  overflow: hidden;
+  overflow: hidden;margin-right:10px;
   line-height: 36px;
   font-size: 16px;
   cursor: pointer;
@@ -138,12 +138,23 @@ html, body {
 /*.mod_select .select_box .select-icon {
   position: absolute;
   top: 50%;
-  right: 10px;
+  left: 38%;
   transform: translate(0,-50%);
-  width: 10px;
+  width: 18px;
   height: 10px;
-  background: url() center no-repeat;
+  background: url(../icons/dowm@2x.png) center no-repeat;
 }*/
+.glyphicon {
+  position: absolute;
+  top: 11px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .mod_select .select_box .option {
 	z-index:99;
   display: none;
@@ -155,8 +166,9 @@ html, body {
   border-top: 0;
 }
 .mod_select .select_box .option li {
+	color: #949494;
 	list-style: none;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #eeeeee;
   padding-left: 28px;
   font-size: 16px;
   height: 40px;line-height: 40px;
