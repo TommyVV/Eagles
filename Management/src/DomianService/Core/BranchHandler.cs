@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Branch.Model;
 using Eagles.Application.Model.Branch.Requset;
 using Eagles.Application.Model.Branch.Response;
@@ -50,32 +49,21 @@ namespace Eagles.DomainService.Core
 
                 return dataAccess.EditBranch(mod) > 0;
 
-
             }
-            else
+            mod = new TbBranch
             {
-                mod = new TbBranch
-                {
-                    BranchDesc = requset.Info.BranchDesc,
-                    BranchId = requset.Info.BranchId,
-                    BranchName = requset.Info.BranchName,
-                    CreateTime = now,
-                    OrgId = tokenInfo.OrgId
-                };
-                return dataAccess.CreateBranch(mod) > 0;
-
-
-            }
-
+                BranchDesc = requset.Info.BranchDesc,
+                BranchId = requset.Info.BranchId,
+                BranchName = requset.Info.BranchName,
+                CreateTime = now,
+                OrgId = tokenInfo.OrgId
+            };
+            return dataAccess.CreateBranch(mod) > 0;
         }
 
         public bool RemoveBranch(RemoveBranchRequset requset)
         {
-
-
             return dataAccess.RemoveBranch(requset) > 0;
-
-
         }
 
         public GetBranchResponse Branch(GetBranchRequset requset)
@@ -85,7 +73,8 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
 
             };
-            List<TbBranch> list = dataAccess.GetBranchList(requset,out int totalcount) ?? new List<TbBranch>();
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
+            var list = dataAccess.GetBranchList(requset,out int totalcount, tokenInfo.OrgId) ?? new List<TbBranch>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
@@ -102,6 +91,7 @@ namespace Eagles.DomainService.Core
 
         public GetBranchDetailResponse GetBranchDetail(GetBranchDetailRequset requset)
         {
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             var response = new GetBranchDetailResponse
             {
 
@@ -122,8 +112,6 @@ namespace Eagles.DomainService.Core
                 BranchId = detail.BranchId,
                 BranchName = detail.BranchName,
                 CreateTime = detail.CreateTime,
-                OrgId = detail.OrgId,
-                OrgName = orginfo.OrgName
             };
             return response;
         }

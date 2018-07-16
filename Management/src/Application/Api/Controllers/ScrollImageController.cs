@@ -2,7 +2,6 @@
 using Eagles.Application.Model.RollImage.Requset;
 using Eagles.Application.Model.RollImage.Response;
 using Eagles.Interface.Core;
-
 using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
 {

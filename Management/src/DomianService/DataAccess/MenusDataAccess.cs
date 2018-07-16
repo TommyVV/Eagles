@@ -2,8 +2,10 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.Menus.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.App;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -12,9 +14,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public MenusDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public MenusDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
         public int EditNews(TbAppMenu mod)
         {
@@ -87,11 +92,11 @@ FROM `eagles`.`tb_app_menu`
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (tokenInfo.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", tokenInfo.OrgId);
             }
 
             //if (requset.BranchId > 0)
@@ -100,11 +105,11 @@ FROM `eagles`.`tb_app_menu`
             //    dynamicParams.Add("BranchId", requset.BranchId);
             //}
 
-            if (requset.MenuLevel > 0)
-            {
-                parameter.Append(" and Level = @MenuLevel ");
-                dynamicParams.Add("MenuLevel", (int)requset.MenuLevel);
-            }
+            //if (requset.MenuLevel > 0)
+            //{
+            //    parameter.Append(" and Level = @MenuLevel ");
+            //    dynamicParams.Add("MenuLevel", (int)requset.MenuLevel);
+            //}
 
 
             sql.AppendFormat(@"SELECT count(*)

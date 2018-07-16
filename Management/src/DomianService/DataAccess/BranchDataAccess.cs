@@ -17,16 +17,16 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount)
+        public List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount,int orgId)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId>0)
+            if (orgId>0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", orgId);
             }
 
          

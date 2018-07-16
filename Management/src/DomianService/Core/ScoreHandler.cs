@@ -12,6 +12,7 @@ using Eagles.Application.Model.ScoreSetUp.Model;
 using Eagles.Application.Model.ScoreSetUp.Requset;
 using Eagles.Application.Model.ScoreSetUp.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Score;
 using Eagles.DomainService.Model.User;
@@ -25,10 +26,14 @@ namespace Eagles.DomainService.Core
         private readonly IScoreDataAccess dataAccess;
 
         private readonly IPartyMemberDataAccess UserdataAccess;
-        public ScoreHandler(IScoreDataAccess dataAccess, IPartyMemberDataAccess userdataAccess)
+
+        private readonly ICacheHelper cacheHelper;
+
+        public ScoreHandler(IScoreDataAccess dataAccess, IPartyMemberDataAccess userdataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
             UserdataAccess = userdataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditScoreSetUp(EditScoreSetUpRequset requset)
@@ -36,12 +41,13 @@ namespace Eagles.DomainService.Core
 
             TbRewardScore mod;
             var now = DateTime.Now;
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.ScoreSetUpId > 0)
             {
                 mod = new TbRewardScore
                 {
-                    BranchId = requset.BranchId,
-                    OrgId = requset.OrgId,
+                    BranchId = tokenInfo.BranchId,
+                    OrgId = tokenInfo.OrgId,
                     KeyWord = string.Join(",", requset.Info.Keyword.ToArray()),
                     LearnTime = requset.Info.LearnTime,
                     RewardId = requset.Info.ScoreSetUpId,
@@ -59,8 +65,8 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TbRewardScore
                 {
-                    BranchId = requset.BranchId,
-                    OrgId = requset.OrgId,
+                    BranchId = tokenInfo.BranchId,
+                    OrgId = tokenInfo.OrgId,
                     KeyWord = string.Join(",", requset.Info.Keyword.ToArray()),
                     LearnTime = requset.Info.LearnTime,
                     RewardId = requset.Info.ScoreSetUpId,
@@ -70,15 +76,12 @@ namespace Eagles.DomainService.Core
 
                 };
                 return dataAccess.CreateScoreSetUp(mod) > 0;
-
             }
-
         }
 
         public bool RemoveScoreSetUp(RemoveScoreSetUpRequset requset)
         {
             return dataAccess.RemoveScoreSetUp(requset) > 0;
-
         }
 
         public GetScoreSetUpDetailResponse GetScoreSetUpDetail(GetScoreSetUpDetailRequset requset)
@@ -88,7 +91,7 @@ namespace Eagles.DomainService.Core
             {
 
             };
-            TbRewardScore detail = dataAccess.GetScoreSetUpDetail(requset);
+            var detail = dataAccess.GetScoreSetUpDetail(requset);
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
@@ -142,7 +145,7 @@ namespace Eagles.DomainService.Core
             {
 
             };
-            TbUserInfo detail = UserdataAccess.GetUserInfoDetail(new GetUserInfoDetailRequest()
+            var detail = UserdataAccess.GetUserInfoDetail(new GetUserInfoDetailRequest()
             {
                 UserId = requset.UserId,
                 Token = requset.Token
@@ -151,17 +154,14 @@ namespace Eagles.DomainService.Core
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
 
-            List<TbUserScoreTrace> list = dataAccess.GetScoreTrace(requset.UserId);
+            var list = dataAccess.GetScoreTrace(requset.UserId);
 
             response.Info = list.Select(x => new UserScoreTrace
             {
                 Comment = x.Comment,
                 CreateTime = x.CreateTime.FormartDatetime(),
-                OrgId = x.OrgId,
-                OriScore = x.OriScore,
                 RewardsType = x.RewardsType,
                 Score = x.Score,
-                TraceId = x.TraceId
             }).ToList();
             return response;
         }
@@ -176,12 +176,12 @@ namespace Eagles.DomainService.Core
             List<TbUserInfo> list = UserdataAccess.GetUserInfoList(new GetPartyMemberRequest()
             {
                 UserName = requset.UserName,
-                OrgId = requset.OrgId,
-                BranchId = requset.BranchId,
-                EndTime = requset.EndTime,
-                PageNumber = requset.PageNumber,
-                PageSize = requset.PageSize,
-                StartTime = requset.StartTime,
+                //OrgId = requset.OrgId,
+                //BranchId = requset.BranchId,
+                //EndTime = requset.EndTime,
+                //PageNumber = requset.PageNumber,
+                //PageSize = requset.PageSize,
+                //StartTime = requset.StartTime,todo
                 Token = requset.Token,
             }, out int totalCount) ?? new List<TbUserInfo>();
 

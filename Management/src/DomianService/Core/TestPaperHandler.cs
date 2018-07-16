@@ -51,7 +51,6 @@ namespace Eagles.DomainService.Core
                 Answer = result.AnswerType,
                 QuestionId = result.QuestionId,
                 Question = result.Question,
-                OrgId = result.OrgId,
                 OptionList = optionList.Select(x => new Option
                 {
                     QuestionId = x.QuestionId,

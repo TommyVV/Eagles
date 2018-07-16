@@ -5,6 +5,9 @@
    /// </summary>
    public  class GetRollImageDetailRequset:RequestBase
     {
-
+        /// <summary>
+        /// imageId
+        /// </summary>
+        public int Id { get; set; }
     }
 }

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
 using Eagles.Application.Model.Enums;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.App;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -17,16 +17,19 @@ namespace Eagles.DomainService.Core
     {
         private readonly IColumnDataAccess dataAccess;
 
-        public ModuleHandler(IColumnDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public ModuleHandler(IColumnDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditColumn(EditColumnRequset requset)
         {
 
             TbAppModule mod;
-
+            var userToken = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.ColumnId > 0)
             {
                 mod = new TbAppModule
@@ -38,10 +41,10 @@ namespace Eagles.DomainService.Core
                     ImageUrl = requset.Info.ColumnImg,
                     IndexDisplay = requset.Info.IsSetTop,
                     ModuleType = requset.Info.ModuleType,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = userToken.OrgId,
                     ModuleId = requset.Info.ColumnId,
                     ModuleName = requset.Info.ColumnName,
-                    IndexPageCount = requset.Info.IndexPageCount
+                   // IndexPageCount = requset.Info.IndexPageCount
                 };
 
                 return dataAccess.EditColumn(mod) > 0;
@@ -57,24 +60,19 @@ namespace Eagles.DomainService.Core
                     ImageUrl = requset.Info.ColumnImg,
                     IndexDisplay = requset.Info.IsSetTop,
                     ModuleType = requset.Info.ModuleType,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = userToken.OrgId,
                     ModuleName = requset.Info.ColumnName,
-                    IndexPageCount = requset.Info.IndexPageCount
+                   // IndexPageCount = requset.Info.IndexPageCount
                 };
 
                 return dataAccess.CreateColumn(mod) > 0;
-
-
             }
-
 
         }
 
         public bool RemoveColumn(RemoveColumnRequset requset)
         {
-
             return dataAccess.RemoveColumn(requset) > 0;
-
         }
 
         public GetColumnDetailResponse GetColumnDetail(GetColumnDetailRequset requset)
@@ -97,8 +95,8 @@ namespace Eagles.DomainService.Core
                 ColumnImg = detail.ImageUrl,
                 IsSetTop = detail.IndexDisplay,
                 ModuleType = detail.ModuleType,
-                IndexPageCount = detail.IndexPageCount,
-                OrgId = detail.OrgId
+              //  IndexPageCount = detail.IndexPageCount
+                AuditStatus = AuditStatus.审核通过 //todo 
             };
             return response;
         }
@@ -109,7 +107,8 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0,
             };
-            List<TbAppModule> list = dataAccess.GetColumnList(requset, out int totalCount) ?? new List<TbAppModule>();
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
+            var list = dataAccess.GetColumnList(requset, out int totalCount, tokenInfo.OrgId) ?? new List<TbAppModule>();
 
             if (list.Count == 0) throw new TransactionException("01", "无业务数据");
             response.TotalCount = totalCount;

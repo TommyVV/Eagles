@@ -111,7 +111,7 @@
         </member>
         <member name="T:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset">
             <summary>
-            修改/新增 任务活动实体类
+            活动 修改/新增
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.DetailInfo">
@@ -282,19 +282,9 @@
             权限信息
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo.CreateTime">
-            <summary>
-            创建时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo.EditTime">
-            <summary>
-            修改时间
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.AuthorityGroupSetUp.Model.AuthorityInfo.FunCode">
             <summary>
-            功能id
+            功能id码，和前端一一对应
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.AuthorityGroupSetUp.Requset.EditAuthorityGroupSetUpRequset">
@@ -444,7 +434,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.AuditStatus">
             <summary>
-            审核状态
+            栏目状态
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Column.Model.ColumnInfo.OrderBy">
@@ -462,11 +452,6 @@
             是否置顶
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.OrgId">
-            <summary>
-            所属页面
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.ColumnIcon">
             <summary>
             小图
@@ -477,14 +462,9 @@
             大图
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.IndexPageCount">
-            <summary>
-            首页显示数量
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Column.Model.ColumnInfoDetails.ModuleType">
             <summary>
-             '类型;
+            所属页面（0:首页;1:党建门户;2:党务工作;3:党建学习
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Column.Requset.EditColumnRequset">
@@ -512,7 +492,7 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Column.Requset.GetColumnRequset.ColumnName">
+        <member name="P:Eagles.Application.Model.Column.Requset.GetColumnRequset.ModulType">
             <summary>
             任务/活动 名字
             </summary>
@@ -1194,16 +1174,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.BranchId">
-            <summary>
-            支部id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.OrgId">
-            <summary>
-            组织id
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Exercises.ExercisesName">
             <summary>
             试卷名
@@ -1281,12 +1251,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.OptionId">
             <summary>
-            
+            选项id（新增时，无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.OptionName">
             <summary>
-            选项
+            选项名称
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.QuestionId">
@@ -1296,12 +1266,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.IsRight">
             <summary>
-            是否正确答案
+            是否正确答案，0：是，1：否；2：为投票时，无正确答案
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.AnswerType">
             <summary>
-            自定义
+            允许用户自定义输入：0：否；1：是；
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Option.IsImg">
@@ -1321,7 +1291,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Question">
             <summary>
-            问题
+            问题名称
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Subject.QuestionId">
@@ -1331,7 +1301,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Answer">
             <summary>
-            答案类型;0:默认:1:自定义
+            答案类型;0:默认:1:自定义：2：投票（无正确答案）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Multiple">
@@ -1344,11 +1314,6 @@
             多选数量
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.OrgId">
-            <summary>
-            机构ID
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.Exercises.Model.SubjectDetails">
             <summary>
             
@@ -1356,7 +1321,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Model.SubjectDetails.OptionList">
             <summary>
-            
+            问题选项
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.EditOptionRequset">
@@ -1382,6 +1347,11 @@
         <member name="P:Eagles.Application.Model.Exercises.Requset.EditExercisesRequset.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Exercises.Requset.EditExercisesRequset.Subject">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.EditSubjectRequset">
@@ -1436,10 +1406,10 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset.RandomSubjectSum">
             <summary>
-            随机题目数量
+            随机生成题目数量
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset.ExercisesId">
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetRandomSubjectRequset.TestId">
             <summary>
             试卷id
             </summary>
@@ -1451,7 +1421,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectDetailRequset.QuestionId">
             <summary>
-            
+            问题Id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.GetSubjectListRequset">
@@ -1459,7 +1429,7 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectListRequset.Question">
+        <member name="P:Eagles.Application.Model.Exercises.Requset.GetSubjectListRequset.QuestionId">
             <summary>
             问题
             </summary>
@@ -1501,7 +1471,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Exercises.Requset.RemoveSubjectInfoRequset.QuestionId">
             <summary>
-            
+            问题Id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Exercises.Requset.RemoveSubjectRequset">
@@ -1767,13 +1737,13 @@
         </member>
         <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.Account">
             <summary>
-            账号
+            用户名
             </summary>
             <returns></returns>
         </member>
         <member name="P:Eagles.Application.Model.Login.Requset.LoginRequset.VerificationCode">
             <summary>
-            验证码
+            验证码（暂时不用）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Login.Response.LoginResponse">
@@ -1783,12 +1753,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Login.Response.LoginResponse.Token">
             <summary>
-            凭证
+            用户登录后的凭证，用于后续接口请求
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Login.Response.LoginResponse.IsVerificationCode">
             <summary>
-            是否需要验证码验证
+            是否需要验证码验证（暂时不用）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Meeting.Model.Meeting">
@@ -1998,12 +1968,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.OrgName">
             <summary>
-            机构名称
+            机构名称（新增修改，无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuId">
             <summary>
-            级菜单名称
+            菜单id（新增无需传入，修改传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuName">
@@ -2013,12 +1983,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuLink">
             <summary>
-            级菜单链接
+            菜单跳转链接
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.MenuLevel">
             <summary>
-            菜单级别 
+            菜单等级；暂时只有2级（1,2） 
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Menus.Model.Menus.ParentId">
@@ -2043,17 +2013,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Menus.Requset.GetMenusDetailRequest.MenuId">
             <summary>
-            级菜单名称
+            菜单id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Menus.Requset.GetMenusRequset">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Menus.Requset.GetMenusRequset.MenuLevel">
-            <summary>
-            菜单级别 
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Menus.Requset.GetSubordinateRequset">
@@ -2063,7 +2028,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Menus.Requset.GetSubordinateRequset.MenuId">
             <summary>
-            级菜单名称
+            菜单id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Menus.Requset.RemoveMenusRequset">
@@ -2073,7 +2038,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Menus.Requset.RemoveMenusRequset.MenuId">
             <summary>
-            级菜单名称
+            菜单id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Menus.Response.GetMenusDetailResponse">
@@ -2422,19 +2387,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgId">
-            <summary>
-            机构ID
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgName">
-            <summary>
-            机构name
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchId">
             <summary>
-            支部id
+            支部id（新增时无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchName">
@@ -2449,7 +2404,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.CreateTime">
             <summary>
-            创建时间
+            创建时间（仅供展示，新增修改不用传递）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.BranchDesc">
@@ -2474,7 +2429,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchDetailRequset.BranchId">
             <summary>
-            凭证
+            支部id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Branch.Requset.GetBranchRequset">
@@ -2682,11 +2637,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.OrgId">
-            <summary>
-            机构id
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ListRequestBase.PageNumber">
             <summary>
             页码
@@ -2695,16 +2645,6 @@
         <member name="P:Eagles.Application.Model.ListRequestBase.PageSize">
             <summary>
             页尺寸
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.StartTime">
-            <summary>
-            统计时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.EndTime">
-            <summary>
-            统计结束时间
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.OrgRequestBase">
@@ -3159,24 +3099,34 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
-            <summary>
-            机构ID
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Id">
             <summary>
-            id
+            滚动图片唯一id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgName">
+            <summary>
+            机构名称
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageId">
             <summary>
-            页面id
+            页面类型（0:首页; 1：党建门户:2：党务工作:3：党建学习）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Img">
             <summary>
             滚动图片url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.TargetUrl">
+            <summary>
+            跳转链接
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.EditRollImageRequest">
@@ -3196,7 +3146,7 @@
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.Id">
             <summary>
-            zhuj
+            imageId
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest">
@@ -3204,14 +3154,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest.PageId">
-            <summary>
-            页面ID
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.RollImage.Requset.RemoveRollImageRequset.Id">
             <summary>
-            页面ID
+            滚动图片id
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Response.GetRollImageDetailsResponse.Info">
@@ -3294,22 +3239,12 @@
             创建时间
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.OrgId">
-            <summary>
-            组织id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.OriScore">
-            <summary>
-            原积分
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.RewardsType">
              <summary>
              积分奖励类型;
-            00:发表文章奖励
-            01:文章字数奖励
-            02:文章关键字奖励
+            0:发表文章奖励
+            1:文章字数奖励
+            2:文章关键字奖励
             10:参加活动奖励
             11:活动分享到支部奖励
             12:活动分享到组织奖励
@@ -3323,11 +3258,6 @@
         <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.Score">
             <summary>
             获得积分
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ScoreRank.Model.UserScoreTrace.TraceId">
-            <summary>
-            流水号
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankDetailRequset">
@@ -3382,7 +3312,7 @@
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreSetUpId">
             <summary>
-            
+            积分配置编号，新增时无需传入，修改时传入
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Score">
@@ -3390,9 +3320,14 @@
             积分奖励值
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Status">
+            <summary>
+            状态字段(0:正常；1：禁用)
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Keyword">
             <summary>
-            文章类型 奖励关键字
+            自定义关键字奖励
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.LearnTime">
@@ -3401,14 +3336,12 @@
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.RewardType">
-             <summary>
-             奖励类型;
-            0:任务奖励
-            1:活动奖励;
-            2:字数奖励
-            3:关键字奖励
-            4:学习时间奖励
-             </summary>
+            <summary>
+            奖励类型;
+            0:发表文章奖励 1:文章字数奖励 2:文章关键字奖励 10:参加活动奖励
+            11:活动分享到支部奖励 12:活动分享到组织奖励 20:任务完成奖励
+            21:任务分享到支部奖励 22:任务分享到组织奖励 30:会议文章奖励 40:心得体会类型奖励
+            </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.WordCount">
             <summary>
@@ -3427,10 +3360,19 @@
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpDetailRequset.ScoreSetUpId">
             <summary>
-            
+            积分奖励id
             </summary>
         </member>
-        <!-- 对于成员“P:Eagles.Application.Model.ScoreSetUp.Requset.RemoveScoreSetUpRequset.ScoreSetUpId”忽略有格式错误的 XML 注释 -->
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpRequset.OperationType">
+            <summary>
+            积分奖励类型
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.RemoveScoreSetUpRequset.ScoreSetUpId">
+            <summary>
+            积分奖励id
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpDetailResponse.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增

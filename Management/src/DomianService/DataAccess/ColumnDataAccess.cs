@@ -18,7 +18,7 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbAppModule> GetColumnList(GetColumnRequset requset, out int totalCount)
+        public List<TbAppModule> GetColumnList(GetColumnRequset requset, out int totalCount,int orgId)
         {
 
 
@@ -26,10 +26,10 @@ namespace Ealges.DomianService.DataAccess
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId > 0)
+            if (orgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", orgId);
             }
 
             //if (requset.BranchId > 0)
@@ -38,11 +38,7 @@ namespace Ealges.DomianService.DataAccess
             //    dynamicParams.Add("BranchId", requset.BranchId);
             //}
 
-            if (!string.IsNullOrWhiteSpace(requset.ColumnName))
-            {
-                parameter.Append(" and ModuleName = @ModuleName ");
-                dynamicParams.Add("ModuleName", requset.ColumnName);
-            }
+            
 
             //if (requset.Status > 0)
             //{

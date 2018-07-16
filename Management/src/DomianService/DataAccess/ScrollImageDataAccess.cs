@@ -61,7 +61,7 @@ WHERE
 ", new { requset.Id });
         }
 
-        public TbScrollImage GetRollImagesDetail(GetRollImageDetailRequset requset)
+        public TbScrollImage GetRollImagesDetail(int id)
         {
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
@@ -74,28 +74,28 @@ WHERE
 FROM `eagles`.`tb_scroll_image`
   where Id=@Id;
  ");
-            dynamicParams.Add("Id", requset.Id);
+            dynamicParams.Add("Id", id);
 
             return dbManager.QuerySingle<TbScrollImage>(sql.ToString(), dynamicParams);
         }
 
-        public List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset ,out int totalCount)
+        public List<TbScrollImage> GetRollImagesList(GetRollImageRequest requset ,out int totalCount,int orgId)
         {
 
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (!string.IsNullOrWhiteSpace(requset.PageId))
-            {
-                parameter.Append(" and PageType = @PageType ");
-                dynamicParams.Add("PageType", requset.PageId);
-            }
+            //if (!string.IsNullOrWhiteSpace(requset))
+            //{
+            //    parameter.Append(" and PageType = @PageType ");
+            //    dynamicParams.Add("PageType", requset.PageId);
+            //}
 
-            if (requset.OrgId > 0)
+            if (orgId > 0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", orgId);
             }
 
 
@@ -111,12 +111,14 @@ FROM `eagles`.`tb_scroll_image`  where 1=1  {0} ;
             dynamicParams.Add("pageNum", requset.PageNumber);
             dynamicParams.Add("pageSize", requset.PageSize);
 
-            sql.AppendFormat(@" SELECT `tb_scroll_image`.`OrgId`,
-                `tb_scroll_image`.`Id`,
-                `tb_scroll_image`.`PageType`,
-                `tb_scroll_image`.`ImageUrl`,
-                `tb_scroll_image`.`TargetUrl`
-            FROM `eagles`.`tb_scroll_image`  where 1 = 1  {0} order by Id desc limit  @pageStart ,@pageSize
+            sql.AppendFormat(@" SELECT  a.OrgId,
+                a.Id,
+                a.PageType,
+                a.ImageUrl,
+               a.TargetUrl,
+                b.OrgName
+            FROM eagles.tb_scroll_image  as a
+            inner join eagles.tb_org_info b on a.OrgId=b.orgId  where 1 = 1  {0} order by Id desc limit  @pageStart ,@pageSize
  ", parameter);
 
 

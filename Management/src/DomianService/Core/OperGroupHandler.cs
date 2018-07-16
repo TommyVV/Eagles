@@ -172,7 +172,6 @@ namespace Eagles.DomainService.Core
             response.List = list.Select(x => new AuthorityInfo
             {
                 FunCode = x.FunCode,
-                CreateTime = x.CreateTime,
             }).ToList();
             return response;
         }
@@ -195,7 +194,6 @@ namespace Eagles.DomainService.Core
                 List = list.Select(x => new AuthorityInfo
                 {
                     FunCode = x.FunCode,
-                    CreateTime = x.CreateTime,
                 }).ToList()
             };
             return response;

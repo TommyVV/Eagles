@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.ScoreSetUp.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Score;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -15,9 +17,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public ScoreDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public ScoreDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
         public int EditScoreSetUp(TbRewardScore mod)
@@ -109,16 +114,17 @@ FROM `eagles`.`tb_reward_score`
                 dynamicParams.Add("RewardType", requset.OperationType);
             }
 
-            if (requset.BranchId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.BranchId > 0)
             {
                 parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
+                dynamicParams.Add("BranchId", token.BranchId);
             }
 
-            if (requset.OrgId > 0)
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
 
