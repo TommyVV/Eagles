@@ -66,12 +66,14 @@ WHERE
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            sql.Append(@" SELECT `tb_scroll_image`.`OrgId`,
-    `tb_scroll_image`.`Id`,
-    `tb_scroll_image`.`PageType`,
-    `tb_scroll_image`.`ImageUrl`,
-    `tb_scroll_image`.`TargetUrl`
-FROM `eagles`.`tb_scroll_image`
+            sql.Append(@" SELECT  a.OrgId,
+                a.Id,
+                a.PageType,
+                a.ImageUrl,
+               a.TargetUrl,
+                b.OrgName
+            FROM eagles.tb_scroll_image  as a
+            inner join eagles.tb_org_info b on a.OrgId=b.orgId
   where Id=@Id;
  ");
             dynamicParams.Add("Id", id);

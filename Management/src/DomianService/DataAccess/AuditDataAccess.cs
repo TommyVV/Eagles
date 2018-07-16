@@ -55,6 +55,7 @@ VALUES
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+
             if (token.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");

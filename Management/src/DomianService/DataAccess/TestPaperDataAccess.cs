@@ -77,7 +77,7 @@ namespace Ealges.DomianService.DataAccess
                 dynamicParams.Add("EndTime", requset.EndTime);
             }
 
-            sql.AppendFormat(@"SELECT count(*)
+            sql.AppendFormat(@"SELECT count(1)
 FROM `eagles`.`tb_test_paper`  where 1=1  {0} 
  ", parameter);
             totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
@@ -105,7 +105,7 @@ FROM `eagles`.`tb_test_paper`  where 1=1  {0}
     `tb_test_paper`.`TestType`,
     `tb_test_paper`.`PassAwardScore`,
     `tb_test_paper`.`Status`
-FROM `eagles`.`tb_test_paper`  where 1=1  {0} order by CreateTime desc limit  @pageStart ,@pageNum;
+FROM `eagles`.`tb_test_paper`  where 1=1  {0} order by CreateTime desc limit @pageStart ,@pageSize;
  ", parameter);
 
             return dbManager.Query<TbTestPaper>(sql.ToString(), dynamicParams);
@@ -239,7 +239,7 @@ FROM `eagles`.`tb_question`  where 1=1  {0}
     `tb_question`.`AnswerType`,
     `tb_question`.`Multiple`,
     `tb_question`.`MultipleCount`
-FROM `eagles`.`tb_question`  where 1=1  {0} order by QuestionId desc limit  @pageStart ,@pageNum;
+FROM `eagles`.`tb_question`  where 1=1  {0} order by QuestionId desc limit  @pageStart ,@pageSize;
  ", parameter);
 
             return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
@@ -421,7 +421,7 @@ WHERE QuestionId=@QuestionId;", new { QuestionId = questionId });
 
         public int CreateOption(List<TbQuestAnswer> optionList)
         {
-            return dbManager.ExecuteScalar<int>(@"INSERT INTO `eagles`.`tb_quest_anwser`
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_quest_anwser`
 (`OrgId`,
 `QuestionId`,
 `AnswerId`,
@@ -439,8 +439,6 @@ VALUES
 @IsRight,
 @ImageUrl,
 @UserCount);
-
-select last_insert_id(); 
 ", optionList);
 
         }
@@ -535,10 +533,10 @@ FROM `eagles`.`tb_question`  where QuestionId not IN  @QuestionId   ORDER BY ran
 WHERE AnswerId in @AnswerId;", new { AnswerId = requset.ToArray() });
         }
 
-        public int RemoveOption(RemoveOptionRequset requset)
+        public int RemoveOption(int questionId)
         {
             return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_quest_anwser`
-WHERE AnswerId = @AnswerId;", new { AnswerId = requset.OptionId });
+WHERE QuestionId = @QuestionId;", new { QuestionId = questionId });
         }
 
         public void UpdataOption(int infoQuestionId, List<int> requsetOptionId)

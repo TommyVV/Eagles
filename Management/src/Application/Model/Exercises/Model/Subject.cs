@@ -18,7 +18,7 @@
         /// <summary>
         /// 答案类型;0:默认:1:自定义：2：投票（无正确答案）
         /// </summary>
-        public int Answer { get; set; }
+        public int AnswerType { get; set; }
 
         /// <summary>
         /// 是否允许多选;0:否;1:是

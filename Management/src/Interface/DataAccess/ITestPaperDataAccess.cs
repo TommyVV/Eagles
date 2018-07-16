@@ -31,6 +31,6 @@ namespace Eagles.Interface.DataAccess
         void UpdataOption(int infoQuestionId, List<int> requsetOptionId);
         bool RemoveExercises(RemoveExercisesRequset requset);
         List<TbQuestion> GetSubjectList(GetSubjectListRequset requset, out int i);
-        int RemoveOption(RemoveOptionRequset requset);
+        int RemoveOption(int requset);
     }
 }

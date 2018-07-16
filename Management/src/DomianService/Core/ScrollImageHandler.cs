@@ -84,6 +84,7 @@ namespace Eagles.DomainService.Core
                 Id = detail.Id,
                 PageId = detail.PageType,
                 TargetUrl=detail.TargetUrl,
+                OrgName=detail.OrgName
             };
             return response;
         }

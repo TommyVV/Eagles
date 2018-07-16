@@ -7,6 +7,7 @@ using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base;
 using Eagles.Base.Cache;
+using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Exercises;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
@@ -46,7 +47,7 @@ namespace Eagles.DomainService.Core
 
             response.Info = new SubjectDetails
             {
-                Answer = result.AnswerType,
+                AnswerType = result.AnswerType,
                 QuestionId = result.QuestionId,
                 Question = result.Question,
                 OptionList = optionList.Select(x => new Option
@@ -96,7 +97,7 @@ namespace Eagles.DomainService.Core
             {
                 info = new TbQuestion
                 {
-                    AnswerType = requset.Info.Answer,
+                    AnswerType = requset.Info.AnswerType,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
                     OrgId = tokenInfo.OrgId,
@@ -108,20 +109,22 @@ namespace Eagles.DomainService.Core
                 //var optionList = dataAccess.GetOptionList( new List<int>{requset.Info.QuestionId});
 
 
-                dataAccess.RemoveOption(requset.Option.Select(x => x.OptionId).ToList());
+                dataAccess.RemoveOption(requset.Info.QuestionId);
+
+               // dataAccess.RemoveOption(requset.Option.Select(x => x.OptionId).ToList());
 
                 ////todo 事务修改 批量修改选项信息
                 dataAccess.CreateOption(requset.Option.Select(x =>
-                   new TbQuestAnswer
-                   {
-                       Answer = x.OptionName,
-                       AnswerType = x.AnswerType,
-                       ImageUrl = x.IsImg ? x.Img : string.Empty,
-                       IsRight = x.IsRight,
-                       OrgId = tokenInfo.OrgId,
-                       QuestionId = requset.Info.QuestionId,
-                       AnswerId = x.OptionId
-                   }).ToList());
+                    new TbQuestAnswer
+                    {
+                        Answer = x.OptionName,
+                        AnswerType = x.AnswerType,
+                        ImageUrl = x.Img,
+                        IsRight = x.IsRight,
+                        OrgId = tokenInfo.OrgId,
+                        QuestionId = requset.Info.QuestionId,
+                        AnswerId = x.OptionId
+                    }).ToList());
 
                 int result = dataAccess.EditSubject(info);
 
@@ -136,7 +139,7 @@ namespace Eagles.DomainService.Core
             {
                 info = new TbQuestion
                 {
-                    AnswerType = requset.Info.Answer,
+                    AnswerType = requset.Info.AnswerType,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
                     OrgId = tokenInfo.OrgId,
@@ -150,10 +153,10 @@ namespace Eagles.DomainService.Core
                     {
                         Answer = x.OptionName,
                         AnswerType = x.AnswerType,
-                        ImageUrl = x.IsImg ? x.Img : string.Empty,
+                        ImageUrl =  x.Img,
                         IsRight = x.IsRight,
                         OrgId = tokenInfo.OrgId,
-                        QuestionId = requset.Info.QuestionId,
+                        QuestionId = questionId,
                         AnswerId = x.OptionId
                     }).ToList());
                 ////todo 事务添加 批量新增选项信息
@@ -204,7 +207,7 @@ namespace Eagles.DomainService.Core
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
-                    OperId = 0, //todo 登陆人员id
+                    OperId = tokenInfo.UserId, //todo 登陆人员id
                     OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
@@ -248,7 +251,7 @@ namespace Eagles.DomainService.Core
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
-                    OperId = 0, //todo 登陆人员id
+                    OperId = tokenInfo.UserId, //todo 登陆人员id
                     OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
@@ -385,7 +388,8 @@ namespace Eagles.DomainService.Core
                 PassAwardScore = x.PassAwardScore,
                 LimitedTime = x.LimitedTime,
                 HasLimitedTime = x.HasLimitedTime > 0,
-                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                CreateTime = x.CreateTime.FormartDatetime(),
+                HtmlDescription=x.HtmlDescription
             }).ToList();
 
             return response;
@@ -468,10 +472,10 @@ namespace Eagles.DomainService.Core
 
         //}
 
-        public bool RemoveOption(RemoveOptionRequset requset)
-        {
-            return dataAccess.RemoveOption(requset) > 0;
-        }
+        //public bool RemoveOption(RemoveOptionRequset requset)
+        //{
+        //    return dataAccess.RemoveOption(requset) > 0;
+        //}
 
         public bool RemoveSubjectInfo(RemoveSubjectInfoRequset requset)
         {
@@ -495,7 +499,7 @@ namespace Eagles.DomainService.Core
             {
                 Question = x.Question,
                 QuestionId = x.QuestionId,
-                Answer = x.AnswerType,
+                AnswerType = x.AnswerType,
                 Multiple = x.Multiple,
                 MultipleCount = x.MultipleCount,
             }).ToList();

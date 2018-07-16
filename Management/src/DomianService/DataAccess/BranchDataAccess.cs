@@ -23,13 +23,13 @@ namespace Ealges.DomianService.DataAccess
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (orgId>0)
+            if (orgId > 0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
                 dynamicParams.Add("OrgId", orgId);
             }
 
-         
+
             sql.AppendFormat(@"SELECT count(*)
 FROM `eagles`.`tb_branch`  where 1=1  {0} ;
  ", parameter);

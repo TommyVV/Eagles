@@ -1319,7 +1319,7 @@
             问题id
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.Answer">
+        <member name="P:Eagles.Application.Model.Exercises.Model.Subject.AnswerType">
             <summary>
             答案类型;0:默认:1:自定义：2：投票（无正确答案）
             </summary>
