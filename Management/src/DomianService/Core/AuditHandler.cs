@@ -23,6 +23,8 @@ namespace Eagles.DomainService.Core
 
         private readonly IAuditDataAccess dataAccess;
 
+        
+
         public AuditHandler(IAuditDataAccess dataAccess)
         {
             this.dataAccess = dataAccess;

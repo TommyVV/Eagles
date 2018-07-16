@@ -197,20 +197,20 @@ namespace Eagles.DomainService.Core
             var now = DateTime.Now;
 
             TbTestPaper info;
-
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.ExercisesId > 0)
             {
 
                 info = new TbTestPaper
                 {
-                    BranchId = requset.Info.BranchId,
+                    BranchId = token.BranchId,
                     EditTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
-                    OrgId = requset.Info.OrgId,
+                    OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -218,18 +218,13 @@ namespace Eagles.DomainService.Core
                     TestId = requset.Info.ExercisesId,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
-
-
                 };
 
-                int result = dataAccess.EditExercises(info);
+                var result = dataAccess.EditExercises(info);
 
-
-
-
-                List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
+                var list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = requset.Info.OrgId,
+                    OrgId = token.OrgId,
                     QuestionId = x,
                     TestId = requset.Info.ExercisesId
                 }).ToList();
@@ -259,14 +254,14 @@ namespace Eagles.DomainService.Core
             {
                 info = new TbTestPaper
                 {
-                    BranchId = requset.Info.BranchId,
+                    BranchId = token.BranchId,
                     CreateTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
-                    OrgId = requset.Info.OrgId,
+                    OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -281,7 +276,7 @@ namespace Eagles.DomainService.Core
 
                 List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = requset.Info.OrgId,
+                    OrgId = token.OrgId,
                     QuestionId = x,
                     TestId = result
                 }).ToList();
@@ -512,7 +507,6 @@ namespace Eagles.DomainService.Core
                 Answer = x.AnswerType,
                 Multiple = x.Multiple,
                 MultipleCount = x.MultipleCount,
-                OrgId = x.OrgId
             }).ToList();
 
             return response;
