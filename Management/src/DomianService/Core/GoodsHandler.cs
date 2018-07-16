@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Goods.Model;
 using Eagles.Application.Model.Goods.Requset;
 using Eagles.Application.Model.Goods.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Product;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -16,18 +17,19 @@ namespace Eagles.DomainService.Core
     {
         private readonly IGoodsDataAccess dataAccess;
 
-        public GoodsHandler(IGoodsDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public GoodsHandler(IGoodsDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditGoods(EditGoodsRequset requset)
         {
 
-
-
             TbProduct mod;
-
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             var now = DateTime.Now;
             if (requset.Info.GoodsId > 0)
             {
@@ -40,7 +42,7 @@ namespace Eagles.DomainService.Core
                     HtmlDescription = requset.Info.Content,
                     ImageUrl = requset.Info.GoodsIcon,
                     MaxBuyCount = requset.Info.MaxExchangeNum,
-                    OrgId = requset.OrgId,
+                    OrgId = token.OrgId,
                     Price = requset.Info.ReferePrice,
                     ProdId = requset.Info.GoodsId,
                     ProdName = requset.Info.GoodsName,
@@ -53,53 +55,41 @@ namespace Eagles.DomainService.Core
                 };
 
                 return dataAccess.EditGoods(mod) > 0;
-
-
             }
-            else
+
+            mod = new TbProduct
             {
-                mod = new TbProduct
-                {
-                    BeginTime = requset.Info.SellStartTime,
-                    EndTime = requset.Info.SellEndTime,
-                    CreateTime = now,
-                    EditTime = now,
-                    HtmlDescription = requset.Info.Content,
-                    ImageUrl = requset.Info.GoodsIcon,
-                    MaxBuyCount = requset.Info.MaxExchangeNum,
-                    OrgId = requset.OrgId,
-                    Price = requset.Info.ReferePrice,
-                    ProdId = requset.Info.GoodsId,
-                    ProdName = requset.Info.GoodsName,
-                    SaleCount = requset.Info.Sale,
-                    Score = requset.Info.Score,
-                    SmallImageUrl = requset.Info.GoodsImg,
-                    Status = requset.Info.GoodsStatus,
-                    Stock = requset.Info.Stock,
+                BeginTime = requset.Info.SellStartTime,
+                EndTime = requset.Info.SellEndTime,
+                CreateTime = now,
+                EditTime = now,
+                HtmlDescription = requset.Info.Content,
+                ImageUrl = requset.Info.GoodsIcon,
+                MaxBuyCount = requset.Info.MaxExchangeNum,
+                OrgId = token.OrgId,
+                Price = requset.Info.ReferePrice,
+                ProdId = requset.Info.GoodsId,
+                ProdName = requset.Info.GoodsName,
+                SaleCount = requset.Info.Sale,
+                Score = requset.Info.Score,
+                SmallImageUrl = requset.Info.GoodsImg,
+                Status = requset.Info.GoodsStatus,
+                Stock = requset.Info.Stock,
 
-                };
+            };
 
-                return dataAccess.CreateGoods(mod) > 0;
-
-            }
+            return dataAccess.CreateGoods(mod) > 0;
 
         }
 
         public bool RemoveGoods(RemoveGoodsRequset requset)
         {
-
             return dataAccess.RemoveGoods(requset) > 0;
-
-
         }
 
         public GetGoodsDetailResponse GetGoodsDetail(GetGoodsDetailRequset requset)
         {
-            var response = new GetGoodsDetailResponse
-            {
-               
-               
-            };
+            var response = new GetGoodsDetailResponse();
             TbProduct detail = dataAccess.GetGoodsDetail(requset);
        
 
@@ -132,7 +122,7 @@ namespace Eagles.DomainService.Core
                
                
             };
-            List<TbProduct> list = dataAccess.GetNewsList(requset) ?? new List<TbProduct>();
+            var list = dataAccess.GetNewsList(requset) ?? new List<TbProduct>();
 
             if (list.Count == 0) throw new TransactionException("M01","无业务数据");
 
