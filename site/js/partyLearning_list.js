@@ -3,11 +3,7 @@ var Moduleid=getRequest('paramModuleid')//获取模块id
 var ModuleType=getRequest('paramModuleType')//获取来源页面id
 var token=localStorage.getItem("token")
 var appId=getRequest('appId')
-//var appId=10000000
 var mescroll;
-//var token="123"
-//var Moduleid=3//传地址截取的值
-//var ModuleType=0//传地址截取的值*/
 var module;
 partyTitle(ModuleType,Moduleid,appId)//来源页面的分类列表
 $('.list-bottom').html('')

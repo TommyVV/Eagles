@@ -14,13 +14,28 @@ $('.publish-btn').on('click', function(e) {
 	var type = $('.selectpicker').val(); //文章类型
 	var content = $('.publish-content').val(); //文章内容
 	if(!title) {
-		alert('请填写文章标题');
+		bootoast({
+			message: '请填写文章标题',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 2
+		});
 		return;
 	} else if(!type) {
-		alert('请选择文章类型');
+		bootoast({
+			message: '请选择文章类型',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 2
+		});
 		return;
 	} else if(!content) {
-		alert('请填写文章内容');
+		bootoast({
+			message: '请填写文章内容',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 2
+		});
 		return;
 	}
 	$.ajax({

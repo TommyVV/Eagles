@@ -144,7 +144,12 @@ function judgeMultiplecount() {
 		var checkedInputs = showQuest.find('input[type=checkbox]:checked');
 		if(checkedInputs.length > quesContent.attr("multiplecount")) {
 			rest = false;
-			alert('当前题目，您最多只能选择' + quesContent.attr("multiplecount") + '个选项')
+			bootoast({
+				message: '当前题目，您最多只能选择' + quesContent.attr("multiplecount") + '个选项',
+				type: 'warning',
+				position: 'toast-top-center',
+				timeout: 3
+			});
 		}
 
 	} else { //单选不处理
