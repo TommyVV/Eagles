@@ -2,9 +2,10 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.ActivityTask.Requset;
-using Eagles.Application.Model.Common;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -13,9 +14,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public ActivityTaskDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public ActivityTaskDataAccess(IDbManager dbManager,ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
         public int EditActivity(TbActivity mod)
         {
@@ -172,17 +176,17 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
-            if (requset.BranchId > 0)
+            if (token.BranchId > 0)
             {
                 parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
+                dynamicParams.Add("BranchId", token.BranchId);
             }
 
 

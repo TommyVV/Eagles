@@ -7,9 +7,6 @@ using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base;
 using Eagles.Base.Cache;
-using Eagles.Base.Configuration;
-using Eagles.Base.DataBase;
-using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
@@ -26,10 +23,9 @@ namespace Eagles.DomainService.Core
 
         private readonly ICacheHelper cacheHelper;
 
-        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager, ICacheHelper cacheHelper)
+        public TestPaperHandler(ITestPaperDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
-            this.dbManager = dbManager;
             this.cacheHelper = cacheHelper;
         }
 
@@ -94,8 +90,6 @@ namespace Eagles.DomainService.Core
         /// <returns></returns>
         public int EditSubject(EditSubjectRequset requset)
         {
-
-            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             TbQuestion info;
             var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
@@ -187,8 +181,6 @@ namespace Eagles.DomainService.Core
         /// <returns></returns>
         public ResponseBase EditExercises(EditExercisesRequset requset)
         {
-
-            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             var response = new ResponseBase
             {

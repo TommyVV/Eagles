@@ -88,11 +88,11 @@ WHERE `VendorId` = @VendorId
 
 
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (requset.OrgId > 0)
             {

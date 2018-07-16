@@ -82,11 +82,11 @@ WHERE `NewsId` = @NewsId
 
 
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and Status = @Status ");
-                dynamicParams.Add("Status", requset.Status);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and Status = @Status ");
+            //    dynamicParams.Add("Status", requset.Status);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.SystemMessageName))
             {

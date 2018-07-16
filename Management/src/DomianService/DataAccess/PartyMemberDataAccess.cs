@@ -213,11 +213,11 @@ VALUES
                 dynamicParams.Add("Name", request.UserName);
             }
 
-            if (request.BranchId>0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", request.BranchId);
-            }
+            //if (request.BranchId>0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", request.BranchId);
+            //}
 
             if (request.OrgId > 0)
             {

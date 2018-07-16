@@ -2,8 +2,10 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.News.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.News;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -12,9 +14,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public NewsDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public NewsDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
         public List<TbNews> GetNewsList(GetNewRequset requset, out int totalCount)
@@ -22,18 +27,18 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.NewsName))
             {
