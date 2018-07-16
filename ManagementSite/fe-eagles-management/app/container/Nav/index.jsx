@@ -286,6 +286,12 @@ export default class App extends React.Component {
               >
                 积分排行列表
               </Menu.Item>
+              <Menu.Item
+                key="155"
+                onClick={e => hashHistory.replace("/rank/detail")}
+              >
+                积分排行详情
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub9"

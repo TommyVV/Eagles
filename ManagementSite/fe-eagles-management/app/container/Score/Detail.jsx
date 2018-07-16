@@ -213,7 +213,7 @@ const FormMap = Form.create({
   }
 })(Base);
 
-class IntergralDetail extends Component {
+class ScoreDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -276,4 +276,4 @@ class IntergralDetail extends Component {
   }
 }
 
-export default IntergralDetail;
+export default ScoreDetail;
