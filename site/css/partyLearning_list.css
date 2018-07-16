@@ -131,7 +131,7 @@
     }
     @media screen and (min-width: 768px) {
     	.pc-nav{margin-bottom: 0;}
-    	.main_content .list-box .list-body{padding-top:138px}
+    	.main_content .list-box .list-body{padding-top:138px;width:1200px;margin:0 auto;}
     	.mescroll{
     		
     		padding-top:100px;
