@@ -6,7 +6,7 @@
     public class GetSubjectDetailRequset:RequestBase
     {
         /// <summary>
-        /// 
+        /// 问题Id
         /// </summary>
         public int QuestionId { get; set; }
 

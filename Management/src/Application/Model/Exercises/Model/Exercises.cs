@@ -10,16 +10,6 @@ namespace Eagles.Application.Model.Exercises.Model
     {
 
         /// <summary>
-        /// 支部id
-        /// </summary>
-        public int BranchId { get; set; }
-
-        /// <summary>
-        /// 组织id
-        /// </summary>
-        public int OrgId { get; set; }
-
-        /// <summary>
         /// 试卷名
         /// </summary>
         public string ExercisesName { get; set; }

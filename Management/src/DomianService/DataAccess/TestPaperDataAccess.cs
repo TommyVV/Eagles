@@ -196,10 +196,10 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
 
 
 
-            if (!string.IsNullOrWhiteSpace(requset.Question))
+            if (!string.IsNullOrWhiteSpace(requset.QuestionId))
             {
                 parameter.Append(" and TestName = @TestName ");
-                dynamicParams.Add("TestName", requset.Question);
+                dynamicParams.Add("TestName", requset.QuestionId);
             }
 
          

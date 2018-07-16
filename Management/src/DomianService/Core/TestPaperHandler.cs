@@ -420,7 +420,7 @@ namespace Eagles.DomainService.Core
 
             var response = new GetRandomSubjectResponse();
             //得到试卷 + 习题的关系
-            List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.ExercisesId);
+            List<TbTestQuestion> list = dataAccess.GetTestQuestionRelationshipByTestId(requset.TestId);
 
             //数据库计算 派出已关联的 
             List<TbQuestion> subjectList =

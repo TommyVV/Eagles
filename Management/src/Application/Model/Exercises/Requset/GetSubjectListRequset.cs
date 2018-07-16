@@ -14,6 +14,6 @@ namespace Eagles.Application.Model.Exercises.Requset
         /// <summary>
         /// 问题
         /// </summary>
-        public string Question { get; set; }
+        public string QuestionId { get; set; }
     }
 }
