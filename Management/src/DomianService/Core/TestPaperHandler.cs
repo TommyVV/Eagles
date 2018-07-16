@@ -24,13 +24,13 @@ namespace Eagles.DomainService.Core
 
         private readonly ITestPaperDataAccess dataAccess;
 
-        private readonly ICacheHelper Cache;
+        private readonly ICacheHelper cacheHelper;
 
-        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager, ICacheHelper cache)
+        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
-            Cache = cache;
-            //  this.dbManager = dbManager;
+            this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
 
@@ -98,7 +98,7 @@ namespace Eagles.DomainService.Core
             var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             TbQuestion info;
-
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.QuestionId > 0)
             {
                 info = new TbQuestion
@@ -199,20 +199,20 @@ namespace Eagles.DomainService.Core
             var now = DateTime.Now;
 
             TbTestPaper info;
-
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.ExercisesId > 0)
             {
 
                 info = new TbTestPaper
                 {
-                    BranchId = tokenInfo.BranchId,
+                    BranchId = token.BranchId,
                     EditTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
-                    OperId = tokenInfo.UserId, //todo 登陆人员id
-                    OrgId = tokenInfo.OrgId,
+                    OperId = 0, //todo 登陆人员id
+                    OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -220,18 +220,13 @@ namespace Eagles.DomainService.Core
                     TestId = requset.Info.ExercisesId,
                     TestName = requset.Info.ExercisesName,
                     TestType = requset.Info.ExercisesType,
-
-
                 };
 
-                int result = dataAccess.EditExercises(info);
+                var result = dataAccess.EditExercises(info);
 
-
-
-
-                List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
+                var list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = tokenInfo.OrgId,
+                    OrgId = token.OrgId,
                     QuestionId = x,
                     TestId = requset.Info.ExercisesId
                 }).ToList();
@@ -254,14 +249,14 @@ namespace Eagles.DomainService.Core
             {
                 info = new TbTestPaper
                 {
-                    BranchId = tokenInfo.BranchId,
+                    BranchId = token.BranchId,
                     CreateTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
-                    OrgId = tokenInfo.OrgId,
+                    OrgId = token.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -276,7 +271,7 @@ namespace Eagles.DomainService.Core
 
                 List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = tokenInfo.OrgId,
+                    OrgId = token.OrgId,
                     QuestionId = x,
                     TestId = result
                 }).ToList();
@@ -510,7 +505,6 @@ namespace Eagles.DomainService.Core
                 Answer = x.AnswerType,
                 Multiple = x.Multiple,
                 MultipleCount = x.MultipleCount,
-                // OrgId = x.OrgId
             }).ToList();
 
             return response;

@@ -18,10 +18,12 @@ namespace Ealges.DomianService.DataAccess
         private readonly IDbManager dbManager;
         private readonly ICacheHelper Cache;
 
-        public TestPaperDataAccess(IDbManager dbManager, ICacheHelper cache)
+        private readonly ICacheHelper cacheHelper;
+
+        public TestPaperDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
-            Cache = cache;
+            this.cacheHelper = cacheHelper;
         }
 
         public List<TbTestPaper> GetExercisesList(GetExercisesRequset requset, out int totalCount)
@@ -30,19 +32,18 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-            // var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
+            {
+                parameter.Append(" and  OrgId = @OrgId ");
+                dynamicParams.Add("OrgId", token.OrgId);
+            }
 
-            //if (requset.OrgId > 0)
-            //{
-            //    parameter.Append(" and  OrgId = @OrgId ");
-            //    dynamicParams.Add("OrgId", requset.OrgId);
-            //}
-
-            //if (requset.BranchId > 0)
-            //{
-            //    parameter.Append(" and BranchId = @BranchId ");
-            //    dynamicParams.Add("BranchId", requset.BranchId);
-            //}
+            if (token.BranchId > 0)
+            {
+                parameter.Append(" and BranchId = @BranchId ");
+                dynamicParams.Add("BranchId", token.BranchId);
+            }
 
             if (!string.IsNullOrWhiteSpace(requset.ExercisesName))
             {
@@ -192,12 +193,12 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            //if (requset.OrgId > 0)
-            //{
-            //    parameter.Append(" and  OrgId = @OrgId ");
-            //    dynamicParams.Add("OrgId", requset.OrgId);
-            //}
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
+            {
+                parameter.Append(" and  OrgId = @OrgId ");
+                dynamicParams.Add("OrgId", token.OrgId);
+            }
 
 
 
@@ -207,18 +208,18 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
                 dynamicParams.Add("TestName", requset.QuestionId);
             }
 
+         
+            //if (requset.StartTime != null)
+            //{
+            //    parameter.Append(" and CreateTime >= @StartTime ");
+            //    dynamicParams.Add("StartTime", requset.StartTime);
+            //}
 
-            if (requset.StartTime != null)
-            {
-                parameter.Append(" and CreateTime >= @StartTime ");
-                dynamicParams.Add("StartTime", requset.StartTime);
-            }
-
-            if (requset.EndTime != null)
-            {
-                parameter.Append(" and CreateTime <= @EndTime ");
-                dynamicParams.Add("EndTime", requset.EndTime);
-            }
+            //if (requset.EndTime != null)
+            //{
+            //    parameter.Append(" and CreateTime <= @EndTime ");
+            //    dynamicParams.Add("EndTime", requset.EndTime);
+            //}
 
             sql.AppendFormat(@"SELECT count(*)
 FROM `eagles`.`tb_question`  where 1=1  {0} 

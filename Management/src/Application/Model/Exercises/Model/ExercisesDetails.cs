@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Eagles.Application.Model.Exercises.Model
 {
@@ -11,8 +7,6 @@ namespace Eagles.Application.Model.Exercises.Model
     /// </summary>
     public class ExercisesDetails : Exercises
     {
-
-    
 
         /// <summary>
         /// 题目列表

@@ -13,7 +13,7 @@ namespace Eagles.Application.Model.Exercises.Requset
         public Model.Exercises Info { get; set; }
 
         /// <summary>
-        /// 
+        /// 问题id
         /// </summary>
         public List<int> Subject { get; set; }
     }
