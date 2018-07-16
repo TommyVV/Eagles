@@ -13,8 +13,6 @@ import PartyMemberList from "../container/PartyMember";
 import PartyMemberDetail from "../container/PartyMember/Detail";
 import SetNextPartyMember from "../container/PartyMember/Next";
 import ImportMember from "../container/PartyMember/ImportMember";
-import IntergralList from "../container/Intergral";
-import IntergralDetail from "../container/Intergral/Detail";
 import GoodsList from "../container/Goods";
 import GoodsDetail from "../container/Goods/Detail";
 import SendList from "../container/Send";
@@ -51,6 +49,8 @@ import SmsSystemDetail from "../container/SmsSystem/Detail";
 import SmsOrgList from "../container/SmsOrg";
 import SmsOrgDetail from "../container/SmsOrg/Detail";
 import ExList from "../container/Exercise/ExDetail/ExList";
+import ScoreList from "../container/Score";
+import ScoreDetail from "../container/Score/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -78,8 +78,8 @@ class RouteMap extends Component {
           />
           <route path="/partymember/import" component={ImportMember} />
           {/* 积分配置 */}
-          <route path="/intergrallist" component={IntergralList} />
-          <route path="/intergral/detail(/:id)" component={IntergralDetail} />
+          <route path="/intergrallist" component={ScoreList} />
+          <route path="/intergral/detail(/:id)" component={ScoreDetail} />
           {/* 商品 */}
           <route path="/goodslist" component={GoodsList} />
           <route path="/goods/detail(/:id)" component={GoodsDetail} />
@@ -93,7 +93,10 @@ class RouteMap extends Component {
           <route path="/system/detail(/:id)" component={SystemDetail} />
           {/* 积分排行 */}
           <route path="/ranklist" component={RankList} />
-          <route path="/rank/detail(/:id)" component={RankDetail} />
+          <route
+            path="/rank/detail(/:id/:name/:score)"
+            component={RankDetail}
+          />
           {/* 操作员 */}
           <route path="/operatorlist" component={OperatorList} />
           <route path="/operator/detail(/:id)" component={OperatorDetail} />
