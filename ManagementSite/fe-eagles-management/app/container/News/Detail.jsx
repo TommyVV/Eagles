@@ -261,14 +261,6 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入标题" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="类型">
-          {getFieldDecorator("NewsType")(
-            <Select>
-              <Option value="0">新闻</Option>
-              <Option value="1">会议</Option>
-            </Select>
-          )}
-        </FormItem>
         <FormItem {...formItemLayout} label="作者">
           {getFieldDecorator("Author", {
             rules: [
@@ -483,7 +475,7 @@ const FormMap = Form.create({
         value: news.NewsName
       }),
       NewsType: Form.createFormField({
-        value: news.NewsType ? news.NewsType + "" : "0"
+        value: "0" // 写死
       }),
       Author: Form.createFormField({
         value: news.Author
