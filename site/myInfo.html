@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的信息</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link href="./css/myInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="css/leftNav.css">
     
@@ -89,7 +90,7 @@
                             出生日期
                         </div>
                         <div class="right">
-                            <span><label class="ld_datas"></label><input type="text" value="" class="ld_datasinput" />&nbsp;</span>
+                            <span><label class="ld_datas"></label><input class="form_datetime ld_datasinput" id="start" size="16" type="text" readonly placeholder="请选择出生日期">&nbsp;</span>
                             <span class="glyphicon glyphicon-edit lg_left" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -266,8 +267,30 @@
         <script src="js/jquery.ui.widget.js"></script>
         <script src="js/jquery.iframe-transport.js"></script>
         <script src="js/jquery.fileupload.js"></script>
+        <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="js/common.js"></script>
         <script src="js/myInfo.js"></script>
+        <script type="text/javascript">
+		    //日期插件
+		    var date = new Date();
+		    var year = date.getFullYear();
+		    var month = date.getMonth() + 1;
+		    var day = date.getDate();
+		   // console.log(year, month, day);
+		    $(".form_datetime").datetimepicker({
+		        format: 'yyyy-mm-dd', //显示格式
+		        minView: "month", //设置只显示到月份
+		        startDate: "",
+		        todayBtn: true,
+		        startView: 2,
+		        forceParse: 0,
+		        showMeridian: 1,
+		        autoclose: 1, //选择后自动关闭
+		        pickerPosition: "bottom-left",
+		        language: "zh-CN"
+		    });
+		</script>
 </body>
 
 </html>
