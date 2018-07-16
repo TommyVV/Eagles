@@ -13,6 +13,10 @@ namespace Eagles.Application.Host.Controllers
     {
         private readonly IUserMessageHandler userMessage;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userMessage"></param>
         public UserMessageController(IUserMessageHandler userMessage)
         {
             this.userMessage = userMessage;

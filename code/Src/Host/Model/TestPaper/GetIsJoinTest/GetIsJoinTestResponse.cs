@@ -2,7 +2,7 @@
 namespace Eagles.Application.Model.TestPaper.GetIsJoinTest
 {
     /// <summary>
-    /// 试卷完成接口
+    /// 是否参加答题接口
     /// </summary>
     public class GetIsJoinTestResponse 
     {

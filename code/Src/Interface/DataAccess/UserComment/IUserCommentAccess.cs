@@ -10,7 +10,7 @@ namespace Eagles.Interface.DataAccess.UserComment
 
         int RemoveUserComment(int messageId, int id);
 
-        int AuditUserComment(int commentId, int reviewStatus);
+        int AuditUserComment(TbUserComment userComment);
 
         List<TbUserComment> GetUserComment(string commentType, int id, int userId, int commentStatus);
 
