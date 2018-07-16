@@ -1,8 +1,6 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Menus.Requset;
 using Eagles.Application.Model.Menus.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
 using Eagles.Application.Host.Common;
 namespace Eagles.Application.Host.Controllers
@@ -20,7 +18,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 编辑  菜单
+        ///新增/编辑菜单
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -31,7 +29,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        ///  菜单 栏目
+        ///  删除菜单
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -42,7 +40,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 菜单 列表
+        /// 查询菜单列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -53,7 +51,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 获取下级菜单
+        /// 获取当前菜单的子菜单
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -64,7 +62,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        ///  菜单 详情
+        ///  菜单 详情（暂时无用）
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>

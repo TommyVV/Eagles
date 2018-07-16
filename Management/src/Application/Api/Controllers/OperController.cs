@@ -22,7 +22,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 编辑 管理员
+        /// 编辑/新增管理员
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 删除 管理员
+        /// 删除管理员
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -44,7 +44,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 管理员 详情
+        /// 管理员详情
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -55,7 +55,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 管理员 列表
+        /// 管理员列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>

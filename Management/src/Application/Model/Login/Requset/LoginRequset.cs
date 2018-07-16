@@ -1,6 +1,4 @@
-﻿using Eagles.Application.Model.Enums;
-
-namespace Eagles.Application.Model.Login.Requset
+﻿namespace Eagles.Application.Model.Login.Requset
 {
     /// <summary>
     /// 
@@ -14,21 +12,15 @@ namespace Eagles.Application.Model.Login.Requset
         public string Password { get; set; }
 
         /// <summary>
-        /// 账号
+        /// 用户名
         /// </summary>
         /// <returns></returns>
         public string Account { get; set; }
 
         /// <summary>
-        /// 验证码
+        /// 验证码（暂时不用）
         /// </summary>
         public string VerificationCode { get; set; }
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public LoginType LoginType { get; set; }
 
     }
 }

@@ -1,6 +1,4 @@
-﻿using Eagles.Application.Model.Enums;
-
-namespace Eagles.Application.Model.Menus.Model
+﻿namespace Eagles.Application.Model.Menus.Model
 {
     /// <summary>
     /// 
@@ -13,11 +11,12 @@ namespace Eagles.Application.Model.Menus.Model
         public int OrgId { get; set; }
 
         /// <summary>
-        /// 机构名称
+        /// 机构名称（新增修改，无需传入）
         /// </summary>
         public string OrgName { get; set; }
+
         /// <summary>
-        /// 级菜单名称
+        /// 菜单id（新增无需传入，修改传入）
         /// </summary>
         public int MenuId { get; set; }
 
@@ -27,12 +26,12 @@ namespace Eagles.Application.Model.Menus.Model
         public string MenuName { get; set; }
 
         /// <summary>
-        /// 级菜单链接
+        /// 菜单跳转链接
         /// </summary>
         public string MenuLink { get; set; }
 
         /// <summary>
-        /// 菜单级别 
+        /// 菜单等级；暂时只有2级（1,2） 
         /// </summary>
         public string MenuLevel { get; set; }
 

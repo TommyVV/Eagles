@@ -25,7 +25,7 @@ namespace Eagles.Application.Model.Column.Model
 
 
         /// <summary>
-        /// 审核状态
+        /// 栏目状态
         /// </summary>
         public AuditStatus AuditStatus { get; set; }
 

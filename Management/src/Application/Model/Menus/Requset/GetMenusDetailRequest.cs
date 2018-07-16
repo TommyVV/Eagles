@@ -6,7 +6,7 @@
     public class GetMenusDetailRequest : RequestBase
     {
         /// <summary>
-        /// 级菜单名称
+        /// 菜单id
         /// </summary>
         public int MenuId { get; set; }
     }
