@@ -20,5 +20,10 @@ namespace Eagles.DomainService.Model.Config
         /// 任务通知跳转链接
         /// </summary>
         public string TaskNoticeUrl { get; set; }
+
+        /// <summary>
+        /// 导出文件路径
+        /// </summary>
+        public string ExportPath { get; set; }
     }
 }
