@@ -64,6 +64,8 @@
     <Compile Include="Common\UserNotice.cs" />
     <Compile Include="Common\UserRelationship.cs" />
     <Compile Include="Enums\TaskEnum.cs" />
+    <Compile Include="Export\ExportRequest.cs" />
+    <Compile Include="Export\ExportResponse.cs" />
     <Compile Include="MessageCode.cs" />
     <Compile Include="MessageKey.cs" />
     <Compile Include="News\AddNewsViewCount\AddNewsCountRequest.cs" />

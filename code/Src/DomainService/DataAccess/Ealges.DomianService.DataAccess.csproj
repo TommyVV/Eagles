@@ -46,6 +46,7 @@
     <Compile Include="ActivityData\ActivityDataAccess.cs" />
     <Compile Include="AppMenu\MenuDataAccess.cs" />
     <Compile Include="AppModule\AppModuleDA.cs" />
+    <Compile Include="ExportData\ExportDataAccess.cs" />
     <Compile Include="NewsDA\NewsDA.cs" />
     <Compile Include="OrderData\OrderDataAccess.cs" />
     <Compile Include="ProductData\ProductDataAccess.cs" />

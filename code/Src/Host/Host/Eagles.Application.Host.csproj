@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\AppModuleController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
