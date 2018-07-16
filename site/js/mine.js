@@ -3,6 +3,8 @@ $('#top-nav,#mobilenav').load('./head.html')
 	if(!localStorage.getItem('token')){
 		window.location.href = "login.html"
 	}
+	var token=localStorage.getItem('token')
+var appId=getRequest('appId');
    
     class CalculateScreen {
         constructor() {
@@ -13,7 +15,7 @@ $('#top-nav,#mobilenav').load('./head.html')
             if (!this.isMobile) {
                $('.mobile').hide();
                 $('.pc').show();
-                $('#left-nav').load('leftNav.html', () => {
+                $('#left-nav').load('leftNav.html?appId='+appId+'', () => {
 
                 })
                 $('#footer').load('footer.html', () => {
@@ -32,8 +34,7 @@ $('#top-nav,#mobilenav').load('./head.html')
     $(window).resize(function () {
         new CalculateScreen();
     })
-var token=localStorage.getItem('token')
-var appId=getRequest('appId');
+
  //积分换购
     $("#point-part").click(function () {
         window.location.href = 'exchange.html?appId='+appId+''
@@ -44,14 +45,18 @@ var appId=getRequest('appId');
     });
     //我的文章
     $(".lw_acile,.fb_wz").click(function () {
-        window.location.href = 'myArticle.html?appId='+appId+''
+        window.location.href = 'myArticle.html?appId='+appId+'&NewsType=0'
+    });
+    //我的会议
+    $("#myhuiyi").click(function () {
+        window.location.href = 'myArticle.html?appId='+appId+'&NewsType=2'
     });
     //我的积分
     $(".lw_muscore").click(function () {
         window.location.href = 'rank.html?appId='+appId+''
     });
     //我的文章
-    $(".a_tz").click(function () {
+    $(".a_tz,.fb_wz").click(function () {
         window.location.href = 'myInfo.html?appId='+appId+''
     });
     //我的通知
@@ -59,20 +64,21 @@ var appId=getRequest('appId');
         window.location.href = 'myNotice.html?appId='+appId+''
     });
     //我的活动
-    $("#myproduct").click(function () {
-        window.location.href = 'activityList..html?appId='+appId+''
+    $("#myproduct,.fb_profuct").click(function () {
+        window.location.href = 'activityList.html?appId='+appId+''
     });
     //文章发布
     $("#pushace,.fb_wzby").click(function () {
         window.location.href = 'publishArticle.html?appId='+appId+''
     });
     //发布活动
-    $("#f_huod").click(function () {
-        window.location.href = '发布活动：publishTask.html?appId='+appId+'&type=0'
+    $("#f_huod,.fb_fbgt").click(function () {
+        window.location.href = 'publishTask.html?appId='+appId+'&type=0'
     });
     //发布任务
     $("#f_rw,.fb_wrw").click(function () {
-        window.location.href = 'publishTask..html?appId='+appId+'&type=0'
+    	console.log(7)
+        window.location.href = 'publishTask.html?appId='+appId+'&type=1'
     });
     //我的任务
     $("#task,.fb_one").click(function () {

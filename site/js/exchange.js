@@ -12,15 +12,15 @@ $(document).ready(function () {
     }
 });
 var appId=getRequest('appId');
- $(".search-btn").click(function () {
-    exchange(appId);
- });
+// $(".search-btn").click(function () {
+//  exchange(appId);
+// });
 exchange(appId);//积分兑换接口
 function exchange(appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"ProductName": $('.search-input').val(),
+			"ProductName": '',
 			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Product/GetProduct",

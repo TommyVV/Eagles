@@ -4,7 +4,7 @@
   font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   background: #e2e2e2; }
 
 .container {
@@ -44,8 +44,8 @@ html, body {
         position: absolute;
         display: inline-block;
         width: 0.512rem;
-        height: 0.55467rem;
-        left: 0.10667rem;
+        height: 0.85467rem;
+        left: 0.20667rem;
         bottom: 0.34133rem; }
       .form-horizontal .form-group .user-icon {
         background: url("../assets/images/user.png") no-repeat center center; }
@@ -85,8 +85,10 @@ html, body {
         box-shadow: none; } }
 
 @media screen and (min-width: 768px) {
+	.container{width:100%;padding: 0;}
   .loginModal {
-    width: 1000px;
+    width:100%;
+    background: url(../icons/er.jpeg)no-repeat;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -117,7 +119,7 @@ html, body {
       margin-right: 0;
       margin-bottom: 70px; }
       .form-horizontal .form-group .form-control {
-        background-color: #f8f8f8;
+        /*background-color: #f8f8f8;*/
         border: none;
         border-bottom: 1px solid #A8A8A8;
         box-shadow: none;

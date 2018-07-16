@@ -10,12 +10,13 @@ html, body {
   height: 100%; }
 
 @media screen and (max-width: 768px) {
-	.mescroll{
-			position: fixed;
-			top: 60px;
-			bottom: 0;
-			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
-		}
+		.mescroll{
+			padding-top:60px;
+		position: fixed;
+		top: 10px;
+		bottom: 10px;
+		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
+	}
   .myArticleModal {
     background-color: #f8f8f8;
     min-height: 100%; } }
