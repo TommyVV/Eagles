@@ -12,6 +12,7 @@
         margin-top: px2rem(27);
         margin-bottom: px2rem(2);
         color: #949494;
+        line-height: px2rem(88);
         img {
             width: px2rem(88);
             height: px2rem(88);
@@ -19,7 +20,6 @@
         }
         .time {
             float: right;
-            line-height: px2rem(88);
         }
     }
     .info-item {
