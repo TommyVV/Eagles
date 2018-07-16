@@ -95,7 +95,6 @@ $('.confirmBtn').on('click', function() {
 	RequestUserInfo.Telphone = $('.ld_phoneinput').val()
 	RequestUserInfo.Employer = $('.ld_bjyinput').val()
 	RequestUserInfo.Department = $('.ld_dakinput').val()
-	console.log(RequestUserInfo)
 	$.ajax({
 		type: "post",
 		data: {
@@ -107,9 +106,9 @@ $('.confirmBtn').on('click', function() {
 		dataType: "json",
 		success: function(res) {
 
-			/*if(res.Code == 00) {
+			if(res.Code == 00) {
 				window.location.href = 'mine.html?appId='+appId
-			}*/
+			}
 		}
 	})
 })
