@@ -11,8 +11,10 @@ using Eagles.Application.Model.AuthorityGroupSetUp.Model;
 using Eagles.Application.Model.AuthorityGroupSetUp.Requset;
 using Eagles.Application.Model.AuthorityGroupSetUp.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Authority;
 using Eagles.DomainService.Model.Oper;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -25,10 +27,13 @@ namespace Eagles.DomainService.Core
 
         private readonly IOperDataAccess OperdataAccess;
 
-        public OperGroupHandler(IOperGroupDataAccess dataAccess, IOperDataAccess operdataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public OperGroupHandler(IOperGroupDataAccess dataAccess, IOperDataAccess operdataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
             OperdataAccess = operdataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditOperGroup(EditAuthorityGroupRequset requset)
@@ -158,7 +163,9 @@ namespace Eagles.DomainService.Core
             var response = new GetAuthorityGroupSetUpResponse
             {
             };
-            List<TbAuthority> list = dataAccess.GetAuthorityGroupSetUp(requset) ?? new List<TbAuthority>();
+
+           
+            List<TbAuthority> list = dataAccess.GetAuthorityGroupSetUp(requset.GroupId) ?? new List<TbAuthority>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
@@ -167,6 +174,30 @@ namespace Eagles.DomainService.Core
                 FunCode = x.FunCode,
                 CreateTime = x.CreateTime,
             }).ToList();
+            return response;
+        }
+
+        public GetAuthorityGroupSetUpResponse GetAuthorityByToken(RequestBase request)
+        {
+            //get user group 
+            var userInfo = cacheHelper.GetData<TbUserToken>(request.Token);
+            var operInfo = OperdataAccess.GetOperDetail(userInfo.UserId);
+            if (operInfo == null)
+            {
+                throw new TransactionException("M01", "无业务数据");
+
+            }
+            var list = dataAccess.GetAuthorityGroupSetUp(operInfo.GroupId) ?? new List<TbAuthority>();
+
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
+            var response = new GetAuthorityGroupSetUpResponse
+            {
+                List = list.Select(x => new AuthorityInfo
+                {
+                    FunCode = x.FunCode,
+                    CreateTime = x.CreateTime,
+                }).ToList()
+            };
             return response;
         }
     }

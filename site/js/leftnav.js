@@ -37,7 +37,7 @@ var appId=getRequest('appId');
     });
     //我的任务
     $(".fb_one").click(function () {
-        window.location.href = 'task.html?appId=appId='+appId+''
+        window.location.href = 'task.html?appId='+appId+''
     });
    
 

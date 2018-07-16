@@ -42,7 +42,7 @@ namespace Eagles.Application.Model
     /// <summary>
     /// 机构和组织
     /// </summary>
-    public class ORequest
+    public class ORequest : RequestBase
     {
         /// <summary>
         /// 机构id

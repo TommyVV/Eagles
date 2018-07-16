@@ -83,16 +83,18 @@ namespace Eagles.DomainService.Core
                 if (oper.LoginErrorCount >= configuration.EaglesConfiguration.CheckVerificationCode)
                 {
 
-                    //得到验证码值
-                    var result = dataAccess.GetverificationInfo(new Verification
-                    {
-                        OrgId = oper.OrgId,
-                        Account = oper.OperName,
-                        //  Code = GetRandomArray(6, 1, 9).ToString(),
-                        Code = "666666"
-                    });
+           
 
-                    if (result <= 0) throw new TransactionException("M06", "验证码错误");
+                    ////得到验证码值
+                    //var result = dataAccess.GetverificationInfo(new Verification
+                    //{
+                    //    OrgId = oper.OrgId,
+                    //    Account = oper.OperName,
+                    //    //  Code = GetRandomArray(6, 1, 9).ToString(),
+                    //    Code = "666666"
+                    //});
+
+                    //if (result <= 0) throw new TransactionException("M06", "验证码错误");
                 }
 
 
@@ -100,6 +102,7 @@ namespace Eagles.DomainService.Core
 
                 dataAccess.InsertToken(new TbUserToken()
                 {
+                    OrgId=requset.OrgId,
                     UserId = oper.OperId,
                     Token = respone.Token,
                     CreateTime = DateTime.Now,
@@ -122,13 +125,13 @@ namespace Eagles.DomainService.Core
                 {
                     var info = new TbOper
                     {
-                        OperId=oper.OperId,
+                        OperId = oper.OperId,
                         OperName = requset.Account,
                         OrgId = requset.OrgId,
-                        LockingTime = intResult
+                        LockingTime = intResult,
+                        LoginErrorCount = oper.LoginErrorCount + 1
                     };
 
-                    info.LoginErrorCount = oper.LoginErrorCount + 1;
 
                     //验证码校验
                     if (oper.LoginErrorCount >= configuration.EaglesConfiguration.CheckVerificationCode)

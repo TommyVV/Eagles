@@ -34,10 +34,10 @@ namespace Eagles.Application.Model.News.Model
         /// </summary>
         public int ModuleId { get; set; }
 
-        /// <summary>
-        /// 分类
-        /// </summary>
-        public List<string> Category { get; set; }
+        ///// <summary>
+        ///// 分类
+        ///// </summary>
+        //public List<string> Category { get; set; }
 
         /// <summary>
         /// 附件 json格式
@@ -49,7 +49,7 @@ namespace Eagles.Application.Model.News.Model
         public string Attach2 { get; set; }
         public string Attach3 { get; set; }
         public string Attach4 { get; set; }
-       // public string Attach5 { get; set; }
+        // public string Attach5 { get; set; }
 
 
         public string AttachName1 { get; set; }
@@ -71,6 +71,36 @@ namespace Eagles.Application.Model.News.Model
         public int IsExternal { get; set; }
 
         public int NewsType { get; set; }
+
+        public int CanStudy { get; set; }
+
+        public int IsAttach { get; set; }
+        /// <summary>
+        /// 有课件
+        /// </summary>
+        public int IsClass { get; set; }
+        /// <summary>
+        /// 有图片
+        /// </summary>
+        public int IsImage { get; set; }
+        /// <summary>
+        /// 是学习心得
+        /// </summary>
+        public int IsLearning { get; set; }
+
+        public int IsVideo { get; set; }
+
+        public string ShortDesc { get; set; }
+
+
+
+
+
+
+
+
+
+
     }
 
 

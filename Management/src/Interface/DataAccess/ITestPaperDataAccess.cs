@@ -25,10 +25,11 @@ namespace Eagles.Interface.DataAccess
         List<TbTestQuestion> GetTestQuestionRelationshipByTestId(int testId);
         int RemoveTestQuestionRelationshipByTestId(int testId);
         int CreateTestQuestionRelationship(List<TbTestQuestion> list);
-        int RemoveTestQuestionRelationshipByQuestionId(int questionId);
+        bool RemoveTestQuestionRelationshipByQuestionId(int questionId);
         List<TbQuestion> GetRandomSubject(List<int> list,int count);
         int RemoveOption(RemoveOptionRequset requset);
         void UpdataOption(int infoQuestionId, List<int> requsetOptionId);
         bool RemoveExercises(RemoveExercisesRequset requset);
+        List<TbQuestion> GetSubjectList(GetSubjectListRequset requset, out int i);
     }
 }

@@ -1,3 +1,10 @@
+$(function() {
+   // console.info(window.location.href);
+	var appId = getRequest('appId') //获取来源页面['0', '1', '2', '3']
+	console.info(appId);
+	navbar(appId)
+})
+
 $('.navbar-header').on('click', '.collapsed', function(e) {
 	if($('.operate').is(':hidden')) {
 		$('.operate').show();
@@ -61,22 +68,20 @@ function navListm(id) {
 	$obj.find("h4").click(function() {
 		var $div = $(this).siblings(".list-item");
 		if($(this).parent().hasClass("selected")) {
-			$div.slideUp(600);
+			$div.slideUp(1);
 			$(this).parent().removeClass("selected");
 		}
 		if($div.is(":hidden")) {
-			$("#J_navlist li").find(".list-item").slideUp(600);
+			$("#J_navlist li").find(".list-item").slideUp(1);
 			$("#J_navlist li").removeClass("selected");
 			$(this).parent().addClass("selected");
-			$div.slideDown(600);
+			$div.slideDown(1);
 
 		} else {
-			$div.slideUp(600);
+			$div.slideUp(1);
 		}
 	});
 }
-var appId = 10000000
-navbar(appId)
 
 function navbar(appId) {
 	$.ajax({

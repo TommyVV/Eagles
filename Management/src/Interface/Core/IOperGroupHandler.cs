@@ -57,5 +57,7 @@ namespace Eagles.Interface.Core
         /// <returns></returns>
         GetAuthorityGroupSetUpResponse GetAuthorityGroupSetUp(GetAuthorityGroupSetUpRequest requset);
 
+
+        GetAuthorityGroupSetUpResponse GetAuthorityByToken(RequestBase request);
     }
 }

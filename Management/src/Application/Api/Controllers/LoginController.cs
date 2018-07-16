@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Host.Common;
+using Eagles.Application.Model;
+using Eagles.Application.Model.AuthorityGroupSetUp.Response;
 using Eagles.Application.Model.Login.Model;
 using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Login.Response;
@@ -14,9 +16,12 @@ namespace Eagles.Application.Host.Controllers
     {
         private readonly ILoginHandler testHandler;
 
-        public LoginController(ILoginHandler testHandler)
+        private readonly IOperGroupHandler _operatorHandler;
+
+        public LoginController(ILoginHandler testHandler, IOperGroupHandler operatorHandler)
         {
             this.testHandler = testHandler;
+            this._operatorHandler = operatorHandler;
         }
 
 
@@ -40,6 +45,17 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<string> VerificationCode(Verification requset)
         {
             return ApiActuator.Runing(() => testHandler.VerificationCode(requset));
+        }
+
+        /// <summary>
+        /// 根据token获取当前token用户的权限 
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetAuthorityGroupSetUpResponse> GetAuthorityByToken(RequestBase requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => _operatorHandler.GetAuthorityByToken(requset));
         }
 
     }

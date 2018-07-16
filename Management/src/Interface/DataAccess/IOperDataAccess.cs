@@ -15,7 +15,7 @@ namespace Eagles.Interface.DataAccess
         int EditOper(TbOper mod);
         int CreateOper(TbOper mod);
         int RemoveOper(RemoveOperatorRequset requset);
-        TbOper GetOperDetail(GetOperatorDetailRequset requset);
+        TbOper GetOperDetail(int operId);
         List<TbOper> GetOperList(GetOperatorRequset requset,out int totalCount);
         int GetOperListByAuthorityGroupId(int requsetAuthorityGroupId);
         TbOper GetOperInfo(LoginRequset requset);
