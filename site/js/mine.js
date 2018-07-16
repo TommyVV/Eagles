@@ -101,7 +101,7 @@ function minedel(token, appId) {
 				var data = res.Result.ResultUserInfo;
 				$('.main-content-top-name,.lc_name').text(data.Name); //昵称
 				$('.main-content-top-tel,.info-tel').text(data.Telphone); //用户id
-				$('.head-icon').text(data.PhotoUrl); //头像
+				$('.head-icon').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
 
 			}
