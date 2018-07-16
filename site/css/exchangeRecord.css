@@ -47,13 +47,13 @@
 
 @media screen and (min-width: 768px) {
 	.conmid_rs{
-		width: 100%;min-height: 360px;height: auto;
+		min-height: 360px;height: auto;width:1000px;overflow: hidden;margin: 0 auto;
 	}
 	.mescroll{
 			position: fixed;
 			top: 135px;
 			bottom: 246px;
-			height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
+			height: 100%;/*如设置bottom:51px,则需height:auto才能生效*/
 		}
   .dj-title {
     width: 1000px;
@@ -78,10 +78,11 @@
     .dj-title .time {
       flex: 1; }
   .dj-container {
-    padding: 30px 20px 20px;
     width: 1000px;
+    margin-left: 16px;
+    margin-top:10px;
     background: white;
-    margin: 0 auto; }
+    }
   .record-item {
     width: 960px;
     background-color: white;
