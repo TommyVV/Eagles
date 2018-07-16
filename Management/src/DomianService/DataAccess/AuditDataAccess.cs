@@ -61,11 +61,11 @@ VALUES
                 dynamicParams.Add("OrgId", token.OrgId);
             }
 
-            if (token.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", token.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             //if (!string.IsNullOrWhiteSpace(requset.ColumnName))
             //{

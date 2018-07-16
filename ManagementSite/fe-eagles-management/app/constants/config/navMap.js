@@ -100,7 +100,7 @@ const navMap = [
   },
   {
     pathname: "#/rank/detail",
-    key: "15",
+    key: "155",
     sub: "sub8"
   },
   {

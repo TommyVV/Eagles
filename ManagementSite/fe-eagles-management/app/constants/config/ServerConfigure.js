@@ -122,6 +122,15 @@ const FILE = {
 const AREA = {
   ALL_AREA: "/api/Area/GetAreaInfo" //全国地区
 };
+//积分
+const SCORE = {
+  EDIT: "/api/Score/EditScoreSetUp", //编辑
+  DELETE: "/api/Score/RemoveScoreSetUp", //删除
+  DETAIL: "/api/Score/GetScoreSetUpDetail", //积分详情
+  LIST: "/api/Score/GetScoreSetUp", //积分列表
+  RANK_LIST: "/api/Score/GetScoreRank", //积分排行列表
+  RANK_DETAIL: "/api/Score/GetScoreRankDetail", //积分排行详情
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -141,5 +150,6 @@ export const serverConfig = {
   EXERCISE,
   EDITPARTYMEMBER,
   FILE,
-  AREA
+  AREA,
+  SCORE
 };

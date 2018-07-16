@@ -17,7 +17,7 @@ namespace Eagles.DomainService.Core
     public class TestPaperHandler : ITestPaperHandler
     {
 
-       // private readonly IDbManager dbManager;
+        private readonly IDbManager dbManager;
 
         private readonly ITestPaperDataAccess dataAccess;
 
@@ -90,6 +90,8 @@ namespace Eagles.DomainService.Core
         /// <returns></returns>
         public int EditSubject(EditSubjectRequset requset)
         {
+
+           
 
             TbQuestion info;
             var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
@@ -181,6 +183,8 @@ namespace Eagles.DomainService.Core
         /// <returns></returns>
         public ResponseBase EditExercises(EditExercisesRequset requset)
         {
+
+            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             var response = new ResponseBase
             {

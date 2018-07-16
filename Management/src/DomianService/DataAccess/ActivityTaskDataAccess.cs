@@ -176,17 +176,17 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
-            if (token.OrgId > 0)
+
+            if (requset.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", token.OrgId);
+                dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-            if (token.BranchId > 0)
+            if (requset.BranchId > 0)
             {
                 parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", token.BranchId);
+                dynamicParams.Add("BranchId", requset.BranchId);
             }
 
 
