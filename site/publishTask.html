@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="css/common/common.css">
     <link rel="stylesheet" href="css/feedBack.css">
+    <link rel="stylesheet" href="css/subordinateList.css">
     <link rel="stylesheet" href="css/publishTask.css">
     <title>我的任务</title>
 </head>
@@ -56,53 +57,71 @@
                 <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="content" cols="30" rows="10"></textarea>
                 <div class="img-area">
                     <div class="title">附件上传</div>
-                    <input type="file" id="fileupload">
-                    <div class="attaches">
-    
+                    <div class="upload-file">
+                        <input type="file" id="fileupload">
+                        <span class="glyphicon glyphicon-folder-open"></span> 文件上传
                     </div>
+                    <div class="upload-progress hide">
+                        <div class="bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="attaches"></div>
                 </div>
-                <div class="pub-area flag-area">
+                <div class="flag-area">
                     <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
                 </div>
                 <div class="sub-btn">发布任务</div>
             </div>
         </div>
     </div>
+    <div class="alert hide">
+        <div class="weui-mask weui-mask--visible"></div>
+        <div class="weui-dialog weui-dialog--visible">
+            <div class="weui-dialog__hd">
+                <strong class="weui-dialog__title"></strong>
+            </div>
+            <div class="weui-dialog__bd">
+                <div class="relation-list"></div>
+                <div class="tip"></div>
+            </div>
+            <div class="weui-dialog__ft">
+                <div class="weui-dialog__btn default">取消</div>
+                <div class="weui-dialog__btn primary">确定</div>
+            </div>
+        </div>
+    </div>
     <div class="footer pc" id="footer"></div>
-<script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
-<script src="thirdparty/jquery-2.1.4.min.js"></script>
-<script src="js/common.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-<script src="thirdparty/jquery.ui.widget.js"></script>
-<script src="thirdparty/jquery.iframe-transport.js"></script>
-<script src="thirdparty/jquery.fileupload.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="js/publishTask.js?v=123"></script>
-<script type="text/javascript">
-    //日期插件
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    console.log(year, month, day);
-    $(".form_datetime").datetimepicker({
-        format: 'yyyy-mm-dd', //显示格式
-        minView: "month", //设置只显示到月份
-        startDate: "",
-        todayBtn: true,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1,
-        autoclose: 1, //选择后自动关闭
-        pickerPosition: "bottom-left",
-        language: "zh-CN",
-        startDate: year + "-" + month + "-" + day
-    });
-</script>
+    <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
+    <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <script src="thirdparty/jquery.ui.widget.js"></script>
+    <script src="thirdparty/jquery.iframe-transport.js"></script>
+    <script src="thirdparty/jquery.fileupload.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/publishTask.js?v=123"></script>
+    <script type="text/javascript">
+        //日期插件
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        console.log(year, month, day);
+        $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd', //显示格式
+            minView: "month", //设置只显示到月份
+            startDate: "",
+            todayBtn: true,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            autoclose: 1, //选择后自动关闭
+            pickerPosition: "bottom-left",
+            language: "zh-CN",
+            startDate: year + "-" + month + "-" + day
+        });
+    </script>
 </body>
-
-</html>
 
 </html>

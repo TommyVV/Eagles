@@ -1,172 +1,216 @@
 @charset "UTF-8";
 .head-area {
   width: 100%;
-  height: 1.7066666667rem; }
-  .head-area .task-cate {
-    float: left;
-    width: 33.33%;
-    line-height: 1.7066666667rem;
-    text-align: center; }
+  height: 1.7066666667rem;
+  background-color: #F6F6F6;
+  padding-bottom: 0.256rem;
+}
+.head-area .task-cate {
+  float: left;
+  width: 33.33%;
+  line-height: 1.7066666667rem;
+  text-align: center;
+}
+
+.tip {
+  margin: 10px;
+}
 
 .drog-down-menu {
   width: 100%;
-  position: relative; }
-  .drog-down-menu .menu-list {
-    width: 100%;
-    background-color: white;
-    position: absolute;
-    padding: 0px 15px;
-    z-index: 2; }
-    .drog-down-menu .menu-list .list-item {
-      height: 1.4933333333rem;
-      border-bottom: 1px solid #EEEEEE;
-      line-height: 1.4933333333rem; }
+  position: relative;
+}
+.drog-down-menu .menu-list {
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  padding: 0px 15px;
+  z-index: 2;
+}
+.drog-down-menu .menu-list .list-item {
+  height: 1.4933333333rem;
+  border-bottom: 1px solid #EEEEEE;
+  line-height: 1.4933333333rem;
+}
 
 .task-list {
   width: 100%;
-  background-color: #FFFFFF; }
+  background-color: #FFFFFF;
+}
 
 .task-item {
   margin: 0 21px;
-  border-bottom: 1px solid #EEEEEE; }
-  .task-item .task-title {
-    padding-top: 30px;
-    line-height: 23px;
-    font-size: 18px;
-    word-break: break-all;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    /** 对象作为伸缩盒子模型显示 **/
-    -webkit-box-orient: vertical;
-    /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-    -webkit-line-clamp: 2;
-    /** 显示的行数 **/
-    overflow: hidden;
-    /** 隐藏超出的内容 **/ }
-  .task-item .task-content {
-    margin-top: 21px;
-    margin-bottom: 30px;
-    height: 36px;
-    font-size: 12px; }
-    .task-item .task-content .task-info {
-      text-align: left;
-      float: left;
-      color: #949494; }
-    .task-item .task-content .task-status {
-      float: right;
-      margin-top: 0.448rem;
-      width: 2.9866666667rem;
-      height: 0.8533333333rem;
-      line-height: 0.8533333333rem;
-      border-radius: 0.4266666667rem;
-      text-align: center; }
-    .task-item .task-content .accept-status {
-      color: white; }
-    .task-item .task-content .init-status {
-      border: 1px solid #949494;
-      color: #949494; }
+  border-bottom: 1px solid #EEEEEE;
+}
+.task-item .task-title {
+  padding-top: 30px;
+  line-height: 23px;
+  font-size: 18px;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /** 对象作为伸缩盒子模型显示 **/
+  -webkit-box-orient: vertical;
+  /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+  -webkit-line-clamp: 2;
+  /** 显示的行数 **/
+  overflow: hidden;
+  /** 隐藏超出的内容 **/
+}
+.task-item .task-content {
+  margin-top: 21px;
+  margin-bottom: 30px;
+  height: 36px;
+  font-size: 12px;
+}
+.task-item .task-content .task-info {
+  text-align: left;
+  float: left;
+  color: #949494;
+}
+.task-item .task-content .task-status {
+  float: right;
+  margin-top: 0.448rem;
+  width: 2.9866666667rem;
+  height: 0.8533333333rem;
+  line-height: 0.8533333333rem;
+  border-radius: 0.4266666667rem;
+  text-align: center;
+}
+.task-item .task-content .accept-status {
+  color: white;
+}
+.task-item .task-content .init-status {
+  border: 1px solid #949494;
+  color: #949494;
+}
 
-.mobile, .pc {
-  display: none; }
+.mobile,
+.pc {
+  display: none;
+}
 
 .pc-wrap {
   width: 1000px;
-  margin: 0 auto; }
-  .pc-wrap .assign {
-    background: #fff;
-    height: 107px;
-    color: #949494;
-    display: flex;
-    align-items: center;
-    padding-left: 48px;
-    margin-bottom: 10px; }
-    .pc-wrap .assign .name-label {
-      font-size: 24px; }
-    .pc-wrap .assign .type-label {
-      margin-left: 50px; }
-    .pc-wrap .assign .select {
-      width: 118px;
-      height: 30px;
-      background: #fff;
-      border: 1px solid #EEEEEE;
-      position: relative;
-      display: flex;
-      font-size: 16px;
-      color: #949494;
-      align-items: center;
-      padding: 0 14px 0 18px; }
-      .pc-wrap .assign .select-name, .pc-wrap .assign .select-type {
-        flex: 1; }
-      .pc-wrap .assign .select i {
-        font-size: 8px; }
-      .pc-wrap .assign .select ul {
-        display: none;
-        list-style: none;
-        position: absolute;
-        top: 33px;
-        left: 0;
-        background: #fff;
-        width: 100%;
-        box-shadow: -4px 4px 4px #dfdfdf; }
-        .pc-wrap .assign .select ul li {
-          padding-left: 18px;
-          height: 30px;
-          font-size: 16px;
-          color: #949494;
-          line-height: 30px;
-          cursor: pointer; }
-          .pc-wrap .assign .select ul li:hover {
-            background: #f2f2f2; }
-  .pc-wrap .list {
-    background: #fff;
-    padding: 0 35px; }
-    .pc-wrap .list-header {
-      display: flex;
-      border-bottom: 1px solid #EEEEEE;
-      line-height: 1;
-      padding: 35px 0 20px 0; }
-      .pc-wrap .list-header-list {
-        flex: 1;
-        color: #0F0F0F;
-        font-size: 30px; }
-      .pc-wrap .list-header-more {
-        font-size: 18px;
-        color: #949494; }
-    .pc-wrap .list ul {
-      padding: 0 14px;
-      list-style: none;
-      padding-bottom: 58px; }
-      .pc-wrap .list ul li {
-        padding-bottom: 41px;
-        border-bottom: 1px solid #EEEEEE; }
-        .pc-wrap .list ul li .title {
-          font-size: 24px;
-          padding: 24px 0 0 0;
-          line-height: 1; }
-        .pc-wrap .list ul li p {
-          font-size: 14px;
-          color: #949494;
-          margin-bottom: 45px; }
-        .pc-wrap .list ul li .props {
-          display: flex; }
-          .pc-wrap .list ul li .props-left {
-            flex: 1;
-            font-size: 18px;
-            color: #949494; }
-            .pc-wrap .list ul li .props-left .detail {
-              color: #141414; }
-          .pc-wrap .list ul li .props-btn {
-            font-size: 18px;
-            color: #FFFFFF;
-            width: 120px;
-            height: 40px;
-            border-radius: 20px;
-            background: #F24848;
-            line-height: 40px;
-            text-align: center; }
-            .pc-wrap .list ul li .props-btn.already {
-              background: #fff;
-              color: #949494;
-              border: 1px solid #949494; }
+  margin: 0 auto;
+}
+.pc-wrap .assign {
+  background: #fff;
+  height: 107px;
+  color: #949494;
+  display: flex;
+  align-items: center;
+  padding-left: 48px;
+  margin-bottom: 10px;
+}
+.pc-wrap .assign .name-label {
+  font-size: 24px;
+}
+.pc-wrap .assign .type-label {
+  margin-left: 50px;
+}
+.pc-wrap .assign .select {
+  width: 118px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid #EEEEEE;
+  position: relative;
+  display: flex;
+  font-size: 16px;
+  color: #949494;
+  align-items: center;
+  padding: 0 14px 0 18px;
+}
+.pc-wrap .assign .select-name, .pc-wrap .assign .select-type {
+  flex: 1;
+}
+.pc-wrap .assign .select i {
+  font-size: 8px;
+}
+.pc-wrap .assign .select ul {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 33px;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  box-shadow: -4px 4px 4px #dfdfdf;
+}
+.pc-wrap .assign .select ul li {
+  padding-left: 18px;
+  height: 30px;
+  font-size: 16px;
+  color: #949494;
+  line-height: 30px;
+  cursor: pointer;
+}
+.pc-wrap .assign .select ul li:hover {
+  background: #f2f2f2;
+}
+.pc-wrap .list {
+  background: #fff;
+  padding: 0 35px;
+}
+.pc-wrap .list-header {
+  display: flex;
+  border-bottom: 1px solid #EEEEEE;
+  line-height: 1;
+  padding: 35px 0 20px 0;
+}
+.pc-wrap .list-header-list {
+  flex: 1;
+  color: #0F0F0F;
+  font-size: 30px;
+}
+.pc-wrap .list-header-more {
+  font-size: 18px;
+  color: #949494;
+}
+.pc-wrap .list ul {
+  padding: 0 14px;
+  list-style: none;
+  padding-bottom: 58px;
+}
+.pc-wrap .list ul li {
+  padding-bottom: 41px;
+  border-bottom: 1px solid #EEEEEE;
+}
+.pc-wrap .list ul li .title {
+  font-size: 24px;
+  padding: 24px 0 0 0;
+  line-height: 1;
+}
+.pc-wrap .list ul li p {
+  font-size: 14px;
+  color: #949494;
+  margin-bottom: 45px;
+}
+.pc-wrap .list ul li .props {
+  display: flex;
+}
+.pc-wrap .list ul li .props-left {
+  flex: 1;
+  font-size: 18px;
+  color: #949494;
+}
+.pc-wrap .list ul li .props-left .detail {
+  color: #141414;
+}
+.pc-wrap .list ul li .props-btn {
+  font-size: 18px;
+  color: #FFFFFF;
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  background: #F24848;
+  line-height: 40px;
+  text-align: center;
+}
+.pc-wrap .list ul li .props-btn.already {
+  background: #fff;
+  color: #949494;
+  border: 1px solid #949494;
+}
 
 /*# sourceMappingURL=task.css.map */
