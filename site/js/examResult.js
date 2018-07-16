@@ -8,7 +8,7 @@ if(!localStorage.getItem('token')){
 }
 $('#top-nav,#mobilenav').load('./head.html')
 
-examResult(TestId,TestList,token,appId);
+examResult(TestId,UseTime,TestList,token,appId);
 function examResult(TestId,UseTime,TestList,token,appId) {
 	$.ajax({
 		type: "post",
