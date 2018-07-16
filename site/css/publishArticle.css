@@ -8,7 +8,7 @@ html, body {
 
 .container {
   padding: 0 1.17333rem; }
-
+.wrap{margin-bottom:8px ;}
 .publish {
   font-size: 0.512rem !important;
   padding-top: 1.30133rem;
