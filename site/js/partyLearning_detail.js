@@ -1,9 +1,4 @@
 $('#top-nav,#mobilenav').load('./head.html')
-/* 
- 1，涉及用户token的地方都需要验证
- 2，提交答案时用户未登录，则跳转到登录页面，登录后 回跳回来自动提交答案，代码已写完 需要联调验证
- * 
- * */
 var newsIds = getRequest('NewsId') //获取来源d的新闻id
 var token = localStorage.getItem('token');
 var appId = getRequest('appId');
