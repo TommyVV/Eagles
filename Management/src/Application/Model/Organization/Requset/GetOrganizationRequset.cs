@@ -3,7 +3,7 @@
      /// <summary>
      /// 
      /// </summary>
-     public class GetOrganizationRequset : RequestBase
+     public class GetOrganizationRequset : PageRequestBase
     {
         /// <summary>
         /// 省id

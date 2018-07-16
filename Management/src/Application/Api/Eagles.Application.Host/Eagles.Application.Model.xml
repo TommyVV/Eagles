@@ -111,7 +111,7 @@
         </member>
         <member name="T:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset">
             <summary>
-            修改/新增 任务活动实体类
+            活动 修改/新增
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ActivityTask.Requset.EditActivityTaskInfoRequset.DetailInfo">
@@ -2422,19 +2422,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgId">
-            <summary>
-            机构ID
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Branch.Model.Branch.OrgName">
-            <summary>
-            机构name
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchId">
             <summary>
-            支部id
+            支部id（新增时无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.Branch.BranchName">
@@ -2449,7 +2439,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.CreateTime">
             <summary>
-            创建时间
+            创建时间（仅供展示，新增修改不用传递）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Branch.Model.BranchDetail.BranchDesc">
@@ -2474,7 +2464,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Branch.Requset.GetBranchDetailRequset.BranchId">
             <summary>
-            凭证
+            支部id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Branch.Requset.GetBranchRequset">
@@ -2682,11 +2672,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.OrgId">
-            <summary>
-            机构id
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.ListRequestBase.PageNumber">
             <summary>
             页码
@@ -2695,16 +2680,6 @@
         <member name="P:Eagles.Application.Model.ListRequestBase.PageSize">
             <summary>
             页尺寸
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.StartTime">
-            <summary>
-            统计时间
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.ListRequestBase.EndTime">
-            <summary>
-            统计结束时间
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.OrgRequestBase">
@@ -3159,24 +3134,34 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
-            <summary>
-            机构ID
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Id">
             <summary>
-            id
+            滚动图片唯一id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgId">
+            <summary>
+            机构id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.OrgName">
+            <summary>
+            机构名称
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.PageId">
             <summary>
-            页面id
+            页面类型（0:首页; 1：党建门户:2：党务工作:3：党建学习）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.Img">
             <summary>
             滚动图片url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.RollImage.Model.RollImageInfo.TargetUrl">
+            <summary>
+            跳转链接
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.EditRollImageRequest">
@@ -3194,24 +3179,14 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageDetailRequset.Id">
-            <summary>
-            zhuj
-            </summary>
-        </member>
         <member name="T:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.RollImage.Requset.GetRollImageRequest.PageId">
-            <summary>
-            页面ID
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.RollImage.Requset.RemoveRollImageRequset.Id">
             <summary>
-            页面ID
+            滚动图片id
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.RollImage.Response.GetRollImageDetailsResponse.Info">

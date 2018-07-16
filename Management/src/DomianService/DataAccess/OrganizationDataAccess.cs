@@ -17,7 +17,7 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset)
+        public List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset, out int totalCount)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
@@ -41,7 +41,19 @@ namespace Ealges.DomianService.DataAccess
                 dynamicParams.Add("Province", requset.Province);
             }
 
-            sql.AppendFormat(@" SELECT `tb_org_info`.`OrgId`,
+
+            sql.AppendFormat(@"SELECT count(1)
+FROM `eagles`.`tb_news`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+            sql.AppendFormat(@"  SELECT `tb_org_info`.`OrgId`,
     `tb_org_info`.`OrgName`,
     `tb_org_info`.`Province`,
     `tb_org_info`.`City`,
@@ -51,8 +63,10 @@ namespace Ealges.DomianService.DataAccess
     `tb_org_info`.`EditTime`,
     `tb_org_info`.`OperId`,
     `tb_org_info`.`Logo`
-FROM `eagles`.`tb_org_info`  where 1=1  {0}  
+FROM `eagles`.`tb_org_info`  where 1=1  {0}    order by CreateTime desc limit  @pageStart ,@pageSize
  ", parameter);
+
+
 
             return dbManager.Query<TbOrgInfo>(sql.ToString(), dynamicParams);
         }
@@ -83,7 +97,7 @@ FROM `eagles`.`tb_org_info`  where OrgId=@OrgId;
         {
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_org_info`  where
                 `OrgId` = @OrgId;
-", new {requset.OrgId});
+", new { requset.OrgId });
         }
 
         public int EditOrganization(TbOrgInfo mod)
@@ -95,7 +109,7 @@ SET
 `City` = @City,
 `District` = @District,
 `Address` = @Address,
-`EditTime` = @EditTime,
+`EditTime` =now(),
 `OperId` = @OperId,
 `Logo` = @Logo
 WHERE `OrgId` = @OrgId;
@@ -121,19 +135,13 @@ VALUES
 @City,
 @District,
 @Address,
-@CreateTime,
-@EditTime,
+now(),
+now(),
 @OperId,
 @Logo);
 ", mod);
         }
 
-        //public List<TB_USER_RELATIONSHIP> GetOrganizationList(List<UserInfoDetails> list)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-   
 
         public List<TbOrgInfo> GetOrganizationList(List<int> list)
         {
@@ -152,7 +160,7 @@ VALUES
     `tb_org_info`.`Logo`
 FROM `eagles`.`tb_org_info`  where  OrgId  in @OrgId
  ");
-            dynamicParams.Add("OrgId",   list.ToArray());
+            dynamicParams.Add("OrgId", list.ToArray());
 
             return dbManager.Query<TbOrgInfo>(sql.ToString(), dynamicParams);
 

@@ -8,7 +8,7 @@ namespace Eagles.Interface.Core
     public interface ITestPaperHandler : IInterfaceBase
     {
 
-        #region 试卷
+        #region 习题
 
         ///// <summary>
         ///// 试卷列表

@@ -7,7 +7,7 @@ namespace Eagles.Interface.DataAccess
 {
     public interface IOrganizationDataAccess : IInterfaceBase
     {
-        List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset);
+        List<TbOrgInfo> GetOrganizationList(GetOrganizationRequset requset,out int totalCount);
         TbOrgInfo GetOrganizationDetail(GetOrganizationDetailRequset requset);
         int RemoveOrganization(RemoveOrganizationRequset requset);
         int EditOrganization(TbOrgInfo mod);
