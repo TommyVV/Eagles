@@ -4,6 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('head.html')
+$('#left-nav').load('leftNav.html?appId=' + appId)
 $('#pc-footer').load('./footer.html')
 
 myInfo(token, appId) //个人信息
@@ -95,7 +96,6 @@ $('.confirmBtn').on('click', function() {
 	RequestUserInfo.Telphone = $('.ld_phoneinput').val()
 	RequestUserInfo.Employer = $('.ld_bjyinput').val()
 	RequestUserInfo.Department = $('.ld_dakinput').val()
-
 	$.ajax({
 		type: "post",
 		data: {
@@ -108,11 +108,7 @@ $('.confirmBtn').on('click', function() {
 		success: function(res) {
 
 			if(res.Code == 00) {
-				window.location.href = 'mine.html?appId='+appId+''
-				//          	if(res.Result!=''&&res.Result!=null){
-				//          		
-				//				window.location.reload()
-				//          	}
+				window.location.href = 'mine.html?appId='+appId
 			}
 		}
 	})

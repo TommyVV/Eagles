@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Common
     /// <summary>
     /// 用户信息
     /// </summary>
-    public class UserInfo
+    public class ResUser
     {
         /// <summary>
         /// 用户Id
@@ -115,7 +115,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 我的支部
         /// </summary>
-        public int Branch { get; set; }
+        public string Branch { get; set; }
 
         /// <summary>
         /// 入支部日期

@@ -246,7 +246,7 @@ $(document).ready(function() {
                         <div class="pass">通过</div>
                         <div class="nopass">不通过</div>
                     </div>`;
-            $(".activity-content").html(str);
+            $(".activity-content").removeClass('hide').html(str);
             $(".activity-content .pass").click(function() {
                 console.log("111111");
                 editActivityComplete(0);
@@ -300,7 +300,7 @@ $(document).ready(function() {
         if (list) {
             list.forEach(element => {
                 str += `<div>${element.Name}</div>`;
-        });
+            });
         }
         return str;
     }
@@ -315,8 +315,8 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#top-nav").load("head.html", () => {});
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -329,7 +329,7 @@ $(document).ready(function() {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

@@ -7,12 +7,14 @@
     <meta name="hotcss" content="initial-dpr=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/exchange.css">
+    <link href="./css/mescroll.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/exchange.css?v=20180715">
+    
     <title>积分商品列表</title>
 </head>
 
 <body>
-    <div id="top-nav" class="pc"></div>
+    <div id="top-nav"></div>
     <div id="mobilenav"></div>
     <!--<div class="search-area">
         <div class="search-position">
@@ -23,80 +25,20 @@
             <div class="search-btn">搜索</div>
         </div>
     </div>-->
-    <div class="goods-area">
-        <!--<div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>
-        <div class="goods-item">
-            <img src="https://img.alicdn.com/bao/uploaded/i1/TB1TtNzuqSWBuNjSsrbSuu0mVXa.jpg_400x400Q75s0.jpg" alt="">
-            <div class="item-title">商品名称啥皇后大道东开导开导</div>
-            <div class="item-point">积分:30</div>
-            <div class="item-btn">去看看</div>
-        </div>-->
+    <div class="g_cimg">
+    	<div class="mescroll" id="mescroll">
+    	<div class="goods-area"></div>
     </div>
+    </div>
+    
+    
     <div id="pc-footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/mescroll.min.js"></script><!--作为滚动的js-->
     <script src="js/common.js"></script>
-    <script src="js/exchange.js"></script>
+    <script src="js/exchange.js?v=20180715"></script>
 </body>
 
 </html>

@@ -39,10 +39,6 @@ namespace Eagles.DomainService.Core
                     Attach2 = requset.DetailInfo.Attach2,
                     Attach3 = requset.DetailInfo.Attach3,
                     Attach4 = requset.DetailInfo.Attach4,
-                    AttachType1 = "",
-                    AttachType2 = "",
-                    AttachType3 = "",
-                    AttachType4 = "",
                     BeginTime = requset.DetailInfo.BeginTime,
                     ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
@@ -63,7 +59,7 @@ namespace Eagles.DomainService.Core
                     
                 };
 
-                int result = dataAccess.EditActivity(mod);
+                var result = dataAccess.EditActivity(mod);
 
                 return result > 0;
             }
@@ -77,10 +73,6 @@ namespace Eagles.DomainService.Core
                     Attach2 = requset.DetailInfo.Attach2,
                     Attach3 = requset.DetailInfo.Attach3,
                     Attach4 = requset.DetailInfo.Attach4,
-                    AttachType1 = "",
-                    AttachType2 = "",
-                    AttachType3 = "",
-                    AttachType4 = "",
                     BeginTime = requset.DetailInfo.BeginTime,
                     ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,

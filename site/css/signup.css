@@ -10,17 +10,18 @@ html, body {
   height: 100%; }
 
 @media screen and (max-width: 768px) {
+	html, body {background-color: #f8f8f8;}
   .signupModal {
     background-color: #f8f8f8;
     height: 100%; } }
 
 @media screen and (min-width: 768px) {
-	.container{width:100%;padding: 0;}
+	html, body {min-height: 100%;background: #fff url(../icons/er.jpeg) center no-repeat;background-size:100% 100%;}
+	.container{width:100%;padding: 0;min-height: 100%;}
   .signupModal {
-  	width:100%;
-    background: url(../icons/er.jpeg)no-repeat;
-    background-color: #fff;
-    height: 100%;padding-top:140px;padding-bottom:100px; } }
+  	width:100%;min-height: 100%;
+    
+    padding-top:140px;padding-bottom:180px;} }
 
 .signupBox {
   background-color: #f8f8f8; }

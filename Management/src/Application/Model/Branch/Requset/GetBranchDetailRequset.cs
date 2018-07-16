@@ -5,10 +5,9 @@
     /// </summary>
     public class GetBranchDetailRequset : RequestBase
     {
-     
 
         /// <summary>
-        /// 凭证
+        /// 支部id
         /// </summary>
         public int BranchId { get; set; }
         

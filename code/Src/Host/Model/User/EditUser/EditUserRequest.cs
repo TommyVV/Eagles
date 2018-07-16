@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.User.EditUser
         /// <summary>
         /// 用户信息
         /// </summary>
-        public UserInfo RequestUserInfo { get; set; }
+        public ReqUser RequestUserInfo { get; set; }
     }
 }

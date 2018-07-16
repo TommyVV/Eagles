@@ -92,6 +92,7 @@ function navbar(appId) {
 		url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
 		dataType: "json",
 		success: function(res) {
+			
 			var data = res.Result;
 			//			$('#pcJ_navlist').html('');
 

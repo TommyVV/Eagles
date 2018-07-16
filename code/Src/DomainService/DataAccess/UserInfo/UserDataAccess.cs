@@ -44,9 +44,10 @@ IsLeader=@IsLeader where UserId = @UserId", userInfo);
 
         public TbUserInfo GetUserInfo(int userId)
         {
-            var userInfo = dbManager.Query<TbUserInfo>(@"SELECT OrgId,BranchId,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,OriginAddress,Phone,IdNumber,Education,
-School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
-PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb_user_info where UserId=@UserId", new { UserId = userId});
+            var userInfo = dbManager.Query<TbUserInfo>(@"select OrgId,(Select OrgName from eagles.tb_org_info b where a.OrgId = b.OrgId) as OrgName,
+BranchId,(Select BranchName from eagles.tb_branch c where a.BranchId = c.BranchId) as BranchName,UserId,Password,Name,Sex,Ethnic,Birthday,Origin,
+OriginAddress,Phone,IdNumber,Education,School,Provice,City,District,Address,Company,Dept,Title,PreMemberTime,MemberTime,MemberType,Status,MemberStatus,
+PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb_user_info a where UserId=@UserId", new { UserId = userId});
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;

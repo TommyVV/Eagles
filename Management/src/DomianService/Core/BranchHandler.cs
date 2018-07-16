@@ -6,7 +6,9 @@ using Eagles.Application.Model.Branch.Model;
 using Eagles.Application.Model.Branch.Requset;
 using Eagles.Application.Model.Branch.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Org;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -17,16 +19,21 @@ namespace Eagles.DomainService.Core
         private readonly IBranchDataAccess dataAccess;
 
         private readonly IOrganizationDataAccess OrganizationdataAccess;
-        public BranchHandler(IBranchDataAccess dataAccess, IOrganizationDataAccess organizationdataAccess)
+
+        private readonly ICacheHelper cacheHelper;
+
+        public BranchHandler(IBranchDataAccess dataAccess, IOrganizationDataAccess organizationdataAccess
+        , ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
             OrganizationdataAccess = organizationdataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditBranch(EditBranchRequset requset)
         {
 
-
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             TbBranch mod;
             var now = DateTime.Now;
             if (requset.Info.BranchId > 0)
@@ -37,7 +44,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.Info.BranchId,
                     BranchName = requset.Info.BranchName,
                     CreateTime = now,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
 
                 };
 
@@ -53,7 +60,7 @@ namespace Eagles.DomainService.Core
                     BranchId = requset.Info.BranchId,
                     BranchName = requset.Info.BranchName,
                     CreateTime = now,
-                    OrgId = requset.Info.OrgId
+                    OrgId = tokenInfo.OrgId
                 };
                 return dataAccess.CreateBranch(mod) > 0;
 
@@ -83,14 +90,12 @@ namespace Eagles.DomainService.Core
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
 
-            var orgInfo = OrganizationdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
+            //var orgInfo = OrganizationdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
             response.TotalCount = totalcount;
             response.List = list.Select(x => new Branch
             {
                 BranchName = x.BranchName,
                 BranchId = x.BranchId,
-                OrgId = x.OrgId,
-                OrgName = orgInfo.First(o => o.OrgId == x.OrgId).OrgName
             }).ToList();
             return response;
         }
@@ -101,7 +106,7 @@ namespace Eagles.DomainService.Core
             {
 
             };
-            TbBranch detail = dataAccess.GetBranchDetail(requset);
+            var detail = dataAccess.GetBranchDetail(requset);
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 

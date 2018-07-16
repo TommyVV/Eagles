@@ -38,6 +38,7 @@
 
 .main_content .list-box .list-header {
 	padding: 0.55467rem 0.64rem;
+	border-bottom:1px solid #eeeeee;
 }
 
 .main_content .list-box .list-header .glyphicon-book {

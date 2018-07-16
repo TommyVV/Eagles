@@ -56,6 +56,8 @@
     <Compile Include="Common\BranchUser.cs" />
     <Compile Include="Common\FeedBack.cs" />
     <Compile Include="Common\JoinPeople.cs" />
+    <Compile Include="Common\ResUser.cs" />
+    <Compile Include="Common\ReqUser.cs" />
     <Compile Include="Common\UserNews.cs" />
     <Compile Include="Common\OrderLs.cs" />
     <Compile Include="Common\ResAnswer.cs" />

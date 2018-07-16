@@ -9,7 +9,7 @@ using Eagles.Interface.Core;
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// ActivityTask
+    /// 活动（投票，在线考试）
     /// </summary>
     public class ActivityController : ApiController
     {

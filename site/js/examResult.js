@@ -8,7 +8,7 @@ if(!localStorage.getItem('token')){
 }
 $('#top-nav,#mobilenav').load('./head.html')
 
-examResult(TestId,TestList,token,appId);
+examResult(TestId,UseTime,TestList,token,appId);
 function examResult(TestId,UseTime,TestList,token,appId) {
 	$.ajax({
 		type: "post",
@@ -46,7 +46,9 @@ function examResult(TestId,UseTime,TestList,token,appId) {
 				$('.result-detail-list').append(examResult)
 				$('.numsf').text($('.right').length)
 				$('.numsgh').text($('.wrong').length)
-			}
+			}else {
+                alert(res.Code, res.Message);
+            }
 		}
 	});
 }
