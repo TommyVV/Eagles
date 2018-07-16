@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Audit.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class CreateAuditRequset:OrgRequestBase
+    public class CreateAuditRequset:RequestBase
     {
         /// <summary>
         /// 

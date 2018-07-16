@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eagles.Application.Model.Login.Model
 {
-    public class Verification : OrgRequest
+    public class Verification 
     {
         /// <summary>
         /// 验证码

@@ -9,7 +9,7 @@ namespace Eagles.Application.Model
     /// <summary>
     /// 分页用的list
     /// </summary>
-    public class OrgListRequestBase : OrgRequestBase
+    public class OrgListRequestBase : RequestBase
     {
         /// <summary>
         /// 页码

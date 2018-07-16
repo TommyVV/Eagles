@@ -6,7 +6,7 @@ namespace Eagles.Application.Model.AuthorityGroupSetUp.Requset
     /// <summary>
     /// 设置权限组 权限
     /// </summary>
-    public class EditAuthorityGroupSetUpRequset:OrgRequestBase
+    public class EditAuthorityGroupSetUpRequset:RequestBase
     {
 
         /// <summary>
