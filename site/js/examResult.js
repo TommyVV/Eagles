@@ -46,7 +46,9 @@ function examResult(TestId,UseTime,TestList,token,appId) {
 				$('.result-detail-list').append(examResult)
 				$('.numsf').text($('.right').length)
 				$('.numsgh').text($('.wrong').length)
-			}
+			}else {
+                alert(res.Code, res.Message);
+            }
 		}
 	});
 }
