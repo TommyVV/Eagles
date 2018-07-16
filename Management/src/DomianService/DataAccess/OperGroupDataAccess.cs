@@ -2,7 +2,6 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.AuthorityGroup.Requset;
-using Eagles.Application.Model.AuthorityGroupSetUp.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Authority;
 using Eagles.DomainService.Model.Oper;

@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.Branch.Model
     {
 
         /// <summary>
-        /// 创建时间
+        /// 创建时间（仅供展示，新增修改不用传递）
         /// </summary>
         public DateTime CreateTime { get; set; }
         /// <summary>

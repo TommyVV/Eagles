@@ -39,11 +39,6 @@ namespace Eagles.Application.Model
     /// </summary>
     public class ListRequestBase : RequestBase
     {
-
-        /// <summary>
-        /// 机构id
-        /// </summary>
-        public int OrgId { get; set; }
         /// <summary>
         /// 页码
         /// </summary>
@@ -53,15 +48,5 @@ namespace Eagles.Application.Model
         /// 页尺寸
         /// </summary>
         public int PageSize { get; set; } = 10;
-
-        /// <summary>
-        /// 统计时间
-        /// </summary>
-        public DateTime? StartTime { get; set; }
-
-        /// <summary>
-        /// 统计结束时间
-        /// </summary>
-        public DateTime? EndTime { get; set; }
     }
 }
