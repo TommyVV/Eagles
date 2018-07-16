@@ -13,7 +13,8 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
-import {  createOrEditNews } from "../../services/newsService";
+import { createOrEditNews } from "../../services/newsService";
+import { newsTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -92,7 +93,7 @@ class ImportNews extends React.Component {
       let { newsList } = this.state;
       // todo 批量导入新闻 等待接口
       // let { code } = await createOrEditNews({
-        
+
       // });
       // if (code === 0) {
       //   message.success("删除成功");
@@ -164,7 +165,9 @@ class ImportNews extends React.Component {
             <span>仅支持txt文件，格式为XXXXX，请注意区分中英文符号</span>
           </Col>
           <Col span={3} key={6}>
-            <Button>下载模板</Button>
+            <Button type="button" >
+              <a href={newsTempUrl}>下载模板</a>
+            </Button>
           </Col>
         </Row>
         <Table

@@ -16,6 +16,8 @@ import { hashHistory } from "react-router";
 import { typeMap } from "../../../constants/config/appconfig";
 import { getInfoById, createOrEdit } from "../../../services/exerciseService";
 import { saveInfo, clearInfo } from "../../../actions/exAction";
+import WrappedDynamicFieldSet from "../../../components/Common/AddField/AddEx";
+
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -108,12 +110,12 @@ class Base extends Component {
         xl: { span: 6 }
       }
     };
-    const tailFormItemLayout = {
+    const formItemLayoutOption = {
+      labelCol: {
+        xl: { span: 2 }
+      },
       wrapperCol: {
-        xl: {
-          span: 5,
-          offset: 11
-        }
+        xl: { span: 24 }
       }
     };
     return (
@@ -157,15 +159,16 @@ class Base extends Component {
               </Select>
             )}
           </FormItem>
+          <WrappedDynamicFieldSet isVote={Info.isRight} />
           <FormItem>
             <Row type="flex" justify="center" className="edit" gutter={24}>
               <Col>
                 <Button
                   htmlType="submit"
-                  className="btn btn--primary"
+                  className="btn btnprimary"
                   type="primary"
                 >
-                  {this.props.info.Info.QuestionId ? "保存" : "新建"}
+                  {Info.QuestionId ? "保存" : "新建"}
                 </Button>
               </Col>
               <Col>
@@ -186,7 +189,7 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
+    console.log("项目详情数据回显  ", props);
     const { Info } = props.info;
     return {
       QuestionId: Form.createFormField({

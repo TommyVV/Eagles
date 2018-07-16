@@ -1,12 +1,13 @@
 var appId = getRequest('appId');
 var token = localStorage.getItem("token")
+var name = getRequest("name");
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 $('#top-nav,#mobilenav').load('./head.html')
 //文章发布
-
+$("#name").html(name);
 $('.publish-btn').on('click', function(e) {
 	e.preventDefault();
 	var title = $('.publish-title').val(); //标题
@@ -49,6 +50,9 @@ $(".publish-type").change(function() {
 		$('.assign').hide();
 	}
 });
+ $("#subord").click(function() {
+        window.location.href = "subordinateList.html?appId=" + appId + "&type=0";
+    });
 branchUsers(token, appId); //党员支部信息展示
 function branchUsers(token, appId) {
 	$.ajax({

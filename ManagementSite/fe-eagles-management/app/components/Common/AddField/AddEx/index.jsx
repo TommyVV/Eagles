@@ -1,4 +1,4 @@
-import { Form, Input, Icon, Button, Checkbox  } from "antd";
+import { Form, Input, Icon, Button, Checkbox, Row, Col } from "antd";
 import React, { Component } from "react";
 const FormItem = Form.Item;
 import "./style.less";
@@ -32,14 +32,17 @@ class DynamicFieldSet extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { isVote } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 4 },
+        xl: { span: 2 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 20 }
+        sm: { span: 20 },
+        xl: { span: 20 }
       }
     };
 
@@ -56,11 +59,23 @@ class DynamicFieldSet extends React.Component {
           {getFieldDecorator(`names[${k}]`)(
             <span>
               <Input
-                placeholder="passenger name"
-                style={{ width: "40%", marginRight: 8 }}
+                placeholder="请输入选项"
+                style={{ width: "30%", marginRight: 8 }}
               />
-               <Checkbox >是否正确答案</Checkbox>
-               <Checkbox >是否允许自定义</Checkbox>
+              <Checkbox
+                style={{
+                  display: isVote == "0" ? null : "none"
+                }}
+              >
+                是否正确答案
+              </Checkbox>
+              <Checkbox
+                style={{
+                  display: isVote == "0" ? null : "none"
+                }}
+              >
+                是否允许自定义
+              </Checkbox>
             </span>
           )}
           <Icon
@@ -68,23 +83,25 @@ class DynamicFieldSet extends React.Component {
             type="minus-circle-o"
             onClick={() => this.remove(k)}
           />
-          <AddImage/>
+          <AddImage />
         </FormItem>
       );
     });
     return (
-      <Form>
+      <div>
         {formItems}
-        <FormItem {...formItemLayout} label="添加选项">
-          <Button
-            type="dashed"
-            onClick={this.add}
-            style={{ width: "30%", textAlign: "center" }}
-          >
-            <Icon type="plus" /> 添加
-          </Button>
-        </FormItem>
-      </Form>
+        <Row gutter={24}>
+          <Col span={4} offset={2}>
+            <Button
+              type="dashed"
+              onClick={this.add}
+              style={{ textAlign: "center" }}
+            >
+              <Icon type="plus" /> 添加选项
+            </Button>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

@@ -19,5 +19,7 @@
         ///3:党建学习'
         /// </summary>
         public string PageType { get; set; }
+
+        public string TargetUrl { get; set; }
     }
 }
