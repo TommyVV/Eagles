@@ -6,10 +6,12 @@ using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Configuration;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -22,10 +24,13 @@ namespace Eagles.DomainService.Core
 
         private readonly ITestPaperDataAccess dataAccess;
 
-        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
 
@@ -93,7 +98,7 @@ namespace Eagles.DomainService.Core
 
 
             TbQuestion info;
-
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.QuestionId > 0)
             {
                 info = new TbQuestion
@@ -101,7 +106,7 @@ namespace Eagles.DomainService.Core
                     AnswerType = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     Question = requset.Info.Question,
                     QuestionId = requset.Info.QuestionId
                 };
@@ -120,7 +125,7 @@ namespace Eagles.DomainService.Core
                        AnswerType = x.AnswerType,
                        ImageUrl = x.IsImg ? x.Img : string.Empty,
                        IsRight = x.IsRight,
-                       OrgId = requset.Info.OrgId,
+                       OrgId = tokenInfo.OrgId,
                        QuestionId = requset.Info.QuestionId,
                        AnswerId = x.OptionId
                    }).ToList());
@@ -141,7 +146,7 @@ namespace Eagles.DomainService.Core
                     AnswerType = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     Question = requset.Info.Question,
                 };
 
@@ -154,7 +159,7 @@ namespace Eagles.DomainService.Core
                         AnswerType = x.AnswerType,
                         ImageUrl = x.IsImg ? x.Img : string.Empty,
                         IsRight = x.IsRight,
-                        OrgId = requset.Info.OrgId,
+                        OrgId = tokenInfo.OrgId,
                         QuestionId = requset.Info.QuestionId,
                         AnswerId = x.OptionId
                     }).ToList());

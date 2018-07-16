@@ -2,7 +2,6 @@
 using Eagles.Application.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
 
 using Eagles.Application.Host.Common;
@@ -29,8 +28,6 @@ namespace Eagles.Application.Host.Controllers
         {
             return ApiActuator.Runing(requset, (requset1) => _testpaperHandler.GetSubjectDetail(requset));
         }
-
-
 
         /// <summary>
         /// 编辑习题
