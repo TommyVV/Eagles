@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.SMS.Request;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Config;
 using Eagles.DomainService.Model.Score;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -15,10 +17,11 @@ namespace Ealges.DomianService.DataAccess
     public class SmsConfigDataAccess : ISmsConfigDataAccess
     {
         private readonly IDbManager dbManager;
-
-        public SmsConfigDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+        public SmsConfigDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
         public int EditSMS(SmsConfig mod)
         {
@@ -86,19 +89,22 @@ WHERE `VendorId` = @VendorId
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
 
+            parameter.Append(" and OrgId = @OrgId ");
+            dynamicParams.Add("OrgId", token.OrgId);
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
 
 

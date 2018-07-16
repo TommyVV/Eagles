@@ -129,17 +129,17 @@ FROM `eagles`.`tb_product`
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and  OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (requset.GoodsStatus > 0)
             {

@@ -3,6 +3,7 @@ using System.Text;
 using Dapper;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.Common;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Activity;
 using Eagles.Interface.DataAccess;
@@ -12,7 +13,7 @@ namespace Ealges.DomianService.DataAccess
     public class ActivityTaskDataAccess: IActivityTaskDataAccess
     {
         private readonly IDbManager dbManager;
-
+      
         public ActivityTaskDataAccess(IDbManager dbManager)
         {
             this.dbManager = dbManager;
@@ -173,17 +174,17 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and  OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
 
             if (requset.ActivityTaskType > 0)
