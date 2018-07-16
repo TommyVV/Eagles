@@ -3,9 +3,11 @@ using System.Linq;
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.Exercises.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -14,10 +16,12 @@ namespace Ealges.DomianService.DataAccess
     public class TestPaperDataAccess : ITestPaperDataAccess
     {
         private readonly IDbManager dbManager;
+        private readonly ICacheHelper Cache;
 
-        public TestPaperDataAccess(IDbManager dbManager)
+        public TestPaperDataAccess(IDbManager dbManager, ICacheHelper cache)
         {
             this.dbManager = dbManager;
+            Cache = cache;
         }
 
         public List<TbTestPaper> GetExercisesList(GetExercisesRequset requset, out int totalCount)
@@ -26,18 +30,19 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
+            // var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and  OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.ExercisesName))
             {
@@ -119,7 +124,7 @@ FROM `eagles`.`tb_test_paper`  where 1=1  {0} order by CreateTime desc limit  @p
 FROM `eagles`.`tb_question` where QuestionId  in @QuestionId;
  ");
 
-            dynamicParams.Add("QuestionId",  questionId.ToArray());
+            dynamicParams.Add("QuestionId", questionId.ToArray());
 
             return dbManager.Query<TbQuestion>(sql.ToString(), dynamicParams);
         }
@@ -154,7 +159,7 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
         public bool RemoveExercisesRelationship(RemoveExercisesRequset requset)
         {
             return dbManager.ExcutedByTransaction(new List<TransactionCommand>()
-            {               
+            {
                 new TransactionCommand()
                 {
                     CommandString = @"DELETE FROM `eagles`.`tb_test_question` WHERE TestId=@TestId;",
@@ -188,11 +193,11 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and  OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
 
 
@@ -202,7 +207,7 @@ FROM `eagles`.`tb_test_paper` where TestId=@TestId;
                 dynamicParams.Add("TestName", requset.QuestionId);
             }
 
-         
+
             if (requset.StartTime != null)
             {
                 parameter.Append(" and CreateTime >= @StartTime ");

@@ -47,17 +47,17 @@ namespace Eagles.Application.Model
     ///// <summary>
     ///// 机构和组织
     ///// </summary>
-    //public class OrgBranchRequest : RequestBase
+    //public class OrgPageRequestBase : PageRequestBase
     //{
     //    /// <summary>
     //    /// 机构id
     //    /// </summary>
     //    public int OrgId { get; set; }
 
-    //    /// <summary>
-    //    /// 支部id
-    //    /// </summary>
-    //    public int BranchId { get; set; }
+    //    ///// <summary>
+    //    ///// 支部id
+    //    ///// </summary>
+    //    //public int BranchId { get; set; }
     //}
 
     ///// <summary>

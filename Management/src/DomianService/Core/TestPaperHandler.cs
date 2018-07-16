@@ -6,10 +6,12 @@ using Eagles.Application.Model.Exercises.Model;
 using Eagles.Application.Model.Exercises.Requset;
 using Eagles.Application.Model.Exercises.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Configuration;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.Exercises;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -18,14 +20,17 @@ namespace Eagles.DomainService.Core
     public class TestPaperHandler : ITestPaperHandler
     {
 
-        private readonly IDbManager dbManager;
+       // private readonly IDbManager dbManager;
 
         private readonly ITestPaperDataAccess dataAccess;
 
-        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager)
+        private readonly ICacheHelper Cache;
+
+        public TestPaperHandler(ITestPaperDataAccess dataAccess, IDbManager dbManager, ICacheHelper cache)
         {
             this.dataAccess = dataAccess;
-            this.dbManager = dbManager;
+            Cache = cache;
+            //  this.dbManager = dbManager;
         }
 
 
@@ -90,7 +95,7 @@ namespace Eagles.DomainService.Core
         public int EditSubject(EditSubjectRequset requset)
         {
 
-
+            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
 
             TbQuestion info;
 
@@ -101,7 +106,7 @@ namespace Eagles.DomainService.Core
                     AnswerType = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     Question = requset.Info.Question,
                     QuestionId = requset.Info.QuestionId
                 };
@@ -120,7 +125,7 @@ namespace Eagles.DomainService.Core
                        AnswerType = x.AnswerType,
                        ImageUrl = x.IsImg ? x.Img : string.Empty,
                        IsRight = x.IsRight,
-                       OrgId = requset.Info.OrgId,
+                       OrgId = tokenInfo.OrgId,
                        QuestionId = requset.Info.QuestionId,
                        AnswerId = x.OptionId
                    }).ToList());
@@ -141,7 +146,7 @@ namespace Eagles.DomainService.Core
                     AnswerType = requset.Info.Answer,
                     Multiple = requset.Info.Multiple,
                     MultipleCount = requset.Info.MultipleCount,
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     Question = requset.Info.Question,
                 };
 
@@ -154,7 +159,7 @@ namespace Eagles.DomainService.Core
                         AnswerType = x.AnswerType,
                         ImageUrl = x.IsImg ? x.Img : string.Empty,
                         IsRight = x.IsRight,
-                        OrgId = requset.Info.OrgId,
+                        OrgId = tokenInfo.OrgId,
                         QuestionId = requset.Info.QuestionId,
                         AnswerId = x.OptionId
                     }).ToList());
@@ -183,6 +188,8 @@ namespace Eagles.DomainService.Core
         public ResponseBase EditExercises(EditExercisesRequset requset)
         {
 
+            var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
+
             var response = new ResponseBase
             {
                 ErrorCode = "00",
@@ -198,14 +205,14 @@ namespace Eagles.DomainService.Core
 
                 info = new TbTestPaper
                 {
-                    BranchId = requset.Info.BranchId,
+                    BranchId = tokenInfo.BranchId,
                     EditTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
-                    OperId = 0, //todo 登陆人员id
-                    OrgId = requset.Info.OrgId,
+                    OperId = tokenInfo.UserId, //todo 登陆人员id
+                    OrgId = tokenInfo.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -224,7 +231,7 @@ namespace Eagles.DomainService.Core
 
                 List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     QuestionId = x,
                     TestId = requset.Info.ExercisesId
                 }).ToList();
@@ -242,26 +249,19 @@ namespace Eagles.DomainService.Core
                 }
 
 
-
-
-                if (result < 0)
-                {
-                    response.IsSuccess = false;
-                }
-
             }
             else
             {
                 info = new TbTestPaper
                 {
-                    BranchId = requset.Info.BranchId,
+                    BranchId = tokenInfo.BranchId,
                     CreateTime = now,
                     HasLimitedTime = requset.Info.HasLimitedTime ? 1 : 0,
                     HasReward = requset.Info.IsScoreAward,
                     HtmlDescription = requset.Info.HtmlDescription,
                     LimitedTime = requset.Info.LimitedTime,
                     OperId = 0, //todo 登陆人员id
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     PassAwardScore = requset.Info.PassAwardScore,
                     PassScore = requset.Info.PassScore,
                     QuestionSocre = requset.Info.SubjectScore,
@@ -276,7 +276,7 @@ namespace Eagles.DomainService.Core
 
                 List<TbTestQuestion> list = requset.Subject.Select(x => new TbTestQuestion
                 {
-                    OrgId = requset.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     QuestionId = x,
                     TestId = result
                 }).ToList();
@@ -375,6 +375,9 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
                 List = new List<Exercises>(),
             };
+            
+          //  var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
+
             var list = dataAccess.GetExercisesList(requset, out int toltalcount) ?? new List<TbTestPaper>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
@@ -400,14 +403,14 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        /// <summary>
-        /// 上传内容格式
-        /// </summary>
-        /// <returns></returns>
-        public string FormatContent()
-        {
-            return "";
-        }
+        ///// <summary>
+        ///// 上传内容格式
+        ///// </summary>
+        ///// <returns></returns>
+        //public string FormatContent()
+        //{
+        //    return "";
+        //}
 
         /// <summary>
         /// 返回 不重复的 习题信息
@@ -434,10 +437,10 @@ namespace Eagles.DomainService.Core
             return response;
         }
 
-        public int EditOption(EditOptionRequset requset)
-        {
-            throw new NotImplementedException();
-        }
+        //public int EditOption(EditOptionRequset requset)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public int EditOption(EditOptionRequset requset)
         //{
@@ -507,7 +510,7 @@ namespace Eagles.DomainService.Core
                 Answer = x.AnswerType,
                 Multiple = x.Multiple,
                 MultipleCount = x.MultipleCount,
-                OrgId = x.OrgId
+                // OrgId = x.OrgId
             }).ToList();
 
             return response;

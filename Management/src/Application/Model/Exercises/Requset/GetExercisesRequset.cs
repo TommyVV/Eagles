@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Exercises.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetExercisesRequset : OrgListRequestBase
+    public class GetExercisesRequset : PageRequestBase
     {
         /// <summary>
         /// 
