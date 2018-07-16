@@ -22,7 +22,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: ""
+      current: "",
+      authMap: new Map()
     };
   }
   componentWillMount() {
@@ -30,10 +31,16 @@ export default class App extends React.Component {
     let index = hash.indexOf("?");
     const current = hash.slice(0, index);
     const obj = navMap.find(item => current.indexOf(item.pathname) > -1);
-    if (obj) {
+    const auth = JSON.parse(localStorage.info).authList;
+    if (obj && auth) {
+      const authMap = new Map();
+      auth.map((a, i) => {
+        authMap.set(a.FunCode, a.FunCode);
+      });
       this.setState({
         current: obj.key,
-        sub: obj.sub
+        sub: obj.sub,
+        authMap
       });
     }
   }
@@ -45,7 +52,7 @@ export default class App extends React.Component {
     });
   };
   render() {
-    let { current, sub } = this.state;
+    let { current, sub, authMap } = this.state;
     return (
       <Layout>
         <Sider
@@ -77,6 +84,7 @@ export default class App extends React.Component {
                   <span>习题问卷</span>
                 </span>
               }
+              style={{ display: authMap.get("News0002") ? null : "none" }}
             >
               <Menu.Item
                 key="1"
@@ -99,6 +107,7 @@ export default class App extends React.Component {
                   <span>习题信息</span>
                 </span>
               }
+              style={{ display: authMap.get("News0003") ? null : "none" }}
             >
               <Menu.Item
                 key="e1"
@@ -121,26 +130,36 @@ export default class App extends React.Component {
                   <span>党员信息</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("User0001") || authMap.get("User0002")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="3"
                 onClick={e => hashHistory.replace("/partymemberlist")}
+                style={{ display: authMap.get("User0001") ? null : "none" }}
               >
                 党员列表
               </Menu.Item>
               <Menu.Item
                 key="4"
                 onClick={e => hashHistory.replace("/partymember/detail")}
+                style={{ display: authMap.get("User0001") ? null : "none" }}
               >
                 党员详情
               </Menu.Item>
               <Menu.Item
                 key="5"
                 onClick={e => hashHistory.replace("/partymember/import")}
+                style={{ display: authMap.get("User0002") ? null : "none" }}
               >
                 党员导入
               </Menu.Item>
             </SubMenu>
+            {/* {authMap.get("User0004") ? ( */}
             <SubMenu
               key="sub3"
               title={
@@ -163,6 +182,7 @@ export default class App extends React.Component {
                 积分配置详情
               </Menu.Item>
             </SubMenu>
+            {/* ) : null} */}
             <SubMenu
               key="sub4"
               title={
@@ -171,6 +191,7 @@ export default class App extends React.Component {
                   <span>商品信息</span>
                 </span>
               }
+              style={{ display: authMap.get("Prod0001") ? null : "none" }}
             >
               <Menu.Item
                 key="8"
@@ -193,6 +214,7 @@ export default class App extends React.Component {
                   <span>商品发货信息</span>
                 </span>
               }
+              style={{ display: authMap.get("Prod0002") ? null : "none" }}
             >
               <Menu.Item
                 key="10"
@@ -207,7 +229,8 @@ export default class App extends React.Component {
                 商品发货详情
               </Menu.Item> */}
             </SubMenu>
-            <SubMenu
+
+            {/* <SubMenu
               key="sub6"
               title={
                 <span>
@@ -222,7 +245,8 @@ export default class App extends React.Component {
               >
                 审核列表
               </Menu.Item>
-            </SubMenu>
+            </SubMenu> */}
+
             <SubMenu
               key="sub7"
               title={
@@ -231,6 +255,7 @@ export default class App extends React.Component {
                   <span>系统信息</span>
                 </span>
               }
+              style={{ display: authMap.get("snew0001") ? null : "none" }}
             >
               <Menu.Item
                 key="13"
@@ -253,6 +278,7 @@ export default class App extends React.Component {
                   <span>积分排行信息</span>
                 </span>
               }
+              style={{ display: authMap.get("User0004") ? null : "none" }}
             >
               <Menu.Item
                 key="15"
@@ -269,6 +295,7 @@ export default class App extends React.Component {
                   <span>操作员信息</span>
                 </span>
               }
+              style={{ display: authMap.get("oper0001") ? null : "none" }}
             >
               <Menu.Item
                 key="16"
@@ -291,6 +318,7 @@ export default class App extends React.Component {
                   <span>机构信息</span>
                 </span>
               }
+              style={{ display: authMap.get("orgs0001") ? null : "none" }}
             >
               <Menu.Item
                 key="18"
@@ -313,6 +341,7 @@ export default class App extends React.Component {
                   <span>滚动图片信息</span>
                 </span>
               }
+              style={{ display: authMap.get("menu0002") ? null : "none" }}
             >
               <Menu.Item
                 key="20"
@@ -335,6 +364,7 @@ export default class App extends React.Component {
                   <span>菜单配置</span>
                 </span>
               }
+              style={{ display: authMap.get("menu0001") ? null : "none" }}
             >
               <Menu.Item
                 key="22"
@@ -363,16 +393,24 @@ export default class App extends React.Component {
                   <span>会议信息</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("News0004") || authMap.get("News0005")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="25"
                 onClick={e => hashHistory.replace("/meetlist")}
+                style={{ display: authMap.get("News0004") ? null : "none" }}
               >
                 会议列表
               </Menu.Item>
               <Menu.Item
                 key="26"
                 onClick={e => hashHistory.replace("/meet/detail")}
+                style={{ display: authMap.get("News0005") ? null : "none" }}
               >
                 会议信息
               </Menu.Item>
@@ -385,6 +423,7 @@ export default class App extends React.Component {
                   <span>栏目信息</span>
                 </span>
               }
+              style={{ display: authMap.get("menu0003") ? null : "none" }}
             >
               <Menu.Item
                 key="27"
@@ -407,6 +446,7 @@ export default class App extends React.Component {
                   <span>活动信息</span>
                 </span>
               }
+              style={{ display: authMap.get("actv0001") ? null : "none" }}
             >
               <Menu.Item
                 key="29"
@@ -429,6 +469,7 @@ export default class App extends React.Component {
                   <span>新闻信息</span>
                 </span>
               }
+              style={{ display: authMap.get("News0001") ? null : "none" }}
             >
               <Menu.Item
                 key="31"
@@ -457,22 +498,31 @@ export default class App extends React.Component {
                   <span>权限管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("oper0002") || authMap.get("oper0003")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="33"
                 onClick={e => hashHistory.replace("/permissionlist")}
+                style={{ display: authMap.get("oper0002") ? null : "none" }}
               >
                 权限组列表
               </Menu.Item>
               <Menu.Item
                 key="34"
                 onClick={e => hashHistory.replace("/permission/detail")}
+                style={{ display: authMap.get("oper0002") ? null : "none" }}
               >
                 权限组详情
               </Menu.Item>
               <Menu.Item
                 key="35"
                 onClick={e => hashHistory.replace("/permission/manage")}
+                style={{ display: authMap.get("oper0003") ? null : "none" }}
               >
                 权限管理
               </Menu.Item>
@@ -485,6 +535,7 @@ export default class App extends React.Component {
                   <span>系统短信配置</span>
                 </span>
               }
+              style={{ display: authMap.get("ssms0001") ? null : "none" }}
             >
               <Menu.Item
                 key="36"
@@ -507,6 +558,7 @@ export default class App extends React.Component {
                   <span>机构短信配置</span>
                 </span>
               }
+              style={{ display: authMap.get("orgs0002") ? null : "none" }}
             >
               <Menu.Item
                 key="38"

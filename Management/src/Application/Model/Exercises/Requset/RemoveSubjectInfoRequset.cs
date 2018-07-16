@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Eagles.Application.Model.Exercises.Requset
+﻿namespace Eagles.Application.Model.Exercises.Requset
 {
     /// <summary>
     /// 
@@ -12,7 +6,7 @@ namespace Eagles.Application.Model.Exercises.Requset
     public class RemoveSubjectInfoRequset:RequestBase
     {
         /// <summary>
-        /// 
+        /// 问题Id
         /// </summary>
         public int QuestionId { get; set; }
     }

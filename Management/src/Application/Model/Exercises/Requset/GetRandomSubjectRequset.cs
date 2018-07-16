@@ -6,13 +6,13 @@
     public class GetRandomSubjectRequset: RequestBase
     {
         /// <summary>
-        /// 随机题目数量
+        /// 随机生成题目数量
         /// </summary>
         public int RandomSubjectSum { get; set; }
 
         /// <summary>
         /// 试卷id
         /// </summary>
-        public int ExercisesId { get; set; }
+        public int TestId { get; set; }
     }
 }

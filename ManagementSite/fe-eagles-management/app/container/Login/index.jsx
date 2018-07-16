@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { hashHistory } from "react-router";
-import { login } from "../../services/loginService";
+import { login, getAuth } from "../../services/loginService";
 import md5 from "blueimp-md5";
 import "./login.less";
 
@@ -30,29 +30,28 @@ class LoginForm extends React.Component {
       // Password: md5(values.Password)
       Password: values.Password
     });
-    this.setState({ loading: false });
     if (Code == "00") {
       //保存用户相关信息
       let { Token, IsVerificationCode } = Result;
-      // 密码错误次数超限，出现验证码
+      // 密码错误次数超限，出现验证码 todo
       if (IsVerificationCode) {
       } else {
         let info = {
           Token
         };
         let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
+        // 拿权限
+        const { Result } = await getAuth();
+        const { List } = Result;
         let { returnUrl } = Info;
+        this.setState({ loading: false });
         if (returnUrl) {
           localStorage.clear();
-          localStorage.info = JSON.stringify({
-            ...info
-          });
+          localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace(returnUrl);
-        }else{
+        } else {
           localStorage.clear();
-          localStorage.info = JSON.stringify({
-            ...info
-          });
+          localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace("/home");
         }
       }
