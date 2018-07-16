@@ -4,6 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('head.html')
+$('#left-nav').load('leftNav.html?appId=' + appId)
 $('#pc-footer').load('./footer.html')
 
 myInfo(token, appId) //个人信息
