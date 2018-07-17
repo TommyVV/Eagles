@@ -2737,6 +2737,11 @@
             党员类型 0:党员; 1:预备党员
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
+            <summary>
+            机构名
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.PartyMember.Model.UserInfoCheck">
             <summary>
             

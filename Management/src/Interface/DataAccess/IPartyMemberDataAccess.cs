@@ -18,5 +18,6 @@ namespace Eagles.Interface.DataAccess
         int RemoveAuthorityUserSetUp(List<TbUserRelationship> list);
         int CreateAuthorityUserSetUp(List<TbUserRelationship> list);
         List<TbUserRelationship> GetAuthorityUserSetUp(int requsetUserId);
+        int CreateUserInfo(List<TbUserInfo> userinfo);
     }
 }

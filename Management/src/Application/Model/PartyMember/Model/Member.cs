@@ -35,5 +35,9 @@
         /// </summary>
         public string MemberType { get; set; }
       
+        /// <summary>
+        /// 机构名
+        /// </summary>
+        public string OrgName { get; set; }
     }
 }

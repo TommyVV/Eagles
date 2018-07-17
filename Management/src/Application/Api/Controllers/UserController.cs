@@ -104,8 +104,9 @@ namespace Eagles.Application.Host.Controllers
         /// <returns></returns>
         public ResponseFormat<ImportUserResponse> BatchImportUser(ImportUserRequest request)
         {
-            //todo 
-            return null;
+
+            return ApiActuator.Runing(request, (requset1) => _partyMemberHandler.BatchImportUser(request));
+           
         }
     }
 }

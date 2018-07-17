@@ -28,7 +28,6 @@ namespace Ealges.DomianService.DataAccess
 SET
 `OrgId` = @OrgId,
 `ProdName` = @ProdName,
-`CreateTime` = @CreateTime,
 `EditTime` = @EditTime,
 `Price` = @Price,
 `Score` = @Score,
@@ -71,8 +70,8 @@ VALUES
 (@ProdId,
 @OrgId,
 @ProdName,
-@CreateTime,
-@EditTime,
+now(),
+now(),
 @Price,
 @Score,
 @Stock,

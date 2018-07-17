@@ -5,7 +5,7 @@
         /// <summary>
         /// 用户姓名
         /// </summary>
-        public int UserName { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// 手机号码

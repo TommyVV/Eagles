@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.SystemMessage.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetSystemNewsRequset : OrgListRequestBase
+    public class GetSystemNewsRequset : PageRequestBase
     {
         /// <summary>
         /// 标题 名字

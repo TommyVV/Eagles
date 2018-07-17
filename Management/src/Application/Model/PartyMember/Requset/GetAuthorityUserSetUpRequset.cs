@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.PartyMember.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuthorityUserSetUpRequset : RequestBase
+    public class GetAuthorityUserSetUpRequset : PageRequestBase
     {
         /// <summary>
         /// 用户名称

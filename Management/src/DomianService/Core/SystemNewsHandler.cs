@@ -43,7 +43,7 @@ namespace Eagles.DomainService.Core
                    // NewsContent = requset.Info.NewsContent,
                     NewsName = requset.Info.NewsName,
                     NewsType = requset.Info.NewsType,
-                    NoticeTime = Convert.ToDateTime(requset.Info.NoticeTime),
+                    NoticeTime = requset.Info.NoticeTime,
                     OperId = token.UserId,
                     RepeatTime = requset.Info.RepeatTime,
                     Status = requset.Info.Status
@@ -62,7 +62,7 @@ namespace Eagles.DomainService.Core
                     //NewsContent = requset.Info.NewsContent,
                     NewsName = requset.Info.NewsName,
                     NewsType = requset.Info.NewsType,
-                    NoticeTime = Convert.ToDateTime(requset.Info.NoticeTime),
+                    NoticeTime = requset.Info.NoticeTime,
                     OperId = token.UserId,
                     RepeatTime = requset.Info.RepeatTime,
                     Status = requset.Info.Status
@@ -85,10 +85,10 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
 
             };
-            List<TbSystemNews> list = dataAccess.SystemNews(requset) ?? new List<TbSystemNews>();
+            List<TbSystemNews> list = dataAccess.SystemNews(requset,out int totalCount) ?? new List<TbSystemNews>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
-
+            response.TotalCount = totalCount;
             response.List = list.Select(x => new SystemNews()
             {
                 HtmlDesc = x.HtmlDesc,
@@ -96,7 +96,7 @@ namespace Eagles.DomainService.Core
                 //NewsContent = x.NewsContent,
                 NewsName = x.NewsName,
                 NewsType = x.NewsType,
-                NoticeTime = x.NoticeTime.ToString("yyyy-MM-dd"),
+                NoticeTime = x.NoticeTime,
                 RepeatTime = x.RepeatTime,
                 Status = x.Status
             }).ToList();
@@ -119,7 +119,7 @@ namespace Eagles.DomainService.Core
                 NewsId = detail.NewsId,
                 NewsName = detail.NewsName,
                 NewsType = detail.NewsType,
-                NoticeTime = detail.NoticeTime.ToString("yyyy-MM-dd"),
+                NoticeTime = detail.NoticeTime,
                 RepeatTime = detail.RepeatTime,
                 Status = detail.Status
             };
