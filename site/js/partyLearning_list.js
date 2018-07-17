@@ -1,4 +1,5 @@
-$('#top-nav,#mobilenav').load('./head.html')
+$('#top-nav,#mobilenav').load('head.html')
+$('#footer').load('footer.html');
 var Moduleid=getRequest('paramModuleid')//获取模块id
 var ModuleType=getRequest('paramModuleType')//获取来源页面id
 var token=localStorage.getItem("token")
