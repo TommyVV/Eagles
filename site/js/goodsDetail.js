@@ -5,7 +5,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('head.html')
-
+$('#footer').load('./footer.html')
 goodDetal(productId, appId)
 $(".sub-btn,.overview-props-btn").click(function() {
 	$.ajax({

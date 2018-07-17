@@ -4,7 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-
+$('#footer').load('./footer.html')
 rank(token, appId);
 
 function rank(token, appId) {

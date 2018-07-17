@@ -4,7 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-$('#pc-footer').load('./footer.html')
+$('#footer').load('./footer.html')
 
 var winWidth = document.body.clientWidth;
 if(winWidth <= 768) {

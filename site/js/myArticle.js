@@ -5,7 +5,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-
+$('#footer').load('./footer.html')
 //var token="abc";
 var mescroll;
 var check_value;
