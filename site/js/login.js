@@ -68,7 +68,7 @@ $('.btn-login').on('click', function(e) {
 				//登陆成功页面跳转地址
 				var prevLink = document.referrer;
 				if($.trim(prevLink) == '') {
-					//parent.location.href = 'mine.html?appId=' + appId + '';
+					parent.location.href = 'mine.html?appId=' + appId + '';
 				} else {
 					if(prevLink.indexOf('signup.html') != -1) { //来自注册页面
 						parent.location.href = 'signup.html?appId=' + appId + '';
@@ -77,7 +77,7 @@ $('.btn-login').on('click', function(e) {
 						//testlist
 						parent.location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist='+testlist+'&NewsId='+newsIds+'&testId='+testId+'';
 					}
-					//parent.location.href = prevLink;
+					parent.location.href = prevLink;
 				}
 
 			} else {
