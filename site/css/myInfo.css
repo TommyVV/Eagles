@@ -165,7 +165,7 @@ html, body {
       .myInfoBox .item .button {
         /*display: none;*/ } }
         .myInfoBox .right input{display: none;height: 24px;border:1px solid #ccc;line-height: 24px;}
-       .myInfoBox .right #fileupload{width:28%;float: right;margin-right:20px;
+       .myInfoBox .right #fileupload{position:relative;float: right;margin-right:20px;
        	display:block;opacity: 0;
        }
        .op_div{background:url(../icons/redact@2x.png) no-repeat center right;width: 30px;height: 30px;background-size:67% ;float: right;}
