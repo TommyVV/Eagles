@@ -1,5 +1,5 @@
 $('#top-nav,#mobilenav').load('./head.html')
-
+$("#footer").load("footer.html");
 var newsIds = getRequest('NewsId'); //获取来源d的新闻id
 var token = localStorage.getItem('token');
 var appId = getRequest('appId');
@@ -125,7 +125,7 @@ function getNewsDetail(newsId, token, appId) {
 				//获取试卷信息
 				if(data.TestId != 0) {
 					getNewsTest(data.TestId, token, appId);
-					$('.footer .submit-box').show()
+					$('.footermid .submit-box').show()
 				} else(
 					$('.dels-mid').hide()
 				)
@@ -172,7 +172,7 @@ function getNewsTest(testId, token, appId) {
 					}
 					question += answerLabel + '</div></div>';
 				}
-				$('.footer .content').append(question); // 将问题和答案追加到页面中
+				$('.footermid .content').append(question); // 将问题和答案追加到页面中
 			}
 		}
 	})
