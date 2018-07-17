@@ -23,14 +23,14 @@
     color: #949494;
     font-size: 0.64rem;
     margin-top: 0.53333rem; }
-    .we_dels{width:100%;height: auto;overflow: hidden;}
+    .we_dels{width:100%;height: auto;overflow: hidden;border-bottom:1px solid #EEEEEE;}
   .main_content .header .source-box {
   	width:70%;float: left;height: auto;
     color: #949494;
     font-size: 0.64rem;
     margin-top: 0.53333rem;
     padding-bottom: 1.10933rem;
-    border-bottom: 1px solid #eee; }
+    }
     
   .main_content .header .author-box {
     color: #949494;
@@ -44,7 +44,6 @@
     color: #949494;
     font-size: 0.512rem;
     padding: 0.869rem 0;
-    border-bottom: 1px solid #eee;
     }
     .main_content .header .author-box .study-time {
       position: absolute;
