@@ -80,7 +80,7 @@
 	color: #141414;
 	font-size: 0.64rem;
 }
-
+.content-box{width: 100%;height: auto;overflow: hidden;}
 .main_content .content-box .content img {
 	display: inline-block;
 	width: 100%!important;
@@ -101,13 +101,13 @@
 	padding: 1.17333rem 0;
 }
 
-.footer {
+.footermid {
 	background-color: #fff;
 	margin-top: 0.768rem;
 	padding: 0 0.74667rem 0.74667rem 0.74667rem;
 }
 
-.footer .title {
+.footermid .title {
 	padding-top: 0.96rem;
 	padding-bottom: 0.576rem;
 	font-size: 0.768rem;
@@ -115,18 +115,18 @@
 	border-bottom: 1px solid #eee;
 }
 
-.footer .content .question {
+.footermid .content .question {
 	color: #141414;
 	font-size: 0.64rem;
 	padding-top: 0.768rem;
 }
 
-.footer .content .answer {
+.footermid .content .answer {
 	border-bottom: 1px solid #eee;
 	padding-bottom: 0.96rem;
 }
 
-.footer .content .answer .demo--label {
+.footermid .content .answer .demo--label {
 	padding: 20px 20px 0 0;
 	display: inline-block;
 	min-width: 40%;
@@ -172,13 +172,13 @@
 	border: 1px solid #E51A1A;
 }
 
-.footer .submit-box {
+.footermid .submit-box {
 	display: none;
 	padding: 2.45333rem 0rem 1.6rem 0;
 	text-align: center;
 }
 
-.footer .submit-box .answer-submit {
+.footermid .submit-box .answer-submit {
 	width: 85%;
 	height: 1.792rem;
 	color: #fff;

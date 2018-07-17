@@ -4,6 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
+$('#footer').load('footer.html')
 var mescroll;
 
 /*var appId=10000000*/

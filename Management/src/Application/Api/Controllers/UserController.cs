@@ -1,11 +1,9 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
-
 using Eagles.Application.Host.Common;
+
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -19,8 +17,6 @@ namespace Eagles.Application.Host.Controllers
         {
             this._partyMemberHandler = testHandler;
         }
-
-
 
         /// <summary>
         /// 编辑 党员
@@ -68,7 +64,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 权限 删除
+        /// 党员关系删除
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>]
@@ -80,7 +76,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 权限 列表
+        /// 查询用户下级列表
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -92,7 +88,7 @@ namespace Eagles.Application.Host.Controllers
 
 
         /// <summary>
-        /// 权限 创建
+        /// 用户上下级关系创建
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -100,6 +96,16 @@ namespace Eagles.Application.Host.Controllers
         public ResponseFormat<bool> CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset)
         {
             return ApiActuator.Runing(requset, (requset1) => _partyMemberHandler.CreateAuthorityUserSetUp(requset));
+        }
+
+        /// <summary>
+        /// 党员导入
+        /// </summary>
+        /// <returns></returns>
+        public ResponseFormat<ImportUserResponse> BatchImportUser(ImportUserRequest request)
+        {
+            //todo 
+            return null;
         }
     }
 }

@@ -3,6 +3,7 @@ var token=localStorage.getItem('token')
 var testId=getRequest('testId')//获取模块id
 var appId=getRequest('appId')//获取模块id
 $('#top-nav,#mobilenav').load('head.html')
+$('#footer').load('footer.html')
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
@@ -318,7 +319,13 @@ function daojishi() {
 		vartt = window.setTimeout("daojishi()", 1000);
 	} else { //倒计时结束，自动交卷
 		window.clearTimeout(vartt);
-		window.confirm("考试时间结束,请单击提交");
+		bootoast({
+			message: '考试时间结束,请单击提交',
+			type: 'warning',
+			position: 'toast-top-center',
+			timeout: 3
+		});
+		//window.confirm("考试时间结束,请单击提交");
 		submit(testId,token,appId); //提交答案
 	}
 

@@ -1,15 +1,20 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-    var voteId = getRequest("voteId");
-    userId = "10000000";
-    token = "1234";
+    var voteId = getRequest("testId");
+    var activityId = getRequest("activityId");
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
     var voteItem = {};
-
-    getTestPaper();
+    var joinFlag = 0;
+    var requestFlag = false;
+    getIsJoinTest();
     //提交按钮
-    $('.sub-btn').click(function () {
+    $('.sub-btn').click(function() {
+        if (requestFlag) {
+            return;
+        }
         var length = $('.select').length;
         if (length > 0) {
             var answerList = voteItem.AnswerList;
@@ -26,6 +31,43 @@ $(document).ready(function () {
             testPaperAnswer(answers);
         }
     });
+    //查询用户是否参加过该活动
+    function getIsJoinTest() {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/TestPaper/GetIsJoinTest",
+            data: {
+                "ActivityId": activityId,
+                "TestId": voteId,
+                "Token": token,
+                "AppId": appId
+            },
+            success: function(data) {
+                console.log("GetIsJoinTest---", data);
+                if (data.Code == "00") {
+                    var joinFlag = data.Result.IsJoin;
+                    if (joinFlag == '1') {
+                        $('.sub-btn').removeClass('hide');
+                    } else {
+                        bootoast({
+                            message: '您已参加过该活动,不能重复参加',
+                            type: 'warning',
+                            position: 'toast-top-center',
+                            timeout: 3
+                        });
+                    }
+                    getTestPaper();
+                } else {
+                    bootoast({
+                        message: '' + data.Message + '',
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
+                }
+            }
+        });
+    }
     //查询投票活动
     function getTestPaper() {
         $.ajax({
@@ -36,40 +78,58 @@ $(document).ready(function () {
                 "Token": token,
                 "AppId": appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("GetTestPaper---", data);
                 if (data.Code == "00") {
+                    $('.main_content').removeClass('hide');
                     voteInfoShow(data.Result);
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: '' + data.Message + '',
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             }
         });
     }
     //提交投票活动
     function testPaperAnswer(answers) {
+        requestFlag = true;
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/TestPaper/TestPaperAnswer",
             data: {
                 "TestId": voteId,
                 "UseTime": 0,
-                "TestList": [
-                    {
-                        "QuestionId": voteItem.QuestionId,
-                        "Answers": answers
-                    }
-                ],
+                "TestList": [{
+                    "QuestionId": voteItem.QuestionId,
+                    "Answers": answers
+                }],
                 "Token": token,
                 "AppId": appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("TestPaperAnswer---", data);
                 if (data.Code == "00") {
-
+                    bootoast({
+                        message: '问卷提交成功:',
+                        type: 'success',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: '问卷提交失败:' + data.Message + '',
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
+            },
+            complete: function() {
+                requestFlag = false;
             }
         });
     }
@@ -87,7 +147,7 @@ $(document).ready(function () {
         $('.header').html(headStr);
         var contentStr = `<p class="content">${data.HtmlContent}</p>`;
         $('.content-box').html(contentStr);
-        var joinRatio = function (answerUserCount) {
+        var joinRatio = function(answerUserCount) {
             if (data.UserCount == 0) {
                 return 0
             } else {
@@ -119,30 +179,32 @@ $(document).ready(function () {
                                 ${answerStr}
                             </div>`;
             $('.vote-box').html(voteStr);
-            $('.img-option').click(function () {
-                var obj = $(this).find('.option-name').find('img');
-                console.log($(obj).attr('class'));
-                var selectFlag = $(obj).hasClass('select');
-                if (selectFlag == false) {
-                    if (multiple == 1) {
-                        //允许多选
-                        var selectCount = $('.select').length;
-                        if (selectCount == multipleCount) {
-                            return;
+            if (joinFlag == '1') {
+                $('.img-option').click(function() {
+                    var obj = $(this).find('.option-name').find('img');
+                    console.log($(obj).attr('class'));
+                    var selectFlag = $(obj).hasClass('select');
+                    if (selectFlag == false) {
+                        if (multiple == 1) {
+                            //允许多选
+                            var selectCount = $('.select').length;
+                            if (selectCount == multipleCount) {
+                                return;
+                            } else {
+                                $(obj).addClass('select');
+                                $(obj).attr('src', 'icons/sel_yes@2x.png');
+                            }
                         } else {
+                            $(".select").removeClass('select');
                             $(obj).addClass('select');
                             $(obj).attr('src', 'icons/sel_yes@2x.png');
                         }
                     } else {
-                        $(".select").removeClass('select');
-                        $(obj).addClass('select');
-                        $(obj).attr('src', 'icons/sel_yes@2x.png');
+                        $(obj).removeClass('select');
+                        $(obj).attr('src', 'icons/sel_no@2x.png');
                     }
-                } else {
-                    $(obj).removeClass('select');
-                    $(obj).attr('src', 'icons/sel_no@2x.png');
-                }
-            });
+                });
+            }
         } else {
             //非图片类型
             answerStr += `<div class="options">`
@@ -170,30 +232,32 @@ $(document).ready(function () {
                                 ${answerStr}
                             </div>`;
             $('.vote-box').html(voteStr);
-            $('.option').click(function () {
-                var obj = $(this).find('.flag').find('img');
-                console.log($(obj).attr('class'));
-                var selectFlag = $(obj).hasClass('select');
-                if (selectFlag == false) {
-                    if (multiple == 1) {
-                        //允许多选
-                        var selectCount = $('.select').length;
-                        if (selectCount == multipleCount) {
-                            return;
+            if (joinFlag == '1') {
+                $('.option').click(function() {
+                    var obj = $(this).find('.flag').find('img');
+                    console.log($(obj).attr('class'));
+                    var selectFlag = $(obj).hasClass('select');
+                    if (selectFlag == false) {
+                        if (multiple == 1) {
+                            //允许多选
+                            var selectCount = $('.select').length;
+                            if (selectCount == multipleCount) {
+                                return;
+                            } else {
+                                $(obj).addClass('select');
+                                $(obj).attr('src', 'icons/sel_yes@2x.png');
+                            }
                         } else {
+                            $(".select").removeClass('select');
                             $(obj).addClass('select');
                             $(obj).attr('src', 'icons/sel_yes@2x.png');
                         }
                     } else {
-                        $(".select").removeClass('select');
-                        $(obj).addClass('select');
-                        $(obj).attr('src', 'icons/sel_yes@2x.png');
+                        $(obj).removeClass('select');
+                        $(obj).attr('src', 'icons/sel_no@2x.png');
                     }
-                } else {
-                    $(obj).removeClass('select');
-                    $(obj).attr('src', 'icons/sel_no@2x.png');
-                }
-            });
+                });
+            }
         }
 
     }
@@ -208,8 +272,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -222,7 +285,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 

@@ -23,6 +23,16 @@ namespace Eagles.Application.Model.PartyMember.Requset
         public int BranchId { get; set; }
 
         /// <summary>
+        /// 支部名称
+        /// </summary>
+        public int BranchName { get; set; }
+
+        /// <summary>
+        /// 机构名称
+        /// </summary>
+        public int OrgName { get; set; }
+
+        /// <summary>
         /// 机构编号
         /// </summary>
         public int OrgId { get; set; }

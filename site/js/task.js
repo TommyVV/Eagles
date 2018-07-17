@@ -4,6 +4,8 @@ $(document).ready(function() {
     var appId = getRequest("appId");
     var taskType = 0;
     var checkUserId = userId;
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
 
     //类别的点击
     $("#t-cate").click(function() {
@@ -256,7 +258,6 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => {});
                 $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
             } else {

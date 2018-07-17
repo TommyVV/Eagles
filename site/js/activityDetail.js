@@ -3,6 +3,8 @@ $(document).ready(function() {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var activityId = getRequest("activityId");
+    $('#top-nav').html('');
+    $('#top-nav').load('./head.html');
     var userType = 1;
     //查询活动详情
     getActivityDetail();
@@ -315,7 +317,6 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => {});
                 $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');

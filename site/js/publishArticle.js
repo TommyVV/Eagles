@@ -6,6 +6,7 @@ if(!localStorage.getItem('token')) {
 }
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 $('#top-nav,#mobilenav').load('./head.html')
+$('#footer').load('footer.html')
 //文章发布
 $("#name").html(name);
 $('.publish-btn').on('click', function(e) {

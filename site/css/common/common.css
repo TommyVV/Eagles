@@ -45,7 +45,7 @@
     }
 }
 
-.alert .weui-dialog__bd textarea {
+.modal textarea {
     height: 200px;
     width: 100%;
     padding: 5px;
@@ -55,13 +55,8 @@
     font-size: 0.64rem;
 }
 
-.alert .tip {
+.modal .tip {
     color: red;
-}
-
-.mobile,
-.pc {
-    display: none;
 }
 
 .pc-wrap {
@@ -132,4 +127,10 @@
     height: 10px;
     border-radius: 5px;
     background: #ec340f;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-container {
+        margin-top: 1.7rem;
+    }
 }

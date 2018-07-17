@@ -1,6 +1,4 @@
-﻿using Eagles.Application.Model.Enums;
-
-namespace Eagles.Application.Model.PartyMember.Requset
+﻿namespace Eagles.Application.Model.PartyMember.Requset
 {
     /// <summary>
     /// 
@@ -8,12 +6,12 @@ namespace Eagles.Application.Model.PartyMember.Requset
     public class GetPartyMemberRequest : OrgListRequestBase
     {
         /// <summary>
-        /// 
+        /// 支部id（可选)
         /// </summary>
-        public UserIdentity UserIdentity { get; set; }
+        public int BranchId { get; set; }
 
         /// <summary>
-        /// 用户名称
+        /// 党员名称(可选）
         /// </summary>
         public string UserName { get; set; }
 

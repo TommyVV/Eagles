@@ -13,7 +13,7 @@ namespace Eagles.Application.Model.Goods.Requset
         public string GoodsName { get; set; }
 
         /// <summary>
-        /// 
+        /// 产品状态;0:上架:1:下架
         /// </summary>
         public GoodsStatus GoodsStatus { get; set; }
     }

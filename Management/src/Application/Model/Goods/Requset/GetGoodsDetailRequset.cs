@@ -7,7 +7,7 @@
     {
 
         /// <summary>
-        /// 
+        /// 商品id
         /// </summary>
         public int GoodsId { get; set; }
 

@@ -9,7 +9,7 @@ namespace Eagles.Application.Model.Audit.Model
     public class Audit
     {
         /// <summary>
-        /// 
+        /// 审核流水id 后台主键
         /// </summary>
         public int AuditId { get; set; }
 
@@ -30,7 +30,7 @@ namespace Eagles.Application.Model.Audit.Model
 
 
         /// <summary>
-        /// 
+        /// 审核状态
         /// </summary>
         public AuditStatus AuditStatus { get; set; }
 

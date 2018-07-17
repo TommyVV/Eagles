@@ -87,7 +87,6 @@ namespace Eagles.DomainService.Core
                 // IsMoney=detail.
                 //  Nation = detail.Ethnic,
                 NativePlace = detail.Origin,
-                OrgId = detail.OrgId,
                 Picture = detail.NickPhotoUrl,
                 Position = detail.Title,
                 Sex = detail.Sex,
@@ -100,12 +99,8 @@ namespace Eagles.DomainService.Core
                 CreateTime = detail.CreateTime,
                 Dept = detail.Dept,
                 District = detail.Dept,
-                IsCustomer = detail.IsCustomer,
-                //    OperId=detail.OperId,
-                EditTime = detail.EditTime,
                 MemberStatus = detail.MemberStatus,
                 Nation=detail.Ethnic
-                //UserStatus=detail.IsCustomer
             };
             return response;
         }
@@ -120,9 +115,6 @@ namespace Eagles.DomainService.Core
 
         public bool EditUserInfoDetails(EditUserInfoDetailsRequest request)
         {
-
-
-
             TbUserInfo mod;
 
             if (request.Info.UserId > 0)
@@ -215,10 +207,7 @@ namespace Eagles.DomainService.Core
                 };
 
                 return dataAccess.CreateUserInfo(mod) > 0;
-
-
             }
-
         }
 
         public GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)

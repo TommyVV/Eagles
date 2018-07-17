@@ -7,16 +7,11 @@ namespace Eagles.Application.Model.PartyMember.Requset
     /// </summary>
     public class CreateAuthorityUserSetUp : RequestBase
     {
-
-        
-        /// <summary>
-        /// 当前用户userId
-        /// </summary>
-        public int OrgId { get; set; }
         /// <summary>
         /// 当前用户userId
         /// </summary>
         public  int UserId { get; set; }
+
         /// <summary>
         /// 下级
         /// </summary>

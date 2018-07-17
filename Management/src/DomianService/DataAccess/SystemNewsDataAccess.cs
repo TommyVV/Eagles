@@ -74,7 +74,7 @@ VALUES
         {
             return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_system_news`
 WHERE `NewsId` = @NewsId
-", new { NewsId = requset.SystemMessageId });
+", new { NewsId = requset.NewsId });
         }
 
         public List<TbSystemNews> SystemNews(GetSystemNewsRequset requset)
@@ -145,7 +145,7 @@ FROM `eagles`.`tb_system_news`  where 1=1  {0}
 FROM `eagles`.`tb_system_news` 
   where NewsId=@NewsId;
  ");
-            dynamicParams.Add("NewsId", requset.SystemMessageId);
+            dynamicParams.Add("NewsId", requset.NewsId);
 
             return dbManager.QuerySingle<TbSystemNews>(sql.ToString(), dynamicParams);
         }

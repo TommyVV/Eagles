@@ -5,6 +5,19 @@ $(document).ready(function() {
     var toUserId = getRequest("toUserId");
     var createType = getRequest("createType");
     var name = getRequest("name");
+    //加载导航
+    $("#top-nav").html("");
+    $("#top-nav").load("head.html", () => {});
+    //加载弹出框
+    new Modal(1, {
+        title: '选择指派人员',
+        data: {
+            "Type": 0,
+            "UserId": userId,
+            "Token": token,
+            "AppId": appId
+        }
+    });
     //pageType 0 活动  1 任务
     var pageType = getRequest("type");
     var imgUrl = "";
@@ -101,22 +114,42 @@ $(document).ready(function() {
     function createTask() {
         var title = $("#title").val();
         if (!title) {
-            $.alert("标题不能为空");
+            bootoast({
+                message: '标题不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var start = $("#start").val();
         if (!start) {
-            $.alert("开始时间不能为空");
+            bootoast({
+                message: '开始时间不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var end = $("#end").val();
         if (!end) {
-            $.alert("结束时间不能为空");
+            bootoast({
+                message: '结束时间不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var content = $("#content").val();
         if (!content) {
-            $.alert("活动内容不能为空");
+            bootoast({
+                message: '活动内容不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var pubFlag = $(".pub-flag").hasClass("select");
@@ -144,7 +177,12 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=任务创建成功";
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: '问卷提交失败:' + data.Message + '',
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             }
         });
@@ -153,26 +191,51 @@ $(document).ready(function() {
     function createActivity() {
         var title = $("#title").val();
         if (!title) {
-            $.alert("标题不能为空");
+            bootoast({
+                message: '标题不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var start = $("#start").val();
         if (!start) {
-            $.alert("开始时间不能为空");
+            bootoast({
+                message: '开始时间不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var end = $("#end").val();
         if (!end) {
-            $.alert("结束时间不能为空");
+            bootoast({
+                message: '结束时间不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var content = $("#content").val();
         if (!content) {
-            $.alert("活动内容不能为空");
+            bootoast({
+                message: '活动内容不能为空:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         if (!imgUrl) {
-            $.alert("请上传图片");
+            bootoast({
+                message: '请上传图片:',
+                type: 'info',
+                position: 'toast-top-center',
+                timeout: 2
+            });
             return;
         }
         var data = {
@@ -201,52 +264,15 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=活动创建成功";
                 } else {
-                    alert(data.Code, data.Message);
-                }
-            }
-        });
-    }
-    getUserRelationship();
-    //查询列表
-    function getUserRelationship() {
-        $.ajax({
-            type: "POST",
-            url: DOMAIN + "/api/User/GetUserRelationship",
-            data: {
-                Type: 0,
-                UserId: userId,
-                Token: token,
-                AppId: appId
-            },
-            success: function(data) {
-                console.log("GetUserRelationship---", data);
-                if (data.Code == "00") {
-                    $(".relation-list").html(dealRelationList(data.Result.UserList));
-                    $(".subordinate-item").click(function() {
-                        var id = $(this).attr("id");
-                        var name = $($(this).find("span")).text();
-                        var arr = id.split("-");
+                    bootoast({
+                        message: '' + data.Message + '',
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
                     });
-                } else {
-                    alert(data.Code, data.Message);
                 }
             }
         });
-    }
-
-    function dealRelationList(list) {
-        var content = ``;
-        list.forEach(element => {
-            content += `<div class="subordinate-item" id="${element.UserId}-${
-        element.IsLeader == true ? "1" : "0"
-      }">
-            <span>${element.Name == null ? element.UserId : element.Name}</span>
-            <div class="right-dir">
-                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-            </div>
-        </div>`;
-        });
-        return content;
     }
     class CalculateScreen {
         constructor() {
@@ -259,7 +285,6 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => {});
                 $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass("pc-wrap");

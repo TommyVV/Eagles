@@ -5,7 +5,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-
+$('#footer').load('footer.html')
 $('#exam-button-jump').on('click', () => {
 	window.location.href = 'onlineExamQuestion.html?testId=' + testId + '&appId=' + appId + ''
 })
