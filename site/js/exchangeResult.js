@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+	var appId = getRequest('appId') //所有跳转到结果页的页面拼上appId
 	$('#top-nav,#mobilenav').load('./head.html')
     var code = getRequest('code');
     var tip = getRequest("tip");
