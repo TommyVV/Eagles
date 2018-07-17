@@ -36,6 +36,7 @@
 	width: 100%;
 	height: auto;
 	overflow: hidden;
+	border-bottom: 1px solid #eee;
 }
 
 .main_content .header .source-box {
@@ -46,7 +47,7 @@
 	font-size: 0.64rem;
 	margin-top: 0.53333rem;
 	padding-bottom: 1.10933rem;
-	border-bottom: 1px solid #eee;
+	
 }
 
 .main_content .header .author-box {
@@ -64,7 +65,6 @@
 	color: #949494;
 	font-size: 0.512rem;
 	padding: 0.869rem 0;
-	border-bottom: 1px solid #eee;
 }
 
 .main_content .header .author-box .study-time {
@@ -146,7 +146,7 @@
 	display: inline-block;
 	height: 16px;
 	margin-right: 10px;
-	margin-top: -1px;
+	margin-top: -3px;
 	vertical-align: middle;
 	width: 16px;
 	line-height: 1
