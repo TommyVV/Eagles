@@ -1,12 +1,14 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
+    $('#top-nav').html('');
+    $('#top-nav').load('./head.html');
     var currentItemType = '0';
 
     //查询所有活动
     getActivityList('0');
     //头部按钮点击
-    $(".activity-cate").click(function () {
+    $(".activity-cate").click(function() {
         var id = $(this).attr('id');
         if (id != currentItemType) {
             currentItemType = id;
@@ -29,13 +31,13 @@ $(document).ready(function () {
                 "Token": token,
                 "AppId": appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log('GetActivityList---', data);
                 if (data.Code == "00") {
                     var list = data.Result.ActivityList;
                     $(".item").html(dealReturnList(list));
                     //给每列数据绑定事件
-                    $(".article").click(function () {
+                    $(".article").click(function() {
                         var par = $(this).attr('id');
                         var tmpArray = par.split('-');
                         console.log(tmpArray);
@@ -47,9 +49,10 @@ $(document).ready(function () {
                             window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
                         } else if (type == '1') {
                             //投票活动
-                            window.location.href = "vote.html?appId=" + appId + "&voteId=" + testId;
+                            window.location.href = "vote.html?appId=" + appId + "&testId=" + testId + "&activityId=" + id;
                         } else if (type == '2') {
                             //问卷调查
+                            window.location.href = "onlineExam.html?appId=" + appId + "&testId=" + testId + "&activityId=" + id;
                         }
                     });
                 } else if (data.Code == '10') {
@@ -92,8 +95,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -106,7 +108,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 

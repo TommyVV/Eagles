@@ -1,33 +1,26 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
     var stepId = "";
     getTaskStep();
     //新增计划
-    $(".plan-add").click(function () {
+    $(".plan-add").click(function() {
         stepId = "";
-        $(".alert .weui-dialog__title").html("新增步骤");
-        $(".alert").removeClass("hide");
+        var modal = new Modal(2, {
+            title: '新增步骤',
+            content: ''
+        }, function(str) {
+            console.log('text---', str);
+            editTaskStep(str);
+        });
     });
-    //弹框取消
-    $(".alert .default").click(function () {
-        $(".alert").addClass("hide");
-        $("#step-name").val("");
-    });
-    //弹框确定
-    $(".alert .primary").click(function () {
-        var stepName = $("#step-name").val();
-        if (stepName) {
-            editTaskStep(stepName);
-        } else {
-            $(".alert .tip").html("内容不能为空");
-        }
-    });
-    var that=$;
+    var that = $;
     //申请完成
-    $('.sub-btn').click(function () {
+    $('.sub-btn').click(function() {
         editTaskComplete();
     });
     //活动步骤查询
@@ -40,7 +33,7 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("GetTaskStep---", data);
                 if (data.Code == "00") {
                     taskStepContent(data.Result.StepList);
@@ -66,7 +59,7 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("EditTaskStep---", data);
                 if (data.Code == "00") {
                     getTaskStep();
@@ -89,7 +82,7 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("RemoveTaskStep---", data);
                 if (data.Code == "00") {
                     getTaskStep();
@@ -125,7 +118,7 @@ $(document).ready(function () {
         $(".plan-content").html(str);
         $(".btn-area").removeClass("hide");
         //编辑按钮
-        $(".edit").click(function () {
+        $(".edit").click(function() {
             stepId = $(this)
                 .attr("id")
                 .split("-")[1];
@@ -134,7 +127,7 @@ $(document).ready(function () {
             $(".alert").removeClass("hide");
         });
         //反馈按钮
-        $(".feedback").click(function () {
+        $(".feedback").click(function() {
             stepId = $(this)
                 .attr("id")
                 .split("-")[1];
@@ -147,7 +140,7 @@ $(document).ready(function () {
                 taskId;
         });
         //删除按钮
-        $(".del").click(function () {
+        $(".del").click(function() {
             stepId = $(this)
                 .attr("id")
                 .split("-")[1];
@@ -167,10 +160,10 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("(下级申请)活动完成---", data);
                 if (data.Code == "00") {
-                    that.toast("申请已提交", function () { });
+                    that.toast("申请已提交", function() {});
                 } else {
                     alert(data.Code, data.Message);
                 }
@@ -188,8 +181,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -202,7 +194,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });
