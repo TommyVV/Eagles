@@ -173,6 +173,7 @@
 }
 
 .footer .submit-box {
+	display: none;
 	padding: 2.45333rem 0rem 1.6rem 0;
 	text-align: center;
 }
