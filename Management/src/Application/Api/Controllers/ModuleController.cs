@@ -1,8 +1,6 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Column.Requset;
 using Eagles.Application.Model.Column.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
 
 using Eagles.Application.Host.Common;

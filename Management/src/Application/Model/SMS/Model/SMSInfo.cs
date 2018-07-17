@@ -6,20 +6,21 @@ namespace Eagles.Application.Model.SMS.Model
     /// <summary>
     /// 
     /// </summary>
-    public class SMS
+    public class SMSInfo
     {
         /// <summary>
-        ///  '短信提供方ID',
+        ///  '短信提供方ID',（新增时无需传递）
         /// </summary>
         public int VendorId { get; set; }
+
         /// <summary>
         /// 短信提供方名称
         /// </summary>
         public string VendorName { get; set; }
+
         /// <summary>
         /// 已发送数量
         /// </summary>
-        /// <returns></returns>
         public int SendCount { get; set; }
         /// <summary>
         /// 创建时间
@@ -29,7 +30,7 @@ namespace Eagles.Application.Model.SMS.Model
         /// 短信方appId
         /// </summary>
         /// <returns></returns>
-        public String AppId { get; set; }
+        public string AppId { get; set; }
 
         /// <summary>
         /// 短信方appKey
@@ -47,9 +48,8 @@ namespace Eagles.Application.Model.SMS.Model
         /// <returns></returns>
         public string ServiceUrl { get; set; }
 
-
         /// <summary>
-        /// 最大发送数量
+        /// 短信总数
         /// </summary>
         /// <returns></returns>
         public int MaxCount { get; set; }
@@ -59,7 +59,7 @@ namespace Eagles.Application.Model.SMS.Model
         /// </summary>
         public int Priority { get; set; }
         /// <summary>
-        /// 状态
+        /// 状态 0：正常；1：禁用
         /// </summary>
         public Status Status { get; set; }
     }

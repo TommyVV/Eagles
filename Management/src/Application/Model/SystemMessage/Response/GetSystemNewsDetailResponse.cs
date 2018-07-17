@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.SystemMessage.Response
         /// <summary>
         /// 
         /// </summary>
-        public SystemNews info { get; set; }
+        public SystemNews News { get; set; }
     }
 }
