@@ -142,6 +142,17 @@ class ScoreList extends React.Component {
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
+        <Row type="flex" gutter={24}>
+          <Col>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() => hashHistory.replace(`/intergral/detail`)}
+            >
+              新增
+            </Button>
+          </Col>
+        </Row>
       </Nav>
     );
   }

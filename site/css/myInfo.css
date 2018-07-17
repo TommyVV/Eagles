@@ -11,6 +11,8 @@ html, body {
   height: 100%; }
 
 @media screen and (max-width: 768px) {
+	.myInfoBox .right input{width:132px;}
+	 .myInfoBox .right .borderfday{width: 132px;}
   #pc-header {
     display: none; }
   #pc-footer {
@@ -87,6 +89,7 @@ html, body {
 
 @media screen and (min-width: 768px) {
 	.myInfoBox .right input{width: 160px;}
+	.myInfoBox .right .borderfday{width: 160px;}
 	.myInfoBox .item .button {
         display: flex;
         justify-content: center; }
@@ -164,7 +167,8 @@ html, body {
         height: 40px; }
       .myInfoBox .item .button {
         /*display: none;*/ } }
-        .myInfoBox .right input{display: none;height: 24px;border:1px solid #ccc;line-height: 24px;}
+        .myInfoBox .right input{display: none;height: 24px;border:1px solid #EEEEEE;line-height: 24px;/*border-top:none;border-right:none;border-left: none;*/}
+        
        .myInfoBox .right #fileupload{position:relative;float: right;margin-right:20px;
        	display:block;opacity: 0;
        }

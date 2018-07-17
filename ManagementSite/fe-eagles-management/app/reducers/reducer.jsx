@@ -6,6 +6,7 @@ import userReducer from "./userReducer";
 import goodsReducer from "./goodsReducer";
 import orgReducer from "./orgReducer";
 import newsReducer from "./newsReducer";
+import scoreReducer from "./scoreReducer";
 import questionReducer from "./questionReducer";
 import programaReducer from "./programaReducer";
 import exReducer from "./exReducer";
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   programaReducer,
   goodsReducer,
   orgReducer,
-  newsReducer
+  newsReducer,
+  scoreReducer
 });
 
 export default reducer;

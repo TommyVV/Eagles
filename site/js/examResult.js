@@ -7,7 +7,7 @@ if(!localStorage.getItem('token')){
 	window.location.href = 'login.html?appId='+appId+'';
 }
 $('#top-nav,#mobilenav').load('./head.html')
-
+$('#footer').load('footer.html')
 examResult(TestId,UseTime,TestList,token,appId);
 function examResult(TestId,UseTime,TestList,token,appId) {
 	$.ajax({

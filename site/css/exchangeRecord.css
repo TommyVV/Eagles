@@ -47,16 +47,16 @@
 
 @media screen and (min-width: 768px) {
 	.conmid_rs{
-		height:700px;width:1000px;overflow: hidden;margin: 0 auto;z-index:999
+		min-height:500px;width:1000px;overflow: hidden;margin: 0 auto;z-index:999
 	}
-	.mescroll{
+	/*.mescroll{
 		
 			position: relative;
 			top: 19px;
 			bottom: 246px;
 			 height:auto;
-		/*如设置bottom:51px,则需height:auto才能生效*/
-		}
+		}*/
+		#mescroll{overflow: hidden;}
   .dj-title {
     width: 1000px;
     height: 32px;
