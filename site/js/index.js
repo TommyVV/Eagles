@@ -3,7 +3,7 @@ var token = localStorage.getItem('token');
 var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
 var appId=getRequest('appId');
 $('#top-nav,#mobilenav').load('head.html');
-$('#pc-footer').load('footer.html');
+$('#footer').load('footer.html');
 class CalculateScreen {
 	constructor() {
 		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
