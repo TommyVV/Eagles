@@ -65,5 +65,26 @@ namespace Eagles.Application.Host.Controllers
         {
             return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.SMS(requset));
         }
+
+        /// <summary>
+        /// 获取机构短信配置
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetOrgSmsResponse GetOrgSms(RequestBase request)
+        {
+            return new GetOrgSmsResponse();
+        }
+
+        /// <summary>
+        /// 创建/修改短信配置。
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public ResponseBase CreateOrgSmsConfig(CreateOrgSmsRequest request)
+        {
+            //todo
+            return null;
+        }
     }
 }

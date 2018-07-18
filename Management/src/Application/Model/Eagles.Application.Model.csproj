@@ -259,10 +259,12 @@
     <Compile Include="SMSOrg\Response\GetSMSOrgDetailResponse.cs" />
     <Compile Include="SMSOrg\Response\GetSMSOrgResponse.cs" />
     <Compile Include="SMS\Model\SMSInfo.cs" />
+    <Compile Include="SMS\Request\CreateOrgSmsRequest.cs" />
     <Compile Include="SMS\Request\EditSMSRequset.cs" />
     <Compile Include="SMS\Request\GetSMSDetailRequset.cs" />
     <Compile Include="SMS\Request\GetSMSRequset.cs" />
     <Compile Include="SMS\Request\RemoveSMSRequset.cs" />
+    <Compile Include="SMS\Response\GetOrgSmsResponse.cs" />
     <Compile Include="SMS\Response\GetSMSDetailResponse.cs" />
     <Compile Include="SMS\Response\GetSMSResponse.cs" />
     <Compile Include="SystemMessage\Model\SystemNews.cs" />
