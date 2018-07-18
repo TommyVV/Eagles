@@ -96,7 +96,7 @@ function minedel(token, appId) {
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
-        var res={"Result":{"ResultUserInfo":{"UserId":10000008,"Name":"136****716","Gender":"男","Ethnic":null,"Birth":"0001-01-01","Provice":null,"City":null,"District":null,"Origin":null,"OriginAddress":null,"Address":null,"Telphone":"13611186716","IdCard":null,"Education":null,"School":null,"Employer":null,"Department":null,"PrepPartyDate":"0001-01-01","FormalPartyDat":"0001-01-01","PartyType":"党员","PartyMembershipDues":null,"Branch":"测试支部","JoinBranchDate":null,"MyOrganization":"湖北党支部","JoinOrganizationDate":null,"MembershipStatus":null,"PhotoUrl":"http://51service.xyz/images/logo_sm.png","IsLeader":0,"Score":0}},"DateTime":"2018-07-18T14:24:00.0626804+08:00","Code":"00","Message":"执行成功"}
+        
 			if(res.Code == 00) {
 				var data = res.Result.ResultUserInfo;
 				$('.main-content-top-name,.lc_name').text(data.Name); //昵称
