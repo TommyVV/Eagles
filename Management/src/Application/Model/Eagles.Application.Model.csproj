@@ -134,6 +134,8 @@
     <Compile Include="Exercises\Response\GetSubjectDetailResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectListResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectResponse.cs" />
+    <Compile Include="Export\ExportRequest.cs" />
+    <Compile Include="Export\ExportResponse.cs" />
     <Compile Include="Goods\Model\Goods.cs" />
     <Compile Include="Goods\Model\GoodsDetail.cs" />
     <Compile Include="Goods\Requset\EditGoodsRequset.cs" />

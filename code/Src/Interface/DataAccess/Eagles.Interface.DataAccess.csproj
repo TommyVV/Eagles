@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="ActivityAccess\IActivityAccess.cs" />
     <Compile Include="AppModule\IAppModuleDA.cs" />
-    <Compile Include="Export\IExportAccess.cs" />
     <Compile Include="Menu\IMenuDataAccess.cs" />
     <Compile Include="NewsDa\INewsDa.cs" />
     <Compile Include="OrderAccess\IOrderAccess.cs" />

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Area\IAreaHandler.cs" />
+    <Compile Include="FileExport\IFileExportHandler.cs" />
     <Compile Include="FileUpload\IFileUploadHandler.cs" />
     <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IAuditHandler.cs" />
@@ -76,5 +77,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -45,7 +45,6 @@
     <Compile Include="AppMenu\IAppMenuHandler.cs" />
     <Compile Include="AppModule\IAppModuleHanlder.cs" />
     <Compile Include="Common\ITokenHadler.cs" />
-    <Compile Include="ExportFile\IExportHandler.cs" />
     <Compile Include="FileUpload\IFileUploadHandler.cs" />
     <Compile Include="News\INewsHandler.cs" />
     <Compile Include="Order\IOrderHandler.cs" />
