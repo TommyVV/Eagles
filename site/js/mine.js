@@ -1,4 +1,4 @@
-var token = localStorage.getItem('token')
+var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 $('#top-nav,#mobilenav').html('')
 $('#top-nav,#mobilenav').load('./head.html')
@@ -91,17 +91,17 @@ function minedel(token, appId) {
 		type: "post",
 		data: {
 			"Token": token,
-			"AppId": appId
+			"AppId": 10000000
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
-
+        var res={"Result":{"ResultUserInfo":{"UserId":10000008,"Name":"136****716","Gender":"男","Ethnic":null,"Birth":"0001-01-01","Provice":null,"City":null,"District":null,"Origin":null,"OriginAddress":null,"Address":null,"Telphone":"13611186716","IdCard":null,"Education":null,"School":null,"Employer":null,"Department":null,"PrepPartyDate":"0001-01-01","FormalPartyDat":"0001-01-01","PartyType":"党员","PartyMembershipDues":null,"Branch":"测试支部","JoinBranchDate":null,"MyOrganization":"湖北党支部","JoinOrganizationDate":null,"MembershipStatus":null,"PhotoUrl":"http://51service.xyz/images/logo_sm.png","IsLeader":0,"Score":0}},"DateTime":"2018-07-18T14:24:00.0626804+08:00","Code":"00","Message":"执行成功"}
 			if(res.Code == 00) {
 				var data = res.Result.ResultUserInfo;
 				$('.main-content-top-name,.lc_name').text(data.Name); //昵称
 				$('.main-content-top-tel,.info-tel').text(data.Telphone); //用户id
-				$('.head-icon').attr("src",data.PhotoUrl); //头像
+				$('.head-icon,.head-pic').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
 
 			}
@@ -115,7 +115,7 @@ function getScrollNews(token, appId) {
 		type: "post",
 		data: {
 			"Token": token,
-			"AppId": appId
+			"AppId": 10000000
 		},
 		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollNews",
 		dataType: "json",
@@ -130,7 +130,8 @@ function getScrollNews(token, appId) {
 				$('#scrollobj').append(divs)
 				setInterval("scroll(document.getElementById('scrollobj'))", 20);
 			} else {
-				$('#scrollobj').hide()
+				$('#scrollobj,.newsd').hide();
+				
 			}
 		}
 	})
