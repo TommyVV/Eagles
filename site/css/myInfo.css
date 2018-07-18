@@ -106,7 +106,7 @@ html, body {
           font-family: SourceHanSansCN-Regular;
           color: white; } 
   .container {
-    width: 1200px;
+    width: 1200px;overflow: hidden;
     margin: 0 auto; }
     .pc-values{margin-top:64px;}
   .myInfoModal {
