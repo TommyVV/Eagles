@@ -15,6 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/scoreService";
+import { scoreType } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -29,7 +30,15 @@ class ScoreList extends React.Component {
     this.columns = [
       {
         title: "积分类型",
-        dataIndex: "RewardType"
+        dataIndex: "RewardType",
+        render: RewardType => {
+          return scoreType.map((o, i) => {
+            if (o.value === RewardType + "") {
+              console.log(o.text);
+              return <span key={o.value}>{o.text}</span>;
+            }
+          });
+        }
       },
       {
         title: "增加积分",
@@ -67,7 +76,7 @@ class ScoreList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      RewardType: ""
+      RewardType: "-1"
     };
   }
   componentWillMount() {
@@ -76,7 +85,7 @@ class ScoreList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);

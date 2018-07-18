@@ -131,6 +131,14 @@ const SCORE = {
   RANK_LIST: "/api/Score/GetScoreRank", //积分排行列表
   RANK_DETAIL: "/api/Score/GetScoreRankDetail", //积分排行详情
 };
+//积分
+const MEMBER = {
+  EDIT: "/api/User/EditPartyMember", //编辑
+  DELETE: "/api/User/RemovePartyMember", //删除
+  DETAIL: "/api/User/GetPartyMemberDetail", //详情
+  LIST: "/api/User/GetPartyMember", //列表
+  IMPORT: "/api/Score/GetScoreRank", //导入
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -151,5 +159,6 @@ export const serverConfig = {
   EDITPARTYMEMBER,
   FILE,
   AREA,
-  SCORE
+  SCORE,
+  MEMBER
 };
