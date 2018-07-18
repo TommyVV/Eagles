@@ -9,8 +9,6 @@
     <title>首页</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./thirdparty/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link href="./css/publishArticle.css?v=20180715" rel="stylesheet">
     <link href="./css/bootoast.css" rel="stylesheet">
 </head>
@@ -36,7 +34,7 @@
 	        <div class="pub-item name-item assign">
                     指派:
                     <span class="item-content" id="name">Tommy</span>
-                    <span class="item-select" id="subord">选择</span>
+                    <span class="item-select" data-toggle="modal" data-target="#myModal">选择</span>
                 </div>
             <div class="wrap">
                 <textarea class="publish-content" name="" id="" cols="30" rows="10" placeholder="点击此处开始写文章..."></textarea>
@@ -46,32 +44,30 @@
             </div>
         </div>
     </div>
-    <div class="alert hide">
-        <div class="weui-mask weui-mask--visible"></div>
-        <div class="weui-dialog weui-dialog--visible">
-            <div class="weui-dialog__hd">
-                <strong class="weui-dialog__title"></strong>
-            </div>
-            <div class="weui-dialog__bd">
-                <div class="relation-list">
-                	<select name="" id="mys_zpy" class="selectpicker">
+    
+    <div class="footer" id="footer"></div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">选择指派人员</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<select name="" id="modal-body">
 	                    
 	                </select>
-                </div>
-                <div class="tip"></div>
-            </div>
-            <div class="weui-dialog__ft">
-                <div class="weui-dialog__btn default">取消</div>
-                <div class="weui-dialog__btn primary">确定</div>
-            </div>
-        </div>
-    </div>
-    <div class="footer" id="footer"></div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-    <script src="thirdparty/jquery.ui.widget.js"></script>
     <script src="js/bootoast.js"></script>
      <script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
     <script src="js/common.js"></script>
