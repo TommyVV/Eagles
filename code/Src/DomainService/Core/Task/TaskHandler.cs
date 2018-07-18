@@ -74,28 +74,32 @@ namespace Eagles.DomainService.Core.Task
                 task.Status = -2; //0:初始状态;(上级发给下级的初始状态)
             else
                 task.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
-            var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
+
+            if (request.AttachList != null && request.AttachList.Count > 0)
             {
-                if (i == 0)
+                var attachList = request.AttachList;
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    task.AttachName1 = attachList[i].AttachName;
-                    task.Attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    task.AttachName2 = attachList[i].AttachName;
-                    task.Attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    task.AttachName3 = attachList[i].AttachName;
-                    task.Attach3 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    task.AttachName4 = attachList[i].AttachName;
-                    task.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    if (i == 0)
+                    {
+                        task.AttachName1 = attachList[i].AttachName;
+                        task.Attach1 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 1)
+                    {
+                        task.AttachName2 = attachList[i].AttachName;
+                        task.Attach2 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 2)
+                    {
+                        task.AttachName3 = attachList[i].AttachName;
+                        task.Attach3 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 3)
+                    {
+                        task.AttachName4 = attachList[i].AttachName;
+                        task.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    }
                 }
             }
             var result = iTaskAccess.CreateTask(task, toUser, toUserName);
@@ -369,28 +373,31 @@ namespace Eagles.DomainService.Core.Task
                 Content = request.Content,
                 UpdateTime = DateTime.Now
             };
-            var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
+            if (request.AttachList != null && request.AttachList.Count > 0)
             {
-                if (i == 0)
+                var attachList = request.AttachList;
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    userTaskStep.AttachName1 = attachList[i].AttachName;
-                    userTaskStep.Attach1 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 1)
-                {
-                    userTaskStep.AttachName2 = attachList[i].AttachName;
-                    userTaskStep.Attach2 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 2)
-                {
-                    userTaskStep.AttachName3 = attachList[i].AttachName;
-                    userTaskStep.Attach3 = attachList[i].AttachmentDownloadUrl;
-                }
-                else if (i == 3)
-                {
-                    userTaskStep.AttachName4 = attachList[i].AttachName;
-                    userTaskStep.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    if (i == 0)
+                    {
+                        userTaskStep.AttachName1 = attachList[i].AttachName;
+                        userTaskStep.Attach1 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 1)
+                    {
+                        userTaskStep.AttachName2 = attachList[i].AttachName;
+                        userTaskStep.Attach2 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 2)
+                    {
+                        userTaskStep.AttachName3 = attachList[i].AttachName;
+                        userTaskStep.Attach3 = attachList[i].AttachmentDownloadUrl;
+                    }
+                    else if (i == 3)
+                    {
+                        userTaskStep.AttachName4 = attachList[i].AttachName;
+                        userTaskStep.Attach4 = attachList[i].AttachmentDownloadUrl;
+                    }
                 }
             }
             var result = iTaskAccess.EditTaskFeedBack(userTaskStep);
