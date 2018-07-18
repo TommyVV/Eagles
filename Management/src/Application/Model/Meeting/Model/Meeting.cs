@@ -26,7 +26,7 @@ namespace Eagles.Application.Model.Meeting.Model
         /// <summary>
         /// 会议参与人
         /// </summary>
-        public List<String> Participants { get; set; }
+        public List<string> Participants { get; set; }
 
     }
 }

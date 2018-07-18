@@ -14,6 +14,11 @@
         /// 会议参与人联系电话
         /// </summary>
         public string MeetUserPhone { get; set; }
+        
+        /// <summary>
+        /// 导入校验错误信息
+        /// </summary>
+        public string ErrorMessage { get; set; }
 
     }
 }

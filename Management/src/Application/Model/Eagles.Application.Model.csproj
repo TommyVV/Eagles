@@ -162,6 +162,7 @@
     <Compile Include="Meeting\Response\CheckMeetUserResponse.cs" />
     <Compile Include="Meeting\Response\GetMeetingDetailResponse.cs" />
     <Compile Include="Meeting\Response\GetMeetingResponse.cs" />
+    <Compile Include="Meeting\Response\ImportMeetingResponse.cs" />
     <Compile Include="Menus\Model\Menus.cs" />
     <Compile Include="Menus\Requset\EditMenusRequset.cs" />
     <Compile Include="Menus\Requset\GetMenusDetailRequest.cs" />
