@@ -76,9 +76,9 @@ namespace Eagles.DomainService.Core.Activity
                 act.Status = 0; //0:初始状态;(上级发给下级的初始状态)
             else
                 act.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
-
-            var attachList = request.AttachList;
-            if (attachList.Count > 0)
+            if (request.AttachList != null && request.AttachList.Count > 0)
+            {
+                var attachList = request.AttachList;
                 for (int i = 0; i < attachList.Count; i++)
                 {
                     switch (i)
@@ -101,6 +101,7 @@ namespace Eagles.DomainService.Core.Activity
                             break;
                     }
                 }
+            }
             var result = iActivityAccess.CreateActivity(act);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
@@ -312,8 +313,9 @@ namespace Eagles.DomainService.Core.Activity
                 UserFeedBack = request.Content,
                 ActivityId = request.ActivityId
             };
-            var attachList = request.AttachList;
-            if (attachList.Count > 0)
+            if (request.AttachList != null && request.AttachList.Count > 0)
+            {
+                var attachList = request.AttachList;
                 for (int i = 0; i < attachList.Count; i++)
                 {
                     switch (i)
@@ -336,6 +338,7 @@ namespace Eagles.DomainService.Core.Activity
                             break;
                     }
                 }
+            }
             var result = iActivityAccess.EditActivityFeedBack(feeBack);
             if (result <= 0)
                  throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
