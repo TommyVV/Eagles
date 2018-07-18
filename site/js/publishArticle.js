@@ -67,7 +67,7 @@ $("#selectpicker").change(function() {
 });
 
    
-branchUsers(token, 10000000); //党员支部信息展示
+branchUsers(token, appId); //党员支部信息展示
 function branchUsers(token, appId) {
 	$.ajax({
 		type: "post",

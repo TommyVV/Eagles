@@ -91,7 +91,7 @@ function minedel(token, appId) {
 		type: "post",
 		data: {
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
@@ -115,7 +115,7 @@ function getScrollNews(token, appId) {
 		type: "post",
 		data: {
 			"Token": token,
-			"AppId": 10000000
+			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollNews",
 		dataType: "json",
