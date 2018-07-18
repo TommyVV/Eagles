@@ -268,6 +268,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\MettingController.cs" />
     <Compile Include="Controllers\SystemNewsController.cs" />
     <Compile Include="Controllers\SmsConfigController.cs" />
     <Compile Include="Controllers\ScoreController.cs" />

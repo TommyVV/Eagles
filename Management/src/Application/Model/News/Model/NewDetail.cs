@@ -70,11 +70,21 @@ namespace Eagles.Application.Model.News.Model
         /// </summary>
         public int IsExternal { get; set; }
 
+        /// <summary>
+        /// 新闻类型：0：新闻；1：会议
+        /// </summary>
         public int NewsType { get; set; }
 
+        /// <summary>
+        /// 是否能学习
+        /// </summary>
         public int CanStudy { get; set; }
 
+        /// <summary>
+        /// 是否有附件
+        /// </summary>
         public int IsAttach { get; set; }
+
         /// <summary>
         /// 有课件
         /// </summary>
@@ -83,23 +93,21 @@ namespace Eagles.Application.Model.News.Model
         /// 有图片
         /// </summary>
         public int IsImage { get; set; }
+
         /// <summary>
-        /// 是学习心得
+        /// 是学习心得（暂时不需要）
         /// </summary>
         public int IsLearning { get; set; }
 
+        /// <summary>
+        /// 有视频
+        /// </summary>
         public int IsVideo { get; set; }
 
+        /// <summary>
+        /// 简单描述
+        /// </summary>
         public string ShortDesc { get; set; }
-
-
-
-
-
-
-
-
-
 
     }
 
