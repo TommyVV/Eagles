@@ -201,7 +201,7 @@
     @media screen and (min-width: 768px) {
         #top-nav {
             position: fixed!important;
-            z-index: 9990!important;
+            z-index: 100000!important;
             width: 100%;
 			left:0;
         }
