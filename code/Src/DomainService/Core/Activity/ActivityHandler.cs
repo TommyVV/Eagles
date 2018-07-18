@@ -76,29 +76,31 @@ namespace Eagles.DomainService.Core.Activity
                 act.Status = 0; //0:初始状态;(上级发给下级的初始状态)
             else
                 act.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
+
             var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
-            {
-                switch (i)
+            if (attachList.Count > 0)
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    case 0:
-                        act.AttachName1 = attachList[i].AttachName;
-                        act.Attach1 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 1:
-                        act.AttachName2 = attachList[i].AttachName;
-                        act.Attach2 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 2:
-                        act.AttachName3 = attachList[i].AttachName;
-                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 3:
-                        act.AttachName4 = attachList[i].AttachName;
-                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            act.AttachName1 = attachList[i].AttachName;
+                            act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 1:
+                            act.AttachName2 = attachList[i].AttachName;
+                            act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 2:
+                            act.AttachName3 = attachList[i].AttachName;
+                            act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 3:
+                            act.AttachName4 = attachList[i].AttachName;
+                            act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                    }
                 }
-            }
             var result = iActivityAccess.CreateActivity(act);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
@@ -311,28 +313,29 @@ namespace Eagles.DomainService.Core.Activity
                 ActivityId = request.ActivityId
             };
             var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
-            {
-                switch (i)
+            if (attachList.Count > 0)
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    case 0:
-                        feeBack.AttachName1 = attachList[i].AttachName;
-                        feeBack.Attach1 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 1:
-                        feeBack.AttachName2 = attachList[i].AttachName;
-                        feeBack.Attach2 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 2:
-                        feeBack.AttachName3 = attachList[i].AttachName;
-                        feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 3:
-                        feeBack.AttachName4 = attachList[i].AttachName;
-                        feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            feeBack.AttachName1 = attachList[i].AttachName;
+                            feeBack.Attach1 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 1:
+                            feeBack.AttachName2 = attachList[i].AttachName;
+                            feeBack.Attach2 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 2:
+                            feeBack.AttachName3 = attachList[i].AttachName;
+                            feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 3:
+                            feeBack.AttachName4 = attachList[i].AttachName;
+                            feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                    }
                 }
-            }
             var result = iActivityAccess.EditActivityFeedBack(feeBack);
             if (result <= 0)
                  throw new TransactionException(MessageCode.NoData, MessageKey.NoData);

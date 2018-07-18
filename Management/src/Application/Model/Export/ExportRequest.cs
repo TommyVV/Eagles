@@ -10,20 +10,20 @@ namespace Eagles.Application.Model.Export
         /// <summary>
         /// 列名
         /// </summary>
-        public string Field { get; set; }
+        public string ColumnNames { get; set; }
 
         /// <summary>
         /// 数据
         /// </summary>
-        public List<Entity> List { get; set; }
+        public List<Row> RowsList { get; set; }
     }
 
     //entity
-    public class Entity
+    public class Row
     {
         /// <summary>
         /// 数据
         /// </summary>
-        public string[] Value { get; set; }
+        public string[] Rows { get; set; }
     }
 }
