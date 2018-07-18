@@ -31,5 +31,10 @@ namespace Eagles.DomainService.Model.Config
         /// 图片网络url
         /// </summary>
         public string ImageBaseUrl { get; set; }
+
+        /// <summary>
+        /// 导出文件路径
+        /// </summary>
+        public string ExportPath { get; set; }
     }
 }

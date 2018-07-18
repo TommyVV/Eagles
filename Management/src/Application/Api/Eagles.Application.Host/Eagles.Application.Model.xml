@@ -1584,6 +1584,36 @@
             集合
             </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Export.ExportRequest">
+            <summary>
+            导出
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Export.ExportRequest.ColumnNames">
+            <summary>
+            列名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Export.ExportRequest.RowsList">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Export.Row.Rows">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Export.ExportResponse">
+            <summary>
+            导出
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Export.ExportResponse.ExportFilePath">
+            <summary>
+            生成路径
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Goods.Model.Goods">
             <summary>
             
