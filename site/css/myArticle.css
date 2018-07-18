@@ -40,7 +40,7 @@ body {
 	.col-md-offset-3{margin-left:0;}
 	#top-nav {
 		position: fixed!important;
-		z-index: 9990!important;
+		z-index:100000!important;
 		width: 100%;
 		left:0;
 	}
@@ -215,7 +215,7 @@ body {
 
 .glyphicon {
     position: absolute;
-    top: 11px;
+    top: 35px;
     display: inline-block;
     font-family: 'Glyphicons Halflings';
     font-style: normal;
@@ -224,7 +224,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.select_box .glyphicon{top:11px;}
 .mod_select .select_box .option {
     z-index: 99;
     display: none;
