@@ -47,7 +47,7 @@ $('.btn-signup').on('click', function(e) {
 				loginIn($('#inputUser').val(), $('#inputPassword').val()) //调登陆接口
 			} else {
 				bootoast({
-					message: '注册失败',
+					message: '' + res.Message + '',
 					type: 'warning',
 					position: 'toast-top-center',
 					timeout: 3
