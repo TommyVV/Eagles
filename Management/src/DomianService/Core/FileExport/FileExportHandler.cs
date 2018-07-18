@@ -29,12 +29,9 @@ namespace Eagles.DomainService.Core.FileExport
             foreach (var s in request.ColumnNames.Split(','))
                 dataTable.Columns.Add(s);
             foreach (var row in request.RowsList)
-            {
                 dataTable.Rows.Add(row.Rows);
-            }
-
-
-            return new ExportResponse() {ExportFilePath = ""};
+            var path = ExportExcel(dataTable);
+            return new ExportResponse() {ExportFilePath = path};
         }
 
         /// <summary>
