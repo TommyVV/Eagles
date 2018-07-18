@@ -1,11 +1,10 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Goods.Requset;
 using Eagles.Application.Model.Goods.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
-
 using Eagles.Application.Host.Common;
+
+
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -21,7 +20,7 @@ namespace Eagles.Application.Host.Controllers
         }
         
         /// <summary>
-        /// 编辑  商品
+        /// 新增/编辑商品
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -32,7 +31,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        ///  商品 栏目
+        ///  商品删除
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -43,7 +42,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        /// 商品 列表
+        /// 商品列表查询
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>
@@ -54,7 +53,7 @@ namespace Eagles.Application.Host.Controllers
         }
 
         /// <summary>
-        ///  商品 详情
+        ///  商品详情查询
         /// </summary>
         /// <param name="requset"></param>
         /// <returns></returns>

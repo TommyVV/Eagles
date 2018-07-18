@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.PartyMember.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuthorityUserSetUpRequset : RequestBase
+    public class GetAuthorityUserSetUpRequset : PageRequestBase
     {
         /// <summary>
         /// 用户名称
@@ -21,6 +21,16 @@ namespace Eagles.Application.Model.PartyMember.Requset
         /// 支部编号
         /// </summary>
         public int BranchId { get; set; }
+
+        /// <summary>
+        /// 支部名称
+        /// </summary>
+        public int BranchName { get; set; }
+
+        /// <summary>
+        /// 机构名称
+        /// </summary>
+        public int OrgName { get; set; }
 
         /// <summary>
         /// 机构编号

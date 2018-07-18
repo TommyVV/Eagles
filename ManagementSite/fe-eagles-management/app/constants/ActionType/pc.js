@@ -43,6 +43,11 @@ const scoreType = {
   SAVE_INFO: "SAVE_INFO", // 保存详情
   CLEAR_INFO: "CLEAR_INFO" // 清空详情
 };
+// 图片
+const imageType = {
+  SAVE_INFO: "SAVE_INFO", // 保存详情
+  CLEAR_INFO: "CLEAR_INFO" // 清空详情
+};
 
 export const actionType = {
   appType,
@@ -53,5 +58,6 @@ export const actionType = {
   programaType,
   orgType,
   newsType,
-  scoreType
+  scoreType,
+  imageType
 };

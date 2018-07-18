@@ -50,10 +50,10 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 					window.location.href = 'partyLearning_detail.html?NewsId=' + newsIds + '&appId=' + appId;
 				} else {
 					bootoast({
-						message: '试卷提交失败,请稍后再试',
+						message: '' + res.Message + '',
 						type: 'danger',
 						position: 'toast-top-center',
-						timeout: 2
+						timeout: 0
 					});
 				}
 
@@ -268,7 +268,7 @@ function getTestPaperAnswerJson() {
 					message: '有题目题目没有作答,请全部完成后再提交!',
 					type: 'warning',
 					position: 'toast-top-center',
-					timeout: 2
+					timeout: 0
 				});
 				return;
 			}
@@ -293,7 +293,7 @@ function getTestPaperAnswerJson() {
 						message: '第' + (i + 1) + '题最多只能选择' + multiplecount + '个答案,请修改后在提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 2
+						timeout: 0
 					});
 
 				} else if(answerCheckboxs.length <= 0) {
@@ -301,7 +301,7 @@ function getTestPaperAnswerJson() {
 						message: '有题目题目没有作答,请全部完成后再提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 2
+						timeout: 0
 					});
 
 				}

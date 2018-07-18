@@ -1,4 +1,4 @@
-var token = localStorage.getItem('token')
+var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 $('#top-nav,#mobilenav').html('')
 $('#top-nav,#mobilenav').load('./head.html')
@@ -96,12 +96,12 @@ function minedel(token, appId) {
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
-
+        
 			if(res.Code == 00) {
 				var data = res.Result.ResultUserInfo;
 				$('.main-content-top-name,.lc_name').text(data.Name); //昵称
 				$('.main-content-top-tel,.info-tel').text(data.Telphone); //用户id
-				$('.head-icon').attr("src",data.PhotoUrl); //头像
+				$('.head-icon,.head-pic').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
 
 			}
@@ -130,7 +130,8 @@ function getScrollNews(token, appId) {
 				$('#scrollobj').append(divs)
 				setInterval("scroll(document.getElementById('scrollobj'))", 20);
 			} else {
-				$('#scrollobj').hide()
+				$('#scrollobj,.newsd').hide();
+				
 			}
 		}
 	})

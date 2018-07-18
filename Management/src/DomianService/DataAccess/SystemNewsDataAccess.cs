@@ -74,19 +74,19 @@ VALUES
         {
             return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_system_news`
 WHERE `NewsId` = @NewsId
-", new { NewsId = requset.SystemMessageId });
+", new { NewsId = requset.NewsId });
         }
 
-        public List<TbSystemNews> SystemNews(GetSystemNewsRequset requset)
+        public List<TbSystemNews> SystemNews(GetSystemNewsRequset requset,out int totalCount)
         {
 
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            //var token = cacheHelper.GetData<TbUserToken>(requset.Token);
 
-            parameter.Append(" and OrgId = @OrgId ");
-            dynamicParams.Add("OrgId", token.OrgId);
+            //parameter.Append(" and OrgId = @OrgId ");
+            //dynamicParams.Add("OrgId", token.OrgId);
 
 
             //if (requset.BranchId > 0)
@@ -103,14 +103,17 @@ WHERE `NewsId` = @NewsId
 
 
 
-            //if (requset.OrgId > 0)
-            //{
-          
-            //}
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_system_news`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
 
+            sql.Clear();
 
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
 
-            /// totalCount = 0;
             sql.AppendFormat(@" 
 SELECT `tb_system_news`.`NewsId`,
     `tb_system_news`.`NewsName`,
@@ -121,8 +124,10 @@ SELECT `tb_system_news`.`NewsId`,
     `tb_system_news`.`RepeatTime`,
     `tb_system_news`.`HtmlDesc`,
     `tb_system_news`.`NewsType`
-FROM `eagles`.`tb_system_news`  where 1=1  {0}  
+FROM `eagles`.`tb_system_news`  where 1=1  {0}   order by NewsId desc limit  @pageStart ,@pageSize
  ", parameter);
+
+         
 
             return dbManager.Query<TbSystemNews>(sql.ToString(), dynamicParams);
         }
@@ -145,7 +150,7 @@ FROM `eagles`.`tb_system_news`  where 1=1  {0}
 FROM `eagles`.`tb_system_news` 
   where NewsId=@NewsId;
  ");
-            dynamicParams.Add("NewsId", requset.SystemMessageId);
+            dynamicParams.Add("NewsId", requset.NewsId);
 
             return dbManager.QuerySingle<TbSystemNews>(sql.ToString(), dynamicParams);
         }

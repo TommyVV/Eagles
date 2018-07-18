@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Eagles.Application.Model.SMS.Model;
 
 namespace Eagles.Application.Model.SMS.Response
 {
    public  class GetSMSDetailResponse 
     {
         /// <summary>
-        /// 维护接口 传主键id 表示修改 不传表示新增
+        /// 短信
         /// </summary>
-        public Model.SMS Info { get; set; }
+        public SMSInfo Info { get; set; }
     }
 }

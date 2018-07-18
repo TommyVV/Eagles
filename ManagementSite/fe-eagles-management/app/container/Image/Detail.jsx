@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Input,
@@ -7,54 +8,62 @@ import {
   Row,
   Col,
   Select,
-  Avatar,
-  Icon,
-  Upload
+  Upload,
+  Icon
 } from "antd";
-const Dragger = Upload.Dragger;
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/imageService";
+import { getOrgList } from "../../services/orgService";
+import { serverConfig } from "../../constants/config/ServerConfigure";
+import { fileSize, pageMap } from "../../constants/config/appconfig";
+import { saveInfo, clearInfo } from "../../actions/imageAction";
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
-
+@connect(
+  state => {
+    return {
+      user: state.userReducer,
+      imageReducer: state.imageReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false //裁剪图片
+      loading: false
     };
   }
-
+  componentWillUnmount() {
+    this.props.clearInfo();
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          const { image, Orgs } = this.props;
+          const { OrgId } = values;
+          const org = Orgs.filter(o => o.OrgId == OrgId);
+          let params = {
+            Info: {
+              ...image,
+              ...values,
+              OrgName: org && org[0].OrgName
+            }
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = image.Id ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/imagelist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = image.Id ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -65,74 +74,38 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
 
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  beforeUpload(file) {
+    const reg = /^image\/(png|jpeg|jpg)$/;
+    const type = file.type;
+    const isImage = reg.test(type);
+    if (!isImage) {
+      message.error("只支持格式为png,jpeg和jpg的图片!");
+    }
 
+    if (file.size > fileSize) {
+      message.error("图片必须小于10M");
+    }
+    return isImage && file.size <= fileSize;
+  }
+  onChangeImage = info => {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} 上传成功`);
+      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
+      // 保存数据
+      let { getFieldsValue } = this.props.form;
+      let values = getFieldsValue();
+      this.props.saveInfo({ ...values, Img: imageUrl });
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} 上传失败`);
+    }
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { Orgs, image } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -143,52 +116,64 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
-    const props = {
-      name: "file",
-      multiple: true,
-      action: "//jsonplaceholder.typicode.com/posts/",
-      onChange(info) {
-        const status = info.file.status;
-        if (status !== "uploading") {
-          console.log(info.file, info.fileList);
-        }
-        if (status === "done") {
-          message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === "error") {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      }
-    };
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("systemId")(<Input />)}
+          {getFieldDecorator("Id")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="所属机构">
-          {getFieldDecorator("org")(
+        <FormItem {...formItemLayout} label="机构名称">
+          {getFieldDecorator("OrgId")(
             <Select>
-              <Option value="0">党小组</Option>
-              <Option value="1">党组织</Option>
+              {Orgs.length &&
+                Orgs.map((obj, index) => {
+                  return (
+                    <Option key={index} value={obj.OrgId + ""}>
+                      {obj.OrgName}
+                    </Option>
+                  );
+                })}
             </Select>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="页面类型">
-          {getFieldDecorator("pageType")(
+          {getFieldDecorator("PageId")(
             <Select>
-              <Option value="0">首页</Option>
-              <Option value="1">党建学习</Option>
-              <Option value="2">党务工作</Option>
+              {pageMap.map((obj, index) => {
+                return (
+                  <Option key={index} value={obj.value + ""}>
+                    {obj.text}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="页面类型">
-          <Dragger {...props}>
-            <p className="ant-upload-drag-icon">
-              <Icon type="inbox" />
-            </p>
-            <p className="ant-upload-text">点击或拖拽图片上传</p>
-            <p className="ant-upload-hint">支持单张和多张图片上传 </p>
-          </Dragger>
+
+        <FormItem {...formItemLayout} label="跳转链接">
+          {getFieldDecorator("TargetUrl")(
+            <Input placeholder="请输入跳转链接" />
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="机构Logo">
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
+            beforeUpload={this.beforeUpload}
+            onChange={this.onChangeImage.bind(this)}
+          >
+            {image.Img ? (
+              <img src={image.Img} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
+          </Upload>
         </FormItem>
         <FormItem>
           <Row gutter={24}>
@@ -198,13 +183,13 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {!this.props.image.Id ? "新建" : "保存"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/project")}
+                onClick={() => hashHistory.replace("/imagelist")}
               >
                 取消
               </Button>
@@ -218,81 +203,81 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    const { image } = props;
+    console.log("机构详情数据回显 - ", image);
     return {
-      intergralId: Form.createFormField({
-        value: ""
+      Id: Form.createFormField({
+        value: image.Id
       }),
-      type: Form.createFormField({
-        org: "0"
+      OrgId: Form.createFormField({
+        value: image.OrgId ? image.OrgId + "" : ""
       }),
-      type: Form.createFormField({
-        pageType: "0"
+      OrgName: Form.createFormField({
+        value: image.OrgName
+      }),
+      PageId: Form.createFormField({
+        value: image.OrgId ? image.PageId + "" : "0"
+      }),
+      TargetUrl: Form.createFormField({
+        value: image.TargetUrl
       })
     };
   }
 })(Base);
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      imageReducer: state.imageReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class ImageDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      Orgs: []
     };
   }
 
   componentWillMount() {
     let { id } = this.props.params;
-    console.log(id);
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    if (id) {
+      this.getInfo(id); //拿详情
+    } else {
+      this.props.clearInfo();
+      this.getOrgList();
+    }
   }
-
+  // 加载所有机构
+  getOrgList = async () => {
+    try {
+      const { List } = await getOrgList();
+      this.setState({ Orgs: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   componentWillUnmount() {
-    // this.props.clearProjectInfo();
+    this.props.clearInfo();
   }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async Id => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { Info } = await getInfoById({ Id });
+      this.getOrgList();
+      this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap image={this.props.imageReducer} Orgs={this.state.Orgs} />
       </Nav>
     );
   }

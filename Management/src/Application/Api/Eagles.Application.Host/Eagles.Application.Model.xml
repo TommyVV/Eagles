@@ -196,7 +196,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditId">
             <summary>
-            
+            审核流水id 后台主键
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditName">
@@ -216,7 +216,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Audit.Model.Audit.AuditStatus">
             <summary>
-            
+            审核状态
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Audit.Model.Audit.Id">
@@ -1591,7 +1591,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsId">
             <summary>
-            
+            商品id（新增时无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsName">
@@ -1606,12 +1606,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.Goods.Score">
             <summary>
-            积分
+            兑换积分积分（>=0）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.Goods.GoodsStatus">
             <summary>
-            
+            产品状态：0:上架:1:下架
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Model.GoodsDetail">
@@ -1621,7 +1621,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.Sale">
             <summary>
-            已售
+            已售数量
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.SellStartTime">
@@ -1646,12 +1646,12 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.Content">
             <summary>
-            内容 json格式 图片 文字
+            内容富文本
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.GoodsIcon">
             <summary>
-            小图
+            产品缩略图
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Goods.Model.GoodsDetail.GoodsImg">
@@ -1666,7 +1666,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Requset.EditGoodsRequset.Info">
             <summary>
-            维护接口 传主键id 表示修改 不传表示新增
+            商品信息
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Requset.GetGoodsDetailRequset">
@@ -1676,7 +1676,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Requset.GetGoodsDetailRequset.GoodsId">
             <summary>
-            
+            商品id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Requset.GetGoodsRequest">
@@ -1691,7 +1691,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Requset.GetGoodsRequest.GoodsStatus">
             <summary>
-            
+            产品状态;0:上架:1:下架
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Requset.RemoveGoodsRequset">
@@ -1701,7 +1701,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Requset.RemoveGoodsRequset.GoodsId">
             <summary>
-            
+            商品id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Response.GetGoodsDetailResponse">
@@ -1711,7 +1711,7 @@
         </member>
         <member name="P:Eagles.Application.Model.Goods.Response.GetGoodsDetailResponse.Info">
             <summary>
-            维护接口 传主键id 表示修改 不传表示新增
+            商品详情
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.Goods.Response.GetGoodsResponse">
@@ -2654,12 +2654,12 @@
         </member>
         <member name="P:Eagles.Application.Model.OrgListRequestBase.StartTime">
             <summary>
-            统计时间
+            统计时间（可选参数）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.OrgListRequestBase.EndTime">
             <summary>
-            统计结束时间
+            统计结束时间（可选参数）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.ListRequestBase">
@@ -2669,12 +2669,37 @@
         </member>
         <member name="P:Eagles.Application.Model.ListRequestBase.PageNumber">
             <summary>
-            页码
+            页码（可选参数）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ListRequestBase.PageSize">
             <summary>
-            页尺寸
+            页尺寸（可选参数）
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.ImportUser.UserName">
+            <summary>
+            用户姓名
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.ImportUser.Phone">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.ImportUser.MemberType">
+            <summary>
+            党员类型 0:党员; 1:预备党员
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.ImportUser.ImportStatus">
+            <summary>
+            导入是否成功（导入时不传递，导入后结果返回）
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.ImportUser.ErrorReason">
+            <summary>
+            导入失败原因（导入时不传递，导入后结果返回）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Model.Member">
@@ -2684,27 +2709,37 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.Member.UserId">
             <summary>
-            
+            新增无需传入，修改时传入
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.Member.UserName">
             <summary>
-            用户名
+            党员姓名
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgId">
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.BranchId">
             <summary>
-            机构编号所属
+            所属支部id
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.BranchName">
             <summary>
-            所属机构名称
+            所属支部名称
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.Member.Phone">
             <summary>
-            联系电话
+            登录手机号
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.MemberType">
+            <summary>
+            党员类型 0:党员; 1:预备党员
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
+            <summary>
+            机构名
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Model.UserInfoCheck">
@@ -2724,7 +2759,7 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Sex">
             <summary>
-            
+            性别 0：男 1：女
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Nation">
@@ -2794,20 +2829,13 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.UserStatus">
             <summary>
-            人员类别
+            用户状态;0:正常;1:禁用
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Picture">
             <summary>
             头像
             </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.IsCustomer">
-             <summary>
-             游客;
-             0:是 ;
-            1:否',
-             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.BranchId">
             <summary>
@@ -2834,19 +2862,9 @@
             区
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.EditTime">
-            <summary>
-            修改时间
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.MemberStatus">
             <summary>
-            党员状态;0:正常;1:禁用
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.OperId">
-            <summary>
-            操作员id
+            党员类型;0:党员;1:预备党员
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Password">
@@ -2894,11 +2912,6 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp.OrgId">
-            <summary>
-            当前用户userId
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.CreateAuthorityUserSetUp.UserId">
             <summary>
             当前用户userId
@@ -2939,6 +2952,16 @@
             支部编号
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.BranchName">
+            <summary>
+            支部名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.OrgName">
+            <summary>
+            机构名称
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.GetAuthorityUserSetUpRequset.OrgId">
             <summary>
             机构编号
@@ -2949,14 +2972,14 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest.UserIdentity">
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest.BranchId">
             <summary>
-            
+            支部id（可选)
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.GetPartyMemberRequest.UserName">
             <summary>
-            用户名称
+            党员名称(可选）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Requset.GetUserInfoDetailRequest">
@@ -2966,17 +2989,22 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.GetUserInfoDetailRequest.UserId">
             <summary>
-            
+            用户id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.ImportUserRequest.BranchId">
+            <summary>
+            导入支部id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Requset.ImportUserRequest.UserList">
+            <summary>
+            导入用户列表
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.OrgId">
-            <summary>
-            当前用户userId
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.UserId">
@@ -2986,7 +3014,7 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveAuthorityUserSetUp.UserIds">
             <summary>
-            下级
+            下级用户id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Requset.RemoveUserInfoDetailsRequest">
@@ -2996,7 +3024,7 @@
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Requset.RemoveUserInfoDetailsRequest.UserId">
             <summary>
-            
+            用户id，后端生成
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Response.CheckUserInfoDetailsResponse">
@@ -3019,9 +3047,9 @@
             总条数
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Response.GetAuthorityUserSetUpResponse.List">
+        <member name="P:Eagles.Application.Model.PartyMember.Response.GetAuthorityUserSetUpResponse.UserId">
             <summary>
-            集合
+            下级用户id集合
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.PartyMember.Response.GetPartyMemberResponse">
@@ -3307,7 +3335,7 @@
         </member>
         <member name="P:Eagles.Application.Model.ScoreRank.Requset.GetScoreRankRequset.UserName">
             <summary>
-            姓名
+            姓名(搜索）
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.ScoreRank.Response.GetScoreRankDetailResponse">
@@ -3342,7 +3370,7 @@
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.ScoreSetUpId">
             <summary>
-            
+            积分奖励唯一id
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.Score">
@@ -3363,11 +3391,17 @@
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.RewardType">
              <summary>
              奖励类型;
-            0:任务奖励
-            1:活动奖励;
-            2:字数奖励
-            3:关键字奖励
-            4:学习时间奖励
+            0:发表文章奖励
+            1:文章字数奖励
+            2:文章关键字奖励
+            10:参加活动奖励
+            11:活动分享到支部奖励
+            12:活动分享到组织奖励
+            20:任务完成奖励
+            21:任务分享到支部奖励
+            22:任务分享到组织奖励
+            30:会议文章奖励
+            40:心得体会类型奖励
              </summary>
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Model.ScoreSetUpInfo.WordCount">
@@ -3387,10 +3421,29 @@
         </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpDetailRequset.ScoreSetUpId">
             <summary>
-            
+            后台主键，唯一id
             </summary>
         </member>
-        <!-- 对于成员“P:Eagles.Application.Model.ScoreSetUp.Requset.RemoveScoreSetUpRequset.ScoreSetUpId”忽略有格式错误的 XML 注释 -->
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.GetScoreSetUpRequset.RewardType">
+             <summary>
+             0:发表文章奖励
+            1:文章字数奖励
+            2:文章关键字奖励
+            10:参加活动奖励
+            11:活动分享到支部奖励
+            12:活动分享到组织奖励
+            20:任务完成奖励
+            21:任务分享到支部奖励
+            22:任务分享到组织奖励
+            30:会议文章奖励
+            40:心得体会类型奖励
+             </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ScoreSetUp.Requset.RemoveScoreSetUpRequset.ScoreSetUpId">
+            <summary>
+            积分奖励id 后台主键
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.ScoreSetUp.Response.GetScoreSetUpDetailResponse.Info">
             <summary>
             维护接口 传主键id 表示修改 不传表示新增
@@ -3514,69 +3567,73 @@
             集合
             </summary>
         </member>
-        <member name="T:Eagles.Application.Model.SMS.Model.SMS">
+        <member name="T:Eagles.Application.Model.SMS.Model.SMSInfo">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.VendorId">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.VendorId">
             <summary>
-             '短信提供方ID',
+             '短信提供方ID',（新增时无需传递）
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.VendorName">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.VendorName">
             <summary>
             短信提供方名称
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.SendCount">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.SendCount">
             <summary>
             已发送数量
             </summary>
-            <returns></returns>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.CreateTime">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.CreateTime">
             <summary>
             创建时间
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.AppId">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.AppId">
             <summary>
             短信方appId
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.AppKey">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.AppKey">
             <summary>
             短信方appKey
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.SginKey">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.SginKey">
             <summary>
             签名key
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.ServiceUrl">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.ServiceUrl">
             <summary>
             接口地址
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.MaxCount">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.MaxCount">
             <summary>
-            最大发送数量
+            短信总数
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.Priority">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.Priority">
             <summary>
             优先级
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SMS.Model.SMS.Status">
+        <member name="P:Eagles.Application.Model.SMS.Model.SMSInfo.Status">
             <summary>
-            状态
+            状态 0：正常；1：禁用
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.SMS.Request.EditSMSRequset.SmsInfo">
+            <summary>
+            短信
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SMS.Request.GetSMSDetailRequset.VendorId">
@@ -3587,11 +3644,6 @@
         <member name="T:Eagles.Application.Model.SMS.Request.GetSMSRequset">
             <summary>
             
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.SMS.Request.GetSMSRequset.VendorName">
-            <summary>
-            短信提供方名称
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.SMS.Request.RemoveSMSRequset">
@@ -3606,7 +3658,7 @@
         </member>
         <member name="P:Eagles.Application.Model.SMS.Response.GetSMSDetailResponse.Info">
             <summary>
-            维护接口 传主键id 表示修改 不传表示新增
+            短信
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SMS.Response.GetSMSResponse.TotalCount">
@@ -3621,17 +3673,12 @@
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsId">
             <summary>
-            消息id
+            消息id（新增时无需传入）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsName">
             <summary>
             消息名称
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsContent">
-            <summary>
-            消息内容
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NoticeTime">
@@ -3641,12 +3688,7 @@
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.Status">
             <summary>
-            状态
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.OperId">
-            <summary>
-            操作员
+            状态 0：正常 1：禁用
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.RepeatTime">
@@ -3658,7 +3700,7 @@
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.HtmlDesc">
             <summary>
-            HTML描述
+            HTML描述（富文本）
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.SystemMessage.Model.SystemNews.NewsType">
@@ -3673,9 +3715,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.RemoveSystemNewsRequset.SystemMessageId">
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.RemoveSystemNewsRequset.NewsId">
             <summary>
-            
+            系统消息id，后台生成
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.SystemMessage.Requset.EditSystemNewsRequset">
@@ -3693,9 +3735,9 @@
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsDetailRequset.SystemMessageId">
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsDetailRequset.NewsId">
             <summary>
-            
+            系统消息id
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsRequset">
@@ -3708,12 +3750,17 @@
             标题 名字
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.SystemMessage.Requset.GetSystemNewsRequset.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsDetailResponse">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsDetailResponse.info">
+        <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsDetailResponse.News">
             <summary>
             
             </summary>
@@ -3731,21 +3778,6 @@
         <member name="P:Eagles.Application.Model.SystemMessage.Response.GetSystemNewsResponse.List">
             <summary>
             集合
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Test.TestRequest.Name">
-            <summary>
-            user Name 
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Test.AreaInfo.AreaId">
-            <summary>
-            area id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Test.AreaInfo.AreaName">
-            <summary>
-            area name 
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Upload.FileUploadResult.FileId">

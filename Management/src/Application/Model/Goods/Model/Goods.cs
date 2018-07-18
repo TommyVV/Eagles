@@ -8,7 +8,7 @@ namespace Eagles.Application.Model.Goods.Model
     public class Goods
     {
         /// <summary>
-        /// 
+        /// 商品id（新增时无需传入）
         /// </summary>
         public int GoodsId { get; set; }
         /// <summary>
@@ -22,12 +22,12 @@ namespace Eagles.Application.Model.Goods.Model
         public int Stock { get; set; }
 
         /// <summary>
-        /// 积分
+        /// 兑换积分积分（>=0）
         /// </summary>
         public int Score { get; set; }
 
         /// <summary>
-        /// 
+        /// 产品状态：0:上架:1:下架
         /// </summary>
         public GoodsStatus GoodsStatus { get; set; }
 

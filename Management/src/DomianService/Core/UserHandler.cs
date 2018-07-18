@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Eagles.Application.Model;
 using Eagles.Application.Model.Enums;
 using Eagles.Application.Model.PartyMember.Model;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Application.Model.PartyMember.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Configuration;
+using Eagles.Base.Md5Helper;
 using Eagles.DomainService.Model.Org;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
@@ -23,11 +26,16 @@ namespace Eagles.DomainService.Core
 
         private readonly IConfigurationManager configurationManager;
 
-        public UserHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager)
+        private readonly IMd5Helper md5Helper;
+        private readonly ICacheHelper cacheHelper;
+
+        public UserHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager, ICacheHelper cacheHelper, IMd5Helper md5Helper)
         {
             this.dataAccess = dataAccess;
             OrgdataAccess = orgdataAccess;
             this.configurationManager = configurationManager;
+            this.cacheHelper = cacheHelper;
+            this.md5Helper = md5Helper;
         }
 
         public GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request)
@@ -87,7 +95,6 @@ namespace Eagles.DomainService.Core
                 // IsMoney=detail.
                 //  Nation = detail.Ethnic,
                 NativePlace = detail.Origin,
-                OrgId = detail.OrgId,
                 Picture = detail.NickPhotoUrl,
                 Position = detail.Title,
                 Sex = detail.Sex,
@@ -100,12 +107,8 @@ namespace Eagles.DomainService.Core
                 CreateTime = detail.CreateTime,
                 Dept = detail.Dept,
                 District = detail.Dept,
-                IsCustomer = detail.IsCustomer,
-                //    OperId=detail.OperId,
-                EditTime = detail.EditTime,
                 MemberStatus = detail.MemberStatus,
-                Nation=detail.Ethnic
-                //UserStatus=detail.IsCustomer
+                Nation = detail.Ethnic
             };
             return response;
         }
@@ -121,10 +124,9 @@ namespace Eagles.DomainService.Core
         public bool EditUserInfoDetails(EditUserInfoDetailsRequest request)
         {
 
-
-
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(request.Token);
             TbUserInfo mod;
-
+            var password = md5Helper.Md5Encypt(request.Info.Password);
             if (request.Info.UserId > 0)
             {
                 mod = new TbUserInfo
@@ -144,12 +146,12 @@ namespace Eagles.DomainService.Core
                     // IsMoney   ,                                                                  
                     //Ethnic = request.Info.Nation,
                     Origin = request.Info.NativePlace,
-                    OrgId = request.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
                     Sex = request.Info.Sex,
                     IsCustomer = 1,
-                    BranchId = 0,
+                    BranchId = tokenInfo.BranchId,
                     City = request.Info.City,
                     //  CreateTime = DateTime.Now,
                     Dept = request.Info.Dept,
@@ -157,8 +159,8 @@ namespace Eagles.DomainService.Core
                     EditTime = DateTime.Now,
                     MemberStatus = request.Info.MemberStatus,
                     MemberType = request.Info.UserStatus,
-                    OperId = 0,
-                    Password = request.Info.Password,
+                    OperId = tokenInfo.UserId,
+                    //Password = password,
                     PhotoUrl = request.Info.PhotoUrl,
                     Provice = request.Info.Provice,
                     Status = request.Info.Status,
@@ -191,12 +193,12 @@ namespace Eagles.DomainService.Core
                     // IsMoney   ,                                                                  
                     //Ethnic = request.Info.Nation,
                     Origin = request.Info.NativePlace,
-                    OrgId = request.Info.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
                     Sex = request.Info.Sex,
                     IsCustomer = 1,
-                    BranchId = 0,
+                    BranchId = tokenInfo.BranchId,
                     City = request.Info.City,
                     CreateTime = DateTime.Now,
                     Dept = request.Info.Dept,
@@ -204,21 +206,19 @@ namespace Eagles.DomainService.Core
                     EditTime = DateTime.Now,
                     MemberStatus = request.Info.MemberStatus,
                     MemberType = request.Info.UserStatus,
-                    OperId = 0,
-                    Password = request.Info.Password,
+                    OperId = tokenInfo.UserId,
+                    Password = password,
                     PhotoUrl = request.Info.PhotoUrl,
                     Provice = request.Info.Provice,
                     Status = request.Info.Status,
                     Ethnic = request.Info.Nation,
-                    IsLeader=0,
-                    Score=0,
+                    IsLeader = 0,
+                    Score = 0,
+                    
                 };
 
                 return dataAccess.CreateUserInfo(mod) > 0;
-
-
             }
-
         }
 
         public GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset)
@@ -258,7 +258,7 @@ namespace Eagles.DomainService.Core
                 userChecklist = userChecklist.Where(x => !x.IsCheck).ToList();
             }
 
-            response.List = userChecklist;
+            response.UserId = userChecklist.Select(x => x.UserId).ToList();
             return response;
         }
 
@@ -271,7 +271,7 @@ namespace Eagles.DomainService.Core
 
             list = requset.UserIds.Select(x => new TbUserRelationship
             {
-                OrgId = requset.OrgId,
+                // OrgId = requset.OrgId,
                 UserId = requset.UserId,
                 SubUserId = x
             }).ToList();
@@ -290,7 +290,7 @@ namespace Eagles.DomainService.Core
 
             list = requset.UserIds.Select(x => new TbUserRelationship
             {
-                OrgId = requset.OrgId,
+                //  OrgId = requset.OrgId,
                 UserId = requset.UserId,
                 SubUserId = x
             }).ToList();
@@ -298,6 +298,61 @@ namespace Eagles.DomainService.Core
             return dataAccess.RemoveAuthorityUserSetUp(list) > 0;
 
 
+        }
+
+        public ImportUserResponse BatchImportUser(ImportUserRequest request)
+        {
+
+            var response = new ImportUserResponse { UserList = new List<ImportUser>() };
+            Regex rx = new Regex(@"^0{0,1}(13[4-9]|15[7-9]|15[0-2]|18[7-8])[0-9]{8}$");
+            var userinfo = new List<TbUserInfo>();
+
+
+            foreach (var md in request.UserList)
+            {
+
+                if (!(md.MemberType == 1 || md.MemberType == 0))
+                {
+                    md.ImportStatus = false;
+                    md.ErrorReason = "党员类型错误！";
+                    response.UserList.Add(md);
+                    break;
+                }
+
+                if (!rx.IsMatch(md.Phone))
+                {
+                    md.ImportStatus = false;
+                    md.ErrorReason = "手机号格式错误！";
+                    response.UserList.Add(md);
+                    break;
+                }
+
+                userinfo.Add(new TbUserInfo
+                {
+                    Name = md.UserName,
+                    Phone = md.Phone,
+                    MemberType = md.MemberType,
+
+                });
+
+
+            }
+
+            if (dataAccess.CreateUserInfo(userinfo)<=0)
+            {
+                response.UserList.AddRange(userinfo.Select(x => new ImportUser()
+                {
+                    ImportStatus = false,
+                    ErrorReason = "添加数据库失败",
+                    MemberType = x.MemberType,
+                    Phone = x.Phone,
+                    UserName = x.Name
+                }));
+            }
+
+            return response;
+
+            // throw new NotImplementedException();
         }
     }
 }

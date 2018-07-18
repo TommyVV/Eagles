@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Eagles.Application.Model.SMS.Model;
 
 namespace Eagles.Application.Model.SMS.Response
 {
@@ -15,6 +12,6 @@ namespace Eagles.Application.Model.SMS.Response
         /// <summary>
         /// 集合
         /// </summary>
-        public List<Model.SMS> List { get; set; }
+        public List<SMSInfo> List { get; set; }
     }
 }

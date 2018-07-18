@@ -29,21 +29,21 @@ namespace Eagles.DomainService.Core
         {
             SmsConfig mod;
             var now = DateTime.Now;
-            if (requset.Info.VendorId > 0)
+            if (requset.SmsInfo.VendorId > 0)
             {
                 mod = new SmsConfig
                 {
-                    AppId = requset.Info.AppId,
-                    AppKey = requset.Info.AppKey,
-                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
-                    MaxCount = requset.Info.MaxCount,
-                    Priority = requset.Info.Priority,
-                    SendCount = requset.Info.SendCount,
-                    ServiceUrl = requset.Info.ServiceUrl,
-                    SginKey = requset.Info.SginKey,
-                    Status = requset.Info.Status,
-                    VendorId = requset.Info.VendorId,
-                    VendorName = requset.Info.VendorName
+                    AppId = requset.SmsInfo.AppId,
+                    AppKey = requset.SmsInfo.AppKey,
+                    CreateTime = Convert.ToDateTime(requset.SmsInfo.CreateTime),
+                    MaxCount = requset.SmsInfo.MaxCount,
+                    Priority = requset.SmsInfo.Priority,
+                    SendCount = requset.SmsInfo.SendCount,
+                    ServiceUrl = requset.SmsInfo.ServiceUrl,
+                    SginKey = requset.SmsInfo.SginKey,
+                    Status = requset.SmsInfo.Status,
+                    VendorId = requset.SmsInfo.VendorId,
+                    VendorName = requset.SmsInfo.VendorName
                 };
 
                 return dataAccess.EditSMS(mod) > 0;
@@ -52,17 +52,17 @@ namespace Eagles.DomainService.Core
             {
                 mod = new SmsConfig
                 {
-                    AppId = requset.Info.AppId,
-                    AppKey = requset.Info.AppKey,
-                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
-                    MaxCount = requset.Info.MaxCount,
-                    Priority = requset.Info.Priority,
-                    SendCount = requset.Info.SendCount,
-                    ServiceUrl = requset.Info.ServiceUrl,
-                    SginKey = requset.Info.SginKey,
-                    Status = requset.Info.Status,
-                    VendorId = requset.Info.VendorId,
-                    VendorName = requset.Info.VendorName
+                    AppId = requset.SmsInfo.AppId,
+                    AppKey = requset.SmsInfo.AppKey,
+                    CreateTime = Convert.ToDateTime(requset.SmsInfo.CreateTime),
+                    MaxCount = requset.SmsInfo.MaxCount,
+                    Priority = requset.SmsInfo.Priority,
+                    SendCount = requset.SmsInfo.SendCount,
+                    ServiceUrl = requset.SmsInfo.ServiceUrl,
+                    SginKey = requset.SmsInfo.SginKey,
+                    Status = requset.SmsInfo.Status,
+                    VendorId = requset.SmsInfo.VendorId,
+                    VendorName = requset.SmsInfo.VendorName
                 };
                 return dataAccess.CreateSMS(mod) > 0;
 
@@ -87,7 +87,7 @@ namespace Eagles.DomainService.Core
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
-            response.List = list.Select(x => new SMS
+            response.List = list.Select(x => new SMSInfo
             {
                 AppId = x.AppId,
                 AppKey = x.AppKey,
@@ -114,7 +114,7 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
-            response.Info = new SMS
+            response.Info = new SMSInfo
             {
                 AppId = detail.AppId,
                 AppKey = detail.AppKey,

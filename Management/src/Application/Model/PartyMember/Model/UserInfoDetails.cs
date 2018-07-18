@@ -1,5 +1,4 @@
 ﻿using System;
-using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.PartyMember.Model
 {
@@ -9,7 +8,7 @@ namespace Eagles.Application.Model.PartyMember.Model
     public class UserInfoDetails : Member
     {
         /// <summary>
-        /// 
+        /// 性别 0：男 1：女
         /// </summary>
         public int Sex { get; set; }
 
@@ -79,7 +78,7 @@ namespace Eagles.Application.Model.PartyMember.Model
         public bool IsMoney { get; set; }
 
         /// <summary>
-        /// 人员类别
+        /// 用户状态;0:正常;1:禁用
         /// </summary>
         public int UserStatus { get; set; }
 
@@ -88,12 +87,13 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// </summary>
         public string Picture { get; set; }
 
-        /// <summary>
-        /// 游客;
-        /// 0:是 ;
-        ///1:否',
-        /// </summary>
-        public int IsCustomer { get; set; }
+        ///// <summary>
+        ///// 游客;
+        ///// 0:是 ;
+        /////1:否',
+        ///// </summary>
+        //public int IsCustomer { get; set; }
+
         /// <summary>
         /// 支部编号
         /// </summary>
@@ -114,30 +114,27 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// 区
         /// </summary>
         public string District { get; set; }
+       
         /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime EditTime { get; set; }
-        /// <summary>
-        /// 党员状态;0:正常;1:禁用
+        /// 党员类型;0:党员;1:预备党员
         /// </summary>
         public int MemberStatus { get; set; }
-        /// <summary>
-        /// 操作员id
-        /// </summary>
-        public int OperId { get; set; }
+
         /// <summary>
         ///  密码
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// 头像
         /// </summary>
         public string PhotoUrl { get; set; }
+
         /// <summary>
         /// 省
         /// </summary>
         public string Provice { get; set; }
+
         /// <summary>
         /// 用户状态;0:正常;1:禁用
         /// </summary>

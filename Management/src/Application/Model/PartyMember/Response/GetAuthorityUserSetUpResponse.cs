@@ -12,9 +12,10 @@ namespace Eagles.Application.Model.PartyMember.Response
         /// 总条数
         /// </summary>
         public int TotalCount { get; set; }
+
         /// <summary>
-        /// 集合
+        /// 下级用户id集合
         /// </summary>
-        public List<UserInfoCheck> List { get; set; }
+        public List<int> UserId { get; set; }
     }
 }

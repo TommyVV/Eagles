@@ -22,14 +22,26 @@ html, body {
     min-height: 100%; } }
 
 @media screen and (min-width: 768px) {
-	.container{min-width: 400px;}
-	/*.mescroll{
+	#top-nav {
+		position: fixed!important;
+		z-index: 9990!important;
+	width: 100%;
+	}
+	#footer{
+		z-index: 9990;
 		position: fixed;
-		top: 90px;
 		bottom: 0;
 		left: 0;
+		width: 100%;
+	}
+	.container{min-width: 400px;}
+	.mescroll{
+		position: fixed;
+		width:1200px;
+		top: 90px;
+		bottom: 250px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
-	}*/
+	}
   .myNoticeModal {
     background-color: #f8f8f8;
     min-height: 100%; } }

@@ -16,6 +16,7 @@ html, body {
     height: 100%; } }
 
 @media screen and (min-width: 768px) {
+	.signupBox .title{font-size:25px!important;}
 	html, body {min-height: 100%;background: #fff url(../icons/er.jpeg) center no-repeat;background-size:100% 100%;}
 	.container{width:100%;padding: 0;min-height: 100%;}
   .signupModal {
