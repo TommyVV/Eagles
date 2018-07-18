@@ -132,7 +132,7 @@ $(document).ready(function() {
                 .attr("id")
                 .split("-")[1];
             window.location.href =
-                "feedBack.html?pageType=2&stepId=" +
+                "feedBack.html?pageType=1&stepId=" +
                 stepId +
                 "&appId=" +
                 appId +

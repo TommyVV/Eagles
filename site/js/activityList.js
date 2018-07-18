@@ -4,9 +4,23 @@ $(document).ready(function() {
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
     var currentItemType = '0';
+    var pageIndex = 1;
+    var pageSize = 6;
+
+    var mescroll;
+    mescroll = new MeScroll("mescroll", {
+        down: {
+            use: false
+        },
+        up: {
+            callback: getActivityList,
+            isBounce: false,
+            htmlNodata: '没有更多数据'
+        }
+    });
 
     //查询所有活动
-    getActivityList('0');
+    //getActivityList();
     //头部按钮点击
     $(".activity-cate").click(function() {
         var id = $(this).attr('id');
@@ -15,27 +29,36 @@ $(document).ready(function() {
             $(".activity-cate").find("span").removeClass("select");
             $(this).find("span").addClass("select");
             $(".item").html('');
-            getActivityList(id);
+            pageIndex = 1;
+            getActivityList();
         }
 
     });
 
     //查询活动
-    function getActivityList(type) {
+    function getActivityList() {
         $.ajax({
             type: 'POST',
             url: DOMAIN + '/api/Activity/GetActivityList',
             data: {
-                "ActivityType": type,
-                "ActivityPage": 0,
+                "ActivityType": 0,
+                "ActivityPage": currentItemType,
                 "Token": token,
-                "AppId": appId
+                "AppId": appId,
+                "PageSize": pageSize,
+                "PageIndex": pageIndex
             },
             success: function(data) {
                 console.log('GetActivityList---', data);
                 if (data.Code == "00") {
                     var list = data.Result.ActivityList;
-                    $(".item").html(dealReturnList(list));
+                    $(".item").append(dealReturnList(list));
+                    if (list.length < pageSize) {
+                        mescroll.endSuccess(5, false, null);
+                    } else {
+                        pageIndex = pageIndex + 1;
+                        mescroll.endSuccess(100000, true, null);
+                    }
                     //给每列数据绑定事件
                     $(".article").click(function() {
                         var par = $(this).attr('id');
@@ -56,10 +79,13 @@ $(document).ready(function() {
                         }
                     });
                 } else if (data.Code == '10') {
-                    $(".item").html('暂无数据');
+                    mescroll.endSuccess(10, false, null);
                 } else {
-                    alert(data.Code, data.Message);
+                    mescroll.endErr();
                 }
+            },
+            error: function() {
+                mescroll.endErr();
             }
         })
     }

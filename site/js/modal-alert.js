@@ -15,12 +15,14 @@ Modal.prototype = {
         this.title = info.title;
         this.content = "";
         this.cb = cb || '';
+        this.selectItem = '';
         if (type == 0) {
             this.content = info.content;
             this.modalShow();
         } else if (type == 1) {
             this.content = '数据加载中...';
             this.getUserRelationship(info.data);
+            this.modalShow();
         } else if (type == 2) {
             this.content = `<textarea id="step-content">${info.content}</textarea>`;
             this.modalShow();
@@ -37,29 +39,27 @@ Modal.prototype = {
                 console.log("GetUserRelationship---", data);
                 if (data.Code == "00") {
                     if (data.Result.UserList.length == 0) {
-                        that.content = '暂无数据';
+                        $('#modal .modal-body').html('暂无数据');
                     } else {
-                        that.content = that.dealRelationList(data.Result.UserList);
+                        that.dealRelationList(data.Result.UserList);
                     }
                 } else {
                     that.content = '查询出错';
                 }
-                that.modalShow();
             },
             error: function() {
                 that.content = '查询出错';
-                that.modalShow();
             }
         });
     },
     modalShow: function() {
         var btnArea = ``;
-        if (this.type == 1) {
+        if (this.type == 0) {
             btnArea = `<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>`;
-        } else if (this.type == 2) {
+        } else if (this.type == 1) {
             btnArea = `<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary">确定</button>`;
-        } else if (this.type == 3) {
+        } else if (this.type == 2) {
             btnArea = `<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary">保存</button>`;
         }
@@ -72,8 +72,8 @@ Modal.prototype = {
                         </div>
                         <div class="modal-body">
                         ${this.content}
-                            <div class='tip'></div>
                         </div>
+                        <div class='tip'></div>
                         <div class="modal-footer">
                         ${btnArea}
                         </div>
@@ -89,7 +89,13 @@ Modal.prototype = {
         var that = this;
         $('.btn-primary').click(function() {
             if (that.type == 1) {
-
+                if (that.selectItem) {
+                    that.cb(that.selectItem);
+                    $("#modal").remove();
+                    $(".modal-backdrop").remove();
+                } else {
+                    $('#modal .tip').html('计划内容不能为空');
+                }
             } else if (that.type == 2) {
                 var str = $("#step-content").val();
                 if (str) {
@@ -101,24 +107,26 @@ Modal.prototype = {
                 }
             }
         });
-        $(".subordinate-item").click(function() {
-            var id = $(this).attr("id");
-            var name = $($(this).find("span")).text();
-            var arr = id.split("-");
-        });
     },
     dealRelationList: function(list) {
-        var content = ``;
-        list.forEach(element => {
-            content += `<div class="subordinate-item" id="${element.UserId}-${
-          element.IsLeader == true ? "1" : "0"
-        }">
+        var content = `<div class="subordinates">`;
+        list.forEach((element, index) => {
+            content += `<div class="subordinate-item" id="subordinate-${index}">
             <span>${element.Name == null ? element.UserId : element.Name}</span>
             <div class="right-dir">
-                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                <span class="glyphicon" aria-hidden="true"></span>
             </div>
         </div>`;
         });
-        return content;
+        content += `</div>`;
+        $('#modal .modal-body').html(content);
+        var that = this;
+        $(".subordinate-item").click(function() {
+            $('.subordinates .glyphicon').removeClass('glyphicon-ok');
+            $($(this).find('.glyphicon')).addClass('glyphicon-ok');
+            var id = $(this).attr("id");
+            var arr = id.split("-");
+            that.selectItem = list[arr[1]];
+        });
     }
 };

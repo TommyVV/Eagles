@@ -96,7 +96,7 @@ $(document).ready(function() {
                     $("#btn-area").html(`<div class="sub-btn">我要反馈</div>`);
                     $(".sub-btn").click(function() {
                         window.location.href =
-                            "feedBack.html?appId=" + appId + "&activityId=" + activityId;
+                            "feedBack.html?pageType=0&appId=" + appId + "&activityId=" + activityId;
                     });
                 }
             }
@@ -231,17 +231,17 @@ $(document).ready(function() {
         });
         if (status == 1) {
             str += `<div class="pub-area">
-                    <div class="item">
-                        <span class="glyphicon glyphicon-record"></span>不公示
+                    <div class="item" id="pub-">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">不公示
                     </div>
-                    <div class="item">
-                        <span class="glyphicon glyphicon-record"></span>公示到小组
+                    <div class="item" id="pub-1">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到小组
                     </div>
-                    <div class="item">
-                        <span class="glyphicon glyphicon-record"></span>公示到支部
+                    <div class="item" id="pub-1">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到支部
                     </div>
-                    <div class="item">
-                        <span class="glyphicon glyphicon-record"></span>公示到组织
+                    <div class="item" id="pub-1">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到组织
                     </div>
                 </div>
                 <div class="activity-result">
@@ -249,6 +249,13 @@ $(document).ready(function() {
                         <div class="nopass">不通过</div>
                     </div>`;
             $(".activity-content").removeClass('hide').html(str);
+            $(".activity-content .item").click(function() {
+                $('.item').removeClass('select');
+                var options = $('.item').find('img');
+                $(options).attr('src', 'icons/sel_no@2x.png');
+                $(this).addClass('select');
+                $($(this).find('img')).attr('src', 'icons/sel_yes@2x.png');
+            });
             $(".activity-content .pass").click(function() {
                 console.log("111111");
                 editActivityComplete(0);

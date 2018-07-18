@@ -5,13 +5,15 @@ $(document).ready(function() {
     var activityId = "";
     var stepId = "";
     var taskId = "";
-    //pageType 1 活动 2 任务
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
+    //pageType 0 活动 1 任务
     var pageType = getRequest("pageType");
-    if (pageType == 1) {
+    if (pageType == 0) {
         activityId = getRequest("activityId");
         $("#content").attr("placeholder", "快让大家知道你的活动进度吧~");
         $(".sub-btn").html("反馈并完成");
-    } else if (pageType == 2) {
+    } else if (pageType == 1) {
         stepId = getRequest("stepId");
         taskId = getRequest("taskId");
         $("#content").attr("placeholder", "快让大家知道你的任务进度吧~");
@@ -69,10 +71,10 @@ $(document).ready(function() {
             $.alert('反馈内容不能为空');
             return;
         }
-        if (pageType == 1) {
+        if (pageType == 0) {
             //活动
             editActivityFeedBack();
-        } else if (pageType == 2) {
+        } else if (pageType == 1) {
             //任务
             editTaskFeedBack();
         }
@@ -85,7 +87,7 @@ $(document).ready(function() {
             "TaskId": taskId,
             "StepId": stepId,
             "Content": $("#content").val(),
-            // "IsPublic": pubFlag==true?0:1,
+            "IsPublic": pubFlag == true ? 0 : 1,
             "AttachList": fileArray,
             "Token": token,
             "AppId": appId
@@ -121,7 +123,7 @@ $(document).ready(function() {
             url: DOMAIN + "/api/Activity/EditActivityFeedBack",
             data: data,
             success: function(data) {
-                console.log("CreateActivity---", data);
+                console.log("editActivityFeedBack---", data);
                 if (data.Code == "00") {
                     editActivityReview(2, 0);
                 } else {
@@ -164,7 +166,6 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => {});
                 $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');

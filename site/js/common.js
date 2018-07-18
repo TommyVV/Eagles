@@ -30,18 +30,19 @@ function setCookie(key, value, days) {
 }
 
 function getCookie(name) {
-    try {
-        var o = JSON.parse(localStorage.getItem(name))
-        if (!o || o.expires < Date.now()) {
-            return null
-        } else {
-            return o.value
-        }
-    } catch (e) {
-        // 兼容其他localstorage
-        console.log(e)
-        return localStorage.getItem(name);
-    } finally {}
+    return localStorage.getItem(name);
+    // try {
+    //     var o = JSON.parse(localStorage.getItem(name))
+    //     if (!o || o.expires < Date.now()) {
+    //         return null
+    //     } else {
+    //         return o.value
+    //     }
+    // } catch (e) {
+    //     // 兼容其他localstorage
+    //     console.log(e)
+    //     return localStorage.getItem(name);
+    // } finally {}
 }
 //附件列表
 function attachmentList(list) {
@@ -49,12 +50,12 @@ function attachmentList(list) {
     if (list) {
         list.forEach(element => {
             if (element.AttachmentDownloadUrl || element.AttachName) {
-            str += `<div class="file">
+                str += `<div class="file">
                     <span class="glyphicon glyphicon-paperclip"></span>
                     <a href="${element.AttachmentDownloadUrl}">${element.AttachName}</a>
                 </div>`;
-        }
-    });
+            }
+        });
     }
     return str;
 }

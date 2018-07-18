@@ -61,8 +61,6 @@ $('.btn-login').on('click', function(e) {
         success: function(res) {
             var data = res.Result;
             if (res.Code == 00) {
-                setCookie('token', data.Token, 1);
-                setCookie('userId', data.UserId, 1);
                 var f = localStorage.setItem("token", data.Token); //存储token
                 localStorage.setItem("userId", data.UserId); //用户ID
                 localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户

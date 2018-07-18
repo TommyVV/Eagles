@@ -2,43 +2,44 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-    var toUserId = getRequest("toUserId");
-    var createType = getRequest("createType");
-    var name = getRequest("name");
+    //指派人员
+    var toUserId = '';
+    //创建类型
+    var createType = '';
     //加载导航
     $("#top-nav").html("");
     $("#top-nav").load("head.html", () => {});
-    //加载弹出框
-    new Modal(1, {
-        title: '选择指派人员',
-        data: {
-            "Type": 0,
-            "UserId": userId,
-            "Token": token,
-            "AppId": appId
-        }
-    });
     //pageType 0 活动  1 任务
     var pageType = getRequest("type");
     var imgUrl = "";
     var fileArray = [];
-    $("#name").html(name);
-    var placeholder = pageType == "0" ? "活动标题" : "任务标题";
-    $("#title").attr("placeholder", placeholder);
+    //初始化页面提示语
+    var titlePlaceholder = pageType == "0" ? "活动标题" : "任务标题";
+    $("#title").attr("placeholder", titlePlaceholder);
+    var btnText = pageType == "0" ? "发布活动" : "发布任务";
+    $('.sub-btn').html(btnText);
+    var textareaPlaceholder = pageType == "0" ? "快让大家知道你的活动是什么吧~" : "快让大家知道你的任务是什么吧~";
+    $('.plan-text').attr("placeholder", textareaPlaceholder);
+
     if (pageType == 1) {
         $("#imgUpload").hide();
     }
     $("#subord").click(function() {
-        $(".alert .weui-dialog__title").html("指派人员");
-        $(".alert").removeClass("hide");
-    });
-    //弹框取消
-    $(".alert .default").click(function() {
-        $(".alert").addClass("hide");
-    });
-    //弹框确定
-    $(".alert .primary").click(function() {
-        $(".alert").addClass("hide");
+        //加载弹出框
+        new Modal(1, {
+            title: "选择指派人员",
+            data: {
+                Type: 0,
+                UserId: userId,
+                Token: token,
+                AppId: appId
+            }
+        }, function(item) {
+            toUserId = item.UserId;
+            createType = item.IsLeader == true ? '1' : '0';
+            $("#name").html(item.Name);
+            console.log('selectItem----', item);
+        });
     });
     //是否公开
     $(".flag-area").click(function() {
@@ -112,12 +113,21 @@ $(document).ready(function() {
     });
     //发布任务
     function createTask() {
+        if (!toUserId) {
+            bootoast({
+                message: "指派人员不能为空",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+            return;
+        }
         var title = $("#title").val();
         if (!title) {
             bootoast({
-                message: '标题不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "标题不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -125,9 +135,9 @@ $(document).ready(function() {
         var start = $("#start").val();
         if (!start) {
             bootoast({
-                message: '开始时间不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "开始时间不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -135,9 +145,9 @@ $(document).ready(function() {
         var end = $("#end").val();
         if (!end) {
             bootoast({
-                message: '结束时间不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "结束时间不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -145,9 +155,9 @@ $(document).ready(function() {
         var content = $("#content").val();
         if (!content) {
             bootoast({
-                message: '活动内容不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "活动内容不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -175,12 +185,12 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("CreateActivity---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功";
+                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId;
                 } else {
                     bootoast({
-                        message: '问卷提交失败:' + data.Message + '',
-                        type: 'warning',
-                        position: 'toast-top-center',
+                        message: "活动创建失败:" + data.Message + "",
+                        type: "warning",
+                        position: "toast-top-center",
                         timeout: 3
                     });
                 }
@@ -189,12 +199,21 @@ $(document).ready(function() {
     }
     //发布活动
     function createActivity() {
+        if (!toUserId) {
+            bootoast({
+                message: "指派人员不能为空",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+            return;
+        }
         var title = $("#title").val();
         if (!title) {
             bootoast({
-                message: '标题不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "标题不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -202,9 +221,9 @@ $(document).ready(function() {
         var start = $("#start").val();
         if (!start) {
             bootoast({
-                message: '开始时间不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "开始时间不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -212,9 +231,9 @@ $(document).ready(function() {
         var end = $("#end").val();
         if (!end) {
             bootoast({
-                message: '结束时间不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "结束时间不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -222,18 +241,18 @@ $(document).ready(function() {
         var content = $("#content").val();
         if (!content) {
             bootoast({
-                message: '活动内容不能为空:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "活动内容不能为空",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
         }
         if (!imgUrl) {
             bootoast({
-                message: '请上传图片:',
-                type: 'info',
-                position: 'toast-top-center',
+                message: "请上传图片",
+                type: "info",
+                position: "toast-top-center",
                 timeout: 2
             });
             return;
@@ -262,12 +281,12 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("CreateActivity---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功";
+                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId;
                 } else {
                     bootoast({
-                        message: '' + data.Message + '',
-                        type: 'warning',
-                        position: 'toast-top-center',
+                        message: "任务创建失败" + data.Message + "",
+                        type: "warning",
+                        position: "toast-top-center",
                         timeout: 3
                     });
                 }

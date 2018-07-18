@@ -57,6 +57,7 @@
 
 .modal .tip {
     color: red;
+    padding: 5px 15px;
 }
 
 .pc-wrap {
@@ -75,9 +76,10 @@
     margin-top: 0.7rem;
 }
 
-.flag-area .pub-flag {
+.pub-flag {
     width: 20px;
     height: 20px;
+    margin-right: 5px;
 }
 
 
@@ -86,7 +88,7 @@
 .img-area {
     margin-top: 0.96rem;
     padding-bottom: 0.67rem;
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .img-area .title {
@@ -119,7 +121,7 @@
     border-radius: 5px;
     width: 100%;
     max-width: 400px;
-    background: #F6F6F6;
+    background: #f6f6f6;
     margin: 15px 0px;
 }
 
@@ -132,5 +134,18 @@
 @media screen and (max-width: 768px) {
     .mobile-container {
         margin-top: 1.7rem;
+    }
+    .list-content {
+        top: 1.7rem;
+        bottom: 0;
+        position: absolute;
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .list-content {
+        height: 600px !important;
     }
 }

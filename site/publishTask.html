@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/bootoast.css">
     <link rel="stylesheet" href="css/subordinateList.css">
     <link rel="stylesheet" href="css/publishTask.css">
-    <title>我的任务</title>
+    <title></title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="pub-item name-item">
                     指派:
-                    <span class="item-content" id="name">Tommy</span>
+                    <span class="item-content" id="name"></span>
                     <span class="item-select" id="subord" data-toggle="modal" data-target="#modal">选择</span>
                 </div>
                 <div class="pub-item">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="content" cols="30" rows="10"></textarea>
+                <textarea class="plan-text" placeholder="" name="" id="content" cols="30" rows="10"></textarea>
                 <div class="img-area">
                     <div class="title">附件上传</div>
                     <div class="upload-file">
@@ -68,15 +68,15 @@
                 <div class="flag-area">
                     <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
                 </div>
-                <div class="sub-btn">发布任务</div>
+                <div class="sub-btn"></div>
             </div>
         </div>
     </div>
     <div class="footer pc" id="footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/modal-alert.js"></script>
+    <script src="js/common.js?v=12"></script>
+    <script src="js/modal-alert.js?v=2018071801"></script>
     <script src="thirdparty/jquery.ui.widget.js"></script>
     <script src="thirdparty/jquery.iframe-transport.js"></script>
     <script src="thirdparty/jquery.fileupload.js"></script>
@@ -84,7 +84,7 @@
     <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="js/bootoast.js"></script>
-    <script src="js/publishTask.js?v=1234"></script>
+    <script src="js/publishTask.js?v=2018071802"></script>
     <script type="text/javascript">
         //日期插件
         var date = new Date();
@@ -101,7 +101,8 @@
             forceParse: 0,
             showMeridian: 1,
             autoclose: 1, //选择后自动关闭
-            pickerPosition: "bottom-left",
+            // pickerPosition: "bottom-right",
+            orientation: 'bottom',
             language: "zh-CN",
             startDate: year + "-" + month + "-" + day
         });

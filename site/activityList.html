@@ -8,37 +8,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/mescroll.min.css">
     <link rel="stylesheet" href="css/activityList.css">
     <title>我的活动</title>
 </head>
 
 <body class="bg-color">
     <div id="top-nav"></div>
-    <div class="container mobile-container">
+    <div class="container mobile-container list-wrap">
         <div class="row">
-            <div>
-                <div class="head-area">
-                    <div class="activity-cate" id="0">
-                        <span class="select">所有活动</span>
-                    </div>
-                    <div class="activity-cate" id="1">
-                        <span>我参加的</span>
-                    </div>
-                    <div class="activity-cate" id="2">
-                        <span>待我报名</span>
+            <div class="mescroll list-content" id="mescroll">
+                <div>
+                    <div class="head-area">
+                        <div class="activity-cate" id="0">
+                            <span class="select">所有活动</span>
+                        </div>
+                        <div class="activity-cate" id="1">
+                            <span>我参加的</span>
+                        </div>
+                        <div class="activity-cate" id="2">
+                            <span>待我报名</span>
+                        </div>
                     </div>
                 </div>
-                <div class="item">
-                </div>
+                <div class="item"></div>
             </div>
         </div>
     </div>
-    <div class="footer pc" id="footer"></div>
+    <div class="footer pc fp-bottom" id="footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/activityList.js?v=1"></script>
+    <script src="js/mescroll.min.js"></script>
+    <script src="js/activityList.js?v=11"></script>
 </body>
 
 </html>
