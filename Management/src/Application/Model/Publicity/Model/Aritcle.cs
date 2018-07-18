@@ -13,7 +13,7 @@
         public string NewsTitle { get; set; }
 
         /// <summary>
-        /// 文章类型
+        /// 文章类型 00:文章 01:心得体会 02:会议
         /// </summary>
         //todo 有时间换成枚举
         public int NewsType { get; set; }
