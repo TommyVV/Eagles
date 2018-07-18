@@ -3,8 +3,14 @@ using Eagles.Application.Model.Meeting.Model;
 
 namespace Eagles.Application.Model.Meeting.Response
 {
-    public class ImportMeetingResponse:ResponseBase
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ImportMeetingResponse
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public List<MeetUser> ImportUsersResult { get; set; }
     }
 }
