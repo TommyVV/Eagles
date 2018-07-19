@@ -55,8 +55,8 @@ namespace Eagles.DomainService.Core.Task
             var toUserInfo = util.GetUserInfo(toUser);
             if (fromUserInfo == null && toUserInfo == null)
                 throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
-            var fromUserName = util.GetUserInfo(fromUser).Name;
-            var toUserName = util.GetUserInfo(toUser).Name;
+            var fromUserName = fromUserInfo.Name;
+            var toUserName = toUserInfo.Name;
             var task = new TbTask
             {
                 OrgId = tokens.OrgId,
