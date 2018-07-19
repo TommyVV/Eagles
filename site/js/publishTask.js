@@ -4,6 +4,9 @@ $(document).ready(function() {
     var appId = getRequest("appId");
     //指派人员
     var toUserId = '';
+    var toUserName = '';
+    //指派人员信息
+    var toUsreInfo = '';
     //创建类型
     var createType = '';
     //加载导航
@@ -24,22 +27,23 @@ $(document).ready(function() {
     if (pageType == 1) {
         $("#imgUpload").hide();
     }
-    $("#subord").click(function() {
-        //加载弹出框
-        new Modal(1, {
-            title: "选择指派人员",
-            data: {
-                Type: 0,
-                UserId: userId,
-                Token: token,
-                AppId: appId
-            }
-        }, function(item) {
-            toUserId = item.UserId;
-            createType = item.IsLeader == true ? '1' : '0';
-            $("#name").html(item.Name);
-            console.log('selectItem----', item);
-        });
+    //查询关系列表
+    getUserRelationship();
+    $('#btnTestSaveLarge').on('click', function() {
+        if (toUsreInfo) {
+            $("#name").html(toUserName);
+            var arr = toUsreInfo.split("-");
+            toUserId = arr[0];
+            createType = arr[1];
+            $(this).parents('.modal').modal('hide');
+        } else {
+            bootoast({
+                message: "请选择指派人员",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+        }
     });
     //是否公开
     $(".flag-area").click(function() {
@@ -111,65 +115,61 @@ $(document).ready(function() {
             createTask();
         }
     });
+    //查询列表
+    function getUserRelationship() {
+        $.ajax({
+            type: 'POST',
+            url: DOMAIN + '/api/User/GetUserRelationship',
+            data: {
+                "Type": 0,
+                "UserId": userId,
+                "Token": token,
+                "AppId": appId
+            },
+            success: function(data) {
+                console.log('GetUserRelationship---', data);
+                if (data.Code == "00") {
+                    dealRelationList(data.Result.UserList);
+                } else {
+                    alert(data.Code, data.Message);
+                }
+            }
+        })
+    }
+
+    function dealRelationList(list) {
+        var content = `<div class="subordinates">`;
+        list.forEach(element => {
+            content += `<div class="subordinate-item" id="${element.UserId}-${element.IsLeader==true?'1':'0'}">
+                <span>${element.Name==null?element.UserId:element.Name}</span>
+                <div class="right-dir">
+                    <span class="glyphicon" aria-hidden="true"></span>
+                </div>
+            </div>`;
+        });
+        content += `</div>`;
+        $(".modal-body").html(content);
+        $(".subordinate-item").click(function() {
+            $('.subordinates .glyphicon').removeClass('glyphicon-ok');
+            $($(this).find('.glyphicon')).addClass('glyphicon-ok');
+            toUsreInfo = $(this).attr("id");
+            toUserName = $($(this).find('span')).text();
+        });
+    }
+
     //发布任务
     function createTask() {
-        if (!toUserId) {
-            bootoast({
-                message: "指派人员不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var title = $("#title").val();
-        if (!title) {
-            bootoast({
-                message: "标题不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var start = $("#start").val();
-        if (!start) {
-            bootoast({
-                message: "开始时间不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var end = $("#end").val();
-        if (!end) {
-            bootoast({
-                message: "结束时间不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var content = $("#content").val();
-        if (!content) {
-            bootoast({
-                message: "活动内容不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
+        if (!validCheck()) {
             return;
         }
         var pubFlag = $(".pub-flag").hasClass("select");
         var data = {
-            TaskName: title,
+            TaskName: $("#title").val(),
             TaskFromUser: userId,
             TaskToUserId: toUserId,
-            TaskBeginDate: start,
-            TaskEndDate: end,
-            TaskContent: content,
+            TaskBeginDate: $("#start").val(),
+            TaskEndDate: $("#end").val(),
+            TaskContent: $("#content").val(),
             CanComment: 0,
             IsPublic: pubFlag == true ? 0 : 1,
             CreateType: createType,
@@ -199,53 +199,7 @@ $(document).ready(function() {
     }
     //发布活动
     function createActivity() {
-        if (!toUserId) {
-            bootoast({
-                message: "指派人员不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var title = $("#title").val();
-        if (!title) {
-            bootoast({
-                message: "标题不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var start = $("#start").val();
-        if (!start) {
-            bootoast({
-                message: "开始时间不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var end = $("#end").val();
-        if (!end) {
-            bootoast({
-                message: "结束时间不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
-        var content = $("#content").val();
-        if (!content) {
-            bootoast({
-                message: "活动内容不能为空",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
+        if (!validCheck()) {
             return;
         }
         if (!imgUrl) {
@@ -259,12 +213,12 @@ $(document).ready(function() {
         }
         var data = {
             ActivityType: 0,
-            ActivityName: title,
+            ActivityName: $("#title").val(),
             ActivityFromUser: userId,
             ActivityToUserId: toUserId,
-            ActivityBeginDate: start,
-            ActivityEndDate: end,
-            ActivityContent: content,
+            ActivityBeginDate: $("#start").val(),
+            ActivityEndDate: $("#end").val(),
+            ActivityContent: $("#content").val(),
             CanComment: 0,
             IsPublic: 0,
             ImageUrl: imgUrl,
@@ -291,6 +245,49 @@ $(document).ready(function() {
                     });
                 }
             }
+        });
+    }
+
+    function validCheck() {
+        var title = $("#title").val();
+        if (!title) {
+            validTip("请填写标题");
+            return false;
+        }
+        if (!toUserId) {
+            validTip("请选择指派人员");
+            return false;
+        }
+        var start = $("#start").val();
+        if (!start) {
+            validTip("请选择开始时间");
+            return false;
+        }
+        var end = $("#end").val();
+        if (!end) {
+            validTip("请选择结束时间");
+            return false;
+        }
+        var startDate = start.replace(/\-/g, "");
+        var endDate = end.replace(/\-/g, "");
+        if (startDate > endDate) {
+            validTip("活动开始日期晚于结束日期");
+            return false;
+        }
+        var content = $("#content").val();
+        if (!content) {
+            validTip("内容不能为空");
+            return false;
+        }
+        return true;
+    }
+
+    function validTip(str) {
+        bootoast({
+            message: str,
+            type: "info",
+            position: "toast-top-center",
+            timeout: 2
         });
     }
     class CalculateScreen {

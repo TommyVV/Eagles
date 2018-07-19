@@ -10,15 +10,22 @@ $(document).ready(function() {
     //新增计划
     $(".plan-add").click(function() {
         stepId = "";
-        var modal = new Modal(2, {
-            title: '新增步骤',
-            content: ''
-        }, function(str) {
-            console.log('text---', str);
-            editTaskStep(str);
-        });
+        $("#modalLargeLabel").html('新增步骤');
     });
-    var that = $;
+    //确定计划
+    $('#btnTestSaveLarge').on('click', function() {
+        var stepContent = $("#step-content").val();
+        if (stepContent) {
+            editTaskStep(stepContent);
+        } else {
+            bootoast({
+                message: "请填写任务步骤",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+        }
+    });
     //申请完成
     $('.sub-btn').click(function() {
         editTaskComplete();
@@ -41,7 +48,12 @@ $(document).ready(function() {
                     //数据为空
                     $(".plan-content").html(`<div class="plan-tip">赶快为任务指定计划吧！</div>`);
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: data.Message,
+                        type: "info",
+                        position: "toast-top-center",
+                        timeout: 2
+                    });
                 }
             }
         });
@@ -63,10 +75,13 @@ $(document).ready(function() {
                 console.log("EditTaskStep---", data);
                 if (data.Code == "00") {
                     getTaskStep();
-                    $("#step-name").val("");
-                    $(".alert").addClass("hide");
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: data.Message,
+                        type: "info",
+                        position: "toast-top-center",
+                        timeout: 2
+                    });
                 }
             }
         });
@@ -87,7 +102,12 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getTaskStep();
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: data.Message,
+                        type: "info",
+                        position: "toast-top-center",
+                        timeout: 2
+                    });
                 }
             }
         });
@@ -122,9 +142,7 @@ $(document).ready(function() {
             stepId = $(this)
                 .attr("id")
                 .split("-")[1];
-            $(".alert .weui-dialog__title").html("编辑步骤");
-            $("#step-name").val($(".content-" + stepId).text());
-            $(".alert").removeClass("hide");
+            $("#modalLargeLabel").html('编辑步骤');
         });
         //反馈按钮
         $(".feedback").click(function() {
@@ -163,9 +181,14 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("(下级申请)活动完成---", data);
                 if (data.Code == "00") {
-                    that.toast("申请已提交", function() {});
+                    window.location.href = "exchangeResult.html?code=1&tip=申请已提交成功&appId=" + appId;
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: data.Message,
+                        type: "info",
+                        position: "toast-top-center",
+                        timeout: 2
+                    });
                 }
             }
         });

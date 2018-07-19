@@ -117,13 +117,13 @@ export default async config => {
     }
     // oken过期
     if (Code === "M20") {
-      // message==='token已过期'
+      message.error("页面过期，请重新登录"); 
       return redirectLogin(); //重定向到login页面
     }
-    if (Code === "4002") {
-      // message==='token不合法'
-      return redirectLogin(); //重定向到login页面
-    }
+    // if (Code === "500") {
+    //   message.error("认证失败，请重新登录"); 
+    //   return redirectLogin(); //重定向到login页面
+    // }
     return res;
   } catch (e) {
     throw new Error(e);

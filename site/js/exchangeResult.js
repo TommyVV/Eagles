@@ -6,12 +6,10 @@ $(document).ready(function() {
     var tip = getRequest("tip");
     if (code == '1') {
         $(".result-des").html(tip);
-        $(".result-bg").addClass("result-success");
-        $(".glyphicon").addClass("glyphicon-ok icon");
+        $("img").attr('src', 'icons/correct@2x.png');
     } else {
         $(".result-des").html(tip);
-        $(".result-bg").addClass("result-fail");
-        $(".glyphicon").addClass("glyphicon-remove icon");
+        $("img").attr('src', 'icons/mistake@2x.png');
     }
     console.log('code---', code);
 });

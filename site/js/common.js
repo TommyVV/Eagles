@@ -52,7 +52,7 @@ function attachmentList(list) {
             if (element.AttachmentDownloadUrl || element.AttachName) {
                 str += `<div class="file">
                     <span class="glyphicon glyphicon-paperclip"></span>
-                    <a href="${element.AttachmentDownloadUrl}">${element.AttachName}</a>
+                    <a href="${element.AttachmentDownloadUrl}" target="_blank">${element.AttachName}</a>
                 </div>`;
             }
         });

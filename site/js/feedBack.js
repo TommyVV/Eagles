@@ -147,7 +147,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功";
+                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId;
                 } else {
                     alert(data.Code, data.Message);
                 }
