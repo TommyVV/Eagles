@@ -1,37 +1,39 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Data;
-using System.ComponentModel;
-using System.Collections.Generic;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using Eagles.DomainService.Model.User;
+using System.Linq;
+using System.Drawing;
+using Eagles.Base;
 using Eagles.Application.Model.Export;
 using Eagles.Interface.Configuration;
-using Eagles.Interface.Core.ExportFile;
-using Eagles.Interface.DataAccess.Export;
+using Eagles.Interface.Core.FileExport;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
-namespace Eagles.DomainService.Core.Export
+namespace Eagles.DomainService.Core.FileExport
 {
-    public class ExportFileHandler : IExportHandler
+    public class FileExportHandler : IFileExportHandler
     {
-        private readonly IExportAccess exportAccess;
         private readonly IEaglesConfig configuration;
 
-        public ExportFileHandler(IExportAccess exportAccess, IEaglesConfig configuration)
+        public FileExportHandler(IEaglesConfig configuration)
         {
-            this.exportAccess = exportAccess;
             this.configuration = configuration;
         }
 
         public ExportResponse ExportFile(ExportRequest request)
-        {            
-            var result = exportAccess.ExportInfo<TbUserInfo>(request.ExportSql);
-            var fileName = ExportExcel(ListToDataTable(result), columnsToTale: request.ColumnName);
-            return new ExportResponse() { ExportFilePath = fileName };
+        {
+            if (string.IsNullOrEmpty(request.ColumnNames))
+                throw new TransactionException("M01", "无业务数据");
+            DataTable dataTable = new DataTable();
+            foreach (var s in request.ColumnNames.Split(','))
+                dataTable.Columns.Add(s);
+            foreach (var row in request.RowsList)
+                dataTable.Rows.Add(row.Rows);
+            var path = ExportExcel(dataTable);
+            return new ExportResponse() {ExportFilePath = path};
         }
-        
+
         /// <summary>
         /// 导出Excel
         /// </summary>
@@ -44,7 +46,7 @@ namespace Eagles.DomainService.Core.Export
         {
             var exportPath = configuration.EaglesConfiguration.ExportPath;
             var fileFullName = exportPath + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
-            using (FileStream stream = new FileStream(fileFullName, FileMode.Create))                
+            using (FileStream stream = new FileStream(fileFullName, FileMode.Create))
             using (ExcelPackage package = new ExcelPackage(stream))
             {
                 ExcelWorksheet workSheet = package.Workbook.Worksheets.Add(string.Format("{0}Data", heading));
@@ -74,10 +76,10 @@ namespace Eagles.DomainService.Core.Export
                 }
                 using (ExcelRange r = workSheet.Cells[startRowFrom, 1, startRowFrom, dataTable.Columns.Count])
                 {
-                    r.Style.Font.Color.SetColor(System.Drawing.Color.White);
+                    r.Style.Font.Color.SetColor(Color.White);
                     r.Style.Font.Bold = true;
                     r.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    r.Style.Fill.BackgroundColor.SetColor(System.Drawing.ColorTranslator.FromHtml("#1fb5ad"));
+                    r.Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#1fb5ad"));
                 }
                 using (ExcelRange r = workSheet.Cells[startRowFrom + 1, 1, startRowFrom + dataTable.Rows.Count, dataTable.Columns.Count])
                 {
@@ -85,10 +87,10 @@ namespace Eagles.DomainService.Core.Export
                     r.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                     r.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                     r.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                    r.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
-                    r.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.Black);
-                    r.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
-                    r.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
+                    r.Style.Border.Top.Color.SetColor(Color.Black);
+                    r.Style.Border.Bottom.Color.SetColor(Color.Black);
+                    r.Style.Border.Left.Color.SetColor(Color.Black);
+                    r.Style.Border.Right.Color.SetColor(Color.Black);
                 }
                 //for (int i = 0; i >= dataTable.Columns.Count - 1; i++)
                 //{
@@ -101,7 +103,7 @@ namespace Eagles.DomainService.Core.Export
                 //        workSheet.DeleteColumn(i + 1);
                 //    }
                 //}
-                if (!String.IsNullOrEmpty(heading))
+                if (!string.IsNullOrEmpty(heading))
                 {
                     workSheet.Cells["A1"].Value = heading;
                     workSheet.Cells["A1"].Style.Font.Size = 20;
@@ -113,32 +115,6 @@ namespace Eagles.DomainService.Core.Export
                 return fileFullName;
             }
         }
-
-        /// <summary>
-        /// List转DataTable
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static DataTable ListToDataTable<T>(List<T> data)
-        {
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
-            DataTable dataTable = new DataTable();
-            for (int i = 0; i < properties.Count; i++)
-            {
-                PropertyDescriptor property = properties[i];
-                dataTable.Columns.Add(property.Name, Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
-            }
-            object[] values = new object[properties.Count];
-            foreach (T item in data)
-            {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    values[i] = properties[i].GetValue(item);
-                }
-                dataTable.Rows.Add(values);
-            }
-            return dataTable;
-        }
+        
     }
 }

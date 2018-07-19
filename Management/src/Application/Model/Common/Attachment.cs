@@ -8,11 +8,6 @@ namespace Eagles.Application.Model.Common
     public class Attachment
     {
         /// <summary>
-        /// 附件类型
-        /// </summary>
-        public string AttachmentType { get; set; }
-
-        /// <summary>
         /// 附件名称
         /// </summary>
         public string AttachmentName { get; set; }
@@ -20,6 +15,6 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 附件Url
         /// </summary>
-        public string AttachmentDownloadUrl { get; set; }
+        public string AttachmentUrl { get; set; }
     }
 }

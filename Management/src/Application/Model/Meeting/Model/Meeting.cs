@@ -11,7 +11,7 @@ namespace Eagles.Application.Model.Meeting.Model
         /// <summary>
         /// 会议id
         /// </summary>
-        public string MeetingId { get; set; }
+        public int MeetingId { get; set; }
 
         /// <summary>
         /// 会议名称
@@ -26,7 +26,7 @@ namespace Eagles.Application.Model.Meeting.Model
         /// <summary>
         /// 会议参与人
         /// </summary>
-        public List<String> Participants { get; set; }
+        public List<string> Participants { get; set; }
 
     }
 }

@@ -39,18 +39,18 @@ class LoginForm extends React.Component {
         let info = {
           Token
         };
-        let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
+        let Info = localStorage.info ? JSON.parse(localStorage.info) : {}; // 先去取上次返回的url
+        localStorage.clear(); // 再清空缓存
+        localStorage.info = JSON.stringify({ ...info }); // 再设置当前的登录信息，方便拿权限
         // 拿权限
         const { Result } = await getAuth();
         const { List } = Result;
         let { returnUrl } = Info;
         this.setState({ loading: false });
-        if (returnUrl) {
-          localStorage.clear();
+        if (returnUrl && returnUrl.indexOf("login") == -1) {
           localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace(returnUrl);
         } else {
-          localStorage.clear();
           localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace("/home");
         }

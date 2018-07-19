@@ -1,22 +1,22 @@
 ﻿using System.Web.Http;
-using Eagles.Base;
+using Eagles.Application.Host.Common;
 using Eagles.Application.Model.Export;
-using Eagles.Interface.Core.ExportFile;
+using Eagles.Interface.Core.FileExport;
 
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
-    /// 导出接口
+    /// 导出控制器
     /// </summary>
     public class ExportController : ApiController
     {
-        private readonly IExportHandler exportHandler;
+        private readonly IFileExportHandler exportHandler;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="exportHandler"></param>
-        public ExportController(IExportHandler exportHandler)
+        public ExportController(IFileExportHandler exportHandler)
         {
             this.exportHandler = exportHandler;
         }

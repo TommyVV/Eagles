@@ -41,10 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Area\IAreaHandler.cs" />
+    <Compile Include="FileExport\IFileExportHandler.cs" />
     <Compile Include="FileUpload\IFileUploadHandler.cs" />
     <Compile Include="IActivityTaskHandler.cs" />
     <Compile Include="IAuditHandler.cs" />
     <Compile Include="ILoginHandler.cs" />
+    <Compile Include="IMettingHandler.cs" />
     <Compile Include="IModuleHandler.cs" />
     <Compile Include="IOperGroupHandler.cs" />
     <Compile Include="IOperHandler.cs" />
@@ -76,5 +78,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

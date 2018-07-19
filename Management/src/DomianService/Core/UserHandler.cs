@@ -54,7 +54,7 @@ namespace Eagles.DomainService.Core
             response.TotalCount = totalCount;
             response.List = list.Select(x => new Member
             {
-                OrgName = orgList.First(o => o.OrgId == x.OrgId).OrgName,
+                OrgName = orgList.FirstOrDefault(o => o.OrgId == x.OrgId)?.OrgName,
                 Phone = x.Phone,
                 UserId = x.UserId,
                 UserName = x.Name,

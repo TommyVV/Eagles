@@ -8,22 +8,29 @@ import {
   Modal,
   Form,
   Input,
-  Select,
-  DatePicker
+  Select
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
+import { getList, del } from "../../services/memberService";
 
 const confirm = Modal.confirm;
-
 class SearchForm extends Component {
   handleSearch = e => {
     e.preventDefault();
+    const view = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
+      console.log("Received values of form: ", values);
+      let params = {
+        ...this.props.pageConfig,
+        ...values
+      };
+      const getCurrentList = view.props.getCurrentList;
+      getCurrentList(params);
     });
   };
 
@@ -37,7 +44,7 @@ class SearchForm extends Component {
       <Form
         className="ant-advanced-search-form"
         layout="inline"
-        onSubmit={this.handleSearch}
+        onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
           <Col span={6} key={1}>
@@ -84,79 +91,61 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    // const project = props.project;
     return {
-      exType: Form.createFormField({
-        value: "0"
-      }),
-      state: Form.createFormField({
+      GoodsStatus: Form.createFormField({
         value: "0"
       })
     };
   }
 })(SearchForm);
-
 class PartyMemberList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
+      memberList: [], // 项目列表数组
       current: 1, // 当前页
       pageConfig: {} // 当前页配置
     };
     this.columns = [
       {
         title: "党员名称",
-        dataIndex: "name",
-        width: "20%"
+        dataIndex: "UserName",
       },
       {
         title: "所属支部",
-        dataIndex: "branch",
-        width: "20%"
+        dataIndex: "BranchName",
       },
       {
         title: "联系电话",
-        dataIndex: "phone",
-        width: "20%",
-        render: text => (
-          <span>{text}</span>
-        )
+        dataIndex: "Phone",
       },
       {
         title: "党员类型",
-        dataIndex: "type",
-        width: "20%",
-        render: text => (
-          <span>{text}</span>
-        )
+        dataIndex: "MemberType",
+        render: text => <span>{text}</span>
       },
       {
         title: "操作",
-        width: "20%",
-        render: (text, record) => {
+        render: (obj) => {
           return (
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
+                  hashHistory.replace(`/partymember/detail/${obj.UserId}`)
                 }
               >
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                 onClick={() => this.handleDelete(obj.Id)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/partymember/setnext/${1}/${"李某"}`)
+                  hashHistory.replace(`/partymember/setnext/${obj.UserId}/${obj.UserName}`)
                 }
                 style={{ paddingLeft: "24px" }}
               >
@@ -167,37 +156,16 @@ class PartyMemberList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        name: "张三",
-        branch: "第一支部",
-        phone: "18512144992",
-        type: "党员"
-      },
-      {
-        key: "2",
-        name: "张四",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员"
-      },
-      {
-        key: "3",
-        name: "张五",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员"
-      }
-    ];
+
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      UserName: "",
+      BranchId : ""
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -205,94 +173,60 @@ class PartyMemberList extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
-  // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
+  // 间接调用getCurrentList
+  getCurrent(params) {
+    this.getCurrentList(params);
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
+  // 加载当前页
+  getCurrentList = async params => {
+    const { PageNumber } = params;
     try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
+      let { List, TotalCount } = await getList(params);
+      console.log("List - ", List);
+      List.forEach(v => {
+        v.key = v.UserId;
       });
-      this.updatePageConfig(totalSize);
+      this.setState({ memberList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
-  // 删除项目
-  handleDelete = async shareIds => {
+  // 更新分页配置
+  updatePageConfig(totalSize) {
+    let pageConfig = {
+      total: totalSize,
+      PageSize: this.getListConfig.PageSize,
+      current: this.state.current,
+      onChange: async (page, pagesize) => {
+        this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: page
+        });
+      }
+    };
+    this.setState({ pageConfig });
+  }
+  // 删除
+  handleDelete = async UserId => {
     confirm({
-      title: "是否确认删除?",
+      title: `是否确认删除?`,
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
-          });
-          if (code === 0) {
-            message.success("删除成功");
+          let { Code } = await del({ UserId });
+          if (Code === "00") {
+            message.success(`删除成功`);
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(`删除失败`);
           }
         } catch (e) {
           throw new Error(e);
@@ -300,7 +234,7 @@ class PartyMemberList extends React.Component {
       }
     });
   };
-  // 编辑项目
+  // 批量操作
   handleEdit = async () => {
     try {
       let { selectedRowKeys } = this.state;
@@ -317,16 +251,19 @@ class PartyMemberList extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, memberList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          pageConfig={pageConfig}
+          getCurrentList={this.getCurrent.bind(this)}
+        />
         <Table
-          dataSource={this.data}
+          dataSource={memberList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
@@ -336,27 +273,12 @@ class PartyMemberList extends React.Component {
 
         <Row
           type="flex"
-          justify="center"
+          // justify="center"
           gutter={24}
-          className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button onClick={this.handleDelete} className="btn">
-              批量删除
-            </Button>
-          </Col>
-          <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
-                新增
-              </a>
-            </Button>
-          </Col>
-          <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                导入
-              </a>
+            <Button className="btn btn--primary">
+              <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>
             </Button>
           </Col>
         </Row>
