@@ -24,5 +24,10 @@
         /// 是否需要验证码
         /// </summary>
         public bool IsVerifyCode { get; set; }
+
+        /// <summary>
+        /// Token过期时间
+        /// </summary>
+        public string TokenExpTime { get; set; }
     }
 }

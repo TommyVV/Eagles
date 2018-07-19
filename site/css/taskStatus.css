@@ -2,154 +2,124 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-}
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
 
 .task-info {
   margin: 0 1.0453333333rem 1.3866666667rem 1.3866666667rem;
-  font-size: 0.64rem;
-}
-.task-info .info-icon {
-  margin-top: 0.576rem;
-  margin-bottom: 0.0426666667rem;
-  color: #949494;
-  line-height: 1.8773333333rem;
-}
-.task-info .info-icon img {
-  width: 1.8773333333rem;
-  height: 1.8773333333rem;
-  border-radius: 50%;
-}
-.task-info .info-icon .time {
-  float: right;
-}
-.task-info .info-item {
-  color: #949494;
-  margin-top: 1.0026666667rem;
-}
-.task-info .info-item span {
-  color: #141414;
-  padding-left: 5px;
-}
-.task-info .info-item .status {
-  color: #F24848;
-}
+  font-size: 0.64rem; }
+  .task-info .info-icon {
+    margin-top: 0.576rem;
+    margin-bottom: 0.0426666667rem;
+    color: #949494;
+    line-height: 1.8773333333rem; }
+    .task-info .info-icon img {
+      width: 1.8773333333rem;
+      height: 1.8773333333rem;
+      border-radius: 50%; }
+    .task-info .info-icon .time {
+      float: right; }
+  .task-info .info-item {
+    color: #949494;
+    margin-top: 1.0026666667rem; }
+    .task-info .info-item span {
+      color: #141414;
+      padding-left: 5px; }
+    .task-info .info-item .status {
+      color: #F24848; }
 
 .task-content {
   border-top: 0.2346666667rem solid #F8F8F8;
   padding: 0 0.7466666667rem;
-  margin-bottom: 1.7493333333rem;
-}
-.task-content .title {
-  height: 2.2613333333rem;
-  border-bottom: 1px solid #EEEEEE;
-  font-size: 0.768rem;
-  line-height: 2.2613333333rem;
-  padding-left: 5px;
-}
-.task-content .content {
-  margin-top: 1.408rem;
-  color: #141414;
-  font-size: 0.64rem;
-  margin-bottom: 0.6826666667rem;
-}
-.task-content .img-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-.task-content .img-area .img-wrap {
-  width: calc(33.3% - 8px);
-  /* 这里设置占屏幕宽度百分比 */
-  margin: 0 auto;
-}
-.task-content .img-area .img-wrap .img-container {
-  width: 100%;
-  height: 0px;
-  padding-bottom: 100%;
-  overflow: hidden;
-  margin: 0;
-  position: relative;
-}
-.task-content .img-area .img-wrap .img-container img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.task-content .add-area {
-  margin-top: 2.176rem;
-  font-size: 0.64rem;
-  line-height: 0.768rem;
-}
-.task-content .add-area .g-color {
-  color: #65BBDE;
-}
-.task-content .add-area a {
-  color: #141414;
-  text-decoration: underline;
-}
+  margin-bottom: 1.7493333333rem; }
+  .task-content .title {
+    height: 2.2613333333rem;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 0.768rem;
+    line-height: 2.2613333333rem;
+    padding-left: 5px; }
+  .task-content .content {
+    margin-top: 1.408rem;
+    color: #141414;
+    font-size: 0.64rem;
+    margin-bottom: 0.6826666667rem; }
+  .task-content .img-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%; }
+    .task-content .img-area .img-wrap {
+      width: calc(33.3% - 8px);
+      /* 这里设置占屏幕宽度百分比 */
+      margin: 0 auto; }
+      .task-content .img-area .img-wrap .img-container {
+        width: 100%;
+        height: 0px;
+        padding-bottom: 100%;
+        overflow: hidden;
+        margin: 0;
+        position: relative; }
+        .task-content .img-area .img-wrap .img-container img {
+          position: absolute;
+          width: 100%;
+          height: 100%; }
+  .task-content .add-area {
+    margin-top: 2.176rem;
+    font-size: 0.64rem;
+    line-height: 0.768rem; }
+    .task-content .add-area .g-color {
+      color: #65BBDE; }
+    .task-content .add-area a {
+      color: #141414;
+      text-decoration: underline; }
 
 .oper-item {
   height: 1.7066666667rem;
   line-height: 1.7066666667rem;
-  border-bottom: 1px solid #EEEEEE;
-}
-.oper-item .oper-text {
-  font-size: 0.64rem;
-  width: 75%;
-  float: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.oper-item .opers {
-  font-size: 0.512rem;
-  width: 25%;
-  float: right;
-  color: #949494;
-}
+  border-bottom: 1px solid #EEEEEE; }
+  .oper-item .oper-text {
+    font-size: 0.64rem;
+    width: 75%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
+  .oper-item .opers {
+    font-size: 0.512rem;
+    width: 25%;
+    float: right;
+    color: #949494; }
 
 .points-area {
-  margin-top: 1.8133333333rem;
-}
-.points-area .points-tip {
-  font-size: 0.64rem;
-}
-.points-area .points-stars {
-  margin-top: 0.64rem;
-  text-align: center;
-}
-.points-area .points-stars .glyphicon {
-  padding: 0px 3px;
-  font-size: 1.0026666667rem;
-}
-.points-area .points-stars .s-star {
-  color: #FFD35A;
-}
-.points-area .points-stars .n-star {
-  color: #DDDDDD;
-}
-.points-area .points-result {
+  margin-top: 1.8133333333rem; }
+  .points-area .points-tip {
+    font-size: 0.64rem; }
+  .points-area .points-stars {
+    margin-top: 0.64rem;
+    text-align: center; }
+    .points-area .points-stars .glyphicon {
+      padding: 0px 3px;
+      font-size: 1.0026666667rem; }
+    .points-area .points-stars .s-star {
+      color: #FFD35A; }
+    .points-area .points-stars .n-star {
+      color: #DDDDDD; }
+
+.points-result {
   margin-top: 2.3466666667rem;
-  text-align: center;
-}
-.points-area .points-result div {
-  width: 35.3%;
-  height: 1.7066666667rem;
-  font-size: 0.64rem;
-  line-height: 1.7066666667rem;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  border-radius: 0.1706666667rem;
-}
-.points-area .points-result .pass {
-  background-color: #FF0000;
-}
-.points-area .points-result .nopass {
-  margin-left: 1.28rem;
-  background-color: #949494;
-}
+  text-align: center; }
+  .points-result div {
+    width: 35.3%;
+    height: 1.7066666667rem;
+    font-size: 0.64rem;
+    line-height: 1.7066666667rem;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    border-radius: 0.1706666667rem; }
+  .points-result .pass {
+    background-color: #FF0000; }
+  .points-result .nopass {
+    margin-left: 1.28rem;
+    background-color: #949494; }
 
 /*# sourceMappingURL=taskStatus.css.map */

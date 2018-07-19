@@ -95,7 +95,7 @@ $(document).ready(function() {
         list.forEach(element => {
             content += `<div class="article" id="${element.ActivityId}-${element.ActivityType}-${element.TestId}">
                     <div class="left">
-                        <img src="${element.ImgUrl}"
+                        <img src="${element.ImageUrl}"
                             alt="">
                     </div>
                     <div class="right">
