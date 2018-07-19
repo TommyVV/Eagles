@@ -597,17 +597,12 @@
             附件类
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentType">
-            <summary>
-            附件类型
-            </summary>
-        </member>
         <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentName">
             <summary>
             附件名称
             </summary>
         </member>
-        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentDownloadUrl">
+        <member name="P:Eagles.Application.Model.Common.Attachment.AttachmentUrl">
             <summary>
             附件Url
             </summary>
@@ -2812,6 +2807,11 @@
             党员类型 0:党员; 1:预备党员
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgId">
+            <summary>
+            机构名
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
             <summary>
             机构名
@@ -2910,11 +2910,6 @@
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Picture">
             <summary>
             头像
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.BranchId">
-            <summary>
-            支部编号
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.City">
@@ -3150,6 +3145,221 @@
         <member name="P:Eagles.Application.Model.PartyMember.Response.GetUserInfoDetailResponse.Info">
             <summary>
             集合
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicActivity.ActivityId">
+            <summary>
+            活动id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicActivity.ActivityName">
+            <summary>
+            活动名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicActivity.ResponsibleUserName">
+            <summary>
+            负责人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicActivity.CreateTime">
+            <summary>
+            申请时间 格式 yyyy-MM-dd HH：mm：ss
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicActivity.UserCount">
+            <summary>
+            参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.Aritcle.NewsId">
+            <summary>
+            文章id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.Aritcle.NewsTitle">
+            <summary>
+            文章标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.Aritcle.NewsType">
+            <summary>
+            文章类型 00:文章 01:心得体会 02:会议
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.Aritcle.CreateTime">
+            <summary>
+            发布时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicTask.TaskId">
+            <summary>
+            任务id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicTask.TaskTitle">
+            <summary>
+            任务标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicTask.ResponsibleUserName">
+            <summary>
+            负责人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Model.PublicTask.CreateTime">
+            <summary>
+            申请时间（格式：yyyy-MM-dd HH：mm：ss
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Request.GetPublicActivityDetailRequest.ActivityId">
+            <summary>
+            公开活动id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Request.GetPublicArticleDetailRequest.NewsId">
+            <summary>
+            公开文章id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Request.GetPublicTaskDetailRequest.TaskId">
+            <summary>
+            任务id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsId">
+            <summary>
+            文章id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsTitle">
+            <summary>
+            文章标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.Author">
+            <summary>
+            文章作者
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.CreateTime">
+            <summary>
+            文章发布时间（时间格式:yyyy-MM-dd
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsDetail">
+            <summary>
+            文章内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.ActivityId">
+            <summary>
+            活动id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.ActivityName">
+            <summary>
+            活动名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.FromUser">
+            <summary>
+            发起人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.ResponsibleUserName">
+            <summary>
+            负责人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.CreateTime">
+            <summary>
+            发布时间（有的地方叫申请时间，一个意思） 格式 yyyy-MM-dd HH：mm：ss
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.UserCount">
+            <summary>
+            参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.ActivityContent">
+            <summary>
+            活动内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.ActivityFeedBack">
+            <summary>
+            活动反馈
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicActivityDetailResponse.Attachments">
+            <summary>
+            附件
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicAritcleResponse.Aritcles">
+            <summary>
+            文章列表
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.TaskId">
+            <summary>
+            任务id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.TaskTitle">
+            <summary>
+            任务标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.ResponsibleUserName">
+            <summary>
+            负责人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.FromUser">
+            <summary>
+            发起人
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.TaskContent">
+            <summary>
+            任务内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.Steps">
+            <summary>
+            计划
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.CreateTime">
+            <summary>
+            申请时间（格式：yyyy-MM-dd HH：mm：ss
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskDetailResponse.Attachments">
+            <summary>
+            附件列表
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.Step.StepId">
+            <summary>
+            计划id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.Step.StepName">
+            <summary>
+            计划名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.Step.StepContent">
+            <summary>
+            计划内容
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicTaskResponse.Tasks">
+            <summary>
+            任务列表
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.RequestBase">

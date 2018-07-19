@@ -24,18 +24,21 @@ namespace Eagles.DomainService.Core
 
         private readonly IOrganizationDataAccess OrgdataAccess;
 
+        private readonly IBranchDataAccess BrcdataAccess;
+
         private readonly IConfigurationManager configurationManager;
 
         private readonly IMd5Helper md5Helper;
         private readonly ICacheHelper cacheHelper;
 
-        public UserHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager, ICacheHelper cacheHelper, IMd5Helper md5Helper)
+        public UserHandler(IPartyMemberDataAccess dataAccess, IOrganizationDataAccess orgdataAccess, IConfigurationManager configurationManager, ICacheHelper cacheHelper, IMd5Helper md5Helper, IBranchDataAccess brcdataAccess)
         {
             this.dataAccess = dataAccess;
             OrgdataAccess = orgdataAccess;
             this.configurationManager = configurationManager;
             this.cacheHelper = cacheHelper;
             this.md5Helper = md5Helper;
+            BrcdataAccess = brcdataAccess;
         }
 
         public GetPartyMemberResponse GetPartyMemberList(GetPartyMemberRequest request)
@@ -77,9 +80,11 @@ namespace Eagles.DomainService.Core
 
             List<TbOrgInfo> orgList = OrgdataAccess.GetOrganizationList(new List<int> { detail.OrgId });
 
+            List<TbBranch> brcList = BrcdataAccess.GetBranchList(new List<int> { detail.BranchId });
+
             response.Info = new UserInfoDetails
             {
-                OrgName = orgList.First(o => o.OrgId == detail.OrgId).OrgName,
+                OrgName = orgList.FirstOrDefault(o => o.OrgId == detail.OrgId)?.OrgName,
                 Phone = detail.Phone,
                 UserId = detail.UserId,
                 UserName = detail.Name,
@@ -93,7 +98,7 @@ namespace Eagles.DomainService.Core
                 GraduateSchool = detail.School,
                 IdCard = detail.IdNumber,
                 // IsMoney=detail.
-                //  Nation = detail.Ethnic,
+                // Nation = detail.Ethnic,
                 NativePlace = detail.Origin,
                 Picture = detail.NickPhotoUrl,
                 Position = detail.Title,
@@ -108,7 +113,12 @@ namespace Eagles.DomainService.Core
                 Dept = detail.Dept,
                 District = detail.Dept,
                 MemberStatus = detail.MemberStatus,
-                Nation = detail.Ethnic
+                Nation = detail.Ethnic,
+                BranchName = brcList.FirstOrDefault(o => o.BranchId == detail.BranchId)?.BranchName,
+                MemberType= detail.MemberType,
+                OrgId=detail.OrgId,
+                
+                
             };
             return response;
         }
@@ -126,7 +136,17 @@ namespace Eagles.DomainService.Core
 
             var tokenInfo = cacheHelper.GetData<TbUserToken>(request.Token);
             TbUserInfo mod;
-            var password = md5Helper.Md5Encypt(request.Info.Password);
+            Regex regex = new Regex("^1[34578]\\d{9}$");
+
+            if (!regex.IsMatch(request.Info.Phone))
+            {
+                throw new TransactionException("", "手机号格式错误！");
+            }
+
+            var password = md5Helper.Md5Encypt(request.Info.Phone.Substring(request.Info.Phone.Length - 6));
+           
+            
+          
             if (request.Info.UserId > 0)
             {
                 mod = new TbUserInfo
@@ -145,13 +165,14 @@ namespace Eagles.DomainService.Core
                     IdNumber = request.Info.IdCard,
                     // IsMoney   ,                                                                  
                     //Ethnic = request.Info.Nation,
+                    Ethinc=request.Info.Nation,
                     Origin = request.Info.NativePlace,
-                    OrgId = tokenInfo.OrgId,
+                    OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
                     Sex = request.Info.Sex,
                     IsCustomer = 1,
-                    BranchId = tokenInfo.BranchId,
+                    BranchId = request.Info.BranchId,
                     City = request.Info.City,
                     //  CreateTime = DateTime.Now,
                     Dept = request.Info.Dept,
@@ -167,6 +188,7 @@ namespace Eagles.DomainService.Core
                     Ethnic = request.Info.Nation,
                     IsLeader = 0,
                     Score = 0,
+                   
                 };
 
                 return dataAccess.EditUserInfo(mod) > 0;
@@ -177,7 +199,8 @@ namespace Eagles.DomainService.Core
             {
                 mod = new TbUserInfo
                 {
-
+                    
+                    Ethinc=request.Info.Nation,
                     Phone = request.Info.Phone,
                     UserId = request.Info.UserId,
                     Name = request.Info.UserName,
@@ -193,12 +216,12 @@ namespace Eagles.DomainService.Core
                     // IsMoney   ,                                                                  
                     //Ethnic = request.Info.Nation,
                     Origin = request.Info.NativePlace,
-                    OrgId = tokenInfo.OrgId,
+                    OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
                     Sex = request.Info.Sex,
                     IsCustomer = 1,
-                    BranchId = tokenInfo.BranchId,
+                    BranchId = request.Info.BranchId,
                     City = request.Info.City,
                     CreateTime = DateTime.Now,
                     Dept = request.Info.Dept,
@@ -214,6 +237,7 @@ namespace Eagles.DomainService.Core
                     Ethnic = request.Info.Nation,
                     IsLeader = 0,
                     Score = 0,
+                    
                     
                 };
 
@@ -304,7 +328,7 @@ namespace Eagles.DomainService.Core
         {
 
             var response = new ImportUserResponse { UserList = new List<ImportUser>() };
-            Regex rx = new Regex(@"^0{0,1}(13[4-9]|15[7-9]|15[0-2]|18[7-8])[0-9]{8}$");
+            Regex regex = new Regex("^1[34578]\\d{9}$");
             var userinfo = new List<TbUserInfo>();
 
 
@@ -319,7 +343,7 @@ namespace Eagles.DomainService.Core
                     break;
                 }
 
-                if (!rx.IsMatch(md.Phone))
+                if (!regex.IsMatch(md.Phone))
                 {
                     md.ImportStatus = false;
                     md.ErrorReason = "手机号格式错误！";

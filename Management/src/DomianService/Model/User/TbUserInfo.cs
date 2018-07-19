@@ -139,8 +139,7 @@ namespace Eagles.DomainService.Model.User
         public int IsLeader { get; set; }
         public int Score { get; set; }
 
-
-        //  public string Ethinc { get; set; }
+          public string Ethinc { get; set; }
 
 
 

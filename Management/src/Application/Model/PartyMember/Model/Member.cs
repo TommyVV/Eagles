@@ -18,7 +18,7 @@
         /// <summary>
         /// 所属支部id
         /// </summary>
-        public string BranchId { get; set; }
+        public int BranchId { get; set; }
 
         /// <summary>
         /// 所属支部名称
@@ -33,8 +33,13 @@
         /// <summary>
         /// 党员类型 0:党员; 1:预备党员
         /// </summary>
-        public string MemberType { get; set; }
-      
+        public int MemberType { get; set; }
+
+        /// <summary>
+        /// 机构名
+        /// </summary>
+        public int OrgId { get; set; }
+
         /// <summary>
         /// 机构名
         /// </summary>
