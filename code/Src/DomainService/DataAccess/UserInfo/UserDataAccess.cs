@@ -37,6 +37,11 @@ Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Compa
 IsLeader=@IsLeader where UserId = @UserId", userInfo);
         }
 
+        public int EditUserPwd(TbUserInfo userInfo)
+        {
+            return dbManager.Excuted(@"update eagles.tb_user_info set Password=@Password where Phone = @Phone", userInfo);
+        }
+
         public int EditUserNoticeIsRead(int newsId)
         {
             return dbManager.Excuted(@"update eagles.tb_user_notice set IsRead = @IsRead where NewsId = @NewsId", new {IsRead = 0, NewsId = newsId});

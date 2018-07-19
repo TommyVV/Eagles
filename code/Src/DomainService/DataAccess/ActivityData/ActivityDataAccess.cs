@@ -22,12 +22,14 @@ namespace Ealges.DomianService.DataAccess.ActivityData
             this.dbManager = dbManager;
         }
 
-        public int CreateActivity(TbActivity reqActivity)
+        public int CreateActivity(TbActivity reqActivity, out int activityId)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
+            activityId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachName1, AttachName2, AttachName3, AttachName4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status, CreateType) 
 value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
-@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType)", reqActivity);
+@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType); select LAST_INSERT_ID(); ", reqActivity);
+            //return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)", userActivity);
+            return 1;
         }
 
         public int EditActivityJoin(TbUserActivity userActivity)

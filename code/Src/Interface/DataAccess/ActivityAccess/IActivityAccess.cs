@@ -9,7 +9,7 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 {
     public interface IActivityAccess : IInterfaceBase
     {
-        int CreateActivity(TbActivity activity);
+        int CreateActivity(TbActivity activity, out int activityId);
 
         int EditActivityJoin(TbUserActivity userActivity);
 
