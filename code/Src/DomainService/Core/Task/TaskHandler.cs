@@ -51,6 +51,10 @@ namespace Eagles.DomainService.Core.Task
             var toUser = request.TaskToUserId; //任务负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
+            var fromUserInfo = util.GetUserInfo(fromUser);
+            var toUserInfo = util.GetUserInfo(toUser);
+            if (fromUserInfo == null && toUserInfo == null)
+                throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
             var fromUserName = util.GetUserInfo(fromUser).Name;
             var toUserName = util.GetUserInfo(toUser).Name;
             var task = new TbTask
