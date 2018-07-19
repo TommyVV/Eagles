@@ -123,7 +123,7 @@ $(document).ready(function() {
         if (status == -2) {
             return "未接受";
         } else if (status == -1) {
-            return "未启动";
+            return "待上级批准";
         } else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {
@@ -177,7 +177,7 @@ $(document).ready(function() {
                 (createType == "0" && userId == acceptUserId) ||
                 (createType == "1" && userId == initiateUserId)
             ) {
-                $("#btn-area").html(`<div class="sub-btn">制度计划</div>`);
+                $("#btn-area").html(`<div class="sub-btn">制定计划</div>`);
                 $(".sub-btn").click(function() {
                     window.location.href =
                         "taskPlan.html?appId=" + appId + "&taskId=" + taskId;

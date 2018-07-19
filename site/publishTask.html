@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/common/common.css">
     <link rel="stylesheet" href="css/feedBack.css">
     <link rel="stylesheet" href="css/bootoast.css">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
     <link rel="stylesheet" href="css/subordinateList.css">
     <link rel="stylesheet" href="css/publishTask.css">
     <title></title>
@@ -28,7 +29,7 @@
                 <div class="pub-item name-item">
                     指派:
                     <span class="item-content" id="name"></span>
-                    <span class="item-select" id="subord" data-toggle="modal" data-target="#modal">选择</span>
+                    <span class="item-select" id="subord" data-toggle="modal" data-target="#myModal">选择</span>
                 </div>
                 <div class="pub-item">
                     开始时间:
@@ -72,17 +73,34 @@
             </div>
         </div>
     </div>
+    <!-- 模态窗口 -->
+    <div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLargeLabel">选择指派人员</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="footer pc" id="footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="js/common.js?v=12"></script>
-    <script src="js/modal-alert.js?v=2018071801"></script>
     <script src="thirdparty/jquery.ui.widget.js"></script>
     <script src="thirdparty/jquery.iframe-transport.js"></script>
     <script src="thirdparty/jquery.fileupload.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
     <script src="js/bootoast.js"></script>
     <script src="js/publishTask.js?v=2018071802"></script>
     <script type="text/javascript">
