@@ -1,5 +1,10 @@
 var appId = getRequest('appId');
 var token = localStorage.getItem("token")
+//指派人员
+var toUserId = '';
+var toUserName = '';
+//指派人员信息
+var toUsreInfo = '';
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
@@ -13,6 +18,7 @@ $('.publish-btn').on('click', function(e) {
 	var title = $('.publish-title').val(); //标题
 	var type = $('#selectpicker').val(); //文章类型
 	var content = $('.publish-content').val(); //文章内容
+	var pubFlag = $(".pub-flag").hasClass("select");
 	if(!title) {
 		bootoast({
 			message: '请填写文章标题',
@@ -38,12 +44,25 @@ $('.publish-btn').on('click', function(e) {
 		});
 		return;
 	}
+	if($('#selectpicker').val()==3){
+		if(!toUserId) {
+			bootoast({
+				message: '请选择指派人员',
+				type: 'warning',
+				position: 'toast-top-center',
+				timeout: 2
+			});
+			return;
+		} 
+	}
 	$.ajax({
 		type: "post",
 		data: {
 			"NewsTitle": title,
 			"NewsType": type,
+			"ToUserId":toUserId,
 			"NewsContent": content,
+			"IsPublic": pubFlag == true ? 0 : 1,
 			"Token": token,
 			"AppId": appId
 		},
@@ -54,6 +73,13 @@ $('.publish-btn').on('click', function(e) {
 			if(res.Code == 00) {
 				window.location.href = 'myArticle.html?NewsType=' + $('#selectpicker').val() + '';
 				//文章发布成功
+			}else{
+				bootoast({
+					message: "文章发布失败:" + res.Message + "",
+					type: "warning",
+					position: "toast-top-center",
+					timeout: 2
+				});
 			}
 		}
 	})
@@ -64,9 +90,7 @@ $("#selectpicker").change(function() {
 	} else {
 		$('.assign').hide();
 	}
-});
-
-   
+});   
 branchUsers(token, appId); //党员支部信息展示
 function branchUsers(token, appId) {
 	$.ajax({
@@ -82,19 +106,55 @@ function branchUsers(token, appId) {
 			var data = res.Result;
 			if(res.Code == 00) {
 				var options = '';
-				if(res.Result.BranchUsers != '' && res.Result.BranchUsers != null) {
+				if(res.Result.BranchUsers != '' && res.Result.BranchUsers != null&& res.Result.BranchUsers.length!= 0) {
 					for(var i = 0; i < data.BranchUsers.length; i++) {
-						options += '<option value="' + data.BranchUsers[i].UserId + '">' + data.BranchUsers[i].UserName + '</option>'
+						options +='<div class="subordinate-item" id="' + data.BranchUsers[i].UserId + '">'+
+							'<span>'+data.BranchUsers[i].UserName+'</span>'+
+							'<div class="right-dir"><span class="glyphicon" aria-hidden="true"></span></div>'+
+							'</div>'
 					}
-					
-					$('#modal-body').append(options);
-					$("#name").html($('#modal-body').find("option:selected").text());
-					console.log($('#modal-body').html())
+					$('.subordinates').append(options);
+				}else{
+					$('#modal .modal-body').html('暂无数据');
 				}
 			}
 		}
 	})
 }
-$("#modal-body").change(function() {
-	$("#name").html($('#modal-body').find("option:selected").text());
+$('.modal-body').on('click', '.subordinate-item', function (e) {
+		$('.subordinates .glyphicon').removeClass('glyphicon-ok');
+		$($(this).find('.glyphicon')).addClass('glyphicon-ok');
+		toUsreInfo = $(this).attr("id");
+		toUserName = $($(this).find('span')).text();
+		console.log(toUsreInfo,toUserName)
+});
+//是否公开
+$(".flag-area").click(function() {
+		if ($(".pub-flag").hasClass("select")) {
+				$(".pub-flag")
+						.attr("src", "icons/sel_no@2x.png")
+						.removeClass("select");
+		} else {
+				$(".pub-flag")
+						.attr("src", "icons/sel_yes@2x.png")
+						.addClass("select");
+		}
+});
+//指派人员
+$('#btnTestSaveLarge').on('click', function() {
+		if (toUsreInfo) {
+			console.log(1)
+				$("#name").html(toUserName);
+				var arr = toUsreInfo.split("-");
+				toUserId = arr[0];
+				createType = arr[1];
+				$(this).parents('.modal').modal('hide');
+		} else {
+				bootoast({
+						message: "请选择指派人员",
+						type: "info",
+						position: "toast-top-center",
+						timeout: 2
+				});
+		}
 });
