@@ -57,7 +57,7 @@ $('.btn-login').on('click', function(e) {
         success: function(res) {
             var data = res.Result;
             if (res.Code == 00) {
-                window.location.href = 'login.html?appId=' + appId
+                window.location.href = 'mine.html?appId=' + appId
             } else {
                 bootoast({
                     message: '' + res.Message + '',
