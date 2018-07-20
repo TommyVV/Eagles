@@ -209,7 +209,7 @@ namespace Eagles.DomainService.Core.User
             {
                 UserId = result.UserId,
                 Name = result.Name,
-                Gender = result.Sex == 0 ? "男" : "女",
+                Gender = result.Sex,
                 Birth = result.Birthday.ToString("yyyy-MM-dd"),
                 Telphone = result.Phone,
                 Address = result.Address,
