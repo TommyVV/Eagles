@@ -13,13 +13,14 @@
       font-size: 0.64rem;
       color: #141414;
       line-height: 0.74667rem; }
-    .good-intro .goods-info .num {
+    .good-intro .goods-info .num{
       float: left;
       width: 20%;
       text-align: right;
       color: #949494;
       font-size: 0.512rem;
       line-break: 0.74667rem; }
+      .good_priced,.good_kcned{color: #949494;}
   .good-intro .points {
     font-size: 0.64rem;
     color: #e52424;
@@ -102,7 +103,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
         height: 80px; }
-      .pc-wrap .overview-props-count {
+      .pc-wrap .overview-props-count,.overview-kuc {
         margin-top: 16px;
         font-size: 18px;
         color: #949494;
