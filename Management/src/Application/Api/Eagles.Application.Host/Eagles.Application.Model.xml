@@ -2246,6 +2246,31 @@
             
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.News.Model.AritcleDetail.NewsId">
+            <summary>
+            文章id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.AritcleDetail.NewsTitle">
+            <summary>
+            文章标题
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.AritcleDetail.Author">
+            <summary>
+            文章作者
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.AritcleDetail.CreateTime">
+            <summary>
+            文章发布时间（时间格式:yyyy-MM-dd
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.AritcleDetail.NewsDetail">
+            <summary>
+            文章内容
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.News.Model.ExternalNew.ExternalUrl">
             <summary>
             外部链接url
@@ -3340,31 +3365,6 @@
         <member name="P:Eagles.Application.Model.Publicity.Request.GetPublicTaskDetailRequest.TaskId">
             <summary>
             任务id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsId">
-            <summary>
-            文章id
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsTitle">
-            <summary>
-            文章标题
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.Author">
-            <summary>
-            文章作者
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.CreateTime">
-            <summary>
-            文章发布时间（时间格式:yyyy-MM-dd
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.Publicity.Response.GetAritcleDetailResponse.NewsDetail">
-            <summary>
-            文章内容
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.Publicity.Response.GetPublicAritcleResponse.Aritcles">

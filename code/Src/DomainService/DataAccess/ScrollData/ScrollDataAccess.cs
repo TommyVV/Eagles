@@ -20,8 +20,7 @@ namespace Ealges.DomianService.DataAccess.ScrollData
 
         public List<Eagles.DomainService.Model.News.TbSystemNews> GetScrollNews(string nowDate,string date)
         {
-            return dbManager.Query<Eagles.DomainService.Model.News.TbSystemNews>(
-                "select newsId,newsName,newsContent,htmlDesc  from tb_system_news where NoticeTime=@NoticeTime or NoticeTime=@Date ",
+            return dbManager.Query<Eagles.DomainService.Model.News.TbSystemNews>("select newsId,newsName,newsContent,htmlDesc from tb_system_news where NoticeTime=@NoticeTime or NoticeTime=@Date ",
                 new {NoticeTime = nowDate, Date = date});
         }
     }

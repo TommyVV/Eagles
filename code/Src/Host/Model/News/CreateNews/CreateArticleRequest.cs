@@ -25,7 +25,7 @@ namespace Eagles.Application.Model.News.CreateNews
         /// <summary>
         /// 入党申请书党员
         /// </summary>
-        public int UserId { get; set; }
+        public int ToUser { get; set; }
 
         /// <summary>
         /// 是否公开

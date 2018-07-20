@@ -16,5 +16,7 @@ namespace Eagles.Interface.DataAccess
         List<TbActivity> GetPublicActivity(RequestBase requset);
         TbTask GetPublicTaskDetail(GetPublicTaskDetailRequest requset);
         List<TbTask> GetPublicTask(RequestBase requset);
+        List<ActivityUserCount> GetActivityUserCount();
+        int GetActivityUserCount(int activityId);
     }
 }

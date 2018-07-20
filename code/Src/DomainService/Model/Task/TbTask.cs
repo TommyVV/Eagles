@@ -62,7 +62,14 @@ namespace Eagles.DomainService.Model.Task
         public int UserId { get; set; }
 
         public string UserName { get; set; }
+        /// <summary>
+        /// 是否公开
+        /// </summary>
         public int IsPublic { get; set; }
+        /// <summary>
+        /// 公开日期
+        /// </summary>
+        public DateTime PublicTime { get; set; }
         public string OrgReview { get; set; }
         public string BranchReview { get; set; }
         /// <summary>

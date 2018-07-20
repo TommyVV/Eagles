@@ -30,9 +30,7 @@ namespace Eagles.DomainService.Core.Scroll
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             var result = iScrollAccess.GetScrollImg(request.PageType);
             if (result == null || result.Count <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             response.ImageList = result?.Select(x => new RollImage()
             {
                 ImageUrl = x.ImageUrl,
@@ -48,11 +46,9 @@ namespace Eagles.DomainService.Core.Scroll
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             if (!util.CheckAppId(request.AppId))
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-
-            var nowDate = DateTime.Now.ToString("yyyyMMdd");
-            var date = DateTime.Now.ToString("MMdd");
+            var nowDate = DateTime.Now.ToString("yyyy-MM-dd");
+            var date = DateTime.Now.ToString("MM-dd");
             var result = iScrollAccess.GetScrollNews(nowDate, date);
-
             if (result != null && result.Any())
             {
                 response.SystemNewsList = result.Select(x => new SystemNews()
@@ -63,9 +59,7 @@ namespace Eagles.DomainService.Core.Scroll
                 }).ToList();
             }
             else
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
     }

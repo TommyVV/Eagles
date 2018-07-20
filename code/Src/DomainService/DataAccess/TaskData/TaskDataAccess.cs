@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
@@ -70,15 +71,15 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
         {
             var commandString = "";
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_task set Status = 3, Score = @Score, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
+                commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic, PublicTime = @PublicTime, Score = @Score where TaskId = @TaskId and Status = 2 "; //通过
             else
-                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
+                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic, PublicTime = @PublicTime where TaskId = @TaskId and Status = 2"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
                     CommandString = commandString,
-                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score }
+                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score, PublicTime = DateTime.Now }
                 },
                 new TransactionCommand()
                 {
@@ -115,8 +116,8 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
 
         public List<TbUserTaskStep> GetTaskStep(int taskId)
         {
-            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime from eagles.tb_user_task_step a
-join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
+            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime,a.Attach1, a.Attach2, 
+a.Attach3, a.Attach4, a.AttachName1, a.AttachName2, a.AttachName3, a.AttachName4 from eagles.tb_user_task_step a join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
                 new { TaskId = taskId });
         }
 

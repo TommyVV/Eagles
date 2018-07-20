@@ -51,6 +51,7 @@
     <Compile Include="LoginDataAccess.cs" />
     <Compile Include="OperDataAccess.cs" />
     <Compile Include="OperGroupDataAccess.cs" />
+    <Compile Include="PublicityDataAccess.cs" />
     <Compile Include="ScoreDataAccess.cs" />
     <Compile Include="ScrollImageDataAccess.cs" />
     <Compile Include="SmsConfigDataAccess.cs" />

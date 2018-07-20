@@ -67,19 +67,19 @@ values (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @F
             return result;
         }
 
-        public bool EditActivityComplete(int activityId, int completeStatus, int score)
+        public bool EditActivityComplete(int activityId, int isPublic, int completeStatus, int score)
         {
             var commandString = "";
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1"; //通过
+                commandString = @"update eagles.tb_activity set Status = 2, IsPublic = @IsPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //通过
             else
-                commandString = @"update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = 1"; //不通过
+                commandString = @"update eagles.tb_activity set Status = 0, IsPublic = @isPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
                     CommandString = commandString,
-                    Parameter = new { ActivityId = activityId }
+                    Parameter = new { IsPublic = isPublic, ActivityId = activityId, PublicTime = DateTime.Now }
                 },
                 new TransactionCommand()
                 {

@@ -449,7 +449,14 @@ namespace Eagles.DomainService.Core.Task
             {
                 StepId = x.StepId,
                 StepName = x.StepName,
-                Content = x.Content
+                Content = x.Content,
+                AttachList = new List<Attachment>()
+                {
+                    new Attachment() { AttachName = x.AttachName1, AttachmentDownloadUrl = x.Attach1 },
+                    new Attachment() { AttachName = x.AttachName2, AttachmentDownloadUrl = x.Attach2 },
+                    new Attachment() { AttachName = x.AttachName3, AttachmentDownloadUrl = x.Attach3 },
+                    new Attachment() { AttachName = x.AttachName4, AttachmentDownloadUrl = x.Attach4 }
+                }
             }).ToList();
             if (result == null || result.Count <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);

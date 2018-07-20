@@ -253,7 +253,7 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException("96", "必须上级完成活动");
             //查询活动奖励积分
             var score = util.RewardScore("1").Score;
-            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.CompleteStatus, score);
+            var result = iActivityAccess.EditActivityComplete(request.ActivityId, request.IsPublic, request.CompleteStatus, score);
             if (!result)
                 throw new TransactionException(MessageCode.SystemError, MessageKey.SystemError);
             //发用户通知
