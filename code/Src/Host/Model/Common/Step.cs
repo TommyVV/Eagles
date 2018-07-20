@@ -13,8 +13,13 @@ namespace Eagles.Application.Model.Common
         public int StepId { get; set; }
 
         /// <summary>
-        /// 步骤名称
+        /// 步骤内容
         /// </summary>
         public string StepName { get; set; }
+
+        /// <summary>
+        /// 反馈内容
+        /// </summary>
+        public string Content { get; set; }
     }
 }

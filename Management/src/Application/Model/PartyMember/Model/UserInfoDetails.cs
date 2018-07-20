@@ -97,7 +97,7 @@ namespace Eagles.Application.Model.PartyMember.Model
         /// <summary>
         /// 支部编号
         /// </summary>
-        public int BranchId { get; set; }
+        // public int BranchId { get; set; }
         /// <summary>
         /// 市
         /// </summary>

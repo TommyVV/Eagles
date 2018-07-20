@@ -36,7 +36,7 @@ $('.btn-login').on('click', function(e) {
             message: '请输入账号',
             type: 'warning',
             position: 'toast-top-center',
-            timeout: 0
+            timeout: 1
         });
         return;
     } else if (!password) {
@@ -44,7 +44,7 @@ $('.btn-login').on('click', function(e) {
             message: '请输入密码',
             type: 'warning',
             position: 'toast-top-center',
-            timeout: 0
+            timeout: 1
         });
         return;
     }

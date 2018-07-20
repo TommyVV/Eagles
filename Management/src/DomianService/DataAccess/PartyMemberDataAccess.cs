@@ -32,11 +32,13 @@ SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`Password`,
     `tb_user_info`.`Name`,
     `tb_user_info`.`Sex`,
+    `tb_user_info`.`Ethnic`,
     `tb_user_info`.`Birthday`,
     `tb_user_info`.`Origin`,
     `tb_user_info`.`OriginAddress`,
     `tb_user_info`.`Phone`,
     `tb_user_info`.`IdNumber`,
+    `tb_user_info`.`Education`,
     `tb_user_info`.`School`,
     `tb_user_info`.`Provice`,
     `tb_user_info`.`City`,
@@ -57,7 +59,9 @@ SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`OperId`,
     `tb_user_info`.`IsCustomer`,
     `tb_user_info`.`Score`,
-    `tb_user_info`.`IsLeader`
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
 FROM `eagles`.`tb_user_info`
   where UserId=@UserId;
  ");
@@ -486,6 +490,57 @@ now(),
 
 ", userinfo);
 
+        }
+
+        public List<TbUserInfo> GetUserInfoList(List<int> list)
+        {
+
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_user_info`.`OrgId`,
+    `tb_user_info`.`BranchId`,
+    `tb_user_info`.`UserId`,
+    `tb_user_info`.`Password`,
+    `tb_user_info`.`Name`,
+    `tb_user_info`.`Sex`,
+    `tb_user_info`.`Ethnic`,
+    `tb_user_info`.`Birthday`,
+    `tb_user_info`.`Origin`,
+    `tb_user_info`.`OriginAddress`,
+    `tb_user_info`.`Phone`,
+    `tb_user_info`.`IdNumber`,
+    `tb_user_info`.`Education`,
+    `tb_user_info`.`School`,
+    `tb_user_info`.`Provice`,
+    `tb_user_info`.`City`,
+    `tb_user_info`.`District`,
+    `tb_user_info`.`Address`,
+    `tb_user_info`.`Company`,
+    `tb_user_info`.`Dept`,
+    `tb_user_info`.`Title`,
+    `tb_user_info`.`PreMemberTime`,
+    `tb_user_info`.`MemberTime`,
+    `tb_user_info`.`MemberType`,
+    `tb_user_info`.`Status`,
+    `tb_user_info`.`MemberStatus`,
+    `tb_user_info`.`PhotoUrl`,
+    `tb_user_info`.`NickPhotoUrl`,
+    `tb_user_info`.`CreateTime`,
+    `tb_user_info`.`EditTime`,
+    `tb_user_info`.`OperId`,
+    `tb_user_info`.`IsCustomer`,
+    `tb_user_info`.`Score`,
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
+FROM `eagles`.`tb_user_info`
+  where UserId  in  @UserId;  
+ ");
+            dynamicParams.Add("UserId", list.ToArray());
+
+            return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
+            
         }
     }
 }

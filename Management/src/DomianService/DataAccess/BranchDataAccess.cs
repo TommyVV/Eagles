@@ -75,6 +75,29 @@ FROM `eagles`.`tb_branch`  where BranchId=@BranchId;
             return dbManager.QuerySingle<TbBranch>(sql.ToString(), dynamicParams);
         }
 
+        public List<TbBranch> GetBranchList(List<int> list)
+        {
+
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_branch`.`OrgId`,
+    `tb_branch`.`BranchId`,
+    `tb_branch`.`BranchName`,
+    `tb_branch`.`BranchDesc`,
+    `tb_branch`.`CreateTime`
+FROM `eagles`.`tb_branch`  where  BranchId  in @BranchId
+ ");
+            dynamicParams.Add("BranchId", list.ToArray());
+
+            return dbManager.Query<TbBranch>(sql.ToString(), dynamicParams);
+
+           
+        }
+
+
+ 
+
         public int RemoveBranch(RemoveBranchRequset requset)
         {
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_branch`  where BranchId=@BranchId;

@@ -40,6 +40,7 @@ namespace Eagles.DomainService.Core.Activity
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
             var response = new CreateActivityResponse();
+            var activityId = 0;
             var toUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -102,7 +103,7 @@ namespace Eagles.DomainService.Core.Activity
                     }
                 }
             }
-            var result = iActivityAccess.CreateActivity(act);
+            var result = iActivityAccess.CreateActivity(act, toUser, out activityId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -112,7 +113,7 @@ namespace Eagles.DomainService.Core.Activity
                 OrgId = tokens.OrgId,
                 Title = "活动发起",
                 Content = "活动已发起",
-                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.ActivityNoticeUrl, tokens.OrgId, activityId),
                 FromUser = request.ActivityFromUser,
                 UserId = request.ActivityToUserId,
                 IsRead = 1,
@@ -382,14 +383,13 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
             var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId, request.PageIndex, request.PageSize);
-            List<TbUserActivity> userActivity;
+            List<TbUserActivity> userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
             switch (request.ActivityPage)
             {
                 case ActivityPage.All:
                     break;
                 case ActivityPage.Mine:
                     //得到用户参与活动
-                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
                     result = (from act in result
                         join usact in userActivity on new {act.BranchId, act.ActivityId} equals new
                         {
@@ -410,9 +410,8 @@ namespace Eagles.DomainService.Core.Activity
                     break;
                 case ActivityPage.Other:
                     //得到用户未参与活动
-                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
                     result = (from act in result
-                        where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId)
+                        where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId) && act.Status != 2
                         select new TbActivity
                         {
                             ActivityId = act.ActivityId,

@@ -14,6 +14,6 @@ namespace Eagles.Interface.DataAccess
     {
         List<TbUserInfo> GetUserInfoByPhone(List<string> list);
         int CreateUserInfo(List<TbMeetingUser> userinfo);
-        List<TbMeetingUser> GetMettingUsers(GetMeetingRequest requset, out int i);
+        List<TbMeetingUser> GetMettingUsers(GetMeetingRequest requset);
     }
 }

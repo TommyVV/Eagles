@@ -26,8 +26,8 @@ value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType,@OrgId,@BranchId)", use
 
         public int CreateUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader)
-value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader)", userInfo);
+            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader,IsCustomer)
+value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader,@IsCustomer)", userInfo);
         }
 
         public int EditUser(TbUserInfo userInfo)
@@ -35,6 +35,11 @@ value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLea
             return dbManager.Excuted(@"update eagles.tb_user_info set Name=@Name,Sex=@Sex,Birthday=@Birthday,Phone=@Phone,Address=@Address,Origin=@Origin,OriginAddress=@OriginAddress,Ethnic=@Ethnic,BranchId=@BranchId,
 Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Company,PreMemberTime=@PreMemberTime,MemberTime=@MemberTime,MemberType=@MemberType,Provice=@Provice,City=@City,District=@District,PhotoUrl=@PhotoUrl,
 IsLeader=@IsLeader where UserId = @UserId", userInfo);
+        }
+
+        public int EditUserPwd(TbUserInfo userInfo)
+        {
+            return dbManager.Excuted(@"update eagles.tb_user_info set Password=@Password where Phone = @Phone", userInfo);
         }
 
         public int EditUserNoticeIsRead(int newsId)

@@ -14,10 +14,11 @@ html, body {
 		.mescroll{
 		position: fixed;
 		top: 31px;
-		bottom: 10px;
+		bottom: 20px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
   .myNoticeModal {
+		padding-top:16px;
     background-color: #f8f8f8;
     min-height: 100%; } }
 
@@ -43,6 +44,7 @@ html, body {
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
   .myNoticeModal {
+		
     background-color: #f8f8f8;
     min-height: 100%; } }
 

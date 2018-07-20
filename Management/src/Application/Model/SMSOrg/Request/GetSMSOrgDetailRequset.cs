@@ -10,6 +10,6 @@
            /// <summary>
         /// 机构id
         /// </summary>
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
     }
 }

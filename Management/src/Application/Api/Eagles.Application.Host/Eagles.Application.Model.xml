@@ -2807,6 +2807,11 @@
             党员类型 0:党员; 1:预备党员
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgId">
+            <summary>
+            机构名
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.Member.OrgName">
             <summary>
             机构名
@@ -2905,11 +2910,6 @@
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.Picture">
             <summary>
             头像
-            </summary>
-        </member>
-        <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.BranchId">
-            <summary>
-            支部编号
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.PartyMember.Model.UserInfoDetails.City">

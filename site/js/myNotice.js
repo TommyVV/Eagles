@@ -53,16 +53,17 @@ function noticeList(token, appId, page) {
 					var news = '';
 
 					for(var i = 0; i < data.NoticeList.length; i++) {
-						if(data.NoticeList[i].IsRead == 1) {
+						if(data.NoticeList[i].IsRead == 0) {
 							news = ''
-						} else if(data.NoticeList[i].IsRead = 0) {
+						} else if(data.NoticeList[i].IsRead = 1) {
 							news = '<span class="new">New</span>'
 						}
-						noticeList += '<div class="item"><div class="title">' + data.NoticeList[i].Title + '</div>' +
+						 
+						noticeList += '<div class="item"><a class="imgturls" href="' + data.NoticeList[i].TargetUrl + '" idse="' + data.NoticeList[i].NewsId + '"><div class="title">' + data.NoticeList[i].Title + '</div>' +
 							'<div class="content overflow-two-line">' + data.NoticeList[i].Content + '</div>' +
 							'<div class="time">' + data.NoticeList[i].CreateTime + '</div>' +
 							'' + news + '' +
-							'</div>';
+							'</a></div>';
 					}
 					mescroll.endSuccess(data.NoticeList.length)
 					$('.myNoticeBox').append(noticeList);
@@ -79,3 +80,23 @@ function noticeList(token, appId, page) {
 		}
 	});
 }
+//点击分类重新获取新分类的内容
+$('.myNoticeBox').on('click', '.imgturls', function (e) {
+    NewsId = $(this).attr('idse')
+	$.ajax({
+		type: "post",
+		data: {
+			"NewsId": NewsId,
+			"Token": token,
+			"AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/User/EditUserNewsIsRead",
+		dataType: "json",
+		success: function(res) {
+			var data = res.Result;
+			if(res.Code == 00) {
+
+			}
+		}
+	})
+})

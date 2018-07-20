@@ -41,6 +41,7 @@ namespace Eagles.DomainService.Core.Task
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
         {
             var response = new CreateTaskResponse();
+            var taskId = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);            
@@ -106,7 +107,7 @@ namespace Eagles.DomainService.Core.Task
                     }
                 }
             }
-            var result = iTaskAccess.CreateTask(task, toUser, toUserName);
+            var result = iTaskAccess.CreateTask(task, toUser, toUserName, out taskId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -116,7 +117,7 @@ namespace Eagles.DomainService.Core.Task
                 OrgId = tokens.OrgId,
                 Title = "任务发起",
                 Content = "任务已经发起",
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, taskId),
                 FromUser = request.TaskFromUser,
                 UserId = request.TaskToUserId,
                 IsRead = 1,
@@ -447,12 +448,11 @@ namespace Eagles.DomainService.Core.Task
             response.StepList = result?.Select(x => new Step
             {
                 StepId = x.StepId,
-                StepName = x.StepName
+                StepName = x.StepName,
+                Content = x.Content
             }).ToList();
             if (result == null || result.Count <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -480,9 +480,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskToUserName = x.UserName
             }).ToList();
             if (result == null || result.Count <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -512,7 +510,7 @@ namespace Eagles.DomainService.Core.Task
                 response.AcceptUserId = result.UserId;
                 response.AcceptUserName = result.UserName;
                 response.CreateType = result.CreateType;
-                response.AcctachmentList = new List<Attachment>
+                response.AttachmentList = new List<Attachment>
                 {
                     new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
                     new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
@@ -521,9 +519,7 @@ namespace Eagles.DomainService.Core.Task
                 };
             }
             else
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
         
@@ -545,9 +541,7 @@ namespace Eagles.DomainService.Core.Task
                 TaskToUser = x.UserId
             }).ToList();
             if (result == null || result.Count <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -569,19 +563,16 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.AcceptUserId = result.UserId;
-                response.AcctachmentList = new List<Attachment>
+                response.AttachmentList = new List<Attachment>
                 {
                     new Attachment() {AttachName = result.AttachName1, AttachmentDownloadUrl = result.Attach1},
                     new Attachment() {AttachName = result.AttachName2, AttachmentDownloadUrl = result.Attach2},
                     new Attachment() {AttachName = result.AttachName3, AttachmentDownloadUrl = result.Attach3},
                     new Attachment() {AttachName = result.AttachName4, AttachmentDownloadUrl = result.Attach4}
                 };
-
             }
             else
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
     }
