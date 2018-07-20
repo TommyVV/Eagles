@@ -60,9 +60,9 @@ $('.publish-btn').on('click', function(e) {
 		data: {
 			"NewsTitle": title,
 			"NewsType": type,
-			"ToUserId":toUserId,
+			"UserId":toUserId,
 			"NewsContent": content,
-			"IsPublic": pubFlag == true ? 0 : 1,
+			"IsPublic": pubFlag == true ? 1 : 0,
 			"Token": token,
 			"AppId": appId
 		},
