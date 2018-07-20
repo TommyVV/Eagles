@@ -41,6 +41,7 @@ namespace Eagles.DomainService.Core.Task
         public CreateTaskResponse CreateTask(CreateTaskRequest request)
         {
             var response = new CreateTaskResponse();
+            var taskId = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);            
@@ -106,7 +107,7 @@ namespace Eagles.DomainService.Core.Task
                     }
                 }
             }
-            var result = iTaskAccess.CreateTask(task, toUser, toUserName);
+            var result = iTaskAccess.CreateTask(task, toUser, toUserName, out taskId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -116,7 +117,7 @@ namespace Eagles.DomainService.Core.Task
                 OrgId = tokens.OrgId,
                 Title = "任务发起",
                 Content = "任务已经发起",
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, taskId),
                 FromUser = request.TaskFromUser,
                 UserId = request.TaskToUserId,
                 IsRead = 1,

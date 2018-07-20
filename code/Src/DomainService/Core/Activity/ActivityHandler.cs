@@ -103,7 +103,7 @@ namespace Eagles.DomainService.Core.Activity
                     }
                 }
             }
-            var result = iActivityAccess.CreateActivity(act, out activityId);
+            var result = iActivityAccess.CreateActivity(act, toUser, out activityId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
