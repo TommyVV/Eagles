@@ -22,14 +22,24 @@ namespace Ealges.DomianService.DataAccess.ActivityData
             this.dbManager = dbManager;
         }
 
-        public int CreateActivity(TbActivity reqActivity, out int activityId)
+        public int CreateActivity(TbActivity reqActivity, int toUserId, out int activityId)
         {
+            var result = 0;
             activityId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachName1, AttachName2, AttachName3, AttachName4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status, CreateType) 
-value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
+values (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
 @AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType); select LAST_INSERT_ID(); ", reqActivity);
+            result = dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime) ",
+                new
+                {
+                    OrgId = reqActivity.OrgId,
+                    BranchId = reqActivity.BranchId,
+                    ActivityId = activityId,
+                    UserId = toUserId, //任务责任人
+                    CreateTime = DateTime.Now
+                });
             //return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)", userActivity);
-            return 1;
+            return result;
         }
 
         public int EditActivityJoin(TbUserActivity userActivity)

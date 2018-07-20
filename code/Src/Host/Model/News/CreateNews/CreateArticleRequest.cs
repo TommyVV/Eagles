@@ -13,7 +13,7 @@ namespace Eagles.Application.Model.News.CreateNews
         public string NewsTitle { get; set; }
 
         /// <summary>
-        /// 文章类型 00:文章 01:心得体会 02:会议
+        /// 文章类型 00:文章 01:心得体会 02:会议 03:入党申请
         /// </summary>
         public NewsEnum NewsType { get; set; }
 
@@ -21,6 +21,11 @@ namespace Eagles.Application.Model.News.CreateNews
         /// 新闻文章内容
         /// </summary>
         public string NewsContent { get; set; }
+
+        /// <summary>
+        /// 入党申请书党员
+        /// </summary>
+        public int UserId { get; set; }
 
         /// <summary>
         /// 是否公开

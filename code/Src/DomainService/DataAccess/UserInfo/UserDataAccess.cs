@@ -26,8 +26,8 @@ value (@UserId,@Token,@CreateTime,@ExpireTime,@TokenType,@OrgId,@BranchId)", use
 
         public int CreateUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader)
-value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader)", userInfo);
+            return dbManager.Excuted(@"insert into eagles.tb_user_info (Phone,Password,CreateTime,OrgId,BranchId,Name,Score,Status,IsLeader,IsCustomer)
+value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLeader,@IsCustomer)", userInfo);
         }
 
         public int EditUser(TbUserInfo userInfo)

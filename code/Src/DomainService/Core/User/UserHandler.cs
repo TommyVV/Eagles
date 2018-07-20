@@ -165,13 +165,9 @@ namespace Eagles.DomainService.Core.User
             var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
             if (resultCode == null)
-            {
-                throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);
-            }
+                throw new TransactionException(MessageCode.InvalidCode, MessageKey.InvalidCode);            
             if (resultCode.ExpireTime < DateTime.Now)
-            {
-                throw new TransactionException(MessageCode.ExpireValidateCode, MessageKey.ExpireValidateCode);
-            }
+                throw new TransactionException(MessageCode.ExpireValidateCode, MessageKey.ExpireValidateCode);            
             var result = userInfoAccess.CreateUser(userInfo);
             return response;
         }
@@ -209,7 +205,7 @@ namespace Eagles.DomainService.Core.User
             {
                 UserId = result.UserId,
                 Name = result.Name,
-                Gender = result.Sex == 0 ? "男" : "女",
+                Gender = result.Sex,
                 Birth = result.Birthday.ToString("yyyy-MM-dd"),
                 Telphone = result.Phone,
                 Address = result.Address,
