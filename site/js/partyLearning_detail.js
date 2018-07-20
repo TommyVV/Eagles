@@ -106,7 +106,7 @@ function getNewsDetail(newsId, token, appId) {
 				$('.content-box .content').append(contentBoxText); //内容
 				$('.person-box').append(personBoxText); //浏览人数
 				$('.file').append(filesText); //附件
-				if(data.CanStudy) { //获取学习时间
+				if(data.CanStudy==1) { //获取学习时间
 					getStudyTime(newsId, data.Module, token, appId); //学习时间
 					//文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟
 					if(token) {

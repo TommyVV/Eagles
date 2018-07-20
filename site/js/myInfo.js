@@ -94,7 +94,7 @@ $('.confirmBtn').on('click', function() {
 	RequestUserInfo.Origin = $('.ld_desinput').val()
 	RequestUserInfo.OriginAddress = $('.ld_chengsinput').val()
 	RequestUserInfo.Address = $('.ld_czdsinput').val()
-	RequestUserInfo.Telphone = $('.ld_phoneinput').val()
+	//RequestUserInfo.Telphone = $('.ld_phoneinput').val()
 	RequestUserInfo.Employer = $('.ld_bjyinput').val()
 	RequestUserInfo.Department = $('.ld_dakinput').val()
 	$.ajax({
