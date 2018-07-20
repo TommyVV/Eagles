@@ -53,21 +53,20 @@ namespace Eagles.DomainService.Core.News
                 OrgId = tokens.OrgId,
                 BranchId = tokens.BranchId,
                 UserId = tokens.UserId,
+                ToUser = request.ToUser,
                 Title = request.NewsTitle,
                 HtmlContent = request.NewsContent,
                 NewsType = request.NewsType,
-                IsPublic = request.IsPublic,
                 Status = "-1",
                 CreateTime = DateTime.Now,
                 RewardsScore = score.Score,
                 OrgReview = "-1",
-                BranchReview = "-1"
+                BranchReview = "-1",
+                IsPublic = request.IsPublic
             };
             var result = articleData.CreateArticle(newsInfo);
             if (result <= 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             return response;
         }
 
@@ -102,6 +101,7 @@ namespace Eagles.DomainService.Core.News
                     Title = x.Title,
                     NewsContent = x.HtmlContent,
                     NewsType = x.NewsType,
+                    ToUser = x.ToUser,
                     CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
                     ViewsCount = x.ViewsCount
                 }).ToList();

@@ -96,6 +96,10 @@ namespace Eagles.DomainService.Model.Activity
         /// </summary>
         public int IsPublic { get; set; }
         /// <summary>
+        /// 公开时间
+        /// </summary>
+        public DateTime PublicTime { get; set; }
+        /// <summary>
         /// 每人最大参与次数
         /// </summary>
         public int MaxCount { get; set; }
