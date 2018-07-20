@@ -109,6 +109,8 @@ $('.confirmBtn').on('click', function() {
 
 			if(res.Code == 00) {
 				window.location.href = 'mine.html?appId='+appId
+			}else{
+				alert(res.Message)
 			}
 		}
 	})
