@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Audit.Model;
 using Eagles.Application.Model.Audit.Requset;
 using Eagles.Application.Model.Audit.Response;
-using Eagles.Application.Model.Menus.Model;
-using Eagles.Application.Model.Menus.Requset;
-using Eagles.Application.Model.Menus.Response;
 using Eagles.Base;
-using Eagles.DomainService.Model.App;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Audit;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -23,24 +18,27 @@ namespace Eagles.DomainService.Core
 
         private readonly IAuditDataAccess dataAccess;
 
-        public AuditHandler(IAuditDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public AuditHandler(IAuditDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool CreateAudit(CreateAuditRequset requset)
         {
 
-
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             var now = DateTime.Now;
             var mod = new TbReview
             {
-                BranchId = requset.BranchId,
+                BranchId = token.BranchId,
                 CreateTime = now,
                 NewsId = requset.Info.Id,
                 NewsType = requset.Info.NewsType,
                 OperId = requset.Info.UserId,
-                OrgId = requset.OrgId,
+                OrgId = token.OrgId,
                 Result = "",
                 ReviewId = requset.Info.AuditId,
                 ReviewStatus = requset.Info.AuditStatus,

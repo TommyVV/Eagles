@@ -7,8 +7,8 @@
     {
 
         /// <summary>
-        /// 
+        /// 系统消息id
         /// </summary>
-        public int SystemMessageId { get; set; }
+        public int NewsId { get; set; }
     }
 }

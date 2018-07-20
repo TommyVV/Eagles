@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.SystemMessage.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.News;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -15,9 +17,11 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public SystemNewsDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+        public SystemNewsDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
         public int EditSystemNews(TbSystemNews mod)
         {
@@ -70,23 +74,26 @@ VALUES
         {
             return dbManager.Excuted(@"DELETE FROM `eagles`.`tb_system_news`
 WHERE `NewsId` = @NewsId
-", new { NewsId = requset.SystemMessageId });
+", new { NewsId = requset.NewsId });
         }
 
-        public List<TbSystemNews> SystemNews(GetSystemNewsRequset requset)
+        public List<TbSystemNews> SystemNews(GetSystemNewsRequset requset,out int totalCount)
         {
 
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
+            //var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+
+            //parameter.Append(" and OrgId = @OrgId ");
+            //dynamicParams.Add("OrgId", token.OrgId);
 
 
-
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and Status = @Status ");
-                dynamicParams.Add("Status", requset.Status);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and Status = @Status ");
+            //    dynamicParams.Add("Status", requset.Status);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.SystemMessageName))
             {
@@ -96,15 +103,17 @@ WHERE `NewsId` = @NewsId
 
 
 
-            //if (requset.OrgId > 0)
-            //{
-            //    parameter.Append(" and OrgId = @OrgId ");
-            //    dynamicParams.Add("OrgId", requset.OrgId);
-            //}
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_system_news`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
 
+            sql.Clear();
 
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
 
-            /// totalCount = 0;
             sql.AppendFormat(@" 
 SELECT `tb_system_news`.`NewsId`,
     `tb_system_news`.`NewsName`,
@@ -115,8 +124,10 @@ SELECT `tb_system_news`.`NewsId`,
     `tb_system_news`.`RepeatTime`,
     `tb_system_news`.`HtmlDesc`,
     `tb_system_news`.`NewsType`
-FROM `eagles`.`tb_system_news`  where 1=1  {0}  
+FROM `eagles`.`tb_system_news`  where 1=1  {0}   order by NewsId desc limit  @pageStart ,@pageSize
  ", parameter);
+
+         
 
             return dbManager.Query<TbSystemNews>(sql.ToString(), dynamicParams);
         }
@@ -139,7 +150,7 @@ FROM `eagles`.`tb_system_news`  where 1=1  {0}
 FROM `eagles`.`tb_system_news` 
   where NewsId=@NewsId;
  ");
-            dynamicParams.Add("NewsId", requset.SystemMessageId);
+            dynamicParams.Add("NewsId", requset.NewsId);
 
             return dbManager.QuerySingle<TbSystemNews>(sql.ToString(), dynamicParams);
         }

@@ -14,5 +14,7 @@ namespace Eagles.Interface.Core
         GetAuthorityUserSetUpResponse GetAuthorityUserSetUp(GetAuthorityUserSetUpRequset requset);
         bool CreateAuthorityUserSetUp(CreateAuthorityUserSetUp requset);
         bool RemoveAuthorityUserSetUp(RemoveAuthorityUserSetUp requset);
+
+        ImportUserResponse BatchImportUser(ImportUserRequest request);
     }
 }

@@ -40,6 +40,7 @@ namespace Eagles.DomainService.Core.Activity
         public CreateActivityResponse CreateActivity(CreateActivityRequest request)
         {
             var response = new CreateActivityResponse();
+            var activityId = 0;
             var toUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
@@ -76,30 +77,33 @@ namespace Eagles.DomainService.Core.Activity
                 act.Status = 0; //0:初始状态;(上级发给下级的初始状态)
             else
                 act.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
-            var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
+            if (request.AttachList != null && request.AttachList.Count > 0)
             {
-                switch (i)
+                var attachList = request.AttachList;
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    case 0:
-                        act.AttachName1 = attachList[i].AttachName;
-                        act.Attach1 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 1:
-                        act.AttachName2 = attachList[i].AttachName;
-                        act.Attach2 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 2:
-                        act.AttachName3 = attachList[i].AttachName;
-                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 3:
-                        act.AttachName4 = attachList[i].AttachName;
-                        act.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            act.AttachName1 = attachList[i].AttachName;
+                            act.Attach1 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 1:
+                            act.AttachName2 = attachList[i].AttachName;
+                            act.Attach2 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 2:
+                            act.AttachName3 = attachList[i].AttachName;
+                            act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 3:
+                            act.AttachName4 = attachList[i].AttachName;
+                            act.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                    }
                 }
             }
-            var result = iActivityAccess.CreateActivity(act);
+            var result = iActivityAccess.CreateActivity(act, toUser, out activityId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -109,7 +113,7 @@ namespace Eagles.DomainService.Core.Activity
                 OrgId = tokens.OrgId,
                 Title = "活动发起",
                 Content = "活动已发起",
-                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.ActivityNoticeUrl, tokens.OrgId, activityId),
                 FromUser = request.ActivityFromUser,
                 UserId = request.ActivityToUserId,
                 IsRead = 1,
@@ -310,27 +314,30 @@ namespace Eagles.DomainService.Core.Activity
                 UserFeedBack = request.Content,
                 ActivityId = request.ActivityId
             };
-            var attachList = request.AttachList;
-            for (int i = 0; i < attachList.Count; i++)
+            if (request.AttachList != null && request.AttachList.Count > 0)
             {
-                switch (i)
+                var attachList = request.AttachList;
+                for (int i = 0; i < attachList.Count; i++)
                 {
-                    case 0:
-                        feeBack.AttachName1 = attachList[i].AttachName;
-                        feeBack.Attach1 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 1:
-                        feeBack.AttachName2 = attachList[i].AttachName;
-                        feeBack.Attach2 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 2:
-                        feeBack.AttachName3 = attachList[i].AttachName;
-                        feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
-                    case 3:
-                        feeBack.AttachName4 = attachList[i].AttachName;
-                        feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            feeBack.AttachName1 = attachList[i].AttachName;
+                            feeBack.Attach1 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 1:
+                            feeBack.AttachName2 = attachList[i].AttachName;
+                            feeBack.Attach2 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 2:
+                            feeBack.AttachName3 = attachList[i].AttachName;
+                            feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                        case 3:
+                            feeBack.AttachName4 = attachList[i].AttachName;
+                            feeBack.Attach4 = attachList[i].AttachmentDownloadUrl;
+                            break;
+                    }
                 }
             }
             var result = iActivityAccess.EditActivityFeedBack(feeBack);
@@ -376,14 +383,13 @@ namespace Eagles.DomainService.Core.Activity
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
             //得到所有支部下活动
             var result = iActivityAccess.GetActivity(request.ActivityType, userInfo.BranchId, request.PageIndex, request.PageSize);
-            List<TbUserActivity> userActivity;
+            List<TbUserActivity> userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
             switch (request.ActivityPage)
             {
                 case ActivityPage.All:
                     break;
                 case ActivityPage.Mine:
                     //得到用户参与活动
-                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
                     result = (from act in result
                         join usact in userActivity on new {act.BranchId, act.ActivityId} equals new
                         {
@@ -404,9 +410,8 @@ namespace Eagles.DomainService.Core.Activity
                     break;
                 case ActivityPage.Other:
                     //得到用户未参与活动
-                    userActivity = iActivityAccess.GetUserActivity(userInfo.UserId);
                     result = (from act in result
-                        where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId)
+                        where !userActivity.Select(x => x.ActivityId).ToList().Contains(act.ActivityId) && act.Status != 2
                         select new TbActivity
                         {
                             ActivityId = act.ActivityId,

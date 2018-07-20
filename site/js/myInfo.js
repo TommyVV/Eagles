@@ -4,6 +4,7 @@ if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
 $('#top-nav,#mobilenav').load('head.html')
+$('#left-nav').load('leftNav.html?appId=' + appId)
 $('#pc-footer').load('./footer.html')
 
 myInfo(token, appId) //个人信息
@@ -28,6 +29,7 @@ function myInfo(token, appId) {
 					var data = res.Result.ResultUserInfo;
 					$('#ld_img,.head-pic').attr('src', data.PhotoUrl);
 					$('.ld_name').text(data.Name);
+					$('#ld_nameinput').attr("aids",data.UserId);
 					$('.ld_sex').text(data.Gender);
 					$('.ld_h').text(data.Ethnic);
 					$('.ld_datas').text(data.Birth);
@@ -83,19 +85,18 @@ $('#fileupload').fileupload({
 });
 $('.confirmBtn').on('click', function() {
 	var RequestUserInfo = {};
-
+	RequestUserInfo.UserId=$('#ld_nameinput').attr("aids")
 	RequestUserInfo.PhotoUrl = $('#ld_img').attr('src');
 	RequestUserInfo.Name = $('.ld_nameinput').val();
-	RequestUserInfo.Gender = $('.ld_sexinput').val();
+	RequestUserInfo.Gender = $('.ld_sex').val();
 	RequestUserInfo.Ethnic = $('.ld_hinput').val()
 	RequestUserInfo.Birth = $('.ld_datasinput').val()
 	RequestUserInfo.Origin = $('.ld_desinput').val()
 	RequestUserInfo.OriginAddress = $('.ld_chengsinput').val()
 	RequestUserInfo.Address = $('.ld_czdsinput').val()
-	RequestUserInfo.Telphone = $('.ld_phoneinput').val()
+	//RequestUserInfo.Telphone = $('.ld_phoneinput').val()
 	RequestUserInfo.Employer = $('.ld_bjyinput').val()
 	RequestUserInfo.Department = $('.ld_dakinput').val()
-
 	$.ajax({
 		type: "post",
 		data: {
@@ -103,17 +104,29 @@ $('.confirmBtn').on('click', function() {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
+		url: "http://51service.xyz/Eagles/api/User/EditUser",
 		dataType: "json",
 		success: function(res) {
 
 			if(res.Code == 00) {
-				window.location.href = 'mine.html?appId='+appId+''
-				//          	if(res.Result!=''&&res.Result!=null){
-				//          		
-				//				window.location.reload()
-				//          	}
+				window.location.href = 'mine.html?appId='+appId
+			}else{
+				alert(res.Message)
 			}
 		}
 	})
+})
+$('.add_fj').on('click',function (e) {
+		$('.p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');;
+		$('.ld_sex').text($(this).text())
+		$('.p_infofre').hide();
+});
+$('.showsex').on('click',function (e) {
+	if($(".p_infofre").css("display")=="none"){
+		$('.p_greinfo').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
+		$(".p_infofre").show();
+	}else{
+		$('.p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+		$(".p_infofre").hide();
+	}
 })

@@ -1,17 +1,19 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var activityId = "";
     var stepId = "";
     var taskId = "";
-    //pageType 1 活动 2 任务
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
+    //pageType 0 活动 1 任务
     var pageType = getRequest("pageType");
-    if (pageType == 1) {
+    if (pageType == 0) {
         activityId = getRequest("activityId");
         $("#content").attr("placeholder", "快让大家知道你的活动进度吧~");
         $(".sub-btn").html("反馈并完成");
-    } else if (pageType == 2) {
+    } else if (pageType == 1) {
         stepId = getRequest("stepId");
         taskId = getRequest("taskId");
         $("#content").attr("placeholder", "快让大家知道你的任务进度吧~");
@@ -19,48 +21,65 @@ $(document).ready(function () {
     }
 
     //是否公开
-    $('.flag-area').click(function(){
-        if($('.pub-flag').hasClass('select')){
+    $('.flag-area').click(function() {
+        if ($('.pub-flag').hasClass('select')) {
 
-            $('.pub-flag').attr('src','icons/sel_no@2x.png').removeClass('select');
-        }else{
-            $('.pub-flag').attr('src','icons/sel_yes@2x.png').addClass('select');
+            $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
+        } else {
+            $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
         }
     });
     var fileArray = [];
     //附件上传fileupload
+    //附件上传fileupload
     $("#fileupload").fileupload({
         url: UPLOAD,
         dataType: "json",
-        done: function (e, data) {
-            if(data.result.Code == "00"){
+        //设置进度条
+        progressall: function(e, data) {
+            var progress = parseInt((data.loaded / data.total) * 100);
+            $(".upload-progress").removeClass("hide");
+            console.log("progress", progress);
+            $(".upload-progress .bar").css("width", progress + "%");
+            if (progress == 100) {
+                setTimeout(() => {
+                    $(".upload-progress").addClass("hide");
+                }, 1000);
+            }
+        },
+        done: function(e, data) {
+            console.log("上传附件--", data);
+            if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
                 var object = {
                     AttachName: array[0].FileName,
                     AttachmentDownloadUrl: array[0].FileUrl
                 };
                 fileArray.push(object);
+                if (fileArray.length == 4) {
+                    $("#fileupload").hide();
+                }
                 $(".attaches").html(attachmentList(fileArray));
-            }else{
+            } else {
                 console.log(data.result);
             }
         }
     });
-    $(".sub-btn").click(function () {
+    $(".sub-btn").click(function() {
         var content = $("#content").val();
         if (!content) {
             $.alert('反馈内容不能为空');
             return;
         }
-        if (pageType == 1) {
+        if (pageType == 0) {
             //活动
             editActivityFeedBack();
-        } else if (pageType == 2) {
+        } else if (pageType == 1) {
             //任务
             editTaskFeedBack();
         }
     });
-    var that=$;
+    var that = $;
     //任务反馈
     function editTaskFeedBack() {
         var pubFlag = $('.pub-flag').hasClass('select');
@@ -68,7 +87,7 @@ $(document).ready(function () {
             "TaskId": taskId,
             "StepId": stepId,
             "Content": $("#content").val(),
-            // "IsPublic": pubFlag==true?0:1,
+            "IsPublic": pubFlag == true ? 0 : 1,
             "AttachList": fileArray,
             "Token": token,
             "AppId": appId
@@ -77,10 +96,10 @@ $(document).ready(function () {
             type: "POST",
             url: DOMAIN + "/api/Task/EditTaskFeedBack",
             data: data,
-            success: function (data) {
+            success: function(data) {
                 console.log("EditTaskFeedBack---", data);
                 if (data.Code == "00") {
-                    that.toast("提交成功", function () {
+                    that.toast("提交成功", function() {
                         window.history.back();
                     });
                 } else {
@@ -103,8 +122,8 @@ $(document).ready(function () {
             type: "POST",
             url: DOMAIN + "/api/Activity/EditActivityFeedBack",
             data: data,
-            success: function (data) {
-                console.log("CreateActivity---", data);
+            success: function(data) {
+                console.log("editActivityFeedBack---", data);
                 if (data.Code == "00") {
                     editActivityReview(2, 0);
                 } else {
@@ -125,10 +144,10 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功";
+                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId;
                 } else {
                     alert(data.Code, data.Message);
                 }
@@ -147,8 +166,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -161,7 +179,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

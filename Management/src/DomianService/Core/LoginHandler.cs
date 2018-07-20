@@ -7,6 +7,7 @@ using Eagles.Application.Model.Login.Model;
 using Eagles.Application.Model.Login.Requset;
 using Eagles.Application.Model.Login.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.ValidateVode;
 using Eagles.DomainService.Model.Oper;
 using Eagles.DomainService.Model.User;
@@ -26,12 +27,15 @@ namespace Eagles.DomainService.Core
 
         private readonly IOperDataAccess userAccess;
 
-        public LoginHandler(ILoginDataAccess dataAccess, IValidateCode validateCode, IEaglesConfig configuration, IOperDataAccess userAccess)
+        private readonly ICacheHelper Cache;
+
+        public LoginHandler(ILoginDataAccess dataAccess, IValidateCode validateCode, IEaglesConfig configuration, IOperDataAccess userAccess, ICacheHelper cache)
         {
             this.dataAccess = dataAccess;
             this.validateCode = validateCode;
             this.configuration = configuration;
             this.userAccess = userAccess;
+            Cache = cache;
         }
 
         /// <summary>
@@ -52,13 +56,15 @@ namespace Eagles.DomainService.Core
         public LoginResponse Login(LoginRequset requset)
         {
 
+            //var tokenInfo = Cache.GetData<TbUserToken>(requset.Token);
+
             var respone = new LoginResponse
             {
                 IsVerificationCode = false,
                 Token = "",
             };
 
-            var oper = userAccess.GetOperInfo(requset);
+            var oper = userAccess.GetOperInfo(requset.Account);
 
             try
             {
@@ -139,13 +145,13 @@ namespace Eagles.DomainService.Core
                         respone.IsVerificationCode = true;
 
                         //每次登陆未成功 跟新验证码
-                        dataAccess.CreateverificationInfo(new Verification
-                        {
-                            OrgId = oper.OrgId,
-                            Account = oper.OperName,
-                            // Code = GetRandomArray(6, 1, 9).ToString(),
-                            Code = "666666"
-                        });
+                        //dataAccess.CreateverificationInfo(new Verification
+                        //{
+                        //    OrgId = oper.OrgId,
+                        //    Account = oper.OperName,
+                        //    // Code = GetRandomArray(6, 1, 9).ToString(),
+                        //    Code = "666666"
+                        //});
                       
                     }
                     //锁定账号

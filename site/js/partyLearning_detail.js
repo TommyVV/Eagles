@@ -1,29 +1,36 @@
 $('#top-nav,#mobilenav').load('./head.html')
-/* 
- 1，涉及用户token的地方都需要验证
- 2，提交答案时用户未登录，则跳转到登录页面，登录后 回跳回来自动提交答案，代码已写完 需要联调验证
- * 
- * */
-var newsIds = getRequest('NewsId') //获取来源d的新闻id
+$("#footer").load("footer.html");
+var newsIds = getRequest('NewsId'); //获取来源d的新闻id
 var token = localStorage.getItem('token');
 var appId = getRequest('appId');
-//var appId = 10000000
+var TestId = getRequest('testId'); //试卷ID
+var testlist = getRequest('testlist'); //试卷答案
+var testListJson;
 addNewsViewCount(newsIds, token, appId) //更新新闻阅读量(页面一打开调用一下)
 getNewsDetail(newsIds, token, appId); //加载页面详情
-var TestId = localStorage.getItem('TestId'); //试卷ID
-//进入页面默认调用一下，为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
-submitTestPaperAnswer("1", TestId, 0, token, appId);
+if(TestId && testlist) {
+	//进入页面默认调用一下，为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
+	submitTestPaperAnswer(TestId, 0, token, appId);
+}
 //点击试卷提交 手动提交答案
 $('#answer-submit').on('click', function() {
-	submitTestPaperAnswer("0", TestId, 0, token, appId);
+	if(localStorage.getItem("IsInternalUser")==0){
+		bootoast({
+			message: '您非系统内部用户,无法使用该功能',
+			type: 'success',
+			position: 'toast-top-center',
+			timeout: 2
+		});
+		return false;
+	}
+	submitTestPaperAnswer(TestId, 0, token, appId);
 })
 //提交试题的答案; 
 //firstIn=1 为用户首次进入，自动提交答案 为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
-function submitTestPaperAnswer(firstIn, TestId, UseTime, token, appId) {
-	//存储答案数据
-	var testlist = '';
-	if(firstIn == '1') { //获取本地存储的答案信息 为了给用户提交时未登录，登录成功后再进来
-		testlist = localStorage.getItem("testlist");
+function submitTestPaperAnswer(TestId, UseTime, token, appId) {
+	if(testlist) { //获取本地存储的答案信息 为了给用户提交时未登录，登录成功后再进来
+		//testlist = localStorage.getItem("testlist");
+		testlist = decodeURI(testlist); //解码
 	} else {
 		testlist = getTestPaperAnswerJson(); //获取页面答案的JSON数据
 	}
@@ -41,8 +48,6 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime, token, appId) {
 			dataType: "json",
 			success: function(res) {
 				if(res.Code == 00) {
-					localStorage.removeItem("testlist");　 //提交成功后 删除本地存储的答案信息
-					localStorage.removeItem("TestId");　 //删除本地存储的试卷ID
 					bootoast({
 						message: '试卷提交成功',
 						type: 'success',
@@ -50,10 +55,11 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime, token, appId) {
 						timeout: 2
 					});
 					//刷新当前页面,为了清空选中的答案
-					window.location.reload();
-				}else{
-						bootoast({
-						message: '试卷提交失败,请稍后再试',
+					//window.location.reload();
+					window.location.href = 'partyLearning_detail.html?NewsId=' + newsIds + '&appId=' + appId;
+				} else {
+					bootoast({
+						message: '' + res.Message + '',
 						type: 'danger',
 						position: 'toast-top-center',
 						timeout: 2
@@ -62,11 +68,9 @@ function submitTestPaperAnswer(firstIn, TestId, UseTime, token, appId) {
 
 			}
 		})
-	} else if(!token && firstIn == '0') { //用户未登录
-		localStorage.setItem("testlist", testlist); //先将答案写入到本地
-		localStorage.setItem("TestId", TestId); //将试题的ID写入本地
-		//跳转到登录页面
-		window.location.href = "login.html";
+	} 
+	else if(!token&&testListJson) { //用户未登录
+		window.location.href = "login.html?testId=" + TestId + '&appId='+appId+'&NewsId='+newsIds+'&testlist=' + encodeURI(testlist);
 	}
 }
 
@@ -111,7 +115,7 @@ function getNewsDetail(newsId, token, appId) {
 				$('.content-box .content').append(contentBoxText); //内容
 				$('.person-box').append(personBoxText); //浏览人数
 				$('.file').append(filesText); //附件
-				if(data.CanStudy) { //获取学习时间
+				if(data.CanStudy==1&&localStorage.getItem("IsInternalUser")==1) { //获取学习时间
 					getStudyTime(newsId, data.Module, token, appId); //学习时间
 					//文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟
 					if(token) {
@@ -130,6 +134,7 @@ function getNewsDetail(newsId, token, appId) {
 				//获取试卷信息
 				if(data.TestId != 0) {
 					getNewsTest(data.TestId, token, appId);
+					$('.footermid .submit-box').show()
 				} else(
 					$('.dels-mid').hide()
 				)
@@ -176,7 +181,7 @@ function getNewsTest(testId, token, appId) {
 					}
 					question += answerLabel + '</div></div>';
 				}
-				$('.footer .content').append(question); // 将问题和答案追加到页面中
+				$('.footermid .content').append(question); // 将问题和答案追加到页面中
 			}
 		}
 	})
@@ -272,7 +277,7 @@ function getTestPaperAnswerJson() {
 					message: '有题目题目没有作答,请全部完成后再提交!',
 					type: 'warning',
 					position: 'toast-top-center',
-					timeout: 2
+					timeout: 1
 				});
 				return;
 			}
@@ -297,7 +302,7 @@ function getTestPaperAnswerJson() {
 						message: '第' + (i + 1) + '题最多只能选择' + multiplecount + '个答案,请修改后在提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 2
+						timeout: 1
 					});
 
 				} else if(answerCheckboxs.length <= 0) {
@@ -305,7 +310,7 @@ function getTestPaperAnswerJson() {
 						message: '有题目题目没有作答,请全部完成后再提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 2
+						timeout: 1
 					});
 
 				}
@@ -315,8 +320,7 @@ function getTestPaperAnswerJson() {
 		//答案对象
 		testList.push(question); //问题对象
 	}
-	var testListJson = JSON.stringify(testList);
-	console.info(testListJson);
+	testListJson = JSON.stringify(testList);
 	return testListJson;
 }
 //更新新闻阅读量

@@ -2,8 +2,10 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.News.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.News;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -12,9 +14,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public NewsDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public NewsDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
         public List<TbNews> GetNewsList(GetNewRequset requset, out int totalCount)
@@ -22,18 +27,18 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (!string.IsNullOrWhiteSpace(requset.NewsName))
             {
@@ -307,6 +312,50 @@ VALUES
 ", mod);
 
 
+        }
+
+        public List<TbNews> GetNewsList(List<int> list)
+        {
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@"  SELECT `tb_news`.`OrgId`,
+    `tb_news`.`NewsId`,
+    `tb_news`.`ShortDesc`,
+    `tb_news`.`Title`,
+    `tb_news`.`HtmlContent`,
+    `tb_news`.`Author`,
+    `tb_news`.`Source`,
+    `tb_news`.`Module`,
+    `tb_news`.`Status`,
+    `tb_news`.`BeginTime`,
+    `tb_news`.`EndTime`,
+    `tb_news`.`TestId`,
+    `tb_news`.`Attach1`,
+    `tb_news`.`Attach2`,
+    `tb_news`.`Attach3`,
+    `tb_news`.`Attach4`,
+    `tb_news`.`Attach5`,
+    `tb_news`.`OperId`,
+    `tb_news`.`CreateTime`,
+    `tb_news`.`IsImage`,
+    `tb_news`.`IsVideo`,
+    `tb_news`.`IsAttach`,
+    `tb_news`.`IsClass`,
+    `tb_news`.`IsLearning`,
+    `tb_news`.`IsText`,
+    `tb_news`.`ViewCount`,
+    `tb_news`.`ReviewId`,
+    `tb_news`.`CanStudy`,
+    `tb_news`.`ImageUrl`,
+    `tb_news`.`IsExternal`,
+    `tb_news`.`ExternalUrl`
+FROM `eagles`.`tb_news`
+  where NewsId in @NewsId; 
+ ");
+            dynamicParams.Add("NewsId", list.ToArray());
+
+            return dbManager.Query<TbNews>(sql.ToString(), dynamicParams);
         }
     }
 }

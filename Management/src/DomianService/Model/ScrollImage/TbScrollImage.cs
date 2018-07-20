@@ -21,5 +21,7 @@
         public string PageType { get; set; }
 
         public string TargetUrl { get; set; }
+
+        public string OrgName { get; set; }
     }
 }

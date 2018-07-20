@@ -12,6 +12,7 @@
         margin-top: px2rem(27);
         margin-bottom: px2rem(2);
         color: #949494;
+        line-height: px2rem(88);
         img {
             width: px2rem(88);
             height: px2rem(88);
@@ -19,7 +20,6 @@
         }
         .time {
             float: right;
-            line-height: px2rem(88);
         }
     }
     .info-item {
@@ -130,25 +130,25 @@
             color: #DDDDDD;
         }
     }
-    .points-result {
-        margin-top: px2rem(110);
+}
+.points-result {
+    margin-top: px2rem(110);
+    text-align: center;
+    div {
+        width: 35.3%;
+        height: px2rem(80);
+        font-size: px2rem(30);
+        line-height: px2rem(80);
+        color: white;
         text-align: center;
-        div {
-            width: 35.3%;
-            height: px2rem(80);
-            font-size: px2rem(30);
-            line-height: px2rem(80);
-            color: white;
-            text-align: center;
-            display: inline-block;
-            border-radius: px2rem(8);
-        }
-        .pass {
-            background-color: #FF0000;
-        }
-        .nopass {
-            margin-left: px2rem(60);
-            background-color: #949494;
-        }
+        display: inline-block;
+        border-radius: px2rem(8);
+    }
+    .pass {
+        background-color: #FF0000;
+    }
+    .nopass {
+        margin-left: px2rem(60);
+        background-color: #949494;
     }
 }

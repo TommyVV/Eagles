@@ -7,9 +7,8 @@ namespace Eagles.Application.Model.Goods.Model
     /// </summary>
     public class GoodsDetail : Goods
     {
-
         /// <summary>
-        /// 已售
+        /// 已售数量
         /// </summary>
         public int Sale { get; set; }
 
@@ -34,12 +33,12 @@ namespace Eagles.Application.Model.Goods.Model
         public decimal ReferePrice { get; set; }
 
         /// <summary>
-        /// 内容 json格式 图片 文字
+        /// 内容富文本
         /// </summary>
         public string Content { get; set; }
 
         /// <summary>
-        /// 小图
+        /// 产品缩略图
         /// </summary>
         public string GoodsIcon { get; set; }
 

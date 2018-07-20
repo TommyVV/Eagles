@@ -31,6 +31,9 @@ function pcnavList(id) {
 		$(this).removeClass("hover");
 	});
 	$obj.find("h4").click(function() {
+		if(localStorage.getItem("IsInternalUser")==0&&$(this).text()=="个人中心"){
+			return false 
+		}
 		var $div = $(this).siblings(".pclist-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(600);
@@ -66,6 +69,9 @@ function navListm(id) {
 		$(this).removeClass("hover");
 	});
 	$obj.find("h4").click(function() {
+		if(localStorage.getItem("IsInternalUser")==0&&$(this).text()=="个人中心"){
+			return false 
+		}
 		var $div = $(this).siblings(".list-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(1);
@@ -92,6 +98,7 @@ function navbar(appId) {
 		url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
 		dataType: "json",
 		success: function(res) {
+			
 			var data = res.Result;
 			//			$('#pcJ_navlist').html('');
 
@@ -122,8 +129,9 @@ function navbar(appId) {
 				$('#J_navlist').append(mobilenav);
 
 				$('#pc_logoimg,#name_logo').attr("src", data.LogoUrl);
-				pcnavList(123);
-				navListm(12);
+					pcnavList(123);
+					navListm(12);
+					
 			}
 		}
 	});

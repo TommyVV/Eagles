@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Button } from "antd";
 import { hashHistory } from "react-router";
-import { login } from "../../services/loginService";
+import { login, getAuth } from "../../services/loginService";
 import md5 from "blueimp-md5";
 import "./login.less";
 
@@ -30,29 +30,28 @@ class LoginForm extends React.Component {
       // Password: md5(values.Password)
       Password: values.Password
     });
-    this.setState({ loading: false });
     if (Code == "00") {
       //保存用户相关信息
       let { Token, IsVerificationCode } = Result;
-      // 密码错误次数超限，出现验证码
+      // 密码错误次数超限，出现验证码 todo
       if (IsVerificationCode) {
       } else {
         let info = {
           Token
         };
-        let Info = localStorage.info ? JSON.parse(localStorage.info) : {};
+        let Info = localStorage.info ? JSON.parse(localStorage.info) : {}; // 先去取上次返回的url
+        localStorage.clear(); // 再清空缓存
+        localStorage.info = JSON.stringify({ ...info }); // 再设置当前的登录信息，方便拿权限
+        // 拿权限
+        const { Result } = await getAuth();
+        const { List } = Result;
         let { returnUrl } = Info;
-        if (returnUrl) {
-          localStorage.clear();
-          localStorage.info = JSON.stringify({
-            ...info
-          });
+        this.setState({ loading: false });
+        if (returnUrl && returnUrl.indexOf("login") == -1) {
+          localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace(returnUrl);
-        }else{
-          localStorage.clear();
-          localStorage.info = JSON.stringify({
-            ...info
-          });
+        } else {
+          localStorage.info = JSON.stringify({ ...info, authList: List });
           hashHistory.replace("/home");
         }
       }

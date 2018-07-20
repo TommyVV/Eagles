@@ -8,7 +8,7 @@ namespace Eagles.Application.Model.Exercises.Model
     public class SubjectDetails : Subject
     {
         /// <summary>
-        /// 
+        /// 问题选项
         /// </summary>
         public List<Option> OptionList { get; set; }
 

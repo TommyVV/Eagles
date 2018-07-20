@@ -8,17 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
     <link rel="stylesheet" href="css/common/common.css">
     <link rel="stylesheet" href="css/feedBack.css">
+    <link rel="stylesheet" href="css/bootoast.css">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
+    <link rel="stylesheet" href="css/subordinateList.css">
     <link rel="stylesheet" href="css/publishTask.css">
-    <title>我的任务</title>
+    <title></title>
 </head>
 
 <body>
-    <div id="top-nav" class="pc"></div>
-    <div class="container">
+    <div id="top-nav"></div>
+    <div class="container mobile-container">
         <div class="row">
             <div class="pub-area">
                 <div class="pub-item">
@@ -27,8 +28,8 @@
                 </div>
                 <div class="pub-item name-item">
                     指派:
-                    <span class="item-content" id="name">Tommy</span>
-                    <span class="item-select" id="subord">选择</span>
+                    <span class="item-content" id="name"></span>
+                    <span class="item-select" id="subord" data-toggle="modal" data-target="#myModal">选择</span>
                 </div>
                 <div class="pub-item">
                     开始时间:
@@ -53,56 +54,77 @@
                         </div>
                     </div>
                 </div>
-                <textarea class="plan-text" placeholder="快让大家知道你的任务是什么吧~" name="" id="content" cols="30" rows="10"></textarea>
+                <textarea class="plan-text" placeholder="" name="" id="content" cols="30" rows="10"></textarea>
                 <div class="img-area">
                     <div class="title">附件上传</div>
-                    <input type="file" id="fileupload">
-                    <div class="attaches">
-    
+                    <div class="upload-file">
+                        <input type="file" id="fileupload">
+                        <span class="glyphicon glyphicon-folder-open"></span> 文件上传
                     </div>
+                    <div class="upload-progress hide">
+                        <div class="bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="attaches"></div>
                 </div>
-                <div class="pub-area flag-area">
+                <div class="flag-area">
                     <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
                 </div>
-                <div class="sub-btn">发布任务</div>
+                <div class="sub-btn"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态窗口 -->
+    <div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLargeLabel">选择指派人员</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
+                </div>
             </div>
         </div>
     </div>
     <div class="footer pc" id="footer"></div>
-<script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
-<script src="thirdparty/jquery-2.1.4.min.js"></script>
-<script src="js/common.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-<script src="thirdparty/jquery.ui.widget.js"></script>
-<script src="thirdparty/jquery.iframe-transport.js"></script>
-<script src="thirdparty/jquery.fileupload.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="js/publishTask.js?v=123"></script>
-<script type="text/javascript">
-    //日期插件
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    console.log(year, month, day);
-    $(".form_datetime").datetimepicker({
-        format: 'yyyy-mm-dd', //显示格式
-        minView: "month", //设置只显示到月份
-        startDate: "",
-        todayBtn: true,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1,
-        autoclose: 1, //选择后自动关闭
-        pickerPosition: "bottom-left",
-        language: "zh-CN",
-        startDate: year + "-" + month + "-" + day
-    });
-</script>
+    <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
+    <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="js/common.js?v=12"></script>
+    <script src="thirdparty/jquery.ui.widget.js"></script>
+    <script src="thirdparty/jquery.iframe-transport.js"></script>
+    <script src="thirdparty/jquery.fileupload.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
+    <script src="js/bootoast.js"></script>
+    <script src="js/publishTask.js?v=2018071802"></script>
+    <script type="text/javascript">
+        //日期插件
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        console.log(year, month, day);
+        $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd', //显示格式
+            minView: "month", //设置只显示到月份
+            startDate: "",
+            todayBtn: true,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            autoclose: 1, //选择后自动关闭
+            // pickerPosition: "bottom-right",
+            orientation: 'bottom',
+            language: "zh-CN",
+            startDate: year + "-" + month + "-" + day
+        });
+    </script>
 </body>
-
-</html>
 
 </html>

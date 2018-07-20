@@ -47,7 +47,7 @@ $('.btn-signup').on('click', function(e) {
 				loginIn($('#inputUser').val(), $('#inputPassword').val()) //调登陆接口
 			} else {
 				bootoast({
-					message: '注册失败',
+					message: '' + res.Message + '',
 					type: 'warning',
 					position: 'toast-top-center',
 					timeout: 3
@@ -80,7 +80,7 @@ $(".btn-cap").click(function() {
 			if(res.Code == 00) {
 				$('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
 				$('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
-				var time = 5
+				var time = 60
 				$('.btn-cap').text(''+time+'s重新获取');
 				
 				$('.btn-cap').css("background","#D6D6D6")
@@ -90,7 +90,7 @@ $(".btn-cap").click(function() {
 					$('.btn-cap').text(''+time+'s重新获取');
 					if(time <= 0) {
 						clearInterval(timer);
-						time = 5;
+						time = 60;
 						$(".btn-cap").text('获取验证码');
 						$('.btn-cap').css("background","#13AEFF")
 						$(".btn-cap").removeAttr("disabled");

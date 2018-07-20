@@ -17,19 +17,19 @@ namespace Ealges.DomianService.DataAccess
             this.dbManager = dbManager;
         }
 
-        public List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount)
+        public List<TbBranch> GetBranchList(GetBranchRequset requset, out int totalcount,int orgId)
         {
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId>0)
+            if (orgId > 0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", orgId);
             }
 
-         
+
             sql.AppendFormat(@"SELECT count(*)
 FROM `eagles`.`tb_branch`  where 1=1  {0} ;
  ", parameter);
@@ -74,6 +74,29 @@ FROM `eagles`.`tb_branch`  where BranchId=@BranchId;
 
             return dbManager.QuerySingle<TbBranch>(sql.ToString(), dynamicParams);
         }
+
+        public List<TbBranch> GetBranchList(List<int> list)
+        {
+
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_branch`.`OrgId`,
+    `tb_branch`.`BranchId`,
+    `tb_branch`.`BranchName`,
+    `tb_branch`.`BranchDesc`,
+    `tb_branch`.`CreateTime`
+FROM `eagles`.`tb_branch`  where  BranchId  in @BranchId
+ ");
+            dynamicParams.Add("BranchId", list.ToArray());
+
+            return dbManager.Query<TbBranch>(sql.ToString(), dynamicParams);
+
+           
+        }
+
+
+ 
 
         public int RemoveBranch(RemoveBranchRequset requset)
         {

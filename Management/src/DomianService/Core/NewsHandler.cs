@@ -10,9 +10,11 @@ using Eagles.Application.Model.News.Model;
 using Eagles.Application.Model.News.Requset;
 using Eagles.Application.Model.News.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Json.Implement;
 using Eagles.Base.Utility;
 using Eagles.DomainService.Model.News;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -22,15 +24,19 @@ namespace Eagles.DomainService.Core
     {
         private readonly INewsDataAccess dataAccess;
 
-        public NewsHandler(INewsDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public NewsHandler(INewsDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditNews(EditNewRequset requset)
         {
 
             TbNews mod;
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             var now = DateTime.Now;
             if (requset.Info.NewsId > 0)
             {
@@ -56,7 +62,7 @@ namespace Eagles.DomainService.Core
                     NewsType = requset.Info.NewsType,
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
-                    OrgId = requset.OrgId,
+                    OrgId = token.OrgId,
                     CanStudy = requset.Info.CanStudy,
                     ExternalUrl = requset.Info.ExternalUrl,
                     IsAttach = requset.Info.IsAttach,
@@ -98,7 +104,7 @@ namespace Eagles.DomainService.Core
                     NewsType = requset.Info.NewsType,
                     Source = requset.Info.Source,
                     TestId = requset.Info.TestId,
-                    OrgId = requset.OrgId,
+                    OrgId = token.OrgId,
                     CanStudy = requset.Info.CanStudy,
                     ExternalUrl = requset.Info.ExternalUrl,
                     IsAttach = requset.Info.IsAttach,

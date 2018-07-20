@@ -3,6 +3,7 @@ using Eagles.Application.Model.User.Login;
 using Eagles.Application.Model.User.EditUser;
 using Eagles.Application.Model.User.Register;
 using Eagles.Application.Model.User.BranchUser;
+using Eagles.Application.Model.User.EditUserPwd;
 using Eagles.Application.Model.User.EditUserNoticeIsRead;
 using Eagles.Application.Model.User.GetUserInfo;
 using Eagles.Application.Model.User.GetUserNotice;
@@ -21,7 +22,14 @@ namespace Eagles.Interface.Core.User
         /// <param name="request"></param>
         /// <returns></returns>
         EditUserResponse EditUser(EditUserRequest request);
-        
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        EditUserPwdResponse EditUserPwd(EditUserPwdRequest request);
+
         /// <summary>
         /// 登录
         /// </summary>

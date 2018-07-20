@@ -1,13 +1,10 @@
 ﻿using System.Web.Http;
-using Eagles.Application.Model;
 using Eagles.Application.Model.DeliverGoods.Requset;
 using Eagles.Application.Model.DeliverGoods.Response;
-using Eagles.Application.Model.Organization.Requset;
-using Eagles.Application.Model.Organization.Response;
-using Eagles.Base;
 using Eagles.Interface.Core;
-
 using Eagles.Application.Host.Common;
+
+
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>

@@ -6,9 +6,12 @@ import userReducer from "./userReducer";
 import goodsReducer from "./goodsReducer";
 import orgReducer from "./orgReducer";
 import newsReducer from "./newsReducer";
+import scoreReducer from "./scoreReducer";
 import questionReducer from "./questionReducer";
 import programaReducer from "./programaReducer";
 import exReducer from "./exReducer";
+import imageReducer from "./imageReducer";
+import memberReducer from "./memberReducer";
 
 const reducer = combineReducers({
   appReducer,
@@ -18,7 +21,10 @@ const reducer = combineReducers({
   programaReducer,
   goodsReducer,
   orgReducer,
-  newsReducer
+  newsReducer,
+  scoreReducer,
+  imageReducer,
+  memberReducer
 });
 
 export default reducer;

@@ -2,7 +2,6 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.AuthorityGroup.Requset;
-using Eagles.Application.Model.AuthorityGroupSetUp.Requset;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Authority;
 using Eagles.DomainService.Model.Oper;
@@ -83,11 +82,11 @@ FROM `eagles`.`tb_oper_group`
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OrgId > 0)
-            {
-                parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
-            }
+            //if (requset.OrgId > 0)
+            //{
+            //    parameter.Append(" and  OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", requset.OrgId);
+            //}
 
             if (requset.StartTime != null)
             {

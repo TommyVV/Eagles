@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Eagles.Application.Model.SMS.Model;
 
 namespace Eagles.Application.Model.SMS.Request
 {
     public class EditSMSRequset : RequestBase
     {
-        public Model.SMS Info { get; set; }
+        /// <summary>
+        /// 短信
+        /// </summary>
+        public SMSInfo SmsInfo { get; set; }
     }
 }

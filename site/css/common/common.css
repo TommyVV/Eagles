@@ -16,10 +16,6 @@
     background: linear-gradient(to bottom right, #f27575, #e94040, #bd1818);
 }
 
-.hide {
-    display: none;
-}
-
 .sub-btn {
     width: 70%;
     margin-left: 15%;
@@ -49,8 +45,9 @@
     }
 }
 
-.alert .weui-dialog__bd textarea {
-    height: 200px;
+.modal textarea {
+    height: 80%;
+    min-height: 200px;
     width: 100%;
     padding: 5px;
     border: 1px solid #eeeeee;
@@ -59,17 +56,17 @@
     font-size: 0.64rem;
 }
 
-.alert .tip {
+.modal .tip {
     color: red;
+    padding: 5px 15px;
 }
-.mobile, .pc {
-    display: none;
-}
+
 .pc-wrap {
     width: 1000px;
     margin: 0 auto;
 }
-.pc-nav-wrap .logo{
+
+.pc-nav-wrap .logo {
     text-align: left;
 }
 
@@ -77,8 +74,79 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 0.7rem;
 }
-.flag-area .pub-flag {
+
+.pub-flag {
     width: 20px;
     height: 20px;
+    margin-right: 5px;
+}
+
+
+/* 上传文件 */
+
+.img-area {
+    margin-top: 0.96rem;
+    padding-bottom: 0.67rem;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.img-area .title {
+    font-size: 0.512rem;
+    height: 1.1093333333rem;
+    line-height: 1.1093333333rem;
+    color: #949494;
+}
+
+.upload-file {
+    width: 4.6rem;
+    height: 1.4rem;
+    border-radius: 0.2rem;
+    position: relative;
+    text-align: center;
+    background-color: #ee2f2f;
+    color: white;
+    line-height: 1.4rem;
+}
+
+.upload-file input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+}
+
+.upload-progress {
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    background: #f6f6f6;
+    margin: 15px 0px;
+}
+
+.bar {
+    height: 10px;
+    border-radius: 5px;
+    background: #ec340f;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-container {
+        margin-top: 1.7rem;
+    }
+    .list-content {
+        top: 1.7rem;
+        bottom: 0;
+        position: absolute;
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .list-content {
+        height: 600px !important;
+    }
 }

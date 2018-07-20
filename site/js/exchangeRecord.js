@@ -6,7 +6,7 @@ if(!localStorage.getItem('token')) {
 var mescroll;
 
 $('#top-nav,#mobilenav').load('head.html')
-$('#pc-footer').load('./footer.html')
+$('#footer').load('./footer.html')
 
 $('.dj-container').html('')
 mescroll = new MeScroll("mescroll", {

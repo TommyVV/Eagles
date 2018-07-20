@@ -3,10 +3,8 @@
     public class RemoveRollImageRequset : RequestBase
     {
         /// <summary>
-        /// 页面ID
+        /// 滚动图片id
         /// </summary>
         public int Id { get; set; }
-
-       
     }
 }

@@ -1,39 +1,46 @@
-var token = localStorage.getItem('token')
+var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 $('#top-nav,#mobilenav').html('')
 $('#top-nav,#mobilenav').load('./head.html')
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
-
+var phonesmodiy;
+$(function(){
+	//修改密码
+	$("#modifypass,.md_password").click(function() {
+		console.log(1)
+		window.location.href = 'modifPassword.html?appId=' + appId + '&phonesmodiy='+phonesmodiy
+	});
+})
 class CalculateScreen {
-	constructor() {
-		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
-		this.init();
-	}
-	init() {
-		if(!this.isMobile) {
-			$('.mobile').hide();
-			$('.pc').show();
-			$('#left-nav').load('leftNav.html?appId=' + appId + '', () => {
-
-			})
-			$('#footer').load('footer.html', () => {
-
-			})
-			$('body').css('background-color', 'rgb(248,248,248)');
-		} else {
-			$('.mobile').show();
-			$('.pc').hide();
-			$('body').css('background-color', '#fff');
+		constructor() {
+			this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+			this.init();
+		}
+		init() {
+			if(!this.isMobile) {
+				$('.mobile').hide();
+				$('.pc').show();
+				$('#left-nav').load('leftNav.html?appId=' + appId + '', () => {
+	
+				})
+				$('#footer').load('footer.html', () => {
+	
+				})
+				$('body').css('background-color', 'rgb(248,248,248)');
+			} else {
+				$('.mobile').show();
+				$('.pc').hide();
+				$('body').css('background-color', '#fff');
+			}
 		}
 	}
-}
-new CalculateScreen();
-
-$(window).resize(function() {
 	new CalculateScreen();
-})
+	
+	$(window).resize(function() {
+		new CalculateScreen();
+	})
 
 //积分换购
 $("#point-part").click(function() {
@@ -84,6 +91,8 @@ $("#f_rw,.fb_wrw").click(function() {
 $("#task").click(function() {
 	window.location.href = 'task.html?appId=' + appId + ''
 });
+
+
 minedel(token, appId);
 
 function minedel(token, appId) {
@@ -96,13 +105,14 @@ function minedel(token, appId) {
 		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
-
+        
 			if(res.Code == 00) {
 				var data = res.Result.ResultUserInfo;
 				$('.main-content-top-name,.lc_name').text(data.Name); //昵称
 				$('.main-content-top-tel,.info-tel').text(data.Telphone); //用户id
-				$('.head-icon').text(data.PhotoUrl); //头像
+				$('.head-icon,.head-pic').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
+				phonesmodiy=data.Telphone
 
 			}
 		}
@@ -130,7 +140,8 @@ function getScrollNews(token, appId) {
 				$('#scrollobj').append(divs)
 				setInterval("scroll(document.getElementById('scrollobj'))", 20);
 			} else {
-				$('#scrollobj').hide()
+				$('#scrollobj,.newsd').hide();
+				
 			}
 		}
 	})

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
 using Eagles.Application.Model.RollImage.Model;
 using Eagles.Application.Model.RollImage.Requset;
 using Eagles.Application.Model.RollImage.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.ScrollImage;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -18,10 +16,12 @@ namespace Eagles.DomainService.Core
     {
         private readonly IScrollImageDataAccess dataAccess;
 
+        private readonly ICacheHelper cacheHelper;
 
-        public ScrollImageHandler(IScrollImageDataAccess dataAccess)
+        public ScrollImageHandler(IScrollImageDataAccess dataAccess,ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditRollImages(EditRollImageRequest requset)
@@ -29,7 +29,7 @@ namespace Eagles.DomainService.Core
            
 
             TbScrollImage mod;
-
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
 
             if (requset.Info.Id > 0)
             {
@@ -37,7 +37,7 @@ namespace Eagles.DomainService.Core
                 {
                     Id = requset.Info.Id,
                     ImageUrl = requset.Info.Img,
-                    OrgId = requset.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     PageType = requset.Info.PageId,
                     TargetUrl =requset.Info.TargetUrl
                 };
@@ -45,23 +45,18 @@ namespace Eagles.DomainService.Core
                 return dataAccess.EditRollImages(mod)>0;
 
             }
-            else
+            mod = new TbScrollImage
             {
-                mod = new TbScrollImage
-                {
-                    //   Id = requset.Info.Id,
+                //   Id = requset.Info.Id,
                    
-                    ImageUrl = requset.Info.Img,
-                    OrgId = requset.OrgId,
-                    PageType = requset.Info.PageId,
-                    TargetUrl = requset.Info.TargetUrl
-                };
+                ImageUrl = requset.Info.Img,
+                OrgId = tokenInfo.OrgId,
+                PageType = requset.Info.PageId,
+                TargetUrl = requset.Info.TargetUrl
+            };
 
-                return dataAccess.CreateRollImages(mod)>0;
+            return dataAccess.CreateRollImages(mod)>0;
 
-                
-            }
-            
 
         }
 
@@ -78,7 +73,7 @@ namespace Eagles.DomainService.Core
             {
               
             };
-            TbScrollImage detail = dataAccess.GetRollImagesDetail(requset);
+            var detail = dataAccess.GetRollImagesDetail(requset.Id);
 
             if (detail == null) throw new TransactionException("M01","无业务数据");
 
@@ -88,19 +83,21 @@ namespace Eagles.DomainService.Core
                 OrgId = detail.OrgId,
                 Id = detail.Id,
                 PageId = detail.PageType,
-                TargetUrl=detail.TargetUrl
+                TargetUrl=detail.TargetUrl,
+                OrgName=detail.OrgName
             };
             return response;
         }
 
         public GetRollImageResponse GetRollImages(GetRollImageRequest requset)
         {
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             var response = new GetRollImageResponse
             {
                 TotalCount = 0,
                
             };
-            List<TbScrollImage> list = dataAccess.GetRollImagesList(requset, out int totalCount) ?? new List<TbScrollImage>();
+            var list = dataAccess.GetRollImagesList(requset, out var totalCount, tokenInfo.OrgId) ?? new List<TbScrollImage>();
 
             if (list.Count == 0) throw new TransactionException("M01","无业务数据");
             response.TotalCount = totalCount;
@@ -108,18 +105,10 @@ namespace Eagles.DomainService.Core
             {
                 Img = x.ImageUrl,
                 OrgId = x.OrgId,
+                OrgName = x.OrgName,
                 Id = x.Id,
                 PageId = x.PageType,
                 TargetUrl=x.TargetUrl
-                //AuditStatus = AuditStatus.审核通过,
-                //Author = x.Author,
-                //CreateTime = x.CreateTime,
-                //NewsId = x.NewsId,
-                //NewsImg = x.ImageUrl,
-                //NewsName = x.Title,
-                //// NewsType=NewsType.
-                //Source = x.Source,
-                //OrgId = x.OrgId
             }).ToList();
             return response;
         }

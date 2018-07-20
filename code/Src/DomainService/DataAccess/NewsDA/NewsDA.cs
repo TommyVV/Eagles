@@ -19,7 +19,7 @@ namespace Ealges.DomianService.DataAccess.NewsDA
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             return dbManager.Query<TbNews>(@"select tb_news.OrgId,NewsId,ShortDesc,Title,HtmlContent,Author,Source,Module,Status,BeginTime,EndTime,TestId,
 Attach1,Attach2,Attach3,Attach4,Attach5,OperId,CreateTime,IsImage,IsVideo,IsAttach,IsClass,IsLearning,IsText,ViewCount,ReviewId,CanStudy,ImageUrl,IsExternal,ExternalUrl
-from eagles.tb_news where Module=@Module and OrgId=@OrgId limit @PageIndex, @PageSize", new {Module = moduleId, OrgId = appId, PageIndex = pageIndexParameter, PageSize = pageSize });
+from eagles.tb_news where Module=@Module and OrgId=@OrgId order by CreateTime desc limit @PageIndex, @PageSize ", new {Module = moduleId, OrgId = appId, PageIndex = pageIndexParameter, PageSize = pageSize });
         }
 
         public TbNews GetNewsDetail(int newsId, int appId)
@@ -31,7 +31,7 @@ IsExternal,ExternalUrl from eagles.tb_news where NewsId=@NewsId and OrgId=@OrgId
 
         public int AddNewsViewCount(int newsId)
         {
-            return dbManager.Excuted("update eagles.tb_news set ViewCount=ViewCount+1 where NewsId=@NewsId ", new {NewsId = newsId});
+            return dbManager.Excuted("update eagles.tb_news set ViewCount = ifnull(ViewCount,0) + 1 where NewsId=@NewsId ", new {NewsId = newsId});
         }
     }
 }

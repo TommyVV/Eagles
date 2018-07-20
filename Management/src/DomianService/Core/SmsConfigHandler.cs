@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Organization.Model;
+using Eagles.Application.Model.Organization.Requset;
 using Eagles.Application.Model.SMS.Model;
 using Eagles.Application.Model.SMS.Request;
 using Eagles.Application.Model.SMS.Response;
+using Eagles.Application.Model.SMSOrg.Model;
+using Eagles.Application.Model.SMSOrg.Request;
+using Eagles.Application.Model.SMSOrg.Response;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Config;
 using Eagles.DomainService.Model.Org;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -19,31 +26,36 @@ namespace Eagles.DomainService.Core
     {
         private readonly ISmsConfigDataAccess dataAccess;
 
+        private readonly ICacheHelper cacheHelper;
 
-        public SmsConfigHandler(ISmsConfigDataAccess dataAccess)
+        private readonly IOrganizationDataAccess OrgdataAccess;
+
+        public SmsConfigHandler(ISmsConfigDataAccess dataAccess, ICacheHelper cacheHelper, IOrganizationDataAccess orgdataAccess)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
+            OrgdataAccess = orgdataAccess;
         }
 
         public bool EditSMS(EditSMSRequset requset)
         {
             SmsConfig mod;
             var now = DateTime.Now;
-            if (requset.Info.VendorId > 0)
+            if (requset.SmsInfo.VendorId > 0)
             {
                 mod = new SmsConfig
                 {
-                    AppId = requset.Info.AppId,
-                    AppKey = requset.Info.AppKey,
-                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
-                    MaxCount = requset.Info.MaxCount,
-                    Priority = requset.Info.Priority,
-                    SendCount = requset.Info.SendCount,
-                    ServiceUrl = requset.Info.ServiceUrl,
-                    SginKey = requset.Info.SginKey,
-                    Status = requset.Info.Status,
-                    VendorId = requset.Info.VendorId,
-                    VendorName = requset.Info.VendorName
+                    AppId = requset.SmsInfo.AppId,
+                    AppKey = requset.SmsInfo.AppKey,
+                    CreateTime = Convert.ToDateTime(requset.SmsInfo.CreateTime),
+                    MaxCount = requset.SmsInfo.MaxCount,
+                    Priority = requset.SmsInfo.Priority,
+                    SendCount = requset.SmsInfo.SendCount,
+                    ServiceUrl = requset.SmsInfo.ServiceUrl,
+                    SginKey = requset.SmsInfo.SginKey,
+                    Status = requset.SmsInfo.Status,
+                    VendorId = requset.SmsInfo.VendorId,
+                    VendorName = requset.SmsInfo.VendorName
                 };
 
                 return dataAccess.EditSMS(mod) > 0;
@@ -52,17 +64,17 @@ namespace Eagles.DomainService.Core
             {
                 mod = new SmsConfig
                 {
-                    AppId = requset.Info.AppId,
-                    AppKey = requset.Info.AppKey,
-                    CreateTime = Convert.ToDateTime(requset.Info.CreateTime),
-                    MaxCount = requset.Info.MaxCount,
-                    Priority = requset.Info.Priority,
-                    SendCount = requset.Info.SendCount,
-                    ServiceUrl = requset.Info.ServiceUrl,
-                    SginKey = requset.Info.SginKey,
-                    Status = requset.Info.Status,
-                    VendorId = requset.Info.VendorId,
-                    VendorName = requset.Info.VendorName
+                    AppId = requset.SmsInfo.AppId,
+                    AppKey = requset.SmsInfo.AppKey,
+                    CreateTime = Convert.ToDateTime(requset.SmsInfo.CreateTime),
+                    MaxCount = requset.SmsInfo.MaxCount,
+                    Priority = requset.SmsInfo.Priority,
+                    SendCount = requset.SmsInfo.SendCount,
+                    ServiceUrl = requset.SmsInfo.ServiceUrl,
+                    SginKey = requset.SmsInfo.SginKey,
+                    Status = requset.SmsInfo.Status,
+                    VendorId = requset.SmsInfo.VendorId,
+                    VendorName = requset.SmsInfo.VendorName
                 };
                 return dataAccess.CreateSMS(mod) > 0;
 
@@ -72,7 +84,7 @@ namespace Eagles.DomainService.Core
 
         public bool RemoveSMS(RemoveSMSRequset requset)
         {
-            return dataAccess.RemoveSMS(requset)>0;
+            return dataAccess.RemoveSMS(requset) > 0;
         }
 
         public GetSMSResponse SMS(GetSMSRequset requset)
@@ -83,11 +95,11 @@ namespace Eagles.DomainService.Core
                 TotalCount = 0,
 
             };
-            List<SmsConfig> list = dataAccess.GetSMS(requset,out int totalCount) ?? new List<SmsConfig>();
+            List<SmsConfig> list = dataAccess.GetSMS(requset, out int totalCount) ?? new List<SmsConfig>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
-            response.List = list.Select(x => new SMS
+            response.List = list.Select(x => new SMSInfo
             {
                 AppId = x.AppId,
                 AppKey = x.AppKey,
@@ -114,7 +126,7 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
-            response.Info = new SMS
+            response.Info = new SMSInfo
             {
                 AppId = detail.AppId,
                 AppKey = detail.AppKey,
@@ -128,7 +140,120 @@ namespace Eagles.DomainService.Core
                 VendorId = detail.VendorId,
                 VendorName = detail.VendorName
             };
-            return response;           
+            return response;
+        }
+
+        public bool EditOrgSmsConfig(EditSMSOrgRequset request)
+        {
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(request.Token);
+
+            TbOrgSmsConfig mod;
+            var now = DateTime.Now;
+            if (request.Info.VendorId > 0 && request.Info.OrgId > 0)
+            {
+                mod = new TbOrgSmsConfig()
+                {
+
+                    //CreateTime = Convert.ToDateTime(request.SmsInfo.CreateTime),
+                    MaxCount = request.Info.MaxCount,
+                    Priority = request.Info.Priority,
+                    SendCount = request.Info.SendCount,
+                    OperId = tokenInfo.UserId,
+                    OrgId = request.Info.OrgId,
+                    Status = request.Info.Status,
+                    VendorId = request.Info.VendorId,
+
+                };
+
+                return dataAccess.EditOrgSmsConfig(mod) > 0;
+            }
+            else
+            {
+                mod = new TbOrgSmsConfig()
+                {
+
+                    //CreateTime = Convert.ToDateTime(request.SmsInfo.CreateTime),
+                    MaxCount = request.Info.MaxCount,
+                    Priority = request.Info.Priority,
+                    SendCount = request.Info.SendCount,
+                    OperId = tokenInfo.UserId,
+                    OrgId = request.Info.OrgId,
+                    Status = request.Info.Status,
+                    VendorId = request.Info.VendorId,
+
+                };
+                return dataAccess.CreateOrgSmsConfig(mod) > 0;
+
+            }
+
+        }
+
+        public GetSMSOrgResponse GetSMSOrg(GetSMSOrgRequest requset)
+        {
+
+            var response = new GetSMSOrgResponse
+            {
+                TotalCount = 0,
+
+            };
+            List<TbOrgSmsConfig> list = dataAccess.GetSMSOrg(requset, out int totalCount) ?? new List<TbOrgSmsConfig>();
+
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
+
+            var orginfo = OrgdataAccess.GetOrganizationList(list.Select(x => x.OrgId).ToList());
+
+            response.TotalCount = totalCount;
+
+            response.List = list.Select(x => new SMSOrg()
+            {
+
+                CreateTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                MaxCount = x.MaxCount,
+                Priority = x.Priority,
+                SendCount = x.SendCount,
+
+                Status = x.Status,
+                VendorId = x.VendorId,
+                OrgId = x.OrgId,
+                OrgName = orginfo.FirstOrDefault(f => f.OrgId == x.OrgId)?.OrgName
+            }).ToList();
+            return response;
+        }
+
+        public bool RemoveOrgSmsConfig(RemoveSMSOrgRequest requset)
+        {
+
+            return dataAccess.RemoveOrgSmsConfig(requset) > 0;
+        }
+
+        public GetSMSOrgDetailResponse GetSMSOrgDetail(GetSMSOrgDetailRequset requset)
+        {
+
+            var response = new GetSMSOrgDetailResponse
+            {
+
+            };
+            TbOrgSmsConfig detail = dataAccess.GetSMSOrgDetail(requset);
+
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
+
+            var orginfo = OrgdataAccess.GetOrganizationDetail(new GetOrganizationDetailRequset()
+            {
+                OrgId = requset.OrgId
+            });
+
+            response.Info = new SMSOrg
+            {
+                CreateTime = detail.CreateTime.ToString("yyyy-MM-dd"),
+                MaxCount = detail.MaxCount,
+                Priority = detail.Priority,
+                SendCount = detail.SendCount,
+                Status = detail.Status,
+                VendorId = detail.VendorId,
+                OrgId = detail.OrgId,
+                OrgName = orginfo.OrgName
+            };
+            return response;
         }
     }
 }

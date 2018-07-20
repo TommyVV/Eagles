@@ -4,6 +4,8 @@ $(document).ready(function() {
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
     //当前用户是上级还是下级（默认是下级）
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
     var userType = 1;
     var requestFlag = false;
 
@@ -28,12 +30,12 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     dealTaskDetail(data.Result);
                 } else {
-                    requestFlag=false;
+                    requestFlag = false;
                     alert(data.Code, data.Message);
                 }
             },
-            complete:function(){
-                requestFlag=false;
+            complete: function() {
+                requestFlag = false;
             }
         });
     }
@@ -75,11 +77,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getTaskDetail();
                 } else {
-                    requestFlag=false;
+                    requestFlag = false;
                     alert(data.Code, data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 requestFlag = false;
             }
         });
@@ -121,7 +123,7 @@ $(document).ready(function() {
         if (status == -2) {
             return "未接受";
         } else if (status == -1) {
-            return "未启动";
+            return "待上级批准";
         } else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {
@@ -147,7 +149,7 @@ $(document).ready(function() {
             if (userId == acceptUserId) {
                 $("#btn-area").html(`<div class="sub-btn">接受任务</div>`);
                 $(".sub-btn").click(function() {
-                    if(!requestFlag){
+                    if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept("2", "0");
                     }
@@ -158,13 +160,13 @@ $(document).ready(function() {
                 $("#btn-area").html(`<div class="pass">通过</div>
                 <div class="nopass">不通过</div>`);
                 $(".pass").click(function() {
-                    if(!requestFlag){
+                    if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept(1, "0");
                     }
                 });
                 $(".nopass").click(function() {
-                    if(!requestFlag){
+                    if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept(1, 1);
                     }
@@ -175,7 +177,7 @@ $(document).ready(function() {
                 (createType == "0" && userId == acceptUserId) ||
                 (createType == "1" && userId == initiateUserId)
             ) {
-                $("#btn-area").html(`<div class="sub-btn">制度计划</div>`);
+                $("#btn-area").html(`<div class="sub-btn">制定计划</div>`);
                 $(".sub-btn").click(function() {
                     window.location.href =
                         "taskPlan.html?appId=" + appId + "&taskId=" + taskId;
@@ -260,14 +262,14 @@ $(document).ready(function() {
                 }
             });
             $(".pass").click(function() {
-                if(!requestFlag){
-                    requestFlag=true;
+                if (!requestFlag) {
+                    requestFlag = true;
                     editTaskComplete(0);
                 }
             });
             $(".nopass").click(function() {
-                if(!requestFlag){
-                    requestFlag=true;
+                if (!requestFlag) {
+                    requestFlag = true;
                     editTaskComplete(1);
                 }
             });
@@ -306,11 +308,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getTaskDetail();
                 } else {
-                    requestFlag=false;
+                    requestFlag = false;
                     alert(data.Code, data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 requestFlag = false;
             }
         });
@@ -326,8 +328,7 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -340,7 +341,7 @@ $(document).ready(function() {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

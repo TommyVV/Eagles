@@ -14,7 +14,7 @@ namespace Eagles.Interface.DataAccess
         int EditSystemNews(TbSystemNews mod);
         int CreateSystemNews(TbSystemNews mod);
         int RemoveSystemNews(RemoveSystemNewsRequset requset);
-        List<TbSystemNews> SystemNews(GetSystemNewsRequset requset);
+        List<TbSystemNews> SystemNews(GetSystemNewsRequset requset,out int  totalCount);
         TbSystemNews GetSystemNewsDetail(GetSystemNewsDetailRequset requset);
     }
 }

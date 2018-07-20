@@ -3,13 +3,11 @@
    /// <summary>
    /// 
    /// </summary>
-   public  class GetRollImageDetailRequset:OrgRequestBase
+   public  class GetRollImageDetailRequset:RequestBase
     {
         /// <summary>
-        /// zhuj
+        /// imageId
         /// </summary>
         public int Id { get; set; }
-
-
     }
 }

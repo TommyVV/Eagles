@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.ScoreSetUp.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Score;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -15,9 +17,12 @@ namespace Ealges.DomianService.DataAccess
     {
         private readonly IDbManager dbManager;
 
-        public ScoreDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public ScoreDataAccess(IDbManager dbManager, ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
 
         public int EditScoreSetUp(TbRewardScore mod)
@@ -103,27 +108,38 @@ FROM `eagles`.`tb_reward_score`
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (requset.OperationType > 0)
+            if (requset.RewardType >= 0)
             {
                 parameter.Append(" and RewardType = @RewardType ");
-                dynamicParams.Add("RewardType", requset.OperationType);
+                dynamicParams.Add("RewardType", requset.RewardType);
             }
 
-            if (requset.BranchId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.BranchId > 0)
             {
                 parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
+                dynamicParams.Add("BranchId", token.BranchId);
             }
 
-            if (requset.OrgId > 0)
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
 
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_reward_score`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
 
-            totalCount = 0;
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+
             sql.AppendFormat(@" SELECT `tb_reward_score`.`RewardId`,
     `tb_reward_score`.`OrgId`,
     `tb_reward_score`.`BranchId`,
@@ -132,8 +148,11 @@ FROM `eagles`.`tb_reward_score`
     `tb_reward_score`.`keyWord`,
     `tb_reward_score`.`LearnTime`,
     `tb_reward_score`.`WordCount`
-FROM `eagles`.`tb_reward_score`  where 1=1  {0}  
+FROM `eagles`.`tb_reward_score`  where 1=1  {0}      order by RewardId desc limit  @pageStart ,@pageSize;
  ", parameter);
+
+
+        
 
             return dbManager.Query<TbRewardScore>(sql.ToString(), dynamicParams);
 

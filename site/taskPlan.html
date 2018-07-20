@@ -7,20 +7,20 @@
     <meta name="hotcss" content="initial-dpr=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
     <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/bootoast.css">
     <link rel="stylesheet" href="css/taskPlan.css?v=1234">
     <title>我的任务</title>
 </head>
 
 <body class="bg-color">
-    <div id="top-nav" class="pc"></div>
-    <div class="container">
+    <div id="top-nav"></div>
+    <div class="container mobile-container">
         <div class="row plan-content">
         </div>
         <div class="row">
-            <div class="plan-add">
+            <div class="plan-add" data-toggle="modal" data-target="#myModal">
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 <span class="text">增加计划</span>
             </div>
@@ -28,19 +28,20 @@
         <div class="btn-area hide">
             <div class="sub-btn">申请完成</div>
         </div>
-        <div class="alert hide">
-            <div class="weui-mask weui-mask--visible"></div>
-            <div class="weui-dialog weui-dialog--visible">
-                <div class="weui-dialog__hd">
-                    <strong class="weui-dialog__title"></strong>
+    </div>
+    <div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLargeLabel"></h4>
                 </div>
-                <div class="weui-dialog__bd">
-                    <textarea id="step-name" placeholder="步骤内容..."></textarea>
-                    <div class="tip"></div>
+                <div class="modal-body">
+                    <textarea name="" id="step-content" cols="30" rows="10" placeholder="活动步骤...."></textarea>
                 </div>
-                <div class="weui-dialog__ft">
-                    <div class="weui-dialog__btn default">取消</div>
-                    <div class="weui-dialog__btn primary">确定</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
                 </div>
             </div>
         </div>
@@ -49,9 +50,10 @@
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/taskPlan.js?v=123"></script>
+    <script src="js/bootoast.js"></script>
+    <script src="js/taskPlan.js?v=2018"></script>
 </body>
 
 </html>

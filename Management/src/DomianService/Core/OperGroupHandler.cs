@@ -135,6 +135,7 @@ namespace Eagles.DomainService.Core
                 throw new TransactionException("M03", "数据异常");
             }
 
+            var tokenInfo = cacheHelper.GetData<TbUserToken>(requset.Token);
             int result = dataAccess.RemoveAuthorityGroupSetUp(requset.GroupId);
 
             if (result > 0)
@@ -146,7 +147,7 @@ namespace Eagles.DomainService.Core
                     FunCode = x.FunCode,
                     OperId = 0,
                     GroupId = requset.GroupId,
-                    OrgId = requset.OrgId,
+                    OrgId = tokenInfo.OrgId,
                     EditTime = now,
                 }).ToList();
 
@@ -172,7 +173,6 @@ namespace Eagles.DomainService.Core
             response.List = list.Select(x => new AuthorityInfo
             {
                 FunCode = x.FunCode,
-                CreateTime = x.CreateTime,
             }).ToList();
             return response;
         }
@@ -195,7 +195,6 @@ namespace Eagles.DomainService.Core
                 List = list.Select(x => new AuthorityInfo
                 {
                     FunCode = x.FunCode,
-                    CreateTime = x.CreateTime,
                 }).ToList()
             };
             return response;

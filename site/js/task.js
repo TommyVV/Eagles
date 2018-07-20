@@ -1,16 +1,18 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskType = 0;
     var checkUserId = userId;
+    $("#top-nav").html('');
+    $("#top-nav").load("head.html", () => {});
 
     //类别的点击
-    $("#t-cate").click(function () {
+    $("#t-cate").click(function() {
         if (
             $(this)
-                .find(".glyphicon")
-                .hasClass("glyphicon-menu-left")
+            .find(".glyphicon")
+            .hasClass("glyphicon-menu-left")
         ) {
             $(this)
                 .find(".glyphicon")
@@ -26,7 +28,7 @@ $(document).ready(function () {
         }
     });
     //任务类型 分类点击
-    $(".task-type .list-item").click(function () {
+    $(".task-type .list-item").click(function() {
         var id = $(this).attr("id");
         var text = $(this).html();
         $(".t-text").html(text);
@@ -40,11 +42,11 @@ $(document).ready(function () {
         getTaskList();
     });
     //人员下拉列表
-    $("#m-cate").click(function () {
+    $("#m-cate").click(function() {
         if (
             $(this)
-                .find(".glyphicon")
-                .hasClass("glyphicon-menu-left")
+            .find(".glyphicon")
+            .hasClass("glyphicon-menu-left")
         ) {
             $(this)
                 .find(".glyphicon")
@@ -74,10 +76,14 @@ $(document).ready(function () {
                 PageSize: 10,
                 PageIndex: 1
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("Task---", data);
                 if (data.Code == "00") {
                     taskList(data.Result.TaskList);
+                } else if (data.Code == '10') {
+                    var tipInfo = `<div class="tip">暂时没有数据</div>`
+                    $(".pc-list").html(tipInfo);
+                    $(".task-list").html(tipInfo);
                 } else {
                     alert(data.Code + ':' + data.Message);
                 }
@@ -95,7 +101,7 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("GetUserRelationship---", data);
                 if (data.Code == "00") {
                     dealRelationList(data.Result.UserList);
@@ -109,7 +115,7 @@ $(document).ready(function () {
     function taskList(list) {
         var str = ``;
         var pcStr = ``;
-        var dealStatus = function (status) {
+        var dealStatus = function(status) {
             var sta = ``;
             if (status == 0) {
                 sta = `<div class="task-status line-color accept-status">已接受</div>`;
@@ -126,7 +132,7 @@ $(document).ready(function () {
             }
             return sta;
         };
-        var dealStatusPC = function (status) {
+        var dealStatusPC = function(status) {
             var sta = ``;
             if (status == 0) {
                 sta = `<span class="props-btn line-color">已接受</span>`;
@@ -180,7 +186,7 @@ $(document).ready(function () {
         });
         $(".pc-list").html(pcStr);
         $(".task-list").html(str);
-        $(".single-task").click(function () {
+        $(".single-task").click(function() {
             window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + $(this).attr('id');
         });
         return str;
@@ -193,14 +199,14 @@ $(document).ready(function () {
             str += `<div class="list-item" id="${element.UserId}">${
                 element.Name
                 }</div>`;
-            pcStr+=`<li id="${element.UserId}">${element.Name}</li>`;
+            pcStr += `<li id="${element.UserId}">${element.Name}</li>`;
         });
         $(".peop-list .menu-list").html(str);
         $("#person-name").html(pcStr);
         $(".select-name").html('我的');
         $(".select-type").html('发起的');
         //切换人员 分类点击
-        $(".peop-list .list-item").click(function () {
+        $(".peop-list .list-item").click(function() {
             var id = $(this).attr("id");
             var text = $(this).html();
             checkUserId = id;
@@ -219,8 +225,8 @@ $(document).ready(function () {
         if (e.target.tagName === "LI") {
             $("#select-result > span").html(
                 $(e.target)
-                    .html()
-                    .trim()
+                .html()
+                .trim()
             );
             checkUserId = $(e.target).attr('id');
             getTaskList();
@@ -231,8 +237,8 @@ $(document).ready(function () {
         if (e.target.tagName === "LI") {
             $("#select-type > span").html(
                 $(e.target)
-                    .html()
-                    .trim()
+                .html()
+                .trim()
             );
             taskType = $(e.target).attr('id');
             getTaskList();
@@ -252,8 +258,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
             } else {
                 $(".mobile").show();
@@ -264,7 +269,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

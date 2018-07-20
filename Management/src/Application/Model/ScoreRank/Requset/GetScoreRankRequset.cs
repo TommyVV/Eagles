@@ -7,7 +7,7 @@
     {
 
         /// <summary>
-        /// 姓名
+        /// 姓名(搜索）
         /// </summary>
         public string UserName { get; set; }
     }

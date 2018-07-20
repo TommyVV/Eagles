@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Audit.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetAuditRequest : OrgRequestBase
+    public class GetAuditRequest : RequestBase
     {
         /// <summary>
         /// 审核名字

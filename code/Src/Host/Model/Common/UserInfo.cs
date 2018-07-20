@@ -20,7 +20,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 性别
         /// </summary>
-        public int Gender { get; set; }
+        public string Gender { get; set; }
 
         /// <summary>
         /// 民族
@@ -30,7 +30,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 生日
         /// </summary>
-        public DateTime Birth { get; set; }
+        public string Birth { get; set; }
 
         /// <summary>
         /// 省
@@ -105,7 +105,7 @@ namespace Eagles.Application.Model.Common
         /// <summary>
         /// 人员类别(正式/预备党员)
         /// </summary>
-        public int PartyType { get; set; }
+        public string PartyType { get; set; }
 
         /// <summary>
         /// 党费缴纳情况

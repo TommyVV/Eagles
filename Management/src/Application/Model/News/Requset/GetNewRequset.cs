@@ -18,7 +18,7 @@ namespace Eagles.Application.Model.News.Requset
         public string  NewsName { get; set; }
 
         /// <summary>
-        /// 新闻类型
+        /// 新闻类型 0：新闻；1：会议（）
         /// </summary>
         public int NewsType { get; set; }
     }

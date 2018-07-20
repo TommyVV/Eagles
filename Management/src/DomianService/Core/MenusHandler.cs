@@ -43,7 +43,7 @@ namespace Eagles.DomainService.Core
                     ParentMenuId = requset.Info.ParentId,
                     TargetUrl = requset.Info.MenuLink
                 };
-                int result = dataAccess.EditNews(mod);
+                var result = dataAccess.EditNews(mod);
 
                 return result > 0;
             }

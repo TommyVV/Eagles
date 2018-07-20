@@ -15,7 +15,7 @@ namespace Eagles.Application.Model.SMSOrg.Model
         /// <summary>
         /// 机构id
         /// </summary>
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
         /// <summary>
         /// 已发送数量
         /// </summary>
@@ -38,12 +38,18 @@ namespace Eagles.Application.Model.SMSOrg.Model
         public int OperId { get; set; }
 
         /// <summary>
+        /// 最后修改人
+        /// </summary>
+        /// <returns></returns>
+        public string OrgName { get; set; }
+
+        /// <summary>
         /// 优先级
         /// </summary>
         public int Priority { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
-        public Status Status { get; set; }
+        public int Status { get; set; }
     }
 }

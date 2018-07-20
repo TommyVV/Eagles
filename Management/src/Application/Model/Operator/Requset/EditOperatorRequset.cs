@@ -5,7 +5,7 @@ namespace Eagles.Application.Model.Operator.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class EditOperatorRequset:OrgRequestBase
+    public class EditOperatorRequset: RequestBase
     {
         /// <summary>
         /// 维护接口 传主键id 表示修改 不传表示新增

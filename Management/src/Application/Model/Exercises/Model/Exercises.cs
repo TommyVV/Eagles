@@ -1,23 +1,10 @@
-﻿using System;
-using Eagles.Application.Model.Enums;
-
-namespace Eagles.Application.Model.Exercises.Model
+﻿namespace Eagles.Application.Model.Exercises.Model
 {
     /// <summary>
     /// 
     /// </summary>
     public class Exercises
     {
-
-        /// <summary>
-        /// 支部id
-        /// </summary>
-        public int BranchId { get; set; }
-
-        /// <summary>
-        /// 组织id
-        /// </summary>
-        public int OrgId { get; set; }
 
         /// <summary>
         /// 试卷名
@@ -30,7 +17,7 @@ namespace Eagles.Application.Model.Exercises.Model
         public int ExercisesId { get; set; }
 
         /// <summary>
-        /// 
+        /// 试卷类型 5：在线考试 10：新闻习题 20：投票
         /// </summary>
         public int ExercisesType { get; set; }
 
@@ -40,7 +27,7 @@ namespace Eagles.Application.Model.Exercises.Model
         //public string Source { get; set; }
         
         /// <summary>
-        /// 是否有积分奖励
+        /// 是否有积分奖励 0:奖励;1:不奖励
         /// </summary>
         public int IsScoreAward { get; set; }
 
@@ -63,24 +50,24 @@ namespace Eagles.Application.Model.Exercises.Model
         ///// 随机题目数量
         ///// </summary>
         //public int RandomSubjectSum { get; set; }
-        
+
         /// <summary>
-        /// 状态
+        /// 状态 0;正常;1:禁用
         /// </summary>
         public int Status { get; set; }
 
         /// <summary>
-        /// 分钟
+        /// 限制答题时间，单位：分钟
         /// </summary>
         public int LimitedTime { get; set; }
 
         /// <summary>
-        /// 是否限制时间
+        /// 是否限制答题时间
         /// </summary>
         public bool HasLimitedTime { get; set; }
 
         /// <summary>
-        /// 创建时间
+        /// 创建时间，仅展示，不用传递
         /// </summary>
         public string CreateTime { get; set; }
 

@@ -1,36 +1,66 @@
 $(document).ready(function() {
-    var token = getCookie('token');
-    var userId = getCookie('userId');
+    var token = getCookie("token");
+    var userId = getCookie("userId");
     var appId = getRequest("appId");
-    var toUserId = getRequest("toUserId");
-    var createType = getRequest("createType");
-    var name = getRequest("name");
+    //指派人员
+    var toUserId = '';
+    var toUserName = '';
+    //指派人员信息
+    var toUsreInfo = '';
+    //创建类型
+    var createType = '';
+    //加载导航
+    $("#top-nav").html("");
+    $("#top-nav").load("head.html", () => {});
     //pageType 0 活动  1 任务
     var pageType = getRequest("type");
     var imgUrl = "";
     var fileArray = [];
-    $("#name").html(name);
-    var placeholder = pageType=='0'?'活动标题':'任务标题'
-    $("#title").attr('placeholder',placeholder);
+    //初始化页面提示语
+    var titlePlaceholder = pageType == "0" ? "活动标题" : "任务标题";
+    $("#title").attr("placeholder", titlePlaceholder);
+    var btnText = pageType == "0" ? "发布活动" : "发布任务";
+    $('.sub-btn').html(btnText);
+    var textareaPlaceholder = pageType == "0" ? "快让大家知道你的活动是什么吧~" : "快让大家知道你的任务是什么吧~";
+    $('.plan-text').attr("placeholder", textareaPlaceholder);
+
     if (pageType == 1) {
         $("#imgUpload").hide();
     }
-    $("#subord").click(function() {
-        window.location.href = "subordinateList.html?appId=" + appId + "&type=" + pageType;
+    //查询关系列表
+    getUserRelationship();
+    $('#btnTestSaveLarge').on('click', function() {
+        if (toUsreInfo) {
+            $("#name").html(toUserName);
+            var arr = toUsreInfo.split("-");
+            toUserId = arr[0];
+            createType = arr[1];
+            $(this).parents('.modal').modal('hide');
+        } else {
+            bootoast({
+                message: "请选择指派人员",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+        }
     });
     //是否公开
-    $('.flag-area').click(function(){
-        if($('.pub-flag').hasClass('select')){
-
-            $('.pub-flag').attr('src','icons/sel_no@2x.png').removeClass('select');
-        }else{
-            $('.pub-flag').attr('src','icons/sel_yes@2x.png').addClass('select');
+    $(".flag-area").click(function() {
+        if ($(".pub-flag").hasClass("select")) {
+            $(".pub-flag")
+                .attr("src", "icons/sel_no@2x.png")
+                .removeClass("select");
+        } else {
+            $(".pub-flag")
+                .attr("src", "icons/sel_yes@2x.png")
+                .addClass("select");
         }
     });
     //图片上传
-    $('#imgupload').fileupload({
+    $("#imgupload").fileupload({
         url: UPLOAD,
-        dataType: 'json',
+        dataType: "json",
         done: function(e, data) {
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
@@ -43,26 +73,37 @@ $(document).ready(function() {
         }
     });
     //附件上传fileupload
-    $('#fileupload').fileupload({
+    $("#fileupload").fileupload({
         url: UPLOAD,
-        dataType: 'json',
+        dataType: "json",
+        //设置进度条
+        progressall: function(e, data) {
+            var progress = parseInt((data.loaded / data.total) * 100);
+            $(".upload-progress").removeClass("hide");
+            console.log("progress", progress);
+            $(".upload-progress .bar").css("width", progress + "%");
+            if (progress == 100) {
+                setTimeout(() => {
+                    $(".upload-progress").addClass("hide");
+                }, 1000);
+            }
+        },
         done: function(e, data) {
-            console.log('上传附件--',data);
-            if(data.result.Code == "00"){
+            console.log("上传附件--", data);
+            if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
                 var object = {
-                    "AttachName": array[0].FileName,
-                    "AttachmentDownloadUrl": array[0].FileUrl
-                }
+                    AttachName: array[0].FileName,
+                    AttachmentDownloadUrl: array[0].FileUrl
+                };
                 fileArray.push(object);
                 if (fileArray.length == 4) {
                     $("#fileupload").hide();
                 }
                 $(".attaches").html(attachmentList(fileArray));
-            }else{
+            } else {
                 console.log(data.result);
             }
-
         }
     });
     $(".sub-btn").click(function() {
@@ -74,114 +115,180 @@ $(document).ready(function() {
             createTask();
         }
     });
-    //发布任务
-    function createTask() {
-        var title = $("#title").val();
-        if (!title) {
-            $.alert("标题不能为空");
-            return;
-        }
-        var start = $("#start").val();
-        if (!start) {
-            $.alert("开始时间不能为空");
-            return;
-        }
-        var end = $("#end").val();
-        if (!end) {
-            $.alert("结束时间不能为空");
-            return;
-        }
-        var content = $("#content").val();
-        if (!content) {
-            $.alert("活动内容不能为空");
-            return;
-        }
-        var pubFlag = $('.pub-flag').hasClass('select');
-        var data = {
-            "TaskName": title,
-            "TaskFromUser": userId,
-            "TaskToUserId": toUserId,
-            "TaskBeginDate": start,
-            "TaskEndDate": end,
-            "TaskContent": content,
-            "CanComment": 0,
-            "IsPublic": pubFlag==true?0:1,
-            "CreateType": createType,
-            "AttachList": fileArray,
-            "Token": token,
-            "AppId": appId
-        };
-        console.log(data, JSON.stringify(data));
+    //查询列表
+    function getUserRelationship() {
         $.ajax({
             type: 'POST',
-            url: DOMAIN + '/api/Task/CreateTask',
-            data: data,
+            url: DOMAIN + '/api/User/GetUserRelationship',
+            data: {
+                "Type": 0,
+                "UserId": userId,
+                "Token": token,
+                "AppId": appId
+            },
             success: function(data) {
-                console.log('CreateActivity---', data);
+                console.log('GetUserRelationship---', data);
                 if (data.Code == "00") {
-                    window.location.href = 'exchangeResult.html?code=1&tip=任务创建成功';
+                    dealRelationList(data.Result.UserList);
                 } else {
                     alert(data.Code, data.Message);
                 }
             }
         })
     }
-    //发布活动
-    function createActivity() {
-        var title = $("#title").val();
-        if (!title) {
-            $.alert("标题不能为空");
+
+    function dealRelationList(list) {
+        var content = `<div class="subordinates">`;
+        list.forEach(element => {
+            content += `<div class="subordinate-item" id="${element.UserId}-${element.IsLeader==true?'1':'0'}">
+                <span>${element.Name==null?element.UserId:element.Name}</span>
+                <div class="right-dir">
+                    <span class="glyphicon" aria-hidden="true"></span>
+                </div>
+            </div>`;
+        });
+        content += `</div>`;
+        $(".modal-body").html(content);
+        $(".subordinate-item").click(function() {
+            $('.subordinates .glyphicon').removeClass('glyphicon-ok');
+            $($(this).find('.glyphicon')).addClass('glyphicon-ok');
+            toUsreInfo = $(this).attr("id");
+            toUserName = $($(this).find('span')).text();
+        });
+    }
+
+    //发布任务
+    function createTask() {
+        if (!validCheck()) {
             return;
         }
-        var start = $("#start").val();
-        if (!start) {
-            $.alert("开始时间不能为空");
-            return;
-        }
-        var end = $("#end").val();
-        if (!end) {
-            $.alert("结束时间不能为空");
-            return;
-        }
-        var content = $("#content").val();
-        if (!content) {
-            $.alert("活动内容不能为空");
-            return;
-        }
-        if (!imgUrl) {
-            $.alert("请上传图片");
-            return;
-        }
+        var pubFlag = $(".pub-flag").hasClass("select");
         var data = {
-            "ActivityType": 0,
-            "ActivityName": title,
-            "ActivityFromUser": userId,
-            "ActivityToUserId": toUserId,
-            "ActivityBeginDate": start,
-            "ActivityEndDate": end,
-            "ActivityContent": content,
-            "CanComment": 0,
-            "IsPublic": 0,
-            "ImageUrl": imgUrl,
-            "CreateType": createType,
-            "AttachList": fileArray,
-            "Token": token,
-            "AppId": appId
+            TaskName: $("#title").val(),
+            TaskFromUser: userId,
+            TaskToUserId: toUserId,
+            TaskBeginDate: $("#start").val(),
+            TaskEndDate: $("#end").val(),
+            TaskContent: $("#content").val(),
+            CanComment: 0,
+            IsPublic: pubFlag == true ? 0 : 1,
+            CreateType: createType,
+            AttachList: fileArray,
+            Token: token,
+            AppId: appId
         };
         console.log(data, JSON.stringify(data));
         $.ajax({
-            type: 'POST',
-            url: DOMAIN + '/api/Activity/CreateActivity',
+            type: "POST",
+            url: DOMAIN + "/api/Task/CreateTask",
             data: data,
             success: function(data) {
-                console.log('CreateActivity---', data);
+                console.log("CreateActivity---", data);
                 if (data.Code == "00") {
-                    window.location.href = 'exchangeResult.html?code=1&tip=活动创建成功';
+                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId;
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: "活动创建失败:" + data.Message + "",
+                        type: "warning",
+                        position: "toast-top-center",
+                        timeout: 3
+                    });
                 }
             }
-        })
+        });
+    }
+    //发布活动
+    function createActivity() {
+        if (!validCheck()) {
+            return;
+        }
+        if (!imgUrl) {
+            bootoast({
+                message: "请上传图片",
+                type: "info",
+                position: "toast-top-center",
+                timeout: 2
+            });
+            return;
+        }
+        var data = {
+            ActivityType: 0,
+            ActivityName: $("#title").val(),
+            ActivityFromUser: userId,
+            ActivityToUserId: toUserId,
+            ActivityBeginDate: $("#start").val(),
+            ActivityEndDate: $("#end").val(),
+            ActivityContent: $("#content").val(),
+            CanComment: 0,
+            IsPublic: 0,
+            ImageUrl: imgUrl,
+            CreateType: createType,
+            AttachList: fileArray,
+            Token: token,
+            AppId: appId
+        };
+        console.log(data, JSON.stringify(data));
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/Activity/CreateActivity",
+            data: data,
+            success: function(data) {
+                console.log("CreateActivity---", data);
+                if (data.Code == "00") {
+                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId;
+                } else {
+                    bootoast({
+                        message: "任务创建失败" + data.Message + "",
+                        type: "warning",
+                        position: "toast-top-center",
+                        timeout: 3
+                    });
+                }
+            }
+        });
+    }
+
+    function validCheck() {
+        var title = $("#title").val();
+        if (!title) {
+            validTip("请填写标题");
+            return false;
+        }
+        if (!toUserId) {
+            validTip("请选择指派人员");
+            return false;
+        }
+        var start = $("#start").val();
+        if (!start) {
+            validTip("请选择开始时间");
+            return false;
+        }
+        var end = $("#end").val();
+        if (!end) {
+            validTip("请选择结束时间");
+            return false;
+        }
+        var startDate = start.replace(/\-/g, "");
+        var endDate = end.replace(/\-/g, "");
+        if (startDate > endDate) {
+            validTip("活动开始日期晚于结束日期");
+            return false;
+        }
+        var content = $("#content").val();
+        if (!content) {
+            validTip("内容不能为空");
+            return false;
+        }
+        return true;
+    }
+
+    function validTip(str) {
+        bootoast({
+            message: str,
+            type: "info",
+            position: "toast-top-center",
+            timeout: 2
+        });
     }
     class CalculateScreen {
         constructor() {
@@ -194,21 +301,20 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#top-nav").load("head.html", () => { });
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
-                $(".container").addClass('pc-wrap');
+                $(".container").addClass("pc-wrap");
             } else {
                 $(".mobile").show();
                 $(".pc").hide();
                 $("body").css("background-color", "#fff");
-                $(".container").removeClass('pc-wrap');
+                $(".container").removeClass("pc-wrap");
             }
         }
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

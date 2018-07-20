@@ -4,12 +4,13 @@ using System.Text;
 using Dapper;
 using Eagles.Application.Model.PartyMember.Requset;
 using Eagles.Base.DataBase;
+using Eagles.Base.DataBase.Modle;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
 {
-    public class PartyMemberDataAccess:IPartyMemberDataAccess
+    public class PartyMemberDataAccess : IPartyMemberDataAccess
     {
         private readonly IDbManager dbManager;
 
@@ -31,11 +32,13 @@ SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`Password`,
     `tb_user_info`.`Name`,
     `tb_user_info`.`Sex`,
+    `tb_user_info`.`Ethnic`,
     `tb_user_info`.`Birthday`,
     `tb_user_info`.`Origin`,
     `tb_user_info`.`OriginAddress`,
     `tb_user_info`.`Phone`,
     `tb_user_info`.`IdNumber`,
+    `tb_user_info`.`Education`,
     `tb_user_info`.`School`,
     `tb_user_info`.`Provice`,
     `tb_user_info`.`City`,
@@ -56,7 +59,9 @@ SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`OperId`,
     `tb_user_info`.`IsCustomer`,
     `tb_user_info`.`Score`,
-    `tb_user_info`.`IsLeader`
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
 FROM `eagles`.`tb_user_info`
   where UserId=@UserId;
  ");
@@ -69,25 +74,25 @@ FROM `eagles`.`tb_user_info`
         {
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_user_info`  where
                 `UserId` = @UserId;
-", new {requset.UserId});
+", new { requset.UserId });
         }
 
         public int EditUserInfo(TbUserInfo info)
         {
-            return dbManager.Excuted(@"UPDATE `eagles`.`tb_user_info`
+            return dbManager.Excuted(@"
+UPDATE `eagles`.`tb_user_info`
 SET
 `OrgId` = @OrgId,
 `BranchId` = @BranchId,
-`Password` = @Password,
 `Name` = @Name,
 `Sex` = @Sex,
-`Ethinc` = @Ethinc,
+`Ethnic` = @Ethnic,
 `Birthday` = @Birthday,
 `Origin` = @Origin,
 `OriginAddress` = @OriginAddress,
 `Phone` = @Phone,
 `IdNumber` = @IdNumber,
-`Eduction` = @Eduction,
+`Education` = @Education,
 `School` = @School,
 `Provice` = @Provice,
 `City` = @City,
@@ -103,15 +108,16 @@ SET
 `MemberStatus` = @MemberStatus,
 `PhotoUrl` = @PhotoUrl,
 `NickPhotoUrl` = @NickPhotoUrl,
-`CreateTime` = @CreateTime,
-`EditTime` = @EditTime,
+`EditTime` = now(),
 `OperId` = @OperId,
 `IsCustomer` = @IsCustomer,
 `Score` = @Score,
 `IsLeader` = @IsLeader
-WHERE `UserId` = @UserId;
+WHERE 
+`UserId` = @UserId
+
 ", info);
-            
+
         }
 
         public int CreateUserInfo(TbUserInfo info)
@@ -123,13 +129,13 @@ WHERE `UserId` = @UserId;
 `Password`,
 `Name`,
 `Sex`,
-`Ethinc`,
+`Ethnic`,
 `Birthday`,
 `Origin`,
 `OriginAddress`,
 `Phone`,
 `IdNumber`,
-`Eduction`,
+`Education`,
 `School`,
 `Provice`,
 `City`,
@@ -158,13 +164,13 @@ VALUES
 @Password,
 @Name,
 @Sex,
-@Ethinc,
+@Ethnic,
 @Birthday,
 @Origin,
 @OriginAddress,
 @Phone,
 @IdNumber,
-@Eduction,
+@Education,
 @School,
 @Provice,
 @City,
@@ -180,12 +186,13 @@ VALUES
 @MemberStatus,
 @PhotoUrl,
 @NickPhotoUrl,
-@CreateTime,
-@EditTime,
+now(),
+now(),
 @OperId,
 @IsCustomer,
 @Score,
 @IsLeader);
+
 
 
 ", info);
@@ -197,11 +204,11 @@ VALUES
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            if (request.UserIdentity>0)
-            {
-                parameter.Append(" and MemberTime = @UserIdentity ");
-                dynamicParams.Add("UserIdentity", (int)request.UserIdentity);
-            }
+            //if (request.UserIdentity>0)
+            //{
+            //    parameter.Append(" and MemberTime = @UserIdentity ");
+            //    dynamicParams.Add("UserIdentity", (int)request.UserIdentity);
+            //}
 
             if (!string.IsNullOrWhiteSpace(request.UserName))
             {
@@ -209,17 +216,17 @@ VALUES
                 dynamicParams.Add("Name", request.UserName);
             }
 
-            if (request.BranchId>0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", request.BranchId);
-            }
+            //if (request.BranchId>0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", request.BranchId);
+            //}
 
-            if (request.OrgId > 0)
-            {
-                parameter.Append(" and OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", request.OrgId);
-            }
+            //if (request.OrgId > 0)
+            //{
+            //    parameter.Append(" and OrgId = @OrgId ");
+            //    dynamicParams.Add("OrgId", request.OrgId);
+            //}
 
             if (request.StartTime != null)
             {
@@ -286,9 +293,9 @@ FROM `eagles`.`tb_user_info`  where 1=1  {0}    order by CreateTime desc limit  
  ", parameter);
 
 
-           
+
             return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
-           // throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         public List<TbUserInfo> GetUserInfoList(GetAuthorityUserSetUpRequset requset, out int totalCount)
@@ -315,22 +322,32 @@ FROM `eagles`.`tb_user_info`  where 1=1  {0}    order by CreateTime desc limit  
                 dynamicParams.Add("OrgId", requset.OrgId);
             }
 
-          
 
-            totalCount = 0;
-            sql.AppendFormat(@" SELECT `tb_user_info`.`OrgId`,
+            sql.AppendFormat(@"SELECT count(*)
+FROM `eagles`.`tb_user_info`  where 1=1  {0} ;
+ ", parameter);
+            totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
+
+            sql.Clear();
+
+            dynamicParams.Add("pageStart", (requset.PageNumber - 1) * requset.PageSize);
+            dynamicParams.Add("pageNum", requset.PageNumber);
+            dynamicParams.Add("pageSize", requset.PageSize);
+
+            sql.AppendFormat(@" 
+SELECT `tb_user_info`.`OrgId`,
     `tb_user_info`.`BranchId`,
     `tb_user_info`.`UserId`,
     `tb_user_info`.`Password`,
     `tb_user_info`.`Name`,
     `tb_user_info`.`Sex`,
-    `tb_user_info`.`Ethinc`,
+    `tb_user_info`.`Ethnic`,
     `tb_user_info`.`Birthday`,
     `tb_user_info`.`Origin`,
     `tb_user_info`.`OriginAddress`,
     `tb_user_info`.`Phone`,
     `tb_user_info`.`IdNumber`,
-    `tb_user_info`.`Eduction`,
+    `tb_user_info`.`Education`,
     `tb_user_info`.`School`,
     `tb_user_info`.`Provice`,
     `tb_user_info`.`City`,
@@ -351,9 +368,14 @@ FROM `eagles`.`tb_user_info`  where 1=1  {0}    order by CreateTime desc limit  
     `tb_user_info`.`OperId`,
     `tb_user_info`.`IsCustomer`,
     `tb_user_info`.`Score`,
-    `tb_user_info`.`IsLeader`
-FROM `eagles`.`tb_user_info`  where 1=1  {0}  
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
+FROM `eagles`.`tb_user_info`  where 1=1  {0}    order by CreateTime desc limit  @pageStart ,@pageSize
  ", parameter);
+
+
+       
 
             return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
         }
@@ -362,7 +384,7 @@ FROM `eagles`.`tb_user_info`  where 1=1  {0}
         {
 
             return dbManager.Excuted(@"  DELETE FROM `eagles`.`tb_user_relationship`
-            WHERE  `UserId` in @UserId;", new {UserId = list.Select(x => x.UserId).ToArray()});
+            WHERE  `UserId` in @UserId;", new { UserId = list.Select(x => x.UserId).ToArray() });
         }
 
         public int CreateAuthorityUserSetUp(List<TbUserRelationship> list)
@@ -387,7 +409,138 @@ VALUES
     `tb_user_relationship`.`SubUserId`
 FROM `eagles`.`tb_user_relationship`  where `UserId` = @UserId;
  ");
-            return dbManager.Query<TbUserRelationship>(sql.ToString(), new {UserId = requsetUserId});
+            return dbManager.Query<TbUserRelationship>(sql.ToString(), new { UserId = requsetUserId });
+        }
+
+        public int CreateUserInfo(List<TbUserInfo> userinfo)
+        {
+
+            return dbManager.Excuted(@"INSERT INTO `eagles`.`tb_user_info`
+(`OrgId`,
+`BranchId`,
+`UserId`,
+`Password`,
+`Name`,
+`Sex`,
+`Ethnic`,
+`Birthday`,
+`Origin`,
+`OriginAddress`,
+`Phone`,
+`IdNumber`,
+`Education`,
+`School`,
+`Provice`,
+`City`,
+`District`,
+`Address`,
+`Company`,
+`Dept`,
+`Title`,
+`PreMemberTime`,
+`MemberTime`,
+`MemberType`,
+`Status`,
+`MemberStatus`,
+`PhotoUrl`,
+`NickPhotoUrl`,
+`CreateTime`,
+`EditTime`,
+`OperId`,
+`IsCustomer`,
+`Score`,
+`IsLeader`)
+VALUES
+(@OrgId,
+@BranchId,
+@UserId,
+@Password,
+@Name,
+@Sex,
+@Ethnic,
+@Birthday,
+@Origin,
+@OriginAddress,
+@Phone,
+@IdNumber,
+@Education,
+@School,
+@Provice,
+@City,
+@District,
+@Address,
+@Company,
+@Dept,
+@Title,
+@PreMemberTime,
+@MemberTime,
+@MemberType,
+@Status,
+@MemberStatus,
+@PhotoUrl,
+@NickPhotoUrl,
+now(),
+now(),
+@OperId,
+@IsCustomer,
+@Score,
+@IsLeader);
+
+
+
+", userinfo);
+
+        }
+
+        public List<TbUserInfo> GetUserInfoList(List<int> list)
+        {
+
+            var sql = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+
+            sql.Append(@" SELECT `tb_user_info`.`OrgId`,
+    `tb_user_info`.`BranchId`,
+    `tb_user_info`.`UserId`,
+    `tb_user_info`.`Password`,
+    `tb_user_info`.`Name`,
+    `tb_user_info`.`Sex`,
+    `tb_user_info`.`Ethnic`,
+    `tb_user_info`.`Birthday`,
+    `tb_user_info`.`Origin`,
+    `tb_user_info`.`OriginAddress`,
+    `tb_user_info`.`Phone`,
+    `tb_user_info`.`IdNumber`,
+    `tb_user_info`.`Education`,
+    `tb_user_info`.`School`,
+    `tb_user_info`.`Provice`,
+    `tb_user_info`.`City`,
+    `tb_user_info`.`District`,
+    `tb_user_info`.`Address`,
+    `tb_user_info`.`Company`,
+    `tb_user_info`.`Dept`,
+    `tb_user_info`.`Title`,
+    `tb_user_info`.`PreMemberTime`,
+    `tb_user_info`.`MemberTime`,
+    `tb_user_info`.`MemberType`,
+    `tb_user_info`.`Status`,
+    `tb_user_info`.`MemberStatus`,
+    `tb_user_info`.`PhotoUrl`,
+    `tb_user_info`.`NickPhotoUrl`,
+    `tb_user_info`.`CreateTime`,
+    `tb_user_info`.`EditTime`,
+    `tb_user_info`.`OperId`,
+    `tb_user_info`.`IsCustomer`,
+    `tb_user_info`.`Score`,
+    `tb_user_info`.`IsLeader`,
+    `tb_user_info`.`LoginErrorCount`,
+    `tb_user_info`.`LockingTime`
+FROM `eagles`.`tb_user_info`
+  where UserId  in  @UserId;  
+ ");
+            dynamicParams.Add("UserId", list.ToArray());
+
+            return dbManager.Query<TbUserInfo>(sql.ToString(), dynamicParams);
+            
         }
     }
 }

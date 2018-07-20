@@ -3,7 +3,7 @@
 namespace Eagles.Application.Model.ActivityTask.Requset
 {
     /// <summary>
-    /// 修改/新增 任务活动实体类
+    /// 活动 修改/新增
     /// </summary>
     public class EditActivityTaskInfoRequset : RequestBase
     {

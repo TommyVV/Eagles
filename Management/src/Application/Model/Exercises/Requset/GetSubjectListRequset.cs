@@ -9,11 +9,11 @@ namespace Eagles.Application.Model.Exercises.Requset
     /// <summary>
     /// 
     /// </summary>
-    public class GetSubjectListRequset: ListRequestBase
+    public class GetSubjectListRequset: PageRequestBase
     {
         /// <summary>
         /// 问题
         /// </summary>
-        public string Question { get; set; }
+        public string QuestionId { get; set; }
     }
 }

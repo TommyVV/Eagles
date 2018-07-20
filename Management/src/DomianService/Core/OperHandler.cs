@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
 using Eagles.Application.Model.Operator.Model;
 using Eagles.Application.Model.Operator.Requset;
 using Eagles.Application.Model.Operator.Response;
 using Eagles.Base;
-using Eagles.DomainService.Model.News;
+using Eagles.Base.Cache;
 using Eagles.DomainService.Model.Oper;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
@@ -19,9 +17,12 @@ namespace Eagles.DomainService.Core
     {
         private readonly IOperDataAccess dataAccess;
 
-        public OperHandler(IOperDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public OperHandler(IOperDataAccess dataAccess,ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
         public bool EditOper(EditOperatorRequset requset)
         {
@@ -29,7 +30,7 @@ namespace Eagles.DomainService.Core
 
             TbOper mod;
             var now = DateTime.Now;
-
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.Info.OperId > 0)
             {
                 mod = new TbOper
@@ -38,7 +39,7 @@ namespace Eagles.DomainService.Core
                    // CreateTime=now,
                     GroupId=requset.Info.AuthorityGroupId,
                     OperName =requset.Info.OperName,
-                    OrgId=requset.OrgId,
+                    OrgId= token.OrgId,
                     Password=requset.Info.Password,
                     Status=requset.Info.Status
                 };
@@ -55,7 +56,7 @@ namespace Eagles.DomainService.Core
                     CreateTime = now,
                     GroupId = requset.Info.AuthorityGroupId,
                     OperName = requset.Info.OperName,
-                    OrgId = requset.OrgId,
+                    OrgId = token.OrgId,
                     Password = requset.Info.Password,
                     Status = requset.Info.Status
                 };

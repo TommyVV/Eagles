@@ -2,8 +2,10 @@
 using System.Text;
 using Dapper;
 using Eagles.Application.Model.Goods.Requset;
+using Eagles.Base.Cache;
 using Eagles.Base.DataBase;
 using Eagles.DomainService.Model.Product;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.DataAccess;
 
 namespace Ealges.DomianService.DataAccess
@@ -13,9 +15,12 @@ namespace Ealges.DomianService.DataAccess
 
         private readonly IDbManager dbManager;
 
-        public GoodsDataAccess(IDbManager dbManager)
+        private readonly ICacheHelper cacheHelper;
+
+        public GoodsDataAccess(IDbManager dbManager,ICacheHelper cacheHelper)
         {
             this.dbManager = dbManager;
+            this.cacheHelper = cacheHelper;
         }
         public int EditGoods(TbProduct mod)
         {
@@ -23,7 +28,6 @@ namespace Ealges.DomianService.DataAccess
 SET
 `OrgId` = @OrgId,
 `ProdName` = @ProdName,
-`CreateTime` = @CreateTime,
 `EditTime` = @EditTime,
 `Price` = @Price,
 `Score` = @Score,
@@ -66,8 +70,8 @@ VALUES
 (@ProdId,
 @OrgId,
 @ProdName,
-@CreateTime,
-@EditTime,
+now(),
+now(),
 @Price,
 @Score,
 @Stock,
@@ -128,18 +132,18 @@ FROM `eagles`.`tb_product`
             var sql = new StringBuilder();
             var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
-
-            if (requset.OrgId > 0)
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
+            if (token.OrgId > 0)
             {
                 parameter.Append(" and  OrgId = @OrgId ");
-                dynamicParams.Add("OrgId", requset.OrgId);
+                dynamicParams.Add("OrgId", token.OrgId);
             }
 
-            if (requset.BranchId > 0)
-            {
-                parameter.Append(" and BranchId = @BranchId ");
-                dynamicParams.Add("BranchId", requset.BranchId);
-            }
+            //if (requset.BranchId > 0)
+            //{
+            //    parameter.Append(" and BranchId = @BranchId ");
+            //    dynamicParams.Add("BranchId", requset.BranchId);
+            //}
 
             if (requset.GoodsStatus > 0)
             {

@@ -16,6 +16,6 @@ namespace Eagles.Application.Model.Meeting.Requset
         /// <summary>
         /// 会议id
         /// </summary>
-        public string MeetingId { get; set; }
+        public int MeetingId { get; set; }
     }
 }

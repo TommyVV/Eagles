@@ -3,7 +3,7 @@ var token = localStorage.getItem('token');
 var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
 var appId=getRequest('appId');
 $('#top-nav,#mobilenav').load('head.html');
-$('#pc-footer').load('footer.html');
+$('#footer').load('footer.html');
 class CalculateScreen {
 	constructor() {
 		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -13,21 +13,11 @@ class CalculateScreen {
 		if(!this.isMobile) {
 			$('.mobile').hide();
 			$('.pc').show();
-//			$('#top-nav').load('head.html', () => {
-//
-//			})
-			$('#left-nav').load('leftNav.html', () => {
-
-			})
-//			$('#footer').load('footer.html', () => {
-//
-//			})
 			$('body').css('background-color', 'rgb(248,248,248)');
 		} else {
 			$('.mobile').show();
 			$('.pc').hide();
 			$('body').css('background-color', '#fff');
-
 		}
 	}
 }
@@ -35,8 +25,6 @@ new CalculateScreen();
 $(window).resize(function() {
 	new CalculateScreen();
 })
-
-
 //接口模块
 scrollimg(moduleType,token,appId); //banner
 moduleListTitle(moduleType,appId) //名称分类方法
@@ -57,17 +45,21 @@ function scrollimg(moduleType,token,appId) {
 				var divs = ''; //移动端图片
 				var pclicon = '';
 				if(data.ImageList!=null){
+					if(data.ImageList.length==1){
+						$('.focus_s,.carousel-indicators').hide();
+					}
 					for(var i = 0; i < data.ImageList.length; i++) {
-							limobile += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>';
-							divs += '<div class="item"><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" alt=""></a><div class="carousel-caption"></div></div>';
-							pclicon += '<li><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" /> </a></li>'
-						}
-						$('#carousel-example-generic .carousel-indicators').append(limobile);
-						$('#carousel-example-generic .carousel-inner').append(divs);
-						$('#focus_m ul').append(pclicon);
-						focusRun.init();
-						$('#carousel-example-generic .carousel-indicators li:eq(0)').addClass('active');
-						$('.item:eq(0)').addClass('active');
+						limobile += '<li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>';
+						divs += '<div class="item"><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" alt=""></a><div class="carousel-caption"></div></div>';
+						pclicon += '<li><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" /> </a></li>'
+					}
+					$('#carousel-example-generic .carousel-indicators').append(limobile);
+					$('#carousel-example-generic .carousel-inner').append(divs);
+					$('#focus_m ul').append(pclicon);
+					
+					focusRun.init();
+					$('#carousel-example-generic .carousel-indicators li:eq(0)').addClass('active');
+					$('.item:eq(0)').addClass('active');
 				}else{
 					$('.pc-wrap-banner,.carousel-box').hide()
 				}
@@ -117,7 +109,6 @@ function moduleListTitle(moduleType,appId) {
 					}
                     //存储新闻类别ID等属性
 					moudlesIds.push(moudle);
-
 				}
 				$('.main_content').append(title);
 				$('#la_leftg').append(pctitieone);

@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.User.GetUserInfo
         /// <summary>
         /// 用户信息
         /// </summary>
-        public UserInfo ResultUserInfo { get; set; }
+        public ResUser ResultUserInfo { get; set; }
     }
 }

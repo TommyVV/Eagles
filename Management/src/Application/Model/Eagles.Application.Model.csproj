@@ -134,6 +134,8 @@
     <Compile Include="Exercises\Response\GetSubjectDetailResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectListResponse.cs" />
     <Compile Include="Exercises\Response\GetSubjectResponse.cs" />
+    <Compile Include="Export\ExportRequest.cs" />
+    <Compile Include="Export\ExportResponse.cs" />
     <Compile Include="Goods\Model\Goods.cs" />
     <Compile Include="Goods\Model\GoodsDetail.cs" />
     <Compile Include="Goods\Requset\EditGoodsRequset.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Meeting\Response\CheckMeetUserResponse.cs" />
     <Compile Include="Meeting\Response\GetMeetingDetailResponse.cs" />
     <Compile Include="Meeting\Response\GetMeetingResponse.cs" />
+    <Compile Include="Meeting\Response\ImportMeetingResponse.cs" />
     <Compile Include="Menus\Model\Menus.cs" />
     <Compile Include="Menus\Requset\EditMenusRequset.cs" />
     <Compile Include="Menus\Requset\GetMenusDetailRequest.cs" />
@@ -205,6 +208,7 @@
     <Compile Include="Organization\Response\GetOrganizationResponse.cs" />
     <Compile Include="OrgListRequestBase.cs" />
     <Compile Include="OrgRequestBase.cs" />
+    <Compile Include="PartyMember\Model\ImportUser.cs" />
     <Compile Include="PartyMember\Model\Member.cs" />
     <Compile Include="PartyMember\Model\UserInfoCheck.cs" />
     <Compile Include="PartyMember\Model\UserInfoDetails.cs" />
@@ -215,13 +219,27 @@
     <Compile Include="PartyMember\Requset\GetAuthorityUserSetUpRequset.cs" />
     <Compile Include="PartyMember\Requset\GetPartyMemberRequest.cs" />
     <Compile Include="PartyMember\Requset\GetUserInfoDetailRequest.cs" />
+    <Compile Include="PartyMember\Requset\ImportUserRequest.cs" />
     <Compile Include="PartyMember\Requset\RemoveAuthorityUserSetUp.cs" />
     <Compile Include="PartyMember\Requset\RemoveUserInfoDetailsRequest.cs" />
     <Compile Include="PartyMember\Response\CheckUserInfoDetailsResponse.cs" />
     <Compile Include="PartyMember\Response\GetAuthorityUserSetUpResponse.cs" />
     <Compile Include="PartyMember\Response\GetPartyMemberResponse.cs" />
     <Compile Include="PartyMember\Response\GetUserInfoDetailResponse.cs" />
+    <Compile Include="PartyMember\Response\ImportUserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publicity\Model\PublicActivity.cs" />
+    <Compile Include="Publicity\Model\Aritcle.cs" />
+    <Compile Include="Publicity\Model\PublicTask.cs" />
+    <Compile Include="Publicity\Request\GetPublicActivityDetailRequest.cs" />
+    <Compile Include="Publicity\Request\GetPublicArticleDetailRequest.cs" />
+    <Compile Include="Publicity\Request\GetPublicTaskDetailRequest.cs" />
+    <Compile Include="Publicity\Response\GetAritcleDetailResponse.cs" />
+    <Compile Include="Publicity\Response\GetPublicActivityDetailResponse.cs" />
+    <Compile Include="Publicity\Response\GetPublicActivityResponse.cs" />
+    <Compile Include="Publicity\Response\GetPublicAritcleResponse.cs" />
+    <Compile Include="Publicity\Response\GetPublicTaskDetailResponse.cs" />
+    <Compile Include="Publicity\Response\GetPublicTaskResponse.cs" />
     <Compile Include="RequestBase.cs" />
     <Compile Include="ResponseBase.cs" />
     <Compile Include="RollImage\Model\RollImageInfo.cs" />
@@ -252,11 +270,13 @@
     <Compile Include="SMSOrg\Request\RemoveSMSOrgRequest.cs" />
     <Compile Include="SMSOrg\Response\GetSMSOrgDetailResponse.cs" />
     <Compile Include="SMSOrg\Response\GetSMSOrgResponse.cs" />
-    <Compile Include="SMS\Model\SMS.cs" />
+    <Compile Include="SMS\Model\SMSInfo.cs" />
+    <Compile Include="SMS\Request\CreateOrgSmsRequest.cs" />
     <Compile Include="SMS\Request\EditSMSRequset.cs" />
     <Compile Include="SMS\Request\GetSMSDetailRequset.cs" />
     <Compile Include="SMS\Request\GetSMSRequset.cs" />
     <Compile Include="SMS\Request\RemoveSMSRequset.cs" />
+    <Compile Include="SMS\Response\GetOrgSmsResponse.cs" />
     <Compile Include="SMS\Response\GetSMSDetailResponse.cs" />
     <Compile Include="SMS\Response\GetSMSResponse.cs" />
     <Compile Include="SystemMessage\Model\SystemNews.cs" />
@@ -266,8 +286,6 @@
     <Compile Include="SystemMessage\Requset\GetSystemNewsRequset.cs" />
     <Compile Include="SystemMessage\Response\GetSystemNewsDetailResponse.cs" />
     <Compile Include="SystemMessage\Response\GetSystemNewsResponse.cs" />
-    <Compile Include="Test\TestRequest.cs" />
-    <Compile Include="Test\TestResponse.cs" />
     <Compile Include="Upload\FileUploadResult.cs" />
     <Compile Include="Upload\UploadResponse.cs" />
   </ItemGroup>

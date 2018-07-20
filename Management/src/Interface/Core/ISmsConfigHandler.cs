@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Eagles.Application.Model;
 using Eagles.Application.Model.SMS.Request;
 using Eagles.Application.Model.SMS.Response;
+using Eagles.Application.Model.SMSOrg.Request;
+using Eagles.Application.Model.SMSOrg.Response;
 using Eagles.Base;
 
 namespace Eagles.Interface.Core
@@ -38,5 +40,13 @@ namespace Eagles.Interface.Core
         /// <param name="requset"></param>
         /// <returns></returns>
         GetSMSDetailResponse GetSMSDetail(GetSMSDetailRequset requset);
+
+
+
+
+        bool EditOrgSmsConfig(EditSMSOrgRequset request);
+        GetSMSOrgResponse GetSMSOrg(GetSMSOrgRequest requset);
+        bool RemoveOrgSmsConfig(RemoveSMSOrgRequest requset);
+        GetSMSOrgDetailResponse GetSMSOrgDetail(GetSMSOrgDetailRequset requset);
     }
 }
