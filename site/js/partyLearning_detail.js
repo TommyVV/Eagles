@@ -104,7 +104,7 @@ function getNewsDetail(newsId, token, appId) {
 				for(var j = 0; j < data.Attach.length; j++) {
 
 					if(data.Attach[j].AttachName) {
-						filesText += ' <p><span class="glyphicon glyphicon-file" aria-hidden="true"></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
+						filesText += ' <p><span class="filebackbg"><img src="icons/downloadfolder@2x.png" /></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
 					}
 				}
 				//头部内容
