@@ -183,7 +183,7 @@ namespace Eagles.DomainService.Core
                 //PageSize = requset.PageSize,
                 //StartTime = requset.StartTime,todo
                 Token = requset.Token,
-            }, out int totalCount) ?? new List<TbUserInfo>();
+            }, out var totalCount) ?? new List<TbUserInfo>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
