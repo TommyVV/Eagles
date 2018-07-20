@@ -124,7 +124,7 @@ body {
 .myInfoBox .right #fileupload {
     position: relative;
     float: right;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     display: block;
     opacity: 0;
 }
@@ -264,6 +264,9 @@ body {
         /*display: none;*/
     }
 }
+.add_fj{width:100%;display: inline-block;height:1.5rem;line-height: 1.5rem;text-align: right;border-bottom:1px solid #EEEEEE;}
+.p_infofre{display: none;}
+.glyphicon{top:2px;}
 
 
 
