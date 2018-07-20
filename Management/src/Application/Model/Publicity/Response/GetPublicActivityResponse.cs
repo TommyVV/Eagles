@@ -6,5 +6,7 @@ namespace Eagles.Application.Model.Publicity.Response
     public class GetPublicActivityResponse
     {
         public List<PublicActivity> Activitys { get; set; }
+
+        public int TotalCount { get; set; }
     }
 }

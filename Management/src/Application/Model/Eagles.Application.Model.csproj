@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="ActivityTask\Model\ActivityDetailInfo.cs" />
     <Compile Include="ActivityTask\Model\ActivityTaskModel.cs" />
+    <Compile Include="ActivityTask\Model\PublicActivityDetail.cs" />
+    <Compile Include="ActivityTask\Model\PublicTaskDetail.cs" />
     <Compile Include="ActivityTask\Requset\EditActivityTaskInfoRequset.cs" />
     <Compile Include="ActivityTask\Requset\GetActivityTaskDetailRequset.cs" />
     <Compile Include="ActivityTask\Requset\GetActivityTaskRequset.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="OrgRequestBase.cs" />
     <Compile Include="PartyMember\Model\ImportUser.cs" />
     <Compile Include="PartyMember\Model\Member.cs" />
+    <Compile Include="PartyMember\Model\User.cs" />
     <Compile Include="PartyMember\Model\UserInfoCheck.cs" />
     <Compile Include="PartyMember\Model\UserInfoDetails.cs" />
     <Compile Include="PartyMember\Model\UserInfoResult.cs" />

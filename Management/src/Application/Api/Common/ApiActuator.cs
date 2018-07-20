@@ -41,6 +41,7 @@ namespace Eagles.Application.Host.Common
         {
             try
             {
+                Logger.LoggerInfo(json.SerializeObject(data));
                 if (needCheckToken)
                 {
                     var requset = json.SerializeObject(data);
@@ -58,9 +59,9 @@ namespace Eagles.Application.Host.Common
                     cacheHelper.SetData(token.ToString(), info);
 
                 }
-
-                // var aa = (object)run.Target;
-                return new ResponseFormat<TResult>(run.Invoke(data));
+                var result = run.Invoke(data);
+                Logger.LoggerInfo(json.SerializeObject(result));
+                return new ResponseFormat<TResult>(result);
             }
             catch (TransactionException err)
             {
@@ -86,7 +87,9 @@ namespace Eagles.Application.Host.Common
         {
             try
             {
-                return new ResponseFormat<T>(run.Invoke());
+                var result = run.Invoke();
+                Logger.LoggerInfo(json.SerializeObject(result));
+                return new ResponseFormat<T>(result);
             }
             catch (TransactionException err)
             {

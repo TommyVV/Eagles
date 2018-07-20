@@ -1,4 +1,6 @@
 ﻿using System;
+using Eagles.Base.Json;
+using Eagles.Base.Json.Implement;
 using Newtonsoft.Json;
 using NLog;
 
@@ -10,6 +12,8 @@ namespace Eagles.Base
     public class ApiActuator
     {
         private static readonly Logger.ILogger Logger=new Logger.Implement.Logger();
+
+        private static readonly IJsonSerialize JsonSerialize = new JsonSerialize();
 
         /// <summary>
         /// 逻辑调用执行器
