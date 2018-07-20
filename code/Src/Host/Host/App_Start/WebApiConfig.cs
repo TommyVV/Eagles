@@ -11,7 +11,7 @@ namespace Eagles.Application.Host
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API 路由
             config.MapHttpAttributeRoutes();
-
+            config.Filters.Add(new LogAttribute());
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
