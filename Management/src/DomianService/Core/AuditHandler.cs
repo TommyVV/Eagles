@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Eagles.Application.Model;
 using Eagles.Application.Model.Audit.Model;
 using Eagles.Application.Model.Audit.Requset;
 using Eagles.Application.Model.Audit.Response;
@@ -20,14 +21,22 @@ namespace Eagles.DomainService.Core
 
         private readonly ICacheHelper cacheHelper;
 
-        public AuditHandler(IAuditDataAccess dataAccess, ICacheHelper cacheHelper)
+        private readonly IOperGroupHandler OperGroupdataAccess;
+
+        public AuditHandler(IAuditDataAccess dataAccess, ICacheHelper cacheHelper, IOperGroupHandler operGroupdataAccess)
         {
             this.dataAccess = dataAccess;
             this.cacheHelper = cacheHelper;
+            OperGroupdataAccess = operGroupdataAccess;
         }
 
         public bool CreateAudit(CreateAuditRequset requset)
         {
+
+
+          
+
+
 
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             var now = DateTime.Now;
@@ -72,6 +81,39 @@ namespace Eagles.DomainService.Core
                 UserId = x.OperId,
             }).ToList();
             return response;
+        }
+
+        public bool Audit(AuditInfo requset)
+        {
+
+            var authority = OperGroupdataAccess.GetAuthorityByToken(new RequestBase() { Token = requset.Token });
+
+            switch (requset.AuditType)
+            {
+                case AuditType.产品:
+
+                    authority.List.Any(x => x.FunCode == "Audit");
+
+                    break;
+                case AuditType.任务:
+
+                    authority.List.Any(x => x.FunCode == "Audit");
+                    break;
+                case AuditType.新闻:
+                    authority.List.Any(x => x.FunCode == "Audit");
+
+                    break;
+                case AuditType.活动:
+                    authority.List.Any(x => x.FunCode == "Audit");
+                    break;
+                case AuditType.用户:
+                    authority.List.Any(x => x.FunCode == "Audit");
+                    break;
+            }
+
+            authority.List.Any(x => x.FunCode == "Audit");
+
+            throw new NotImplementedException();
         }
     }
 }

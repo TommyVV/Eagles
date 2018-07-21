@@ -124,6 +124,16 @@ const navMap = [
     sub: "sub10"
   },
   {
+    pathname: "#/branchlist",
+    key: "188",
+    sub: "sub10"
+  },
+  {
+    pathname: "#/branch/detail",
+    key: "199",
+    sub: "sub10"
+  },
+  {
     pathname: "#/imagelist",
     key: "20",
     sub: "sub11"

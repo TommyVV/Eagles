@@ -338,6 +338,18 @@ export default class App extends React.Component {
               >
                 机构详情
               </Menu.Item>
+              <Menu.Item
+                key="188"
+                onClick={e => hashHistory.replace("/branchlist")}
+              >
+                支部列表
+              </Menu.Item>
+              <Menu.Item
+                key="199"
+                onClick={e => hashHistory.replace("/branch/detail")}
+              >
+                支部详情
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub11"

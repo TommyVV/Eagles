@@ -51,6 +51,8 @@ import SmsOrgDetail from "../container/SmsOrg/Detail";
 import ExList from "../container/Exercise/ExDetail/ExList";
 import ScoreList from "../container/Score";
 import ScoreDetail from "../container/Score/Detail";
+import BranchList from "../container/Branch";
+import BranchDetail from "../container/Branch/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -103,6 +105,9 @@ class RouteMap extends Component {
           {/* 机构管理 */}
           <route path="/orglist" component={OrgList} />
           <route path="/org/detail(/:id)" component={OrgDetail} />
+          {/* 支部管理 */}
+          <route path="/branchlist" component={BranchList} />
+          <route path="/branch/detail(/:id)" component={BranchDetail} />
           {/* 滚动图片管理 */}
           <route path="/imagelist" component={ImageList} />
           <route path="/image/detail(/:id)" component={ImageDetail} />
@@ -133,7 +138,7 @@ class RouteMap extends Component {
           <route path="/smssystem/detail(/:id)" component={SmsSystemDetail} />
           {/* 机构短信配置 */}
           <route path="/smsorglist" component={SmsOrgList} />
-          <route path="/smsorg/detail(/:id)" component={SmsOrgDetail} />
+          <route path="/smsorg/detail(/:org/:vendor)" component={SmsOrgDetail} />
         </Route>
       </Router>
     );
