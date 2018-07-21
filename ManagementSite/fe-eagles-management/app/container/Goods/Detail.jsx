@@ -172,7 +172,6 @@ class Base extends Component {
         },
         uploadFn: async file => {
           // const res=await uploadFile(file);
-          debugger;
         }
       },
       onChange: (Content, info) => {

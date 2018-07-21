@@ -16,7 +16,7 @@ import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/memberService";
-// import { getOrgList } from "../../services/br";
+import { getList } from "../../services/branchService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, pageMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/imageAction";
@@ -49,14 +49,18 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          const { member, Orgs } = this.props;
-          // const { OrgId } = values;
-          // const org = Orgs.filter(o => o.OrgId == OrgId);
+          const { branch, member } = this.props;
+          const { BranchId } = values;
+          const bra = branch.filter(o => o.BranchId == BranchId);
+          let { IsMoney } = values;
+          IsMoney = IsMoney ? true : false;
           let params = {
             Info: {
               ...member,
-              ...values
-              // OrgName: org && org[0].OrgName
+              ...values,
+              IsMoney,
+              Password: "abc123",
+              BranchName: bra && bra[0].BranchName
             }
           };
           let { Code } = await createOrEdit(params);
@@ -107,7 +111,8 @@ class Base extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { Orgs, member } = this.props;
+    const { branch, member } = this.props;
+    console.log(branch,member)
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -127,9 +132,14 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="所属支部">
           {getFieldDecorator("BranchId")(
             <Select>
-              <Option value="0">第一支部</Option>
-              <Option value="1">第二支部</Option>
-              <Option value="2">第三支部</Option>
+              {branch.map((o, i) => {
+                console.log(o.BranchId,o.BranchName)
+                return (
+                  <Option value={o.BranchId} key={i}>
+                    {o.BranchName}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
@@ -199,15 +209,17 @@ class Base extends Component {
             <Input placeholder="请输入常住地址" />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="联系电话">
+        <FormItem {...formItemLayout} label="手机号码">
           {getFieldDecorator("Phone", {
             rules: [
               {
                 required: true,
-                message: "必填，请输入联系电话"
+                message: "必填，请输入手机号码",
+                pattern: /^1(3|4|5|7|8)\d{9}$/,
+                message: "手机号格式不正确!"
               }
             ]
-          })(<Input placeholder="请输入联系电话" />)}
+          })(<Input placeholder="请输入手机号码" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="身份证">
           {getFieldDecorator("IdCard", {
@@ -252,7 +264,7 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="人员类别（正式/预备党员）">
-          {getFieldDecorator("UserStatus")(
+          {getFieldDecorator("MemberType")(
             <Select>
               <Option value="0">预备党员</Option>
               <Option value="1">正式党员</Option>
@@ -270,9 +282,9 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="党费缴纳到期时间">
           {getFieldDecorator("ExpireDateFee")(
             <DatePicker
-            placeholder="请选择党费缴纳到期时间"
-            style={{ width: "100%" }}
-          />
+              placeholder="请选择党费缴纳到期时间"
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="党籍状态">
@@ -332,7 +344,7 @@ const FormMap = Form.create({
         value: member.Nation
       }),
       Birth: Form.createFormField({
-        value: member.Birth ? moment(news.Birth, "YYYY-MM-DD") : null
+        value: member.Birth ? moment(member.Birth, "YYYY-MM-DD") : null
       }),
       NativePlace: Form.createFormField({
         value: member.NativePlace
@@ -362,19 +374,25 @@ const FormMap = Form.create({
         value: member.Position
       }),
       BeforJoinTime: Form.createFormField({
-        value: member.BeforJoinTime ? moment(news.BeforJoinTime, "YYYY-MM-DD") : null
+        value: member.BeforJoinTime
+          ? moment(member.BeforJoinTime, "YYYY-MM-DD")
+          : null
       }),
       FormalJoinTime: Form.createFormField({
-        value: member.FormalJoinTime ? moment(news.FormalJoinTime, "YYYY-MM-DD") : null
+        value: member.FormalJoinTime
+          ? moment(member.FormalJoinTime, "YYYY-MM-DD")
+          : null
       }),
-      UserStatus: Form.createFormField({
-        value: member.UserStatus ? member.UserStatus + "" : "0"
+      MemberType: Form.createFormField({
+        value: member.MemberType ? member.MemberType + "" : "0"
       }),
       IsMoney: Form.createFormField({
         value: member.IsMoney ? "1" : "0"
       }),
       ExpireDateFee: Form.createFormField({
-        value: member.ExpireDateFee ? moment(news.ExpireDateFee, "YYYY-MM-DD") : null
+        value: member.ExpireDateFee
+          ? moment(member.ExpireDateFee, "YYYY-MM-DD")
+          : null
       }),
       MemberStatus: Form.createFormField({
         value: member.MemberStatus ? member.MemberStatus + "" : "0"
@@ -395,7 +413,7 @@ class PartyMemberDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Orgs: []
+      branch: []
     };
   }
 
@@ -405,14 +423,14 @@ class PartyMemberDetail extends Component {
       this.getInfo(id); //拿详情
     } else {
       this.props.clearInfo();
-      // this.getOrgList();
+      this.getBranchList();
     }
   }
   // 加载所有机构
-  getOrgList = async () => {
+  getBranchList = async () => {
     try {
-      const { List } = await getOrgList();
-      this.setState({ Orgs: List });
+      const { List } = await getList();
+      this.setState({ branch: List });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -424,8 +442,8 @@ class PartyMemberDetail extends Component {
   // 根据id查询详情
   getInfo = async UserId => {
     try {
+      await this.getBranchList();
       const { Info } = await getInfoById({ UserId });
-      // this.getOrgList();
       this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");
@@ -435,8 +453,7 @@ class PartyMemberDetail extends Component {
   render() {
     return (
       <Nav>
-        {/* <FormMap member={this.props.memberReducer} Orgs={this.state.Orgs} /> */}
-        <FormMap member={this.props.memberReducer} />
+        <FormMap member={this.props.memberReducer} branch={this.state.branch} />
       </Nav>
     );
   }
