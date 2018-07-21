@@ -14,8 +14,7 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getOrgList, deleteOrg } from "../../services/orgService";
-import { getAllArea } from "../../services/areaService";
+import { getList, del } from "../../services/systemSmsService";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -25,37 +24,33 @@ class SmsSystemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orgList: [], // 项目列表数组
-      AreaInfos: [] // 地区
+      systemList: [] // 列表数组
     };
     this.columns = [
       {
-        title: "短信商id",
-        dataIndex: "OrgId"
+        title: "短信提供商",
+        dataIndex: "VendorName"
       },
       {
-        title: "短信商",
-        dataIndex: "OrgName"
+        title: "AppId",
+        dataIndex: "AppId"
       },
       {
-        title: "appId",
-        dataIndex: "a"
-      },
-      {
-        title: "appKey",
-        dataIndex: "b"
+        title: "AppKey",
+        dataIndex: "AppKey"
       },
       {
         title: "短信总数",
-        dataIndex: "n"
+        dataIndex: "MaxCount"
       },
       {
-        title: "已用数量",
-        dataIndex: "g"
+        title: "已发数量",
+        dataIndex: "SendCount"
       },
       {
         title: "状态",
-        dataIndex: "t"
+        dataIndex: "Status",
+        render: status => <span>{status == "0" ? "正常" : "禁用"}</span>
       },
       {
         title: "操作",
@@ -64,27 +59,30 @@ class SmsSystemList extends React.Component {
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/smssystem/detail/${obj.OrgId}`)
+                  hashHistory.replace(`/smssystem/detail/${obj.VendorId}`)
                 }
               >
                 编辑
+              </a>
+              <a
+                onClick={() => this.handleDelete(obj.VendorId)}
+                style={{ paddingLeft: "24px" }}
+              >
+                删除
               </a>
             </div>
           );
         }
       }
     ];
+
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10,
-      Province: "",
-      City: "",
-      District: ""
+      PageSize: 10
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
-    // this.getAreaList();
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -94,47 +92,51 @@ class SmsSystemList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
-      let res = await getOrgList(params);
-      console.log("orgList - ", res.List);
-      res.List.forEach(v => {
-        v.key = v.OrgId;
+      let { List, TotalCount } = await getList(params);
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
       });
-      this.setState({ orgList: res.List, current: PageNumber });
-      // this.updatePageConfig(totalSize);
+      this.setState({ systemList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
-  // 加载所有地区
-  getAreaList = async () => {
-    try {
-      const { AreaInfos } = await getAllArea();
-      this.setState({ AreaInfos });
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
+  // 更新分页配置
+  updatePageConfig(totalSize) {
+    let pageConfig = {
+      total: totalSize,
+      pageSize: this.getListConfig.PageSize,
+      current: this.state.current,
+      onChange: async (page, pagesize) => {
+        this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: page
+        });
+      }
+    };
+    this.setState({ pageConfig });
+  }
   // 删除项目
-  handleDelete = async OrgId => {
+  handleDelete = async VendorId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await deleteOrg({
-            OrgId
+          let { Code } = await del({
+            VendorId
           });
           if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
               PageNumber: this.state.current
-              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -146,31 +148,8 @@ class SmsSystemList extends React.Component {
       }
     });
   };
-  onChange(value, selectedOptions) {
-    const areaParam = {};
-    value.map((obj, index) => {
-      if (index == 0) {
-        areaParam.Province = obj;
-      }
-      if (index == 1) {
-        areaParam.City = obj;
-      }
-      if (index == 2) {
-        areaParam.District = obj;
-      }
-    });
-    let params = {
-      ...this.getListConfig,
-      ...areaParam
-    };
-    this.getCurrentList(params);
-  }
   render() {
-    const { selectedRowKeys, pageConfig, orgList, AreaInfos } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+    const { selectedRowKeys, pageConfig, systemList } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -182,26 +161,18 @@ class SmsSystemList extends React.Component {
     return (
       <Nav>
         <Table
-          dataSource={orgList}
+          dataSource={systemList}
           columns={this.columns}
-          onChange={async (page, pagesize) => {
-            this.getCurrentList({
-              ...this.getListConfig,
-              requestPage: page,
-              keyword: this.state.keyword
-            });
-          }}
+          pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-        <Row
-          type="flex"
-          gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
-        >
+        <Row type="flex" gutter={24}>
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>新增</a>
+              <a onClick={() => hashHistory.replace(`/smssystem/detail`)}>
+                新增
+              </a>
             </Button>
           </Col>
         </Row>

@@ -48,7 +48,7 @@ class SearchForm extends Component {
       >
         <Row gutter={24}>
           <Col span={6} key={1}>
-            <FormItem label="党员级别">
+            <FormItem label="支部名称">
               {getFieldDecorator("type")(
                 <Select>
                   <Option value="0">全部</Option>
@@ -61,11 +61,6 @@ class SearchForm extends Component {
           <Col span={6} key={2}>
             <FormItem label="党员名称">
               {getFieldDecorator(`name`)(<Input />)}
-            </FormItem>
-          </Col>
-          <Col span={6} key={3}>
-            <FormItem label="机构名称">
-              {getFieldDecorator(`orgName`)(<Input />)}
             </FormItem>
           </Col>
           <Col
@@ -110,15 +105,15 @@ class PartyMemberList extends React.Component {
     this.columns = [
       {
         title: "党员名称",
-        dataIndex: "UserName",
+        dataIndex: "UserName"
       },
       {
         title: "所属支部",
-        dataIndex: "BranchName",
+        dataIndex: "BranchName"
       },
       {
         title: "联系电话",
-        dataIndex: "Phone",
+        dataIndex: "Phone"
       },
       {
         title: "党员类型",
@@ -127,7 +122,7 @@ class PartyMemberList extends React.Component {
       },
       {
         title: "操作",
-        render: (obj) => {
+        render: obj => {
           return (
             <div>
               <a
@@ -138,14 +133,16 @@ class PartyMemberList extends React.Component {
                 编辑
               </a>
               <a
-                 onClick={() => this.handleDelete(obj.Id)}
+                onClick={() => this.handleDelete(obj.UserId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/partymember/setnext/${obj.UserId}/${obj.UserName}`)
+                  hashHistory.replace(
+                    `/partymember/setnext/${obj.UserId}/${obj.UserName}`
+                  )
                 }
                 style={{ paddingLeft: "24px" }}
               >
@@ -161,7 +158,7 @@ class PartyMemberList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       UserName: "",
-      BranchId : ""
+      BranchId: ""
     };
   }
   componentWillMount() {
@@ -173,10 +170,6 @@ class PartyMemberList extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
-  // 间接调用getCurrentList
-  getCurrent(params) {
-    this.getCurrentList(params);
-  }
   // 加载当前页
   getCurrentList = async params => {
     const { PageNumber } = params;
@@ -260,7 +253,7 @@ class PartyMemberList extends React.Component {
       <Nav>
         <WrapperSearchForm
           pageConfig={pageConfig}
-          getCurrentList={this.getCurrent.bind(this)}
+          getCurrentList={this.getCurrentList.bind(this)}
         />
         <Table
           dataSource={memberList}

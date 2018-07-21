@@ -47,6 +47,7 @@ export const pageMap = [
 
 export const fileSize = 1024 * 1024 * 10;
 export const newsTempUrl = "http://51service.xyz/images/system/template.txt";
+export const memberTempUrl = "http://51service.xyz/images/system/template.txt";
 export const scoreType = [
   {
     value: "0",

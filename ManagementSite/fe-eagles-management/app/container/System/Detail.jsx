@@ -7,53 +7,47 @@ import {
   Row,
   Col,
   Select,
-  Avatar,
-  Icon,
   DatePicker
 } from "antd";
+import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/systemService";
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
-
+const TextArea = Input.TextArea;
 class Base extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showCrop: false //裁剪图片
-    };
   }
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          const { system } = this.props;
+          const { RepeatTime, NoticeTime } = values;
+
+          let params = {
+            Info: {
+              ...system,
+              ...values,
+              NoticeTime:
+                RepeatTime == "0"
+                  ? moment(NoticeTime, "MM-dd").format()
+                  : moment(NoticeTime, "yy-MM-dd").format()
+            }
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = system.NewsId ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/systemlist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = system.NewsId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -64,74 +58,19 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
+  changDate(value) {
+    console.log(value);
+    // const { system } = this.props;
+    // const { RepeatTime, NoticeTime } = values;
+    // const system={
 
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
+    // };
+    // if (value == "0") {
+    // }
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { system } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -142,95 +81,58 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
-    const formItemLayoutDate = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 11 }
-      }
-    };
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("systemId")(<Input />)}
+          {getFieldDecorator("NewsId")(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="标题">
-          {getFieldDecorator("title", {
+          {getFieldDecorator("NewsName", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入标题"
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入标题" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="类型">
-          {getFieldDecorator("type")(
+          {getFieldDecorator("NewsType")(
             <Select>
-              <Option value="0">头部通知</Option>
-              <Option value="1">系统消息</Option>
+              <Option value="00">领袖诞辰</Option>
+              <Option value="10">系统通知</Option>
             </Select>
           )}
         </FormItem>
-        <FormItem label="生效时间" {...formItemLayoutDate}>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
-          <Col span={1}>
-            <span
-              style={{
-                display: "inline-block",
-                width: "100%",
-                textAlign: "center"
-              }}
-            >
-              -
-            </span>
-          </Col>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
+        <FormItem {...formItemLayout} label="重复类型">
+          {getFieldDecorator("RepeatTime")(
+            <Select onChange={this.changDate}>
+              <Option value="0">每年</Option>
+              <Option value="1">仅一次</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="提醒时间">
+          {getFieldDecorator("NoticeTime")(
+            <DatePicker placeholder="请选择提醒时间" />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("content", {
+          {getFieldDecorator("HtmlDesc", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                message: "必填，请输入内容"
               }
             ]
-          })(<TextArea rows={4} />)}
+          })(<TextArea rows={4} placeholder="必填，请输入内容" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
+          {getFieldDecorator("Status")(
             <Select>
               <Option value="0">正常</Option>
-              <Option value="1">失效</Option>
+              <Option value="1">禁用</Option>
             </Select>
           )}
         </FormItem>
@@ -242,13 +144,13 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {!system.NewsId ? "新建" : "保存"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/project")}
+                onClick={() => hashHistory.replace("/systemlist")}
               >
                 取消
               </Button>
@@ -262,75 +164,68 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
-    return { intergralId: Form.createFormField({
-        value: ""
-      }), type: Form.createFormField({
-        value: "0"
-      }), state: Form.createFormField({ value: "0" }) };
+    const { system } = props;
+    console.log("详情数据回显 - ", system);
+    return {
+      NewsId: Form.createFormField({
+        value: system.NewsId
+      }),
+      NewsName: Form.createFormField({
+        value: system.NewsName
+      }),
+      NewsType: Form.createFormField({
+        value: system.NewsType ? system.NewsType + "" : "00"
+      }),
+      RepeatTime: Form.createFormField({
+        value: system.RepeatTime ? system.RepeatTime + "" : "0"
+      }),
+      NoticeTime: Form.createFormField({
+        value: system.NoticeTime
+          ? system.RepeatTime == "0"
+            ? moment(NoticeTime, "MM-DD").format()
+            : moment(NoticeTime, "YY-MM-DD").format()
+          : null
+      }),
+
+      HtmlDesc: Form.createFormField({
+        value: system.HtmlDesc
+      }),
+      Status: Form.createFormField({
+        value: system.Status ? system.Status + "" : "0"
+      })
+    };
   }
 })(Base);
-
 class SystemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      system: {}
     };
   }
 
   componentWillMount() {
     let { id } = this.props.params;
-    console.log(id);
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    if (id) {
+      this.getInfo(id); //拿详情
+    }
   }
 
-  componentWillUnmount() {
-    // this.props.clearProjectInfo();
-  }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async NewsId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      const { News } = await getInfoById({ NewsId });
+      debugger;
+      this.setState({ system: News });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-
   render() {
-    const { projectDetails } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap system={this.state.system} />
       </Nav>
     );
   }

@@ -7,8 +7,8 @@ const API_SERVER = "http://51service.xyz/ManagementService"; //test
 
 const LOGIN = {
   LOGIN: "/api/Login/Login", //登录
-  AUTH: "/api/Login/GetAuthorityByToken", //权限
-}
+  AUTH: "/api/Login/GetAuthorityByToken" //权限
+};
 // 活动
 const ACTIVITY = {
   ACTIVITY_EDIT: "/api/Activity/EditActivityTask", //编辑活动
@@ -99,7 +99,7 @@ const EXERCISE = {
   DELETE_RELATION: "/api/TestPaper/RemoveSubject", //删除习题与试卷的关系
   LIST: "/api/TestPaper/GetExercises", //试卷习题
   DETAIL: "/api/TestPaper/GetExercisesDetail", //试卷习题
-  RANDOM: "/api/TestPaper/GetRandomSubject", //习题随机生成
+  RANDOM: "/api/TestPaper/GetRandomSubject" //习题随机生成
 };
 // 党员
 const EDITPARTYMEMBER = {
@@ -129,15 +129,44 @@ const SCORE = {
   DETAIL: "/api/Score/GetScoreSetUpDetail", //积分详情
   LIST: "/api/Score/GetScoreSetUp", //积分列表
   RANK_LIST: "/api/Score/GetScoreRank", //积分排行列表
-  RANK_DETAIL: "/api/Score/GetScoreRankDetail", //积分排行详情
+  RANK_DETAIL: "/api/Score/GetScoreRankDetail" //积分排行详情
 };
-//积分
+//党员
 const MEMBER = {
   EDIT: "/api/User/EditPartyMember", //编辑
   DELETE: "/api/User/RemovePartyMember", //删除
   DETAIL: "/api/User/GetPartyMemberDetail", //详情
   LIST: "/api/User/GetPartyMember", //列表
-  IMPORT: "/api/Score/GetScoreRank", //导入
+  NEXT_LIST: "/api/User/GetAuthorityUserSetUp", //下级列表
+  SET_NEXT: "/api/User/GetAuthorityUserSetUp", //设置下级
+  IMPORT: "/api/User/BatchImportUser" //导入
+};
+//支部
+const BRANCH = {
+  EDIT: "/api/Branch/EditBranch", //编辑
+  DELETE: "/api/Branch/RemoveBranch", //删除
+  DETAIL: "/api/Branch/GetBranchDetail", //详情
+  LIST: "/api/Branch/GetBranch" //列表
+};
+//系统消息
+const SYSTEM = {
+  EDIT: "/api/SystemNews/EditSystemNews", //编辑
+  DELETE: "/api/SystemNews/RemoveSystemNews", //删除
+  DETAIL: "/api/SystemNews/GetSystemNewsDetail", //详情
+  LIST: "/api/SystemNews/GetSystemNews" //列表
+};
+//系统短信
+const SYSTEMSMS = {
+  EDIT: "/api/SMS/EditSMS", //编辑
+  DELETE: "/api/SMS/RemoveSMS", //删除
+  DETAIL: "/api/SMS/GetSMSDetail", //详情
+  LIST: "/api/SMS/GetSMS" //列表
+};
+//机构短信
+const ORGSMS = {
+  EDIT: "/api/SMS/EditOrgSmsConfig", //编辑
+  DETAIL: "/api/SMS/GetSMSOrgDetail", //详情
+  LIST: "/api/SMS/GetSMSOrg" //列表
 };
 
 export const serverConfig = {
@@ -160,5 +189,9 @@ export const serverConfig = {
   FILE,
   AREA,
   SCORE,
-  MEMBER
+  MEMBER,
+  BRANCH,
+  SYSTEM,
+  SYSTEMSMS,
+  ORGSMS
 };
