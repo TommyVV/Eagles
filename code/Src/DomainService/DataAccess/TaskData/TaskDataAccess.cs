@@ -69,22 +69,20 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
 
         public bool EditTaskComplete(int taskId, int isPublic, int completeStatus, int rewardScore, int score)
         {
-            var commandString = "";
+            var status = 0; //不通过,置成初始状态重新审核
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic, PublicTime = @PublicTime, Score = @Score where TaskId = @TaskId and Status = 2 "; //通过
-            else
-                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic, PublicTime = @PublicTime where TaskId = @TaskId and Status = 2"; //不通过
+                status = 3; //通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = commandString,
-                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score, PublicTime = DateTime.Now }
+                    CommandString = @"update eagles.tb_task set Status = @Status, IsPublic = @IsPublic, PublicTime = @PublicTime where TaskId = @TaskId and Status = 2",
+                    Parameter = new { Status = status, IsPublic = isPublic,  PublicTime = DateTime.Now, TaskId = taskId }
                 },
                 new TransactionCommand()
                 {
-                    CommandString = "update tb_user_task set RewardsScore=@RewardsScore where TaskId=@TaskId",
-                    Parameter = new { RewardsScore = rewardScore, TaskId = taskId }
+                    CommandString = @"update tb_user_task set RewardsScore = @RewardsScore, Score = @Score where TaskId = @TaskId",
+                    Parameter = new { RewardsScore = rewardScore, Score = score, TaskId = taskId }
                 },
             };
             return dbManager.ExcutedByTransaction(commands);

@@ -35,8 +35,8 @@ VALUES (@OrgId,@UserId,@TraceId,@CreateTime,@Score,@RewardsType,@Comment,@OriSco
 
         public int EditUserScore(int userId, int score)
         {
-            //修改用户积分            
-            return dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId = @UserId and Score>=@Score", new {UserId = userId, Score = score});
+            //修改用户积分
+            return dbManager.Excuted(@"update eagles.tb_user_info set Score = ifnull(Score,0) + @Score where UserId = @UserId ", new { UserId = userId, Score = score });
         }
 
         public bool BatchEditUserScore(List<JoinPeople> userList, int score)
@@ -47,7 +47,7 @@ VALUES (@OrgId,@UserId,@TraceId,@CreateTime,@Score,@RewardsType,@Comment,@OriSco
             foreach (var user in userList)
                 sql.Append(string.Format("{0},", user.UserId));
             sql.Remove(sql.ToString().LastIndexOf(','), 1);
-            dbManager.Excuted(@"update eagles.tb_user_info set Score = Score - @Score where UserId in (@UserId) and Score>=@Score", new { UserId = sql, Score = score });
+            dbManager.Excuted(@"update eagles.tb_user_info set Score = ifnull(Score,0) + @Score where UserId in (@UserId) ", new { UserId = sql, Score = score });
             return true;
         }
 
