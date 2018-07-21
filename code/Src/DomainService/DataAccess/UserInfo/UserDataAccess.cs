@@ -32,9 +32,8 @@ value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLea
 
         public int EditUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"update eagles.tb_user_info set Name=@Name,Sex=@Sex,Birthday=@Birthday,Phone=@Phone,Address=@Address,Origin=@Origin,OriginAddress=@OriginAddress,Ethnic=@Ethnic,BranchId=@BranchId,
-Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Company,PreMemberTime=@PreMemberTime,MemberTime=@MemberTime,MemberType=@MemberType,Provice=@Provice,City=@City,District=@District,PhotoUrl=@PhotoUrl,
-IsLeader=@IsLeader where UserId = @UserId", userInfo);
+            return dbManager.Excuted(@"update eagles.tb_user_info set Name=@Name,Sex=@Sex,Birthday=@Birthday,Address=@Address,Origin=@Origin,OriginAddress=@OriginAddress,Ethnic=@Ethnic,
+Dept=@Dept,Company=@Company,PhotoUrl=@PhotoUrl where UserId = @UserId", userInfo);
         }
 
         public int EditUserPwd(TbUserInfo userInfo)

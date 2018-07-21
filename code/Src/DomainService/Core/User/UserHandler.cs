@@ -53,7 +53,6 @@ namespace Eagles.DomainService.Core.User
                 Name = reqUserInfo.Name,
                 Sex = reqUserInfo.Gender,
                 Birthday = reqUserInfo.Birth,
-                //Phone = reqUserInfo.Telphone,
                 Address = reqUserInfo.Address,
                 OriginAddress = reqUserInfo.OriginAddress,
                 Ethnic = reqUserInfo.Ethnic,
