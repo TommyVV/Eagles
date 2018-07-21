@@ -31,6 +31,10 @@ function pcnavList(id) {
 		$(this).removeClass("hover");
 	});
 	$obj.find("h4").click(function() {
+		if($(this).text()=="个人中心"&&localStorage.getItem("IsInternalUser")=="0"){
+			return false;
+		
+		}
 		var $div = $(this).siblings(".pclist-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(600);
@@ -66,6 +70,10 @@ function navListm(id) {
 		$(this).removeClass("hover");
 	});
 	$obj.find("h4").click(function() {
+		if($(this).text()=="个人中心"&&localStorage.getItem("IsInternalUser")=="0"){
+			return false;
+		
+		}
 		var $div = $(this).siblings(".list-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(1);

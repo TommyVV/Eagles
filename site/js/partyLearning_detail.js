@@ -17,7 +17,7 @@ $('#answer-submit').on('click', function() {
 	if(localStorage.getItem("IsInternalUser")==0){
 		bootoast({
 			message: '您非系统内部用户,无法使用该功能',
-			type: 'success',
+			type: 'warning',
 			position: 'toast-top-center',
 			timeout: 2
 		});

@@ -3,6 +3,9 @@ $(document).ready(function() {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
+    if(!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => {});
     var stepId = "";
@@ -131,9 +134,9 @@ $(document).ready(function() {
                 element.StepName
                 }</div>
                     <div class="item-opers">
-                        <div class="oper edit" id="edit-${element.StepId}-${index}" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="oper edit" id="edit-${element.StepId}-${index}" data-toggle="modal" data-target="#myModal">
                             <span class="glyphicon glyphicon-edit"></span>编辑
-                        </div>
+                        </button>
                         <div class="oper feedback" id="feedback-${element.StepId}-${index}">
                             <span class="glyphicon glyphicon-pencil"></span>反馈
                         </div>
