@@ -119,7 +119,7 @@ namespace Eagles.DomainService.Core.User
                 throw new TransactionException(MessageCode.LoginFail, MessageKey.LoginFail);
             response.UserId = result.UserId;
             response.IsInternalUser = result.IsCustomer;
-            response.TokenExpTime = expireTime.ToString("yyyy-MM-dd");
+            response.TokenExpTime = expireTime.ToString("yyyy-MM-dd HH:mm:ss");
             
             return response;
         }
