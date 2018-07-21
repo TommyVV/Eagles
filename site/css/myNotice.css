@@ -13,7 +13,7 @@ html, body {
 @media screen and (max-width: 768px) {
 		.mescroll{
 		position: fixed;
-		top: 31px;
+		top: 23px;
 		bottom: 20px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}

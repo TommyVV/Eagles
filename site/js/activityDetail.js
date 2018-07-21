@@ -8,7 +8,6 @@ $(document).ready(function() {
     var userType = 1;
     //查询活动详情
     getActivityDetail();
-
     //查询活动详情
     function getActivityDetail() {
         $.ajax({
@@ -43,8 +42,11 @@ $(document).ready(function() {
                         }
                     });
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
             }
         });
     }
@@ -147,8 +149,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
             }
         });
     }
@@ -169,8 +174,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
             }
         });
     }
@@ -189,8 +197,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     showActivityResult(data.Result, status);
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
             }
         });
     }
@@ -212,8 +223,11 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
             }
         });
     }
@@ -267,6 +281,14 @@ $(document).ready(function() {
             $(".activity-content").html(str);
         }
 
+    }
+    function errorTip(str){
+        bootoast({
+            message: ''+str,
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 3
+        });
     }
     //活动详情展示
     function showContent(data) {

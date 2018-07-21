@@ -51,6 +51,7 @@
     <Compile Include="IOperGroupHandler.cs" />
     <Compile Include="IOperHandler.cs" />
     <Compile Include="IBranchHandler.cs" />
+    <Compile Include="IPublicityHandler.cs" />
     <Compile Include="ISmsConfigHandler.cs" />
     <Compile Include="IRewardScoreHandler.cs" />
     <Compile Include="IScoreHandler.cs" />

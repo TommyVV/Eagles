@@ -1,18 +1,17 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
     //当前用户是上级还是下级（默认是下级）
     $("#top-nav").html('');
-    $("#top-nav").load("head.html", () => {});
+    $("#top-nav").load("head.html", () => { });
     var userType = 1;
     var requestFlag = false;
-
     //初始化页面
     getTaskDetail();
 
-    $(".opers").click(function() {
+    $(".opers").click(function () {
         window.location.href = "taskPlanEdit.html";
     });
     //查询任务详情
@@ -25,16 +24,19 @@ $(document).ready(function() {
                 Token: token,
                 AppId: appId
             },
-            success: function(data) {
+            success: function (data) {
                 console.log("GetTaskDetail---", data);
                 if (data.Code == "00") {
                     dealTaskDetail(data.Result);
                 } else {
                     requestFlag = false;
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
             },
-            complete: function() {
+            error:function(){
+                errorTip("网络错误");
+            },
+            complete: function () {
                 requestFlag = false;
             }
         });
@@ -49,13 +51,16 @@ $(document).ready(function() {
                 Token: token,
                 AppId: appId
             },
-            success: function(data) {
+            success: function (data) {
                 console.log("GetTaskStep---", data);
                 if (data.Code == "00") {
                     taskRecord(data.Result.StepList, status);
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);                    
                 }
+            },
+            error:function(){
+                errorTip("网络错误");
             }
         });
     }
@@ -72,17 +77,18 @@ $(document).ready(function() {
                 Token: token,
                 AppId: appId
             },
-            success: function(data) {
+            success: function (data) {
                 console.log("EditTaskAccept---", data);
                 if (data.Code == "00") {
                     getTaskDetail();
                 } else {
                     requestFlag = false;
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);                    
                 }
             },
-            error: function() {
+            error: function () {
                 requestFlag = false;
+                errorTip("网络错误");
             }
         });
     }
@@ -92,18 +98,24 @@ $(document).ready(function() {
         var taskInfoStr = `<div class="info-icon">
         <span class="name">${data.InitiateUserName}</span>
         <span class="time">${data.CreateTime.substr(0, 10)}</span>
-    </div>
-    <div class="row">
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">任务标题:
+         </div>
+         <div class="row">
+            <div class="info-item col-xs-12 col-sm-12 col-md-6">负责人：
+            <span>${data.CreateType == 1 ? data.InitiateUserName : data.AcceptUserName}</span>
+        </div>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">审核人：
+            <span>${data.CreateType == 0 ? data.InitiateUserName : data.AcceptUserName}</span>
+        </div>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">任务标题：
             <span>${data.TaskName}</span>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">开始时间:
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">开始时间：
             <span>${data.TaskBeginDate.substr(0, 10)}</span>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">截止时间:
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">截止时间：
             <span>${data.TaskEndDate.substr(0, 10)}</span>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">当前状态:
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">当前状态：
             <span class="status">${taskStatus(data.TaskStatus)}</span>
         </div>
     </div>`;
@@ -148,7 +160,7 @@ $(document).ready(function() {
             //上级发起
             if (userId == acceptUserId) {
                 $("#btn-area").html(`<div class="sub-btn">接受任务</div>`);
-                $(".sub-btn").click(function() {
+                $(".sub-btn").click(function () {
                     if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept("2", "0");
@@ -157,28 +169,28 @@ $(document).ready(function() {
             }
         } else if (status == -1) {
             if (acceptUserId == userId) {
-                $("#btn-area").html(`<div class="pass">通过</div>
+                $("#btn-area").addClass('points-result').html(`<div class="pass">通过</div>
                 <div class="nopass">不通过</div>`);
-                $(".pass").click(function() {
+                $(".pass").click(function () {
                     if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept(1, "0");
                     }
                 });
-                $(".nopass").click(function() {
+                $(".nopass").click(function () {
                     if (!requestFlag) {
                         requestFlag = true;
                         editTaskAccept(1, 1);
                     }
                 });
             }
-        } else if (status == -8) {} else if (status == -9) {} else if (status == 0) {
+        } else if (status == -8) { } else if (status == -9) { } else if (status == 0) {
             if (
                 (createType == "0" && userId == acceptUserId) ||
                 (createType == "1" && userId == initiateUserId)
             ) {
                 $("#btn-area").html(`<div class="sub-btn">制定计划</div>`);
-                $(".sub-btn").click(function() {
+                $(".sub-btn").click(function () {
                     window.location.href =
                         "taskPlan.html?appId=" + appId + "&taskId=" + taskId;
                 });
@@ -195,7 +207,6 @@ $(document).ready(function() {
         } else if (status == 3) {
             //查询任务步骤
             getTaskStep(3);
-            //完成任务待审核 领导 审核
             if (
                 (createType == "0" && userId == initiateUserId) ||
                 (createType == "1" && userId == acceptUserId)
@@ -212,21 +223,21 @@ $(document).ready(function() {
                 userId: userId
             });
             comment.getUserComment();
-        } else {}
+        } else { }
     }
 
     //活动记录(活动步骤)
     function taskRecord(list, status) {
         var step = ``;
-        list.forEach(element => {
+        list.forEach((element, index) => {
             step += `<div class="oper-item">
-            <div class="oper-text">${element.StepName}</div>
-        </div>`;
+                <div class="oper-text">${element.StepName}</div>
+                <div class="opers" id="step-${index}" data-toggle="modal" data-target="#myModal">查看</div></div>`;
         });
         var str = ``;
         //待审核
         if (status == 2) {
-            str = `<div class="title">操作记录</div>
+            str = `<div class="title">计划步骤</div>
             ${step}
             <div class="points-area">
                 <div class="points-tip">请为任务评分</div>
@@ -237,13 +248,40 @@ $(document).ready(function() {
                     <span class="glyphicon glyphicon-star n-star"></span>
                     <span class="glyphicon glyphicon-star n-star"></span>
                 </div>
+                <div class="pub-area flag-area">
+                    <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
+                </div>
                 <div class="points-result">
                     <div class="pass">通过</div>
                     <div class="nopass">不通过</div>
                 </div>
             </div>`;
             $(".task-record").removeClass('hide').html(str);
-            $(".points-stars .glyphicon").click(function() {
+            //查看操作详情
+            $(".opers").click(function () {
+                var stepIndex = $(this).attr('id').split('-')[1];
+                var stepItem = list[stepIndex];
+                var stepDetail = `<div>
+                <div class="step-title">步骤内容：</div>
+                <div class="step-content">${stepItem.StepName}</div>
+                <div class="step-title">反馈内容：</div>
+                <div class="step-content">${stepItem.Content == null ? "" : stepItem.Content}</div>
+                <div class="add-area">
+                ${attachmentList(stepItem.AttachList)}
+                </div>
+                </div>`;
+                $(".modal-body").html(stepDetail);
+            });
+            //是否公开
+            $('.flag-area').click(function () {
+                if ($('.pub-flag').hasClass('select')) {
+                    $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
+                } else {
+                    $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
+                }
+            });
+
+            $(".points-stars .glyphicon").click(function () {
                 var list = $(".points-stars .glyphicon");
                 var flag = true;
                 for (var i = 0; i < list.length; i++) {
@@ -261,13 +299,13 @@ $(document).ready(function() {
                     }
                 }
             });
-            $(".pass").click(function() {
+            $(".pass").click(function () {
                 if (!requestFlag) {
                     requestFlag = true;
                     editTaskComplete(0);
                 }
             });
-            $(".nopass").click(function() {
+            $(".nopass").click(function () {
                 if (!requestFlag) {
                     requestFlag = true;
                     editTaskComplete(1);
@@ -292,29 +330,39 @@ $(document).ready(function() {
     //上级审核活动是否完成
     function editTaskComplete(status) {
         var score = $('.s-star').length;
+        var pubFlag = $('.pub-flag').hasClass('select');
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Task/EditTaskComplete",
             data: {
                 TaskId: taskId,
-                IsPublic: 0,
+                IsPublic: pubFlag == true ? 0 : 1,
                 Score: score,
                 CompleteStatus: status,
                 Token: token,
                 AppId: appId
             },
-            success: function(data) {
+            success: function (data) {
                 console.log("EditTaskComplete---", data);
                 if (data.Code == "00") {
                     getTaskDetail();
                 } else {
                     requestFlag = false;
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
             },
-            error: function() {
+            error: function () {
                 requestFlag = false;
+                errorTip("网络错误");
             }
+        });
+    }
+    function errorTip(str){
+        bootoast({
+            message: ''+str,
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 3
         });
     }
     class CalculateScreen {
@@ -328,7 +376,7 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#footer").load("footer.html", () => {});
+                $("#footer").load("footer.html", () => { });
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass('pc-wrap');
             } else {
@@ -341,7 +389,7 @@ $(document).ready(function() {
     }
     new CalculateScreen();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         new CalculateScreen();
     });
 });

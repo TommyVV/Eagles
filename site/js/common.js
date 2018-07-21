@@ -51,7 +51,7 @@ function attachmentList(list) {
         list.forEach(element => {
             if (element.AttachmentDownloadUrl || element.AttachName) {
                 str += `<div class="file">
-                    <span class="glyphicon glyphicon-paperclip"></span>
+                    <img src="icons/downloadfolder@2x.png">
                     <a href="${element.AttachmentDownloadUrl}" target="_blank">${element.AttachName}</a>
                 </div>`;
             }

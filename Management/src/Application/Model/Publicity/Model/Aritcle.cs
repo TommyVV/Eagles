@@ -1,4 +1,6 @@
-﻿namespace Eagles.Application.Model.Publicity.Model
+﻿using System;
+
+namespace Eagles.Application.Model.Publicity.Model
 {
     public class Aritcle
     {
@@ -21,6 +23,6 @@
         /// <summary>
         /// 发布时间
         /// </summary>
-        public string CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }

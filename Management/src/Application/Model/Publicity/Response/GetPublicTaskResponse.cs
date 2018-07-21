@@ -9,5 +9,7 @@ namespace Eagles.Application.Model.Publicity.Response
         /// 任务列表
         /// </summary>
         public List<PublicTask> Tasks { get; set; }
+
+        public  int TotalCount { get; set; }
     }
 }

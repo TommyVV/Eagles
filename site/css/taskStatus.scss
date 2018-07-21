@@ -106,7 +106,8 @@
         font-size: px2rem(24);
         width: 25%;
         float: right;
-        color: #949494;
+        color: #14a5f8;
+        text-align: center;
     }
 }
 
@@ -151,4 +152,11 @@
         margin-left: px2rem(60);
         background-color: #949494;
     }
+}
+.step-title{
+    font-weight: 600;
+    font-size: px2rem(30);
+}
+.step-content{
+    padding: 10px 15px;
 }

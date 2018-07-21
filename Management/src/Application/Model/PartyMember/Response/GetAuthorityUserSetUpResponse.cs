@@ -16,6 +16,6 @@ namespace Eagles.Application.Model.PartyMember.Response
         /// <summary>
         /// 下级用户id集合
         /// </summary>
-        public List<int> UserId { get; set; }
+        public List<User> User { get; set; }
     }
 }

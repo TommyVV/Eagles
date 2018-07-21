@@ -74,7 +74,14 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("EditTaskStep---", data);
                 if (data.Code == "00") {
+                    bootoast({
+                        message: '提交成功',
+                        type: "success",
+                        position: "toast-top-center",
+                        timeout: 2
+                    });
                     getTaskStep();
+                    $('.modal').modal('hide');
                 } else {
                     bootoast({
                         message: data.Message,
@@ -83,6 +90,9 @@ $(document).ready(function() {
                         timeout: 2
                     });
                 }
+            },
+            error:function(){
+
             }
         });
     }
@@ -115,18 +125,16 @@ $(document).ready(function() {
     //任务步骤显示
     function taskStepContent(list) {
         var str = ``;
-        list.forEach(element => {
+        list.forEach((element,index) => {
             str += `<div class="plan-item">
                     <div class="item-content content-${element.StepId}">${
                 element.StepName
                 }</div>
                     <div class="item-opers">
-                        <div class="oper edit" id="edit-${element.StepId}">
+                        <div class="oper edit" id="edit-${element.StepId}-${index}" data-toggle="modal" data-target="#myModal">
                             <span class="glyphicon glyphicon-edit"></span>编辑
                         </div>
-                        <div class="oper feedback" id="feedback-${
-                element.StepId
-                }">
+                        <div class="oper feedback" id="feedback-${element.StepId}-${index}">
                             <span class="glyphicon glyphicon-pencil"></span>反馈
                         </div>
                         <div class="oper del" id="del-${element.StepId}">
@@ -139,16 +147,20 @@ $(document).ready(function() {
         $(".btn-area").removeClass("hide");
         //编辑按钮
         $(".edit").click(function() {
-            stepId = $(this)
+            var itemInfoArr = $(this)
                 .attr("id")
-                .split("-")[1];
+                .split("-");
+            stepId = itemInfoArr[1];
             $("#modalLargeLabel").html('编辑步骤');
+            $("#step-content").val(list[itemInfoArr[2]].StepName);
         });
         //反馈按钮
         $(".feedback").click(function() {
-            stepId = $(this)
+            var itemInfoArr = $(this)
                 .attr("id")
-                .split("-")[1];
+                .split("-");
+            stepId = itemInfoArr[1];    
+            localStorage.setItem('stepfeed',JSON.stringify(list[itemInfoArr[2]]));
             window.location.href =
                 "feedBack.html?pageType=1&stepId=" +
                 stepId +
