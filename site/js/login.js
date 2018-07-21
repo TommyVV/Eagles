@@ -65,14 +65,17 @@ $('.btn-login').on('click', function(e) {
                 localStorage.setItem("userId", data.UserId); //用户ID
                 localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
                 localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
-				if(data.IsInternalUser==0){
+				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
+				 
+				if(data.IsInternalUser=="0"){
 					window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
+					return false;
 				}
-				
                 //登陆成功页面跳转地址
-                var prevLink = document.referrer;
-				console.log(prevLink)
+               var prevLink = document.referrer;
+				
                 if ($.trim(prevLink) == '') {
+					
                     location.href = 'mine.html?appId=' + appId + '';
                 } else {
                     if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
@@ -83,6 +86,7 @@ $('.btn-login').on('click', function(e) {
 					
                         location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist=' + testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
                     }else{
+						
 						location.href = prevLink;
 						
 					}
