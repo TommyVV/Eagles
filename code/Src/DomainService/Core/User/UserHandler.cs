@@ -128,38 +128,27 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new RegisterResponse();
             if (request.AppId <= 0)
-            {
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            }
             if (!util.CheckAppId(request.AppId))
-            {
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            }
-
             if (string.IsNullOrEmpty(request.Phone) || request.Phone.Length != 11 || string.IsNullOrEmpty(request.UserPwd))
-            {
                 throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
-            }
-
             var login = userInfoAccess.GetLogin(request.Phone);
             if (login != null)
-            {
                 throw new TransactionException(MessageCode.ExistsPhone, MessageKey.ExistsPhone);
-            }
-                
             var userInfo = new TbUserInfo()
             {
+                OrgId = request.AppId,
+                Name = request.Phone.MaskPhone(),
                 Phone = request.Phone,
                 Password = md5Helper.Md5Encypt(request.UserPwd),
                 CreateTime = DateTime.Now,
                 IsCustomer = 0,
-                OrgId = request.AppId,
                 BranchId = 0,
                 Score = 0,
                 EditTime = DateTime.Now,
-                Status = 0,
-                IsLeader = 0,
-                Name = request.Phone.MaskPhone(),
+                Status = 0
+                //IsLeader = 0,
             };
             var codeInfo = new TbValidCode() { Phone = request.Phone, ValidCode = request.ValidCode, Seq = request.Seq };
             var resultCode = userInfoAccess.GetValidCode(codeInfo);
