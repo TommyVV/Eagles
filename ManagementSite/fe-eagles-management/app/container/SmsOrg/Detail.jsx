@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import {
   Button,
   Input,
@@ -7,38 +6,23 @@ import {
   message,
   Row,
   Col,
-  Cascader,
-  Upload,
-  Icon
+  Select,
+  DatePicker
 } from "antd";
+import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
-import { getOrgInfoById, createOrEditOrg } from "../../services/orgService";
-import { getAllArea } from "../../services/areaService";
-import { serverConfig } from "../../constants/config/ServerConfigure";
-import { fileSize } from "../../constants/config/appconfig";
-import { saveOrgInfo, clearInfo } from "../../actions/orgAction";
+import { getInfoById, createOrEdit } from "../../services/orgSmsService";
+import { getOrgList } from "../../services/orgService";
+import { getList } from "../../services/systemSmsService";
 import "./style.less";
 
 const FormItem = Form.Item;
-@connect(
-  state => {
-    return {
-      user: state.userReducer,
-      orgReducer: state.orgReducer
-    };
-  },
-  { saveOrgInfo, clearInfo }
-)
+const Option = Select.Option;
+const TextArea = Input.TextArea;
 class Base extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false
-    };
-  }
-  componentWillUnmount() {
-    this.props.clearInfo();
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -46,20 +30,28 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          const { org } = this.props;
+          const { system, org } = this.props;
+          const { OrgId } = values;
+          let OrgName = "";
+          org.map((o, i) => {
+            if (o.OrgId == OrgId) {
+              OrgName = o.OrgName;
+            }
+          });
           let params = {
             Info: {
-              ...org,
-              ...values
+              ...system,
+              ...values,
+              OrgName
             }
           };
-          let { Code } = await createOrEditOrg(params);
+          let { Code } = await createOrEdit(params);
           if (Code === "00") {
-            let tip = this.props.org.OrgId ? "保存机构成功" : "创建机构成功";
+            let tip = system.VendorId ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/orglist");
+            hashHistory.replace("/smsorglist");
           } else {
-            let tip = this.props.org.OrgId ? "保存机构失败" : "创建机构失败";
+            let tip = system.VendorId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -70,78 +62,19 @@ class Base extends Component {
       }
     });
   };
-  // 将地区的数组转换为对象
-  convertObj(area) {
-    let areaParam = {};
-    if (area.length) {
-      area.map((obj, index) => {
-        if (index == 0) {
-          areaParam.Province = obj;
-        }
-        if (index == 1) {
-          areaParam.City = obj;
-        }
-        if (index == 2) {
-          areaParam.District = obj;
-        }
-      });
-    } else {
-      areaParam = {
-        Province: "",
-        City: "",
-        District: ""
-      };
-    }
-    return areaParam;
-  }
-  beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
-    const type = file.type;
-    const isImage = reg.test(type);
-    if (!isImage) {
-      message.error('只支持格式为png,jpeg和jpg的图片!');
-    }
+  changDate(value) {
+    console.log(value);
+    // const { system } = this.props;
+    // const { RepeatTime, NoticeTime } = values;
+    // const system={
 
-    if (file.size > fileSize) {
-      message.error("图片必须小于10M");
-    }
-    return isImage && file.size <=fileSize;
+    // };
+    // if (value == "0") {
+    // }
   }
-  onChange(value) {
-    // 保存数据
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    const areaParam = this.convertObj(value);
-    this.props.saveOrgInfo({ ...values, ...areaParam });
-  }
-  onChangeImage = info => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
-      // 保存数据
-      let { getFieldsValue } = this.props.form;
-      let values = getFieldsValue();
-      this.props.saveOrgInfo({ ...values, Logo: imageUrl });
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} 上传失败`);
-    }
-  };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { org, defaultArea } = this.props;
-    let area = [];
-    if (org.Province) {
-      area.push(org.Province);
-      if (org.City) {
-        area.push(org.City);
-        if (org.District) {
-          area.push(org.District);
-        }
-      }
-    }
+    const { system, org, vendor } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -156,44 +89,67 @@ class Base extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("OrgId")(<Input />)}
+          {/* {getFieldDecorator("VendorId")(<Input />)} */}
         </FormItem>
         <FormItem {...formItemLayout} label="机构名称">
-          {getFieldDecorator("GoodsStatus")(
-            <Select>
-              <Option value="0">正常</Option>
-              <Option value="1">不正常</Option>
+          {getFieldDecorator("OrgId", {
+            rules: [
+              {
+                required: true,
+                message: "请选择机构"
+              }
+            ]
+          })(
+            <Select placeholder="请选择机构">
+              {org.map((o, i) => {
+                return (
+                  <Option value={o.OrgId} key={i}>
+                    {o.OrgName}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构提供商">
-          {getFieldDecorator("GoodsStatus")(
-            <Select>
-              <Option value="0">正常</Option>
-              <Option value="1">不正常</Option>
+        <FormItem {...formItemLayout} label="短信提供商">
+          {getFieldDecorator("VendorId", {
+            rules: [
+              {
+                required: true,
+                message: "请选择短信提供商"
+              }
+            ]
+          })(
+            <Select placeholder="请选择短信提供商">
+              {vendor.map((o, i) => {
+                return (
+                  <Option value={o.VendorId} key={i}>
+                    {o.VendorName}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="优先级">
-          {getFieldDecorator("Address")(<Input placeholder="请输入优先级" />)}
+          {getFieldDecorator("Priority")(<Input placeholder="请输入优先级" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="总数短信">
-          {getFieldDecorator("Address")(<Input placeholder="请输入总数短信" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="已发数量">
-          {getFieldDecorator("Address")(
-            <Input disabled placeholder="请输入已发数量" />
+          {getFieldDecorator("MaxCount")(
+            <Input placeholder="请输入总数短信" />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构提供商">
-          {getFieldDecorator("GoodsStatus")(
+        <FormItem {...formItemLayout} label="已发数量">
+          {getFieldDecorator("SendCount")(<Input disabled />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="状态">
+          {getFieldDecorator("Status")(
             <Select>
               <Option value="0">正常</Option>
-              <Option value="1">不正常</Option>
+              <Option value="1">禁止</Option>
             </Select>
           )}
         </FormItem>
-
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -202,13 +158,13 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {!this.props.org.OrgId ? "新建" : "保存"}
+                {!system.VendorId ? "新建" : "保存"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/orglist")}
+                onClick={() => hashHistory.replace("/smsorglist")}
               >
                 取消
               </Button>
@@ -222,82 +178,96 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("机构详情数据回显 - ", props);
-    const org = props.org;
+    const { system } = props;
+    console.log("详情数据回显 - ", system);
     return {
+      VendorId: Form.createFormField({
+        value: system.VendorId ? system.VendorId : ""
+      }),
       OrgId: Form.createFormField({
-        value: org.OrgId
+        value: system.OrgId ? system.OrgId : ""
       }),
-      OrgName: Form.createFormField({
-        value: org.OrgName
+      Priority: Form.createFormField({
+        value: system.Priority
       }),
-      Address: Form.createFormField({
-        value: org.Address
+      MaxCount: Form.createFormField({
+        value: system.MaxCount
+      }),
+      SendCount: Form.createFormField({
+        value: system.SendCount ? system.SendCount : "0"
+      }),
+      Status: Form.createFormField({
+        value: system.Status ? system.Status + "" : "0"
       })
     };
   }
 })(Base);
-@connect(
-  state => {
-    return {
-      userReducer: state.userReducer,
-      orgReducer: state.orgReducer
-    };
-  },
-  { saveOrgInfo, clearInfo }
-)
-class SmsOrgDetail extends Component {
+class SmsSystemDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      AreaInfos: []
+      system: {},
+      org: [],
+      vendor: []
     };
   }
 
   componentWillMount() {
-    let { id } = this.props.params;
-    if (id) {
-      this.getInfo(id); //拿详情
+    let { org, vendor } = this.props.params;
+    if (org && vendor) {
+      this.getInfo(org, vendor); //拿详情
     } else {
-      this.props.clearInfo();
-      this.getAreaList();
+      this.getOrg();
+      this.getVendor();
     }
   }
 
-  componentWillUnmount() {
-    this.props.clearInfo();
-  }
   // 根据id查询详情
-  getInfo = async OrgId => {
+  getInfo = async (OrgId, VendorId) => {
     try {
-      const { Info } = await getOrgInfoById({ OrgId });
-      this.getAreaList();
-      this.props.saveOrgInfo(Info);
+      await this.getOrg();
+      await this.getVendor();
+      const { Info } = await getInfoById({ VendorId, OrgId });
+      this.setState({ system: Info });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-  // 加载所有地区
-  getAreaList = async () => {
+  // 查机构
+  getOrg = async () => {
     try {
-      const { AreaInfos } = await getAllArea();
-      this.setState({ AreaInfos });
+      const { List } = await getOrgList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      this.setState({ org: List });
     } catch (e) {
-      message.error("获取失败");
+      message.error("获取详情失败");
+      throw new Error(e);
+    }
+  };
+  // 查短信商
+  getVendor = async () => {
+    try {
+      const { List } = await getList({
+        PageNumber: 1,
+        PageSize: 100000
+      });
+      this.setState({ vendor: List });
+    } catch (e) {
+      message.error("获取详情失败");
       throw new Error(e);
     }
   };
   render() {
+    const { system, org, vendor } = this.state;
     return (
       <Nav>
-        <FormMap
-          org={this.props.orgReducer}
-          defaultArea={this.state.AreaInfos}
-        />
+        <FormMap system={system} org={org} vendor={vendor} />
       </Nav>
     );
   }
 }
 
-export default SmsOrgDetail;
+export default SmsSystemDetail;

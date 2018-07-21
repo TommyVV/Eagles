@@ -15,7 +15,6 @@ export const uploadFile = async file => {
       headers: { "Content-Type": "multipart/form-data" },
       data: formdata // post请求的数据
     });
-    debugger;
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
       return Result;

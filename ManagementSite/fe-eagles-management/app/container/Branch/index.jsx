@@ -6,48 +6,28 @@ import {
   Button,
   message,
   Modal,
-  Form,
-  Input,
-  Select,
-  Cascader
 } from "antd";
-const FormItem = Form.Item;
-const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getList, del } from "../../services/systemService";
+import { getList, del } from "../../services/branchService";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
 
-class SystemList extends React.Component {
+class BranchList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      systemList: [] // 列表数组
+      branchIdList: [] // 列表数组
     };
     this.columns = [
       {
-        title: "标题",
-        dataIndex: "NewsName"
+        title: "支部编号",
+        dataIndex: "BranchId"
       },
       {
-        title: "提醒时间",
-        render: obj => (
-          <span>
-            {obj.RepeatTime == "0"
-              ? new Date(obj.NoticeTime).format("MM-dd")
-              : new Date(obj.NoticeTime).format("yyyy-MM-dd")}
-          </span>
-        )
-      },
-      {
-        title: "内容",
-        dataIndex: "HtmlDesc"
-      },
-      {
-        title: "状态",
-        dataIndex: "Status"
+        title: "支部名称",
+        dataIndex: "BranchName"
       },
       {
         title: "操作",
@@ -56,13 +36,13 @@ class SystemList extends React.Component {
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/system/detail/${obj.NewsId}`)
+                  hashHistory.replace(`/branch/detail/${obj.BranchId}`)
                 }
               >
                 编辑
               </a>
               <a
-                onClick={() => this.handleDelete(obj.NewsId)}
+                onClick={() => this.handleDelete(obj.BranchId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -75,9 +55,7 @@ class SystemList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10,
-      Status: "",
-      SystemMessageName: ""
+      PageSize: 10
     };
   }
   componentWillMount() {
@@ -96,9 +74,9 @@ class SystemList extends React.Component {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
-        v.key = v.NewsId;
+        v.key = v.BranchId;
       });
-      this.setState({ systemList: List, current: PageNumber });
+      this.setState({ branchList: List, current: PageNumber });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -121,7 +99,7 @@ class SystemList extends React.Component {
     this.setState({ pageConfig });
   }
   // 删除项目
-  handleDelete = async NewsId => {
+  handleDelete = async BranchId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
@@ -129,13 +107,14 @@ class SystemList extends React.Component {
       onOk: async () => {
         try {
           let { Code } = await del({
-            NewsId
+            BranchId
           });
           if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
               PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -148,28 +127,24 @@ class SystemList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, systemList } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { selectedRowKeys, pageConfig, branchList } = this.state;
     return (
       <Nav>
         <Table
-          dataSource={systemList}
+          dataSource={branchList}
           columns={this.columns}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-        <Row type="flex" gutter={24}>
+        <Row
+          type="flex"
+          gutter={24}
+          // className={projectList.length === 0 ? "init" : ""}
+        >
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/system/detail`)}>新增</a>
+              <a onClick={() => hashHistory.replace(`/branch/detail`)}>新增</a>
             </Button>
           </Col>
         </Row>
@@ -178,4 +153,4 @@ class SystemList extends React.Component {
   }
 }
 
-export default SystemList;
+export default BranchList;

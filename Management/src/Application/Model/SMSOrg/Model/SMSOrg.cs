@@ -51,5 +51,10 @@ namespace Eagles.Application.Model.SMSOrg.Model
         /// 状态
         /// </summary>
         public int Status { get; set; }
+
+        /// <summary>
+        /// 短信提供方名称
+        /// </summary>
+        public string VendorName { get; set; }
     }
 }

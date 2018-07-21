@@ -1,4 +1,5 @@
 ﻿using Eagles.Application.Model;
+using Eagles.Application.Model.Audit.Model;
 using Eagles.Application.Model.Audit.Requset;
 using Eagles.Application.Model.Audit.Response;
 using Eagles.Base;
@@ -20,5 +21,7 @@ namespace Eagles.Interface.Core
         /// <param name="requset"></param>
         /// <returns></returns>
         GetAuditResponse GetAuditList(GetAuditRequest requset);
+
+        bool Audit(AuditInfo requset);
     }
 }
