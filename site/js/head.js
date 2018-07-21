@@ -1,6 +1,6 @@
+var appId = getRequest('appId') //获取来源页面['0', '1', '2', '3']
 $(function() {
    // console.info(window.location.href);
-	var appId = getRequest('appId') //获取来源页面['0', '1', '2', '3']
 	console.info(appId);
 	navbar(appId)
 })

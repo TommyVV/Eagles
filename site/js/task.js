@@ -7,8 +7,18 @@ $(document).ready(function() {
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => {});
 
+    var pageIndex = 1;
+    var pageSize = 10;
+
+    var mescroll;
     //类别的点击
     $("#t-cate").click(function() {
+        //关闭我的部分
+        $("#m-cate")
+                .find(".glyphicon")
+                .removeClass("glyphicon-menu-down")
+                .addClass("glyphicon-menu-left");
+            $(".peop-list").addClass("hide");
         if (
             $(this)
             .find(".glyphicon")
@@ -43,6 +53,12 @@ $(document).ready(function() {
     });
     //人员下拉列表
     $("#m-cate").click(function() {
+        //关闭类别筛选
+        $("#t-cate")
+                .find(".glyphicon")
+                .removeClass("glyphicon-menu-down")
+                .addClass("glyphicon-menu-left");
+        $(".task-type").addClass("hide");
         if (
             $(this)
             .find(".glyphicon")
@@ -61,7 +77,6 @@ $(document).ready(function() {
             $(".peop-list").addClass("hide");
         }
     });
-    getTaskList();
     getUserRelationship();
     //查询活动
     function getTaskList() {
@@ -73,19 +88,34 @@ $(document).ready(function() {
                 TaskType: taskType,
                 Token: token,
                 AppId: appId,
-                PageSize: 10,
-                PageIndex: 1
+                PageSize: pageSize,
+                PageIndex: pageIndex
             },
             success: function(data) {
                 console.log("Task---", data);
                 if (data.Code == "00") {
-                    taskList(data.Result.TaskList);
+                    var list = data.Result.TaskList;
+                    taskList(list);
+                    if (list.length < pageSize) {
+                        mescroll.endSuccess(5, false, null);
+                    } else {
+                        pageIndex = pageIndex + 1;
+                        mescroll.endSuccess(100000, true, null);
+                    }
+
                 } else if (data.Code == '10') {
-                    var tipInfo = `<div class="tip">暂时没有数据</div>`
-                    $(".pc-list").html(tipInfo);
-                    $(".task-list").html(tipInfo);
+                    // var tipInfo = `<div class="tip">暂时没有数据</div>`;
+                    // $(".pc-list").html(tipInfo);
+                    // $(".task-list").html(tipInfo);
+                    mescroll.endSuccess(10, false, null);
                 } else {
-                    alert(data.Code + ':' + data.Message);
+                    bootoast({
+                        message: ''+data.Message,
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
+                    mescroll.endErr();
                 }
             }
         });
@@ -106,7 +136,12 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     dealRelationList(data.Result.UserList);
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: ''+data.Message,
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             }
         });
@@ -256,11 +291,31 @@ $(document).ready(function() {
         }
         init() {
             if (!this.isMobile) {
+                mescroll = new MeScroll("mescrollPC", {
+                    down: {
+                        use: false
+                    },
+                    up: {
+                        callback:getTaskList,
+                        isBounce: false,
+                        htmlNodata: '没有更多数据'
+                    }
+                });
                 $(".mobile").hide();
                 $(".pc").show();
                 $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
             } else {
+                mescroll = new MeScroll("mescroll", {
+                    down: {
+                        use: false
+                    },
+                    up: {
+                        callback:getTaskList,
+                        isBounce: false,
+                        htmlNodata: '没有更多数据'
+                    }
+                });
                 $(".mobile").show();
                 $(".pc").hide();
                 $("body").css("background-color", "#fff");

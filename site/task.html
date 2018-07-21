@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/mescroll.min.css">
+    <link href="./css/bootoast.css" rel="stylesheet">
     <link rel="stylesheet" href="css/task.css">
     <title>我的任务</title>
 </head>
@@ -16,67 +18,75 @@
 <body class="bg-color">
     <div id="top-nav"></div>
     <div class="pc pc-wrap">
-        <div class="assign">
-            <span class="name-label">
-                指派:
-            </span>
-            <div class="select" id="select-result">
-                <span class="select-name"></span>
-                <i class="glyphicon glyphicon-triangle-bottom"></i>
-                <ul class="person-name" id="person-name">
-                </ul>
+        <div class="mescroll list-content" id="mescrollPC">
+            <div>
+                <div class="assign">
+                    <span class="name-label">
+                        指派:
+                    </span>
+                    <div class="select" id="select-result">
+                        <span class="select-name"></span>
+                        <i class="glyphicon glyphicon-triangle-bottom"></i>
+                        <ul class="person-name" id="person-name">
+                        </ul>
+                    </div>
+                    <span class="name-label type-label">
+                        任务分类:
+                    </span>
+                    <div class="select" id="select-type">
+                        <span class="select-type"></span>
+                        <i class="glyphicon glyphicon-triangle-bottom"></i>
+                        <ul class="type-name" id="type-name">
+                            <li id="0">
+                                发起的
+                            </li>
+                            <li id="1">
+                                负责的
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="list-header">
+                        <span class="list-header-list">
+                            <img src="icons/class_partylearn@2x.png" alt=""> 任务列表
+                        </span>
+                        <span class="list-header-more">更多&gt;&gt;</span>
+                    </div>
+                    <ul class="pc-list">
+                    </ul>
+                </div>
             </div>
-            <span class="name-label type-label">
-                任务分类:
-            </span>
-            <div class="select" id="select-type">
-                <span class="select-type"></span>
-                <i class="glyphicon glyphicon-triangle-bottom"></i>
-                <ul class="type-name" id="type-name">
-                    <li id="0">
-                        发起的
-                    </li>
-                    <li id="1">
-                        负责的
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="list">
-            <div class="list-header">
-                <span class="list-header-list">
-                    <img src="icons/class_partylearn@2x.png" alt=""> 任务列表
-                </span>
-                <span class="list-header-more">更多&gt;&gt;</span>
-            </div>
-            <ul class="pc-list">
-            </ul>
         </div>
     </div>
     <div class="footer pc" id="footer"></div>
     <div class="container mobile mobile-container">
         <div class="row">
-            <div class="head-area">
-                <div class="task-cate" id="m-cate">
-                    <span class="m-text">我的</span>
-                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+            <div class="mescroll list-content" id="mescroll">
+                <div>
+                    <div class="head-area">
+                        <div class="task-cate" id="m-cate">
+                            <span class="m-text">我的</span>
+                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        </div>
+                        <div class="task-cate" id="t-cate">
+                            <span class="t-text">发起的</span>
+                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="drog-down-menu hide peop-list">
+                        <div class="menu-list">
+                        </div>
+                    </div>
+                    <div class="drog-down-menu hide task-type">
+                        <div class="menu-list">
+                            <div class="list-item" id="0">发起的</div>
+                            <div class="list-item" id="1">负责的</div>
+                        </div>
+                    </div>
+                    <div class="task-list">
+                    </div>
                 </div>
-                <div class="task-cate" id="t-cate">
-                    <span class="t-text">发起的</span>
-                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                </div>
-            </div>
-            <div class="drog-down-menu hide peop-list">
-                <div class="menu-list">
-                </div>
-            </div>
-            <div class="drog-down-menu hide task-type">
-                <div class="menu-list">
-                    <div class="list-item" id="0">发起的</div>
-                    <div class="list-item" id="1">负责的</div>
-                </div>
-            </div>
-            <div class="task-list">
             </div>
         </div>
     </div>
@@ -86,7 +96,9 @@
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/task.js?v=123"></script>
+    <script src="js/bootoast.js"></script>
+    <script src="js/mescroll.min.js"></script>
+    <script src="js/task.js?v=2018"></script>
 </body>
 
 </html>

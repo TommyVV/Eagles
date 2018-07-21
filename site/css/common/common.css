@@ -34,8 +34,9 @@
     padding-top: 0.64rem;
 }
 
-.file .glyphicon {
-    color: #65bbde;
+.file img {
+    width:1rem;
+    height: 1rem;
 }
 
 @media screen and (min-width: 1024px) {
@@ -76,7 +77,10 @@
     align-items: center;
     margin-top: 0.7rem;
 }
-
+.pub-area {
+    margin-top: 1.7066666667rem;
+    font-size: 0.64rem;
+}
 .pub-flag {
     width: 20px;
     height: 20px;
@@ -134,7 +138,7 @@
 
 @media screen and (max-width: 768px) {
     .mobile-container {
-        margin-top: 1.7rem;
+        padding-top: 1.7rem;
     }
     .list-content {
         top: 1.7rem;

@@ -5,8 +5,10 @@ $(document).ready(function() {
     var activityId = "";
     var stepId = "";
     var taskId = "";
+    var fileArray = [];
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => {});
+    var requestFlag = false;
     //pageType 0 活动 1 任务
     var pageType = getRequest("pageType");
     if (pageType == 0) {
@@ -18,19 +20,22 @@ $(document).ready(function() {
         taskId = getRequest("taskId");
         $("#content").attr("placeholder", "快让大家知道你的任务进度吧~");
         $(".sub-btn").html("提交反馈");
+        var stepfeed = JSON.parse(localStorage.getItem('stepfeed'));
+        if(stepfeed){
+            $("#content").val(stepfeed.Content);
+            fileArray = stepfeed.AttachList;
+            $(".attaches").html(attachmentList(fileArray));
+        }
     }
 
     //是否公开
     $('.flag-area').click(function() {
         if ($('.pub-flag').hasClass('select')) {
-
             $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
         } else {
             $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
         }
     });
-    var fileArray = [];
-    //附件上传fileupload
     //附件上传fileupload
     $("#fileupload").fileupload({
         url: UPLOAD,
@@ -68,7 +73,7 @@ $(document).ready(function() {
     $(".sub-btn").click(function() {
         var content = $("#content").val();
         if (!content) {
-            $.alert('反馈内容不能为空');
+            errorTip('反馈内容不能为空');
             return;
         }
         if (pageType == 0) {
@@ -79,15 +84,26 @@ $(document).ready(function() {
             editTaskFeedBack();
         }
     });
-    var that = $;
+    function errorTip(str){
+        bootoast({
+            message: ''+str,
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 3
+        });
+    }
     //任务反馈
     function editTaskFeedBack() {
         var pubFlag = $('.pub-flag').hasClass('select');
+        if(requestFlag){
+            return;
+        }
+        requestFlag=true;
         var data = {
             "TaskId": taskId,
             "StepId": stepId,
             "Content": $("#content").val(),
-            "IsPublic": pubFlag == true ? 0 : 1,
+            // "IsPublic": pubFlag == true ? 0 : 1,
             "AttachList": fileArray,
             "Token": token,
             "AppId": appId
@@ -99,17 +115,28 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("EditTaskFeedBack---", data);
                 if (data.Code == "00") {
-                    that.toast("提交成功", function() {
+                    $.toast("提交成功", function() {
                         window.history.back();
                     });
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
+            },
+            complete:function(){
+                requestFlag = false;
             }
+
         });
     }
     //(活动)提交反馈
     function editActivityFeedBack() {
+        if(requestFlag){
+            return;
+        }
+        requestFlag=true;
         var data = {
             ActivityId: activityId,
             Content: $("#content").val(),
@@ -127,13 +154,23 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     editActivityReview(2, 0);
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
+            },
+            complete:function(){
+                requestFlag = false;
             }
         });
     }
     //(活动)审核任务
     function editActivityReview(type, rType) {
+        if(requestFlag){
+            return;
+        }
+        requestFlag=true;
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/EditActivityReview",
@@ -149,8 +186,14 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId;
                 } else {
-                    alert(data.Code, data.Message);
+                    errorTip(data.Message);
                 }
+            },
+            error:function(){
+                errorTip('网络错误');
+            },
+            complete:function(){
+                requestFlag = false;
             }
         });
     }

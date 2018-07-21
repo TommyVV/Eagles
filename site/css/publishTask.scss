@@ -14,7 +14,8 @@
         border-bottom: 1px solid #EEEEEE;
         display: flex;
         input {
-            height: px2rem(80);
+            margin-top: px2rem(10);
+            height: px2rem(60);
             outline: none;
             border: none;
             background: transparent;
@@ -32,7 +33,8 @@
             float: right;
             font-size: px2rem(24);
             height: px2rem(80);
-            width: px2rem(80);
+            width: px2rem(120);
+            text-align: center;
         }
     }
     .name-item {

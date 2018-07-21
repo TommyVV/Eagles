@@ -5,8 +5,7 @@ $(document).ready(function() {
     $('#top-nav').load('./head.html');
     var currentItemType = '0';
     var pageIndex = 1;
-    var pageSize = 6;
-
+    var pageSize = 10;
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
@@ -54,7 +53,7 @@ $(document).ready(function() {
                     var list = data.Result.ActivityList;
                     $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {
-                        mescroll.endSuccess(5, false, null);
+                        mescroll.endSuccess(100000, false, null);
                     } else {
                         pageIndex = pageIndex + 1;
                         mescroll.endSuccess(100000, true, null);
@@ -81,13 +80,23 @@ $(document).ready(function() {
                 } else if (data.Code == '10') {
                     mescroll.endSuccess(10, false, null);
                 } else {
+                    errorTip(data.Message);
                     mescroll.endErr();
                 }
             },
             error: function() {
+                errorTip('网络错误');
                 mescroll.endErr();
             }
         })
+    }
+    function errorTip(str){
+        bootoast({
+            message: ''+str,
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 3
+        });
     }
     //处理返回数据
     function dealReturnList(list) {
