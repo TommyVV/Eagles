@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\TbActivity.cs" />
+    <Compile Include="Activity\TbTask.cs" />
     <Compile Include="App\TbAppMenu.cs" />
     <Compile Include="App\TbAppModule.cs" />
     <Compile Include="App\TB_APP_MENU.cs" />

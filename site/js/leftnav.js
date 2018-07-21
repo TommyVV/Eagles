@@ -39,6 +39,10 @@ var appId=getRequest('appId');
     $(".fb_one").click(function () {
         window.location.href = 'task.html?appId='+appId+''
     });
+		//修改密码
+		/* $(".md_password").click(function () {
+				window.location.href = 'task.html?appId='+appId+''
+		}); */
    
 
 

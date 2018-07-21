@@ -72,6 +72,6 @@ namespace Eagles.Application.Model.Task.GetPublicTaskDetail
         /// <summary>
         /// 附件集合
         /// </summary>
-        public List<Attachment> AcctachmentList { get; set; }
+        public List<Attachment> AttachmentList { get; set; }
     }
 }

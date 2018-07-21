@@ -47,6 +47,7 @@
     <Compile Include="IMettingDataAccess.cs" />
     <Compile Include="IOperGroupDataAccess.cs" />
     <Compile Include="IBranchDataAccess.cs" />
+    <Compile Include="IPublicityDataAccess.cs" />
     <Compile Include="IRewardScoreDataAccess.cs" />
     <Compile Include="IScoreDataAccess.cs" />
     <Compile Include="IScrollImageDataAccess.cs" />

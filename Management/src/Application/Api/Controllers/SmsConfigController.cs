@@ -6,6 +6,9 @@ using Eagles.Base;
 using Eagles.Interface.Core;
 
 using Eagles.Application.Host.Common;
+using Eagles.Application.Model.SMSOrg.Request;
+using Eagles.Application.Model.SMSOrg.Response;
+
 namespace Eagles.Application.Host.Controllers
 {
     /// <summary>
@@ -66,25 +69,61 @@ namespace Eagles.Application.Host.Controllers
             return ApiActuator.Runing(requset, (requset1) =>_SmsHandler.SMS(requset));
         }
 
-        /// <summary>
-        /// 获取机构短信配置
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public GetOrgSmsResponse GetOrgSms(RequestBase request)
-        {
-            return new GetOrgSmsResponse();
-        }
+
+
+
+
+
+
 
         /// <summary>
         /// 创建/修改短信配置。
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public ResponseBase CreateOrgSmsConfig(CreateOrgSmsRequest request)
+        public ResponseFormat<bool> EditOrgSmsConfig(EditSMSOrgRequset request)
         {
+
+            return ApiActuator.Runing(request, (requset1) => _SmsHandler.EditOrgSmsConfig(request));
             //todo
-            return null;
+            //return null;
         }
+
+        ///// <summary>
+        ///// 删除 短信配置
+        ///// </summary>
+        ///// <param name="requset"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ResponseFormat<bool> RemoveOrgSmsConfig(RemoveSMSOrgRequest requset)
+        //{
+        //    return ApiActuator.Runing(requset, (requset1) => _SmsHandler.RemoveOrgSmsConfig(requset));
+        //}
+
+        /// <summary>
+        /// 短信配置 详情
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetSMSOrgDetailResponse> GetSMSOrgDetail(GetSMSOrgDetailRequset requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => _SmsHandler.GetSMSOrgDetail(requset));
+        }
+
+        /// <summary>
+        /// 短信配置 列表
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<GetSMSOrgResponse> GetSMSOrg(GetSMSOrgRequest requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => _SmsHandler.GetSMSOrg(requset));
+        }
+
+     
+
+        
     }
 }

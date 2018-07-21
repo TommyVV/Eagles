@@ -27,7 +27,7 @@ namespace Eagles.Application.Model.Publicity.Model
         /// <summary>
         /// 申请时间 格式 yyyy-MM-dd HH：mm：ss
         /// </summary>
-        public string CreateTime { get; set; }
+        public DateTime  CreateTime { get; set; }
 
         /// <summary>
         /// 参与人数

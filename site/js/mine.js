@@ -5,35 +5,42 @@ $('#top-nav,#mobilenav').load('./head.html')
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
-
+var phonesmodiy;
+$(function(){
+	//修改密码
+	$("#modifypass,.md_password").click(function() {
+		console.log(1)
+		window.location.href = 'modifPassword.html?appId=' + appId + '&phonesmodiy='+phonesmodiy
+	});
+})
 class CalculateScreen {
-	constructor() {
-		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
-		this.init();
-	}
-	init() {
-		if(!this.isMobile) {
-			$('.mobile').hide();
-			$('.pc').show();
-			$('#left-nav').load('leftNav.html?appId=' + appId + '', () => {
-
-			})
-			$('#footer').load('footer.html', () => {
-
-			})
-			$('body').css('background-color', 'rgb(248,248,248)');
-		} else {
-			$('.mobile').show();
-			$('.pc').hide();
-			$('body').css('background-color', '#fff');
+		constructor() {
+			this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+			this.init();
+		}
+		init() {
+			if(!this.isMobile) {
+				$('.mobile').hide();
+				$('.pc').show();
+				$('#left-nav').load('leftNav.html?appId=' + appId + '', () => {
+	
+				})
+				$('#footer').load('footer.html', () => {
+	
+				})
+				$('body').css('background-color', 'rgb(248,248,248)');
+			} else {
+				$('.mobile').show();
+				$('.pc').hide();
+				$('body').css('background-color', '#fff');
+			}
 		}
 	}
-}
-new CalculateScreen();
-
-$(window).resize(function() {
 	new CalculateScreen();
-})
+	
+	$(window).resize(function() {
+		new CalculateScreen();
+	})
 
 //积分换购
 $("#point-part").click(function() {
@@ -84,6 +91,8 @@ $("#f_rw,.fb_wrw").click(function() {
 $("#task").click(function() {
 	window.location.href = 'task.html?appId=' + appId + ''
 });
+
+
 minedel(token, appId);
 
 function minedel(token, appId) {
@@ -103,6 +112,7 @@ function minedel(token, appId) {
 				$('.main-content-top-tel,.info-tel').text(data.Telphone); //用户id
 				$('.head-icon,.head-pic').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
+				phonesmodiy=data.Telphone
 
 			}
 		}

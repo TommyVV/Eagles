@@ -9,13 +9,13 @@ namespace Eagles.Interface.DataAccess.ActivityAccess
 {
     public interface IActivityAccess : IInterfaceBase
     {
-        int CreateActivity(TbActivity activity);
+        int CreateActivity(TbActivity reqActivity, int toUserId, out int activityId);
 
         int EditActivityJoin(TbUserActivity userActivity);
 
         int EditActivityReview(ActivityTypeEnum type, int activityId, int reviewType);
 
-        bool EditActivityComplete(int activityId, int completeStatus, int score);
+        bool EditActivityComplete(int activityId, int isPublic, int completeStatus, int score);
         
         int EditActivityFeedBack(TbUserActivity userActivity);
 

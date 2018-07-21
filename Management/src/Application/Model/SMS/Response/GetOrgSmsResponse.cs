@@ -1,5 +1,8 @@
 ﻿namespace Eagles.Application.Model.SMS.Response
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class GetOrgSmsResponse
     {
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Eagles.Application.Model.Common
 {
@@ -13,8 +13,18 @@ namespace Eagles.Application.Model.Common
         public int StepId { get; set; }
 
         /// <summary>
-        /// 步骤名称
+        /// 步骤内容
         /// </summary>
         public string StepName { get; set; }
+
+        /// <summary>
+        /// 反馈内容
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
+        /// 反馈附件列表
+        /// </summary>
+        public List<Attachment> AttachList { get; set; }
     }
 }

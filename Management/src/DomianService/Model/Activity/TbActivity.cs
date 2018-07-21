@@ -126,5 +126,19 @@ namespace Eagles.DomainService.Model.Activity
         /// 负责人Id
         /// </summary>
         public int ToUserId { get; set; }
+
+        public DateTime PublicTime { get; set; }
+    }
+
+    public class ActivityUserCount
+    {
+        /// <summary>
+        /// 活动id
+        /// </summary>
+        public int ActivityId { get; set; }
+        /// <summary>
+        /// 活动名称
+        /// </summary>
+        public int Count { get; set; }
     }
 }

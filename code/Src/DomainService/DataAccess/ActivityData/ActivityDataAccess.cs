@@ -22,12 +22,24 @@ namespace Ealges.DomianService.DataAccess.ActivityData
             this.dbManager = dbManager;
         }
 
-        public int CreateActivity(TbActivity reqActivity)
+        public int CreateActivity(TbActivity reqActivity, int toUserId, out int activityId)
         {
-            return dbManager.Excuted(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
+            var result = 0;
+            activityId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_activity (OrgId, BranchId, ActivityName, HtmlContent, BeginTime, EndTime, FromUser, ActivityType, MaxCount, CanComment, 
 TestId, MaxUser, Attach1, Attach2, Attach3, Attach4, AttachName1, AttachName2, AttachName3, AttachName4, ImageUrl, IsPublic, OrgReview, BranchReview, ToUserId, Status, CreateType) 
-value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
-@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType)", reqActivity);
+values (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @FromUser, @ActivityType, @MaxCount, @CanComment, @TestId, @MaxUser, @Attach1, @Attach2, @Attach3, @Attach4, 
+@AttachName1, @AttachName2, @AttachName3, @AttachName4, @ImageUrl, @IsPublic, @OrgReview, @BranchReview, @ToUserId, @Status, @CreateType); select LAST_INSERT_ID(); ", reqActivity);
+            result = dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime) ",
+                new
+                {
+                    OrgId = reqActivity.OrgId,
+                    BranchId = reqActivity.BranchId,
+                    ActivityId = activityId,
+                    UserId = toUserId, //任务责任人
+                    CreateTime = DateTime.Now
+                });
+            //return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)", userActivity);
+            return result;
         }
 
         public int EditActivityJoin(TbUserActivity userActivity)
@@ -55,19 +67,19 @@ value (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @Fr
             return result;
         }
 
-        public bool EditActivityComplete(int activityId, int completeStatus, int score)
+        public bool EditActivityComplete(int activityId, int isPublic, int completeStatus, int score)
         {
             var commandString = "";
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_activity set Status = 2 where ActivityId = @ActivityId and Status = 1"; //通过
+                commandString = @"update eagles.tb_activity set Status = 2, IsPublic = @IsPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //通过
             else
-                commandString = @"update eagles.tb_activity set Status = 0 where ActivityId = @ActivityId and Status = 1"; //不通过
+                commandString = @"update eagles.tb_activity set Status = 0, IsPublic = @isPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
                     CommandString = commandString,
-                    Parameter = new { ActivityId = activityId }
+                    Parameter = new { IsPublic = isPublic, ActivityId = activityId, PublicTime = DateTime.Now }
                 },
                 new TransactionCommand()
                 {

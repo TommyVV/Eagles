@@ -38,6 +38,11 @@ namespace Eagles.Application.Model.Common
         public int ViewsCount { get; set; }
 
         /// <summary>
+        /// 党员
+        /// </summary>
+        public int ToUser { get; set; }
+
+        /// <summary>
         /// 是否公开
         /// </summary>
         public int IsPublic { get; set; }

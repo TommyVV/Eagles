@@ -14,6 +14,15 @@ if(TestId && testlist) {
 }
 //点击试卷提交 手动提交答案
 $('#answer-submit').on('click', function() {
+	if(localStorage.getItem("IsInternalUser")==0){
+		bootoast({
+			message: '您非系统内部用户,无法使用该功能',
+			type: 'success',
+			position: 'toast-top-center',
+			timeout: 2
+		});
+		return false;
+	}
 	submitTestPaperAnswer(TestId, 0, token, appId);
 })
 //提交试题的答案; 
@@ -53,7 +62,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 						message: '' + res.Message + '',
 						type: 'danger',
 						position: 'toast-top-center',
-						timeout: 0
+						timeout: 2
 					});
 				}
 
@@ -95,7 +104,7 @@ function getNewsDetail(newsId, token, appId) {
 				for(var j = 0; j < data.Attach.length; j++) {
 
 					if(data.Attach[j].AttachName) {
-						filesText += ' <p><span class="glyphicon glyphicon-file" aria-hidden="true"></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
+						filesText += ' <p><span class="filebackbg"><img src="icons/downloadfolder@2x.png" /></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
 					}
 				}
 				//头部内容
@@ -106,7 +115,7 @@ function getNewsDetail(newsId, token, appId) {
 				$('.content-box .content').append(contentBoxText); //内容
 				$('.person-box').append(personBoxText); //浏览人数
 				$('.file').append(filesText); //附件
-				if(data.CanStudy) { //获取学习时间
+				if(data.CanStudy==1&&localStorage.getItem("IsInternalUser")==1) { //获取学习时间
 					getStudyTime(newsId, data.Module, token, appId); //学习时间
 					//文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟
 					if(token) {
@@ -268,7 +277,7 @@ function getTestPaperAnswerJson() {
 					message: '有题目题目没有作答,请全部完成后再提交!',
 					type: 'warning',
 					position: 'toast-top-center',
-					timeout: 0
+					timeout: 1
 				});
 				return;
 			}
@@ -293,7 +302,7 @@ function getTestPaperAnswerJson() {
 						message: '第' + (i + 1) + '题最多只能选择' + multiplecount + '个答案,请修改后在提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 0
+						timeout: 1
 					});
 
 				} else if(answerCheckboxs.length <= 0) {
@@ -301,7 +310,7 @@ function getTestPaperAnswerJson() {
 						message: '有题目题目没有作答,请全部完成后再提交!',
 						type: 'warning',
 						position: 'toast-top-center',
-						timeout: 0
+						timeout: 1
 					});
 
 				}

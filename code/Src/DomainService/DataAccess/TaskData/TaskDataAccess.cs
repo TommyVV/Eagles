@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Eagles.Base.DataBase;
 using Eagles.Base.DataBase.Modle;
@@ -18,10 +19,10 @@ namespace Ealges.DomianService.DataAccess.TaskData
             this.dbManager = dbManager;
         }
 
-        public int CreateTask(TbTask reqTask, int toUserId, string toUserName)
+        public int CreateTask(TbTask reqTask, int toUserId, string toUserName, out int taskId)
         {
             var result = 0;
-            var taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,FromUserName,TaskContent,BeginTime,EndTime,
+            taskId = dbManager.ExecuteScalar<int>(@"insert into eagles.tb_task (OrgId,BranchId,TaskName,FromUser,FromUserName,TaskContent,BeginTime,EndTime,
 AttachName1,AttachName2,AttachName3,AttachName4,Attach1,Attach2,Attach3,Attach4,CreateTime,CanComment,Status,IsPublic,OrgReview,BranchReview,CreateType) 
 value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTime,@EndTime,@AttachName1,@AttachName2,@AttachName3,@AttachName4,@Attach1,@Attach2,@Attach3,@Attach4,
 @CreateTime,@CanComment,@Status,@IsPublic,@OrgReview,@BranchReview,@CreateType); select LAST_INSERT_ID(); ", reqTask);
@@ -70,15 +71,15 @@ value (@OrgId,@BranchId,@TaskName,@FromUser,@FromUserName,@TaskContent,@BeginTim
         {
             var commandString = "";
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_task set Status = 3, Score = @Score, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2 "; //通过
+                commandString = @"update eagles.tb_task set Status = 3, IsPublic = @IsPublic, PublicTime = @PublicTime, Score = @Score where TaskId = @TaskId and Status = 2 "; //通过
             else
-                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic where TaskId = @TaskId and Status = 2"; //不通过
+                commandString = @"update eagles.tb_task set Status = 0, IsPublic = @IsPublic, PublicTime = @PublicTime where TaskId = @TaskId and Status = 2"; //不通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
                     CommandString = commandString,
-                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score }
+                    Parameter = new { IsPublic = isPublic, TaskId = taskId, Score = score, PublicTime = DateTime.Now }
                 },
                 new TransactionCommand()
                 {
@@ -115,8 +116,8 @@ where TaskId = @TaskId and StepId = @StepId", userTaskStep);
 
         public List<TbUserTaskStep> GetTaskStep(int taskId)
         {
-            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime from eagles.tb_user_task_step a
-join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
+            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime,a.Attach1, a.Attach2, 
+a.Attach3, a.Attach4, a.AttachName1, a.AttachName2, a.AttachName3, a.AttachName4 from eagles.tb_user_task_step a join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
                 new { TaskId = taskId });
         }
 
@@ -135,7 +136,7 @@ join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a
 
         public TbTask GetTaskDetail(int taskId, int appId)
         {
-            var result = dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.FromUserName,a.Status,a.TaskContent,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
+            var result = dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.FromUserName,a.Status,a.TaskContent,a.BeginTime,a.EndTime,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
 a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,a.CreateType,b.UserId,UserName from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId
 where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
             if (result != null && result.Any())

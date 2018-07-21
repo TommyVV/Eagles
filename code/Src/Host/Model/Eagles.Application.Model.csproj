@@ -149,6 +149,8 @@
     <Compile Include="UserMessage\GetUserUnreadMessage.cs" />
     <Compile Include="User\BranchUser\GetBranchUserRequest.cs" />
     <Compile Include="User\BranchUser\GetBranchUserResponse.cs" />
+    <Compile Include="User\EditUserPwd\EditUserPwdRequest.cs" />
+    <Compile Include="User\EditUserPwd\EditUserPwdResponse.cs" />
     <Compile Include="User\GetUserNotice\GetUserNoticeRequest.cs" />
     <Compile Include="User\GetUserNotice\GetUserNoticeResponse.cs" />
     <Compile Include="User\GetUserRelationship\GetUserRelationshipRequest.cs" />
