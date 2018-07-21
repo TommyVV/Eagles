@@ -14,7 +14,7 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-	
+		#J_navlist .glyphicon{top:10px;}
 		.mod_select {
 		    position: absolute;
 		    left: 0;
