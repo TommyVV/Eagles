@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Eagles.Application.Host.Common;
 using Eagles.Application.Model;
+using Eagles.Application.Model.Audit.Model;
 using Eagles.Application.Model.Audit.Requset;
 using Eagles.Application.Model.Audit.Response;
 using Eagles.Base;
@@ -47,5 +48,20 @@ namespace Eagles.Application.Host.Controllers
         {
              return ApiActuator.Runing(requset, (requset1) =>_AuditHandler.GetAuditList(requset));
         }
+
+
+        /// <summary>
+        /// 审核 列表
+        /// </summary>
+        /// <param name="requset"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ResponseFormat<bool> Audit(AuditInfo requset)
+        {
+            return ApiActuator.Runing(requset, (requset1) => _AuditHandler.Audit(requset));
+        }
+
+
+        
     }
 }
