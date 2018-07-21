@@ -65,7 +65,7 @@ $('.btn-login').on('click', function(e) {
                 localStorage.setItem("userId", data.UserId); //用户ID
                 localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
                 localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
-				if(localStorage.getItem("IsInternalUser")==0){
+				if(data.IsInternalUser==0){
 					window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
 				}
 				
