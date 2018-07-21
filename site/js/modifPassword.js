@@ -1,5 +1,6 @@
 var appId = getRequest('appId');
 var phonesmodiy = getRequest('phonesmodiy');
+var token = localStorage.getItem("token")
 $('#top-nav,#mobilenav').load('./head.html')
 $("#footer").load("footer.html");
 navbar(appId)
