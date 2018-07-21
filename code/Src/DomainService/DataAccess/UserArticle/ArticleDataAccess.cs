@@ -24,7 +24,7 @@ values (@OrgId,@BranchId,@NewsId,@UserId,@ToUser,@Title,@HtmlContent,@NewsType,@
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             var userNews = dbManager.Query<TbUserNews>(@"select OrgId,BranchId,NewsId,UserId,ToUser,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,IsPublic,PublicTime
-OrgReview,BranchReview from eagles.tb_user_news where UserId = @UserId and Status = 0 limit @PageIndex, @PageSize ", 
+OrgReview,BranchReview from eagles.tb_user_news where UserId = @UserId and Status = 0 order by CreateTime desc limit @PageIndex, @PageSize ", 
 new { UserId =  userId , PageIndex = pageIndexParameter, PageSize = pageSize });
             return userNews;
         }
@@ -33,7 +33,7 @@ new { UserId =  userId , PageIndex = pageIndexParameter, PageSize = pageSize });
         {
             int pageIndexParameter = (pageIndex - 1) * pageSize;
             var userNews = dbManager.Query<TbUserNews>(@"select OrgId,BranchId,NewsId,UserId,ToUser,Title,HtmlContent,NewsType,Status,CreateTime,ViewsCount,RewardsScore,ReviewId,IsPublic,PublicTime
-OrgReview,BranchReview from eagles.tb_user_news where Status = 0 and IsPublic = 0 and OrgReview = 0 and BranchReview = 0 limit @PageIndex, @PageSize ",
+OrgReview,BranchReview from eagles.tb_user_news where Status = 0 and IsPublic = 0 and OrgReview = 0 and BranchReview = 0 order by CreateTime desc limit @PageIndex, @PageSize ",
                 new { UserId = userId, PageIndex = pageIndexParameter, PageSize = pageSize });
             return userNews;
         }

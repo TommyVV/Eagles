@@ -165,7 +165,7 @@ namespace Eagles.DomainService.Core.Task
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, request.TaskId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -256,7 +256,7 @@ namespace Eagles.DomainService.Core.Task
                 NewsType = 26, //26 任务审核确认完成
                 Title = "任务完成",
                 Content = "任务已完成",
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, request.TaskId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -334,7 +334,7 @@ namespace Eagles.DomainService.Core.Task
                 NewsType = 23, //23 任务负责人定制计划（新增，修改，删除）
                 Title = "任务负责人定制计划",
                 Content = "任务计划已定制",
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, request.TaskId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -415,7 +415,7 @@ namespace Eagles.DomainService.Core.Task
                 NewsType = 24, //24 任务负责人反馈计划内容（新增，修改）
                 Title = "任务负责人反馈计划内容",
                 Content = "任务已反馈",
-                TargetUrl = configuration.EaglesConfiguration.TaskNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.TaskNoticeUrl, tokens.OrgId, request.TaskId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
