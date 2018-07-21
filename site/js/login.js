@@ -65,20 +65,29 @@ $('.btn-login').on('click', function(e) {
                 localStorage.setItem("userId", data.UserId); //用户ID
                 localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
                 localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
+				if(data.IsInternalUser==0){
+					window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
+				}
+				
                 //登陆成功页面跳转地址
                 var prevLink = document.referrer;
+				console.log(prevLink)
                 if ($.trim(prevLink) == '') {
-                    parent.location.href = 'mine.html?appId=' + appId + '';
+                    location.href = 'mine.html?appId=' + appId + '';
                 } else {
                     if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
-                        parent.location.href = 'signup.html?appId=' + appId + '';
-                    } else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
-                        console.log(666)
-                            //testlist
-                        parent.location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist=' + testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
-                    }
-                    parent.location.href = prevLink;
+                        location.href = 'signup.html?appId=' + appId + '';
+                    }else if(prevLink.indexOf('login.html') != -1){
+						location.href = 'mine.html?appId=' + appId + '';
+					} else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
+					
+                        location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist=' + testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
+                    }else{
+						location.href = prevLink;
+						
+					}
                 }
+				
 
             } else {
                 bootoast({
