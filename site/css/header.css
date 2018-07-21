@@ -1,5 +1,6 @@
 
 @media screen and (max-width: 768px) {
+	
 	#mobilenav{width: 100%;overflow: hidden;height: 1.4rem;;}
 	 #pc-header {
     display: none; }
