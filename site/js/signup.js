@@ -124,14 +124,15 @@ function loginIn(account, UserPwd) {
 		success: function(res) {
 			var data = res.Result;
 			if(res.Code == 00) {
-				localStorage.setItem("token", data.Result.Token); //存储token
-				localStorage.setItem("userId", data.Result.UserId); //用户ID
-				localStorage.setItem("IsInternalUser", data.Result.IsInternalUser); //是否是内部用户
-				localStorage.setItem("IsVerifyCode", data.Result.IsVerifyCode); //是否需要验证码
+				localStorage.setItem("token", data.Token); //存储token
+				localStorage.setItem("userId", data.UserId); //用户ID
+				localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
+				localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
+				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
 				//登陆成功页面跳转地址
 				var prevLink = document.referrer;
 				if($.trim(prevLink) == '') {
-					location.href = 'index.html';
+					location.href = 'index.html?moduleType=0&appId=' + appId
 				} else {
 					location.href = prevLink;
 				}
