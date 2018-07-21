@@ -23,7 +23,7 @@ namespace Eagles.Application.Model.News.CreateNews
         public string NewsContent { get; set; }
 
         /// <summary>
-        /// 入党申请书党员
+        /// 入党介绍人
         /// </summary>
         public int ToUser { get; set; }
 

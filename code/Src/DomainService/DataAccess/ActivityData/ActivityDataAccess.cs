@@ -38,7 +38,6 @@ values (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @F
                     UserId = toUserId, //任务责任人
                     CreateTime = DateTime.Now
                 });
-            //return dbManager.Excuted(@"insert into eagles.tb_user_activity(OrgId,BranchId,ActivityId,UserId,CreateTime) values (@OrgId,@BranchId,@ActivityId,@UserId,@CreateTime)", userActivity);
             return result;
         }
 
@@ -69,17 +68,15 @@ values (@OrgId, @BranchId, @ActivityName, @HtmlContent, @BeginTime, @EndTime, @F
 
         public bool EditActivityComplete(int activityId, int isPublic, int completeStatus, int score)
         {
-            var commandString = "";
+            var status = 0; //不通过,置成初始状态重新审核
             if (completeStatus == 0)
-                commandString = @"update eagles.tb_activity set Status = 2, IsPublic = @IsPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //通过
-            else
-                commandString = @"update eagles.tb_activity set Status = 0, IsPublic = @isPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1"; //不通过
+                status = 2; //通过
             var commands = new List<TransactionCommand>()
             {
                 new TransactionCommand()
                 {
-                    CommandString = commandString,
-                    Parameter = new { IsPublic = isPublic, ActivityId = activityId, PublicTime = DateTime.Now }
+                    CommandString = @"update eagles.tb_activity set Status = @Status, IsPublic = @IsPublic, PublicTime = @PublicTime where ActivityId = @ActivityId and Status = 1",
+                    Parameter = new { Status = status, IsPublic = isPublic, PublicTime = DateTime.Now, ActivityId = activityId }
                 },
                 new TransactionCommand()
                 {
