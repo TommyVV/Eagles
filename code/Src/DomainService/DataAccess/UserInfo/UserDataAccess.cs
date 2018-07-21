@@ -60,7 +60,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
 
         public TbUserInfo GetLogin(string phone)
         {
-            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
+            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone and Status = 0 ", new { Phone = phone });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
@@ -148,7 +148,7 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId ");
             dynamicParams.Add("PageIndex", pageIndexParameter);
             dynamicParams.Add("PageSize", pageSize);
             sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime,TargetUrl from eagles.tb_user_notice 
-where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
+where 1=1 {0} order by CreateTime limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbUserNotice>(sql.ToString(), dynamicParams);
         }
 
