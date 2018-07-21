@@ -42,6 +42,8 @@ namespace Eagles.DomainService.Core.Score
             var userInfo = util.GetUserInfo(tokens.UserId);
             if (userInfo == null)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
+            if (request.Count <= 0)
+                throw new TransactionException(MessageCode.InvalidParameter, MessageKey.InvalidParameter);
             //查询商品
             var productInfo = iproductAccess.GetProductDetail(request.ProductId);
             if (productInfo == null)
@@ -77,7 +79,7 @@ namespace Eagles.DomainService.Core.Score
             //订单表、流水表
             var exchange = iScoreAccess.AppScoreExchange(order, userScore, buyCount);
             //更新用户积分
-            var result = util.EditUserScore(tokens.UserId, score * request.Count);
+            var result = util.EditUserScore(userInfo.UserId, score * request.Count);
             if (result <= 0)
                 throw new TransactionException(MessageCode.UpdateScoreFail, MessageKey.UpdateScoreFail);
             return response;
