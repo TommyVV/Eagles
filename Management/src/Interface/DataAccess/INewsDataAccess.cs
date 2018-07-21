@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Eagles.Application.Model.News.Requset;
+using Eagles.Application.Model.Publicity.Request;
 using Eagles.Base;
 using Eagles.DomainService.Model.News;
 
@@ -14,5 +15,6 @@ namespace Eagles.Interface.DataAccess
         int CreateNews(TbNews mod);
         int ImportNews(List<TbNews> mod);
         List<TbNews> GetNewsList(List<int> list);
+        List<TbNews> GetNewsList(string Token);
     }
 }

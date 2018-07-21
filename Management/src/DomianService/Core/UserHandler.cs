@@ -273,16 +273,18 @@ namespace Eagles.DomainService.Core
                 IsCheck = userSetUp.Any(up => up.SubUserId == x.UserId)
             }).ToList();
 
-            if (requset.IsRelation == IsRelation.关联)
-            {
-                userChecklist = userChecklist.Where(x => x.IsCheck).ToList();
-            }
-            else if (requset.IsRelation == IsRelation.未关联)
-            {
-                userChecklist = userChecklist.Where(x => !x.IsCheck).ToList();
-            }
+            userChecklist = userChecklist.Where(x => x.IsCheck).ToList();
 
-            response.UserId = userChecklist.Select(x => x.UserId).ToList();
+            //if (requset.IsRelation == IsRelation.关联)
+            //{
+            //    userChecklist = userChecklist.Where(x => x.IsCheck).ToList();
+            //}
+            //else if (requset.IsRelation == IsRelation.未关联)
+            //{
+            //    userChecklist = userChecklist.Where(x => !x.IsCheck).ToList();
+            //}
+
+            response.User = userChecklist.Select(x => new User {UserId = x.UserId, UserName = x.UserName}).ToList();
             return response;
         }
 

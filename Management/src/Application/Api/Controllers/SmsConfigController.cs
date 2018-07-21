@@ -89,16 +89,16 @@ namespace Eagles.Application.Host.Controllers
             //return null;
         }
 
-        /// <summary>
-        /// 删除 短信配置
-        /// </summary>
-        /// <param name="requset"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ResponseFormat<bool> RemoveOrgSmsConfig(RemoveSMSOrgRequest requset)
-        {
-            return ApiActuator.Runing(requset, (requset1) => _SmsHandler.RemoveOrgSmsConfig(requset));
-        }
+        ///// <summary>
+        ///// 删除 短信配置
+        ///// </summary>
+        ///// <param name="requset"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ResponseFormat<bool> RemoveOrgSmsConfig(RemoveSMSOrgRequest requset)
+        //{
+        //    return ApiActuator.Runing(requset, (requset1) => _SmsHandler.RemoveOrgSmsConfig(requset));
+        //}
 
         /// <summary>
         /// 短信配置 详情

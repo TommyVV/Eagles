@@ -147,7 +147,8 @@ FROM `eagles`.`tb_news`
     `tb_news`.`CanStudy`,
     `tb_news`.`ImageUrl`,
     `tb_news`.`IsExternal`,
-    `tb_news`.`ExternalUrl`
+    `tb_news`.`ExternalUrl`,
+ `tb_news`.`NewsType`
 FROM `eagles`.`tb_news`
   where NewsId=@NewsId;
  ");
@@ -356,6 +357,59 @@ FROM `eagles`.`tb_news`
             dynamicParams.Add("NewsId", list.ToArray());
 
             return dbManager.Query<TbNews>(sql.ToString(), dynamicParams);
+        }
+
+        public List<TbNews> GetNewsList(string Token)
+        {
+            var sql = new StringBuilder();
+            var parameter = new StringBuilder();
+            var dynamicParams = new DynamicParameters();
+            var token = cacheHelper.GetData<TbUserToken>(Token);
+
+            parameter.Append(" and  OrgId = @OrgId ");
+            dynamicParams.Add("OrgId", token.OrgId);
+
+            parameter.Append(" and  NewsType = @NewsType ");
+            dynamicParams.Add("NewsType", 1);
+
+
+
+            sql.AppendFormat(@" SELECT `tb_news`.`OrgId`,
+    `tb_news`.`NewsId`,
+    `tb_news`.`ShortDesc`,
+    `tb_news`.`Title`,
+    `tb_news`.`HtmlContent`,
+    `tb_news`.`Author`,
+    `tb_news`.`Source`,
+    `tb_news`.`Module`,
+    `tb_news`.`Status`,
+    `tb_news`.`BeginTime`,
+    `tb_news`.`EndTime`,
+    `tb_news`.`TestId`,
+    `tb_news`.`Attach1`,
+    `tb_news`.`Attach2`,
+    `tb_news`.`Attach3`,
+    `tb_news`.`Attach4`,
+    `tb_news`.`Attach5`,
+    `tb_news`.`OperId`,
+    `tb_news`.`CreateTime`,
+    `tb_news`.`IsImage`,
+    `tb_news`.`IsVideo`,
+    `tb_news`.`IsAttach`,
+    `tb_news`.`IsClass`,
+    `tb_news`.`IsLearning`,
+    `tb_news`.`IsText`,
+    `tb_news`.`ViewCount`,
+    `tb_news`.`ReviewId`,
+    `tb_news`.`CanStudy`,
+    `tb_news`.`ImageUrl`,
+ `tb_news`.`NewsType`
+FROM `eagles`.`tb_news` 
+  where  1=1  {0}  
+ ", parameter);
+
+            return dbManager.Query<TbNews>(sql.ToString(), dynamicParams);
+
         }
     }
 }
