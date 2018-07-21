@@ -15,5 +15,6 @@ namespace Eagles.DomainService.Model.Org
         public int SendCount { get; set; }
         public int Status { get; set; }
         public int VendorId { get; set; }
+        public string VendorName { get; set; }
     }
 }

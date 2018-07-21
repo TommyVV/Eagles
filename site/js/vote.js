@@ -3,6 +3,9 @@ $(document).ready(function() {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var voteId = getRequest("testId");
+    if(!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     var activityId = getRequest("activityId");
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => {});

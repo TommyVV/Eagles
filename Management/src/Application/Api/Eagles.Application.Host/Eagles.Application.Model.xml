@@ -3813,6 +3813,11 @@
             状态
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.SMSOrg.Model.SMSOrg.VendorName">
+            <summary>
+            短信提供方名称
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.SMSOrg.Request.EditSMSOrgRequset">
             <summary>
             
