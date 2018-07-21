@@ -3,6 +3,9 @@ $(document).ready(function () {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
+    if(!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     //当前用户是上级还是下级（默认是下级）
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => { });
@@ -33,7 +36,7 @@ $(document).ready(function () {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function () {
                 errorTip("网络错误");
             },
             complete: function () {
@@ -56,10 +59,10 @@ $(document).ready(function () {
                 if (data.Code == "00") {
                     taskRecord(data.Result.StepList, status);
                 } else {
-                    errorTip(data.Message);                    
+                    errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function () {
                 errorTip("网络错误");
             }
         });
@@ -83,7 +86,7 @@ $(document).ready(function () {
                     getTaskDetail();
                 } else {
                     requestFlag = false;
-                    errorTip(data.Message);                    
+                    errorTip(data.Message);
                 }
             },
             error: function () {
@@ -232,7 +235,7 @@ $(document).ready(function () {
         list.forEach((element, index) => {
             step += `<div class="oper-item">
                 <div class="oper-text">${element.StepName}</div>
-                <div class="opers" id="step-${index}" data-toggle="modal" data-target="#myModal">查看</div></div>`;
+                <button type="button" class="opers" id="step-${index}" data-toggle="modal" data-target="#myModal">查看</button></div>`;
         });
         var str = ``;
         //待审核
@@ -257,21 +260,6 @@ $(document).ready(function () {
                 </div>
             </div>`;
             $(".task-record").removeClass('hide').html(str);
-            //查看操作详情
-            $(".opers").click(function () {
-                var stepIndex = $(this).attr('id').split('-')[1];
-                var stepItem = list[stepIndex];
-                var stepDetail = `<div>
-                <div class="step-title">步骤内容：</div>
-                <div class="step-content">${stepItem.StepName}</div>
-                <div class="step-title">反馈内容：</div>
-                <div class="step-content">${stepItem.Content == null ? "" : stepItem.Content}</div>
-                <div class="add-area">
-                ${attachmentList(stepItem.AttachList)}
-                </div>
-                </div>`;
-                $(".modal-body").html(stepDetail);
-            });
             //是否公开
             $('.flag-area').click(function () {
                 if ($('.pub-flag').hasClass('select')) {
@@ -324,8 +312,23 @@ $(document).ready(function () {
                     <span class="glyphicon glyphicon-star n-star"></span>
                 </div>
             </div>`;
-            $(".task-record").html(str);
+            $(".task-record").removeClass('hide').html(str);
         }
+        //查看操作详情
+        $(".opers").click(function () {
+            var stepIndex = $(this).attr('id').split('-')[1];
+            var stepItem = list[stepIndex];
+            var stepDetail = `<div>
+                        <div class="step-title">步骤内容：</div>
+                        <div class="step-content">${stepItem.StepName}</div>
+                        <div class="step-title">反馈内容：</div>
+                        <div class="step-content">${stepItem.Content == null ? "" : stepItem.Content}</div>
+                        <div class="add-area">
+                        ${attachmentList(stepItem.AttachList)}
+                        </div>
+                        </div>`;
+            $(".modal-body").html(stepDetail);
+        });
     }
     //上级审核活动是否完成
     function editTaskComplete(status) {
@@ -357,9 +360,9 @@ $(document).ready(function () {
             }
         });
     }
-    function errorTip(str){
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3

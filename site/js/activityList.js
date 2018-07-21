@@ -1,6 +1,9 @@
 $(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
+    if(!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
     var currentItemType = '0';

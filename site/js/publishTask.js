@@ -2,6 +2,9 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
+    if(!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     //指派人员
     var toUserId = '';
     var toUserName = '';
