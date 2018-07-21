@@ -149,7 +149,18 @@ namespace Eagles.DomainService.Core
 
             TbOrgSmsConfig mod;
             var now = DateTime.Now;
-            if (request.Info.VendorId > 0 && request.Info.OrgId > 0)
+
+            if (request.Info.VendorId == 0 || request.Info.OrgId == 0)
+            {
+                throw new TransactionException("","参数不正确");
+            }
+            TbOrgSmsConfig detail = dataAccess.GetSMSOrgDetail(new GetSMSOrgDetailRequset
+            {
+                VendorId = request.Info.VendorId,
+                OrgId = request.Info.OrgId
+            });
+
+            if (detail != null)
             {
                 mod = new TbOrgSmsConfig()
                 {

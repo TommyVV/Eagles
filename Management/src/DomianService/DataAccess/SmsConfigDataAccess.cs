@@ -32,7 +32,6 @@ SET
 
 `VendorName` = @VendorName,
 `SendCount` = @SendCount,
-`CreateTime` = @CreateTime,
 `AppId` = @AppId,
 `AppKey` = @AppKey,
 `SginKey` = @SginKey,
@@ -64,7 +63,7 @@ VALUES
 (@VendorId,
 @VendorName,
 @SendCount,
-@CreateTime,
+now(),
 @AppId,
 @AppKey,
 @SginKey,
@@ -93,8 +92,8 @@ WHERE `VendorId` = @VendorId
 
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
 
-            parameter.Append(" and OrgId = @OrgId ");
-            dynamicParams.Add("OrgId", token.OrgId);
+            //parameter.Append(" and OrgId = @OrgId ");
+            //dynamicParams.Add("OrgId", token.OrgId);
 
             //if (requset.BranchId > 0)
             //{
@@ -159,7 +158,7 @@ FROM `eagles`.`tb_sms_config`  where 1=1  {0} order by VendorId desc limit  @pag
 FROM `eagles`.`tb_sms_config`
   where VendorId=@VendorId;
  ");
-            dynamicParams.Add("Id", requset.VendorId);
+            dynamicParams.Add("VendorId", requset.VendorId);
 
             return dbManager.QuerySingle<SmsConfig>(sql.ToString(), dynamicParams);
         }
