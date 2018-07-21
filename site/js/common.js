@@ -92,9 +92,10 @@ if(localStorage.getItem('TokenExpTime')!=null&&localStorage.getItem('TokenExpTim
 	var dataObjData = getLocalStorage('information', s)
 	if (dataObjData != "" && dataObjData != null) {
 	} else {
+		alert("获取的token已经过期请重新登录");
 	    localStorage.removeItem("token"); //清除token的值
 	    localStorage.removeItem("TokenExpTime"); //清楚时间
-	    //alert("获取的信息已经过期");
+	    
 	}
 }
 
