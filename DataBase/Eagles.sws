@@ -4,8 +4,9 @@
 
 <Workspace>
 	<Local Expanded="Yes" Name="Eagles">
-		<Model Expanded="Yes" ID="{3C82EAEC-BB5A-4FFB-BCF5-57C96D2AD3C2}" Loaded="No" Name="indexTemplate" Selected="Yes" Type="{A6BAC8D1-B730-11D1-8898-00A02455633B}" URL="index.rtp"/>
-		<Model Expanded="Yes" ID="{2DE2992E-A2AF-48BD-80C5-AC6C67B53E67}" Name="Eagles" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Eagles.pdm"/>
+		<Model Expanded="Yes" ID="{3C82EAEC-BB5A-4FFB-BCF5-57C96D2AD3C2}" Loaded="No" Name="indexTemplate" Type="{A6BAC8D1-B730-11D1-8898-00A02455633B}" URL="index.rtp"/>
+		<Model Expanded="Yes" ID="{2DE2992E-A2AF-48BD-80C5-AC6C67B53E67}" Loaded="No" Name="Eagles" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Eagles.pdm"/>
+		<Model Expanded="Yes" ID="{2DE2992E-A2AF-48BD-80C5-AC6C67B53E67}" Name="Eagles" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/Work/Eagles/DataBase/Eagles.pdm"/>
 	</Local>
 	<BrowserModule Name="仓库(&amp;R)"/>
 </Workspace>
