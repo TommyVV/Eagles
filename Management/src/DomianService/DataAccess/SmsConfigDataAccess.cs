@@ -32,7 +32,6 @@ SET
 
 `VendorName` = @VendorName,
 `SendCount` = @SendCount,
-`CreateTime` = @CreateTime,
 `AppId` = @AppId,
 `AppKey` = @AppKey,
 `SginKey` = @SginKey,
@@ -64,7 +63,7 @@ VALUES
 (@VendorId,
 @VendorName,
 @SendCount,
-@CreateTime,
+now(),
 @AppId,
 @AppKey,
 @SginKey,
