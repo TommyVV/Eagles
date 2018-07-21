@@ -13,7 +13,7 @@ function navbar(appId) {
         },
         url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             var data = res.Result;
             if (res.Code == 00) {
                 $('#login_logo').attr("src", data.LogoUrl)
@@ -22,11 +22,11 @@ function navbar(appId) {
     });
 }
 
-$('.login-zc').on('click', function(e) {
-        window.location.href = "signup.html?appId=" + appId
-    })
-    //登录
-$('.btn-login').on('click', function(e) {
+$('.login-zc').on('click', function (e) {
+    window.location.href = "signup.html?appId=" + appId
+})
+//登录
+$('.btn-login').on('click', function (e) {
     e.preventDefault();
     let password = $('#inputPassword').val(); //密码
     let account = $('#inputUser').val(); //用户名
@@ -58,41 +58,36 @@ $('.btn-login').on('click', function(e) {
         },
         url: "http://51service.xyz/Eagles/api/User/Login",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             var data = res.Result;
             if (res.Code == 00) {
                 var f = localStorage.setItem("token", data.Token); //存储token
                 localStorage.setItem("userId", data.UserId); //用户ID
                 localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
                 localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
-				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
-				 
-				if(data.IsInternalUser=="0"){
-					window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
-					return false;
-				}
-                //登陆成功页面跳转地址
-               var prevLink = document.referrer;
-				
-                if ($.trim(prevLink) == '') {
-					
-                    location.href = 'mine.html?appId=' + appId + '';
-                } else {
-                    if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
-                        location.href = 'signup.html?appId=' + appId + '';
-                    }else if(prevLink.indexOf('login.html') != -1){
-						location.href = 'mine.html?appId=' + appId + '';
-					} else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
-					
-                        location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist=' + testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
-                    }else{
-						
-						location.href = prevLink;
-						
-					}
-                }
-				
+                localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
 
+                if (data.IsInternalUser == "0") {
+                    window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
+                    return false;
+                }else{
+					//登陆成功页面跳转地址
+					var prevLink = document.referrer;
+					if ($.trim(prevLink) == '') {
+						location.href = 'mine.html?appId=' + appId + '';
+					} else {
+						if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
+							location.href = 'signup.html?appId=' + appId + '';
+						} else if (prevLink.indexOf('login.html') != -1) {
+							location.href = 'mine.html?appId=' + appId + '';
+						} else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
+							location.href = 'partyLearning_detail.html?appId=' + appId + '&testlist=' +
+								testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
+						} else {
+							location.href = prevLink;
+						}
+					}
+				}
             } else {
                 bootoast({
                     message: '' + res.Message + '',
