@@ -260,21 +260,21 @@ namespace Eagles.DomainService.Core.Task
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
-            var userScore = 0;
+            var rewardScoreUser = 0;
 
             if (0 == createType)
             {
-                userScore = taskInfo.FromUser; //奖励积分的人
+                rewardScoreUser = taskInfo.FromUser; //奖励积分的人
                 userNotice.FromUser = taskInfo.FromUser;
                 userNotice.UserId = taskInfo.UserId;
             }
             else
             {
-                userScore = taskInfo.UserId; //奖励积分的人
+                rewardScoreUser = taskInfo.UserId; //奖励积分的人
                 userNotice.FromUser = taskInfo.UserId;
                 userNotice.UserId = taskInfo.FromUser;
             }
-            util.EditUserScore(userScore, rewardScore); //增加完成任务的人积分
+            util.EditUserScore(rewardScoreUser, rewardScore); //增加完成任务的人积分
             var scoreLs = new TbUserScoreTrace()
             {
                 OrgId = tokens.OrgId,

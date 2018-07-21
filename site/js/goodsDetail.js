@@ -29,7 +29,7 @@ $(".sub-btn,.overview-props-btn").click(function() {
             if (res.Code == 00) {
                 window.location.href = "exchangeResult.html?code=1&tip=商品兑换成功&appId=" + appId;
             } else {
-                window.location.href = "exchangeResult.html?code=0&tip=商品兑换失败&appId=" + appId;
+                window.location.href = "exchangeResult.html?code=0&tip="+res.Message+"&appId=" + appId;
             }
         }
     });
