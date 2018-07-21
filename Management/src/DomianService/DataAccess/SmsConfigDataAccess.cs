@@ -93,8 +93,8 @@ WHERE `VendorId` = @VendorId
 
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
 
-            parameter.Append(" and OrgId = @OrgId ");
-            dynamicParams.Add("OrgId", token.OrgId);
+            //parameter.Append(" and OrgId = @OrgId ");
+            //dynamicParams.Add("OrgId", token.OrgId);
 
             //if (requset.BranchId > 0)
             //{
@@ -109,8 +109,8 @@ WHERE `VendorId` = @VendorId
             //}
 
             sql.AppendFormat(@"SELECT count(*)
-FROM `eagles`.`tb_sms_config`  where 1=1  {0} ;
- ", parameter);
+FROM `eagles`.`tb_sms_config`  where 1=1 
+ ");
             totalCount = dbManager.ExecuteScalar<int>(sql.ToString(), dynamicParams);
 
             sql.Clear();
@@ -130,8 +130,8 @@ FROM `eagles`.`tb_sms_config`  where 1=1  {0} ;
     `tb_sms_config`.`MaxCount`,
     `tb_sms_config`.`Priority`,
     `tb_sms_config`.`Status`
-FROM `eagles`.`tb_sms_config`  where 1=1  {0} order by VendorId desc limit  @pageStart ,@pageSize
- ", parameter);
+FROM `eagles`.`tb_sms_config`  where 1=1  order by VendorId desc limit  @pageStart ,@pageSize
+ ");
 
             
       
@@ -159,7 +159,7 @@ FROM `eagles`.`tb_sms_config`  where 1=1  {0} order by VendorId desc limit  @pag
 FROM `eagles`.`tb_sms_config`
   where VendorId=@VendorId;
  ");
-            dynamicParams.Add("Id", requset.VendorId);
+            dynamicParams.Add("VendorId", requset.VendorId);
 
             return dbManager.QuerySingle<SmsConfig>(sql.ToString(), dynamicParams);
         }
@@ -234,7 +234,7 @@ FROM `eagles`.`tb_org_sms_config`
 
             var token = cacheHelper.GetData<TbUserToken>(requset.Token);
 
-            parameter.Append(" and OrgId = @OrgId ");
+            parameter.Append(" and a.OrgId = @OrgId ");
             dynamicParams.Add("OrgId", token.OrgId);
 
             //if (requset.BranchId > 0)
@@ -261,15 +261,18 @@ FROM `eagles`.`tb_org_sms_config`  where 1=1  {0} ;
             dynamicParams.Add("pageNum", requset.PageNumber);
             dynamicParams.Add("pageSize", requset.PageSize);
 
-            sql.AppendFormat(@" SELECT `tb_org_sms_config`.`OrgId`,
-    `tb_org_sms_config`.`VendorId`,
-    `tb_org_sms_config`.`MaxCount`,
-    `tb_org_sms_config`.`SendCount`,
-    `tb_org_sms_config`.`CreateTime`,
-    `tb_org_sms_config`.`OperId`,
-    `tb_org_sms_config`.`Priority`,
-    `tb_org_sms_config`.`Status`
-FROM `eagles`.`tb_org_sms_config`  where 1=1  {0} order by CreateTime desc limit  @pageStart ,@pageSize
+            sql.AppendFormat(@" 
+SELECT a.OrgId,
+       a.VendorId,
+       a.MaxCount,
+       a.SendCount,
+       a.CreateTime,
+       a.OperId,
+       a.Priority,
+       a.Status,
+	   b.VendorName
+FROM eagles.tb_org_sms_config a
+inner join eagles.tb_sms_config b on a.VendorId=b.VendorId  where 1=1  {0} order by a.CreateTime desc limit  @pageStart ,@pageSize
  ", parameter);
 
 

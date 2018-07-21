@@ -149,7 +149,14 @@ namespace Eagles.DomainService.Core
 
             TbOrgSmsConfig mod;
             var now = DateTime.Now;
-            if (request.Info.VendorId > 0 && request.Info.OrgId > 0)
+            //查询
+            var exists=dataAccess.GetSMSOrgDetail(new GetSMSOrgDetailRequset()
+            {
+                OrgId = request.Info.OrgId,
+                VendorId = request.Info.VendorId
+            });
+
+            if (exists!=null&& exists.OrgId>0)
             {
                 mod = new TbOrgSmsConfig()
                 {
@@ -211,7 +218,7 @@ namespace Eagles.DomainService.Core
                 MaxCount = x.MaxCount,
                 Priority = x.Priority,
                 SendCount = x.SendCount,
-
+                VendorName = x.VendorName,
                 Status = x.Status,
                 VendorId = x.VendorId,
                 OrgId = x.OrgId,
