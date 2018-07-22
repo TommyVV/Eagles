@@ -146,8 +146,14 @@ namespace Eagles.DomainService.Core
                     StepContent = x.Content,
 
                 }).ToList()
+
+
                 // UserCount=detail
             };
+
+
+            response.info.Attachments = response.info.Attachments
+                .Where(x => !string.IsNullOrWhiteSpace(x.AttachmentName)).ToList();
             return response;
 
         }
