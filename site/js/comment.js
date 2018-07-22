@@ -156,7 +156,7 @@ Comment.prototype = {
                 ${commentOper(element.CommentStatus, element.CommentId)}
             </div>
             <div class="item-content">${element.CommentContent}</div>
-            <div class="item-time">${element.CommentTime.substr(0, 10)}</div>
+            <div class="item-time">${element.CommentTime}</div>
         </div>`;
         });
         $(".comment-area").html(commentStr);

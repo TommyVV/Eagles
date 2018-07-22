@@ -23,8 +23,23 @@ $(document).ready(function() {
         var stepfeed = JSON.parse(localStorage.getItem('stepfeed'));
         if(stepfeed){
             $("#content").val(stepfeed.Content);
-            fileArray = stepfeed.AttachList;
-            $(".attaches").html(attachmentList(fileArray));
+            stepfeed.AttachList.forEach(element => {
+                if(element.AttachName&&element.AttachmentDownloadUrl){
+                    fileArray.push(element);
+                }
+            });
+            fileArray = fileArray||[];
+            if (fileArray.length == 4) {
+                $(".upload-file").hide();
+            }
+            $(".attaches").html(attachmentList(fileArray,1));
+            $(".glyphicon-remove").click(function(){
+                var index = $('.glyphicon-remove').index(this);
+                fileArray.splice(index,1);
+                $(this).parents('.file').remove();
+                $(".upload-file").show();
+                console.log('index---',index);
+            })
         }
     }
 
@@ -62,9 +77,16 @@ $(document).ready(function() {
                 };
                 fileArray.push(object);
                 if (fileArray.length == 4) {
-                    $("#fileupload").hide();
+                    $(".upload-file").hide();
                 }
-                $(".attaches").html(attachmentList(fileArray));
+                $(".attaches").html(attachmentList(fileArray,1));
+                $(".glyphicon-remove").click(function(){
+                    var index = $('.glyphicon-remove').index(this);
+                    fileArray.splice(index,1);
+                    $(this).parents('.file').remove();
+                    $(".upload-file").show();
+                    console.log('index---',index);
+                })
             } else {
                 console.log(data.result);
             }
@@ -154,23 +176,18 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     editActivityReview(2, 0);
                 } else {
+                    requestFlag = false;
                     errorTip(data.Message);
                 }
             },
             error:function(){
                 errorTip('网络错误');
-            },
-            complete:function(){
                 requestFlag = false;
             }
         });
     }
-    //(活动)审核任务
+    //(活动)审核
     function editActivityReview(type, rType) {
-        if(requestFlag){
-            return;
-        }
-        requestFlag=true;
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/EditActivityReview",

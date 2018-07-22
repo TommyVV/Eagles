@@ -242,7 +242,7 @@ $(document).ready(function() {
         list.forEach(function(element) {
             str += ` <div class="content">${element.UserFeedBack}</div>
             <div class="attaches">
-                ${attachmentList(element.AttachList)}
+                ${attachmentList(element.AttachList,0)}
             </div>
             <div class="result-time">${result.DateTime.substr(0,10)}</div>`;
         });
@@ -306,11 +306,11 @@ $(document).ready(function() {
             data.ActivityImageUrl
             }" class="img-responsive" alt="">
                     </p>
-                    ${attachmentList(data.AttachmentList)}
+                    ${attachmentList(data.AttachmentList,0)}
                     <div id="btn-area"></div>
                 </div>
                 <div class="sign-up-area" style="display:${
-            data.ActivityStatus > 0 ? "none" : "block"
+            data.ActivityStatus > -1 ? "block" : "none"
             }">
                     <div class="area-title">
                         <span>已报名人员(${

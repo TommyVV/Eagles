@@ -10,6 +10,7 @@ $(document).ready(function () {
     //当前用户是上级还是下级（默认是下级）
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => { });
+    // 0 上级 1 下级
     var userType = 1;
     var requestFlag = false;
     //初始化页面
@@ -127,7 +128,7 @@ $(document).ready(function () {
         var taskDesc = `<div class="title">任务内容</div>
         <div class="content">${data.TaskContent}</div>
         <div class="add-area">
-        ${attachmentList(data.AttachmentList)}
+        ${attachmentList(data.AttachmentList,0)}
         </div>
         <div id="btn-area"></div>`;
         $(".task-desc").html(taskDesc);
@@ -205,9 +206,10 @@ $(document).ready(function () {
                 (createType == "0" && userId == initiateUserId) ||
                 (createType == "1" && userId == acceptUserId)
             ) {
-                //查询任务步骤
-                getTaskStep(2);
+                userType = 0;
             }
+            //查询任务步骤
+            getTaskStep(2);
         } else if (status == 3) {
             //查询任务步骤
             getTaskStep(3);
@@ -241,65 +243,73 @@ $(document).ready(function () {
         var str = ``;
         //待审核
         if (status == 2) {
-            str = `<div class="title">计划步骤</div>
-            ${step}
-            <div class="points-area">
-                <div class="points-tip">请为任务评分</div>
-                <div class="points-stars">
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                </div>
-                <div class="pub-area flag-area">
-                    <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
-                </div>
-                <div class="points-result">
-                    <div class="pass">通过</div>
-                    <div class="nopass">不通过</div>
-                </div>
-            </div>`;
-            $(".task-record").removeClass('hide').html(str);
-            //是否公开
-            $('.flag-area').click(function () {
-                if ($('.pub-flag').hasClass('select')) {
-                    $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
-                } else {
-                    $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
-                }
-            });
-
-            $(".points-stars .glyphicon").click(function () {
-                var list = $(".points-stars .glyphicon");
-                var flag = true;
-                for (var i = 0; i < list.length; i++) {
-                    if (flag) {
-                        $(list[i])
-                            .removeClass("n-star")
-                            .addClass("s-star");
+            if(userType==0){
+                //上级审核
+                str = `<div class="title">计划步骤</div>
+                ${step}
+                <div class="points-area">
+                    <div class="points-tip">请为任务评分</div>
+                    <div class="points-stars">
+                        <span class="glyphicon glyphicon-star n-star"></span>
+                        <span class="glyphicon glyphicon-star n-star"></span>
+                        <span class="glyphicon glyphicon-star n-star"></span>
+                        <span class="glyphicon glyphicon-star n-star"></span>
+                        <span class="glyphicon glyphicon-star n-star"></span>
+                    </div>
+                    <div class="pub-area flag-area">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
+                    </div>
+                    <div class="points-result">
+                        <div class="pass">通过</div>
+                        <div class="nopass">不通过</div>
+                    </div>
+                </div>`;
+                $(".task-record").removeClass('hide').html(str);
+                //是否公开
+                $('.flag-area').click(function () {
+                    if ($('.pub-flag').hasClass('select')) {
+                        $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
                     } else {
-                        $(list[i])
-                            .removeClass("s-star")
-                            .addClass("n-star");
+                        $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
                     }
-                    if (list[i] == this) {
-                        flag = false;
+                });
+    
+                $(".points-stars .glyphicon").click(function () {
+                    var list = $(".points-stars .glyphicon");
+                    var flag = true;
+                    for (var i = 0; i < list.length; i++) {
+                        if (flag) {
+                            $(list[i])
+                                .removeClass("n-star")
+                                .addClass("s-star");
+                        } else {
+                            $(list[i])
+                                .removeClass("s-star")
+                                .addClass("n-star");
+                        }
+                        if (list[i] == this) {
+                            flag = false;
+                        }
                     }
-                }
-            });
-            $(".pass").click(function () {
-                if (!requestFlag) {
-                    requestFlag = true;
-                    editTaskComplete(0);
-                }
-            });
-            $(".nopass").click(function () {
-                if (!requestFlag) {
-                    requestFlag = true;
-                    editTaskComplete(1);
-                }
-            });
+                });
+                $(".pass").click(function () {
+                    if (!requestFlag) {
+                        requestFlag = true;
+                        editTaskComplete(0);
+                    }
+                });
+                $(".nopass").click(function () {
+                    if (!requestFlag) {
+                        requestFlag = true;
+                        editTaskComplete(1);
+                    }
+                });
+            }else{
+                //下级查看
+                str = `<div class="title">计划步骤</div>${step}`;
+                $(".task-record").removeClass('hide').html(str);
+            }
+
         } else {
             var starStr=``;
             for(var i=0;i<5;i++){
@@ -323,13 +333,13 @@ $(document).ready(function () {
         $(".opers").click(function () {
             var stepIndex = $(this).attr('id').split('-')[1];
             var stepItem = list[stepIndex];
-            var stepDetail = `<div>
+            var stepDetail = `<div style="width:90%;margin-left:5%;">
                         <div class="step-title">步骤内容：</div>
                         <div class="step-content">${stepItem.StepName}</div>
                         <div class="step-title">反馈内容：</div>
                         <div class="step-content">${stepItem.Content == null ? "" : stepItem.Content}</div>
                         <div class="add-area">
-                        ${attachmentList(stepItem.AttachList)}
+                        ${attachmentList(stepItem.AttachList,0)}
                         </div>
                         </div>`;
             $(".modal-body").html(stepDetail);

@@ -2,7 +2,7 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-    if(!token) {
+        if(!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     //指派人员
@@ -101,9 +101,16 @@ $(document).ready(function() {
                 };
                 fileArray.push(object);
                 if (fileArray.length == 4) {
-                    $("#fileupload").hide();
+                    $(".upload-file").hide();
                 }
-                $(".attaches").html(attachmentList(fileArray));
+                $(".attaches").html(attachmentList(fileArray,1));
+                $(".glyphicon-remove").click(function(){
+                    var index = $('.glyphicon-remove').index(this);
+                    fileArray.splice(index,1);
+                    $(this).parents('.file').remove();
+                    $(".upload-file").show();
+                    console.log('index---',index);
+                })
             } else {
                 console.log(data.result);
             }

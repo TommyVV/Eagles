@@ -13,14 +13,6 @@
       margin-top: 0.9813333333rem;
       font-size: 0.64rem;
       line-height: 0.8533333333rem; }
-    .main_content .content-box .file {
-      margin-top: 0.8533333333rem;
-      padding-top: 0.64rem; }
-      .main_content .content-box .file .glyphicon {
-        color: #65BBDE; }
-      .main_content .content-box .file a {
-        color: #141414;
-        text-decoration: underline; }
     .main_content .content-box .file:first-of-type {
       border-top: 1px solid #EEEEEE; }
     .main_content .content-box .sub-btn {
@@ -45,7 +37,8 @@
       flex-wrap: wrap;
       line-height: 0.8533333333rem; }
       .main_content .sign-up-area .names div {
-        width: 2.3466666667rem; }
+        padding-left: 5px;
+        padding-right: 5px; }
 
 .activity-content {
   background-color: white;

@@ -13,6 +13,7 @@ $(document).ready(function() {
     //新增计划
     $(".plan-add").click(function() {
         stepId = "";
+        $('#step-content').val('');
         $("#modalLargeLabel").html('新增步骤');
     });
     //确定计划

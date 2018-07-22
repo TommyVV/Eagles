@@ -45,15 +45,16 @@ function getCookie(name) {
     // } finally {}
 }
 //附件列表
-function attachmentList(list) {
+function attachmentList(list,type) {
     var str = ``;
     if (list) {
         list.forEach(element => {
             if (element.AttachmentDownloadUrl || element.AttachName) {
                 str +=
-                    `<div class="file">
+                    `<div class="file ${type==1?'file-oper':''}">
                     <img src="icons/downloadfolder@2x.png">
                     <a href="${element.AttachmentDownloadUrl}" target="_blank">${element.AttachName}</a>
+                    ${type==1?'<span class="glyphicon glyphicon-remove"></span>':''}
                 </div>`;
             }
         });

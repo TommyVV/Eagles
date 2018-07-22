@@ -15,17 +15,17 @@
             font-size: px2rem(30);
             line-height: px2rem(40);
         }
-        .file {
-            margin-top: px2rem(40);
-            padding-top: px2rem(30);
-            .glyphicon {
-                color: #65BBDE;
-            }
-            a {
-                color: #141414;
-                text-decoration: underline;
-            }
-        }
+        // .file {
+        //     margin-top: px2rem(40);
+        //     padding-top: px2rem(30);
+        //     .glyphicon {
+        //         color: #65BBDE;
+        //     }
+        //     a {
+        //         color: #141414;
+        //         text-decoration: underline;
+        //     }
+        // }
         .file:first-of-type{
             border-top: 1px solid #EEEEEE;
         }
@@ -55,7 +55,8 @@
             flex-wrap: wrap;
             line-height: px2rem(40); 
             div{
-                width: px2rem(110);       
+                padding-left: 5px;
+                padding-right:5px;        
             }
         }
     }

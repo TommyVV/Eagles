@@ -32,11 +32,24 @@
 
 .file {
     padding-top: 0.64rem;
+    display: flex;
 }
-
+.file-oper{
+    justify-content: space-between;
+}
 .file img {
     width:1rem;
     height: 1rem;
+}
+.file a{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 1rem;
+}
+.file .glyphicon-remove{
+    color: red;
+    font-size: 0.8rem;
 }
 
 @media screen and (min-width: 1024px) {
