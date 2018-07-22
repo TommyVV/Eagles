@@ -138,7 +138,12 @@ function navbar(appId) {
 	});
 }
 $('.sk_sps').on('click', function(e) {
-	window.location.href = 'myNotice.html?appId=' + appId + '';
+	if(localStorage.getItem("IsInternalUser")==0){
+		return false;
+	}else{
+		window.location.href = 'myNotice.html?appId=' + appId + '';
+	}
+	
 })
 $('.main-topf').on('click', function(e) {
 	window.location.href = 'index.html?moduleType=0&appId=' + appId + '';

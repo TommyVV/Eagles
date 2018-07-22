@@ -1,8 +1,7 @@
-﻿using System;
-using Eagles.Application.Model.UserMessage;
+﻿using Eagles.Application.Model.UserMessage;
 using Eagles.Interface.Core.UserMessage;
-using Eagles.Interface.DataAccess.UserMessage;
 using Eagles.Interface.DataAccess.Util;
+using Eagles.Interface.DataAccess.UserMessage;
 
 namespace Eagles.DomainService.Core.UserMessage
 {
@@ -25,7 +24,6 @@ namespace Eagles.DomainService.Core.UserMessage
             {
                 return new GetUserUnreadMessage();
             }
-            
             var count= userMessage.GetUserUnreadMessageCount(userInfo.UserId);
             return new GetUserUnreadMessage()
             {

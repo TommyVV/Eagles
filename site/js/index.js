@@ -166,11 +166,16 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 					}
 					//PC代码 右边列表页
 					if(flag == 'right') { 
-						pclistriht += '<a href="' + externalUrl + '"><div class="top">' + '<img src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '" />' +
+						if(i==0){
+							pclistriht += '<a href="' + externalUrl + '"><div class="top">' + '<img src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '" />' +
 							'<div class="top-overview"><div class="top-overview-title">' + data.NewsInfos[i].Title + '</div>' +
 							'<span class="top-overview-date">' + data.NewsInfos[i].CreateTime + '</span>' +
-							'</div></div>' +
-							'<p class="article">' + data.NewsInfos[i].Title + '</p></a>';
+							'</div></div></a>';
+						}else{
+							pclistriht += '<a href="' + externalUrl + '"><p class="article">' + data.NewsInfos[i].Title + '</p></a>';
+							
+						}
+						
 					} else if(flag == 'left') {
 						if(i < 1) { //PC代码 左边列表页 大图
 							pccontenone += '<a href="' + externalUrl + '"><div class="top">' +

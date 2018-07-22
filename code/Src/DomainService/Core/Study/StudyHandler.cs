@@ -86,7 +86,7 @@ namespace Eagles.DomainService.Core.Study
             if (result != null)
                 response.StudyTime = result.StudyTime;
             else
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
+                response.StudyTime = 0;
             return response;
         }
     }
