@@ -134,12 +134,30 @@ namespace Eagles.DomainService.Core
         public GetNewDetailResponse GetNewsDetail(GetNewDetailRequset requset)
         {
             var response = new GetNewDetailResponse();
-
-            TbNews detail = dataAccess.GetNewsDetail(requset);
-
-
-
-            response.Info = new NewDetail
+            var detail = dataAccess.GetNewsDetail(requset);
+            var attach = new List<Attachment>()
+            {
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach1,
+                    AttachmentName = detail.AttachName1
+                },
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach2,
+                    AttachmentName = detail.AttachName2
+                },
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach3,
+                    AttachmentName = detail.AttachName3
+                },new Attachment()
+                {
+                    AttachmentUrl = detail.Attach4,
+                    AttachmentName = detail.AttachName4
+                }
+            };
+            response.Info = new QueryNewsDetail()
             {
                 //AuditStatus = AuditStatus.审核通过,
                 AuditStatus = AuditStatus.审核通过,
@@ -158,16 +176,7 @@ namespace Eagles.DomainService.Core
                 //OrgId = detail.OrgId,
                 ExternalUrl = detail.ExternalUrl,
                 IsExternal = detail.IsExternal,
-                AttachName1 = detail.AttachName1,
-                AttachName2 = detail.AttachName2,
-                AttachName3 = detail.AttachName3,
-                AttachName4 = detail.AttachName4,
-                Attach1 = detail.Attach1,
-                Attach2 = detail.Attach2,
-                Attach3 = detail.Attach3,
-                Attach4 = detail.Attach4,
-
-                // Category=detail.ViewCount
+                Attachments = attach
             };
             return response;
         }
@@ -179,7 +188,7 @@ namespace Eagles.DomainService.Core
             {
                 TotalCount = 0
             };
-            List<TbNews> list = dataAccess.GetNewsList(requset, out int totalCount) ?? new List<TbNews>();
+            var list = dataAccess.GetNewsList(requset, out int totalCount) ?? new List<TbNews>();
 
             if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
             response.TotalCount = totalCount;
@@ -210,7 +219,7 @@ namespace Eagles.DomainService.Core
                 ExternalUrl = x.ExternalUrl,
                 IsExternal = 1,
                 CreateTime = now,
-                Source =x.Source
+                Source = x.Source
             }).ToList();
 
             return dataAccess.ImportNews(mod) > 0;

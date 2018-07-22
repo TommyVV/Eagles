@@ -48,8 +48,13 @@ const imageType = {
   SAVE_INFO: "SAVE_INFO", // 保存详情
   CLEAR_INFO: "CLEAR_INFO" // 清空详情
 };
-// 图片
+// 党员
 const memberType = {
+  SAVE_INFO: "SAVE_INFO", // 保存详情
+  CLEAR_INFO: "CLEAR_INFO" // 清空详情
+};
+// 活动
+const activityType = {
   SAVE_INFO: "SAVE_INFO", // 保存详情
   CLEAR_INFO: "CLEAR_INFO" // 清空详情
 };
@@ -65,5 +70,6 @@ export const actionType = {
   newsType,
   scoreType,
   imageType,
-  memberType
+  memberType,
+  activityType
 };

@@ -1,34 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eagles.Application.Model;
 using Eagles.Application.Model.ActivityTask.Model;
 using Eagles.Application.Model.ActivityTask.Requset;
 using Eagles.Application.Model.ActivityTask.Response;
+using Eagles.Application.Model.Common;
 using Eagles.Base;
+using Eagles.Base.Cache;
 using Eagles.Base.Utility;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
 
 namespace Eagles.DomainService.Core
 {
-    public class ActivityTaskHandler: IActivityTaskHandler
+    public class ActivityTaskHandler : IActivityTaskHandler
     {
         private readonly IActivityTaskDataAccess dataAccess;
 
-        public ActivityTaskHandler(IActivityTaskDataAccess dataAccess)
+        private readonly ICacheHelper cacheHelper;
+
+        public ActivityTaskHandler(IActivityTaskDataAccess dataAccess, ICacheHelper cacheHelper)
         {
             this.dataAccess = dataAccess;
+            this.cacheHelper = cacheHelper;
         }
 
         public bool EditActivity(EditActivityTaskInfoRequset requset)
         {
-           
-            TbActivity mod;
 
+            TbActivity mod;
+            var token = cacheHelper.GetData<TbUserToken>(requset.Token);
             if (requset.DetailInfo.ActivityTaskId > 0)
             {
                 mod = new TbActivity
@@ -41,23 +43,26 @@ namespace Eagles.DomainService.Core
                     Attach4 = requset.DetailInfo.Attach4,
                     BeginTime = requset.DetailInfo.BeginTime,
                     ActivityId = requset.DetailInfo.ActivityTaskId,
-                    BranchId = requset.BranchId,
-                    BranchReview = "-1",
+                    BranchId = token.BranchId,
+                    BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
                     EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
                     HtmlContent = requset.DetailInfo.Content,
                     ImageUrl = requset.DetailInfo.ImageUrl,
                     IsPublic = requset.DetailInfo.IsPublic,
-                    MaxCount = requset.DetailInfo.MaxPartakePeople,
+                    MaxCount = requset.DetailInfo.EverybodyPeople,
                     MaxUser = requset.DetailInfo.MaxPartakePeople,
-                    OrgId = requset.OrgId,
-                    OrgReview = "-1",
+                    AttachName1 = requset.DetailInfo.AttachName1,
+                    AttachName2 = requset.DetailInfo.AttachName2,
+                    AttachName3 = requset.DetailInfo.AttachName3,
+                    AttachName4 = requset.DetailInfo.AttachName4,
+                    OrgId = token.OrgId,
+                    OrgReview = "",
                     Status = 0,
                     TestId = requset.DetailInfo.ExampleId,
                     ToUserId = 0,
-                    
-                    
+
                 };
 
                 var result = dataAccess.EditActivity(mod);
@@ -74,9 +79,13 @@ namespace Eagles.DomainService.Core
                     Attach2 = requset.DetailInfo.Attach2,
                     Attach3 = requset.DetailInfo.Attach3,
                     Attach4 = requset.DetailInfo.Attach4,
+                    AttachName1 = requset.DetailInfo.AttachName1,
+                    AttachName2 = requset.DetailInfo.AttachName2,
+                    AttachName3 = requset.DetailInfo.AttachName3,
+                    AttachName4 = requset.DetailInfo.AttachName4,
                     BeginTime = requset.DetailInfo.BeginTime,
                     ActivityId = requset.DetailInfo.ActivityTaskId,
-                    BranchId = requset.BranchId,
+                    BranchId = token.BranchId,
                     BranchReview = "",
                     CanComment = requset.DetailInfo.IsComment,
                     EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
@@ -86,7 +95,7 @@ namespace Eagles.DomainService.Core
                     IsPublic = requset.DetailInfo.IsPublic,
                     MaxCount = requset.DetailInfo.EverybodyPeople,
                     MaxUser = requset.DetailInfo.MaxPartakePeople,
-                    OrgId = requset.OrgId,
+                    OrgId = token.OrgId,
                     OrgReview = "",
                     Status = 0,
                     TestId = requset.DetailInfo.ExampleId,
@@ -112,7 +121,7 @@ namespace Eagles.DomainService.Core
 
         public bool RemoveActivity(RemoveActivityTaskRequset requset)
         {
-           
+
             var result = dataAccess.RemoveActivity(requset);
 
             return result > 0;
@@ -123,46 +132,46 @@ namespace Eagles.DomainService.Core
             var response = new GetActivityTaskDetailResponse
             {
             };
-            TbActivity detail = dataAccess.GetActivityDetail(requset);
+            var detail = dataAccess.GetActivityDetail(requset);
 
-            if (detail == null) throw new TransactionException("M01","无业务数据");
-
-            response.Info = new ActivityDetailInfo
+            if (detail == null) throw new TransactionException("M01", "无业务数据");
+            var attac = new List<Attachment>()
+            {
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach1,
+                    AttachmentName = detail.AttachName1
+                },
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach2,
+                    AttachmentName = detail.AttachName2
+                },
+                new Attachment()
+                {
+                    AttachmentUrl = detail.Attach3,
+                    AttachmentName = detail.AttachName3
+                },new Attachment()
+                {
+                    AttachmentUrl = detail.Attach4,
+                    AttachmentName = detail.AttachName4
+                }
+            };
+            response.Info = new GetActivityDetail()
             {
                 ActivityTaskName = detail.ActivityName,
                 ActivityTaskType = detail.ActivityType,
-                Attach1 = detail.Attach1,
-                Attach2 = detail.Attach2,
-                Attach3 = detail.Attach3,
-                Attach4 = detail.Attach4,
-              
+                Attachments = attac,
                 BeginTime = detail.BeginTime,
                 ActivityTaskId = detail.ActivityId,
-                //BranchId = BranchId,
-                //"" = BranchReview,
                 IsComment = detail.CanComment,
                 EndTime = detail.EndTime.FormartDatetime(),
-               // 0 = FromUser,
                 Content = detail.HtmlContent,
                 ImageUrl = detail.ImageUrl,
                 IsPublic = detail.IsPublic,
                 EverybodyPeople = detail.MaxCount,
                 MaxPartakePeople = detail.MaxUser,
-                //requset.OrgId = OrgId,
-               // "" = OrgReview,
-              //  0 = detail.Status,
                 ExampleId = detail.TestId,
-               // 0                  ToUserId,
-
-                //AuditStatus = AuditStatus.审核通过,
-                //ColumnAddress = detail.TragetUrl,
-                //ColumnId = detail.ModuleId,
-                //ColumnName = detail.ModuleName,
-                //OrderBy = detail.Priority,
-                //ColumnIcon = detail.SmallImageUrl,
-                //ColumnImg = detail.ImageUrl,
-                //IsSetTop = detail.IndexDisplay,
-                //ModuleType = detail.ModuleType,
             };
             return response;
         }
@@ -175,13 +184,12 @@ namespace Eagles.DomainService.Core
             };
             List<TbActivity> list = dataAccess.GetGetActivityList(requset) ?? new List<TbActivity>();
 
-            if (list.Count == 0) throw new TransactionException("M01","无业务数据");
+            if (list.Count == 0) throw new TransactionException("M01", "无业务数据");
 
             response.List = list.Select(x => new ActivityTaskModel
             {
                 ActivityTaskName = x.ActivityName,
                 ActivityTaskType = x.ActivityType,
-            
                 ActivityTaskId = x.ActivityId,
                 ActivityTaskImg = x.ImageUrl,
             }).ToList();

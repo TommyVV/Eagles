@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Input,
@@ -9,21 +10,40 @@ import {
   Select,
   Upload,
   Icon,
-  DatePicker
+  DatePicker,
+  Checkbox
 } from "antd";
+import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/activityService";
+import { getList } from "../../services/exerciseService";
+import { serverConfig } from "../../constants/config/ServerConfigure";
+import { fileSize, newsMap } from "../../constants/config/appconfig";
+import { saveInfo, clearInfo } from "../../actions/activityAction";
+// 引入编辑器以及编辑器样式
+import BraftEditor from "braft-editor";
+import "braft-editor/dist/braft.css";
+
 import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { TextArea } = Input;
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      activityReducer: state.activityReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCrop: false //裁剪图片
+      loading: false
     };
   }
 
@@ -33,27 +53,23 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          let { BeginTime, EndTime } = values;
+          const { news } = this.props;
+          let params = {
+            DetailInfo: {
+              ...news,
+              ...values,
+              BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
+              EndTime: moment(EndTime, "yyyy-MM-dd").format()
+            }
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/activitylist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -71,142 +87,178 @@ class Base extends Component {
     this.props.saveAgencyInfo(values);
     // console.log('上传图片记录表单数据 - ', values, this.props.share)
   };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
 
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  beforeUpload(file) {
+    const reg = /^image\/(png|jpeg|jpg)$/;
+    const type = file.type;
+    const isImage = reg.test(type);
+    if (!isImage) {
+      message.error("只支持格式为png,jpeg和jpg的图片!");
+    }
 
+    if (file.size > fileSize) {
+      message.error("图片必须小于10M");
+    }
+    return isImage && file.size <= fileSize;
+  }
+  // 上传新闻的附件
+  handleChange = info => {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} 上传成功`);
+      let attach = {};
+      info.fileList.map((obj, index) => {
+        const url = obj.response.Result.FileUploadResults[0].FileUrl;
+        attach[`Attach${++index}`] = url;
+      });
+      this.props.saveInfo({ ...this.props.news, ...attach }); // todo
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} 上传失败`);
+    }
+  };
+  // 封面
+  onChangeImage = info => {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} 上传成功`);
+      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
+      // 保存数据
+      let { getFieldsValue } = this.props.form;
+      let values = getFieldsValue();
+      this.props.saveInfo({ ...values, ImageUrl: imageUrl });
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} 上传失败`);
+    }
+  };
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { showCrop } = this.state;
-    console.log("members - ", this.props);
+    const {
+      getFieldDecorator,
+      setFieldsValue,
+      getFieldsValue
+    } = this.props.form;
+    const { news, List } = this.props; //是否显示试卷列表
     const props = {
       name: "file",
-      action: "//jsonplaceholder.typicode.com/posts/",
+      action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
       headers: {
         authorization: "authorization-text"
       },
-      onChange(info) {
-        if (info.file.status !== "uploading") {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === "done") {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === "error") {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      }
+      onChange: this.handleChange.bind(this),
+      defaultFileList: news.Attachments // todo 附件
     };
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 3 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 10 }
       }
     };
     const formItemLayoutDate = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 }
+        sm: { span: 3 }
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 11 }
+        sm: { span: 12 }
       }
+    };
+    const formItemLayoutContent = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 3 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 19 }
+      }
+    };
+    // 编辑器属性
+    const editorProps = {
+      height: 300,
+      contentFormat: "html",
+      initialContent: news.Content,
+      placeholder: "必填，请输入新闻内容",
+      onChange: Content => {
+        setFieldsValue({ Content });
+        console.log("新闻内容：", getFieldsValue());
+      },
+      media: {
+        validateFn: file => {
+          return file.size < fileSize;
+        },
+        uploadFn: async param => {
+          // const res=await uploadFile(file);
+          console.log(param);
+          let formData = new FormData();
+          formData.append("file", param.file);
+          var request = new XMLHttpRequest();
+          request.open(
+            "POST",
+            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
+          );
+          request.send(formData);
+          request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+              let { Result } = JSON.parse(request.responseText);
+              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
+              // 上传成功后调用param.success并传入上传后的文件地址
+              param.success({
+                url: FileUrl,
+                meta: {
+                  id: FileId,
+                  title: FileName,
+                  alt: FileName,
+                  loop: false, // 指定音视频是否循环播放
+                  autoPlay: false, // 指定音视频是否自动播放
+                  controls: false // 指定音视频是否显示控制栏
+                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
+                }
+              });
+            }
+          };
+        },
+        onInsert: files => {
+          console.log(files);
+        }
+      }
+      // onRawChange: this.handleRawChange
     };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("intergralId")(<Input />)}
+          {getFieldDecorator("ActivityTaskId")(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="标题">
-          {getFieldDecorator("name", {
+          {getFieldDecorator("ActivityTaskName", {
             rules: [
               {
                 required: true,
-                message: "必填，20字以内!",
+                message: "必填，请输入标题",
                 pattern: /^(?!.{21}|\s*$)/g
               }
             ]
-          })(<Input placeholder="必填，20字以内" />)}
+          })(<Input placeholder="必填，请输入标题" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="类型">
-          {getFieldDecorator("type")(
+          {getFieldDecorator("ActivityTaskType")(
             <Select>
               <Option value="0">投票</Option>
-              <Option value="1">问卷</Option>
+              <Option value="1">调查问卷</Option>
             </Select>
           )}
         </FormItem>
         <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
+              {getFieldDecorator("BeginTime")(<DatePicker />)}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -221,108 +273,106 @@ class Base extends Component {
             </span>
           </Col>
           <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
+            <FormItem>{getFieldDecorator("EndTime")(<DatePicker />)}</FormItem>
           </Col>
         </FormItem>
-        <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("price", {
+        <FormItem {...formItemLayoutContent} label="内容">
+          {getFieldDecorator("Content", {
             rules: [
               {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
+                required: true
               }
             ]
-          })(<TextArea rows={4} />)}
+          })(
+            <div className="editor-wrap">
+              <BraftEditor {...editorProps} />
+            </div>
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="最大参与人数">
-          {getFieldDecorator("name", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="每人可参与次数">
-          {getFieldDecorator("name", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
+          {getFieldDecorator("MaxPartakePeople")(
+            <Input placeholder="必填，20字以内" />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="是否允许评论">
-          {getFieldDecorator("comment")(
+          {getFieldDecorator("IsComment")(
             <Select>
               <Option value="0">是</Option>
               <Option value="1">否</Option>
             </Select>
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="每人可参与次数">
+          {getFieldDecorator("EverybodyPeople", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请输入每人可参与次数"
+              }
+            ]
+          })(<Input placeholder="必填，请输入每人可参与次数" />)}
+        </FormItem>
         <FormItem {...formItemLayout} label="习题选择">
-          {getFieldDecorator("exercise")(
+          {getFieldDecorator("ExampleId")(
             <Select>
-              <Option value="0">习题一</Option>
-              <Option value="1">习题二</Option>
+              {List.map((o, i) => {
+                return (
+                  <Option value={o.QuestionId} key={i}>
+                    {o.Question}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="图片">
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
+            beforeUpload={this.beforeUpload}
+            onChange={this.onChangeImage.bind(this)}
+          >
+            {news.ImageUrl ? (
+              <img src={news.ImageUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
+          </Upload>
+        </FormItem>
         <FormItem {...formItemLayout} label="附件">
-          {getFieldDecorator("view")(
-            <Upload {...props}>
-              <Button>
-                <Icon type="upload" /> 点击上传
-              </Button>
-            </Upload>
-          )}
+          <Upload {...props}>
+            <Button>
+              <Icon type="upload" /> 上传
+            </Button>
+          </Upload>
         </FormItem>
         <FormItem>
           <Row gutter={24}>
-            <Col span={2} offset={4}>
+            <Col span={2} offset={2}>
               <Button
                 htmlType="submit"
                 className="btn btn--primary"
                 type="primary"
               >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
+                {news.ActivityTaskId ? "更新" : "新建"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/project")}
+                onClick={() => hashHistory.replace("/activitylist")}
               >
                 取消
               </Button>
             </Col>
           </Row>
         </FormItem>
-        {showCrop ? (
-          <Crop
-            handleFile={() => this.handleFile("avatar")}
-            onCancel={() =>
-              this.setState({
-                ["showCrop"]: false
-              })
-            }
-          />
-        ) : null}
       </Form>
     );
   }
@@ -330,63 +380,100 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
+    const { news } = props;
+    console.log("详情数据回显 - ", news);
     return {
-      // intergralId: Form.createFormField({ value: "" }),
-      page: Form.createFormField({ value: "0" }),
-      // state: Form.createFormField({ value: "0" })
+      ActivityTaskId: Form.createFormField({
+        value: news.ActivityTaskId
+      }),
+      ActivityTaskName: Form.createFormField({
+        value: news.ActivityTaskName
+      }),
+      ActivityTaskType: Form.createFormField({
+        value: news.ActivityTaskType ? news.ActivityTaskType + "" : "0"
+      }),
+      BeginTime: Form.createFormField({
+        value: news.BeginTime ? moment(news.BeginTime, "YYYY-MM-DD") : null
+      }),
+      EndTime: Form.createFormField({
+        value: news.EndTime ? moment(news.EndTime, "YYYY-MM-DD") : null
+      }),
+      Content: Form.createFormField({
+        value: news.Content
+      }),
+      MaxPartakePeople: Form.createFormField({
+        value: news.MaxPartakePeople
+      }),
+      IsComment: Form.createFormField({
+        value: news.IsComment ? news.IsComment + "" : "0"
+      }),
+      EverybodyPeople: Form.createFormField({
+        value: news.EverybodyPeople
+      }),
+      ExampleId: Form.createFormField({
+        value: news.ExampleId ? news.ExampleId : ""
+      })
     };
   }
 })(Base);
-
+@connect(
+  state => {
+    return {
+      userReducer: state.userReducer,
+      activityReducer: state.activityReducer
+    };
+  },
+  { saveInfo, clearInfo }
+)
 class ActivityDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      List: [] // 习题列表
     };
   }
 
   componentWillMount() {
-    // let { projectId } = this.props.params;
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    let { id } = this.props.params;
+    if (id) {
+      this.getInfo(id); //拿新闻详情
+    } else {
+      this.props.clearInfo();
+      // 拿习题详情
+      this.getList();
+    }
   }
 
   componentWillUnmount() {
-    // this.props.clearProjectInfo();
+    this.props.clearInfo();
   }
+
+  // 查询栏目列表
+  getList = async () => {
+    const { List } = await getList();
+    console.log("List", List);
+    this.setState({ List });
+  };
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async ActivityId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
+      this.getList();
+      let { Info } = await getInfoById({ ActivityId });
+      console.log("newsDetails", Info);
+      Info = {
+        ...Info,
+        isTest: Info.TestId ? "1" : "0"
       };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      this.props.saveInfo(Info);
+      // 拿栏目详情
+      // 说明有试卷
+      if (Info.TestId > 0) {
+        // const { List } = await getQuestionList();
+        // console.log(List);
+      } else {
+        // const { List } = await getQuestionList();
+        // console.log(List);
+      }
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
@@ -394,10 +481,10 @@ class ActivityDetail extends Component {
   };
 
   render() {
-    const { projectDetails } = this.state;
+    const { List } = this.state;
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <FormMap news={this.props.activityReducer} List={List} />
       </Nav>
     );
   }

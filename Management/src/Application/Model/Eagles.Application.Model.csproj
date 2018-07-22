@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ActivityTask\Model\ActivityDetailInfo.cs" />
     <Compile Include="ActivityTask\Model\ActivityTaskModel.cs" />
+    <Compile Include="ActivityTask\Model\GetActivityDetail.cs" />
     <Compile Include="ActivityTask\Model\PublicActivityDetail.cs" />
     <Compile Include="ActivityTask\Model\PublicTaskDetail.cs" />
     <Compile Include="ActivityTask\Requset\EditActivityTaskInfoRequset.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Menus\Response\GetSubordinateResponse.cs" />
     <Compile Include="News\Model\AritcleDetail.cs" />
     <Compile Include="News\Model\ExternalNew.cs" />
+    <Compile Include="News\Model\QueryNewsDetail.cs" />
     <Compile Include="News\Requset\ImportNewRequset.cs" />
     <Compile Include="News\Model\New.cs" />
     <Compile Include="News\Model\NewDetail.cs" />

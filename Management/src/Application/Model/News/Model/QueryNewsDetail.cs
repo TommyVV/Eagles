@@ -4,10 +4,7 @@ using Eagles.Application.Model.Common;
 
 namespace Eagles.Application.Model.News.Model
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class NewDetail : New
+    public class QueryNewsDetail : New
     {
         /// <summary>
         /// 生效时间
@@ -44,24 +41,7 @@ namespace Eagles.Application.Model.News.Model
         /// </summary>
         //   public string Attach { get; set; }
 
-        public string Attach1 { get; set; }
-
-        public string Attach2 { get; set; }
-
-        public string Attach3 { get; set; }
-
-        public string Attach4 { get; set; }
-
-        // public string Attach5 { get; set; }
-
-
-        public string AttachName1 { get; set; }
-
-        public string AttachName2 { get; set; }
-
-        public string AttachName3 { get; set; }
-
-        public string AttachName4 { get; set; }
+        public List<Attachment> Attachments { get; set; }
         //
         // public List<Attachment> Attach { get; set; }
         /// <summary>
@@ -111,8 +91,5 @@ namespace Eagles.Application.Model.News.Model
         /// 简单描述
         /// </summary>
         public string ShortDesc { get; set; }
-
     }
-
-
 }

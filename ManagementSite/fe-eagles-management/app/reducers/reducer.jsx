@@ -12,6 +12,7 @@ import programaReducer from "./programaReducer";
 import exReducer from "./exReducer";
 import imageReducer from "./imageReducer";
 import memberReducer from "./memberReducer";
+import activityReducer from "./activityReducer";
 
 const reducer = combineReducers({
   appReducer,
@@ -24,7 +25,8 @@ const reducer = combineReducers({
   newsReducer,
   scoreReducer,
   imageReducer,
-  memberReducer
+  memberReducer,
+  activityReducer
 });
 
 export default reducer;

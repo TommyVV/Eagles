@@ -11,10 +11,10 @@ const LOGIN = {
 };
 // 活动
 const ACTIVITY = {
-  ACTIVITY_EDIT: "/api/Activity/EditActivityTask", //编辑活动
-  ACTIVITY_REMOVE: "/api/Activity/RemoveActivityTask", //删除活动
-  ACTIVITY_DETAIL: "/api/Activity/GetActivityTaskDetail", //活动详情
-  ACTIVITY_LIST: "/api/Activity/GetActivityTask" //活动列表
+  EDIT: "/api/Activity/EditActivity", //编辑活动
+  DELETE: "/api/Activity/RemoveActivity", //删除活动
+  DETAIL: "/api/Activity/GetActivityDetail", //活动详情
+  LIST: "/api/Activity/GetActivity" //活动列表
 };
 // 审核
 const AUDIT = {
@@ -97,7 +97,7 @@ const EXERCISE = {
   EDIT: "/api/TestPaper/EditSubject", //编辑习题
   DELETE: "/api/TestPaper/RemoveExercises", //删除习题
   DELETE_RELATION: "/api/TestPaper/RemoveSubject", //删除习题与试卷的关系
-  LIST: "/api/TestPaper/GetExercises", //试卷习题
+  LIST: "/api/TestPaper/GetSubjectList", //试卷习题
   DETAIL: "/api/TestPaper/GetExercisesDetail", //试卷习题
   RANDOM: "/api/TestPaper/GetRandomSubject" //习题随机生成
 };

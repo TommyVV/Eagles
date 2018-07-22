@@ -19,6 +19,7 @@ namespace Eagles.DomainService.Model.Oper
         /// 操作员编号
         /// </summary>
         public int OperId { get; set; }
+
         /// <summary>
         /// 操作员名称
         /// </summary>
