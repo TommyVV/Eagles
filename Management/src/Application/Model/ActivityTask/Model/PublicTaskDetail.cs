@@ -55,7 +55,7 @@ namespace Eagles.Application.Model.ActivityTask.Model
         /// <summary>
         /// 计划id
         /// </summary>
-        public string StepId { get; set; }
+        public int StepId { get; set; }
 
         /// <summary>
         /// 计划名称

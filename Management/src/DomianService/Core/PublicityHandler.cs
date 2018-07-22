@@ -19,6 +19,7 @@ using Eagles.DomainService.Model.News;
 using Eagles.DomainService.Model.User;
 using Eagles.Interface.Core;
 using Eagles.Interface.DataAccess;
+using Step = Eagles.Application.Model.ActivityTask.Model.Step;
 
 namespace Eagles.DomainService.Core
 {
@@ -105,6 +106,8 @@ namespace Eagles.DomainService.Core
 
             if (detail == null) throw new TransactionException("M01", "无业务数据");
 
+            List<TbUserTaskStep> result = dataAccess.GetTaskStep(requset.TaskId);
+
             response.info = new PublicTaskDetail()
             {
                 //FromUser=detail.FromUser,
@@ -136,7 +139,13 @@ namespace Eagles.DomainService.Core
                     }
                 },
                 ResponsibleUserName = detail.FromUserName,
+                Steps = result?.Select(x => new Step
+                {
+                    StepId = x.StepId,
+                    StepName = x.StepName,
+                    StepContent = x.Content,
 
+                }).ToList()
                 // UserCount=detail
             };
             return response;

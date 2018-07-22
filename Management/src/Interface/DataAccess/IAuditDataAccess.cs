@@ -9,5 +9,6 @@ namespace Eagles.Interface.DataAccess
     {
         int CreateAudit(TbReview mod);
         List<TbReview> GetAuditList(GetAuditRequest requset);
+        int Audit(string sql,int auditId);
     }
 }
