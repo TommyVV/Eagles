@@ -71,7 +71,12 @@ $(document).ready(function() {
                 imgUrl = array[0].FileUrl;
                 $(".add").html(`<img src="${imgUrl}" class="upload-img">`);
             } else {
-                alert("上传失败");
+                bootoast({
+                    message: "上传失败",
+                    type: "warning",
+                    position: "toast-top-center",
+                    timeout: 2
+                });
             }
         }
     });
@@ -141,7 +146,12 @@ $(document).ready(function() {
                 if (data.Code == "00") {
                     dealRelationList(data.Result.UserList);
                 } else {
-                    alert(data.Code, data.Message);
+                    bootoast({
+                        message: ''+data.Message,
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             }
         })
