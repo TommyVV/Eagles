@@ -105,15 +105,15 @@ namespace Eagles.DomainService.Core
 
 
                 respone.Token = Guid.NewGuid().ToString();
-
                 dataAccess.InsertToken(new TbUserToken()
                 {
-                    OrgId=requset.OrgId,
+                    OrgId= oper.OrgId,
                     UserId = oper.OperId,
                     Token = respone.Token,
                     CreateTime = DateTime.Now,
                     ExpireTime = DateTime.Now.AddMinutes(30),
-                    TokenType = 1
+                    TokenType = 1,
+                    BranchId = 0
                 });
                 dataAccess.UpdateOperErrorCount(new TbOper
                 {

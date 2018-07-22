@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.News.Response
         /// <summary>
         /// 
         /// </summary>
-        public NewDetail Info { get; set; }
+        public QueryNewsDetail Info { get; set; }
     }
 }

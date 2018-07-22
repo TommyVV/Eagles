@@ -10,6 +10,6 @@ namespace Eagles.Application.Model.ActivityTask.Response
         /// <summary>
         /// 
         /// </summary>
-        public ActivityDetailInfo Info { get; set; }
+        public GetActivityDetail Info { get; set; }
     }
 }

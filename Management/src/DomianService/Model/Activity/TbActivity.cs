@@ -39,19 +39,19 @@ namespace Eagles.DomainService.Model.Activity
         /// <summary>
         /// 附件1类型;0:图片;1:其他
         /// </summary>
-        public string AttachType1 { get; set; }
+        public string AttachName1 { get; set; }
         /// <summary>
         /// 附件1类型;0:图片;1:其他
         /// </summary>
-        public string AttachType2 { get; set; }
+        public string AttachName2 { get; set; }
         /// <summary>
         /// 附件1类型;0:图片;1:其他
         /// </summary>
-        public string AttachType3 { get; set; }
+        public string AttachName3 { get; set; }
         /// <summary>
         /// 附件1类型;0:图片;1:其他
         /// </summary>
-        public string AttachType4 { get; set; }
+        public string AttachName4 { get; set; }
         /// <summary>
         /// 开始日期
         /// </summary>

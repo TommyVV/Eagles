@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Eagles.Application.Model.Common;
-using Eagles.Application.Model.Enums;
 
 namespace Eagles.Application.Model.ActivityTask.Model
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ActivityDetailInfo : ActivityTaskModel
+    public class GetActivityDetail: ActivityTaskModel
     {
-
         /// <summary>
         /// 结束时间
         /// </summary>
@@ -59,40 +57,6 @@ namespace Eagles.Application.Model.ActivityTask.Model
         ///// 附件 json格式
         ///// </summary>
         //public string Enclosure { get; set; }
-
-        /// <summary>
-        /// 附件1
-        /// </summary>
-        public string Attach1 { get; set; }
-        /// <summary>
-        /// 附件2
-        /// </summary>
-        public string Attach2 { get; set; }
-        /// <summary>
-        /// 附件3
-        /// </summary>
-        public string Attach3 { get; set; }
-        /// <summary>
-        /// 附件4
-        /// </summary>
-        public string Attach4 { get; set; }
-
-        /// <summary>
-        /// 附件名称
-        /// </summary>
-        public string AttachName1 { get; set; }
-        /// <summary>
-        /// 附件名称
-        /// </summary>
-        public string AttachName2 { get; set; }
-        /// <summary>
-        /// 附件名称
-        /// </summary>
-        public string AttachName3 { get; set; }
-        /// <summary>
-        /// 附件名称
-        /// </summary>
-        public string AttachName4 { get; set; }
 
         /// <summary>
         /// 图片
