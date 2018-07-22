@@ -14,6 +14,8 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import { getList, del } from "../../services/activityService";
+import moment from "moment";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -22,13 +24,28 @@ const confirm = Modal.confirm;
 class SearchForm extends Component {
   handleSearch = e => {
     e.preventDefault();
+    const _this = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
+      let params = {
+        ..._this.props.getListConfig,
+        ...values
+      };
+      const getCurrentList = this.props.getCurrentList;
+      getCurrentList(params);
     });
   };
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    let params = {
+      ...this.props.getListConfig,
+      ...values
+    };
+    const getCurrentList = this.props.getCurrentList;
+    getCurrentList(params);
   };
 
   render() {
@@ -37,28 +54,29 @@ class SearchForm extends Component {
       <Form
         className="ant-advanced-search-form"
         layout="inline"
-        onSubmit={this.handleSearch}
+        onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          <Col span={5} key={5}>
+          <Col span={5} key={1}>
             <FormItem label="标题">
-              {getFieldDecorator(`goods`)(<Input />)}
+              {getFieldDecorator(`NewsName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={8} key={3}>
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("startTime")(
+                  {getFieldDecorator("StarTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
               </Col>
-              <Col span={1}>
+              <Col span={2}>
                 <span
                   style={{
                     display: "inline-block",
-                    width: "100%"
+                    width: "100%",
+                    textAlign: "center"
                   }}
                 >
                   -
@@ -66,7 +84,7 @@ class SearchForm extends Component {
               </Col>
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("endTime")(
+                  {getFieldDecorator("EndTime")(
                     <DatePicker placeholder="结束时间" />
                   )}
                 </FormItem>
@@ -96,16 +114,28 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    return {};
+    const config = props.getListConfig;
+    console.log(config);
+    return {
+      NewsName: Form.createFormField({
+        value: config.NewsName
+      }),
+      StarTime: Form.createFormField({
+        value: config.StarTime ? moment(config.StarTime, "YYYY-MM-dd") : null
+      }),
+      EndTime: Form.createFormField({
+        value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
+      })
+    };
   }
 })(SearchForm);
 
-class ActivityList extends React.Component {
+class NewsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
+      newsList: [], // 新闻列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
       pageConfig: {} // 当前页配置
@@ -113,15 +143,18 @@ class ActivityList extends React.Component {
     this.columns = [
       {
         title: "标题",
-        dataIndex: "title"
+        dataIndex: "ActivityTaskName"
       },
       {
         title: "类型",
-        dataIndex: "type"
+        dataIndex: "ActivityTaskType",
+        render: type => {
+          return <span>{type == "0" ? "投票" : "调查问卷"}</span>;
+        }
       },
       {
         title: "标题图片",
-        dataIndex: "image",
+        dataIndex: "ActivityTaskImg",
         render: image => {
           return (
             <div>
@@ -132,24 +165,24 @@ class ActivityList extends React.Component {
       },
       {
         title: "发布时间",
-        dataIndex: "date"
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
         title: "操作",
-        render: (text, record) => {
+        dataIndex: "ActivityTaskId",
+        render: ActivityTaskId => {
           return (
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/programa/detail/${record.projectId}`)
+                  hashHistory.replace(`/activity/detail/${ActivityTaskId}`)
                 }
               >
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(ActivityTaskId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -159,38 +192,12 @@ class ActivityList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        title: "关于党的发展",
-        type: "活动",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        date: "2018-06-30"
-      },
-      {
-        key: "2",
-        title: "关于党的发展",
-        type: "活动",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        date: "2018-06-30"
-      },
-      {
-        key: "3",
-        title: "关于党的发展",
-        type: "活动",
-        image:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        date: "2018-06-30"
-      }
-    ];
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      Province: "",
-      City: "",
-      District: ""
+      ActivityName: ""
+      // StarTime: "",
+      // EndTime: ""
     };
   }
   componentWillMount() {
@@ -205,13 +212,14 @@ class ActivityList extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { keyword, requestPage } = params;
-      let config = { ...this.getListConfig, requestPage, keyword };
-      let { totalSize, projectList } = await getProjectList(config);
-      console.log("projectList - ", projectList);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({ projectList, current: requestPage });
-      this.updatePageConfig(totalSize);
+      let { List, TotalCount } = await getList(params);
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.getListConfig = params; // 保存搜索的数据
+      this.setState({ newsList: List, current: params.PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -221,71 +229,35 @@ class ActivityList extends React.Component {
   updatePageConfig(totalSize) {
     let pageConfig = {
       total: totalSize,
-      pageSize: this.getListConfig.pageSize,
+      pageSize: this.getListConfig.PageSize,
       current: this.state.current,
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
+          PageNumber: page
         });
       }
     };
     this.setState({ pageConfig });
   }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async ActivityId => {
+    console.log(ActivityId);
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await del({
+            ActivityId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              requestPage: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -297,33 +269,20 @@ class ActivityList extends React.Component {
       }
     });
   };
-  // 编辑项目
-  handleEdit = async () => {
-    try {
-      let { selectedRowKeys } = this.state;
-      console.log(selectedRowKeys);
-      if (selectedRowKeys.length > 1) {
-        return message.error("不能同时编辑多个项目");
-      }
-      if (selectedRowKeys.length === 0) {
-        return message.error("请选择需要编辑的项目");
-      }
-      hashHistory.replace(`/project/create/${selectedRowKeys[0]}`);
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, newsList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList}
+          getListConfig={this.getListConfig}
+        />
         <Table
-          dataSource={this.data}
+          dataSource={newsList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
@@ -337,14 +296,14 @@ class ActivityList extends React.Component {
           gutter={24}
           // className={projectList.length === 0 ? "init" : ""}
         >
-          <Col>
+          {/* <Col>
             <Button onClick={this.handleDelete} className="btn">
               批量删除
             </Button>
-          </Col>
+          </Col> */}
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
+              <a onClick={() => hashHistory.replace(`/activity/detail`)}>
                 新增
               </a>
             </Button>
@@ -355,4 +314,4 @@ class ActivityList extends React.Component {
   }
 }
 
-export default ActivityList;
+export default NewsList;
