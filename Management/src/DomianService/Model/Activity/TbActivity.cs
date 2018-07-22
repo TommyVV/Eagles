@@ -128,6 +128,14 @@ namespace Eagles.DomainService.Model.Activity
         public int ToUserId { get; set; }
 
         public DateTime PublicTime { get; set; }
+
+
+
+        public int CreateType { get; set; }
+    
+        public string FromUserName { get; set; }
+   
+        public string ToUserName { get; set; }
     }
 
     public class ActivityUserCount
