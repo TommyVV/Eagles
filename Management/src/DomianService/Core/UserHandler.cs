@@ -102,7 +102,7 @@ namespace Eagles.DomainService.Core
                 NativePlace = detail.Origin,
                 Picture = detail.NickPhotoUrl,
                 Position = detail.Title,
-                Sex = detail.Sex,
+                Sex = detail.Sex == "男" ? 0 : 1,
                 BranchId = detail.BranchId,
                 Status = detail.Status,
                 Provice = detail.Provice,
@@ -170,7 +170,7 @@ namespace Eagles.DomainService.Core
                     OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
-                    Sex = request.Info.Sex,
+                    Sex = request.Info.Sex == 0 ? "男" : "女",
                     IsCustomer = 1,
                     BranchId = request.Info.BranchId,
                     City = request.Info.City,
@@ -219,7 +219,7 @@ namespace Eagles.DomainService.Core
                     OrgId = request.Info.OrgId,
                     NickPhotoUrl = request.Info.Picture,
                     Title = request.Info.Position,
-                    Sex = request.Info.Sex,
+                    Sex = request.Info.Sex== 0?"男":"女",
                     IsCustomer = 1,
                     BranchId = request.Info.BranchId,
                     City = request.Info.City,
@@ -358,8 +358,9 @@ namespace Eagles.DomainService.Core
                     Name = md.UserName,
                     Phone = md.Phone,
                     MemberType = md.MemberType,
+                    Password =  md5Helper.Md5Encypt(md.Phone.Substring(md.Phone.Length - 6))
 
-                });
+            });
 
 
             }
