@@ -35,8 +35,6 @@ namespace Eagles.Base.DataBase.Implement
             catch (Exception e)
             {
                 logger.LoggerError(e.ToString());
-                conn.Close();
-                throw;
             }
             finally
             {
@@ -56,8 +54,6 @@ namespace Eagles.Base.DataBase.Implement
             catch (Exception e)
             {
                 logger.LoggerError(e.ToString());
-                conn.Close();
-                throw;
             }
             finally
             {

@@ -31,7 +31,7 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            sql.Append(@" SELECT `tb_activity`.`OrgId`,
+            sql.Append(@"SELECT `tb_activity`.`OrgId`,
     `tb_activity`.`BranchId`,
     `tb_activity`.`ActivityId`,
     `tb_activity`.`ActivityName`,
@@ -39,6 +39,7 @@ namespace Ealges.DomianService.DataAccess
     `tb_activity`.`BeginTime`,
     `tb_activity`.`EndTime`,
     `tb_activity`.`FromUser`,
+    `tb_activity`.`FromUserName`,
     `tb_activity`.`ActivityType`,
     `tb_activity`.`MaxCount`,
     `tb_activity`.`CanComment`,
@@ -48,16 +49,19 @@ namespace Ealges.DomianService.DataAccess
     `tb_activity`.`Attach2`,
     `tb_activity`.`Attach3`,
     `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
     `tb_activity`.`ImageUrl`,
     `tb_activity`.`IsPublic`,
     `tb_activity`.`OrgReview`,
     `tb_activity`.`BranchReview`,
     `tb_activity`.`ToUserId`,
-    `tb_activity`.`Status`
+    `tb_activity`.`ToUserName`,
+    `tb_activity`.`Status`,
+    `tb_activity`.`CreateType`,
+    `tb_activity`.`AttachName1`,
+    `tb_activity`.`AttachName2`,
+    `tb_activity`.`AttachName3`,
+    `tb_activity`.`AttachName4`,
+    `tb_activity`.`PublicTime`
 FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
             dynamicParams.Add("ActivityId", requset.ActivityId);
@@ -97,10 +101,10 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
     `tb_activity`.`Attach2`,
     `tb_activity`.`Attach3`,
     `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
+    `tb_activity`.`AttachName1`,
+    `tb_activity`.`AttachName2`,
+    `tb_activity`.`AttachName3`,
+    `tb_activity`.`AttachName4`,
     `tb_activity`.`ImageUrl`,
     `tb_activity`.`IsPublic`,
     `tb_activity`.`OrgReview`,
@@ -212,6 +216,13 @@ FROM `eagles`.`tb_task`    where 1=1  {0}
         public int GetActivityUserCount(int activityId)
         {
             return dbManager.ExecuteScalar<int>("select count(*) from eagles.tb_user_activity where ActivityId = @ActivityId ", new { ActivityId = activityId });
+        }
+
+        public List<TbUserTaskStep> GetTaskStep(int requsetTaskId)
+        {
+            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime,a.Attach1, a.Attach2, 
+a.Attach3, a.Attach4, a.AttachName1, a.AttachName2, a.AttachName3, a.AttachName4 from eagles.tb_user_task_step a join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
+                new { TaskId = requsetTaskId });
         }
     }
 }

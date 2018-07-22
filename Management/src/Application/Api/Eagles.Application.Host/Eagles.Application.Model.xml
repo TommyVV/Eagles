@@ -64,9 +64,34 @@
             附件4
             </summary>
         </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.AttachName1">
+            <summary>
+            附件名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.AttachName2">
+            <summary>
+            附件名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.AttachName3">
+            <summary>
+            附件名称
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.AttachName4">
+            <summary>
+            附件名称
+            </summary>
+        </member>
         <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.ImageUrl">
             <summary>
             图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.Attachments">
+            <summary>
+            附件列表
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityDetailInfo.IsPublic">
@@ -107,6 +132,56 @@
         <member name="P:Eagles.Application.Model.ActivityTask.Model.ActivityTaskModel.AuditStatus">
             <summary>
             审核状态
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.BeginTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.MaxPartakePeople">
+            <summary>
+            最大参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.EverybodyPeople">
+            <summary>
+            每人参与人数
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.IsComment">
+            <summary>
+            是否允许评论
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.ExampleId">
+            <summary>
+            习题id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.ImageUrl">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.Attachments">
+            <summary>
+            附件列表
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.ActivityTask.Model.GetActivityDetail.IsPublic">
+            <summary>
+            是否公开
             </summary>
         </member>
         <member name="P:Eagles.Application.Model.ActivityTask.Model.PublicActivityDetail.ActivityId">
@@ -331,6 +406,16 @@
             10:任务
             20:活动
              </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Model.AuditInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Model.AuditType">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:Eagles.Application.Model.Audit.Requset.CreateAuditRequset">
             <summary>
@@ -2289,6 +2374,86 @@
         <member name="P:Eagles.Application.Model.News.Model.ExternalNew.Source">
             <summary>
             来源
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.EndTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.StarTime">
+            <summary>
+            生效时间
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.Content">
+            <summary>
+            内容 json格式 图片 文字
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.TestId">
+            <summary>
+            习题id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.ModuleId">
+            <summary>
+            栏目id
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.Attachments">
+            <summary>
+            附件 json格式
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.ExternalUrl">
+            <summary>
+            外部链接url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsExternal">
+            <summary>
+            是否有url
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.NewsType">
+            <summary>
+            新闻类型：0：新闻；1：会议
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.CanStudy">
+            <summary>
+            是否能学习
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsAttach">
+            <summary>
+            是否有附件
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsClass">
+            <summary>
+            有课件
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsImage">
+            <summary>
+            有图片
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsLearning">
+            <summary>
+            是学习心得（暂时不需要）
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.IsVideo">
+            <summary>
+            有视频
+            </summary>
+        </member>
+        <member name="P:Eagles.Application.Model.News.Model.QueryNewsDetail.ShortDesc">
+            <summary>
+            简单描述
             </summary>
         </member>
         <member name="T:Eagles.Application.Model.News.Model.New">

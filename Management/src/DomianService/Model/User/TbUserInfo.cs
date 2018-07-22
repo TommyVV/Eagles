@@ -123,7 +123,7 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 性别;0:男;1:女
         /// </summary>
-        public int Sex { get; set; }
+        public string Sex { get; set; }
         /// <summary>
         /// 用户状态;0:正常;1:禁用
         /// </summary>
