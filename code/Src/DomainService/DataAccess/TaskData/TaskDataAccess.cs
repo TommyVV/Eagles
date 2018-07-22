@@ -135,12 +135,10 @@ join eagles.tb_user_task b on a.TaskId = b.TaskId where b.UserId = @UserId and a
         public TbTask GetTaskDetail(int taskId, int appId)
         {
             var result = dbManager.Query<TbTask>(@"select a.TaskId,a.TaskName,a.FromUser,a.FromUserName,a.Status,a.TaskContent,a.BeginTime,a.EndTime,a.AttachName1,a.AttachName2,a.AttachName3,a.AttachName4,
-a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,a.CreateType,b.UserId,UserName from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId
+a.Attach1,a.Attach2,a.Attach3,a.Attach4,a.CreateTime,a.CreateType,b.UserId,b.UserName,ifnull(b.Score,0) as Score from eagles.tb_task a join eagles.tb_user_task b on a.taskId = b.taskId
 where a.TaskId = @TaskId and a.OrgId = @OrgId ", new {TaskId = taskId, Orgid = appId });
             if (result != null && result.Any())
-            {
                 return result.FirstOrDefault();
-            }
             return null;
         }
         

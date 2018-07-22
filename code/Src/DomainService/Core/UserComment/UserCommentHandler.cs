@@ -102,17 +102,16 @@ namespace Eagles.DomainService.Core.UserComment
                 {
                     CommentId = x.MessageId,
                     Id = x.Id,
-                    CommentTime = x.CreateTime.ToString("yyyy-MM-dd"),
+                    CommentTime = x.CreateTime.ToString("yyyy-MM-dd HH:mm"),
                     CommentUserId = x.UserId,
                     CommentUserName = x.UserName,
                     CommentContent = x.Content,
                     CommentStatus = x.ReviewStatus
                 }).ToList();
             }
-            else            
-                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);            
+            else
+                throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
             return response;
         }
-
     }
 }

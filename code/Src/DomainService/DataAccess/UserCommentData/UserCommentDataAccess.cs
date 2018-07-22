@@ -34,12 +34,12 @@ value (@OrgId,@Id,@Content,@Createtime,@UserId,@UserName,@ReviewStatus,@CommentT
         {
             if (commentStatus == 0)
                 return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
-where CommentType = @CommentType and Id = @Id ", new { CommentType = commentType, Id = id });
+where CommentType = @CommentType and Id = @Id ", new {CommentType = commentType, Id = id});
             else
                 return dbManager.Query<TbUserComment>(@"select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
-where UserId in (select UserId from eagles.tb_user_comment where UserId = @UserId and (ReviewStatus = 0 or ReviewStatus = -1)) 
-and CommentType = @CommentType and Id = @Id and ReviewStatus <> 1 ", new { CommentType = commentType, Id = id, UserId = userId });
+where CommentType = @CommentType and Id = @Id and ReviewStatus = 0 union 
+select MessageId,Id,OrgId,MessageId,Content,CreateTime,UserId,UserName,ReviewUser,ReviewTime,ReviewStatus from eagles.tb_user_comment 
+where CommentType = @CommentType and Id = @Id and UserId = @UserId and ReviewStatus = -1 ", new {CommentType = commentType, Id = id, UserId = userId});
         }
-
     }
 }

@@ -42,6 +42,7 @@ namespace Eagles.DomainService.Core.Activity
             var response = new CreateActivityResponse();
             var activityId = 0;
             var toUser = 0;
+            var activityUser = 0;
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);
@@ -49,7 +50,7 @@ namespace Eagles.DomainService.Core.Activity
             if (userInfo == null)
                 throw new TransactionException(MessageCode.UserNotExists, MessageKey.UserNotExists);
             var fromUser = request.ActivityFromUser; //活动发起人
-            if(request.ActivityToUserId>0)
+            if (request.ActivityToUserId > 0)
                 toUser = request.ActivityToUserId; //活动负责人
             if (fromUser == toUser)
                 throw new TransactionException(MessageCode.InvalidActivityUser, MessageKey.InvalidActivityUser);
@@ -74,9 +75,15 @@ namespace Eagles.DomainService.Core.Activity
                 BranchReview = "-1"
             };
             if (0 == request.CreateType)
+            {
                 act.Status = 0; //0:初始状态;(上级发给下级的初始状态)
+                activityUser = toUser; //上级创建活动,下级userid记录userActivity表
+            }
             else
+            { 
                 act.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
+                activityUser = fromUser; //下级创建活动,fromUseruserid
+            }
             if (request.AttachList != null && request.AttachList.Count > 0)
             {
                 var attachList = request.AttachList;
@@ -103,7 +110,7 @@ namespace Eagles.DomainService.Core.Activity
                     }
                 }
             }
-            var result = iActivityAccess.CreateActivity(act, toUser, out activityId);
+            var result = iActivityAccess.CreateActivity(act, activityUser, out activityId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -387,6 +394,19 @@ namespace Eagles.DomainService.Core.Activity
             switch (request.ActivityPage)
             {
                 case ActivityPage.All:
+                    //result = (from act in result
+                    //    where ((act.FromUser != userInfo.UserId || act.ToUserId != userInfo.UserId) && act.Status == -1)
+                    //    select new TbActivity
+                    //    {
+                    //        ActivityId = act.ActivityId,
+                    //        ActivityName = act.ActivityName,
+                    //        ActivityType = act.ActivityType,
+                    //        BeginTime = act.BeginTime,
+                    //        HtmlContent = act.HtmlContent,
+                    //        Status = act.Status,
+                    //        TestId = act.TestId,
+                    //        ImageUrl = act.ImageUrl
+                    //    }).ToList();
                     break;
                 case ActivityPage.Mine:
                     //得到用户参与活动
@@ -426,9 +446,7 @@ namespace Eagles.DomainService.Core.Activity
                     break;
             }
             if (result.Count == 0)
-            {
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
-            }
             response.ActivityList = result?.Select(x => new Application.Model.Common.Activity
             {
                 ActivityId = x.ActivityId,

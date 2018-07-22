@@ -120,7 +120,7 @@ where a.ActivityId = @ActivityId and a.OrgId = @OrgId and a.UserId = @UserId ", 
             dynamicParams.Add("PageSize", pageSize);
             sql.AppendFormat(@"select OrgId,BranchId,ActivityId,ActivityName,HtmlContent,BeginTime,EndTime,FromUser,ActivityType,MaxCount,CanComment,TestId,MaxUser,
 Attach1,Attach2,Attach3,Attach4,AttachName1,AttachName2,AttachName3,AttachName4,ImageUrl,IsPublic,OrgReview,BranchReview,ToUserId,Status from eagles.tb_activity where Status <> -9 {0} 
-limit @PageIndex, @PageSize ", parameter);
+order by ActivityId desc limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);
         }
         
