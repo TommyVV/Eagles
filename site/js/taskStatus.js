@@ -3,6 +3,7 @@ $(document).ready(function () {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
+    var score = 0;
     if(!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
@@ -13,7 +14,6 @@ $(document).ready(function () {
     var requestFlag = false;
     //初始化页面
     getTaskDetail();
-
     $(".opers").click(function () {
         window.location.href = "taskPlanEdit.html";
     });
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 if (data.Code == "00") {
                     taskRecord(data.Result.StepList, status);
                 } else {
-                    errorTip(data.Message);
+                    errorTip('任务步骤:'+data.Message);
                 }
             },
             error: function () {
@@ -98,11 +98,11 @@ $(document).ready(function () {
     //页面内容显示
     function dealTaskDetail(data) {
         // <img src="${data.HeadImg}" alt="">
-        var taskInfoStr = `<div class="info-icon">
-        <span class="name">${data.InitiateUserName}</span>
-        <span class="time">${data.CreateTime.substr(0, 10)}</span>
-         </div>
-         <div class="row">
+        // <div class="info-icon">
+        // <span class="name">${data.InitiateUserName}</span>
+        // <span class="time">${data.CreateTime.substr(0, 10)}</span>
+        //  </div>
+        var taskInfoStr = `<div class="row">
             <div class="info-item col-xs-12 col-sm-12 col-md-6">负责人：
             <span>${data.CreateType == 1 ? data.InitiateUserName : data.AcceptUserName}</span>
         </div>
@@ -122,6 +122,7 @@ $(document).ready(function () {
             <span class="status">${taskStatus(data.TaskStatus)}</span>
         </div>
     </div>`;
+        score = data.Score||0;
         $(".task-info").html(taskInfoStr);
         var taskDesc = `<div class="title">任务内容</div>
         <div class="content">${data.TaskContent}</div>
@@ -300,16 +301,20 @@ $(document).ready(function () {
                 }
             });
         } else {
+            var starStr=``;
+            for(var i=0;i<5;i++){
+                if(i<score){
+                    starStr+=`<span class="glyphicon glyphicon-star s-star"></span>`;
+                }else{
+                    starStr+=`<span class="glyphicon glyphicon-star n-star"></span>`;
+                }
+            }
             str = `<div class="title">操作记录</div>
             ${step}
             <div class="points-area">
                 <div class="points-tip">任务评分</div>
                 <div class="points-stars">
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
-                    <span class="glyphicon glyphicon-star n-star"></span>
+                    ${starStr}
                 </div>
             </div>`;
             $(".task-record").removeClass('hide').html(str);
@@ -332,7 +337,7 @@ $(document).ready(function () {
     }
     //上级审核活动是否完成
     function editTaskComplete(status) {
-        var score = $('.s-star').length;
+        score = $('.s-star').length;
         var pubFlag = $('.pub-flag').hasClass('select');
         $.ajax({
             type: "POST",

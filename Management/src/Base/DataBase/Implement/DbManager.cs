@@ -33,9 +33,10 @@ namespace Eagles.Base.DataBase.Implement
                 result = conn.Query<T>(command, parameter).ToList();
             }
             catch (Exception e)
-
             {
                 logger.LoggerError(e.ToString());
+                conn.Close();
+                throw;
             }
             finally
             {
@@ -54,8 +55,9 @@ namespace Eagles.Base.DataBase.Implement
             }
             catch (Exception e)
             {
-
                 logger.LoggerError(e.ToString());
+                conn.Close();
+                throw;
             }
             finally
             {
@@ -75,6 +77,8 @@ namespace Eagles.Base.DataBase.Implement
             catch (Exception e)
             {
                 logger.LoggerError(e.ToString());
+                conn.Close();
+                throw;
             }
             finally
             {
@@ -94,6 +98,8 @@ namespace Eagles.Base.DataBase.Implement
             catch (Exception e)
             {
                 logger.LoggerError(e.ToString());
+                conn.Close();
+                throw;
             }
             finally
             {
@@ -133,6 +139,7 @@ namespace Eagles.Base.DataBase.Implement
                     Console.WriteLine(e);
                     response = false;
                     trans.Rollback();
+
                 }
                 finally
                 {

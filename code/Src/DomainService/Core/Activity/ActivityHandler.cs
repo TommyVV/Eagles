@@ -178,7 +178,7 @@ namespace Eagles.DomainService.Core.Activity
             var userNotice = new TbUserNotice()
             {
                 OrgId = tokens.OrgId,
-                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.ActivityNoticeUrl, tokens.OrgId, request.ActivityId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -263,7 +263,7 @@ namespace Eagles.DomainService.Core.Activity
                 NewsType = 15, //15 活动已完成
                 Title = "活动完成",
                 Content = "活动已完成",
-                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.ActivityNoticeUrl, tokens.OrgId, request.ActivityId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };
@@ -350,7 +350,7 @@ namespace Eagles.DomainService.Core.Activity
                 NewsType = 13, //13 活动负责人反馈
                 Title = "活动负责人反馈",
                 Content = "活动已经反馈",
-                TargetUrl = configuration.EaglesConfiguration.ActivityNoticeUrl,
+                TargetUrl = string.Format(configuration.EaglesConfiguration.ActivityNoticeUrl, tokens.OrgId, request.ActivityId),
                 IsRead = 1,
                 CreateTime = DateTime.Now
             };

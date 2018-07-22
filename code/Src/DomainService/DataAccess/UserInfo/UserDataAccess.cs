@@ -32,9 +32,8 @@ value (@Phone,@Password,@CreateTime,@OrgId,@BranchId,@Name,@Score,@Status,@IsLea
 
         public int EditUser(TbUserInfo userInfo)
         {
-            return dbManager.Excuted(@"update eagles.tb_user_info set Name=@Name,Sex=@Sex,Birthday=@Birthday,Phone=@Phone,Address=@Address,Origin=@Origin,OriginAddress=@OriginAddress,Ethnic=@Ethnic,BranchId=@BranchId,
-Dept=@Dept,Education=@Education,School=@School,IdNumber=@IdNumber,Company=@Company,PreMemberTime=@PreMemberTime,MemberTime=@MemberTime,MemberType=@MemberType,Provice=@Provice,City=@City,District=@District,PhotoUrl=@PhotoUrl,
-IsLeader=@IsLeader where UserId = @UserId", userInfo);
+            return dbManager.Excuted(@"update eagles.tb_user_info set Name=@Name,Sex=@Sex,Birthday=@Birthday,Address=@Address,Origin=@Origin,OriginAddress=@OriginAddress,Ethnic=@Ethnic,
+Dept=@Dept,Company=@Company,PhotoUrl=@PhotoUrl where UserId = @UserId", userInfo);
         }
 
         public int EditUserPwd(TbUserInfo userInfo)
@@ -60,7 +59,7 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
 
         public TbUserInfo GetLogin(string phone)
         {
-            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone ", new { Phone = phone });
+            var userInfo = dbManager.Query<TbUserInfo>("select OrgId,BranchId,UserId,Password,IsCustomer from eagles.tb_user_info where Phone = @Phone and Status = 0 ", new { Phone = phone });
             if (userInfo != null && userInfo.Any())
                 return userInfo.FirstOrDefault();
             return null;
@@ -148,7 +147,7 @@ FROM `eagles`.`tb_user_info`  where  UserId  in @UserId ");
             dynamicParams.Add("PageIndex", pageIndexParameter);
             dynamicParams.Add("PageSize", pageSize);
             sql.AppendFormat(@"select OrgId,NewsId,NewsType,Title,UserId,Content,IsRead,FromUser,CreateTime,TargetUrl from eagles.tb_user_notice 
-where 1=1 {0} limit @PageIndex, @PageSize ", parameter);
+where 1=1 {0} order by CreateTime limit @PageIndex, @PageSize ", parameter);
             return dbManager.Query<TbUserNotice>(sql.ToString(), dynamicParams);
         }
 

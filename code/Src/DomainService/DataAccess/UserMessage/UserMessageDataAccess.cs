@@ -14,9 +14,7 @@ namespace Ealges.DomianService.DataAccess.UserMessage
 
         public int GetUserUnreadMessageCount(int userId)
         {
-           return  dbManager.QuerySingle<int>(
-                " select Count(*) from eagles.tb_user_notice where UserId=@UserId and IsRead=@IsRead",
-                new {UserId = userId, IsRead = 1});
+           return  dbManager.QuerySingle<int>(" select Count(*) from eagles.tb_user_notice where UserId=@UserId and IsRead=@IsRead", new {UserId = userId, IsRead = 1});
         }
     }
 }
