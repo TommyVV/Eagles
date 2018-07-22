@@ -13,11 +13,11 @@ namespace Eagles.DomainService.Model.User
         /// <summary>
         /// 领导id
         /// </summary>
-        public int SubUserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// 下级id
         /// </summary>
-        public int UserId { get; set; }
+        public int SubUserId { get; set; }
         /// <summary>
         /// 用户昵称
         /// </summary>

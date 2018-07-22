@@ -256,8 +256,8 @@ namespace Eagles.DomainService.Core.User
         {
             var response = new GetUserRelationshipResponse();
             var userId = request.UserId;
-            var lowerUserList = userInfoAccess.GetRelationship(userId, true);
-            var superiorUserList = userInfoAccess.GetRelationship(userId, false);
+            var lowerUserList = userInfoAccess.GetRelationship(userId, true); //下级
+            var superiorUserList = userInfoAccess.GetRelationship(userId, false); //上级
             var userRelationship = new List<UserRelationship>();
             switch (request.Type)
             {
@@ -267,8 +267,8 @@ namespace Eagles.DomainService.Core.User
                         userRelationship.Add(new UserRelationship()
                         {
                             Name = x.Name,
-                            UserId = x.SubUserId,
-                            IsLeader = false
+                            UserId = x.UserId,
+                            IsLeader = true
                         });
                     });
                     superiorUserList.ForEach(x =>
@@ -276,14 +276,14 @@ namespace Eagles.DomainService.Core.User
                         userRelationship.Add(new UserRelationship()
                         {
                             Name = x.Name,
-                            UserId = x.UserId,
-                            IsLeader = true
+                            UserId = x.SubUserId,
+                            IsLeader = false
                         });
                     });
                     response.UserList = userRelationship;
                     return response;
                 case 1:
-                    superiorUserList.ForEach(x =>
+                    lowerUserList.ForEach(x =>
                     {
                         userRelationship.Add(new UserRelationship()
                         {
@@ -295,7 +295,7 @@ namespace Eagles.DomainService.Core.User
                     response.UserList = userRelationship;
                     return response;
                 case 2:
-                    lowerUserList.ForEach(x =>
+                    superiorUserList.ForEach(x =>
                     {
                         userRelationship.Add(new UserRelationship()
                         {

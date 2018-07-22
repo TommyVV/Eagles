@@ -61,7 +61,7 @@ namespace Eagles.Application.Model.Task.GetTaskDetail
         /// <summary>
         /// 任务评分
         /// </summary>
-        public string Score { get; set; }
+        public int Score { get; set; }
 
         /// <summary>
         /// 发起用户编号

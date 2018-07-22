@@ -42,6 +42,8 @@ namespace Eagles.DomainService.Core.Task
         {
             var response = new CreateTaskResponse();
             var taskId = 0;
+            var userTaskUserId = 0;
+            var userTaskUserName = "";
             var tokens = util.GetUserId(request.Token, 0);
             if (tokens == null || tokens.UserId <= 0)
                 throw new TransactionException(MessageCode.InvalidToken, MessageKey.InvalidToken);            
@@ -76,9 +78,17 @@ namespace Eagles.DomainService.Core.Task
                 BranchReview = "-1"
             };
             if (0 == request.CreateType)
+            {
                 task.Status = -2; //0:初始状态;(上级发给下级的初始状态)
+                userTaskUserId = toUser;
+                userTaskUserName = toUserName;
+            }
             else
+            {
                 task.Status = -1; //-1下级发起任务;上级审核任务是否允许开始
+                userTaskUserId = fromUser;
+                userTaskUserName = fromUserName;
+            }
 
             if (request.AttachList != null && request.AttachList.Count > 0)
             {
@@ -107,7 +117,7 @@ namespace Eagles.DomainService.Core.Task
                     }
                 }
             }
-            var result = iTaskAccess.CreateTask(task, toUser, toUserName, out taskId);
+            var result = iTaskAccess.CreateTask(task, userTaskUserId, userTaskUserName, out taskId);
             if (result <= 0)
                 throw new TransactionException(MessageCode.NoData, MessageKey.NoData);
 
@@ -511,6 +521,7 @@ namespace Eagles.DomainService.Core.Task
                 response.TaskBeginDate = result.BeginTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.TaskEndDate = result.EndTime.ToString("yyyy-MM-dd HH:mm:ss");
                 response.CreateTime = result.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                response.Score = result.Score;
                 response.TaskFounder = result.FromUser;
                 response.InitiateUserId = result.FromUser;
                 response.InitiateUserName = result.FromUserName;

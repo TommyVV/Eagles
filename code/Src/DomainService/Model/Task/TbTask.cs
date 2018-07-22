@@ -76,5 +76,9 @@ namespace Eagles.DomainService.Model.Task
         /// 创建类型 0上级发布 1下级向上级申请  
         /// </summary>
         public int CreateType { get; set; }
+        /// <summary>
+        /// 任务评分
+        /// </summary>
+        public int Score { get; set; }
     }
 }

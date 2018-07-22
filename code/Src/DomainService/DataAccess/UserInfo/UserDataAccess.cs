@@ -74,20 +74,22 @@ PhotoUrl,NickPhotoUrl,CreateTime,EditTime,OperId,IsCustomer,score FROM eagles.tb
         public List<TbUserRelationship> GetRelationship(int userId, bool relationshipType)
         {
             var sql = new StringBuilder();
-            var parameter = new StringBuilder();
             var dynamicParams = new DynamicParameters();
             if (relationshipType)
             {
-                parameter.Append(" and a.UserId = @UserId ");
+                //查询上级
                 dynamicParams.Add("UserId", userId);
+                sql.Append(@"select UserId,SubUserId,(select Name from eagles.tb_user_info b where a.UserId = b.UserId) Name 
+from eagles.tb_user_relationship a where SubUserId = @UserId ");
             }
             else           
             {
-                parameter.Append(" and a.SubUserId = @SubUserId ");
+                //查询下级
                 dynamicParams.Add("SubUserId", userId);
+                sql.Append(@"select UserId,SubUserId,(select Name from eagles.tb_user_info b where a.SubUserId = b.UserId) Name 
+from eagles.tb_user_relationship a where UserId = @SubUserId ");
             }
-            sql.AppendFormat(@" select a.UserId,a.SubUserId,b.Name from eagles.tb_user_relationship a 
-inner join tb_user_info b on a.SubUserId = b.UserId where 1=1 {0} ", parameter);
+            
             return dbManager.Query<TbUserRelationship>(sql.ToString(), dynamicParams);
         }
 
