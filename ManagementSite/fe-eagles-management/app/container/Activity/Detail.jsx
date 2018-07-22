@@ -103,26 +103,45 @@ class Base extends Component {
   }
   // 上传新闻的附件
   handleChange = info => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
+    console.log(info.file, info.fileList);
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
       let attach = {};
+      let Attachments = [];
       info.fileList.map((obj, index) => {
         const url = obj.response.Result.FileUploadResults[0].FileUrl;
         attach[`Attach${++index}`] = url;
+        if (obj.uid == info.file.uid) {
+          Attachments.push({
+            uid: obj.uid,
+            name: obj.name,
+            status: "done",
+            url: url
+          });
+        } else {
+          Attachments.push(obj);
+        }
       });
-      this.props.saveInfo({ ...this.props.news, ...attach }); // todo
+
+      this.props.saveInfo({ ...this.props.news, ...attach, Attachments });
+    } else if (info.file.status === "removed") {
+      // 删除附件
+      let attach = {};
+      info.fileList.map((obj, index) => {
+        attach[`Attach${++index}`] = obj.url;
+      });
+      this.props.saveInfo({
+        ...this.props.news,
+        ...attach,
+        Attachments: info.fileList
+      });
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
   };
   // 封面
   onChangeImage = info => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
+    console.log(info.file, info.fileList);
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
       const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
@@ -141,6 +160,19 @@ class Base extends Component {
       getFieldsValue
     } = this.props.form;
     const { news, List } = this.props; //是否显示试卷列表
+    let fileList = [];
+    news &&
+      news.Attachments &&
+      news.Attachments.map((file, index) => {
+        let obj = {
+          uid: index,
+          name: file.AttachmentName,
+          status: "done",
+          url: file.AttachmentUrl
+        };
+        fileList.push(obj);
+      });
+    console.log(fileList);
     const props = {
       name: "file",
       action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
@@ -148,7 +180,7 @@ class Base extends Component {
         authorization: "authorization-text"
       },
       onChange: this.handleChange.bind(this),
-      defaultFileList: news.Attachments // todo 附件
+      fileList: fileList
     };
     const formItemLayout = {
       labelCol: {

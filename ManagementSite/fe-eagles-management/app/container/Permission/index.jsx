@@ -9,11 +9,12 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
+  Cascader
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import { getList, del } from "../../services/authGroupService";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -93,46 +94,43 @@ class PermissionList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
-      current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      operatorList: [] // 列表数组
     };
     this.columns = [
       {
         title: "权限组名称",
-        dataIndex: "name"
+        dataIndex: "AuthorityGroupName"
       },
       {
-        title: "创建时间",
-        dataIndex: "date"
+        title: "添加时间",
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
         title: "权限组所属机构",
-        dataIndex: "org"
+        dataIndex: "OrgId"
       },
       {
-        title: "状态",
-        dataIndex: "state"
+        title: "状态"
+        // dataIndex: "state"
       },
+
       {
         title: "操作",
-        id: "1",
         render: obj => {
           return (
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/org/detail/${obj.systemId}`)
+                  hashHistory.replace(
+                    `/permission/detail/${obj.AuthorityGroupId}`
+                  )
                 }
               >
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(obj.AuthorityGroupId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -142,40 +140,14 @@ class PermissionList extends React.Component {
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        name: "管理员",
-        date: "2018-5-12",
-        org: "党支部",
-        state: "有效",
-        id: "1"
-      },
-      {
-        key: "2",
-        name: "用户",
-        date: "2018-5-12",
-        org: "党支部",
-        state: "无效",
-        id: "2"
-      },
-      {
-        key: "3",
-        name: "管理员",
-        date: "2018-5-12",
-        org: "党支部",
-        state: "有效",
-        id: "3"
-      }
-    ];
+
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -184,89 +156,53 @@ class PermissionList extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
-  }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
+  getCurrentList = async params => {
+    const { PageNumber } = params;
     try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
+      let { List, TotalCount } = await getList(params);
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
       });
-      this.updatePageConfig(totalSize);
+      this.setState({ List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
+  // 更新分页配置
+  updatePageConfig(totalSize) {
+    let pageConfig = {
+      total: totalSize,
+      pageSize: this.getListConfig.PageSize,
+      current: this.state.current,
+      onChange: async (page, pagesize) => {
+        this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: page
+        });
+      }
+    };
+    this.setState({ pageConfig });
+  }
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async AuthorityGroupId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await del({
+            AuthorityGroupId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -278,55 +214,33 @@ class PermissionList extends React.Component {
       }
     });
   };
-  // 编辑项目
-  handleEdit = async () => {
-    try {
-      let { selectedRowKeys } = this.state;
-      console.log(selectedRowKeys);
-      if (selectedRowKeys.length > 1) {
-        return message.error("不能同时编辑多个项目");
-      }
-      if (selectedRowKeys.length === 0) {
-        return message.error("请选择需要编辑的项目");
-      }
-      hashHistory.replace(`/project/create/${selectedRowKeys[0]}`);
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+    const { selectedRowKeys, pageConfig, List } = this.state;
     const formItemLayout = {
       labelCol: {
-        xl: { span: 2 }
+        xl: { span: 3 }
       },
       wrapperCol: {
-        xl: { span: 4 }
+        xl: { span: 10 }
       }
     };
     return (
       <Nav>
         <WrapperSearchForm />
         <Table
-          dataSource={this.data}
+          dataSource={List}
           columns={this.columns}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-
-        <Row
-          type="flex"
-          gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
-        >
+        <Row type="flex" gutter={24}>
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>新增</a>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/permission/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

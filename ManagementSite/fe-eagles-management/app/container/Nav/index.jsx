@@ -591,6 +591,75 @@ export default class App extends React.Component {
                 机构配置详情
               </Menu.Item>
             </SubMenu>
+            <SubMenu
+              key="sub20"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>任务公开信息</span>
+                </span>
+              }
+              style={{ display: authMap.get("open0001") ? null : "block" }}
+            >
+              <Menu.Item
+                key="40"
+                onClick={e => hashHistory.replace("/taskactivitypubliclist")}
+              >
+                任务公开列表
+              </Menu.Item>
+              <Menu.Item
+                key="41"
+                onClick={e => hashHistory.replace("/taskpublic/detail")}
+              >
+                任务公开详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub21"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>活动公开信息</span>
+                </span>
+              }
+              style={{ display: authMap.get("open0002") ? null : "block" }}
+            >
+              <Menu.Item
+                key="42"
+                onClick={e => hashHistory.replace("/activitypubliclist")}
+              >
+                活动公开列表
+              </Menu.Item>
+              <Menu.Item
+                key="43"
+                onClick={e => hashHistory.replace("/activitypublic/detail")}
+              >
+                活动公开详情
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub22"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>用户文章信息</span>
+                </span>
+              }
+              style={{ display: authMap.get("open0003") ? null : "block" }}
+            >
+              <Menu.Item
+                key="44"
+                onClick={e => hashHistory.replace("/articlelist")}
+              >
+                用户文章列表
+              </Menu.Item>
+              <Menu.Item
+                key="45"
+                onClick={e => hashHistory.replace("/article/detail")}
+              >
+                用户文章详情
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: 260, minHeight: "100vh" }}>

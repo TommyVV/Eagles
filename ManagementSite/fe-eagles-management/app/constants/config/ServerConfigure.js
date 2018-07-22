@@ -168,6 +168,13 @@ const ORGSMS = {
   DETAIL: "/api/SMS/GetSMSOrgDetail", //详情
   LIST: "/api/SMS/GetSMSOrg" //列表
 };
+//权限组
+const AUTHGROUP = {
+  EDIT: "/api/OperGroup/EditOperGroup", //编辑
+  DETAIL: "/api/OperGroup/GetOperGroupDetail", //详情
+  LIST: "/api/OperGroup/GetOperGroupList", //列表
+  DELETE: "/api/OperGroup/RemoveOperGroup" //删除
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -193,5 +200,6 @@ export const serverConfig = {
   BRANCH,
   SYSTEM,
   SYSTEMSMS,
-  ORGSMS
+  ORGSMS,
+  AUTHGROUP
 };

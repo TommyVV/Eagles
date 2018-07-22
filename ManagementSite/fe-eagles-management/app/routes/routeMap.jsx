@@ -138,7 +138,19 @@ class RouteMap extends Component {
           <route path="/smssystem/detail(/:id)" component={SmsSystemDetail} />
           {/* 机构短信配置 */}
           <route path="/smsorglist" component={SmsOrgList} />
-          <route path="/smsorg/detail(/:org/:vendor)" component={SmsOrgDetail} />
+          <route
+            path="/smsorg/detail(/:org/:vendor)"
+            component={SmsOrgDetail}
+          />
+          {/* 任务公开 */}
+          <route path="/taskactivitypubliclist" component={SmsOrgList} />
+          <route path="/taskpublic/detail(/:id)" component={SmsOrgDetail} />
+          {/* 活动公开 */}
+          <route path="/activitypubliclist" component={SmsOrgList} />
+          <route path="/activitypublic/detail(/:id)" component={SmsOrgDetail} />
+          {/* 用户文章 */}
+          <route path="/articlelist" component={SmsOrgList} />
+          <route path="/article/detail(/:id)" component={SmsOrgDetail} />
         </Route>
       </Router>
     );
