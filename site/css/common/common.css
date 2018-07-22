@@ -30,7 +30,7 @@
     letter-spacing: 5px;
 }
 
-.attaches .file {
+.file {
     padding-top: 0.64rem;
     display: flex;
 }
@@ -45,7 +45,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    line-height: 1rem;
+    line-height: 1.2rem;
 }
 .file .glyphicon-remove{
     color: red;

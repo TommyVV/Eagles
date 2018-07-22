@@ -118,6 +118,12 @@ $(document).ready(function() {
                 })
             } else {
                 console.log(data.result);
+                bootoast({
+                    message: ''+data.result.Message,
+                    type: 'warning',
+                    position: 'toast-top-center',
+                    timeout: 3
+                });        
             }
         }
     });
