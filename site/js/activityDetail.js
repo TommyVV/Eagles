@@ -210,13 +210,19 @@ $(document).ready(function() {
     }
     //活动完成
     function editActivityComplete(type) {
+        var ele = $('.select');
+        if(ele.length==0){
+            errorTip('请选择公示方式');
+            return;
+        }
         var data = {
             ActivityId: activityId,
             CompleteStatus: type,
+            IsPublic: $('.select').attr('id').split('-')[1],
             Token: token,
             AppId: appId
         };
-        console.log(data, JSON.stringify(data));
+        // console.log(data, JSON.stringify(data));
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/EditActivityComplete",
@@ -248,16 +254,16 @@ $(document).ready(function() {
         });
         if (status == 1) {
             str += `<div class="pub-area">
-                    <div class="item" id="pub-">
+                    <div class="item" id="pub-0">
+                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示
+                    </div>
+                    <div class="item" id="pub-1">
                         <img class="pub-flag" src="icons/sel_no@2x.png" alt="">不公示
                     </div>
-                    <div class="item" id="pub-1">
-                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到小组
-                    </div>
-                    <div class="item" id="pub-1">
+                    <div class="item" id="pub-2">
                         <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到支部
                     </div>
-                    <div class="item" id="pub-1">
+                    <div class="item" id="pub-3">
                         <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到组织
                     </div>
                 </div>
@@ -274,7 +280,6 @@ $(document).ready(function() {
                 $($(this).find('img')).attr('src', 'icons/sel_yes@2x.png');
             });
             $(".activity-content .pass").click(function() {
-                console.log("111111");
                 editActivityComplete(0);
             });
             $(".nopass").click(function() {
