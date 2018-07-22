@@ -213,5 +213,12 @@ FROM `eagles`.`tb_task`    where 1=1  {0}
         {
             return dbManager.ExecuteScalar<int>("select count(*) from eagles.tb_user_activity where ActivityId = @ActivityId ", new { ActivityId = activityId });
         }
+
+        public List<TbUserTaskStep> GetTaskStep(int requsetTaskId)
+        {
+            return dbManager.Query<TbUserTaskStep>(@"select a.OrgId,a.BranchId,a.TaskId,a.UserId,b.Name,a.StepId,a.StepName,a.CreateTime,a.Content,a.UpdateTime,a.Attach1, a.Attach2, 
+a.Attach3, a.Attach4, a.AttachName1, a.AttachName2, a.AttachName3, a.AttachName4 from eagles.tb_user_task_step a join eagles.tb_user_info b on a.UserId = b.UserId where a.TaskId = @taskId",
+                new { TaskId = requsetTaskId });
+        }
     }
 }

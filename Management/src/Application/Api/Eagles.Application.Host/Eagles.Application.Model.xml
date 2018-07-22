@@ -332,6 +332,16 @@
             20:活动
              </summary>
         </member>
+        <member name="T:Eagles.Application.Model.Audit.Model.AuditInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Eagles.Application.Model.Audit.Model.AuditType">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Eagles.Application.Model.Audit.Requset.CreateAuditRequset">
             <summary>
             

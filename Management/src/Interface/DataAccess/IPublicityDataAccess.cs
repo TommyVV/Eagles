@@ -7,6 +7,7 @@ using Eagles.Application.Model;
 using Eagles.Application.Model.Publicity.Request;
 using Eagles.Base;
 using Eagles.DomainService.Model.Activity;
+using Eagles.DomainService.Model.User;
 
 namespace Eagles.Interface.DataAccess
 {
@@ -18,5 +19,6 @@ namespace Eagles.Interface.DataAccess
         List<TbTask> GetPublicTask(RequestBase requset);
         List<ActivityUserCount> GetActivityUserCount();
         int GetActivityUserCount(int activityId);
+        List<TbUserTaskStep> GetTaskStep(int requsetTaskId);
     }
 }

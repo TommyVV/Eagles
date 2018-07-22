@@ -95,5 +95,13 @@ FROM `eagles`.`tb_review`   where 1=1  {0}
 
             return dbManager.Query<TbReview>(sql.ToString(), dynamicParams);
         }
+
+        public int Audit(string sql, int AuditId)
+        {
+
+
+            return dbManager.Excuted(sql,new {Id= AuditId });
+           
+        }
     }
 }
