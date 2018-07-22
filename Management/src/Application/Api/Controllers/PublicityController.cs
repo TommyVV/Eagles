@@ -22,6 +22,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 查询申请公开文章
         /// </summary>
+        [HttpPost]
         public ResponseFormat<GetPublicAritcleResponse> GetPublicArticle(RequestBase requset)
         {
             //todo 
@@ -32,6 +33,7 @@ namespace Eagles.Application.Host.Controllers
 
         /// <summary>
         /// 查询申请公开文章详情
+        [HttpPost]
         /// </summary>
         public ResponseFormat<GetAritcleDetailResponse> GetAritcleDetail(GetPublicArticleDetailRequest requset)
         {
@@ -43,6 +45,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 查询申请公开任务
         /// </summary>
+        [HttpPost]
         public ResponseFormat<GetPublicTaskResponse> GetPublicTask(RequestBase requset)
         {
             return ApiActuator.Runing(requset, (requset1) => Handler.GetPublicTask(requset));
@@ -53,6 +56,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 查询公开任务详情
         /// </summary>
+        [HttpPost]
         public ResponseFormat<GetPublicTaskDetailResponse> GetPublicTaskDetail(GetPublicTaskDetailRequest requset)
         {
             return ApiActuator.Runing(requset, (requset1) => Handler.GetPublicTaskDetail(requset));
@@ -63,6 +67,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 查询申请公开活动
         /// </summary>
+        [HttpPost]
         public ResponseFormat<GetPublicActivityResponse> GetPublicActivity(RequestBase requset)
         {
             return ApiActuator.Runing(requset, (requset1) => Handler.GetPublicActivity(requset));
@@ -73,6 +78,7 @@ namespace Eagles.Application.Host.Controllers
         /// <summary>
         /// 查询申请公开活动详情
         /// </summary>
+        [HttpPost]
         public ResponseFormat<GetPublicActivityDetailResponse> GetPublicActivityDetail(GetPublicActivityDetailRequest requset)
         {
             return ApiActuator.Runing(requset, (requset1) => Handler.GetPublicActivityDetail(requset));

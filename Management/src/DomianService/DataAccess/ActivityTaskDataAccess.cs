@@ -32,6 +32,7 @@ SET
 `BeginTime` = @BeginTime,
 `EndTime` = @EndTime,
 `FromUser` = @FromUser,
+`FromUserName` = @FromUserName,
 `ActivityType` = @ActivityType,
 `MaxCount` = @MaxCount,
 `CanComment` = @CanComment,
@@ -41,18 +42,22 @@ SET
 `Attach2` = @Attach2,
 `Attach3` = @Attach3,
 `Attach4` = @Attach4,
-`AttachType1` = @AttachType1,
-`AttachType2` = @AttachType2,
-`AttachType3` = @AttachType3,
-`AttachType4` = @AttachType4,
 `ImageUrl` = @ImageUrl,
 `IsPublic` = @IsPublic,
 `OrgReview` = @OrgReview,
 `BranchReview` = @BranchReview,
 `ToUserId` = @ToUserId,
-`Status` = @Status
+`ToUserName` = @ToUserName,
+`Status` = @Status,
+`CreateType` = @CreateType,
+`AttachName1` = @AttachName1,
+`AttachName2` = @AttachName2,
+`AttachName3` = @AttachName3,
+`AttachName4` = @AttachName4,
+`PublicTime` = @PublicTime
 WHERE 
 `ActivityId` = @ActivityId
+
 
 
 ", mod);
@@ -71,6 +76,7 @@ WHERE
 `BeginTime`,
 `EndTime`,
 `FromUser`,
+`FromUserName`,
 `ActivityType`,
 `MaxCount`,
 `CanComment`,
@@ -80,16 +86,19 @@ WHERE
 `Attach2`,
 `Attach3`,
 `Attach4`,
-`AttachType1`,
-`AttachType2`,
-`AttachType3`,
-`AttachType4`,
 `ImageUrl`,
 `IsPublic`,
 `OrgReview`,
 `BranchReview`,
 `ToUserId`,
-`Status`)
+`ToUserName`,
+`Status`,
+`CreateType`,
+`AttachName1`,
+`AttachName2`,
+`AttachName3`,
+`AttachName4`,
+`PublicTime`)
 VALUES
 (@OrgId,
 @BranchId,
@@ -99,6 +108,7 @@ VALUES
 @BeginTime,
 @EndTime,
 @FromUser,
+@FromUserName,
 @ActivityType,
 @MaxCount,
 @CanComment,
@@ -108,16 +118,20 @@ VALUES
 @Attach2,
 @Attach3,
 @Attach4,
-@AttachType1,
-@AttachType2,
-@AttachType3,
-@AttachType4,
 @ImageUrl,
 @IsPublic,
 @OrgReview,
 @BranchReview,
 @ToUserId,
-@Status);
+@ToUserName,
+@Status,
+@CreateType,
+@AttachName1,
+@AttachName2,
+@AttachName3,
+@AttachName4,
+@PublicTime);
+
 
 ", mod);
         
@@ -144,6 +158,7 @@ VALUES
     `tb_activity`.`BeginTime`,
     `tb_activity`.`EndTime`,
     `tb_activity`.`FromUser`,
+    `tb_activity`.`FromUserName`,
     `tb_activity`.`ActivityType`,
     `tb_activity`.`MaxCount`,
     `tb_activity`.`CanComment`,
@@ -153,16 +168,19 @@ VALUES
     `tb_activity`.`Attach2`,
     `tb_activity`.`Attach3`,
     `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
     `tb_activity`.`ImageUrl`,
     `tb_activity`.`IsPublic`,
     `tb_activity`.`OrgReview`,
     `tb_activity`.`BranchReview`,
     `tb_activity`.`ToUserId`,
-    `tb_activity`.`Status`
+    `tb_activity`.`ToUserName`,
+    `tb_activity`.`Status`,
+    `tb_activity`.`CreateType`,
+    `tb_activity`.`AttachName1`,
+    `tb_activity`.`AttachName2`,
+    `tb_activity`.`AttachName3`,
+    `tb_activity`.`AttachName4`,
+    `tb_activity`.`PublicTime`
 FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
             dynamicParams.Add("ActivityId", requset.ActivityId);
@@ -212,7 +230,7 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
             //}
 
 
-            sql.AppendFormat(@" SELECT `tb_activity`.`OrgId`,
+            sql.AppendFormat(@"SELECT `tb_activity`.`OrgId`,
     `tb_activity`.`BranchId`,
     `tb_activity`.`ActivityId`,
     `tb_activity`.`ActivityName`,
@@ -220,6 +238,7 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
     `tb_activity`.`BeginTime`,
     `tb_activity`.`EndTime`,
     `tb_activity`.`FromUser`,
+    `tb_activity`.`FromUserName`,
     `tb_activity`.`ActivityType`,
     `tb_activity`.`MaxCount`,
     `tb_activity`.`CanComment`,
@@ -229,17 +248,20 @@ FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
     `tb_activity`.`Attach2`,
     `tb_activity`.`Attach3`,
     `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
     `tb_activity`.`ImageUrl`,
     `tb_activity`.`IsPublic`,
     `tb_activity`.`OrgReview`,
     `tb_activity`.`BranchReview`,
     `tb_activity`.`ToUserId`,
-    `tb_activity`.`Status`
-FROM `eagles`.`tb_activity`   where 1=1  {0}  
+    `tb_activity`.`ToUserName`,
+    `tb_activity`.`Status`,
+    `tb_activity`.`CreateType`,
+    `tb_activity`.`AttachName1`,
+    `tb_activity`.`AttachName2`,
+    `tb_activity`.`AttachName3`,
+    `tb_activity`.`AttachName4`,
+    `tb_activity`.`PublicTime`
+FROM `eagles`.`tb_activity`  where 1=1  {0}  
  ", parameter);
 
             return dbManager.Query<TbActivity>(sql.ToString(), dynamicParams);

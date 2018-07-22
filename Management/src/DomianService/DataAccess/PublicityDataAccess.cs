@@ -31,7 +31,7 @@ namespace Ealges.DomianService.DataAccess
             var sql = new StringBuilder();
             var dynamicParams = new DynamicParameters();
 
-            sql.Append(@" SELECT `tb_activity`.`OrgId`,
+            sql.Append(@"SELECT `tb_activity`.`OrgId`,
     `tb_activity`.`BranchId`,
     `tb_activity`.`ActivityId`,
     `tb_activity`.`ActivityName`,
@@ -39,6 +39,7 @@ namespace Ealges.DomianService.DataAccess
     `tb_activity`.`BeginTime`,
     `tb_activity`.`EndTime`,
     `tb_activity`.`FromUser`,
+    `tb_activity`.`FromUserName`,
     `tb_activity`.`ActivityType`,
     `tb_activity`.`MaxCount`,
     `tb_activity`.`CanComment`,
@@ -48,16 +49,19 @@ namespace Ealges.DomianService.DataAccess
     `tb_activity`.`Attach2`,
     `tb_activity`.`Attach3`,
     `tb_activity`.`Attach4`,
-    `tb_activity`.`AttachType1`,
-    `tb_activity`.`AttachType2`,
-    `tb_activity`.`AttachType3`,
-    `tb_activity`.`AttachType4`,
     `tb_activity`.`ImageUrl`,
     `tb_activity`.`IsPublic`,
     `tb_activity`.`OrgReview`,
     `tb_activity`.`BranchReview`,
     `tb_activity`.`ToUserId`,
-    `tb_activity`.`Status`
+    `tb_activity`.`ToUserName`,
+    `tb_activity`.`Status`,
+    `tb_activity`.`CreateType`,
+    `tb_activity`.`AttachName1`,
+    `tb_activity`.`AttachName2`,
+    `tb_activity`.`AttachName3`,
+    `tb_activity`.`AttachName4`,
+    `tb_activity`.`PublicTime`
 FROM `eagles`.`tb_activity`   where ActivityId=@ActivityId;
  ");
             dynamicParams.Add("ActivityId", requset.ActivityId);

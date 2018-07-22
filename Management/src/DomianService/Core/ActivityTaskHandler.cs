@@ -42,7 +42,7 @@ namespace Eagles.DomainService.Core
                     BeginTime = requset.DetailInfo.BeginTime,
                     ActivityId = requset.DetailInfo.ActivityTaskId,
                     BranchId = requset.BranchId,
-                    BranchReview = "",
+                    BranchReview = "-1",
                     CanComment = requset.DetailInfo.IsComment,
                     EndTime = requset.DetailInfo.EndTime.ConvertToDateTime(),
                     FromUser = 0,
@@ -52,10 +52,11 @@ namespace Eagles.DomainService.Core
                     MaxCount = requset.DetailInfo.MaxPartakePeople,
                     MaxUser = requset.DetailInfo.MaxPartakePeople,
                     OrgId = requset.OrgId,
-                    OrgReview = "",
+                    OrgReview = "-1",
                     Status = 0,
                     TestId = requset.DetailInfo.ExampleId,
                     ToUserId = 0,
+                    
                     
                 };
 
