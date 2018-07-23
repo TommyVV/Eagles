@@ -40,7 +40,7 @@ html, body {
 		position: fixed;
 		width:1200px;
 		top: 90px;
-		bottom: 250px;
+		bottom: 50px;
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
   .myNoticeModal {

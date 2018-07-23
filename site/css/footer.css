@@ -1,12 +1,12 @@
 .footer {
   background: #414141;
-  height: 240px;
+  height: 40px;
   text-align: center;
-  line-height: 240px;
+  line-height: 40px;
   margin-top: 35px; }
   .footer span {
     color: #fff;
-    font-size: 24px; }
+    font-size: 20px; }
     @media screen and (max-width: 768px) {
     	.footer{display: none;}
     }
