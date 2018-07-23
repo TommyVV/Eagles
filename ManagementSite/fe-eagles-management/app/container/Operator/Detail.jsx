@@ -3,7 +3,8 @@ import { Button, Input, Form, message, Row, Col, Select } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/operatorService";
-// import { getAllArea } from "../../services/areaService";
+import { getList } from "../../services/authGroupService";
+import { getList as getBranchList } from "../../services/branchService";
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -11,6 +12,10 @@ const Option = Select.Option;
 class Base extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      IsBranch: "0",
+      branchList: []
+    };
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -23,19 +28,15 @@ class Base extends Component {
             Info: {
               ...operator,
               ...values
-            },
+            }
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
-            let tip = this.props.operator.OperId
-              ? "保存操作员成功"
-              : "创建操作员成功";
+            let tip = this.props.operator.OperId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/operatorlist");
           } else {
-            let tip = this.props.operator.OperId
-              ? "保存操作员失败"
-              : "创建操作员失败";
+            let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -46,9 +47,32 @@ class Base extends Component {
       }
     });
   };
+  change(value) {
+    if (value == "0") {
+      this.setState({
+        IsBranch: value
+      });
+    } else {
+      this.getBranchList(value);
+    }
+  }
+  // 拿支部列表
+  getBranchList = async value => {
+    try {
+      const { List } = await getBranchList({
+        PageNumber: 1,
+        PageSize: 1000000
+      });
+      this.setState({ branchList: List, IsBranch: value });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { authList } = this.props;
+    const { IsBranch, branchList } = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -99,15 +123,38 @@ class Base extends Component {
           {getFieldDecorator("AuthorityGroupId")(
             <Select>
               {authList.map((obj, index) => {
-                // todo
                 return (
-                  <Option value={index} key={index}>
-                    党组织一
+                  <Option value={obj.AuthorityGroupId} key={index}>
+                    {obj.AuthorityGroupName}
                   </Option>
                 );
               })}
-              <Option value="0">党组织二</Option>
-              <Option value="2">党组织二</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="是否是支部操作员">
+          {getFieldDecorator("IsBranch")(
+            <Select onChange={this.change.bind(this)}>
+              <Option value="0">否</Option>
+              <Option value="1">是</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="所属支部"
+          style={{ display: IsBranch == "0" ? "none" : "block" }}
+        >
+          {getFieldDecorator("BranchId")(
+            <Select>
+              {branchList.map((obj, index) => {
+                // todo
+                return (
+                  <Option value={obj.BranchId} key={index}>
+                    {obj.BranchName}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </FormItem>
@@ -149,7 +196,13 @@ const FormMap = Form.create({
         value: operator.OperName
       }),
       AuthorityGroupId: Form.createFormField({
-        value: operator.AuthorityGroupId ? operator.AuthorityGroupId + "" : "0"
+        value: operator.AuthorityGroupId ? operator.AuthorityGroupId : ""
+      }),
+      IsBranch: Form.createFormField({
+        value: operator.IsBranch ? operator.IsBranch : "0"
+      }),
+      BranchId: Form.createFormField({
+        value: operator.BranchId ? operator.BranchId : ""
       }),
       Password: Form.createFormField({
         value: operator.Password
@@ -171,31 +224,35 @@ class OperatorDetail extends Component {
     if (id) {
       this.getInfo(id); //拿详情
     } else {
-      // this.getAreaList(); // 改成拿权限组列表 todo
+      this.getAuthList(); // 拿权限组列表
     }
   }
 
   // 根据id查询详情
   getInfo = async OperId => {
     try {
+      await this.getAuthList(); // 拿权限组列表
       const { Info } = await getInfoById({ OperId });
       this.setState({ operator: Info });
-      // this.getAreaList(); // 改成拿权限组列表 todo
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
-  // 改成拿权限组列表
-  // getAreaList = async () => {
-  //   try {
-  //     const { AreaInfos } = await getAllArea();
-  //     this.setState({ AreaInfos });
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
+  // 拿权限组列表
+  getAuthList = async () => {
+    try {
+      const { List } = await getList({
+        PageNumber: 1,
+        PageSize: 1000000
+      });
+      this.setState({ authList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
+
   render() {
     return (
       <Nav>

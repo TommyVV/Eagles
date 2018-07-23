@@ -94,7 +94,7 @@ function myAricle(NewsType, token, page, appId) {
 				if(res.Result.NewsList != '' || res.Result.NewsList != null) {
 					var myAricle = '';
 					for(var i = 0; i < data.NewsList.length; i++) {
-						myAricle += '<div class="article">' +
+						myAricle += '<div class="article" type="'+data.NewsList[i].NewsType +'" conretn="' + data.NewsList[i].Title + '" comids="'+data.NewsList[i].NewsContent+'" dangyuan="'+data.NewsList[i].ToUser+'" ispubic="'+data.NewsList[i].IsPublic+'">' +
 							'<div class="left"><img src="' + data.NewsList[i].ImageUrl + '" alt=""></div>' +
 							'<div class="right">' +
 							'<div class="content overflow-two-line">' + data.NewsList[i].Title + '</div>' +
@@ -158,3 +158,15 @@ $(".select_box").click(function () {
             //$(".peop-list").addClass("hide");
         }
     });
+	
+//点击文章分类
+$('.item').on('click', '.article', function (e) {
+	var aryewsType=$(this).attr('type');
+	var conretn=$(this).attr('conretn')
+	var dangyuan=$(this).attr('dangyuan')
+	var comids=$(this).attr('comids')
+	var ispubic=$(this).attr('ispubic')
+	window.location.href = 'publishArticle.html?appId=' + appId + '&aryewsType=' +
+		aryewsType + '&conretn=' + conretn + '&dangyuan=' + dangyuan + '&comids='+comids+'&ispubic='+ispubic;
+
+})
