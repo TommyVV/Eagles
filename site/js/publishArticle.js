@@ -12,7 +12,19 @@ let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('footer.html')
 //文章发布
-
+if(getRequest('aryewsType')!=undefined){
+	$('.publish-title').val(getRequest('conretn'));
+	$('#selectpicker').val(getRequest('aryewsType')).attr('selected','selected'); 
+	if(getRequest('aryewsType')==3){
+		$('.assign').show();
+	}
+	$('.publish-content').val(getRequest('comids'))
+	if(getRequest('ispubic')==0){
+		$(".pub-flag").attr("src", "icons/sel_yes@2x.png").addClass("select");
+	}else{
+		$(".pub-flag").attr("src", "icons/sel_no@2x.png").removeClass("select");
+	}
+}
 $('.publish-btn').on('click', function(e) {
 	e.preventDefault();
 	var title = $('.publish-title').val(); //标题
@@ -114,6 +126,11 @@ function branchUsers(token, appId) {
 							'</div>'
 					}
 					$('.subordinates').append(options);
+					if(getRequest('dangyuan')!=undefined){
+						var idf=getRequest('dangyuan')
+						$("#name").html($('#' + idf).find('span').text());
+						toUserId=idf
+					}
 				}else{
 					$('#modal .modal-body').html('暂无数据');
 				}
