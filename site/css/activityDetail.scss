@@ -1,6 +1,6 @@
 @import 'common/px2rem.scss';
 .main_content {
-    padding: 0px px2rem(35);
+    padding: 0px px2rem(35) 20px px2rem(35);
     background-color: white;
     .header {
         padding: px2rem(55) 0 px2rem(50) 0;
@@ -111,13 +111,6 @@
     .pub-area{
         border-top: 1px solid #EEEEEE;
         padding-top:px2rem(20);
-        .item{
-            height: px2rem(70);
-            line-height: px2rem(70); 
-            .glyphicon{
-                padding-right:5px; 
-            }
-        }
     }
 }
 .activity-result,#btn-area {

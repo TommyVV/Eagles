@@ -94,6 +94,11 @@
     margin-top: 1.7066666667rem;
     font-size: 0.64rem;
 }
+.pub-area .item{
+    height: 1.4933333333rem;
+    line-height: 1.4933333333rem; 
+    margin-top: 0px;
+}
 .pub-flag {
     width: 20px;
     height: 20px;

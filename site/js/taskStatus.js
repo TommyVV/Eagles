@@ -256,8 +256,16 @@ $(document).ready(function () {
                         <span class="glyphicon glyphicon-star n-star"></span>
                         <span class="glyphicon glyphicon-star n-star"></span>
                     </div>
-                    <div class="pub-area flag-area">
-                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">申请公开
+                    <div class="pub-area">
+                        <div class="item flag-area" id="pub-1">
+                            <img class="pub-flag" src="icons/sel_no@2x.png" alt="">不公示
+                        </div>
+                        <div class="item flag-area" id="pub-2">
+                            <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到支部
+                        </div>
+                        <div class="item flag-area" id="pub-3">
+                            <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示到组织
+                        </div>
                     </div>
                     <div class="points-result">
                         <div class="pass">通过</div>
@@ -266,12 +274,12 @@ $(document).ready(function () {
                 </div>`;
                 $(".task-record").removeClass('hide').html(str);
                 //是否公开
-                $('.flag-area').click(function () {
-                    if ($('.pub-flag').hasClass('select')) {
-                        $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
-                    } else {
-                        $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
-                    }
+                $(".pub-area .item").click(function() {
+                    $('.item').removeClass('select');
+                    var options = $('.item').find('img');
+                    $(options).attr('src', 'icons/sel_no@2x.png');
+                    $(this).addClass('select');
+                    $($(this).find('img')).attr('src', 'icons/sel_yes@2x.png');
                 });
     
                 $(".points-stars .glyphicon").click(function () {

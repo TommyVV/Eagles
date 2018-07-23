@@ -48,18 +48,6 @@ $(document).ready(function() {
             });
         }
     });
-    //是否公开
-    $(".flag-area").click(function() {
-        if ($(".pub-flag").hasClass("select")) {
-            $(".pub-flag")
-                .attr("src", "icons/sel_no@2x.png")
-                .removeClass("select");
-        } else {
-            $(".pub-flag")
-                .attr("src", "icons/sel_yes@2x.png")
-                .addClass("select");
-        }
-    });
     //图片上传
     $("#imgupload").fileupload({
         url: UPLOAD,
@@ -188,7 +176,6 @@ $(document).ready(function() {
         if (!validCheck()) {
             return;
         }
-        var pubFlag = $(".pub-flag").hasClass("select");
         var data = {
             TaskName: $("#title").val(),
             TaskFromUser: userId,
@@ -197,7 +184,6 @@ $(document).ready(function() {
             TaskEndDate: $("#end").val(),
             TaskContent: $("#content").val(),
             CanComment: 0,
-            IsPublic: pubFlag == true ? 0 : 1,
             CreateType: createType,
             AttachList: fileArray,
             Token: token,
@@ -246,7 +232,6 @@ $(document).ready(function() {
             ActivityEndDate: $("#end").val(),
             ActivityContent: $("#content").val(),
             CanComment: 0,
-            IsPublic: 0,
             ImageUrl: imgUrl,
             CreateType: createType,
             AttachList: fileArray,

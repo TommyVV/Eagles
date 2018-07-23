@@ -4,7 +4,12 @@
     padding: 0;
     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
-
+html,body{
+    height: 100%;
+}
+.container{
+    height: 100%;
+}
 .plan-item {
     background-color: white;
     padding: 0 px2rem(35);

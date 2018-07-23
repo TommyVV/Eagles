@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .main_content {
-  padding: 0px 0.7466666667rem;
+  padding: 0px 0.7466666667rem 20px 0.7466666667rem;
   background-color: white; }
   .main_content .header {
     padding: 1.1733333333rem 0 1.0666666667rem 0;
@@ -83,11 +83,6 @@
   .activity-content .pub-area {
     border-top: 1px solid #EEEEEE;
     padding-top: 0.4266666667rem; }
-    .activity-content .pub-area .item {
-      height: 1.4933333333rem;
-      line-height: 1.4933333333rem; }
-      .activity-content .pub-area .item .glyphicon {
-        padding-right: 5px; }
 
 .activity-result, #btn-area {
   margin-top: 1.7706666667rem;

@@ -42,15 +42,6 @@ $(document).ready(function() {
             })
         }
     }
-
-    //是否公开
-    $('.flag-area').click(function() {
-        if ($('.pub-flag').hasClass('select')) {
-            $('.pub-flag').attr('src', 'icons/sel_no@2x.png').removeClass('select');
-        } else {
-            $('.pub-flag').attr('src', 'icons/sel_yes@2x.png').addClass('select');
-        }
-    });
     //附件上传fileupload
     $("#fileupload").fileupload({
         url: UPLOAD,

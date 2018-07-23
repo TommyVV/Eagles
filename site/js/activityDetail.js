@@ -254,9 +254,6 @@ $(document).ready(function() {
         });
         if (status == 1) {
             str += `<div class="pub-area">
-                    <div class="item" id="pub-0">
-                        <img class="pub-flag" src="icons/sel_no@2x.png" alt="">公示
-                    </div>
                     <div class="item" id="pub-1">
                         <img class="pub-flag" src="icons/sel_no@2x.png" alt="">不公示
                     </div>
@@ -272,7 +269,7 @@ $(document).ready(function() {
                         <div class="nopass">不通过</div>
                     </div>`;
             $(".activity-content").removeClass('hide').html(str);
-            $(".activity-content .item").click(function() {
+            $(".pub-area .item").click(function() {
                 $('.item').removeClass('select');
                 var options = $('.item').find('img');
                 $(options).attr('src', 'icons/sel_no@2x.png');
@@ -286,7 +283,7 @@ $(document).ready(function() {
                 editActivityComplete(1);
             });
         } else {
-            $(".activity-content").html(str);
+            $(".activity-content").removeClass('hide').html(str);
         }
 
     }
