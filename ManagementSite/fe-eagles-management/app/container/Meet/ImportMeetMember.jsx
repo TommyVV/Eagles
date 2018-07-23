@@ -9,13 +9,13 @@ import {
   Form,
   Input,
   Select,
-  DatePicker,
   Upload,
   Icon
 } from "antd";
 const FormItem = Form.Item;
-const Option = Select.Option;
 import { hashHistory } from "react-router";
+import { createOrEdit } from "../../services/meettingService";
+import { memberTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -25,213 +25,128 @@ class ImportMeetMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
-      current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      memberList: [], // 列表数组
+      fileList: []
     };
     this.columns = [
       {
-        title: "党员名称",
-        dataIndex: "name"
-      },
-      {
-        title: "所属支部",
-        dataIndex: "branch"
+        title: "参与人员姓名",
+        dataIndex: "UserName"
       },
       {
         title: "联系电话",
-        dataIndex: "phone"
-      },
-      {
-        title: "党员类型",
-        dataIndex: "type"
+        dataIndex: "Phone"
       },
       {
         title: "检验结果",
-        dataIndex: "result"
+        dataIndex: "ErrorMessage"
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        name: "张三",
-        branch: "第一支部",
-        phone: "18512144992",
-        type: "党员",
-        result:"名字不合法"
-      },
-      {
-        key: "2",
-        name: "张四",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员",
-        result:"手机号码格式不正常"
-      },
-      {
-        key: "3",
-        name: "张五",
-        branch: "第二支部",
-        phone: "18512144992",
-        type: "预备党员",
-        result:"支部错误"
-      }
-    ];
-    this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
-    };
   }
-  componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
-  }
-
-  // 选择分享时触发的改变
-  onSelectChange = selectedRowKeys => {
-    this.setState({ selectedRowKeys });
-  };
-
-  // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
-  }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
+  handleUpload = () => {
+    const { fileList, memberList } = this.state;
+    if (memberList.length) {
+      return;
     }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
-      });
-      this.updatePageConfig(totalSize);
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
-  // 删除项目
-  handleDelete = async shareIds => {
-    confirm({
-      title: "是否确认删除?",
-      okText: "确认",
-      cancelText: "取消",
-      onOk: async () => {
-        try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+    const file = fileList[0];
+    const view = this;
+    var reader = new FileReader();
+    //将文件以文本形式读入页面
+    reader.readAsText(file, "utf-8");
+    // reader.readAsText(file, "gb2312");
+    reader.onload = function(e) {
+      var fileText = e.target.result.split("\n");
+      fileText.map((data, index) => {
+        if (data.length) {
+          data = data.split(",");
+          let news = {};
+          data.map((text, i) => {
+            switch (i) {
+              case 0:
+                news["UserName"] = text;
+              case 1:
+                news["Phone"] = text;
+            }
           });
-          if (code === 0) {
-            message.success("删除成功");
-            await this.getCurrentList({
-              ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
-            });
-            this.setState({ selectedRowKeys: [] });
-          } else {
-            message.error("删除失败");
-          }
-        } catch (e) {
-          throw new Error(e);
+          memberList.push({ ...news, key: index });
         }
-      }
-    });
+      });
+      view.setState({
+        memberList
+      });
+    };
   };
-  // 编辑项目
-  handleEdit = async () => {
+
+  handleImport = async () => {
     try {
-      let { selectedRowKeys } = this.state;
-      console.log(selectedRowKeys);
-      if (selectedRowKeys.length > 1) {
-        return message.error("不能同时编辑多个项目");
+      let { memberList } = this.state;
+      const { id } = this.props.params;
+      let List = [];
+      memberList.map((obj, index) => {
+        List.push({
+          MeetUserName: obj.UserName,
+          MeetUserPhone: obj.Phone,
+          ErrorMessage: ""
+        });
+      });
+      let params = {
+        MeetingId: id,
+        List
+      };
+      let { Code } = await createOrEdit(params);
+      if (Code === "00") {
+        message.success("保存成功");
+        hashHistory.replace("/meetlist");
+      } else {
+        message.error("保存失败");
       }
-      if (selectedRowKeys.length === 0) {
-        return message.error("请选择需要编辑的项目");
-      }
-      hashHistory.replace(`/project/create/${selectedRowKeys[0]}`);
     } catch (e) {
       throw new Error(e);
     }
   };
 
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+    const { fileList, memberList } = this.state;
+    const { name } = this.props.params;
     const props = {
       name: "file",
-      action: "//jsonplaceholder.typicode.com/posts/",
-      headers: {
-        authorization: "authorization-text"
+      action: "",
+      onRemove: file => {
+        this.setState(({ fileList }) => {
+          const index = fileList.indexOf(file);
+          const newFileList = fileList.slice();
+          newFileList.splice(index, 1);
+          return { fileList: newFileList, memberList: [] };
+        });
       },
-      onChange(info) {
-        if (info.file.status !== "uploading") {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === "done") {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === "error") {
-          message.error(`${info.file.name} file upload failed.`);
-        }
+      beforeUpload: file => {
+        this.setState({
+          fileList: [file]
+        });
+        return false;
+      },
+      fileList
+    };
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 2 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 6 }
       }
     };
 
     return (
       <Nav>
+        <Row gutter={24}>
+          <Col span={24} key={111}>
+            <FormItem {...formItemLayout} label="会议名称">
+              <span>{name}</span>
+            </FormItem>
+          </Col>
+        </Row>
         <Row gutter={24}>
           <Col span={2} key={1}>
             <FormItem label="选择导入文件" />
@@ -239,12 +154,19 @@ class ImportMeetMember extends React.Component {
           <Col span={3} key={2}>
             <Upload {...props}>
               <Button>
-                <Icon type="upload" />上传
+                <Icon type="upload" />选择
               </Button>
             </Upload>
           </Col>
           <Col span={3} key={3}>
-            <Button>预览</Button>
+            <Button
+              className="upload-demo-start"
+              type="primary"
+              onClick={this.handleUpload}
+              disabled={fileList.length === 0}
+            >
+              预览
+            </Button>
           </Col>
         </Row>
         <Row gutter={24}>
@@ -252,39 +174,34 @@ class ImportMeetMember extends React.Component {
             <FormItem label="规则说明" />
           </Col>
           <Col span={8} key={5} className="upload-tip">
-            <span>支持txt文件.csv文件, 格式为XXXXX请注意区分中英文符号</span>
+            <span>仅支持txt文件，格式为XXXXX，请注意区分中英文符号</span>
           </Col>
           <Col span={3} key={6}>
-            <Button>下载模板</Button>
+            <Button type="button">
+              <a href={memberTempUrl}>下载模板</a>
+            </Button>
           </Col>
         </Row>
         <Table
-          dataSource={this.data}
+          dataSource={memberList}
           columns={this.columns}
-          rowSelection={rowSelection}
-          pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
 
         <Row type="flex" justify="center" gutter={24}>
           <Col>
-            <Button onClick={this.handleDelete} className="btn">
-              批量删除
-            </Button>
-          </Col>
-          <Col>
-            <Button type="primary" className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
-                确认导入
-              </a>
+            <Button
+              type="primary"
+              className="btn btn--primary"
+              disabled={memberList.length === 0}
+            >
+              <a onClick={this.handleImport}>确认导入</a>
             </Button>
           </Col>
           <Col>
             <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                取消导入
-              </a>
+              <a onClick={() => hashHistory.replace(`/meetlist`)}>取消导入</a>
             </Button>
           </Col>
         </Row>

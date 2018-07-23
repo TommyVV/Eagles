@@ -14,99 +14,144 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import { getNewsList, deleteNews } from "../../services/newsService";
+import moment from "moment";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
+
+class SearchForm extends Component {
+  handleSearch = e => {
+    e.preventDefault();
+    const _this = this;
+    this.props.form.validateFields((err, values) => {
+      console.log("Received values of form: ", values);
+      let params = {
+        ..._this.props.getListConfig,
+        ...values,
+        PageNumber: 1
+      };
+      const getCurrentList = this.props.getCurrentList;
+      getCurrentList(params);
+    });
+  };
+
+  handleReset = () => {
+    this.props.form.resetFields();
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    let params = {
+      ...this.props.getListConfig,
+      ...values
+    };
+    const getCurrentList = this.props.getCurrentList;
+    getCurrentList(params);
+  };
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch.bind(this)}
+      >
+        <Row gutter={24}>
+          <Col span={5} key={1}>
+            <FormItem label="会议名称">
+              {getFieldDecorator(`NewsName`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    const config = props.getListConfig;
+    console.log(config);
+    return {
+      NewsName: Form.createFormField({
+        value: config.NewsName
+      }),
+      StarTime: Form.createFormField({
+        value: config.StarTime ? moment(config.StarTime, "YYYY-MM-dd") : null
+      }),
+      EndTime: Form.createFormField({
+        value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
+      })
+    };
+  }
+})(SearchForm);
 
 class MeetList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
+      newsList: [], // 新闻列表数组
       current: 1, // 当前页
       pageConfig: {} // 当前页配置
     };
     this.columns = [
       {
         title: "会议名称",
-        dataIndex: "name"
+        dataIndex: "NewsName",
+        width: "30%"
       },
       {
         title: "会议发起人",
-        dataIndex: "user"
-      },
-      {
-        title: "参与人员",
-        dataIndex: "member"
+        dataIndex: "Author"
       },
       {
         title: "操作",
-        id: "1",
         render: obj => {
           return (
             <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/org/detail/${obj.systemId}`)
-                }
-              >
+              <a onClick={() => hashHistory.replace(`/meet/detail/${obj.NewsId}`)}>
                 编辑
               </a>
               <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
+                onClick={() => this.handleDelete(obj.NewsId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/importmember/${obj.id}`)
-                }
-                style={{ paddingLeft: "24px" }}
-              >
-                导入
+              <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}`)}>
+              导入
               </a>
             </div>
           );
         }
       }
     ];
-    this.data = [
-      {
-        key: "1",
-        name: "领导人第一次会议",
-        user: "张三",
-        member: "小李、小红、小张",
-        id: "1"
-      },
-      {
-        key: "2",
-        name: "领导人第一次会议",
-        user: "张三",
-        member: "小李、小红、小张",
-        id: "2"
-      },
-      {
-        key: "3",
-        name: "领导人第一次会议",
-        user: "张三",
-        member: "小李、小红、小张",
-        id: "3"
-      }
-    ];
     this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
+      PageNumber: 1,
+      PageSize: 10,
+      NewsName: "",
+      NewsType: "1"
     };
   }
   componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
+    this.getCurrentList(this.getListConfig);
   }
 
   // 选择分享时触发的改变
@@ -115,89 +160,54 @@ class MeetList extends React.Component {
   };
 
   // 加载当前页
-  // getCurrentList = async params => {
-  //   try {
-  //     let { keyword, requestPage } = params;
-  //     let config = { ...this.getListConfig, requestPage, keyword };
-  //     let { totalSize, projectList } = await getProjectList(config);
-  //     console.log("projectList - ", projectList);
-  //     projectList.forEach(v => (v.key = v.projectId));
-  //     this.setState({ projectList, current: requestPage });
-  //     this.updatePageConfig(totalSize);
-  //   } catch (e) {
-  //     message.error("获取失败");
-  //     throw new Error(e);
-  //   }
-  // };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
-  }
-  // 下拉提示列表 关键字匹配
-  fetchList = async value => {
+  getCurrentList = async params => {
     try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList } = await getProjectList(params);
-      return projectList.map(v => ({
-        text: v.projectName,
-        value: v.projectName
-      }));
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  // 回车搜索列表  关键字匹配
-  searchList = async value => {
-    try {
-      let keyword = encodeURI(value);
-      let params = { ...this.getListConfig, keyword };
-      let { projectList, totalSize } = await getProjectList(params);
-      projectList.forEach(v => (v.key = v.projectId));
-      this.setState({
-        keyword,
-        projectList,
-        current: 1
+      let { List, TotalCount } = await getNewsList(params);
+      console.log("List - ", List);
+      List.forEach(v => {
+        v.key = v.NewsId;
       });
-      this.updatePageConfig(totalSize);
+      this.getListConfig = params; // 保存搜索的数据
+      this.setState({ newsList: List, current: params.PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
+  // 更新分页配置
+  updatePageConfig(totalSize) {
+    let pageConfig = {
+      total: totalSize,
+      pageSize: this.getListConfig.PageSize,
+      current: this.state.current,
+      onChange: async (page, pagesize) => {
+        this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: page
+        });
+      }
+    };
+    this.setState({ pageConfig });
+  }
   // 删除项目
-  handleDelete = async shareIds => {
+  handleDelete = async NewsId => {
+    console.log(NewsId);
     confirm({
       title: "是否确认删除?",
       okText: "确认",
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
+          let { Code } = await deleteNews({
+            NewsId
           });
-          if (code === 0) {
+          if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
+              requestPage: this.state.current
+              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -226,55 +236,25 @@ class MeetList extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys, pageConfig, newsList } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 4 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
     return (
       <Nav>
-        <Row gutter={24}>
-          <Col span={12}>
-            <Form>
-              <FormItem {...formItemLayout} label="会议名称">
-                <Input />
-              </FormItem>
-            </Form>
-          </Col>
-        </Row>
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList}
+          getListConfig={this.getListConfig}
+        />
         <Table
-          dataSource={this.data}
+          dataSource={newsList}
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-
-        <Row
-          type="flex"
-          gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
-        >
-          <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>新增</a>
-            </Button>
-          </Col>
-          <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>批量删除</a>
-            </Button>
-          </Col>
-        </Row>
       </Nav>
     );
   }

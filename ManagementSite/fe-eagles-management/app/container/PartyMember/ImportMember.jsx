@@ -24,7 +24,7 @@ class ImportMember extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      memberList: [], // 新闻列表数组
+      memberList: [], // 列表数组
       fileList: []
     };
     this.columns = [
@@ -86,7 +86,7 @@ class ImportMember extends React.Component {
       let { memberList } = this.state;
       console.log(memberList);
       // todo 批量导入新闻 等待接口
-      let { Code,Result } = await bitchCreate({
+      let { Code, Result } = await bitchCreate({
         UserList: memberList
       });
       if (Code === "00") {
@@ -119,7 +119,7 @@ class ImportMember extends React.Component {
         });
         return false;
       },
-      fileList: this.state.fileList
+      fileList
     };
 
     return (

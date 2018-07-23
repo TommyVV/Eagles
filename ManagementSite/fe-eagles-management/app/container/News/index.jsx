@@ -195,7 +195,8 @@ class NewsList extends React.Component {
       PageSize: 10,
       NewsName: "",
       StarTime: "",
-      EndTime: ""
+      EndTime: "",
+      NewsType: "0"
     };
   }
   componentWillMount() {

@@ -14,415 +14,62 @@ import {
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getInfoById, createOrEdit } from "../../services/meettingService";
 import "./style.less";
 
 const FormItem = Form.Item;
-const Option = Select.Option;
-const { TextArea } = Input;
-
-class Base extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedRowKeys: []
-    };
-
-    this.columns = [
-      {
-        title: "参与人员姓名",
-        dataIndex: "name"
-      },
-      {
-        title: "联系电话",
-        dataIndex: "phone"
-      },
-      {
-        title: "是否为系统人员",
-        dataIndex: "member"
-      },
-      {
-        title: "操作",
-        id: "1",
-        render: obj => {
-          return (
-            <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/project/detail/${record.projectId}`)
-                }
-              >
-                删除
-              </a>
-            </div>
-          );
-        }
-      }
-    ];
-    this.data = [
-      {
-        key: "1",
-        name: "张三",
-        phone: "15555555555",
-        member: "是",
-        id: "1"
-      },
-      {
-        key: "2",
-        name: "张三",
-        phone: "15555555555",
-        member: "是",
-        id: "2"
-      },
-      {
-        key: "3",
-        name: "张三",
-        phone: "15555555555",
-        member: "否",
-        id: "3"
-      }
-    ];
-    this.getListConfig = {
-      requestPage: 1,
-      pageSize: 6,
-      keyword: ""
-    };
-  }
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields(async (err, values) => {
-      if (!err) {
-        try {
-          console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
-          });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
-            message.success(tip);
-            hashHistory.replace("/project");
-          } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
-            message.error(tip);
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      } else {
-        message.error("请检查字段是否正确");
-      }
-    });
-  };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
-  // 上传附件成功或者删除
-  handleFile = attr => {
-    let _this = this;
-    this.saveInfo();
-    return {
-      move(list, map, fileId) {
-        let idList = [];
-        list.forEach(file => {
-          if (file.status) {
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        let { deleteList } = _this.props.agency;
-        deleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          deleteList,
-          [count]: list.length
-        });
-      },
-      done(list, map, fileId) {
-        // list 为当前图片list 、map为uid和fileId的关联关系
-        if (attr === "avatar") {
-          _this.props.saveFileUrl({ [attr]: list });
-          return;
-        }
-        let idList = [];
-        let { uploadDeleteList } = _this.props.agency;
-        list.forEach(file => {
-          if (file.status) {
-            //从编辑中获取fileId
-            idList.push(map.get(file.uid));
-          }
-          idList.push(file.fileId);
-        });
-        let noUndefindArray = idList.filter(v => v);
-        uploadDeleteList.push(fileId);
-        let count = attr + "Count";
-        _this.props.saveFileUrl({
-          [attr]: noUndefindArray.join(";"),
-          [count]: noUndefindArray.length,
-          uploadDeleteList
-        });
-      }
-    };
-  };
-
-  handleCancel = attr => {
-    this.setState({
-      [attr]: false
-    });
-  };
-  onChangeTime = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    const props = {
-      name: "file",
-      action: "//jsonplaceholder.typicode.com/posts/",
-      headers: {
-        authorization: "authorization-text"
-      },
-      onChange(info) {
-        if (info.file.status !== "uploading") {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === "done") {
-          message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === "error") {
-          message.error(`${info.file.name} file upload failed.`);
-        }
-      }
-    };
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 6 }
-      }
-    };
-    const formItemLayoutDate = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 11 }
-      }
-    };
-    const formItemLayoutTable = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
-      }
-    };
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("systemId")(<Input />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="会议名称">
-          {getFieldDecorator("num", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="发起人">
-          {getFieldDecorator("password", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<Input placeholder="必填，20字以内" />)}
-        </FormItem>
-        <FormItem label="发起时间" {...formItemLayoutDate}>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("startTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
-          <Col span={1}>
-            <span
-              style={{
-                display: "inline-block",
-                width: "100%",
-                textAlign: "center"
-              }}
-            >
-              -
-            </span>
-          </Col>
-          <Col span={6}>
-            <FormItem>
-              {getFieldDecorator("endTime", {
-                rules: [
-                  {
-                    required: true,
-                    message: "必填，20字以内!",
-                    pattern: /^(?!.{21}|\s*$)/g
-                  }
-                ]
-              })(<DatePicker />)}
-            </FormItem>
-          </Col>
-        </FormItem>
-        <FormItem {...formItemLayout} label="内容">
-          {getFieldDecorator("price", {
-            rules: [
-              {
-                required: true,
-                message: "必填，20字以内!",
-                pattern: /^(?!.{21}|\s*$)/g
-              }
-            ]
-          })(<TextArea rows={4} />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="附件">
-          {getFieldDecorator("view")(
-            <Upload {...props}>
-              <Button>
-                <Icon type="upload" /> 点击上传
-              </Button>
-            </Upload>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayoutTable} label="参会人员">
-          <Table
-            dataSource={this.data}
-            columns={this.columns}
-            pagination={pageConfig}
-            locale={{ emptyText: "暂无数据" }}
-            bordered
-          />
-        </FormItem>
-        <FormItem>
-          <Row gutter={24}>
-            <Col span={2} offset={4}>
-              <Button
-                htmlType="submit"
-                className="btn btn--primary"
-                type="primary"
-              >
-                {this.props.project.projectId === "" ? "新建" : "保存"}
-              </Button>
-            </Col>
-            <Col span={2} offset={1}>
-              <Button
-                className="btn"
-                onClick={() => hashHistory.replace("/project")}
-              >
-                取消
-              </Button>
-            </Col>
-          </Row>
-        </FormItem>
-      </Form>
-    );
-  }
-}
-
-const FormMap = Form.create({
-  mapPropsToFields: props => {
-    console.log("项目详情数据回显 - ", props);
-    const project = props.project;
-    return {
-      intergralId: Form.createFormField({
-        value: ""
-      }),
-      type: Form.createFormField({
-        org: "0"
-      })
-    };
-  }
-})(Base);
 
 class MeetDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      selectedRowKeys: [],
+      detail: {}
     };
+
+    this.columns = [
+      {
+        title: "参与人员姓名",
+        dataIndex: "UserName"
+      },
+      {
+        title: "联系电话",
+        dataIndex: "Phone"
+      },
+      {
+        title: "操作",
+        render: obj => {
+          return (
+            <div>
+              <a onClick={() => this.handleDelete(obj.Phone)}>删除</a>
+            </div>
+          );
+        }
+      }
+    ];
   }
 
   componentWillMount() {
     let { id } = this.props.params;
-    console.log(id);
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    if (id) {
+      this.getInfo(id); //拿新闻详情
+    }
   }
 
-  componentWillUnmount() {
-    // this.props.clearProjectInfo();
-  }
   // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  getInfo = async MeetingId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
+      let { List } = await getInfoById({
+        MeetingId
+      });
+      console.log("List", List);
+      let member = List[0].Participants;
+      member.forEach(v => {
+        v.key = v.Phone;
+      });
+      console.log(List[0]);
+      this.setState({
+        detail: List[0]
       });
     } catch (e) {
       message.error("获取详情失败");
@@ -430,11 +77,167 @@ class MeetDetail extends Component {
     }
   };
 
+  onSelectChange = selectedRowKeys => {
+    console.log(selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  };
+  // 删除项目
+  handleDelete = async Phone => {
+    try {
+      let { detail, selectedRowKeys } = this.state;
+      let member = detail.Participants;
+      delete member[
+        member.findIndex(i => {
+          if (i.Phone == Phone) {
+            delete selectedRowKeys[selectedRowKeys.findIndex(i => i == Phone)];
+            selectedRowKeys = selectedRowKeys.filter(item => item); // 删掉复选的id
+            return true;
+          }
+        })
+      ];
+      detail.Participants = member.filter(item => item);
+      this.setState({
+        detail,
+        selectedRowKeys
+      });
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+  // 编辑分享内容
+  handleDeleteBitch = () => {
+    let { detail, selectedRowKeys } = this.state;
+    if (selectedRowKeys.length == 0) {
+      return message.error("请选择删除的人员");
+    }
+    let member = detail.Participants;
+    selectedRowKeys.map((Phone, index) => {
+      delete member[
+        member.findIndex(i => {
+          if (i.Phone == Phone) {
+            delete selectedRowKeys[index];
+            selectedRowKeys = selectedRowKeys.filter(item => item); // 删掉复选的id
+            console.log(selectedRowKeys);
+            return true;
+          }
+        })
+      ];
+      member = member.filter(item => item);
+      console.log(member);
+    });
+    detail.Participants = member.filter(item => item); // 过滤掉空元素
+    console.log(detail);
+    this.setState({
+      detail,
+      selectedRowKeys
+    });
+  };
+  save = async () => {
+    try {
+      const { id } = this.props.params;
+      const { detail } = this.state;
+      const member = detail.Participants;
+      let List = [];
+      member.map((obj, index) => {
+        List.push({
+          MeetUserName: obj.UserName,
+          MeetUserPhone: obj.Phone,
+          ErrorMessage: ""
+        });
+      });
+      let params = {
+        MeetingId: id,
+        List
+      };
+      let { Code } = await createOrEdit(params);
+      if (Code === "00") {
+        message.success("保存成功");
+        hashHistory.replace("/meetlist");
+      } else {
+        message.error("保存失败");
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
   render() {
-    const { projectDetails } = this.state;
+    const { detail } = this.state;
+    let { id, name } = this.props.params;
+    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 2 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 6 }
+      }
+    };
+    const formItemLayoutTable = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 2 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    };
     return (
       <Nav>
-        <FormMap project={projectDetails} />
+        <Form onSubmit={this.handleSubmit}>
+          <FormItem {...formItemLayout} label="会议名称">
+            <Input disabled value={detail.MeetingName} />
+          </FormItem>
+          <FormItem {...formItemLayout} label="会议发起人">
+            <Input disabled value={detail.MeetingInitiator} />
+          </FormItem>
+          <FormItem {...formItemLayoutTable} label="参会人员">
+            <Table
+              dataSource={detail.Participants}
+              columns={this.columns}
+              pagination={pageConfig}
+              rowSelection={rowSelection}
+              locale={{ emptyText: "暂无数据" }}
+              bordered
+            />
+          </FormItem>
+          <FormItem>
+            <Row gutter={24}>
+              <Col span={2} offset={2}>
+                <Button
+                  onClick={this.handleDeleteBitch}
+                  type="primary"
+                  className="btn btn--primary"
+                >
+                  批量删除
+                </Button>
+              </Col>
+              <Col span={2} offset={1}>
+                <Button
+                  className="btn btn--primary"
+                  type="primary"
+                  onClick={this.save}
+                >
+                  保存
+                </Button>
+              </Col>
+              <Col span={2} offset={1}>
+                <Button
+                  className="btn"
+                  onClick={() => hashHistory.replace("/meetlist")}
+                >
+                  取消
+                </Button>
+              </Col>
+            </Row>
+          </FormItem>
+        </Form>
       </Nav>
     );
   }

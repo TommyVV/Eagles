@@ -175,6 +175,11 @@ const AUTHGROUP = {
   LIST: "/api/OperGroup/GetOperGroupList", //列表
   DELETE: "/api/OperGroup/RemoveOperGroup" //删除
 };
+//会议
+const MEETING = {
+  EDIT: "/api/Metting/ImportMeetingUser", //编辑
+  DETAIL: "/api/Metting/GetMettingUsers" //详情
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -201,5 +206,6 @@ export const serverConfig = {
   SYSTEM,
   SYSTEMSMS,
   ORGSMS,
-  AUTHGROUP
+  AUTHGROUP,
+  MEETING
 };

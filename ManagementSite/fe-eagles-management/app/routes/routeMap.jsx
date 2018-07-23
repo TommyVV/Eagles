@@ -117,7 +117,7 @@ class RouteMap extends Component {
           <route path="/menutwo/detail(/:id)" component={MenuDetailTwo} />
           {/* 菜单设置 */}
           <route path="/meetlist" component={MeetList} />
-          <route path="/importmember/:id" component={ImportMeetMember} />
+          <route path="/importmember/:id/:name" component={ImportMeetMember} />
           <route path="/meet/detail(/:id)" component={MeetDetail} />
           {/* 栏目信息 */}
           <route path="/programalist" component={ProgramaList} />
