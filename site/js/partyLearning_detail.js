@@ -12,6 +12,7 @@ if(TestId && testlist) {
 	//进入页面默认调用一下，为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
 	submitTestPaperAnswer(TestId, 0, token, appId);
 }
+var timeoutflag = null;
 //点击试卷提交 手动提交答案
 $('#answer-submit').on('click', function() {
 	if(localStorage.getItem("IsInternalUser")==0){
@@ -23,7 +24,12 @@ $('#answer-submit').on('click', function() {
 		});
 		return false;
 	}
-	submitTestPaperAnswer(TestId, 0, token, appId);
+	if(timeoutflag != null){
+	  clearTimeout(timeoutflag);
+	}
+	timeoutflag=setTimeout(function(){
+		submitTestPaperAnswer(TestId, 0, token, appId);
+	},500);
 })
 //提交试题的答案; 
 //firstIn=1 为用户首次进入，自动提交答案 为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
