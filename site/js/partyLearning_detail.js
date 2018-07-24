@@ -233,7 +233,14 @@ function editStudyTime(NewsId, ModuleId, StudyTime, token, appId) {
 		url: "http://51service.xyz/Eagles/api/Study/EditStudyTime",
 		dataType: "json",
 		success: function(res) {
-
+			$('.header .study-time').html('');
+			var data = res.Result;
+			if(res.Code == 00) {
+				if(data) {
+					var studyTimeHtml = '<span class="glyphicon glyphicon-time" aria-hidden="true"></span><span>已学习:</span><span class="studyTime">' + data.StudyTime + '分钟</span>';
+					$('.header .study-time').append(studyTimeHtml); //添加学习时间
+				}
+			}
 		}
 	})
 
