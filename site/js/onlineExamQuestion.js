@@ -65,6 +65,10 @@ function getNewsTest(testId, token,appId) {
 				counttime = data.LimitedTime * 60; //试卷规定时间
 				limitedTime = data.LimitedTime;
 				var num = 0;
+				if(data.TestList.length==1){
+					$("#next").hide();
+					$("#submit").show()
+				}
 				for(var i = 0; i < data.TestList.length; i++) {
 					num += 1;
 					var questionHtml = ''; //存储问题的Html
@@ -228,9 +232,14 @@ function submit(testId,token,appId) {
 			success: function(res) {
 				if(res.Code == 00) {
 					console.info("提交成功")
-										window.location.href = 'examResult.html?appId='+appId+'&TestId='+testId+'&useTime='+useTime+'&TestList='+dataJson+''
+					window.location.href = 'examResult.html?appId='+appId+'&TestId='+testId+'&useTime='+useTime+'&TestList='+dataJson+''
 				} else {
-
+					bootoast({
+						message: '' + res.Message + '',
+						type: 'warning',
+						position: 'toast-top-center',
+						timeout: 2
+					});
 				}
 			}
 		})

@@ -49,6 +49,10 @@ function goodDetal(productIds, appId) {
             //$('.goods-area').html('')
             var data = res.Result;
             if (res.Code == 00) {
+				if(data.Inventory==0){
+					$('.sub-btn,.overview-props-btn').attr("disabled","disabled");
+					$('.sub-btn,.overview-props-btn').css("background","#ccc");
+				}
                 $('.ld_img,.goods-img').attr('src', data.ProductImgUrl);
                 $('.overview-props-name,.goods-title').text(data.ProductName);
                 $('.overview-props-count span,.num span').text(data.PeopleCount);
@@ -58,7 +62,7 @@ function goodDetal(productIds, appId) {
                 $('.good_priced span').text(data.Price);
                 
                 $('.points').html('价格:'+data.ProductScore+'积分' ); //移动端
-                $('.overview-props-date span,.time span').text(data.ProductBeginTime);
+                $('.overview-props-date span,.time span').text(data.ProductBeginTime+'~'+data.ProductEndTime );
                 $('.detail p,.detail-content').html(data.ProductDescrption) //文章列表
             }
         }
