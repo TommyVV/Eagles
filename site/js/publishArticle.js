@@ -5,6 +5,7 @@ var toUserId = '';
 var toUserName = '';
 //指派人员信息
 var toUsreInfo = '';
+var imgUrl = "";
 if(!localStorage.getItem('token')) {
 	window.location.href = 'login.html?appId=' + appId + '';
 }
@@ -25,6 +26,26 @@ if(getRequest('aryewsType')!=undefined){
 		$(".pub-flag").attr("src", "icons/sel_no@2x.png").removeClass("select");
 	}
 }
+//图片上传
+$("#imgupload").fileupload({
+	url: UPLOAD,
+	dataType: "json",
+	done: function(e, data) {
+		if (data.result.Code == "00") {
+			var array = data.result.Result.FileUploadResults;
+			console.log(data.result.Result.FileUploadResults);
+			imgUrl = array[0].FileUrl;
+			$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
+		} else {
+			bootoast({
+				message: "上传失败",
+				type: "warning",
+				position: "toast-top-center",
+				timeout: 2
+			});
+		}
+	}
+});
 $('.publish-btn').on('click', function(e) {
 	e.preventDefault();
 	var title = $('.publish-title').val(); //标题
@@ -55,6 +76,14 @@ $('.publish-btn').on('click', function(e) {
 			timeout: 2
 		});
 		return;
+	}else if (!imgUrl) {
+		bootoast({
+			message: "请上传图片",
+			type: "info",
+			position: "toast-top-center",
+			timeout: 2
+		});
+		return;
 	}
 	if($('#selectpicker').val()==3){
 		if(!toUserId) {
@@ -74,6 +103,7 @@ $('.publish-btn').on('click', function(e) {
 			"NewsType": type,
 			"UserId":toUserId,
 			"NewsContent": content,
+			"ImageUrl": imgUrl,
 			"IsPublic": pubFlag == true ? 1 : 0,
 			"Token": token,
 			"AppId": appId

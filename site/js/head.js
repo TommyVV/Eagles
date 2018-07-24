@@ -1,8 +1,13 @@
 var appId = getRequest('appId') //获取来源页面['0', '1', '2', '3']
+var token=localStorage.getItem('token')
 $(function() {
    // console.info(window.location.href);
 	console.info(appId);
 	navbar(appId)
+	if(localStorage.getItem('token')&&localStorage.getItem("IsInternalUser")==1){
+		
+		unreadMessage(token);
+	}
 })
 
 $('.navbar-header').on('click', '.collapsed', function(e) {
@@ -148,3 +153,26 @@ $('.sk_sps').on('click', function(e) {
 $('.main-topf').on('click', function(e) {
 	window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
 })
+
+
+function unreadMessage(token) {
+	$.ajax({
+		type: "get",
+		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
+		dataType: "json",
+		success: function(res) {
+			//$('.g_hds').html('')
+			var data = res.Result;
+			if(res.Code == 00) {
+				//$('.news_list,.g_hds').text(data.UnreadMessageCount);
+				if(data.UnreadMessageCount==0){
+					$('.g_hds').hide()
+				}else{
+					$('.g_hds').show()
+				}
+				
+			}
+		}
+	});
+}
+

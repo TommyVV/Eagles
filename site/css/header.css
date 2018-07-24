@@ -1,6 +1,6 @@
 
 @media screen and (max-width: 768px) {
-	
+	.g_hds{position: absolute;top:3px;left:12px;background: url(../icons/uploadfailed@2x.png) no-repeat;display: inline-block;width:12px;height: 12px;background-size: cover;display: none;}
 	#mobilenav{width: 100%;overflow: hidden;height: 1.4rem;;}
 	 #pc-header {
     display: none; }
