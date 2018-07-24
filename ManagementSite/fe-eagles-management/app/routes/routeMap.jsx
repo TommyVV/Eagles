@@ -53,6 +53,8 @@ import ScoreList from "../container/Score";
 import ScoreDetail from "../container/Score/Detail";
 import BranchList from "../container/Branch";
 import BranchDetail from "../container/Branch/Detail";
+import PublicTaskList from "../container/PublicTask";
+import PublicTaskDetail from "../container/PublicTask/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -143,14 +145,17 @@ class RouteMap extends Component {
             component={SmsOrgDetail}
           />
           {/* 任务公开 */}
-          <route path="/taskactivitypubliclist" component={SmsOrgList} />
-          <route path="/taskpublic/detail(/:id)" component={SmsOrgDetail} />
+          <route
+            path="/taskactivitypubliclist(/:type)"
+            component={PublicTaskList}
+          />
+          <route path="/taskpublic/detail(/:id/:audit)" component={PublicTaskDetail} />
           {/* 活动公开 */}
-          <route path="/activitypubliclist" component={SmsOrgList} />
-          <route path="/activitypublic/detail(/:id)" component={SmsOrgDetail} />
+          <route path="/activitypubliclist(/:type)" component={SmsOrgList} />
+          <route path="/activitypublic/detail(/:id/:audit)" component={SmsOrgDetail} />
           {/* 用户文章 */}
-          <route path="/articlelist" component={SmsOrgList} />
-          <route path="/article/detail(/:id)" component={SmsOrgDetail} />
+          <route path="/articlelist(/:type)" component={SmsOrgList} />
+          <route path="/article/detail(/:id/:audit)" component={SmsOrgDetail} />
         </Route>
       </Router>
     );

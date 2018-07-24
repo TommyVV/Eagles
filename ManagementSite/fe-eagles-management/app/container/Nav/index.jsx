@@ -69,8 +69,7 @@ export default class App extends React.Component {
             <img src={baixian} alt="" className="baixian" />
           </div>
           <Menu
-            theme="dark"
-            // onClick={this.handleClick}
+            theme="dark" // onClick={this.handleClick}
             style={{ minWidth: 224 }}
             defaultOpenKeys={[sub]}
             selectedKeys={[current]}
@@ -599,11 +598,22 @@ export default class App extends React.Component {
                   <span>任务公开信息</span>
                 </span>
               }
-              style={{ display: authMap.get("open0001") ? null : "block" }}
+              style={{
+                display:
+                  authMap.get("open0001") || authMap.get("open0004")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="40"
-                onClick={e => hashHistory.replace("/taskactivitypubliclist")}
+                onClick={e => {
+                  if (authMap.get("open0001")) {
+                    hashHistory.replace(`/taskactivitypubliclist/branch`);
+                  } else if (authMap.get("open0004")) {
+                    hashHistory.replace(`/taskactivitypubliclist/org`);
+                  }
+                }}
               >
                 任务公开列表
               </Menu.Item>
@@ -622,11 +632,22 @@ export default class App extends React.Component {
                   <span>活动公开信息</span>
                 </span>
               }
-              style={{ display: authMap.get("open0002") ? null : "block" }}
+              style={{
+                display:
+                  authMap.get("open0002") || authMap.get("open0005")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="42"
-                onClick={e => hashHistory.replace("/activitypubliclist")}
+                onClick={e => {
+                  if (authMap.get("open0002")) {
+                    hashHistory.replace(`/activitypubliclist/branch`);
+                  } else if (authMap.get("open0005")) {
+                    hashHistory.replace(`/activitypubliclist/org`);
+                  }
+                }}
               >
                 活动公开列表
               </Menu.Item>
@@ -645,11 +666,22 @@ export default class App extends React.Component {
                   <span>用户文章信息</span>
                 </span>
               }
-              style={{ display: authMap.get("open0003") ? null : "block" }}
+              style={{
+                display:
+                  authMap.get("open0003") || authMap.get("open0006")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="44"
-                onClick={e => hashHistory.replace("/articlelist")}
+                onClick={e => {
+                  if (authMap.get("open0003")) {
+                    hashHistory.replace(`/articlelist/branch`);
+                  } else if (authMap.get("open0006")) {
+                    hashHistory.replace(`/articlelist/org`);
+                  }
+                }}
               >
                 用户文章列表
               </Menu.Item>

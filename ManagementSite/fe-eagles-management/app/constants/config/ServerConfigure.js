@@ -180,6 +180,27 @@ const MEETING = {
   EDIT: "/api/Metting/ImportMeetingUser", //编辑
   DETAIL: "/api/Metting/GetMettingUsers" //详情
 };
+//公开任务
+const PUBLIC_TASK = {
+  LIST_BRANCH: "/api/Publicity/GetBrnPublicTask", //列表 支部
+  LIST_ORG: "/api/Publicity/GetOrgPublicTask", //列表 机构
+  // EDIT: "/api/Metting/ImportMeetingUser", //审核
+  DETAIL: "/api/Publicity/GetPublicTaskDetail" //详情
+};
+//公开活动
+const PUBLIC_ACTIVITY = {
+  LIST_BRANCH: "/api/Publicity/GetBrnPublicActivity", //列表 支部
+  LIST_ORG: "/api/Publicity/GetOrgPublicActivity", //列表 机构
+  // EDIT: "/api/Metting/ImportMeetingUser", //审核
+  DETAIL: "/api/Publicity/GetPublicActivityDetail" //详情
+};
+//用户文章
+const PUBLIC_ARTICLE = {
+  LIST_BRANCH: "/api/Publicity/GetBrnPublicArticle", //列表 支部
+  LIST_ORG: "/api/Publicity/GetOrgPublicArticle", //列表 机构
+  // EDIT: "/api/Metting/ImportMeetingUser", //审核
+  DETAIL: "/api/Publicity/GetAritcleDetail" //详情
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -207,5 +228,8 @@ export const serverConfig = {
   SYSTEMSMS,
   ORGSMS,
   AUTHGROUP,
-  MEETING
+  MEETING,
+  PUBLIC_TASK,
+  PUBLIC_ACTIVITY,
+  PUBLIC_ARTICLE
 };

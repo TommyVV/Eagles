@@ -242,6 +242,36 @@ const navMap = [
     pathname: "#/smsorg/detail",
     key: "39",
     sub: "sub19"
+  },
+  {
+    pathname: "#/taskactivitypubliclist",
+    key: "40",
+    sub: "sub20"
+  },
+  {
+    pathname: "#/taskpublic/detail",
+    key: "41",
+    sub: "sub20"
+  },
+  {
+    pathname: "#/activitypubliclist",
+    key: "42",
+    sub: "sub21"
+  },
+  {
+    pathname: "#/activitypublic/detail",
+    key: "43",
+    sub: "sub21"
+  },
+  {
+    pathname: "#/articlelist",
+    key: "44",
+    sub: "sub22"
+  },
+  {
+    pathname: "#/article/detail",
+    key: "45",
+    sub: "sub22"
   }
 ];
 export default navMap;
