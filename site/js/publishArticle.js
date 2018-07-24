@@ -83,7 +83,13 @@ $('.publish-btn').on('click', function(e) {
 		success: function(res) {
 			var data = res.Result;
 			if(res.Code == 00) {
-				window.location.href = 'myArticle.html?NewsType=' + $('#selectpicker').val() + '';
+				bootoast({
+					message: "文章发布成功，待审核",
+					type: "success",
+					position: "toast-top-center",
+					timeout: 2
+				});
+				//window.location.href = 'myArticle.html?NewsType=' + $('#selectpicker').val() + '';
 				//文章发布成功
 			}else{
 				bootoast({
