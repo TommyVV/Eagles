@@ -161,14 +161,17 @@ function unreadMessage(token) {
 		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
 		dataType: "json",
 		success: function(res) {
-			//$('.g_hds').html('')
+			$('.g_hds').html('')
 			var data = res.Result;
 			if(res.Code == 00) {
-				//$('.news_list,.g_hds').text(data.UnreadMessageCount);
+				$('.news_list,.g_hds').text(data.UnreadMessageCount);
 				if(data.UnreadMessageCount==0){
 					$('.g_hds').hide()
 				}else{
 					$('.g_hds').show()
+					if(data.UnreadMessageCount>99){
+						$('.g_hds').html(99)
+					}
 				}
 				
 			}
