@@ -68,14 +68,14 @@ function rank(token, appId) {
 						if(i < 3) {
 							rankzb += '<tr class="list">' +
 								'<td>' + imgs + '</td>' +
-								'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
+								//'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
 								'<td>' + data.BranchRank[i].UserCount + '</td>' +
 								'<td>' + data.BranchRank[i].Score + '</td>' +
 								'</tr>';
 						} else if(i >= 3) {
 							rankzb += '<tr class="list">' +
 								'<td>' + data.BranchRank[i].Rank + '</td>' +
-								'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
+								//'<td class="name">' + data.BranchRank[i].Branch + '</td>' +
 								'<td>' + data.BranchRank[i].UserCount + '</td>' +
 								'<td>' + data.BranchRank[i].Score + '</td>' +
 								'</tr>';
