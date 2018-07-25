@@ -12,7 +12,7 @@ import {
 import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
-import { getInfoById } from "../../services/publicTaskService";
+import { getInfoById } from "../../services/publicArticleService";
 import { audit } from "../../services/auditService";
 import "./style.less";
 
@@ -30,18 +30,18 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           const { obj, type } = this.props;
-          const { AuditStatus, Reason, TaskId } = values;
+          const { AuditStatus, Reason, NewsId } = values;
 
           let params = {
             AuditStatus,
             Reason,
-            Type: "5", // 任务
-            AuditId: TaskId,
+            Type: "6", // 文章
+            AuditId: NewsId,
             AuditType: type
           };
           let { Code } = await audit(params);
           message.success("审核成功");
-          hashHistory.replace(`/taskactivitypubliclist/${type}`);
+          hashHistory.replace(`/articlelist/${type}`);
         } catch (e) {
           message.error("审核失败");
           throw new Error(e);
@@ -68,43 +68,19 @@ class Base extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("TaskId")(<Input />)}
+          {getFieldDecorator("NewsId")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="任务标题">
-          {getFieldDecorator("TaskTitle")(<Input disabled />)}
+        <FormItem {...formItemLayout} label="标题">
+          {getFieldDecorator("NewsTitle")(<Input disabled />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="发起人">
-          {getFieldDecorator("FromUser")(<Input disabled />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="负责人">
-          {getFieldDecorator("ResponsibleUserName")(<Input disabled />)}
+        <FormItem {...formItemLayout} label="作者">
+          {getFieldDecorator("Author")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="发布时间">
           {getFieldDecorator("CreateTime")(<Input disabled />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="任务描述">
-          {getFieldDecorator("TaskContent")(<TextArea rows={4} disabled />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="任务计划">
-          {obj.Steps &&
-            obj.Steps.map((o, i) => {
-              return (
-                <div key={i}>
-                  <div>{o.StepName}</div>
-                  <div>{o.StepContent}</div>
-                </div>
-              );
-            })}
-        </FormItem>
-        <FormItem {...formItemLayout} label="附件">
-          {obj.Attachments &&
-            obj.Attachments.map((o, i) => {
-              return (
-                <div key={i}>
-                  <a href={o.AttachmentUrl}>{o.AttachmentName}</a>
-                </div>
-              );
-            })}
+        <FormItem {...formItemLayout} label="文章描述">
+          {getFieldDecorator("NewsDetail")(<TextArea rows={4} disabled />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -148,25 +124,22 @@ const FormMap = Form.create({
     const { obj } = props;
     console.log("详情数据回显 - ", obj);
     return {
-      TaskId: Form.createFormField({
-        value: obj.TaskId
+      NewsId: Form.createFormField({
+        value: obj.NewsId
       }),
-      TaskTitle: Form.createFormField({
-        value: obj.TaskTitle
+      NewsTitle: Form.createFormField({
+        value: obj.NewsTitle
       }),
-      FromUser: Form.createFormField({
-        value: obj.FromUser
-      }),
-      ResponsibleUserName: Form.createFormField({
-        value: obj.ResponsibleUserName
+      Author: Form.createFormField({
+        value: obj.Author
       }),
       CreateTime: Form.createFormField({
         value: obj.CreateTime
           ? new Date(obj.CreateTime).format("yyyy-MM-dd")
           : ""
       }),
-      TaskContent: Form.createFormField({
-        value: obj.TaskContent
+      NewsDetail: Form.createFormField({
+        value: obj.NewsDetail
       }),
       AuditStatus: Form.createFormField({
         value: obj.AuditStatus ? obj.AuditStatus + "" : "0"
@@ -177,7 +150,7 @@ const FormMap = Form.create({
     };
   }
 })(Base);
-class PublicTaskDetail extends Component {
+class PublicArticleDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -193,9 +166,9 @@ class PublicTaskDetail extends Component {
   }
 
   // 根据id查询详情
-  getInfo = async TaskId => {
+  getInfo = async NewsId => {
     try {
-      const { info } = await getInfoById({ TaskId });
+      const { info } = await getInfoById({ NewsId });
       this.setState({ obj: info });
     } catch (e) {
       message.error("获取详情失败");
@@ -212,4 +185,4 @@ class PublicTaskDetail extends Component {
   }
 }
 
-export default PublicTaskDetail;
+export default PublicArticleDetail;

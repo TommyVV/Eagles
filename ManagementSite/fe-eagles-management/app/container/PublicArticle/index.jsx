@@ -14,14 +14,14 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getListBranch, getListOrg } from "../../services/publicTaskService";
-import { scoreType } from "../../constants/config/appconfig";
+import { getListBranch, getListOrg } from "../../services/publicArticleService";
+import { articleMap } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
 
-class PublicTaskList extends React.Component {
+class PublicArticleList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,19 +29,27 @@ class PublicTaskList extends React.Component {
     };
     this.columns = [
       {
-        title: "任务名称",
-        dataIndex: "TaskTitle"
+        title: "标题",
+        dataIndex: "NewsTitle"
       },
       {
-        title: "发起人",
-        dataIndex: "Score"
+        title: "作者",
+        dataIndex: "Author"
       },
       {
-        title: "负责人",
-        dataIndex: "ResponsibleUserName"
+        title: "类型",
+        dataIndex: "NewsType",
+        render: NewsType => {
+          return articleMap.map((o, i) => {
+            if (o.value === NewsType + "") {
+              console.log(o.text);
+              return <span key={o.value}>{o.text}</span>;
+            }
+          });
+        }
       },
       {
-        title: "申请时间",
+        title: "发布时间",
         dataIndex: "CreateTime",
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
@@ -52,22 +60,18 @@ class PublicTaskList extends React.Component {
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(
-                    `/taskpublic/detail/${obj.TaskId}/0/${
-                      this.props.params.type
-                    }`
-                  )
+                  hashHistory.replace(`/article/detail/${obj.NewsId}/0/${
+                    this.props.params.type
+                  }`)
                 }
               >
                 详情
               </a>
               <a
                 onClick={() =>
-                  hashHistory.replace(
-                    `/taskpublic/detail/${obj.TaskId}/1/${
-                      this.props.params.type
-                    }`
-                  )
+                  hashHistory.replace(`/article/detail/${obj.NewsId}/1/${
+                    this.props.params.type
+                  }`)
                 }
                 style={{ paddingLeft: "24px" }}
               >
@@ -101,10 +105,10 @@ class PublicTaskList extends React.Component {
         res = await getListOrg(params);
       }
       console.log("res - ", res);
-      res.Tasks.forEach(v => {
-        v.key = v.TaskId;
+      res.Aritcles.forEach(v => {
+        v.key = v.NewsId;
       });
-      this.setState({ List: res.Tasks, current: PageNumber });
+      this.setState({ List: res.Aritcles, current: PageNumber });
       this.updatePageConfig(res.TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -142,4 +146,4 @@ class PublicTaskList extends React.Component {
   }
 }
 
-export default PublicTaskList;
+export default PublicArticleList;

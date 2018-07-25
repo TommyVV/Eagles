@@ -26,6 +26,20 @@ export const stateMap = [
     text: "审核不通过"
   }
 ];
+export const articleMap = [
+  {
+    Status: "0",
+    text: "文章"
+  },
+  {
+    Status: "1",
+    text: "心得体会"
+  },
+  {
+    Status: "2",
+    text: "会议"
+  }
+];
 export const pageMap = [
   {
     value: "0",

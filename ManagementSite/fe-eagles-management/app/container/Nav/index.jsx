@@ -609,9 +609,9 @@ export default class App extends React.Component {
                 key="40"
                 onClick={e => {
                   if (authMap.get("open0001")) {
-                    hashHistory.replace(`/taskactivitypubliclist/branch`);
+                    hashHistory.replace(`/taskactivitypubliclist/2`);
                   } else if (authMap.get("open0004")) {
-                    hashHistory.replace(`/taskactivitypubliclist/org`);
+                    hashHistory.replace(`/taskactivitypubliclist/1`);
                   }
                 }}
               >
@@ -643,9 +643,9 @@ export default class App extends React.Component {
                 key="42"
                 onClick={e => {
                   if (authMap.get("open0002")) {
-                    hashHistory.replace(`/activitypubliclist/branch`);
+                    hashHistory.replace(`/activitypubliclist/2`);
                   } else if (authMap.get("open0005")) {
-                    hashHistory.replace(`/activitypubliclist/org`);
+                    hashHistory.replace(`/activitypubliclist/1`);
                   }
                 }}
               >
@@ -677,9 +677,9 @@ export default class App extends React.Component {
                 key="44"
                 onClick={e => {
                   if (authMap.get("open0003")) {
-                    hashHistory.replace(`/articlelist/branch`);
+                    hashHistory.replace(`/articlelist/2`);
                   } else if (authMap.get("open0006")) {
-                    hashHistory.replace(`/articlelist/org`);
+                    hashHistory.replace(`/articlelist/1`);
                   }
                 }}
               >

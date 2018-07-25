@@ -14,14 +14,17 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getListBranch, getListOrg } from "../../services/publicTaskService";
+import {
+  getListBranch,
+  getListOrg
+} from "../../services/publicActivityService";
 import { scoreType } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
 
-class PublicTaskList extends React.Component {
+class PublicActivityList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,12 +32,12 @@ class PublicTaskList extends React.Component {
     };
     this.columns = [
       {
-        title: "任务名称",
-        dataIndex: "TaskTitle"
+        title: "标题",
+        dataIndex: "ActivityName"
       },
       {
         title: "发起人",
-        dataIndex: "Score"
+        dataIndex: "FromUser"
       },
       {
         title: "负责人",
@@ -46,6 +49,10 @@ class PublicTaskList extends React.Component {
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
+        title: "参与人数",
+        dataIndex: "UserCount"
+      },
+      {
         title: "操作",
         render: obj => {
           return (
@@ -53,7 +60,7 @@ class PublicTaskList extends React.Component {
               <a
                 onClick={() =>
                   hashHistory.replace(
-                    `/taskpublic/detail/${obj.TaskId}/0/${
+                    `/activitypublic/detail/${obj.ActivityId}/0/${
                       this.props.params.type
                     }`
                   )
@@ -64,7 +71,7 @@ class PublicTaskList extends React.Component {
               <a
                 onClick={() =>
                   hashHistory.replace(
-                    `/taskpublic/detail/${obj.TaskId}/1/${
+                    `/activitypublic/detail/${obj.ActivityId}/1/${
                       this.props.params.type
                     }`
                   )
@@ -101,10 +108,10 @@ class PublicTaskList extends React.Component {
         res = await getListOrg(params);
       }
       console.log("res - ", res);
-      res.Tasks.forEach(v => {
-        v.key = v.TaskId;
+      res.Activitys.forEach(v => {
+        v.key = v.ActivityId;
       });
-      this.setState({ List: res.Tasks, current: PageNumber });
+      this.setState({ List: res.Activitys, current: PageNumber });
       this.updatePageConfig(res.TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -142,4 +149,4 @@ class PublicTaskList extends React.Component {
   }
 }
 
-export default PublicTaskList;
+export default PublicActivityList;
