@@ -25,11 +25,23 @@ function navbar(appId) {
 $('.login-zc').on('click', function (e) {
     window.location.href = "signup.html?appId=" + appId
 })
+$(".flag-area").click(function() {
+		if ($(".pub-flag").hasClass("select")) {
+				$(".pub-flag")
+						.attr("src", "icons/sel_no@2x.png")
+						.removeClass("select");
+		} else {
+				$(".pub-flag")
+						.attr("src", "icons/sel_yes@2x.png")
+						.addClass("select");
+		}
+});
 //登录
 $('.btn-login').on('click', function (e) {
     e.preventDefault();
     let password = $('#inputPassword').val(); //密码
     let account = $('#inputUser').val(); //用户名
+	var pubFlag = $(".pub-flag").hasClass("select");
     //let captcha = $('#inputCaptcha').val();
     if (!account) {
         bootoast({
@@ -54,6 +66,7 @@ $('.btn-login').on('click', function (e) {
         data: {
             "Phone": account,
             "UserPwd": password,
+			"IsRememberPwd":pubFlag == true ? 1 : 0,
             "AppId": appId
         },
         url: "http://51service.xyz/Eagles/api/User/Login",

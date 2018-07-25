@@ -117,6 +117,7 @@ function loginIn(account, UserPwd) {
 		data: {
 			"Phone": account,
 			"UserPwd": UserPwd,
+			"IsRememberPwd":1,
 			"AppId": appId
 		},
 		url: "http://51service.xyz/Eagles/api/User/Login",
