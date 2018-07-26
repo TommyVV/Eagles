@@ -276,7 +276,7 @@
         height: 26px;
         float: left;
     }
-    .navbar-default .navbar-right .sk_sps img {
+    .navbar-default .navbar-right .sk_sps img,.navbar-default .navbar-right a img{
         display: block;
         width: 72%;
         margin-top: 24%;
