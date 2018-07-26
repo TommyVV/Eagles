@@ -13,8 +13,7 @@ $(".sub-btn,.overview-props-btn").click(function() {
         type: "post",
         data: {
             "ProductId": productId,
-            //"ProductId": $('.overview-props-price span').text(),
-            "Count": $('.num span').text(),
+            "Count": 1,
             "Address": "string",
             "Province": "string",
             "City": "string",
