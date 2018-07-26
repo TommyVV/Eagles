@@ -1,14 +1,25 @@
 .footer {
-  background: #414141;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  margin-top: 35px; }
-  .footer span {
+    position:absolute;
+	bottom:0;
+    width: 100%;
+    background: #414141;
+    height: 40px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 35px;
+}
+
+.footer span {
     color: #fff;
-    font-size: 20px; }
-    @media screen and (max-width: 768px) {
-    	.footer{display: none;}
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        display: none;
     }
+}
+
 
 /*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZm9vdGVyLmNzcyIsInNvdXJjZXMiOlsiZm9vdGVyLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLmZvb3RlcntcbiAgICBiYWNrZ3JvdW5kOiM0MTQxNDE7XG4gICAgaGVpZ2h0OjI0MHB4O1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBsaW5lLWhlaWdodDogMjQwcHg7XG4gICAgbWFyZ2luLXRvcDogMzVweDtcbiAgICBzcGFue1xuICAgICAgICBjb2xvcjojZmZmO1xuICAgICAgICBmb250LXNpemU6IDI0cHg7XG4gICAgfVxufSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxBQUFBLE9BQU8sQ0FBQTtFQUNILFVBQVUsRUFBQyxPQUFPO0VBQ2xCLE1BQU0sRUFBQyxLQUFLO0VBQ1osVUFBVSxFQUFFLE1BQU07RUFDbEIsV0FBVyxFQUFFLEtBQUs7RUFDbEIsVUFBVSxFQUFFLElBQUksR0FLbkI7RUFWRCxBQU1JLE9BTkcsQ0FNSCxJQUFJLENBQUE7SUFDQSxLQUFLLEVBQUMsSUFBSTtJQUNWLFNBQVMsRUFBRSxJQUFJLEdBQ2xCIn0= */

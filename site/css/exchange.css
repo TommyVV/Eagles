@@ -121,6 +121,8 @@ body {
 }
 
 @media screen and (min-width: 768px) {
+	html{height:100%;}
+	body{min-height:100%;margin:0;padding:0;position:relative;}
     #top-nav {
         position: fixed!important;
         z-index: 9990!important;

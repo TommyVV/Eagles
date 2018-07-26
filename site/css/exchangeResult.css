@@ -22,5 +22,8 @@ body {
   font-size: 0.64rem;
   color: #141414;
 }
-
+@media screen and (min-width: 768px) {
+html{height:100%;}
+body{min-height:100%;margin:0;padding:0;position:relative;}
+}
 /*# sourceMappingURL=exchangeResult.css.map */
