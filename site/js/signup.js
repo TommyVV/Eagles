@@ -1,4 +1,4 @@
-var appId = 1000;
+var appId = getRequest('appId');
 console.log(getRequest('onurl'))
 var onurl=getRequest('onurl')
 $('.btn-signup').on('click', function(e) {
@@ -145,14 +145,6 @@ function loginIn(account, UserPwd) {
 							return false;
 						}
 					}
-				
-				//登陆成功页面跳转地址
-				/* var prevLink = document.referrer;
-				if($.trim(prevLink) == '') {
-					location.href = 'index.html?moduleType=0&appId=' + appId
-				} else {
-					location.href = prevLink;
-				} */
 
 			}
 		}
