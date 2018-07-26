@@ -3,8 +3,9 @@ var TestList=getRequest('TestList')
 var UseTime=getRequest('useTime')
 var token=localStorage.getItem("token")
 var appId=getRequest('appId')
-if(!localStorage.getItem('token')){
-	window.location.href = 'login.html?appId='+appId+'';
+var onurl=window.location.href
+if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
+	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
 }
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('footer.html')

@@ -1,4 +1,6 @@
-var appId = getRequest('appId');
+var appId = 1000;
+console.log(getRequest('onurl'))
+var onurl=getRequest('onurl')
 $('.btn-signup').on('click', function(e) {
 	e.preventDefault();
 	let password = $('#inputPassword').val();
@@ -130,13 +132,27 @@ function loginIn(account, UserPwd) {
 				localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
 				localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
 				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
+				
+					if(onurl!=undefined){
+						location.href =onurl+'?appId='+appId
+						return false;
+					}else{
+						if(localStorage.getItem('IsInternalUser')==1){
+							location.href = 'mine.html?appId=' + appId + '';
+							return false;
+						}else{
+							location.href = 'index.html?moduleType=0&appId=' + appId
+							return false;
+						}
+					}
+				
 				//登陆成功页面跳转地址
-				var prevLink = document.referrer;
+				/* var prevLink = document.referrer;
 				if($.trim(prevLink) == '') {
 					location.href = 'index.html?moduleType=0&appId=' + appId
 				} else {
 					location.href = prevLink;
-				}
+				} */
 
 			}
 		}

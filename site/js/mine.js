@@ -2,8 +2,9 @@ var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 $('#top-nav,#mobilenav').html('')
 $('#top-nav,#mobilenav').load('./head.html')
-if(!localStorage.getItem('token')) {
-	window.location.href = 'login.html?appId=' + appId + '';
+var onurl=window.location.href
+if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
+	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
 }
 var phonesmodiy;
 $(function(){
@@ -141,7 +142,6 @@ function getScrollNews(token, appId) {
 				setInterval("scroll(document.getElementById('scrollobj'))", 20);
 			} else {
 				$('#scrollobj,.newsd').hide();
-				
 			}
 		}
 	})

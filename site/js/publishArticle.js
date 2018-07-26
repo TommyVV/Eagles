@@ -6,8 +6,9 @@ var toUserName = '';
 //指派人员信息
 var toUsreInfo = '';
 var imgUrl = "";
-if(!localStorage.getItem('token')) {
-	window.location.href = 'login.html?appId=' + appId + '';
+var onurl=window.location.href
+if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
+	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
 }
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 $('#top-nav,#mobilenav').load('./head.html')

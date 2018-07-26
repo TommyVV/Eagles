@@ -2,6 +2,7 @@ var appId = getRequest('appId');
 var testId = getRequest('testId');
 var testlist = getRequest('testlist');
 var newsIds = getRequest('NewsId'); //获取来源d的新闻id
+var onurl=getRequest('onurl')
 //var appId = 10000000
 navbar(appId)
 
@@ -21,9 +22,14 @@ function navbar(appId) {
         }
     });
 }
-
+console.log(getRequest('onurl'))
 $('.login-zc').on('click', function (e) {
-    window.location.href = "signup.html?appId=" + appId
+	if(onurl==undefined){
+		window.location.href = "signup.html?appId=" + appId
+	}else{
+		window.location.href = "signup.html?appId=" + appId+"&onurl="+onurl;
+	}
+    
 })
 $(".flag-area").click(function() {
 		if ($(".pub-flag").hasClass("select")) {
