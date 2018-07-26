@@ -136,7 +136,7 @@ function getScrollNews(token, appId) {
 				var data = res.Result.SystemNewsList;
 				var divs = '';
 				for(var i = 0; i < data.length; i++) {
-					divs += '' + data[i].NewsName + '';
+					divs += '<span class="scroll-r" ids="'+data[i].NewsId+'">' + data[i].NewsName + '</span>';
 				}
 				$('#scrollobj').append(divs)
 				setInterval("scroll(document.getElementById('scrollobj'))", 20);
@@ -172,3 +172,8 @@ function unreadMessage(token) {
 		}
 	});
 }
+//点击滚动信息
+$('#scrollobj').on('click', '.scroll-r', function (e) {
+    module = $(this).attr('ids')
+    window.location.href = 'notice_detail.html?appId=' + appId+'&NewsId='+module;
+})
