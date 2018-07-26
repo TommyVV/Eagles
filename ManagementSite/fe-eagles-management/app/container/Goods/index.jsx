@@ -98,9 +98,9 @@ class GoodsList extends React.Component {
     this.state = {
       selectedRowKeys: [], // 项目id数组
       goodsList: [], // 项目列表数组
-      keyword: "", // 关键字
       current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      pageConfig: {}, // 当前页配置
+      authMap: new Map()
     };
     this.columns = [
       {
@@ -128,6 +128,7 @@ class GoodsList extends React.Component {
         title: "操作",
         width: "20%",
         render: obj => {
+          console.log("this", this);
           return (
             <div>
               <a
@@ -149,6 +150,15 @@ class GoodsList extends React.Component {
               >
                 {obj.GoodsStatus == "0" ? "上架" : "下架"}
               </a>
+              <a
+                onClick={() => this.audit(obj)}
+                style={{
+                  paddingLeft: "24px",
+                  display: this.state.authMap.get("Audit001") ? null : "none"
+                }}
+              >
+                审核
+              </a>
             </div>
           );
         }
@@ -163,6 +173,16 @@ class GoodsList extends React.Component {
     };
   }
   componentWillMount() {
+    const auth = JSON.parse(localStorage.info).authList;
+    if (auth) {
+      const authMap = new Map();
+      auth.map((a, i) => {
+        authMap.set(a.FunCode, a.FunCode);
+      });
+      this.setState({
+        authMap
+      });
+    }
     this.getCurrentList(this.getListConfig);
   }
 
@@ -208,6 +228,39 @@ class GoodsList extends React.Component {
   }
   // 快速上下架
   changeStatus = async goods => {
+    const tipTitle = goods.GoodsStatus == "0" ? "上架" : "下架";
+    confirm({
+      title: `是否确认${tipTitle}“${goods.GoodsName}”?`,
+      okText: "确认",
+      cancelText: "取消",
+      onOk: async () => {
+        try {
+          const params = {
+            Info: {
+              ...goods,
+              GoodsStatus: goods.GoodsStatus == "0" ? "1" : "0"
+            }
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            message.success(`${tipTitle}成功`);
+            await this.getCurrentList({
+              ...this.getListConfig,
+              PageNumber: this.state.current
+              // keyword: this.state.keyword
+            });
+            this.setState({ selectedRowKeys: [] });
+          } else {
+            message.error(`${tipTitle}失败`);
+          }
+        } catch (e) {
+          throw new Error(e);
+        }
+      }
+    });
+  };
+  // 審核
+  audit = async goods => {
     const tipTitle = goods.GoodsStatus == "0" ? "上架" : "下架";
     confirm({
       title: `是否确认${tipTitle}“${goods.GoodsName}”?`,

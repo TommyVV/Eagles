@@ -55,6 +55,10 @@ import BranchList from "../container/Branch";
 import BranchDetail from "../container/Branch/Detail";
 import PublicTaskList from "../container/PublicTask";
 import PublicTaskDetail from "../container/PublicTask/Detail";
+import PublicActivityList from "../container/PublicActivity";
+import PublicActivityDetail from "../container/PublicActivity/Detail";
+import PublicArticleList from "../container/PublicArticle";
+import PublicArticleDetail from "../container/PublicArticle/Detail";
 
 class RouteMap extends Component {
   render() {
@@ -149,13 +153,25 @@ class RouteMap extends Component {
             path="/taskactivitypubliclist(/:type)"
             component={PublicTaskList}
           />
-          <route path="/taskpublic/detail(/:id/:audit)" component={PublicTaskDetail} />
+          <route
+            path="/taskpublic/detail(/:id/:audit/:type)"
+            component={PublicTaskDetail}
+          />
           {/* 活动公开 */}
-          <route path="/activitypubliclist(/:type)" component={SmsOrgList} />
-          <route path="/activitypublic/detail(/:id/:audit)" component={SmsOrgDetail} />
+          <route
+            path="/activitypubliclist(/:type)"
+            component={PublicActivityList}
+          />
+          <route
+            path="/activitypublic/detail(/:id/:audit/:type)"
+            component={PublicActivityDetail}
+          />
           {/* 用户文章 */}
-          <route path="/articlelist(/:type)" component={SmsOrgList} />
-          <route path="/article/detail(/:id/:audit)" component={SmsOrgDetail} />
+          <route path="/articlelist(/:type)" component={PublicArticleList} />
+          <route
+            path="/article/detail(/:id/:audit/:type)"
+            component={PublicArticleDetail}
+          />
         </Route>
       </Router>
     );

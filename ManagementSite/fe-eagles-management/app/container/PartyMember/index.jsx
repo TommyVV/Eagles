@@ -100,7 +100,8 @@ class PartyMemberList extends React.Component {
       selectedRowKeys: [], // 项目id数组
       memberList: [], // 项目列表数组
       current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      pageConfig: {}, // 当前页配置
+      authMap: new Map()
     };
     this.columns = [
       {
@@ -148,6 +149,15 @@ class PartyMemberList extends React.Component {
               >
                 设置数据权限
               </a>
+              <a
+                onClick={() => this.audit(obj)}
+                style={{
+                  paddingLeft: "24px",
+                  display: this.state.authMap.get("Audit001") ? null : "none"
+                }}
+              >
+                审核
+              </a>
             </div>
           );
         }
@@ -162,6 +172,16 @@ class PartyMemberList extends React.Component {
     };
   }
   componentWillMount() {
+    const auth = JSON.parse(localStorage.info).authList;
+    if (auth) {
+      const authMap = new Map();
+      auth.map((a, i) => {
+        authMap.set(a.FunCode, a.FunCode);
+      });
+      this.setState({
+        authMap
+      });
+    }
     this.getCurrentList(this.getListConfig);
   }
 

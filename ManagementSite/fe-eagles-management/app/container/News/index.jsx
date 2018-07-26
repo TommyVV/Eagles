@@ -138,7 +138,8 @@ class NewsList extends React.Component {
       newsList: [], // 新闻列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      pageConfig: {}, // 当前页配置
+      authMap: new Map()
     };
     this.columns = [
       {
@@ -185,6 +186,15 @@ class NewsList extends React.Component {
               >
                 删除
               </a>
+              <a
+                onClick={() => this.audit(obj)}
+                style={{
+                  paddingLeft: "24px",
+                  display: this.state.authMap.get("Audit001") ? null : "none"
+                }}
+              >
+                审核
+              </a>
             </div>
           );
         }
@@ -200,6 +210,16 @@ class NewsList extends React.Component {
     };
   }
   componentWillMount() {
+    const auth = JSON.parse(localStorage.info).authList;
+    if (auth) {
+      const authMap = new Map();
+      auth.map((a, i) => {
+        authMap.set(a.FunCode, a.FunCode);
+      });
+      this.setState({
+        authMap
+      });
+    }
     this.getCurrentList(this.getListConfig);
   }
 

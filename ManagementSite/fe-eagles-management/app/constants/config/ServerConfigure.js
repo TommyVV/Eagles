@@ -16,11 +16,6 @@ const ACTIVITY = {
   DETAIL: "/api/Activity/GetActivityDetail", //活动详情
   LIST: "/api/Activity/GetActivity" //活动列表
 };
-// 审核
-const AUDIT = {
-  AUDIT_CREATE: "/api/CreateAudit", //审核
-  AUDIT_LIST: "/api/GetAudit" //审核列表
-};
 // 菜单
 const MENU = {
   MENU_EDIT: "/api/Menus/EditMenus", //编辑菜单
@@ -201,6 +196,10 @@ const PUBLIC_ARTICLE = {
   // EDIT: "/api/Metting/ImportMeetingUser", //审核
   DETAIL: "/api/Publicity/GetAritcleDetail" //详情
 };
+//审核
+const AUDIT = {
+  AUDIT: "/api/Audit/Audit"
+};
 
 export const serverConfig = {
   API_SERVER,
@@ -231,5 +230,6 @@ export const serverConfig = {
   MEETING,
   PUBLIC_TASK,
   PUBLIC_ACTIVITY,
-  PUBLIC_ARTICLE
+  PUBLIC_ARTICLE,
+  AUDIT
 };

@@ -1,12 +1,12 @@
 import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/config/ServerConfigure";
 
-const { PUBLIC_TASK } = serverConfig;
+const { PUBLIC_ARTICLE} = serverConfig;
 // 根据id查看详情
 export const getInfoById = async params => {
   try {
     let res = await sendRequest({
-      url: PUBLIC_TASK.DETAIL,
+      url: PUBLIC_ARTICLE.DETAIL,
       method: "post",
       params
     });
@@ -25,7 +25,7 @@ export const getInfoById = async params => {
 export const getListBranch = async params => {
   try {
     let res = await sendRequest({
-      url: PUBLIC_TASK.LIST_BRANCH,
+      url: PUBLIC_ARTICLE.LIST_BRANCH,
       method: "post",
       params
     });
@@ -43,7 +43,7 @@ export const getListBranch = async params => {
 export const getListOrg = async params => {
   try {
     let res = await sendRequest({
-      url: PUBLIC_TASK.LIST_ORG,
+      url: PUBLIC_ARTICLE.LIST_ORG,
       method: "post",
       params
     });
