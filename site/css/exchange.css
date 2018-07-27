@@ -22,6 +22,7 @@ body {
     #pc-footer {
         display: none;
     }
+		.goods-area{width:100%;overflow: hidden;}
     .search-area {
         background-color: white;
         width: 100%;
@@ -78,7 +79,7 @@ body {
     }
     .goods-item {
         float: left;
-        margin: 0.21333rem 0 0.21333rem 0.61333rem;
+        margin: 0.21333rem 0 0.21333rem 0.65333rem;
         width: 7.04rem;
         height: 10.51733rem;
         background: white;
