@@ -44,7 +44,7 @@ html, body {
 		height: auto;/*如设置bottom:51px,则需height:auto才能生效*/
 	}
   .myNoticeModal {
-		
+		padding-bottom:110px;
     background-color: #f8f8f8;
     min-height: 100%; } }
 
