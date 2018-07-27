@@ -50,7 +50,7 @@ function myAricle(token, page, appId) {
 				if(res.Result.NewsList != '' || res.Result.NewsList != null) {
 					var myAricle = '';
 					for(var i = 0; i < data.NewsList.length; i++) {
-						myAricle += '<div class="article" type="'+data.NewsList[i].NewsType +'" conretn="' + data.NewsList[i].Title + '" comids="'+data.NewsList[i].NewsContent+'" dangyuan="'+data.NewsList[i].ToUser+'" ispubic="'+data.NewsList[i].IsPublic+'">' +
+						myAricle += '<div class="article" type="'+data.NewsList[i].NewsId +'">' +
 							'<div class="left"><img src="' + data.NewsList[i].ImageUrl + '" alt=""></div>' +
 							'<div class="right">' +
 							'<div class="content overflow-two-line">' + data.NewsList[i].Title + '</div>' +
@@ -74,3 +74,8 @@ function myAricle(token, page, appId) {
 		}
 	});
 }
+//点击文章分类
+$('.item').on('click', '.article', function (e) {
+	var aryewsType=$(this).attr('type');
+	window.location.href = 'article_del.html?appId=' + appId + '&aryewsType=' +aryewsType ;
+})

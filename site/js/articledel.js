@@ -1,5 +1,5 @@
 var appId = getRequest('appId');
-var NewsId = getRequest('NewsId');
+var NewsId = getRequest('aryewsType');
 var token = localStorage.getItem("token")
 var onurl=window.location.href
 if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
@@ -9,9 +9,9 @@ $('#top-nav,#mobilenav').load('head.html')
 
 $('#pc-footer').load('./footer.html')
 
-mynotice(NewsId,token, appId) 
+myart(NewsId,token, appId) 
 
-function mynotice(NewsId,token, appId) {
+function myart(NewsId,token, appId) {
 	$.ajax({
 		type: "post",
 		data: {
@@ -26,6 +26,8 @@ function mynotice(NewsId,token, appId) {
 				$('.title').html(res.Result.Title);
 				$('.time').text(res.Result.UserName);
 				$('.content-box').html(res.Result.HtmlContent);
+				$('.cont-imgs img').attr("src",res.Result.ImageUrl);
+				
 			}
 		}
 	})
