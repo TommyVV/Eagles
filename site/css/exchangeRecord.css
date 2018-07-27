@@ -122,7 +122,7 @@
     }
     .dj-container {
         width: 1000px;
-        height: 500px;
+        min-height: 500px;
         margin-left: 16px;
         margin-top: 10px;
         background: white;
