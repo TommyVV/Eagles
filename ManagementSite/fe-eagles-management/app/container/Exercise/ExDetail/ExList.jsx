@@ -24,24 +24,33 @@ class ExList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      operatorList: [] // 列表数组
+      List: [] // 列表数组
     };
     this.columns = [
       {
         title: "题目",
-        dataIndex: "exTitle"
+        dataIndex: "Question"
       },
       {
-        title: "类型",
-        dataIndex: "exType"
+        title: "是否多选",
+        dataIndex: "Multiple",
+        render: text => <span>{text == "0" ? "单选" : "多选"}</span>
       },
       {
         title: "操作",
-        dataIndex: "operate",
-        render: () => (
+        render: (obj) => (
           <span>
-            <a href="javascript:;">编辑</a>
-            <a href="javascript:;" style={{ paddingLeft: "24px" }}>
+            <a
+              onClick={() =>
+                hashHistory.replace(`/exercise/detail/${obj.QuestionId}`)
+              }
+            >
+              编辑
+            </a>
+            <a
+              onClick={() => this.handleDelete(obj.QuestionId)}
+              style={{ paddingLeft: "24px" }}
+            >
               删除
             </a>
           </span>
@@ -51,7 +60,7 @@ class ExList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10,
+      PageSize: 10
     };
   }
   componentWillMount() {
@@ -65,15 +74,15 @@ class ExList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
-      let { List } = await getList(params);
+      let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
-      List.forEach(v => {
-        v.key = v.OperId;
+      List.forEach((v, i) => {
+        v.key = i;
       });
-      this.setState({ operatorList: List, current: PageNumber });
-      // this.updatePageConfig(totalSize);
+      this.setState({ List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -88,14 +97,14 @@ class ExList extends React.Component {
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          PageNumber: page,
+          PageNumber: page
         });
       }
     };
     this.setState({ pageConfig });
   }
   // 删除项目
-  handleDelete = async OperId => {
+  handleDelete = async QuestionId => {
     confirm({
       title: "是否确认删除?",
       okText: "确认",
@@ -103,14 +112,13 @@ class ExList extends React.Component {
       onOk: async () => {
         try {
           let { Code } = await del({
-            OperId
+            QuestionId
           });
           if (Code === "00") {
             message.success("删除成功");
             await this.getCurrentList({
               ...this.getListConfig,
               PageNumber: this.state.current
-              // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
           } else {
@@ -123,7 +131,7 @@ class ExList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, operatorList } = this.state;
+    const { List } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -135,11 +143,11 @@ class ExList extends React.Component {
     return (
       <Nav>
         <Table
-            columns={columns}
-            dataSource={data}
-            bordered
-            style={{ width: "90%" }}
-          />
+          columns={this.columns}
+          dataSource={List}
+          bordered
+          style={{ width: "90%" }}
+        />
         <Row
           type="flex"
           gutter={24}
@@ -147,7 +155,9 @@ class ExList extends React.Component {
         >
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/exercise/detail`)}>新增</a>
+              <a onClick={() => hashHistory.replace(`/exercise/detail`)}>
+                新增
+              </a>
             </Button>
           </Col>
         </Row>

@@ -11,11 +11,13 @@ import {
   Select
 } from "antd";
 const FormItem = Form.Item;
+const TextArea = Input.TextArea;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
 import { getList, del } from "../../services/memberService";
+import { audit } from "../../services/auditService";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
@@ -93,6 +95,62 @@ const WrapperSearchForm = Form.create({
     };
   }
 })(SearchForm);
+
+// 审核的表单
+const WrapperAuditForm = Form.create({
+  onFieldsChange(props, changedFields) {
+    props.onChange(changedFields);
+  },
+  mapPropsToFields: props => {
+    // const project = props.project;
+    return {
+      AuditStatus: Form.createFormField({
+        ...props.AuditStatus,
+        value: props.AuditStatus.value
+      }),
+      Reason: Form.createFormField({
+        ...props.Reason,
+        value: props.Reason.value
+      })
+    };
+  }
+})(props => {
+  const { getFieldDecorator } = props.form;
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 7 }
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 6 }
+    }
+  };
+  return (
+    <Form className="ant-advanced-search-form">
+      <Row gutter={24}>
+        <Col span={20} key={1}>
+          <FormItem {...formItemLayout} label="审核结果">
+              {getFieldDecorator("AuditStatus")(
+                <Select>
+                  <Option value="0">通过</Option>
+                  <Option value="1">拒绝</Option>
+                </Select>
+              )}
+            </FormItem>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col span={20} key={2}>
+          <FormItem {...formItemLayout} label="审核结果描述">
+            {getFieldDecorator(`Reason`)(<TextArea rows={4} />)}
+          </FormItem>
+        </Col>
+      </Row>
+    </Form>
+  );
+});
+
 class PartyMemberList extends React.Component {
   constructor(props) {
     super(props);
@@ -101,7 +159,13 @@ class PartyMemberList extends React.Component {
       memberList: [], // 项目列表数组
       current: 1, // 当前页
       pageConfig: {}, // 当前页配置
-      authMap: new Map()
+      authMap: new Map(),
+      currentId: "", // 当前的id
+      visible: false, // 弹出框
+      fields: {
+        AuditStatus: "", //审核结果
+        Reason: "" // 审核结果描述
+      }
     };
     this.columns = [
       {
@@ -150,11 +214,13 @@ class PartyMemberList extends React.Component {
                 设置数据权限
               </a>
               <a
-                onClick={() => this.audit(obj)}
                 style={{
                   paddingLeft: "24px",
                   display: this.state.authMap.get("Audit001") ? null : "none"
                 }}
+                onClick={() =>
+                  this.setState({ visible: true, currentId: obj.UserId })
+                }
               >
                 审核
               </a>
@@ -263,8 +329,45 @@ class PartyMemberList extends React.Component {
       throw new Error(e);
     }
   };
+  handleOk = async () => {
+    try {
+      const { currentId, fields } = this.state;
+      const { AuditStatus, Reason } = fields;
+      let params = {
+        AuditStatus: AuditStatus.value,
+        Reason: Reason.value,
+        Type: "2", // 党员
+        AuditId: currentId,
+        AuditType: 0
+      };
+      let { Code } = await audit(params);
+      this.setState({
+        visible: false,
+        fields: {
+          AuditStatus: "",
+          Reason: ""
+        }
+      });
+      if (Code === "00") {
+        message.success("审核成功");
+        await this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: this.state.current
+        });
+      } else {
+        message.error("审核失败");
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+  handleFormChange = changedFields => {
+    this.setState(({ fields }) => ({
+      fields: { ...fields, ...changedFields }
+    }));
+  };
   render() {
-    const { selectedRowKeys, pageConfig, memberList } = this.state;
+    const { selectedRowKeys, pageConfig, memberList, visible,fields } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -283,6 +386,14 @@ class PartyMemberList extends React.Component {
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
+        <Modal
+          title="审核党员"
+          visible={visible}
+          onOk={this.handleOk}
+          onCancel={() => this.setState({ visible: false })}
+        >
+          <WrapperAuditForm {...fields} onChange={this.handleFormChange} />
+        </Modal>
 
         <Row
           type="flex"

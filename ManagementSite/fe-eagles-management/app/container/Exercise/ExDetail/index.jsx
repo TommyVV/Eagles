@@ -26,7 +26,8 @@ const Option = Select.Option;
 @connect(
   state => {
     return {
-      user: state.userReducer
+      user: state.userReducer,
+      exReducer: state.exReducer
     };
   },
   { saveInfo }
@@ -34,10 +35,7 @@ const Option = Select.Option;
 class Base extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showDemandList: false, //项目需求列表
-      showMemberList: false //项目需求列表
-    };
+    this.state = {};
   }
 
   handleSubmit = e => {
@@ -46,27 +44,36 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { projectMembers } = this.props.project;
-          let newProjectMembers = projectMembers.filter(
-            v => v.user_id !== this.props.user.userId
-          ); //删除本人
-          let { projectName } = values;
-          let { code } = await createProject({
-            ...values,
-            ...this.props.project,
-            projectName,
-            projectMembers: JSON.stringify(newProjectMembers)
+          const { Info } = this.props.info;
+          const { OptionList } = Info;
+          let list = [];
+          OptionList.map((o, i) => {
+            list.push({
+              OptionId: o.OptionId,
+              OptionName: o.OptionName,
+              QuestionId: Info.QuestionId,
+              IsRight: o.IsRight,
+              AnswerType: o.AnswerType,
+              Img: o.Img
+            });
           });
-          if (code === 0) {
-            let tip = this.props.project.projectId
-              ? "保存项目成功"
-              : "创建项目成功";
+          let params = {
+            Info: {
+              Question: values.Question,
+              QuestionId: values.QuestionId,
+              IsVote: values.IsVote == "1" ? true : false,
+              Multiple: values.Multiple,
+              MultipleCount: values.MultipleCount
+            },
+            Option: list
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = Info.QuestionId ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/project");
+            hashHistory.replace("/exerciselist");
           } else {
-            let tip = this.props.project.projectId
-              ? "保存项目失败"
-              : "创建项目失败";
+            let tip = Info.QuestionId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -91,17 +98,34 @@ class Base extends Component {
   };
   change = (attr, value) => {
     const { getFieldsValue } = this.props.form;
+    const { Info } = this.props.info;
     let values = getFieldsValue();
+    console.log("是否投票：", value);
     this.props.saveInfo({
       Info: {
+        ...Info,
         ...values,
-        [attr]: value
+        [attr]: value == "1" ? true : false
       }
     });
   };
+  setOptionList(OptionList, IsVote) {
+    const { getFieldsValue } = this.props.form;
+    const { Info } = this.props.info;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      Info: {
+        ...Info,
+        ...values,
+        OptionList,
+        IsVote
+      }
+    });
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { Info } = this.props.info;
+    console.log(Info);
     const formItemLayout = {
       labelCol: {
         xl: { span: 2 }
@@ -152,26 +176,31 @@ class Base extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否投票">
-            {getFieldDecorator("isRight")(
-              <Select onChange={this.change.bind(this, "isRight")}>
+            {getFieldDecorator("IsVote")(
+              <Select onChange={this.change.bind(this, "IsVote")}>
                 <Option value="0">否</Option>
                 <Option value="1">是</Option>
               </Select>
             )}
           </FormItem>
-          <WrappedDynamicFieldSet isVote={Info.isRight} />
+          {/* 选项 */}
+          <WrappedDynamicFieldSet
+            IsVote={Info.IsVote}
+            OptionList={Info.OptionList}
+            setOptionList={this.setOptionList.bind(this)}
+          />
           <FormItem>
-            <Row type="flex" justify="center" className="edit" gutter={24}>
-              <Col>
+            <Row gutter={24} style={{ marginTop: "24px" }}>
+              <Col span={2} offset={2}>
                 <Button
                   htmlType="submit"
-                  className="btn btnprimary"
+                  className="btn btn--primary"
                   type="primary"
                 >
                   {Info.QuestionId ? "保存" : "新建"}
                 </Button>
               </Col>
-              <Col>
+              <Col span={2} offset={1}>
                 <Button
                   className="btn"
                   onClick={() => hashHistory.replace("/exerciselist")}
@@ -189,11 +218,14 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("项目详情数据回显  ", props);
     const { Info } = props.info;
+    console.log("项目详情数据回显  ", Info);
     return {
       QuestionId: Form.createFormField({
         value: Info.QuestionId
+      }),
+      Question: Form.createFormField({
+        value: Info.Question
       }),
       Multiple: Form.createFormField({
         value: Info.Multiple ? Info.Multiple + "" : "0"
@@ -201,8 +233,14 @@ const FormMap = Form.create({
       MultipleCount: Form.createFormField({
         value: Info.MultipleCount
       }),
-      isRight: Form.createFormField({
-        value: Info.isRight ? Info.isRight + "" : "0"
+      IsVote: Form.createFormField({
+        value: Info.IsVote ? "1" : "0"
+      }),
+      AnswerType: Form.createFormField({
+        value: Info.AnswerType ? Info.AnswerType + "" : "0"
+      }),
+      OptionList: Form.createFormField({
+        value: Info.OptionList ? Info.AnswerType : []
       })
     };
   }
@@ -215,14 +253,11 @@ const FormMap = Form.create({
       exReducer: state.exReducer
     };
   },
-  { clearInfo }
+  { clearInfo, saveInfo }
 )
 class QuestionDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      projectDetails: {} //项目详情
-    };
   }
   componentWillMount() {
     let { id } = this.props.params;
@@ -233,10 +268,14 @@ class QuestionDetail extends Component {
     }
   }
   // 根据id查询详情
-  getInfo = async id => {
+  getInfo = async QuestionId => {
     try {
-      const { Info } = await getInfoById();
-      this.props.saveInfo(Info);
+      const { Info } = await getInfoById({ QuestionId });
+      console.log(Info);
+      const obj = {
+        Info
+      };
+      this.props.saveInfo(obj);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);

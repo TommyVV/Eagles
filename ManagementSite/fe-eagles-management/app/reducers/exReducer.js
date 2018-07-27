@@ -2,13 +2,13 @@ import { actionType } from "../constants/ActionType/pc";
 
 const exercise = {
   Info: {
-    QuestionId: "",
-    Question: "",
-    Multiple: "0",
-    MultipleCount: "",
-    Answer: "",
+    // QuestionId: "",
+    // Question: "",
+    // Multiple: "0",
+    // MultipleCount: "",
+    // Answer: "",
+    OptionList: []
   },
-  OptionList: []
 };
 
 const exReducer = (state = exercise, action) => {

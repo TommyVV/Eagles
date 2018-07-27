@@ -12,11 +12,12 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
+const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
 import { getList, createOrEdit, del } from "../../services/goodsService";
-
+import { audit } from "../../services/auditService";
 const confirm = Modal.confirm;
 class SearchForm extends Component {
   handleSearch = e => {
@@ -92,6 +93,61 @@ const WrapperSearchForm = Form.create({
     };
   }
 })(SearchForm);
+// 审核的表单
+const WrapperAuditForm = Form.create({
+  onFieldsChange(props, changedFields) {
+    props.onChange(changedFields);
+  },
+  mapPropsToFields: props => {
+    // const project = props.project;
+    return {
+      AuditStatus: Form.createFormField({
+        ...props.AuditStatus,
+        value: props.AuditStatus.value
+      }),
+      Reason: Form.createFormField({
+        ...props.Reason,
+        value: props.Reason.value
+      })
+    };
+  }
+})(props => {
+  const { getFieldDecorator } = props.form;
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 7 }
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 6 }
+    }
+  };
+  return (
+    <Form className="ant-advanced-search-form">
+      <Row gutter={24}>
+        <Col span={20} key={1}>
+          <FormItem {...formItemLayout} label="审核结果">
+            {getFieldDecorator("AuditStatus")(
+              <Select>
+                <Option value="0">通过</Option>
+                <Option value="1">拒绝</Option>
+              </Select>
+            )}
+          </FormItem>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col span={20} key={2}>
+          <FormItem {...formItemLayout} label="审核结果描述">
+            {getFieldDecorator(`Reason`)(<TextArea rows={4} />)}
+          </FormItem>
+        </Col>
+      </Row>
+    </Form>
+  );
+});
+
 class GoodsList extends React.Component {
   constructor(props) {
     super(props);
@@ -100,7 +156,13 @@ class GoodsList extends React.Component {
       goodsList: [], // 项目列表数组
       current: 1, // 当前页
       pageConfig: {}, // 当前页配置
-      authMap: new Map()
+      authMap: new Map(),
+      currentId: "", // 当前的id
+      visible: false, // 弹出框
+      fields: {
+        AuditStatus: "", //审核结果
+        Reason: "" // 审核结果描述
+      }
     };
     this.columns = [
       {
@@ -151,7 +213,9 @@ class GoodsList extends React.Component {
                 {obj.GoodsStatus == "0" ? "上架" : "下架"}
               </a>
               <a
-                onClick={() => this.audit(obj)}
+                onClick={() =>
+                  this.setState({ visible: true, currentId: obj.GoodsId })
+                }
                 style={{
                   paddingLeft: "24px",
                   display: this.state.authMap.get("Audit001") ? null : "none"
@@ -259,39 +323,7 @@ class GoodsList extends React.Component {
       }
     });
   };
-  // 審核
-  audit = async goods => {
-    const tipTitle = goods.GoodsStatus == "0" ? "上架" : "下架";
-    confirm({
-      title: `是否确认${tipTitle}“${goods.GoodsName}”?`,
-      okText: "确认",
-      cancelText: "取消",
-      onOk: async () => {
-        try {
-          const params = {
-            Info: {
-              ...goods,
-              GoodsStatus: goods.GoodsStatus == "0" ? "1" : "0"
-            }
-          };
-          let { Code } = await createOrEdit(params);
-          if (Code === "00") {
-            message.success(`${tipTitle}成功`);
-            await this.getCurrentList({
-              ...this.getListConfig,
-              PageNumber: this.state.current
-              // keyword: this.state.keyword
-            });
-            this.setState({ selectedRowKeys: [] });
-          } else {
-            message.error(`${tipTitle}失败`);
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      }
-    });
-  };
+
   // 删除
   handleDelete = async GoodsId => {
     confirm({
@@ -334,8 +366,51 @@ class GoodsList extends React.Component {
       throw new Error(e);
     }
   };
+  handleOk = async () => {
+    try {
+      const { currentId, fields } = this.state;
+      const { AuditStatus, Reason } = fields;
+      let params = {
+        AuditStatus: AuditStatus.value,
+        Reason: Reason.value,
+        Type: "3", // 商品
+        AuditId: currentId,
+        AuditType: 0
+      };
+      let { Code } = await audit(params);
+      this.setState({
+        visible: false,
+        fields: {
+          AuditStatus: "",
+          Reason: ""
+        }
+      });
+      if (Code === "00") {
+        message.success("审核成功");
+        await this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: this.state.current
+        });
+      } else {
+        message.error("审核失败");
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+  handleFormChange = changedFields => {
+    this.setState(({ fields }) => ({
+      fields: { ...fields, ...changedFields }
+    }));
+  };
   render() {
-    const { selectedRowKeys, pageConfig, goodsList } = this.state;
+    const {
+      selectedRowKeys,
+      pageConfig,
+      goodsList,
+      visible,
+      fields
+    } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -354,7 +429,14 @@ class GoodsList extends React.Component {
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-
+        <Modal
+          title="审核党员"
+          visible={visible}
+          onOk={this.handleOk}
+          onCancel={() => this.setState({ visible: false })}
+        >
+          <WrapperAuditForm {...fields} onChange={this.handleFormChange} />
+        </Modal>
         <Row
           type="flex"
           // justify="center"

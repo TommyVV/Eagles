@@ -90,10 +90,10 @@ const TESTPAPER = {
 //todo  习题（接口注释有问题）
 const EXERCISE = {
   EDIT: "/api/TestPaper/EditSubject", //编辑习题
-  DELETE: "/api/TestPaper/RemoveExercises", //删除习题
+  DELETE: "/api/TestPaper/RemoveSubjectInfo", //删除习题
   DELETE_RELATION: "/api/TestPaper/RemoveSubject", //删除习题与试卷的关系
   LIST: "/api/TestPaper/GetSubjectList", //试卷习题
-  DETAIL: "/api/TestPaper/GetExercisesDetail", //试卷习题
+  DETAIL: "/api/TestPaper/GetSubjectDetail", //习题
   RANDOM: "/api/TestPaper/GetRandomSubject" //习题随机生成
 };
 // 党员
