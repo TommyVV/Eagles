@@ -5,7 +5,7 @@ $('#footer').load('footer.html')
 var code = getRequest('code');
 var mode=getRequest('mode');
 var tip = getRequest("tip");
-var goodsdel = getRequest("goodsdel");
+//var goodsdel = getRequest("goodsdel");
 
 if (code == '1') {
 	$(".result-des").html(tip);

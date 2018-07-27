@@ -27,9 +27,9 @@ $(".sub-btn,.overview-props-btn").click(function() {
             //$('.goods-area').html('')
             var data = res.Result;
             if (res.Code == 00) {
-                window.location.href = "public_result.html?code=1&tip=商品兑换成功&appId=" + appId +'&goodsdel=商品1';
+                window.location.href = "public_result.html?code=1&tip=商品兑换成功&appId=" + appId +'&mode=商品1';
             } else {
-                window.location.href = "public_result.html?code=0&tip="+res.Message+"&appId=" + appId +'&goodsdel=商品0';
+                window.location.href = "public_result.html?code=0&tip="+res.Message+"&appId=" + appId +'&mode=商品0';
             }
         }
     });
