@@ -4,6 +4,16 @@ var moduleType=getRequest('moduleType')//获取来源页面['0', '1', '2', '3'],
 var appId=getRequest('appId');
 $('#top-nav,#mobilenav').load('head.html');
 $('#footer').load('footer.html');
+if(moduleType==0){
+	document.title='首页';
+}else if(moduleType==1){
+	document.title='党建门户';
+}else if(moduleType==2){
+	document.title='党建工作';
+}else if(moduleType==3){
+	document.title='党建学习';
+}
+
 class CalculateScreen {
 	constructor() {
 		this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
