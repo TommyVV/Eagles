@@ -17,6 +17,7 @@ $('#footer').load('footer.html')
 if(getRequest('aryewsType')!=undefined){
 	$('.publish-title').val(getRequest('conretn'));
 	$('#selectpicker').val(getRequest('aryewsType')).attr('selected','selected'); 
+	//imgsrec
 	if(getRequest('aryewsType')==3){
 		$('.assign').show();
 	}
@@ -120,7 +121,7 @@ $('.publish-btn').on('click', function(e) {
 					position: "toast-top-center",
 					timeout: 2
 				});
-				//window.location.href = 'myArticle.html?NewsType=' + $('#selectpicker').val() + '';
+				window.location.href = 'public_result.html?code=1&tip=文章发布成功待审核&appId=' + appId +'&mode=文章';
 				//文章发布成功
 			}else{
 				bootoast({
