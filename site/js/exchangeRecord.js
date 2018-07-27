@@ -53,7 +53,7 @@ function exchangeRecord(token, appId, page) {
 				var exchangeRecord = '';
 				if(res.Result.OrderList != '' || res.Result.OrderList != null) {
 					for(var i = 0; i < data.OrderList.length; i++) {
-						exchangeRecord += '<div class="record-item"><div class="orderNum">订单编号<span>' + data.OrderList[i].ProdId + '</span></div>' +
+						exchangeRecord += '<div class="record-item" type="'+data.OrderList[i].ProdId+'"><div class="orderNum">订单编号<span>' + data.OrderList[i].ProdId + '</span></div>' +
 							'<img src="' + data.OrderList[i].SmallImageUrl + '" alt="">' +
 							'<div class="record-content">' +
 							'<div class="item-title">' + data.OrderList[i].ProdName + '</div>' +
@@ -76,3 +76,7 @@ function exchangeRecord(token, appId, page) {
 		}
 	});
 }
+$('.dj-container').on('click', '.record-item', function (e) {
+	var aryewsType=$(this).attr('type');
+	window.location.href = 'goodsDetail.html?productId=' + aryewsType + '&appId=' + appId + '';
+})
