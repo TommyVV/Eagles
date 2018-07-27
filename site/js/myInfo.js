@@ -101,7 +101,7 @@ $('.confirmBtn').on('click', function() {
 	$.ajax({
 		type: "post",
 		data: {
-			"RequestUserInfo": JSON.stringify(RequestUserInfo),
+			"RequestUserInfo":RequestUserInfo,
 			"Token": token,
 			"AppId": appId
 		},
