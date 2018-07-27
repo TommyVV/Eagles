@@ -193,3 +193,8 @@
 }
 .filebackbg{display: inline-block;width:22px;height: 22px;}
 .filebackbg img{display: block;width:100%;margin-top: 5px;}
+@media screen and (min-width: 768px) {
+	html{height:100%;}
+	body{min-height:100%;margin:0;padding:0;position:relative;}
+	.container{padding-bottom:50px;}
+}
