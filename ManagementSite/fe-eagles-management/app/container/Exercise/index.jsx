@@ -256,7 +256,7 @@ class Exercise extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 删除项目
+  // 删除
   handleDelete = async id => {
     confirm({
       title: "是否确认删除?",
@@ -284,7 +284,7 @@ class Exercise extends React.Component {
       }
     });
   };
-  // 编辑项目
+  // 编辑
   handleEdit = async () => {
     try {
       let { selectedRowKeys } = this.state;

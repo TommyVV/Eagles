@@ -39,7 +39,9 @@ const confirm = Modal.confirm;
 class QuestionForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isRandom: false
+    };
   }
 
   handleSubmit = e => {
@@ -47,16 +49,20 @@ class QuestionForm extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          console.log("Received values of form: ", values);
-          let { Subject } = this.props.info;
+          console.log("submit form: ", values);
+          const { Info } = this.props.info;
+          let { SubjectList, HasLimitedTime } = Info;
+          debugger;
           let idList = [];
-          Subject.forEach(v => {
+          SubjectList.forEach(v => {
             idList.push(v.QuestionId);
           });
+          delete Info["SubjectList"]; // 提交的时候，删除习题列表，只传数组
           let params = {
             Info: {
-              ...this.props.info.Info,
-              ...values
+              ...Info,
+              ...values,
+              HasLimitedTime
             },
             Subject: idList
           };
@@ -106,11 +112,18 @@ class QuestionForm extends Component {
   change = value => {
     const { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
+    const { Info } = this.props.info;
     this.props.saveInfo({
       Info: {
         ...values,
-        HasLimitedTime: value
+        ...Info,
+        HasLimitedTime: value == "1" ? true : false
       }
+    });
+  };
+  changeRandom = value => {
+    this.setState({
+      isRandom: value == "1" ? true : false
     });
   };
   // 删除
@@ -121,41 +134,43 @@ class QuestionForm extends Component {
       cancelText: "取消",
       onOk: async () => {
         const { getFieldsValue } = this.props.form;
-        let { Subject } = this.props.info;
+        const { Info } = this.props.info;
+        const { SubjectList } = Info;
         let values = getFieldsValue();
         const _this = this;
         // 删除本地的习题
-        function delSubject(Subject) {
+        function delSubject(SubjectList) {
           // let newSubject = Subject.splice(
           //   Subject.findIndex(item => item.QuestionId === QuestionId),
           //   1
           // );
-          let newSubject = Subject.filter(function(v) {
+          let newSubject = SubjectList.filter(function(v) {
             return v.QuestionId != QuestionId;
           });
           _this.props.saveInfo({
             Info: {
-              ...values
-            },
-            Subject: newSubject
+              ...values,
+              SubjectList: newSubject
+            }
           });
         }
-        if (!ExercisesId) {
-          delSubject(Subject);
-          message.success(`删除成功`);
-        } else {
-          try {
-            let { Code } = await delRelation({ ExercisesId, QuestionId });
-            if (Code === "00") {
-              delSubject(Subject);
-              message.success(`删除成功`);
-            } else {
-              message.error(`删除失败`);
-            }
-          } catch (e) {
-            throw new Error(e);
-          }
-        }
+        delSubject(SubjectList);
+        // if (!ExercisesId) {
+        //   delSubject(Subject);
+        //   message.success(`删除成功`);
+        // } else {
+        //   try {
+        //     let { Code } = await delRelation({ ExercisesId, QuestionId });
+        //     if (Code === "00") {
+        //       delSubject(Subject);
+        //       message.success(`删除成功`);
+        //     } else {
+        //       message.error(`删除失败`);
+        //     }
+        //   } catch (e) {
+        //     throw new Error(e);
+        //   }
+        // }
       }
     });
   };
@@ -164,23 +179,23 @@ class QuestionForm extends Component {
     try {
       const { getFieldsValue } = this.props.form;
       let values = getFieldsValue();
-      if (!values.LimitedTime) {
+      if (!values.randomCount) {
         message.error(`请输入随机生成题目数量`);
         return;
       }
       let { SubjectList } = await random({
         ExercisesId,
-        RandomSubjectSum: values.LimitedTime
+        RandomSubjectSum: values.randomCount
       });
       console.log("List - ", SubjectList);
-      SubjectList.forEach(v => {
-        v.key = v.QuestionId;
+      SubjectList.forEach((v, i) => {
+        v.key = i;
       });
       this.props.saveInfo({
         Info: {
-          ...values
-        },
-        Subject: SubjectList
+          ...values,
+          SubjectList
+        }
       });
     } catch (e) {
       message.error("获取失败");
@@ -189,8 +204,12 @@ class QuestionForm extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { Info, Subject } = this.props.info;
-    console.log("渲染习题列表：", Subject);
+    const { Info } = this.props.info;
+    const { ExercisesId } = Info;
+    let { SubjectList } = Info;
+    SubjectList.forEach((v, i) => {
+      v.key = i;
+    });
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -212,14 +231,23 @@ class QuestionForm extends Component {
     const columns = [
       {
         title: "题目",
-        dataIndex: "Question"
+        dataIndex: "Question",
+        key: "1"
       },
       {
+        key: "2",
         title: "类型",
         dataIndex: "Multiple",
         render: text => <span>{text == "0" ? "单选" : "多选"}</span>
       },
       {
+        key: "3",
+        title: "是否投票",
+        dataIndex: "IsVote",
+        render: text => <span>{text ? "是" : "否"}</span>
+      },
+      {
+        key: "4",
         title: "操作",
         render: obj => (
           <span>
@@ -271,16 +299,6 @@ class QuestionForm extends Component {
               </Select>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="来源">
-            {getFieldDecorator("source", {
-              rules: [
-                {
-                  required: true,
-                  message: "必填，请输入试卷来源"
-                }
-              ]
-            })(<Input placeholder="请输入试卷来源" />)}
-          </FormItem>
           <FormItem {...formItemLayout} label="内容">
             {getFieldDecorator("HtmlDescription")(
               <TextArea rows={4} placeholder="请输入试卷内容" />
@@ -322,7 +340,7 @@ class QuestionForm extends Component {
               </Col>
             </Row>
           </div>
-          <FormItem {...formItemLayout} label="是否随机生成题目">
+          <FormItem {...formItemLayout} label="是否限制答题时间">
             {getFieldDecorator("HasLimitedTime")(
               <Select onChange={this.change.bind(this)}>
                 <Option value="0">否</Option>
@@ -332,16 +350,39 @@ class QuestionForm extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="随机生成题目数量"
+            label="限制答题时间"
             style={{
-              display: Info.HasLimitedTime == "1" ? "block" : "none"
+              display: Info.HasLimitedTime ? "block" : "none"
             }}
           >
-            {getFieldDecorator(`LimitedTime`)(<Input />)}
+            {getFieldDecorator(`LimitedTime`)(
+              <Input placeholder="请输入限制时间，单位：分钟" />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="是否随机生成题目"
+            style={{ display: ExercisesId ? "none" : null }}
+          >
+            {getFieldDecorator("isRandom")(
+              <Select onChange={this.changeRandom.bind(this)}>
+                <Option value="0">否</Option>
+                <Option value="1">是</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="随机生成题目数量"
+            style={{
+              display: !ExercisesId && this.state.isRandom ? "block" : "none"
+            }}
+          >
+            {getFieldDecorator(`randomCount`)(<Input />)}
           </FormItem>
           <Table
             columns={columns}
-            dataSource={Subject}
+            dataSource={SubjectList}
             bordered
             style={{ width: "90%" }}
             locale={{ emptyText: "暂无数据" }}
@@ -361,7 +402,8 @@ class QuestionForm extends Component {
                   span={2}
                   offset={1}
                   style={{
-                    display: Info.HasLimitedTime == "1" ? "block" : "none"
+                    display:
+                      !ExercisesId && this.state.isRandom ? "block" : "none"
                   }}
                 >
                   <Button
@@ -389,7 +431,7 @@ class QuestionForm extends Component {
               <Col>
                 <Button
                   className="btn"
-                  onClick={() => hashHistory.replace("/project")}
+                  onClick={() => hashHistory.replace("/questionlist")}
                 >
                   取消
                 </Button>
@@ -414,10 +456,7 @@ const QuestionFormMap = Form.create({
         value: Info.ExercisesName
       }),
       ExercisesType: Form.createFormField({
-        value: Info.ExercisesType + ""
-      }),
-      source: Form.createFormField({
-        value: Info.source
+        value: Info.ExercisesType ? Info.ExercisesType + "" : "5"
       }),
       HtmlDescription: Form.createFormField({
         value: Info.HtmlDescription
@@ -435,10 +474,13 @@ const QuestionFormMap = Form.create({
         value: Info.PassScore
       }),
       HasLimitedTime: Form.createFormField({
-        value: Info.HasLimitedTime == "1" ? "1" : "0"
+        value: Info.HasLimitedTime ? "1" : "0"
       }),
       LimitedTime: Form.createFormField({
         value: Info.LimitedTime
+      }),
+      isRandom: Form.createFormField({
+        value: "0"
       })
     };
   }
@@ -467,10 +509,13 @@ export default class QuestionDetail extends Component {
     }
   }
   // 根据id查询详情
-  getInfo = async id => {
+  getInfo = async ExercisesId => {
     try {
-      const { Info } = await getQuestionInfoById();
-      this.props.saveInfo(Info);
+      const { Info } = await getQuestionInfoById({ ExercisesId });
+      const obj = {
+        Info
+      };
+      this.props.saveInfo(obj);
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);

@@ -4,7 +4,7 @@ const question = {
   Info: {
     ExercisesId: "",
     ExercisesName: "",
-    ExercisesType: "0",
+    ExercisesType: "5",
     source: "",
     HtmlDescription: "",
     IsScoreAward: "0",
@@ -12,9 +12,9 @@ const question = {
     SubjectScore: "",
     PassScore: "",
     HasLimitedTime: "0",
-    LimitedTime: ""
+    LimitedTime: "",
+    SubjectList: []
   },
-  Subject: []
 };
 
 const questionReducer = (state = question, action) => {

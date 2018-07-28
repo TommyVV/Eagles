@@ -4,7 +4,7 @@ const exercise = {
   Info: {
     // QuestionId: "",
     // Question: "",
-    // Multiple: "0",
+    Multiple: "0",
     // MultipleCount: "",
     // Answer: "",
     OptionList: []

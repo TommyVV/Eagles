@@ -44,8 +44,6 @@ export const getQuestionList = async params => {
 // 创建或编辑试卷
 export const createOrEditQuestion = async params => {
   try {
-    const user = Util.getOrgIdAndBranchId();
-    params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: TESTPAPER.TESTPAPER_EDIT,
