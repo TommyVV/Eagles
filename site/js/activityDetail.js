@@ -61,9 +61,10 @@ $(document).ready(function() {
         //发起人
         var initiateUserId = result.InitiateUserId;
         var acceptUserId = result.AcceptUserId;
+        var auditUserId = result.AuditUserId;
         if (status == -1) {
             //下级创建的活动
-            if (userId == acceptUserId) {
+            if (userId == auditUserId) {
                 //如果当前是上级，审核
                 $("#btn-area").html(`<div class="pass">通过</div>
                 <div class="nopass">不通过</div>`);
@@ -93,11 +94,8 @@ $(document).ready(function() {
                     editActivityJoin();
                 });
             } else {
-                //上级发起任务
-                if (
-                    (createType == 0 && acceptUserId == userId) ||
-                    (createType == 1 && initiateUserId == userId)
-                ) {
+                //负责人
+                if(userId==acceptUserId){
                     $("#btn-area").html(`<div class="sub-btn">我要反馈</div>`);
                     $(".sub-btn").click(function() {
                         window.location.href =
@@ -107,10 +105,7 @@ $(document).ready(function() {
             }
         } else if (status == 1) {
             //申请完成
-            if (
-                (createType == 0 && initiateUserId == userId) ||
-                (createType == 1 && acceptUserId == userId)
-            ) {
+            if(userId==auditUserId){
                 //查询反馈信息
                 GetActivityFeedBack(1);
             }
@@ -119,11 +114,7 @@ $(document).ready(function() {
             //1）查询反馈信息
             GetActivityFeedBack(2);
             //评论区域
-            if (
-                (createType == "0" && userId == initiateUserId) ||
-                (createType == "1" && userId == acceptUserId)
-            ) {
-                //上级登录
+            if(userId==auditUserId){
                 userType = 0;
             }
             var comment = new Comment({

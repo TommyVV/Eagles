@@ -9,7 +9,11 @@
     height: 1.7066666667rem;
     line-height: 1.7066666667rem;
     border-bottom: 1px solid #EEEEEE;
-    font-size: 0.64rem; }
+    font-size: 0.64rem;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between; }
     .subordinates .subordinate-item .right-dir {
       color: #AFAFB1;
       float: right;

@@ -8,10 +8,6 @@ $(document).ready(function() {
     //指派人员
     var toUserId = '';
     var toUserName = '';
-    //指派人员信息
-    var toUsreInfo = '';
-    //创建类型
-    var createType = '';
     //加载导航
     $("#top-nav").html("");
     $("#top-nav").load("head.html", () => {});
@@ -33,15 +29,12 @@ $(document).ready(function() {
     //查询关系列表
     getUserRelationship();
     $('#btnTestSaveLarge').on('click', function() {
-        if (toUsreInfo) {
+        if (toUserId) {
             $("#name").html(toUserName);
-            var arr = toUsreInfo.split("-");
-            toUserId = arr[0];
-            createType = arr[1];
             $(this).parents('.modal').modal('hide');
         } else {
             bootoast({
-                message: "请选择指派人员",
+                message: "请选择负责人",
                 type: "info",
                 position: "toast-top-center",
                 timeout: 2
@@ -154,8 +147,9 @@ $(document).ready(function() {
     function dealRelationList(list) {
         var content = `<div class="subordinates">`;
         list.forEach(element => {
-            content += `<div class="subordinate-item" id="${element.UserId}-${element.IsLeader==true?'1':'0'}">
-                <span>${element.Name==null?element.UserId:element.Name}</span>
+            content += `<div class="subordinate-item" id="${element.UserId}">
+                <div>${element.Name}</div>
+                <div>${element.BranchName}</div>
                 <div class="right-dir">
                     <span class="glyphicon" aria-hidden="true"></span>
                 </div>
@@ -166,8 +160,8 @@ $(document).ready(function() {
         $(".subordinate-item").click(function() {
             $('.subordinates .glyphicon').removeClass('glyphicon-ok');
             $($(this).find('.glyphicon')).addClass('glyphicon-ok');
-            toUsreInfo = $(this).attr("id");
-            toUserName = $($(this).find('span')).text();
+            toUserId = $(this).attr("id");
+            toUserName = $($(this).find('div')[0]).text();
         });
     }
 
@@ -183,8 +177,6 @@ $(document).ready(function() {
             TaskBeginDate: $("#start").val(),
             TaskEndDate: $("#end").val(),
             TaskContent: $("#content").val(),
-            CanComment: 0,
-            CreateType: createType,
             AttachList: fileArray,
             Token: token,
             AppId: appId
@@ -195,7 +187,7 @@ $(document).ready(function() {
             url: DOMAIN + "/api/Task/CreateTask",
             data: data,
             success: function(data) {
-                console.log("CreateActivity---", data);
+                console.log("CreateTask---", data);
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId;
                 } else {
@@ -233,7 +225,6 @@ $(document).ready(function() {
             ActivityContent: $("#content").val(),
             CanComment: 0,
             ImageUrl: imgUrl,
-            CreateType: createType,
             AttachList: fileArray,
             Token: token,
             AppId: appId

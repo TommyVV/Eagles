@@ -50,4 +50,9 @@
         font-family: Roboto-Regular;
         color: #949494; }
 
+.footer {
+  position: static !important; }
+  .footer .footer {
+    margin-top: 0px !important; }
+
 /*# sourceMappingURL=activityList.css.map */

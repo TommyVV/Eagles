@@ -105,4 +105,9 @@
 .comment-content {
   background-color: white; }
 
+.footer {
+  position: static !important; }
+  .footer .footer {
+    margin-top: 0px !important; }
+
 /*# sourceMappingURL=activityDetail.css.map */
