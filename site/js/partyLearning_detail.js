@@ -15,6 +15,7 @@ if(TestId && testlist) {
 var timeoutflag = null;
 //点击试卷提交 手动提交答案
 $('#answer-submit').on('click', function() {
+	
 	if(localStorage.getItem("IsInternalUser")==0){
 		bootoast({
 			message: '您非系统内部用户,无法使用该功能',
@@ -63,6 +64,9 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 					//刷新当前页面,为了清空选中的答案
 					//window.location.reload();
 					window.location.href = 'partyLearning_detail.html?NewsId=' + newsIds + '&appId=' + appId;
+				}else if(res.Code == 11){
+					localStorage.clear();
+			  		window.location.href = 'login.html?appId=' + appId;
 				} else {
 					bootoast({
 						message: '' + res.Message + '',
@@ -70,7 +74,9 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 						position: 'toast-top-center',
 						timeout: 2
 					});
+					
 				}
+				testlist='';
 
 			}
 		})
@@ -188,6 +194,9 @@ function getNewsTest(testId, token, appId) {
 					question += answerLabel + '</div></div>';
 				}
 				$('.footermid .content').append(question); // 将问题和答案追加到页面中
+			}else if(res.Code == 11){
+				localStorage.clear();
+		  		window.location.href = 'login.html?appId=' + appId;
 			}
 		}
 	})
@@ -213,6 +222,9 @@ function getStudyTime(NewsId, ModuleId, token, appId) {
 					var studyTimeHtml = '<span class="glyphicon glyphicon-time" aria-hidden="true"></span><span>已学习:</span><span class="studyTime">' + data.StudyTime + '分钟</span>';
 					$('.header .study-time').append(studyTimeHtml); //添加学习时间
 				}
+			}else if(res.Code == 11){
+				localStorage.clear();
+		  		window.location.href = 'login.html?appId=' + appId;
 			}
 		}
 	})
@@ -240,6 +252,9 @@ function editStudyTime(NewsId, ModuleId, StudyTime, token, appId) {
 					var studyTimeHtml = '<span class="glyphicon glyphicon-time" aria-hidden="true"></span><span>已学习:</span><span class="studyTime">' + data.StudyTime + '分钟</span>';
 					$('.header .study-time').append(studyTimeHtml); //添加学习时间
 				}
+			}else if(res.Code == 11){
+				localStorage.clear();
+		  		window.location.href = 'login.html?appId=' + appId;
 			}
 		}
 	})

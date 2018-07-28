@@ -2,9 +2,7 @@ var appId = getRequest('appId');
 var NewsId = getRequest('aryewsType');
 var token = localStorage.getItem("token")
 var onurl=window.location.href
-if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
-	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
-}
+
 $('#top-nav,#mobilenav').load('head.html')
 
 $('#pc-footer').load('./footer.html')

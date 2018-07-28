@@ -1,9 +1,6 @@
 
 var appId = getRequest('appId');
 var token = localStorage.getItem("token")
-if(!localStorage.getItem('token')) {
-	window.location.href = 'login.html?appId=' + appId + '';
-}
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('./footer.html')
 //var token="abc";
