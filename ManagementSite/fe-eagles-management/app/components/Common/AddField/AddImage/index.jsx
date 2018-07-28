@@ -53,7 +53,12 @@ class AddImage extends React.Component {
     const { Img } = this.props;
     return (
       <div>
-        <Checkbox onChange={this.change}>是否包含图片</Checkbox>
+        <Checkbox
+          onChange={this.change}
+          checked={Img || isShowUpload ? true : false}
+        >
+          是否包含图片
+        </Checkbox>
         <div
           className="clearfix"
           style={{ display: isShowUpload ? "block" : "none" }}

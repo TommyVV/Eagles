@@ -1,4 +1,4 @@
-import { Form, Input, Icon, Button, Checkbox, Row, Col } from "antd";
+import { Form, Input, Icon, Button, Checkbox, Row, Col, message } from "antd";
 import React, { Component } from "react";
 const FormItem = Form.Item;
 import "./style.less";
@@ -8,70 +8,101 @@ let uuid = 0;
 class DynamicFieldSet extends React.Component {
   remove = k => {
     const { form } = this.props;
-    // can use data-binding to get
     const keys = form.getFieldValue("keys");
-
-    // can use data-binding to set
+    const keys2 = keys.filter(key => key !== k); // 剩下的数据
     form.setFieldsValue({
-      keys: keys.filter(key => key !== k)
+      keys: keys2
     });
+    const { setOptionList, obj } = this.props;
+    setOptionList(keys2, obj);
   };
 
   add = () => {
     const { form } = this.props;
-    // can use data-binding to get
     const keys = form.getFieldValue("keys");
-    const nextKeys = keys.concat(uuid);
-    uuid++;
-    // can use data-binding to set
-    // important! notify form to detect changes
+    const nextKeys = keys.concat([
+      {
+        OptionId: "",
+        OptionName: "",
+        IsRight: "1",
+        AnswerType: "0",
+        Img: ""
+      }
+    ]);
     form.setFieldsValue({
       keys: nextKeys
     });
+    const { setOptionList, obj } = this.props;
+    setOptionList(nextKeys, obj);
   };
   changeInput(index, e) {
-    const { OptionList, setOptionList, IsVote } = this.props;
+    const { OptionList, setOptionList, obj } = this.props;
     console.log(index, e.target.value);
     OptionList.map((obj, i) => {
       if (i == index) {
         obj.OptionName = e.target.value;
       }
     });
-    setOptionList(OptionList, IsVote);
+    setOptionList(OptionList, obj);
   }
   changeAnswer(index, e) {
     console.log(index, e.target.checked);
-    const { OptionList, setOptionList, IsVote } = this.props;
-    OptionList.map((obj, i) => {
-      if (i == index) {
-        obj.IsRight = e.target.checked ? "0" : "1";
+    const { OptionList, setOptionList, obj } = this.props;
+    let IsRightCount = 0;
+    let tipCount = 0;
+    OptionList.map((k, i) => {
+      if (k.IsRight == "0") {
+        ++IsRightCount; // 正确答案个数
       }
     });
-    setOptionList(OptionList, IsVote);
+    OptionList.map((k, i) => {
+      if (obj.Multiple == "0") {
+        // 单选，只能选一个
+        if (i == index) {
+          k.IsRight = e.target.checked ? "0" : "1";
+        } else {
+          k.IsRight = e.target.checked ? "1" : "0";
+        }
+      } else {
+        // 多选，根据多选数量判定
+        if (e.target.checked && IsRightCount >= obj.MultipleCount) {
+          if (!tipCount) {
+            ++tipCount;
+            message.error("请根据多选数量来选择");
+            return;
+          }
+        } else {
+          if (i == index) {
+            k.IsRight = e.target.checked ? "0" : "1";
+          }
+        }
+      }
+    });
+    setOptionList(OptionList, obj);
   }
   changeCustom(index, e) {
     console.log(index, e.target.checked);
-    const { OptionList, setOptionList, IsVote } = this.props;
+    const { OptionList, setOptionList, obj } = this.props;
     OptionList.map((obj, i) => {
       if (i == index) {
         obj.AnswerType = e.target.checked ? "1" : "0";
       }
     });
-    setOptionList(OptionList, IsVote);
+    setOptionList(OptionList, obj);
   }
   changeImg(index, Img) {
     console.log(index, Img);
-    const { OptionList, setOptionList, IsVote } = this.props;
+    const { OptionList, setOptionList, obj } = this.props;
     OptionList.map((obj, i) => {
       if (i == index) {
         obj.Img = Img;
       }
     });
-    setOptionList(OptionList, IsVote);
+    setOptionList(OptionList, obj);
   }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { IsVote, OptionList } = this.props;
+    const { obj, OptionList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -108,7 +139,7 @@ class DynamicFieldSet extends React.Component {
                   />
                   <Checkbox
                     style={{
-                      display: IsVote ? "none" : null
+                      display: obj.IsVote ? "none" : null
                     }}
                     onChange={this.changeAnswer.bind(this, index)}
                     checked={k.IsRight == "0" ? true : false}
@@ -117,7 +148,7 @@ class DynamicFieldSet extends React.Component {
                   </Checkbox>
                   <Checkbox
                     style={{
-                      display: IsVote ? "none" : null
+                      display: obj.IsVote ? "none" : null
                     }}
                     onChange={this.changeCustom.bind(this, index)}
                     checked={k.AnswerType == "1" ? true : false}

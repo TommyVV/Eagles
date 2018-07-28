@@ -100,16 +100,31 @@ class Base extends Component {
     const { getFieldsValue } = this.props.form;
     const { Info } = this.props.info;
     let values = getFieldsValue();
-    console.log("是否投票：", value);
+    console.log(attr, value);
+    if (attr == "IsVote") {
+      value = value == "1" ? true : false;
+      this.props.saveInfo({
+        Info: {
+          ...Info,
+          ...values,
+          [attr]: value
+        }
+      });
+      return;
+    }
+    if (attr == "MultipleCount") {
+      value = value.target.value;
+    }
     this.props.saveInfo({
       Info: {
         ...Info,
         ...values,
-        [attr]: value == "1" ? true : false
+        [attr]: value,
+        IsVote: Info.IsVote
       }
     });
   };
-  setOptionList(OptionList, IsVote) {
+  setOptionList(OptionList, obj) {
     const { getFieldsValue } = this.props.form;
     const { Info } = this.props.info;
     let values = getFieldsValue();
@@ -118,7 +133,7 @@ class Base extends Component {
         ...Info,
         ...values,
         OptionList,
-        IsVote
+        ...obj
       }
     });
   }
@@ -126,6 +141,11 @@ class Base extends Component {
     const { getFieldDecorator } = this.props.form;
     const { Info } = this.props.info;
     console.log(Info);
+    const obj = {
+      IsVote: Info.IsVote,
+      Multiple: Info.Multiple,
+      MultipleCount: Info.MultipleCount
+    };
     const formItemLayout = {
       labelCol: {
         xl: { span: 2 }
@@ -172,7 +192,10 @@ class Base extends Component {
             style={{ display: Info.Multiple == "1" ? "block" : "none" }}
           >
             {getFieldDecorator("MultipleCount")(
-              <Input placeholder="请输入多选数量" />
+              <Input
+                placeholder="请输入多选数量"
+                onChange={this.change.bind(this, "MultipleCount")}
+              />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否投票">
@@ -185,7 +208,7 @@ class Base extends Component {
           </FormItem>
           {/* 选项 */}
           <WrappedDynamicFieldSet
-            IsVote={Info.IsVote}
+            obj={obj}
             OptionList={Info.OptionList}
             setOptionList={this.setOptionList.bind(this)}
           />

@@ -114,6 +114,8 @@ function minedel(token, appId) {
 				$('.head-icon,.head-pic').attr("src",data.PhotoUrl); //头像
 				$('.points,.integral').html(data.Score); //积分
 				phonesmodiy=data.Telphone
+				$('.myr_num').html('('+res.Result.TaskCount+')'); 
+				$('.mya_num').html('('+res.Result.ActivityCount+')'); 
 
 			}
 		}
