@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
         }
       }
     } else {
-      this.setState({ errMsg: Message });
+      this.setState({ errMsg: Message, loading: false });
     }
   };
 

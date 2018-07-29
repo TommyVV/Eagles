@@ -26,8 +26,7 @@ class SetNextPartyMember extends React.Component {
     this.state = {
       selectedRowKeys: [], // 项目id数组
       memberList: [], // 列表数组
-      current: 1, // 当前页
-      current2: 1, // 当前页
+      current2: 1, // 当前页弹窗
       pageConfig: {}, // 当前页配置
       pageConfig2: {}, // 当前页配置
       visible: false
@@ -58,7 +57,7 @@ class SetNextPartyMember extends React.Component {
   }
   componentWillMount() {
     const { id, name } = this.props.params;
-    this.getCurrentList({ ...this.getListConfig, UserId: id });
+    this.getCurrentList({ UserId: id });
   }
 
   // 选择分享时触发的改变
@@ -68,37 +67,18 @@ class SetNextPartyMember extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = params;
     try {
-      // let { List, TotalCount } = await getListById(params);
-      let { UserId, TotalCount } = await getListById(params);
-      console.log("List - ", UserId);
-      // List.forEach(v => {
-      //   v.key = v.UserId;
-      // });
-      // this.setState({ memberList: List, current: PageNumber });
-      // this.updatePageConfig(TotalCount);
+      let { User } = await getListById(params);
+      console.log("List - ", User);
+      User.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ memberList: User });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
     }
   };
-  // 更新分页配置
-  updatePageConfig(totalSize) {
-    let pageConfig = {
-      total: totalSize,
-      pageSize: this.getListConfig.pageSize,
-      current: this.state.current,
-      onChange: async (page, pagesize) => {
-        this.getCurrentList({
-          ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
-        });
-      }
-    };
-    this.setState({ pageConfig });
-  }
 
   // 删除
   handleDelete = async shareIds => {
@@ -133,10 +113,9 @@ class SetNextPartyMember extends React.Component {
     });
   };
   // 保存下级
-  saveMember() {}
-  handleOk = async () => {
+  saveMember = async () => {
     try {
-      const { selectedRowKeys } = this.state;
+      const { selectedRowKeys, currentId } = this.state;
       console.log(selectedRowKeys);
       let param = {
         UserId: this.props.params.id,
@@ -156,6 +135,10 @@ class SetNextPartyMember extends React.Component {
       throw new Error(e);
     }
   };
+  handleOk() {
+    const { selectedRowKeys } = this.state;
+    this.setState({ memberList: JSON.parse(selectedRowKeys) });
+  }
   getAllMember() {
     this.setState({ visible: true });
     this.getCurrentList2({ ...this.pageConfig });
@@ -165,9 +148,10 @@ class SetNextPartyMember extends React.Component {
     const { PageNumber } = params;
     try {
       let { List, TotalCount } = await getList(params);
+      // todo 应该排除掉当前设置的用户
       console.log("List - ", List);
       List.forEach(v => {
-        v.key = v.UserId;
+        v.key = JSON.stringify(v);
       });
       this.setState({ memberList: List, current2: PageNumber });
       this.updatePageConfig2(TotalCount);
@@ -243,7 +227,7 @@ class SetNextPartyMember extends React.Component {
             </Button>
           </Col> */}
           <Col>
-            <Button className="btn ">
+            <Button className="btn btn--primary">
               <a onClick={() => this.saveMember()}>保存</a>
             </Button>
           </Col>
@@ -259,7 +243,7 @@ class SetNextPartyMember extends React.Component {
           title="选择下级"
           visible={visible}
           width={700}
-          onOk={this.handleOk}
+          onOk={this.handleOk.bind(this)}
           onCancel={() => this.setState({ visible: false })}
         >
           <Table

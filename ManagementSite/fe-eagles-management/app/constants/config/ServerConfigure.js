@@ -44,15 +44,6 @@ const OPERATOR = {
   OPERATOR_LIST: "/api/Operator/GetOperator", //操作员列表
   OPERATOR_DETAIL: "/api/Operator/GetOperatorDetail" //操作员详情
 };
-// 权限组
-const OPERGROUP = {
-  OPERGROUP_EDIT: "/api/OperGroup/EditOperGroup", //编辑权限组
-  OPERGROUP_DELETE: "/api/OperGroup/RemoveOperGroup", //删除权限组
-  OPERGROUP_DETAIL: "/api/OperGroup/GetOperGroupDetail", //权限组详情
-  OPERGROUP_LIST: "/api/OperGroup/GetOperGroupList", //权限组列表
-  PERMISSION_DETAIL: "/api/OperGroup/GetAuthorityGroupSetUp", //权限详情
-  PERMISSION_EDIT: "/api/OperGroup/EditAuthorityGroupSetUp" //权限编辑
-};
 // 发货
 const ORDER = {
   ORDER_EDIT: "/api/Order/EditOrders", //编辑发货
@@ -168,7 +159,9 @@ const AUTHGROUP = {
   EDIT: "/api/OperGroup/EditOperGroup", //编辑
   DETAIL: "/api/OperGroup/GetOperGroupDetail", //详情
   LIST: "/api/OperGroup/GetOperGroupList", //列表
-  DELETE: "/api/OperGroup/RemoveOperGroup" //删除
+  DELETE: "/api/OperGroup/RemoveOperGroup", //删除
+  PERMISSION_DETAIL: "/api/OperGroup/GetAuthorityGroupSetUp", //权限详情
+  PERMISSION_EDIT: "/api/OperGroup/EditAuthorityGroupSetUp" //权限编辑
 };
 //会议
 const MEETING = {
@@ -210,7 +203,6 @@ export const serverConfig = {
   MODULE,
   NEWS,
   OPERATOR,
-  OPERGROUP,
   ORDER,
   ORG,
   GOODS,

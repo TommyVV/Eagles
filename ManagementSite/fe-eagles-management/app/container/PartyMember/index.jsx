@@ -21,6 +21,12 @@ import { audit } from "../../services/auditService";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      branchList: []
+    };
+  }
   handleSearch = e => {
     e.preventDefault();
     const view = this;
@@ -39,9 +45,30 @@ class SearchForm extends Component {
   handleReset = () => {
     this.props.form.resetFields();
   };
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach(v => {
+        v.key = v.BranchId;
+      });
+      this.setState({ branchList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { branchList } = this.state;
     return (
       <Form
         className="ant-advanced-search-form"
@@ -53,9 +80,9 @@ class SearchForm extends Component {
             <FormItem label="支部名称">
               {getFieldDecorator("type")(
                 <Select>
-                  <Option value="0">全部</Option>
-                  <Option value="1">支部</Option>
-                  <Option value="2">小组</Option>
+                  {branchList.map((o, i) => {
+                    return <Option key={i} value={o.BranchId}>{o.BranchName}</Option>;
+                  })}
                 </Select>
               )}
             </FormItem>
@@ -131,13 +158,13 @@ const WrapperAuditForm = Form.create({
       <Row gutter={24}>
         <Col span={20} key={1}>
           <FormItem {...formItemLayout} label="审核结果">
-              {getFieldDecorator("AuditStatus")(
-                <Select>
-                  <Option value="0">通过</Option>
-                  <Option value="1">拒绝</Option>
-                </Select>
-              )}
-            </FormItem>
+            {getFieldDecorator("AuditStatus")(
+              <Select>
+                <Option value="0">通过</Option>
+                <Option value="1">拒绝</Option>
+              </Select>
+            )}
+          </FormItem>
         </Col>
       </Row>
       <Row gutter={24}>
@@ -183,7 +210,7 @@ class PartyMemberList extends React.Component {
       {
         title: "党员类型",
         dataIndex: "MemberType",
-        render: text => <span>{text}</span>
+        render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
       },
       {
         title: "操作",
@@ -367,7 +394,13 @@ class PartyMemberList extends React.Component {
     }));
   };
   render() {
-    const { selectedRowKeys, pageConfig, memberList, visible,fields } = this.state;
+    const {
+      selectedRowKeys,
+      pageConfig,
+      memberList,
+      visible,
+      fields
+    } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -402,7 +435,9 @@ class PartyMemberList extends React.Component {
         >
           <Col>
             <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>
+              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
+                新增
+              </a>
             </Button>
           </Col>
         </Row>
