@@ -123,7 +123,7 @@ $(document).ready(function() {
             type: 'POST',
             url: DOMAIN + '/api/User/GetUserRelationship',
             data: {
-                "Type": 0,
+                "Type": 1,
                 "UserId": userId,
                 "Token": token,
                 "AppId": appId
