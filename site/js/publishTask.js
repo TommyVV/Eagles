@@ -189,7 +189,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("CreateTask---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId;
+                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId+"&cb=task.html";
                 } else {
                     bootoast({
                         message: "活动创建失败:" + data.Message + "",
@@ -237,7 +237,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("CreateActivity---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId;
+                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId+"&cb=activityList.html";
                 } else {
                     bootoast({
                         message: "任务创建失败" + data.Message + "",
