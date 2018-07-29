@@ -75,6 +75,14 @@ $(".lw_news,.fb_info").click(function() {
 $("#myproduct,.fb_profuct").click(function() {
 	window.location.href = 'activityList.html?appId=' + appId + ''
 });
+//我的学习
+$("#mystudy").click(function() {
+	window.location.href = 'studyList.html?appId=' + appId + ''
+});
+//我的会议
+$("#mymeeting").click(function() {
+	window.location.href = 'meetingList.html?appId=' + appId + ''
+});
 //文章发布
 $("#pushace,.fb_wzby").click(function() {
 	window.location.href = 'publishArticle.html?appId=' + appId + ''
