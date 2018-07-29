@@ -15,6 +15,7 @@ import {
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
 import { typeMap } from "../../../constants/config/appconfig";
+import _ from "lodash";
 import {
   getQuestionInfoById,
   createOrEditQuestion
@@ -22,6 +23,7 @@ import {
 import { delRelation, random } from "../../../services/exerciseService";
 import { saveInfo, clearInfo } from "../../../actions/questionAction";
 import "./style.less";
+import ExList from "../../../components/Common/ChooseEx/ExList";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -40,7 +42,8 @@ class QuestionForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRandom: false
+      isRandom: false,
+      visible: false // 弹出框
     };
   }
 
@@ -52,7 +55,6 @@ class QuestionForm extends Component {
           console.log("submit form: ", values);
           const { Info } = this.props.info;
           let { SubjectList, HasLimitedTime } = Info;
-          debugger;
           let idList = [];
           SubjectList.forEach(v => {
             idList.push(v.QuestionId);
@@ -202,14 +204,48 @@ class QuestionForm extends Component {
       throw new Error(e);
     }
   };
+  handleOk = async () => {
+    const { Info } = this.props.info;
+    let { SubjectList } = Info;
+    const { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    const selected = this.exList.state.selectedRowKeys;
+    let keys = [];
+    selected.map(o => {
+      keys.push(JSON.parse(o));
+    });
+    let newKeys = keys.concat(SubjectList);
+    let hash = {};
+    let newArr = newKeys.reduceRight((item, next) => {
+      hash[next.QuestionId]
+        ? ""
+        : (hash[next.QuestionId] = true && item.push(next));
+      return item;
+    }, []);
+    console.log(newArr);
+    newArr.forEach((v, i) => {
+      v.key = i;
+    });
+    this.props.saveInfo({
+      Info: {
+        ...values,
+        SubjectList: newArr
+      }
+    });
+    this.setState({
+      visible: false
+    });
+    this.exList.setState({ selectedRowKeys: [] });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { Info } = this.props.info;
     const { ExercisesId } = Info;
     let { SubjectList } = Info;
-    SubjectList.forEach((v, i) => {
-      v.key = i;
-    });
+    SubjectList &&
+      SubjectList.forEach((v, i) => {
+        v.key = i;
+      });
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -253,16 +289,8 @@ class QuestionForm extends Component {
           <span>
             <a
               onClick={() =>
-                hashHistory.replace(`/exercise/detail/${obj.QuestionId}`)
-              }
-            >
-              编辑
-            </a>
-            <a
-              onClick={() =>
                 this.handleDelete(Info.ExercisesId, obj.QuestionId)
               }
-              style={{ paddingLeft: "24px" }}
             >
               删除
             </a>
@@ -393,7 +421,7 @@ class QuestionForm extends Component {
                 <Col span={2} offset={7}>
                   <Button
                     className="btn"
-                    onClick={() => hashHistory.replace("/exercise/detail")}
+                    onClick={() => this.setState({ visible: true })}
                   >
                     新增
                   </Button>
@@ -439,6 +467,15 @@ class QuestionForm extends Component {
             </Row>
           </FormItem>
         </Form>
+        <Modal
+          title="选择习题"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={() => this.setState({ visible: false })}
+          style={{ width: "100%", marginBottom: "0" }}
+        >
+          <ExList ref={instance => (this.exList = instance)} />
+        </Modal>
       </div>
     );
   }

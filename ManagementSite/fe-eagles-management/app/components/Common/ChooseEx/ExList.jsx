@@ -14,9 +14,7 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getList, del } from "../../../services/exerciseService";
-import Nav from "../../Nav";
-import "./style.less";
+import { getList } from "../../../services/exerciseService";
 
 const confirm = Modal.confirm;
 
@@ -24,7 +22,10 @@ class ExList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      List: [] // 列表数组
+      List: [], // 列表数组
+      selectedRowKeys: [], // id数组
+      current: 1, // 当前页
+      pageConfig: {} // 当前页配置
     };
     this.columns = [
       {
@@ -40,32 +41,12 @@ class ExList extends React.Component {
         title: "是否投票",
         dataIndex: "IsVote",
         render: text => <span>{text ? "是" : "否"}</span>
-      },
-      {
-        title: "操作",
-        render: obj => (
-          <span>
-            <a
-              onClick={() =>
-                hashHistory.replace(`/exercise/detail/${obj.QuestionId}`)
-              }
-            >
-              编辑
-            </a>
-            <a
-              onClick={() => this.handleDelete(obj.QuestionId)}
-              style={{ paddingLeft: "24px" }}
-            >
-              删除
-            </a>
-          </span>
-        )
       }
     ];
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10
+      PageSize: 5
     };
   }
   componentWillMount() {
@@ -84,7 +65,7 @@ class ExList extends React.Component {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {
-        v.key = i;
+        v.key = JSON.stringify(v);
       });
       this.setState({ List, current: PageNumber });
       this.updatePageConfig(TotalCount);
@@ -108,35 +89,8 @@ class ExList extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 删除项目
-  handleDelete = async QuestionId => {
-    confirm({
-      title: "是否确认删除?",
-      okText: "确认",
-      cancelText: "取消",
-      onOk: async () => {
-        try {
-          let { Code } = await del({
-            QuestionId
-          });
-          if (Code === "00") {
-            message.success("删除成功");
-            await this.getCurrentList({
-              ...this.getListConfig,
-              PageNumber: this.state.current
-            });
-            this.setState({ selectedRowKeys: [] });
-          } else {
-            message.error("删除失败");
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      }
-    });
-  };
   render() {
-    const { List } = this.state;
+    const { selectedRowKeys, pageConfig, List } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -145,28 +99,20 @@ class ExList extends React.Component {
         xl: { span: 10 }
       }
     };
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
     return (
-      <Nav>
-        <Table
-          columns={this.columns}
-          dataSource={List}
-          bordered
-          style={{ width: "90%" }}
-        />
-        <Row
-          type="flex"
-          gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
-        >
-          <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/exercise/detail`)}>
-                新增
-              </a>
-            </Button>
-          </Col>
-        </Row>
-      </Nav>
+      <Table
+        columns={this.columns}
+        dataSource={List}
+        bordered
+        pagination={pageConfig}
+        rowSelection={rowSelection}
+        style={{ width: "90%" }}
+        width="700px"
+      />
     );
   }
 }
