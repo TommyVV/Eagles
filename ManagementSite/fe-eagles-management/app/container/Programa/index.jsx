@@ -150,7 +150,7 @@ class ProgramaList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 5,
+      PageSize: 10,
       GoodsName: "",
       GoodsStatus: "0"
     };
@@ -170,7 +170,7 @@ class ProgramaList extends React.Component {
   }
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
@@ -188,7 +188,7 @@ class ProgramaList extends React.Component {
   updatePageConfig(totalSize) {
     let pageConfig = {
       total: totalSize,
-      PageSize: this.getListConfig.PageSize,
+      pageSize: this.getListConfig.PageSize,
       current: this.state.current,
       onChange: async (page, pagesize) => {
         this.getCurrentList({

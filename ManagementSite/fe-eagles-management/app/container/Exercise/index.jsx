@@ -249,8 +249,7 @@ class Exercise extends React.Component {
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
+          PageNumber: page
         });
       }
     };
@@ -318,7 +317,7 @@ class Exercise extends React.Component {
           bordered
         />
 
-        <Row type="flex"  gutter={24}>
+        <Row type="flex" gutter={24}>
           <Col>
             <Button type="primary" className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/exercise/detail`)}>

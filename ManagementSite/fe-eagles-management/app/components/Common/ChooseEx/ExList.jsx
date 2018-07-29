@@ -110,7 +110,7 @@ class ExList extends React.Component {
         bordered
         pagination={pageConfig}
         rowSelection={rowSelection}
-        style={{ width: "90%" }}
+        style={{ marginBottom: "0" }}
         width="700px"
       />
     );

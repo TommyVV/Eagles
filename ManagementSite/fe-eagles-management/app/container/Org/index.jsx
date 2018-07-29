@@ -83,15 +83,15 @@ class OrgList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
-      let res = await getOrgList(params);
-      console.log("orgList - ", res.List);
-      res.List.forEach(v => {
+      let { List, TotalCount } = await getOrgList(params);
+      console.log("List - ", List);
+      List.forEach(v => {
         v.key = v.OrgId;
       });
-      this.setState({ orgList: res.List, current: PageNumber });
-      // this.updatePageConfig(totalSize);
+      this.setState({ orgList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -116,8 +116,7 @@ class OrgList extends React.Component {
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
+          PageNumber: page
         });
       }
     };

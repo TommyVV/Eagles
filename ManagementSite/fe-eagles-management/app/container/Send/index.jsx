@@ -159,7 +159,7 @@ class SendList extends React.Component {
       selectedRowKeys: [], // id数组
       sendList: [], // 列表数组
       keyword: "", // 关键字
-      current: 1, // 当前页
+      current: 10, // 当前页
       pageConfig: {}, // 当前页配置
       currentId: "", // 当前发货商品的id
       visible: false, // 弹出框
@@ -239,7 +239,7 @@ class SendList extends React.Component {
       List.forEach(v => (v.key = v.OrderId));
       let { PageNumber } = params;
       this.setState({ sendList: List, current: PageNumber });
-      // this.updatePageConfig(TotalCount);
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -254,8 +254,7 @@ class SendList extends React.Component {
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          requestPage: page,
-          keyword: this.state.keyword
+          PageNumber: page
         });
       }
     };

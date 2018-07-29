@@ -15,7 +15,6 @@ import {
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
 import { typeMap } from "../../../constants/config/appconfig";
-import _ from "lodash";
 import {
   getQuestionInfoById,
   createOrEditQuestion

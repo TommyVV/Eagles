@@ -69,15 +69,15 @@ class RankList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
-      let { List } = await getRankList(params);
+      let { List, TotalCount } = await getRankList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.UserId;
       });
       this.setState({ rankList: List, current: PageNumber });
-      // this.updatePageConfig(totalSize);
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);

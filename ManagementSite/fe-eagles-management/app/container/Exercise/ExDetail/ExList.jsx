@@ -24,7 +24,8 @@ class ExList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      List: [] // 列表数组
+      List: [], // 列表数组
+      pageConfig: {} // 当前页配置
     };
     this.columns = [
       {
@@ -136,7 +137,7 @@ class ExList extends React.Component {
     });
   };
   render() {
-    const { List } = this.state;
+    const { List, pageConfig } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -152,6 +153,7 @@ class ExList extends React.Component {
           dataSource={List}
           bordered
           style={{ width: "90%" }}
+          pagination={pageConfig}
         />
         <Row
           type="flex"
