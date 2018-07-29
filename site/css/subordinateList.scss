@@ -12,6 +12,10 @@
         line-height: px2rem(80);
         border-bottom: 1px solid #EEEEEE;
         font-size: px2rem(30);
+        display: flex;
+        display: -webkit-flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
         .right-dir{
             color: #AFAFB1;
             float: right;

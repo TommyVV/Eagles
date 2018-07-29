@@ -12,6 +12,7 @@ $(document).ready(function() {
 
     var pageIndex = 1;
     var pageSize = 10;
+    var isPC = false;
 
     var mescroll;
     //类别的点击
@@ -39,6 +40,7 @@ $(document).ready(function() {
                 .addClass("glyphicon-menu-left");
             $(".task-type").addClass("hide");
         }
+        pageIndex = 1;
     });
     //任务类型 分类点击
     $(".task-type .list-item").click(function() {
@@ -203,7 +205,7 @@ $(document).ready(function() {
                     </div>`;
             pcStr += `<li class="single-task" id="${element.TaskId}">
             <h4 class="title">${element.TaskeName}</h4>
-            <p>植树节是按照法律规定宣传保护树木，并动员群众参加以植树造林为活动内容的节日。按时间长短可分为植树日、植树周和植树月，共称为国际植树节。提倡通过这种活动，激发人们爱林造林的热情。中国的植树节由林学家韩安、凌道扬等倡议设立，最初确定在4月5日清明节。1928年为纪念孙中山逝世三周年将植树节改为3月12日。</p>
+            <p>${element.TaskContent}</p>
             <div class="props">
                 <div class="props-left">
                     <div>
@@ -222,8 +224,8 @@ $(document).ready(function() {
             </div>
         </li>`;
         });
-        $(".pc-list").html(pcStr);
-        $(".task-list").html(str);
+        $(".pc-list").append(pcStr);
+        $(".task-list").append(str);
         $(".single-task").click(function() {
             window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + $(this).attr('id');
         });
@@ -267,6 +269,7 @@ $(document).ready(function() {
                 .trim()
             );
             checkUserId = $(e.target).attr('id');
+            $(".pc-list").html("");
             getTaskList();
         }
         $("#person-name").toggle();
@@ -279,6 +282,7 @@ $(document).ready(function() {
                 .trim()
             );
             taskType = $(e.target).attr('id');
+            $(".pc-list").html("");
             getTaskList();
         }
         $("#type-name").toggle();
@@ -294,6 +298,10 @@ $(document).ready(function() {
         }
         init() {
             if (!this.isMobile) {
+                if(isPC){
+                    return;
+                }
+                isPC=true;
                 mescroll = new MeScroll("mescrollPC", {
                     down: {
                         use: false
@@ -304,6 +312,7 @@ $(document).ready(function() {
                         htmlNodata: '没有更多数据'
                     }
                 });
+                $(".pc-list").html("");
                 $(".mobile").hide();
                 $(".pc").show();
                 $("#footer").load("footer.html", () => {});
@@ -319,6 +328,7 @@ $(document).ready(function() {
                         htmlNodata: '没有更多数据'
                     }
                 });
+                $(".task-list").html("");
                 $(".mobile").show();
                 $(".pc").hide();
                 $("body").css("background-color", "#fff");

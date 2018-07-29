@@ -1,14 +1,14 @@
 export const typeMap = [
   {
-    ExercisesType: "0",
+    ExercisesType: "5",
     text: "在线考试"
   },
   {
-    ExercisesType: "1",
+    ExercisesType: "10",
     text: "阅读练习题"
   },
   {
-    ExercisesType: "2",
+    ExercisesType: "20",
     text: "投票"
   }
 ];

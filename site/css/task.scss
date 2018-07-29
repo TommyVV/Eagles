@@ -1,4 +1,7 @@
 @import 'common/px2rem.scss';
+body{
+    position: relative;
+}
 .head-area {
     width: 100%;
     height: px2rem(80);
@@ -108,7 +111,7 @@
             margin-left: 50px;
         }
         .select {
-            width: 118px;
+            min-width: 140px;
             height: 30px;
             background: #fff;
             border: 1px solid #EEEEEE;
@@ -211,5 +214,11 @@
                 }
             }
         }
+    }
+}
+.footer{
+    position: static !important;
+    .footer{
+        margin-top: 0px !important;
     }
 }
