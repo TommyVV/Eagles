@@ -198,7 +198,14 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId;
+                    var cb="";
+                    //pageType 0 活动 1 任务
+                    if(pageType==0){
+                        cb='activityList.html';
+                    }else if(pageType==1){
+                        cb='task.html';
+                    }
+                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId+"&cb="+cb;
                 } else {
                     errorTip(data.Message);
                 }

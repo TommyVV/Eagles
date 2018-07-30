@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-        if(!token) {
+    if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     //指派人员
@@ -10,7 +10,7 @@ $(document).ready(function() {
     var toUserName = '';
     //加载导航
     $("#top-nav").html("");
-    $("#top-nav").load("head.html", () => {});
+    $("#top-nav").load("head.html", () => { });
     //pageType 0 活动  1 任务
     var pageType = getRequest("type");
     var imgUrl = "";
@@ -28,7 +28,7 @@ $(document).ready(function() {
     }
     //查询关系列表
     getUserRelationship();
-    $('#btnTestSaveLarge').on('click', function() {
+    $('#btnTestSaveLarge').on('click', function () {
         if (toUserId) {
             $("#name").html(toUserName);
             $(this).parents('.modal').modal('hide');
@@ -45,7 +45,7 @@ $(document).ready(function() {
     $("#imgupload").fileupload({
         url: UPLOAD,
         dataType: "json",
-        done: function(e, data) {
+        done: function (e, data) {
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
                 console.log(data.result.Result.FileUploadResults);
@@ -66,7 +66,7 @@ $(document).ready(function() {
         url: UPLOAD,
         dataType: "json",
         //设置进度条
-        progressall: function(e, data) {
+        progressall: function (e, data) {
             var progress = parseInt((data.loaded / data.total) * 100);
             $(".upload-progress").removeClass("hide");
             console.log("progress", progress);
@@ -77,7 +77,7 @@ $(document).ready(function() {
                 }, 1000);
             }
         },
-        done: function(e, data) {
+        done: function (e, data) {
             console.log("上传附件--", data);
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
@@ -89,26 +89,26 @@ $(document).ready(function() {
                 if (fileArray.length == 4) {
                     $(".upload-file").hide();
                 }
-                $(".attaches").html(attachmentList(fileArray,1));
-                $(".glyphicon-remove").click(function(){
+                $(".attaches").html(attachmentList(fileArray, 1));
+                $(".glyphicon-remove").click(function () {
                     var index = $('.glyphicon-remove').index(this);
-                    fileArray.splice(index,1);
+                    fileArray.splice(index, 1);
                     $(this).parents('.file').remove();
                     $(".upload-file").show();
-                    console.log('index---',index);
+                    console.log('index---', index);
                 })
             } else {
                 console.log(data.result);
                 bootoast({
-                    message: ''+data.result.Message,
+                    message: '' + data.result.Message,
                     type: 'warning',
                     position: 'toast-top-center',
                     timeout: 3
-                });        
+                });
             }
         }
     });
-    $(".sub-btn").click(function() {
+    $(".sub-btn").click(function () {
         if (pageType == 0) {
             //活动
             createActivity();
@@ -128,13 +128,13 @@ $(document).ready(function() {
                 "Token": token,
                 "AppId": appId
             },
-            success: function(data) {
+            success: function (data) {
                 console.log('GetUserRelationship---', data);
                 if (data.Code == "00") {
                     dealRelationList(data.Result.UserList);
                 } else {
                     bootoast({
-                        message: ''+data.Message,
+                        message: '' + data.Message,
                         type: 'warning',
                         position: 'toast-top-center',
                         timeout: 3
@@ -145,11 +145,13 @@ $(document).ready(function() {
     }
 
     function dealRelationList(list) {
-        var content = `<div class="subordinates">`;
+        var content = `<div class="subordinates"><div class="subordinate-item subordinate-title">
+        <div class="name">姓名</div>
+        <div class="branch">支部名称</div><div class="right-dir"></div></div>`;
         list.forEach(element => {
             content += `<div class="subordinate-item" id="${element.UserId}">
-                <div>${element.Name}</div>
-                <div>${element.BranchName}</div>
+                <div class="name">${element.Name}</div>
+                <div class="branch">${element.BranchName}</div>
                 <div class="right-dir">
                     <span class="glyphicon" aria-hidden="true"></span>
                 </div>
@@ -157,7 +159,12 @@ $(document).ready(function() {
         });
         content += `</div>`;
         $(".modal-body").html(content);
-        $(".subordinate-item").click(function() {
+        $(".subordinate-item").click(function () {
+            var index = $(".subordinate-item").index(this);
+            if(index==0){
+                return;
+            }
+            //console.log('index----',index);
             $('.subordinates .glyphicon').removeClass('glyphicon-ok');
             $($(this).find('.glyphicon')).addClass('glyphicon-ok');
             toUserId = $(this).attr("id");
@@ -186,10 +193,10 @@ $(document).ready(function() {
             type: "POST",
             url: DOMAIN + "/api/Task/CreateTask",
             data: data,
-            success: function(data) {
+            success: function (data) {
                 console.log("CreateTask---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId+"&cb=task.html";
+                    window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId + "&cb=task.html";
                 } else {
                     bootoast({
                         message: "活动创建失败:" + data.Message + "",
@@ -234,10 +241,10 @@ $(document).ready(function() {
             type: "POST",
             url: DOMAIN + "/api/Activity/CreateActivity",
             data: data,
-            success: function(data) {
+            success: function (data) {
                 console.log("CreateActivity---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId+"&cb=activityList.html";
+                    window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId + "&cb=activityList.html";
                 } else {
                     bootoast({
                         message: "任务创建失败" + data.Message + "",
@@ -303,7 +310,7 @@ $(document).ready(function() {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#footer").load("footer.html", () => {});
+                $("#footer").load("footer.html", () => { });
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass("pc-wrap");
             } else {
@@ -316,7 +323,7 @@ $(document).ready(function() {
     }
     new CalculateScreen();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         new CalculateScreen();
     });
 });
