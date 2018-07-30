@@ -17,6 +17,7 @@ import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
 import { getList, del } from "../../services/memberService";
+import { getList as getBranchList } from "../../services/branchService";
 import { audit } from "../../services/auditService";
 
 const confirm = Modal.confirm;
@@ -32,13 +33,15 @@ class SearchForm extends Component {
     const view = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
-      console.log("Received values of form: ", values);
       let params = {
-        ...this.props.pageConfig,
+        PageNumber: 1,
+        PageSize: 10,
         ...values
       };
       const getCurrentList = view.props.getCurrentList;
       getCurrentList(params);
+      const { setObj } = this.props;
+      setObj(values);
     });
   };
 
@@ -51,13 +54,13 @@ class SearchForm extends Component {
   // 加载当前页
   getCurrentList = async () => {
     try {
-      let { List } = await getList({
+      let { List } = await getBranchList({
         PageNumber: 1,
         PageSize: 10000
       });
       console.log("List - ", List);
-      List.forEach(v => {
-        v.key = v.BranchId;
+      List.forEach((v, i) => {
+        v.key = i;
       });
       this.setState({ branchList: List });
     } catch (e) {
@@ -78,10 +81,14 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={6} key={1}>
             <FormItem label="支部名称">
-              {getFieldDecorator("type")(
+              {getFieldDecorator("BranchId")(
                 <Select>
                   {branchList.map((o, i) => {
-                    return <Option key={i} value={o.BranchId}>{o.BranchName}</Option>;
+                    return (
+                      <Option key={i} value={o.BranchId}>
+                        {o.BranchName}
+                      </Option>
+                    );
                   })}
                 </Select>
               )}
@@ -89,7 +96,7 @@ class SearchForm extends Component {
           </Col>
           <Col span={6} key={2}>
             <FormItem label="党员名称">
-              {getFieldDecorator(`name`)(<Input />)}
+              {getFieldDecorator(`UserName`)(<Input />)}
             </FormItem>
           </Col>
           <Col
@@ -115,9 +122,14 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
+    console.log(this);
+    console.log(props);
     return {
-      GoodsStatus: Form.createFormField({
-        value: "0"
+      BranchId: Form.createFormField({
+        value: props.obj.BranchId
+      }),
+      UserName: Form.createFormField({
+        value: props.obj.UserName
       })
     };
   }
@@ -189,6 +201,7 @@ class PartyMemberList extends React.Component {
       authMap: new Map(),
       currentId: "", // 当前的id
       visible: false, // 弹出框
+      obj: {},
       fields: {
         AuditStatus: "", //审核结果
         Reason: "" // 审核结果描述
@@ -243,7 +256,10 @@ class PartyMemberList extends React.Component {
               <a
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") ? null : "none"
+                  display:
+                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                      ? null
+                      : "none"
                 }}
                 onClick={() =>
                   this.setState({ visible: true, currentId: obj.UserId })
@@ -393,13 +409,19 @@ class PartyMemberList extends React.Component {
       fields: { ...fields, ...changedFields }
     }));
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
     const {
       selectedRowKeys,
       pageConfig,
       memberList,
       visible,
-      fields
+      fields,
+      obj
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -410,6 +432,8 @@ class PartyMemberList extends React.Component {
         <WrapperSearchForm
           pageConfig={pageConfig}
           getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
         />
         <Table
           dataSource={memberList}

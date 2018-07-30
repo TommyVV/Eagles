@@ -124,7 +124,7 @@ const MEMBER = {
   DETAIL: "/api/User/GetPartyMemberDetail", //详情
   LIST: "/api/User/GetPartyMember", //列表
   NEXT_LIST: "/api/User/GetAuthorityUserSetUp", //下级列表
-  SET_NEXT: "/api/User/GetAuthorityUserSetUp", //设置下级
+  SET_NEXT: "/api/User/CreateAuthorityUserSetUp", //设置下级
   IMPORT: "/api/User/BatchImportUser" //导入
 };
 //支部

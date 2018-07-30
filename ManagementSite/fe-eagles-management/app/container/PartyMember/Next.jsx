@@ -26,6 +26,7 @@ class SetNextPartyMember extends React.Component {
     this.state = {
       selectedRowKeys: [], // 项目id数组
       memberList: [], // 列表数组
+      memberList2: [], // 弹窗列表数组
       current2: 1, // 当前页弹窗
       pageConfig: {}, // 当前页配置
       pageConfig2: {}, // 当前页配置
@@ -34,20 +35,52 @@ class SetNextPartyMember extends React.Component {
     this.columns = [
       {
         title: "党员名称",
-        dataIndex: "UserName"
+        dataIndex: "UserName",
+        key: "UserName"
       },
       {
         title: "所属支部",
-        dataIndex: "BranchName"
+        dataIndex: "BranchName",
+        key: "BranchName"
       },
       {
         title: "联系电话",
-        dataIndex: "Phone"
+        dataIndex: "Phone",
+        key: "Phone"
       },
       {
         title: "党员类型",
         dataIndex: "MemberType",
-        render: text => <span>{text}</span>
+        key: "MemberType",
+        render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
+      },
+      {
+        title: "操作",
+        key: "oper",
+        render: obj => <a onClick={() => this.handleDelete(obj.UserId)}>删除</a>
+      }
+    ];
+    this.columns2 = [
+      {
+        title: "党员名称",
+        dataIndex: "UserName",
+        key: "UserName"
+      },
+      {
+        title: "所属支部",
+        dataIndex: "BranchName",
+        key: "BranchName"
+      },
+      {
+        title: "联系电话",
+        dataIndex: "Phone",
+        key: "Phone"
+      },
+      {
+        title: "党员类型",
+        dataIndex: "MemberType",
+        key: "MemberType",
+        render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
       }
     ];
     this.getListConfig = {
@@ -56,7 +89,7 @@ class SetNextPartyMember extends React.Component {
     };
   }
   componentWillMount() {
-    const { id, name } = this.props.params;
+    const { id } = this.props.params;
     this.getCurrentList({ UserId: id });
   }
 
@@ -81,63 +114,44 @@ class SetNextPartyMember extends React.Component {
   };
 
   // 删除
-  handleDelete = async shareIds => {
-    confirm({
-      title: "是否确认删除?",
-      okText: "确认",
-      cancelText: "取消",
-      onOk: async () => {
-        try {
-          let { selectedRowKeys } = this.state;
-          if (selectedRowKeys.length === 0) {
-            return message.error("请选择需要删除的项目");
-          }
-          let { code } = await deleteProject({
-            projectIdList: selectedRowKeys
-          });
-          if (code === 0) {
-            message.success("删除成功");
-            await this.getCurrentList({
-              ...this.getListConfig,
-              requestPage: this.state.current,
-              keyword: this.state.keyword
-            });
-            this.setState({ selectedRowKeys: [] });
-          } else {
-            message.error("删除失败");
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      }
-    });
+  handleDelete = async UserId => {
+    let { memberList } = this.state;
+    let newKeys = memberList.filter(v => v.UserId != UserId);
+    this.setState({ memberList: newKeys });
   };
   // 保存下级
   saveMember = async () => {
     try {
-      const { selectedRowKeys, currentId } = this.state;
-      console.log(selectedRowKeys);
-      let param = {
-        UserId: this.props.params.id,
-        UserIds: selectedRowKeys
-      };
-      let { Code } = await setNext({
-        OrderInfo: [
-          {
-            OrderId: currentId,
-            Address: fields.Address.value,
-            ExpressId: fields.ExpressId.value
-          }
-        ],
-        Remark: "这个是什么备注字段？"
+      const { id } = this.props.params;
+      const { memberList } = this.state;
+      let newList = [];
+      memberList.forEach(v => {
+        newList.push(v.UserId);
       });
+      let param = {
+        UserId: id,
+        UserIds: newList
+      };
+
+      let { Code } = await setNext(param);
+      if (Code == "00") {
+        message.success("设置成功");
+        hashHistory.replace("/partymemberlist");
+      } else {
+        message.error("设置失败");
+      }
     } catch (e) {
       throw new Error(e);
     }
   };
   handleOk() {
     const { selectedRowKeys } = this.state;
-    this.setState({ memberList: JSON.parse(selectedRowKeys) });
+    let newList = [];
+    selectedRowKeys.map(o => newList.push(JSON.parse(o)));
+    newList.forEach((v, i) => {
+      v.key = i;
+    });
+    this.setState({ memberList: newList, visible: false });
   }
   getAllMember() {
     this.setState({ visible: true });
@@ -145,15 +159,17 @@ class SetNextPartyMember extends React.Component {
   }
   // 加载当前页
   getCurrentList2 = async params => {
+    const { id } = this.props.params;
     const { PageNumber } = params;
     try {
       let { List, TotalCount } = await getList(params);
-      // todo 应该排除掉当前设置的用户
+      // 排除掉当前设置的用户
       console.log("List - ", List);
-      List.forEach(v => {
+      let newList = List.filter(v => v.UserId != id);
+      newList.forEach(v => {
         v.key = JSON.stringify(v);
       });
-      this.setState({ memberList: List, current2: PageNumber });
+      this.setState({ memberList2: newList, current2: PageNumber });
       this.updatePageConfig2(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -181,7 +197,8 @@ class SetNextPartyMember extends React.Component {
       pageConfig,
       pageConfig2,
       visible,
-      memberList
+      memberList,
+      memberList2
     } = this.state;
     const { id, name } = this.props.params;
     const rowSelection = {
@@ -213,7 +230,7 @@ class SetNextPartyMember extends React.Component {
           </Row>
         </Form>
         <Table
-          dataSource={this.data}
+          dataSource={memberList}
           columns={this.columns}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
@@ -247,8 +264,8 @@ class SetNextPartyMember extends React.Component {
           onCancel={() => this.setState({ visible: false })}
         >
           <Table
-            dataSource={memberList}
-            columns={this.columns}
+            dataSource={memberList2}
+            columns={this.columns2}
             rowSelection={rowSelection}
             pagination={pageConfig2}
             locale={{ emptyText: "暂无数据" }}
