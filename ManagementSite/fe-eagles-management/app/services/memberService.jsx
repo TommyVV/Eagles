@@ -49,7 +49,7 @@ export const getListById = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { UserId: [] };
+      return Code == "00" ? Result : { User: [] };
     } else {
       throw new Error(`${Code} - ${Message}`);
     }

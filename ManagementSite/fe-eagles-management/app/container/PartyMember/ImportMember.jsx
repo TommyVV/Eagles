@@ -12,8 +12,10 @@ import {
   Icon
 } from "antd";
 const FormItem = Form.Item;
+const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { bitchCreate } from "../../services/memberService";
+import { getList } from "../../services/branchService";
 import { memberTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
@@ -25,7 +27,9 @@ class ImportMember extends React.Component {
     super(props);
     this.state = {
       memberList: [], // 列表数组
-      fileList: []
+      fileList: [],
+      branchList: [],
+      currentBranch: ""
     };
     this.columns = [
       {
@@ -42,9 +46,33 @@ class ImportMember extends React.Component {
         render: MemberType => {
           return MemberType == "0" ? "正式党员" : "预备党员";
         }
+      },
+      {
+        title: "验证结果",
+        dataIndex: "ErrorReason"
       }
     ];
   }
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ branchList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   handleUpload = () => {
     const { fileList, memberList } = this.state;
     if (memberList.length) {
@@ -83,25 +111,39 @@ class ImportMember extends React.Component {
 
   handleImport = async () => {
     try {
-      let { memberList } = this.state;
+      let { memberList, currentBranch } = this.state;
       console.log(memberList);
-      // todo 批量导入新闻 等待接口
-      let { Code, Result } = await bitchCreate({
-        UserList: memberList
+      let newKeys = [];
+      memberList.map(o => {
+        newKeys.push({
+          UserName: o.UserName,
+          Phone: o.Phone,
+          MemberType: o.MemberType,
+          ImportStatus: true,
+          ErrorReason: ""
+        });
+      });
+      let { Code, Result, Message } = await bitchCreate({
+        UserList: newKeys,
+        BranchId: currentBranch
       });
       if (Code === "00") {
         message.success("导入成功");
         console.log(Result);
+        hashHistory.replace(`/partymemberlist`);
       } else {
-        message.error("导入失败");
+        message.success(Message);
+        this.setState({ memberList: Result.UserList });
       }
     } catch (e) {
       throw new Error(e);
     }
   };
-
+  changeSelect(value) {
+    this.state.currentBranch = value;
+  }
   render() {
-    const { fileList, memberList } = this.state;
+    const { fileList, memberList, branchList } = this.state;
     const props = {
       name: "file",
       action: "",
@@ -114,6 +156,12 @@ class ImportMember extends React.Component {
         });
       },
       beforeUpload: file => {
+        const reg = /^file\/(txt)$/;
+        const type = file.type;
+        const isImage = reg.test(type);
+        if (!isImage) {
+          message.error("只支持格式为txt的文件!");
+        }
         this.setState({
           fileList: [file]
         });
@@ -124,6 +172,25 @@ class ImportMember extends React.Component {
 
     return (
       <Nav>
+        <Row gutter={24}>
+          <Col span={2} key={111}>
+            <FormItem label="选择支部" />
+          </Col>
+          <Col span={5} key={22}>
+            <Select
+              onChange={this.changeSelect.bind(this)}
+              style={{ width: "100%" }}
+            >
+              {branchList.map((o, i) => {
+                return (
+                  <Option key={i} value={o.BranchId}>
+                    {o.BranchName}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Col>
+        </Row>
         <Row gutter={24}>
           <Col span={2} key={1}>
             <FormItem label="选择导入文件" />
@@ -151,7 +218,7 @@ class ImportMember extends React.Component {
             <FormItem label="规则说明" />
           </Col>
           <Col span={8} key={5} className="upload-tip">
-            <span>仅支持txt文件，格式为XXXXX，请注意区分中英文符号</span>
+            <span>仅支持txt文件，格式为XX.txt，请注意区分中英文符号</span>
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
@@ -172,15 +239,17 @@ class ImportMember extends React.Component {
               type="primary"
               className="btn btn--primary"
               disabled={memberList.length === 0}
+              onClick={this.handleImport}
             >
-              <a onClick={this.handleImport}>确认导入</a>
+              确认导入
             </Button>
           </Col>
           <Col>
-            <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
-                取消导入
-              </a>
+            <Button
+              className="btn "
+              onClick={() => hashHistory.replace(`/partymemberlist`)}
+            >
+              取消导入
             </Button>
           </Col>
         </Row>
