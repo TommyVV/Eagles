@@ -10,6 +10,7 @@
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/common/common.css">
     <link href="./thirdparty/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
 	<link rel="stylesheet" href="css/subordinateList.css">
     <link href="./css/publishArticle.css?v=20180715" rel="stylesheet">
     <link href="./css/bootoast.css" rel="stylesheet">
@@ -66,7 +67,7 @@
     </div>
     
     <div class="footer" id="footer"></div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -75,16 +76,30 @@
 	            </div>
 	            <div class="modal-body">
 					<div class="subordinates"></div>
-	            	<!--<select name="" id="modal-body">
-	                    
-	                </select>-->
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 	                <button type="button" class="btn btn-primary" id="btnTestSaveLarge">确认</button>
 	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal -->
+	        </div>
+	    </div>
+	</div>-->
+	<div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modalLargeLabel">选择入党介绍人</h4>
+				</div>
+				<div class="modal-body">
+					<div class="subordinates"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
+				</div>
+			</div>
+		</div>
 	</div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
@@ -94,6 +109,7 @@
 	<script src="thirdparty/jquery.fileupload.js"></script>
     <script src="js/bootoast.js"></script>
      <script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
+	 <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/publishArticle.js?v=20180715"></script>
 	<script src="js/compulicajax.js"></script>
