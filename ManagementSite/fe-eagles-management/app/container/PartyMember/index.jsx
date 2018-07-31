@@ -430,7 +430,6 @@ class PartyMemberList extends React.Component {
     return (
       <Nav>
         <WrapperSearchForm
-          pageConfig={pageConfig}
           getCurrentList={this.getCurrentList.bind(this)}
           obj={obj}
           setObj={this.changeSearch.bind(this)}

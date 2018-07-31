@@ -24,6 +24,15 @@ class SearchForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
+      let params = {
+        PageNumber: 1,
+        PageSize: 10,
+        ...values
+      };
+      const getCurrentList = this.props.getCurrentList;
+      getCurrentList(params);
+      const { setObj } = this.props;
+      setObj(values);
     });
   };
 
@@ -42,14 +51,14 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={5} key={2}>
             <FormItem label="商品名称">
-              {getFieldDecorator(`user`)(<Input />)}
+              {getFieldDecorator(`GoodsName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={8} key={3}>
             <FormItem label="下单日期">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("startTime")(
+                  {getFieldDecorator("StartTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
@@ -65,9 +74,9 @@ class SearchForm extends Component {
                   -
                 </span>
               </Col>
-              <Col span={11}>
+              <Col span={10} offset={1}>
                 <FormItem>
-                  {getFieldDecorator("endTime")(
+                  {getFieldDecorator("EndTime")(
                     <DatePicker placeholder="结束时间" />
                   )}
                 </FormItem>
@@ -92,11 +101,14 @@ const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     // const project = props.project;
     return {
-      exType: Form.createFormField({
-        value: "0"
+      GoodsName: Form.createFormField({
+        value: props.obj.GoodsName
       }),
-      state: Form.createFormField({
-        value: "0"
+      StartTime: Form.createFormField({
+        value: props.obj.StartTime
+      }),
+      EndTime: Form.createFormField({
+        value: props.obj.EndTime
       })
     };
   }
@@ -164,7 +176,8 @@ class SendList extends React.Component {
       fields: {
         ExpressId: "", //快递单号
         Address: "" // 快递地址
-      }
+      },
+      obj: {}
     };
     this.columns = [
       {
@@ -319,11 +332,20 @@ class SendList extends React.Component {
       }));
     }
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { visible, pageConfig, sendList, fields } = this.state;
+    const { visible, pageConfig, sendList, fields, obj } = this.state;
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={sendList}
           columns={this.columns}
