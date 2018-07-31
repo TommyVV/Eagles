@@ -198,7 +198,7 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="状态">
           {getFieldDecorator("GoodsStatus")(
             <Select>
-              <Option value="0">上架</Option>
+              <Option value="0">正常</Option>
               <Option value="1">下架</Option>
             </Select>
           )}

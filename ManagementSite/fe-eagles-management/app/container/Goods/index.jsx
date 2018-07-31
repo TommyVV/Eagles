@@ -25,13 +25,14 @@ class SearchForm extends Component {
     const view = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
-      console.log("Received values of form: ", values);
       let params = {
-        ...this.props.pageConfig,
+        PageNumber: 1,
+        PageSize: 10,
         ...values
       };
-      const getCurrentList = view.props.getCurrentList;
+      const { getCurrentList, setObj } = view.props;
       getCurrentList(params);
+      setObj({ ...values });
     });
   };
 
@@ -57,7 +58,7 @@ class SearchForm extends Component {
             <FormItem label="商品状态">
               {getFieldDecorator(`GoodsStatus`)(
                 <Select>
-                  <Option value="0">上架</Option>
+                  <Option value="0">正常</Option>
                   <Option value="1">下架</Option>
                 </Select>
               )}
@@ -88,7 +89,10 @@ const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     return {
       GoodsStatus: Form.createFormField({
-        value: "0"
+        value: props.obj.GoodsStatus ? props.obj.GoodsStatus : ""
+      }),
+      GoodsName: Form.createFormField({
+        value: props.obj.GoodsName
       })
     };
   }
@@ -162,7 +166,8 @@ class GoodsList extends React.Component {
       fields: {
         AuditStatus: "", //审核结果
         Reason: "" // 审核结果描述
-      }
+      },
+      obj: {}
     };
     this.columns = [
       {
@@ -183,14 +188,13 @@ class GoodsList extends React.Component {
       {
         title: "状态",
         dataIndex: "GoodsStatus",
-        render: text => <span>{text == "0" ? "下架" : "上架"}</span>,
+        render: text => <span>{text == "0" ? "正常" : "下架"}</span>,
         width: "20%"
       },
       {
         title: "操作",
         width: "20%",
         render: obj => {
-          console.log("this", this);
           return (
             <div>
               <a
@@ -210,7 +214,7 @@ class GoodsList extends React.Component {
                 onClick={() => this.changeStatus(obj)}
                 style={{ paddingLeft: "24px" }}
               >
-                {obj.GoodsStatus == "0" ? "上架" : "下架"}
+                {obj.GoodsStatus == "0" ? "下架" : "上架"}
               </a>
               <a
                 onClick={() =>
@@ -233,7 +237,7 @@ class GoodsList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       GoodsName: "",
-      GoodsStatus: "0"
+      GoodsStatus: ""
     };
   }
   componentWillMount() {
@@ -292,7 +296,7 @@ class GoodsList extends React.Component {
   }
   // 快速上下架
   changeStatus = async goods => {
-    const tipTitle = goods.GoodsStatus == "0" ? "上架" : "下架";
+    const tipTitle = goods.GoodsStatus == "0" ? "下架" : "上架";
     confirm({
       title: `是否确认${tipTitle}“${goods.GoodsName}”?`,
       okText: "确认",
@@ -351,21 +355,6 @@ class GoodsList extends React.Component {
     });
   };
   // 批量操作
-  handleEdit = async () => {
-    try {
-      let { selectedRowKeys } = this.state;
-      console.log(selectedRowKeys);
-      if (selectedRowKeys.length > 1) {
-        return message.error("不能同时编辑多个项目");
-      }
-      if (selectedRowKeys.length === 0) {
-        return message.error("请选择需要编辑的项目");
-      }
-      hashHistory.replace(`/project/create/${selectedRowKeys[0]}`);
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
   handleOk = async () => {
     try {
       const { currentId, fields } = this.state;
@@ -403,13 +392,19 @@ class GoodsList extends React.Component {
       fields: { ...fields, ...changedFields }
     }));
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
     const {
       selectedRowKeys,
       pageConfig,
       goodsList,
       visible,
-      fields
+      fields,
+      obj
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -418,19 +413,20 @@ class GoodsList extends React.Component {
     return (
       <Nav>
         <WrapperSearchForm
-          pageConfig={pageConfig}
           getCurrentList={this.getCurrent.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
         />
         <Table
           dataSource={goodsList}
           columns={this.columns}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
         <Modal
-          title="审核党员"
+          title="审核商品"
           visible={visible}
           onOk={this.handleOk}
           onCancel={() => this.setState({ visible: false })}

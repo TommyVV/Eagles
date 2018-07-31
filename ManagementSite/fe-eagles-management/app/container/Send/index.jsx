@@ -108,15 +108,13 @@ const WrapperSendForm = Form.create({
     props.onChange(changedFields);
   },
   mapPropsToFields: props => {
-    // const project = props.project;
+    console.log(props);
     return {
       ExpressId: Form.createFormField({
-        ...props.ExpressId,
-        value: props.ExpressId.value
+        value: props.ExpressId
       }),
       Address: Form.createFormField({
-        ...props.Address,
-        value: props.Address.value
+        value: props.Address
       })
     };
   }
@@ -179,7 +177,7 @@ class SendList extends React.Component {
       },
       {
         title: "下单日期",
-        dataIndex: "CreateTime",
+        dataIndex: "PlaceTime",
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
@@ -199,7 +197,14 @@ class SendList extends React.Component {
               {obj.OrderStatus == "0" ? (
                 <a
                   onClick={() =>
-                    this.setState({ visible: true, currentId: obj.OrderId })
+                    this.setState({
+                      visible: true,
+                      currentId: obj.OrderId,
+                      fields: {
+                        ExpressId: obj.ExpressId, //快递单号
+                        Address: obj.Address // 快递地址
+                      }
+                    })
                   }
                 >
                   发货
@@ -218,7 +223,6 @@ class SendList extends React.Component {
       PageSize: 10,
       StartTime: "",
       EndTime: "",
-      OrgId: "",
       GoodsName: ""
     };
   }
@@ -267,11 +271,9 @@ class SendList extends React.Component {
         OrderInfo: [
           {
             OrderId: currentId,
-            Address: fields.Address.value,
-            ExpressId: fields.ExpressId.value
+            ...fields
           }
-        ],
-        Remark: "这个是什么备注字段？"
+        ]
       });
       if (Code === "00") {
         message.success("发货成功");
@@ -285,7 +287,6 @@ class SendList extends React.Component {
         await this.getCurrentList({
           ...this.getListConfig,
           PageNumber: this.state.current
-          // keyword: this.state.keyword
         });
       } else {
         message.error("发货失败");
@@ -302,9 +303,21 @@ class SendList extends React.Component {
     }
   };
   handleFormChange = changedFields => {
-    this.setState(({ fields }) => ({
-      fields: { ...fields, ...changedFields }
-    }));
+    if (changedFields.ExpressId) {
+      this.setState(({ fields }) => ({
+        fields: {
+          ...fields,
+          ExpressId: changedFields.ExpressId.value
+        }
+      }));
+    } else if (changedFields.Address) {
+      this.setState(({ fields }) => ({
+        fields: {
+          ...fields,
+          Address: changedFields.Address.value
+        }
+      }));
+    }
   };
   render() {
     const { visible, pageConfig, sendList, fields } = this.state;
