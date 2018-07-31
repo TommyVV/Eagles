@@ -108,6 +108,8 @@ $(document).ready(function() {
             if(userId==auditUserId){
                 //查询反馈信息
                 GetActivityFeedBack(1);
+            }else if(userId==acceptUserId){
+                GetActivityFeedBack();
             }
         } else if (status == 2) {
             //活动完成

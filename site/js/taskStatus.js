@@ -195,6 +195,8 @@ $(document).ready(function () {
             if(userId==auditUserId){
                 userType = 0;
                 getTaskStep(2);
+            }else if(userId==acceptUserId){
+                getTaskStep('');
             }
         } else if (status == 3) {
             //任务完成
@@ -302,7 +304,7 @@ $(document).ready(function () {
                 $(".task-record").removeClass('hide').html(str);
             }
 
-        } else {
+        } else{
             var starStr = ``;
             for (var i = 0; i < 5; i++) {
                 if (i < score) {
@@ -311,14 +313,16 @@ $(document).ready(function () {
                     starStr += `<span class="glyphicon glyphicon-star n-star"></span>`;
                 }
             }
-            str = `<div class="title">计划步骤</div>
-            ${step}
-            <div class="points-area">
+            if(status==3){
+                starStr = `<div class="points-area">
                 <div class="points-tip">任务评分</div>
                 <div class="points-stars">
                     ${starStr}
                 </div>
             </div>`;
+            }
+            str = `<div class="title">计划步骤</div>
+            ${step}`;
             $(".task-record").removeClass('hide').html(str);
         }
         //查看操作详情
