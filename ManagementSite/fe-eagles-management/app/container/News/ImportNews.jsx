@@ -13,7 +13,7 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
-import { createOrEditNews } from "../../services/newsService";
+import { bitchCreate } from "../../services/newsService";
 import { newsTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
@@ -34,7 +34,7 @@ class ImportNews extends React.Component {
       },
       {
         title: "新闻链接",
-        dataIndex: "Content"
+        dataIndex: "ExternalUrl"
       },
       {
         title: "新闻图片链接",
@@ -72,7 +72,7 @@ class ImportNews extends React.Component {
               case 0:
                 news["NewsName"] = text;
               case 1:
-                news["Content"] = text;
+                news["ExternalUrl"] = text;
               case 2:
                 news["NewsImg"] = text;
               case 3:
@@ -91,21 +91,17 @@ class ImportNews extends React.Component {
   handleImport = async () => {
     try {
       let { newsList } = this.state;
-      // todo 批量导入新闻 等待接口
-      // let { code } = await createOrEditNews({
-
-      // });
-      // if (code === 0) {
-      //   message.success("删除成功");
-      //   await this.getCurrentList({
-      //     ...this.getListConfig,
-      //     requestPage: this.state.current,
-      //     keyword: this.state.keyword
-      //   });
-      //   this.setState({ selectedRowKeys: [] });
-      // } else {
-      //   message.error("删除失败");
-      // }
+      debugger;
+      let { Code, Result, Message } = await bitchCreate({
+        Info: newsList
+      });
+      if (Code === "00") {
+        message.success("导入成功");
+        this.setState({ memberList: Result.UserList });
+      } else {
+        message.error(Message);
+        this.setState({ memberList: Result.UserList });
+      }
     } catch (e) {
       throw new Error(e);
     }
@@ -165,7 +161,7 @@ class ImportNews extends React.Component {
             <span>仅支持txt文件，格式为XXXXX，请注意区分中英文符号</span>
           </Col>
           <Col span={3} key={6}>
-            <Button type="button" >
+            <Button type="button">
               <a href={newsTempUrl}>下载模板</a>
             </Button>
           </Col>

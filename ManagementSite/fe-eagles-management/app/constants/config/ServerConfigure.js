@@ -35,7 +35,8 @@ const NEWS = {
   NEWS_EDIT: "/api/News/EditNews", //编辑新闻
   NEWS_DELETE: "/api/News/RemoveNews", //删除新闻
   NEWS_LIST: "/api/News/GetNews", //新闻列表
-  NEWS_DETAIL: "/api/News/GetNewsDetail" //新闻详情
+  NEWS_DETAIL: "/api/News/GetNewsDetail", //新闻详情
+  NEWS_IMPORT: "/api/News/ImportNews", //新闻导入
 };
 // 操作员
 const OPERATOR = {

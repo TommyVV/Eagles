@@ -44,8 +44,6 @@ export const getNewsList = async params => {
 // 创建或编辑新闻
 export const createOrEditNews = async params => {
   try {
-    // const user = Util.getOrgIdAndBranchId();
-    // params = { ...params, ...user };
     let res = await sendRequest({
       method: "post",
       url: NEWS.NEWS_EDIT,
@@ -67,6 +65,25 @@ export const deleteNews = async params => {
     let res = await sendRequest({
       method: "post",
       url: NEWS.NEWS_DELETE,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+// 导入
+export const bitchCreate= async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: NEWS.NEWS_IMPORT,
       params
     });
     let { Code, Message } = res.data;

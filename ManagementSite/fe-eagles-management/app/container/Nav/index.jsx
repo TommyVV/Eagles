@@ -80,7 +80,7 @@ export default class App extends React.Component {
               title={
                 <span>
                   <Icon type="mail" />
-                  <span>习题问卷</span>
+                  <span>试卷信息</span>
                 </span>
               }
               style={{ display: authMap.get("News0002") ? null : "none" }}
@@ -89,13 +89,13 @@ export default class App extends React.Component {
                 key="1"
                 onClick={e => hashHistory.replace("/questionlist")}
               >
-                习题问卷列表
+                试卷列表
               </Menu.Item>
               <Menu.Item
                 key="2"
                 onClick={e => hashHistory.replace("/question/detail")}
               >
-                习题问卷详情
+                试卷详情
               </Menu.Item>
             </SubMenu>
             <SubMenu

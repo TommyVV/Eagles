@@ -181,7 +181,7 @@ class QuestionForm extends Component {
       const { getFieldsValue } = this.props.form;
       let values = getFieldsValue();
       if (!values.randomCount) {
-        message.error(`请输入随机生成题目数量`);
+        message.error(`请输入随机生成习题数量`);
         return;
       }
       let { SubjectList } = await random({
@@ -215,6 +215,7 @@ class QuestionForm extends Component {
     });
     let newKeys = keys.concat(SubjectList);
     let hash = {};
+    // let newArr=[];
     let newArr = newKeys.reduceRight((item, next) => {
       hash[next.QuestionId]
         ? ""
@@ -265,7 +266,12 @@ class QuestionForm extends Component {
     };
     const columns = [
       {
-        title: "题目",
+        title: "习题编号",
+        dataIndex: "QuestionId",
+        key: "0"
+      },
+      {
+        title: "习题名称",
         dataIndex: "Question",
         key: "1"
       },
@@ -388,7 +394,7 @@ class QuestionForm extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="是否随机生成题目"
+            label="是否随机生成习题"
             style={{ display: ExercisesId ? "none" : null }}
           >
             {getFieldDecorator("isRandom")(
@@ -400,7 +406,7 @@ class QuestionForm extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="随机生成题目数量"
+            label="随机生成习题数量"
             style={{
               display: !ExercisesId && this.state.isRandom ? "block" : "none"
             }}

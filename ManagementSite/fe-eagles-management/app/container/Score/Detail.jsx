@@ -70,6 +70,7 @@ class Base extends Component {
     });
   };
   change(value) {
+    debugger
     // 保存数据
     let { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
@@ -206,18 +207,16 @@ class Base extends Component {
           label="字数"
           style={{ display: score.RewardType == "1" ? "block" : "none" }}
         >
-          {getFieldDecorator("WordCount")(
-            <Input placeholder="请输入字数" />
-          )}
+          {getFieldDecorator("WordCount")(<Input placeholder="请输入字数" />)}
         </FormItem>
-        {/* <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("state")(
+        <FormItem {...formItemLayout} label="状态">
+          {getFieldDecorator("Status")(
             <Select>
               <Option value="0">可用</Option>
               <Option value="1">不可用</Option>
             </Select>
           )}
-        </FormItem> */}
+        </FormItem>
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -232,7 +231,7 @@ class Base extends Component {
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/operatorlist")}
+                onClick={() => hashHistory.replace("/intergrallist")}
               >
                 取消
               </Button>
@@ -246,8 +245,8 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("详情数据回显 - ", props);
     const { score } = props;
+    console.log("详情数据回显 - ", score);
     return {
       ScoreSetUpId: Form.createFormField({
         value: score.ScoreSetUpId
@@ -260,6 +259,9 @@ const FormMap = Form.create({
       }),
       WordCount: Form.createFormField({
         value: score.WordCount
+      }),
+      Status: Form.createFormField({
+        value: score.Status ? score.Status : "0"
       })
     };
   }

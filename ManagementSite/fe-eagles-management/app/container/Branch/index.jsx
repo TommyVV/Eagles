@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Table,
-  Row,
-  Col,
-  Button,
-  message,
-  Modal,
-} from "antd";
+import { Table, Row, Col, Button, message, Modal } from "antd";
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/branchService";
 import Nav from "../Nav";
@@ -143,8 +136,11 @@ class BranchList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/branch/detail`)}>新增</a>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/branch/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

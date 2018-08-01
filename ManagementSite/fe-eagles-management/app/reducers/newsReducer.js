@@ -1,7 +1,7 @@
 import { actionType } from "../constants/ActionType/pc";
 
 const newsInfo = {
-  
+  Attachments: []
 };
 
 const newsReducer = (state = newsInfo, action) => {

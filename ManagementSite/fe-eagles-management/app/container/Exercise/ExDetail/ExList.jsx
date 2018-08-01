@@ -29,7 +29,11 @@ class ExList extends React.Component {
     };
     this.columns = [
       {
-        title: "题目",
+        title: "习题编号",
+        dataIndex: "QuestionId"
+      },
+      {
+        title: "习题名称",
         dataIndex: "Question"
       },
       {
@@ -161,10 +165,11 @@ class ExList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/exercise/detail`)}>
-                新增
-              </a>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/exercise/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

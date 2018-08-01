@@ -168,17 +168,17 @@ class Base extends Component {
           <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
             {getFieldDecorator("QuestionId")(<Input />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="题目名称">
+          <FormItem {...formItemLayout} label="习题名称">
             {getFieldDecorator("Question", {
               rules: [
                 {
                   required: true,
-                  message: "必填，请输入题目名称"
+                  message: "必填，请输入习题名称"
                 }
               ]
-            })(<Input placeholder="必填，请输入题目名称" />)}
+            })(<Input placeholder="必填，请输入习题名称" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="题目类型">
+          <FormItem {...formItemLayout} label="习题类型">
             {getFieldDecorator("Multiple")(
               <Select onChange={this.change.bind(this, "Multiple")}>
                 <Option value="0">单选</Option>

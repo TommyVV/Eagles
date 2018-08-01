@@ -153,7 +153,11 @@ class Exercise extends React.Component {
     };
     this.columns = [
       {
-        title: "问卷名称",
+        title: "试卷编号",
+        dataIndex: "ExercisesId"
+      },
+      {
+        title: "试卷名称",
         dataIndex: "ExercisesName"
       },
       {
@@ -169,19 +173,19 @@ class Exercise extends React.Component {
           </span>
         )
       },
-      {
-        title: "状态",
-        dataIndex: "Status",
-        render: text => (
-          <span>
-            {stateMap.map(obj => {
-              if (obj.Status == text) {
-                return obj.text;
-              }
-            })}
-          </span>
-        )
-      },
+      // {
+      //   title: "状态",
+      //   dataIndex: "Status",
+      //   render: text => (
+      //     <span>
+      //       {stateMap.map(obj => {
+      //         if (obj.Status == text) {
+      //           return obj.text;
+      //         }
+      //       })}
+      //     </span>
+      //   )
+      // },
       {
         title: "发布时间",
         dataIndex: "CreateTime",
@@ -189,15 +193,18 @@ class Exercise extends React.Component {
       },
       {
         title: "操作",
-        dataIndex: "ExercisesId",
-        render: id => {
+        render: obj => {
           return (
             <div>
-              <a onClick={() => hashHistory.replace(`/question/detail/${id}`)}>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/question/detail/${obj.ExercisesId}`)
+                }
+              >
                 编辑
               </a>
               <a
-                onClick={() => this.handleDelete(id)}
+                onClick={() => this.handleDelete(obj.ExercisesId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -321,7 +328,7 @@ class Exercise extends React.Component {
           <Col>
             <Button type="primary" className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/exercise/detail`)}>
-                新增问卷
+                新增试卷
               </a>
             </Button>
           </Col>

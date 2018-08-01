@@ -29,7 +29,11 @@ class ExList extends React.Component {
     };
     this.columns = [
       {
-        title: "题目",
+        title: "习题编号",
+        dataIndex: "QuestionId"
+      },
+      {
+        title: "习题名称",
         dataIndex: "Question"
       },
       {

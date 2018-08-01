@@ -46,8 +46,8 @@ class ScoreList extends React.Component {
       },
       {
         title: "是否可用",
-        dataIndex: "WordCount",
-        render: text => <span>{text}</span>
+        dataIndex: "Status",
+        render: text => <span>{text == "0" ? "可用" : "不可用"}</span>
       },
       {
         title: "操作",

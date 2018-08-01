@@ -18,6 +18,7 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getNewsInfoById, createOrEditNews } from "../../services/newsService";
 import { getList } from "../../services/programaService";
+import { getQuestionList } from "../../services/questionService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/newsAction";
@@ -29,7 +30,6 @@ import "./style.less";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
 @connect(
   state => {
     return {
@@ -43,7 +43,9 @@ class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      fileList: [],
+      attachs: []
     };
   }
 
@@ -54,13 +56,27 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { StarTime, EndTime } = values;
+          let fileList = [];
+          let { news, Attachs } = this.props;
+          let { Attachments } = news;
+          let attach = {}; // 存附件对象
+          let index = 0;
+          Attachs.map(obj => {
+            attach[`Attach${++index}`] = obj.AttachmentUrl;
+          });
+          Attachments.map(obj => {
+            if (obj.response) {
+              const url = obj.response.Result.FileUploadResults[0].FileUrl;
+              attach[`Attach${++index}`] = url;
+            }
+          });
           let params = {
             Info: {
               ...this.props.news,
               ...values,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
-              EndTime: moment(EndTime, "yyyy-MM-dd").format()
-              // NewsImg: this.props.news.NewsImg
+              EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+              ...attach
             }
           };
           let { Code } = await createOrEditNews(params);
@@ -70,6 +86,7 @@ class Base extends Component {
             hashHistory.replace("/newslist");
           } else {
             let tip = this.props.news.NewsId ? "保存新闻失败" : "创建新闻失败";
+
             message.error(tip);
           }
         } catch (e) {
@@ -103,17 +120,55 @@ class Base extends Component {
   }
   // 上传新闻的附件
   handleChange = info => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
+    console.log("上传新闻附件：", info);
+    if (info.fileList.length > 4) {
+      message.error("最多只能上传4个附件");
+      return false;
+    }
+    let { news, Attachs, setObj } = this.props;
+    if (info.file.status == "uploading") {
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
+    }
+    if (info.file.status == "removed") {
+      let newKeys = Attachs.filter((v, i) => {
+        return i != info.file.uid;
+      });
+      setObj(newKeys);
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
-      let attach = {};
-      info.fileList.map((obj, index) => {
-        const url = obj.response.Result.FileUploadResults[0].FileUrl;
-        attach[`Attach${++index}`] = url;
-      });
-      this.props.saveInfo({ ...this.props.news, ...attach }); // todo
+      let attach = {}; // 存附件对象
+      let fileList = [];
+      let { news } = this.props;
+      // info.fileList.map((obj, index) => {
+      //   let url = "";
+      //   if (obj.response) {
+      //     url = obj.response.Result.FileUploadResults[0].FileUrl;
+      //     // attach[`Attach${++index}`] = url;
+      //     fileList.push({
+      //       AttachmentName: info.file.name,
+      //       AttachmentUrl: url
+      //     });
+      //   }
+      // });
+      // let newFileList = [];
+      // Attachments.map((o, i) => {
+      //   if (o.url) {
+      //     newFileList.push({
+      //       uid: i,
+      //       name: o.AttachmentName,
+      //       status: "done",
+      //       url: o.AttachmentUrl
+      //     });
+      //   }
+      // });
+      // this.props.saveInfo({
+      //   ...news,
+      //   Attachments: newFileList.concat(fileList)
+      // });
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      return;
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -156,15 +211,22 @@ class Base extends Component {
       setFieldsValue,
       getFieldsValue
     } = this.props.form;
-    const { news, programaList } = this.props; //是否显示试卷列表
-    const props = {
-      name: "file",
-      action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
-      headers: {
-        authorization: "authorization-text"
-      },
-      onChange: this.handleChange.bind(this)
-    };
+    const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
+    console.log("保存的附件：", Attachs);
+    let fileList = [];
+    news.Attachments &&
+      news.Attachments.map((o, i) => {
+        if (o.lastModified) {
+          fileList.push(o);
+        } else {
+          fileList.push({
+            uid: i,
+            name: o.AttachmentName,
+            status: "done",
+            url: o.AttachmentUrl
+          });
+        }
+      });
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -343,14 +405,18 @@ class Base extends Component {
         <FormItem
           {...formItemLayout}
           label="试卷选择"
-          style={{
-            display: news.isTest == "1" ? "block" : "none"
-          }}
+          style={{ display: news.isTest == "1" ? "block" : "none" }}
         >
           {getFieldDecorator("TestId")(
             <Select>
-              <Option value="1">试卷一</Option>
-              <Option value="2">试卷二</Option>
+              {questionList.length &&
+                questionList.map((obj, index) => {
+                  return (
+                    <Option key={index} value={obj.ExercisesId + ""}>
+                      {obj.ExercisesName}
+                    </Option>
+                  );
+                })}
             </Select>
           )}
         </FormItem>
@@ -371,69 +437,88 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="分类">
           <Row>
             <Col span={8}>
-              <Checkbox
-                checked={news.IsImage == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsImage")}
-              >
-                有图片
-              </Checkbox>
+              {news.IsImage == "0" || news.IsImage == "1" ? (
+                <Checkbox
+                  checked={news.IsImage == "1" ? true : false}
+                  onChange={this.changeBox.bind(this, "IsImage")}
+                >
+                  有图片
+                </Checkbox>
+              ) : (
+                <Checkbox onChange={this.changeBox.bind(this, "IsImage")}>
+                  有图片
+                </Checkbox>
+              )}
             </Col>
             <Col span={8}>
-              <Checkbox
-                checked={news.IsVideo == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsVideo")}
-              >
-                有视频
-              </Checkbox>
+              {news.IsVideo == "0" || news.IsVideo == "1" ? (
+                <Checkbox
+                  checked={news.IsVideo == "1" ? true : false}
+                  onChange={this.changeBox.bind(this, "IsVideo")}
+                >
+                  有视频
+                </Checkbox>
+              ) : (
+                <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                  有视频
+                </Checkbox>
+              )}
             </Col>
             <Col span={8}>
-              <Checkbox
-                checked={news.IsAttach == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsAttach")}
-              >
-                有附件
-              </Checkbox>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={8}>
-              <Checkbox
-                checked={news.IsClass == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsClass")}
-              >
-                有课件
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={news.IsLearning == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsLearning")}
-              >
-                是学习心得
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={news.IsText == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "IsText")}
-              >
-                是文章
-              </Checkbox>
+              {news.IsAttach == "0" || news.IsAttach == "1" ? (
+                <Checkbox
+                  checked={news.IsAttach == "1" ? true : false}
+                  onChange={this.changeBox.bind(this, "IsAttach")}
+                >
+                  有附件
+                </Checkbox>
+              ) : (
+                <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
+                  有附件
+                </Checkbox>
+              )}
             </Col>
           </Row>
           <Row>
             <Col span={8}>
-              <Checkbox
-                checked={news.CanStudy == "1" ? true : false}
-                onChange={this.changeBox.bind(this, "CanStudy")}
-              >
-                有否允许学习
-              </Checkbox>
+              {news.IsClass == "0" || news.IsClass == "1" ? (
+                <Checkbox
+                  checked={news.IsClass == "1" ? true : false}
+                  onChange={this.changeBox.bind(this, "IsClass")}
+                >
+                  有课件
+                </Checkbox>
+              ) : (
+                <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
+                  有课件
+                </Checkbox>
+              )}
+            </Col>
+            <Col span={8}>
+              {news.CanStudy == "0" || news.CanStudy == "1" ? (
+                <Checkbox
+                  checked={news.CanStudy == "1" ? true : false}
+                  onChange={this.changeBox.bind(this, "CanStudy")}
+                >
+                  有否允许学习
+                </Checkbox>
+              ) : (
+                <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                  有否允许学习
+                </Checkbox>
+              )}
             </Col>
           </Row>
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
-          <Upload {...props}>
+          <Upload
+            name="file"
+            listType="text"
+            showUploadList={true}
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD} 
+            onChange={this.handleChange.bind(this)}
+            fileList={fileList}
+          >
             <Button>
               <Icon type="upload" /> 点击上传
             </Button>
@@ -520,7 +605,9 @@ class NewsDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      programaList: [] // 栏目列表
+      programaList: [], // 栏目列表
+      questionList: [], // 试卷列表
+      Attachments: []
     };
   }
 
@@ -530,8 +617,9 @@ class NewsDetail extends Component {
       this.getInfo(id); //拿新闻详情
     } else {
       this.props.clearInfo();
-      // 拿栏目详情
+      // 拿栏目、试卷详情
       this.getProgramaList();
+      this.getQuestionList();
     }
   }
 
@@ -545,9 +633,17 @@ class NewsDetail extends Component {
     console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };
+  // 查询试卷列表
+  getQuestionList = async () => {
+    const res = await getQuestionList();
+    console.log("getQuestionList", res);
+    this.setState({ questionList: res.List });
+  };
   // 根据id查询详情
   getInfo = async NewsId => {
     try {
+      // 说明有试卷
+      this.getQuestionList();
       this.getProgramaList();
       let { Info } = await getNewsInfoById({ NewsId });
       console.log("newsDetails", Info);
@@ -555,16 +651,8 @@ class NewsDetail extends Component {
         ...Info,
         isTest: Info.TestId ? "1" : "0"
       };
+      this.state.Attachments = Info.Attachments;
       this.props.saveInfo(Info);
-      // 拿栏目详情
-      // 说明有试卷
-      if (Info.TestId > 0) {
-        // const { List } = await getQuestionList();
-        // console.log(List);
-      } else {
-        // const { List } = await getQuestionList();
-        // console.log(List);
-      }
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
@@ -572,10 +660,18 @@ class NewsDetail extends Component {
   };
 
   render() {
-    const { programaList } = this.state;
+    const { programaList, questionList,Attachments } = this.state;
     return (
       <Nav>
-        <FormMap news={this.props.newsReducer} programaList={programaList} />
+        <FormMap
+          news={this.props.newsReducer}
+          Attachs={Attachments}
+          programaList={programaList}
+          questionList={questionList}
+          setObj={attachs => {
+            this.state.Attachments = attachs;
+          }}
+        />
       </Nav>
     );
   }
