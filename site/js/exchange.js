@@ -33,7 +33,8 @@ mescroll = new MeScroll("mescroll", {
 		},
 		isLock: false,
 		callback: partyLearningfunc,
-		isBounce: false
+		isBounce: false,
+		htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
 	}
 });
 
@@ -80,7 +81,7 @@ function exchange(token,appId,page) {
                 alert(res.Code, res.Message);
                 mescroll.lockDownScroll(true);
 				mescroll.lockUpScroll(true);
-				$('.mescroll-hardware').html('没有更多')
+				$('.mescroll-hardware').html('没有更多数据')
             }
 		}
 	});
