@@ -6,6 +6,9 @@ var toUserName = '';
 //指派人员信息
 var toUsreInfo = '';
 var imgUrl = "";
+var inputval='';
+var NewsId=''
+//$("input:radio[name='radio1']").attr("checked",2);
 var onurl=window.location.href
 if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
 	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
@@ -14,7 +17,8 @@ let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('footer.html')
 //文章发布
-if(getRequest('aryewsType')!=undefined){
+if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
+	NewsId=getRequest('NewsId');
 	$('.publish-title').val(getRequest('conretn'));
 	$('#selectpicker').val(getRequest('aryewsType')).attr('selected','selected'); 
 	//imgsrec
@@ -22,12 +26,11 @@ if(getRequest('aryewsType')!=undefined){
 		$('.assign').show();
 	}
 	$('.publish-content').val(getRequest('comids'))
-	if(getRequest('ispubic')==0){
-		$(".pub-flag").attr("src", "icons/sel_yes@2x.png").addClass("select");
-	}else{
-		$(".pub-flag").attr("src", "icons/sel_no@2x.png").removeClass("select");
-	}
+	$("input:radio[value='"+getRequest('ispubic')+"']").attr('checked','true');
+	imgUrl = getRequest('imgsrec');
+	$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
 }
+
 //图片上传
 $("#imgupload").fileupload({
 	url: UPLOAD,
@@ -49,7 +52,9 @@ $("#imgupload").fileupload({
 	}
 });
 $('.publish-btn').on('click', function(e) {
+	
 	e.preventDefault();
+	inputval=$('input:radio[name="radio1"]:checked').val();
 	var title = $('.publish-title').val(); //标题
 	var type = $('#selectpicker').val(); //文章类型
 	var content = $('.publish-content').val(); //文章内容
@@ -86,6 +91,14 @@ $('.publish-btn').on('click', function(e) {
 			timeout: 2
 		});
 		return;
+	}else if(!inputval){
+        bootoast({
+        	message: "请选择公开类型",
+        	type: "info",
+        	position: "toast-top-center",
+        	timeout: 2
+        });
+        return;
 	}
 	if($('#selectpicker').val()==3){
 		if(!toUserId) {
@@ -101,12 +114,13 @@ $('.publish-btn').on('click', function(e) {
 	$.ajax({
 		type: "post",
 		data: {
+			"NewsId":NewsId,
 			"NewsTitle": title,
 			"NewsType": type,
 			"UserId":toUserId,
 			"NewsContent": content,
 			"ImageUrl": imgUrl,
-			"IsPublic": pubFlag == true ? 1 : 0,
+			"IsPublic": inputval,
 			"Token": token,
 			"AppId": appId
 		},
@@ -184,7 +198,7 @@ $('.modal-body').on('click', '.subordinate-item', function (e) {
 		console.log(toUsreInfo,toUserName)
 });
 //是否公开
-$(".flag-area").click(function() {
+/* $(".flag-area").click(function() {
 		if ($(".pub-flag").hasClass("select")) {
 				$(".pub-flag")
 						.attr("src", "icons/sel_no@2x.png")
@@ -194,7 +208,7 @@ $(".flag-area").click(function() {
 						.attr("src", "icons/sel_yes@2x.png")
 						.addClass("select");
 		}
-});
+}); */
 //指派人员
 $('#btnTestSaveLarge').on('click', function() {
 		if (toUsreInfo) {

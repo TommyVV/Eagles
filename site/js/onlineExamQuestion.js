@@ -305,7 +305,7 @@ function getTestPaperAnswerJson() {
 
 	}
 
-	var testListJson = JSON.stringify(testList);
+	var testListJson = testList;
 	console.info(testListJson);
 	return testListJson;
 }

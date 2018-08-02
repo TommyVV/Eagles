@@ -348,7 +348,7 @@ function getTestPaperAnswerJson() {
 		//答案对象
 		testList.push(question); //问题对象
 	}
-	testListJson = JSON.stringify(testList);
+	testListJson = testList;
 	return testListJson;
 }
 //更新新闻阅读量

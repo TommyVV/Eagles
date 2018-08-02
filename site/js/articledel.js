@@ -1,23 +1,20 @@
 var appId = getRequest('appId');
 var NewsId = getRequest('aryewsType');
-var token = localStorage.getItem("token")
-var onurl=window.location.href
-
 $('#top-nav,#mobilenav').load('head.html')
 
 $('#pc-footer').load('./footer.html')
 
-myart(NewsId,token, appId) 
+myart(NewsId, appId) 
 
-function myart(NewsId,token, appId) {
+function myart(NewsId,appId) {
 	$.ajax({
 		type: "post",
 		data: {
 			"NewsId": NewsId,
-			"Token": token,
+			"Token": "",
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserArticleDetail",
+		url: "http://51service.xyz/Eagles/api/News/GetPublicUserNewsDetail",
 		dataType: "json",
 		success: function(res) {
 			if(res.Code == 00) {

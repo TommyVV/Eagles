@@ -1,9 +1,7 @@
 
 var appId = getRequest('appId');
-var token = localStorage.getItem("token")
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('./footer.html')
-//var token="abc";
 var mescroll;
 $('.item').html('')
 mescroll = new MeScroll("mescroll", {
@@ -27,19 +25,19 @@ mescroll = new MeScroll("mescroll", {
 function downcallback() {}
 
 function partyLearningfunc(page) {
-myAricle(token, page, appId);
+myAricle(page, appId);
 	
 }
-function myAricle(token, page, appId) {
+function myAricle(page, appId) {
 	$.ajax({
 		type: "post",
 		data: {
-			"Token": token,
+			"Token": "",
 			"AppId": appId,
 			"PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserArticle",
+		url: "http://51service.xyz/Eagles/api/News/GetPublicUserNews",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
