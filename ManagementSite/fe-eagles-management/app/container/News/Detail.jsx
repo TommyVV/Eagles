@@ -56,7 +56,6 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { StarTime, EndTime } = values;
-          let fileList = [];
           let { news, Attachs } = this.props;
           let { Attachments } = news;
           let attach = {}; // 存附件对象
@@ -72,7 +71,7 @@ class Base extends Component {
           });
           let params = {
             Info: {
-              ...this.props.news,
+              ...news,
               ...values,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
               EndTime: moment(EndTime, "yyyy-MM-dd").format(),
@@ -560,7 +559,7 @@ const FormMap = Form.create({
         value: news.NewsName
       }),
       NewsType: Form.createFormField({
-        value: "0" // 写死
+        value: "0" // 写死新闻
       }),
       Author: Form.createFormField({
         value: news.Author
@@ -627,6 +626,7 @@ class NewsDetail extends Component {
     this.props.clearInfo();
   }
 
+  
   // 查询栏目列表
   getProgramaList = async () => {
     const { List } = await getList();
