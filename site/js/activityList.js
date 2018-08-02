@@ -16,8 +16,7 @@ $(document).ready(function() {
         },
         up: {
             callback: getActivityList,
-            isBounce: false,
-            htmlNodata: '没有更多数据'
+            isBounce: false
         }
     });
 

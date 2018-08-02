@@ -32,6 +32,13 @@ $(document).ready(function() {
                 }
             }
             testPaperAnswer(answers);
+        }else{
+            bootoast({
+                message: '请选择投票',
+                type: 'warning',
+                position: 'toast-top-center',
+                timeout: 3
+            });
         }
     });
     //查询用户是否参加过该活动
@@ -48,7 +55,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("GetIsJoinTest---", data);
                 if (data.Code == "00") {
-                    var joinFlag = data.Result.IsJoin;
+                    joinFlag = data.Result.IsJoin;
                     if (joinFlag == '1') {
                         $('.sub-btn').removeClass('hide');
                     } else {
@@ -122,6 +129,7 @@ $(document).ready(function() {
                         position: 'toast-top-center',
                         timeout: 3
                     });
+                    getIsJoinTest();
                 } else {
                     bootoast({
                         message: '问卷提交失败:' + data.Message + '',
@@ -182,32 +190,7 @@ $(document).ready(function() {
                                 ${answerStr}
                             </div>`;
             $('.vote-box').html(voteStr);
-            if (joinFlag == '1') {
-                $('.img-option').click(function() {
-                    var obj = $(this).find('.option-name').find('img');
-                    console.log($(obj).attr('class'));
-                    var selectFlag = $(obj).hasClass('select');
-                    if (selectFlag == false) {
-                        if (multiple == 1) {
-                            //允许多选
-                            var selectCount = $('.select').length;
-                            if (selectCount == multipleCount) {
-                                return;
-                            } else {
-                                $(obj).addClass('select');
-                                $(obj).attr('src', 'icons/sel_yes@2x.png');
-                            }
-                        } else {
-                            $(".select").removeClass('select');
-                            $(obj).addClass('select');
-                            $(obj).attr('src', 'icons/sel_yes@2x.png');
-                        }
-                    } else {
-                        $(obj).removeClass('select');
-                        $(obj).attr('src', 'icons/sel_no@2x.png');
-                    }
-                });
-            }
+            addClickEvent(multiple,multipleCount,voteType);
         } else {
             //非图片类型
             answerStr += `<div class="options">`
@@ -235,34 +218,42 @@ $(document).ready(function() {
                                 ${answerStr}
                             </div>`;
             $('.vote-box').html(voteStr);
-            if (joinFlag == '1') {
-                $('.option').click(function() {
-                    var obj = $(this).find('.flag').find('img');
-                    console.log($(obj).attr('class'));
-                    var selectFlag = $(obj).hasClass('select');
-                    if (selectFlag == false) {
-                        if (multiple == 1) {
-                            //允许多选
-                            var selectCount = $('.select').length;
-                            if (selectCount == multipleCount) {
-                                return;
-                            } else {
-                                $(obj).addClass('select');
-                                $(obj).attr('src', 'icons/sel_yes@2x.png');
-                            }
+            addClickEvent(multiple,multipleCount,voteType);
+        }
+
+    }
+    function addClickEvent(multiple,multipleCount,voteType){
+        if (joinFlag == '1') {
+            $('.img-option,.option').click(function() {
+                var obj="";
+                if(voteType){
+                    obj = $(this).find('.option-name').find('img');
+                }else{
+                    obj = $(this).find('.flag').find('img');
+                }
+                console.log($(obj).attr('class'));
+                var selectFlag = $(obj).hasClass('select');
+                if (selectFlag == false) {
+                    if (multiple == 1) {
+                        //允许多选
+                        var selectCount = $('.select').length;
+                        if (selectCount == multipleCount) {
+                            return;
                         } else {
-                            $(".select").removeClass('select');
                             $(obj).addClass('select');
                             $(obj).attr('src', 'icons/sel_yes@2x.png');
                         }
                     } else {
-                        $(obj).removeClass('select');
-                        $(obj).attr('src', 'icons/sel_no@2x.png');
+                        $(".select").removeClass('select').attr('src', 'icons/sel_no@2x.png');
+                        $(obj).addClass('select');
+                        $(obj).attr('src', 'icons/sel_yes@2x.png');
                     }
-                });
-            }
+                } else {
+                    $(obj).removeClass('select');
+                    $(obj).attr('src', 'icons/sel_no@2x.png');
+                }
+            });
         }
-
     }
     class CalculateScreen {
         constructor() {

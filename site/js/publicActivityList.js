@@ -1,9 +1,6 @@
 $(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
-    if(!token) {
-        window.location.href = 'login.html?appId=' + appId + '';
-    }
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
     var pageIndex = 1;
@@ -15,8 +12,7 @@ $(document).ready(function() {
         },
         up: {
             callback: getPublicActivityList,
-            isBounce: false,
-            htmlNodata: '没有更多数据'
+            isBounce: false
         }
     });
 
@@ -98,6 +94,7 @@ $(document).ready(function() {
                         </div>
                         <div class="date">
                             ${element.ActivityDate.substr(0, 10)}
+                            <div class="pub-status line-color">已完成</div>
                         </div>
                     </div>
                 </div>`;

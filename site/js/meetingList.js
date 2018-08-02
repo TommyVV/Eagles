@@ -16,8 +16,7 @@ $(document).ready(function() {
         },
         up: {
             callback: getMeeting,
-            isBounce: false,
-            htmlNodata: '没有更多数据'
+            isBounce: false
         }
     });
     //查询会议

@@ -2,9 +2,6 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-    if(!token) {
-        window.location.href = 'login.html?appId=' + appId + '';
-    }
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => {});
 
@@ -18,8 +15,7 @@ $(document).ready(function() {
         },
         up: {
             callback:getPublicTask,
-            isBounce: false,
-            htmlNodata: '没有更多数据'
+            isBounce: false
         }
     });
     //查询活动

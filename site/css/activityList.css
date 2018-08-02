@@ -67,4 +67,12 @@
   -webkit-line-clamp: 2;
   overflow: hidden; }
 
+.pub-status {
+  width: 2.9866666667rem;
+  height: 0.8533333333rem;
+  line-height: 0.8533333333rem;
+  border-radius: 0.4266666667rem;
+  text-align: center;
+  color: white; }
+
 /*# sourceMappingURL=activityList.css.map */

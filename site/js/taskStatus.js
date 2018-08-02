@@ -140,7 +140,7 @@ $(document).ready(function () {
         if (status == -2) {
             return "待审核";
         } else if (status == -1) {
-            return "待审核";
+            return "未接受";
         } else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {
