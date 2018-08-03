@@ -29,6 +29,11 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 	$("input:radio[value='"+getRequest('ispubic')+"']").attr('checked','true');
 	imgUrl = getRequest('imgsrec');
 	$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
+	if(getRequest('status')!=-1){
+		$(".publish-title,#selectpicker,.item-select,#imgupload,.demo--radio,.publish-content").attr("disabled",true);
+		$('.publish-wrap-btn').hide()
+	}
+	
 }
 
 //图片上传
