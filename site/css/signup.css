@@ -60,9 +60,9 @@ html, body {
     .form-horizontal .form-group .user-icon {
       background: url("../assets/images/user.png") no-repeat center center; }
     .form-horizontal .form-group .pwd-icon {
-      background: url("../assets/images/lock.png") no-repeat center center; }
+      background: url("../assets/images/lock1.png") no-repeat center center;background-size:100% ; }
     .form-horizontal .form-group .cap-icon {
-      background: url("../assets/images/verifycode.png") no-repeat center center; }
+      background: url("../assets/images/verifycode1.png") no-repeat center center;background-size:100% ; }
     .form-horizontal .form-group .btn-cap {
       position: absolute;
       display: inline-block;
