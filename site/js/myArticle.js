@@ -96,7 +96,7 @@ function myAricle(NewsType, token, page, appId) {
 				if(res.Result.NewsList != '' || res.Result.NewsList != null) {
 					var myAricle = '';
 					for(var i = 0; i < data.NewsList.length; i++) {
-						myAricle += '<div class="article" NewsId="'+data.NewsList[i].NewsId +'" status="'+data.NewsList[i].status +'" type="'+data.NewsList[i].NewsType +'" conretn="' + data.NewsList[i].Title + '" comids="'+data.NewsList[i].NewsContent+'" dangyuan="'+data.NewsList[i].ToUser+'" ispubic="'+data.NewsList[i].IsPublic+'" imgsrec="'+data.NewsList[i].ImageUrl+'">' +
+						myAricle += '<div class="article" NewsId="'+data.NewsList[i].NewsId +'" status="'+data.NewsList[i].Status +'" type="'+data.NewsList[i].NewsType +'" conretn="' + data.NewsList[i].Title + '" comids="'+data.NewsList[i].NewsContent+'" dangyuan="'+data.NewsList[i].ToUser+'" ispubic="'+data.NewsList[i].IsPublic+'" imgsrec="'+data.NewsList[i].ImageUrl+'">' +
 							'<div class="left"><img src="' + data.NewsList[i].ImageUrl + '" alt=""></div>' +
 							'<div class="right">' +
 							'<div class="content overflow-two-line">' + data.NewsList[i].Title + '</div>' +
