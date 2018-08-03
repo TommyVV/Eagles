@@ -296,13 +296,14 @@ function getTestPaperAnswerJson() {
 		if(multiple == 0) { //单选
 			var tempAnswers2 = {}; //存储临时的答案ID
 			var answer = $(questions[i]).children('.answer').find('input[type=radio]:checked');
+			var inputRadio = $(questions[i]).children('.answer').find('input[type=radio]');
 			if(answer.length > 0) {
 				tempAnswers2.AnswerId = answer.attr('answerid');
 				if(JSON.stringify(tempAnswers2) != "{}") //判断对象不为空时添加 避免添加空对象
 					question.Answers.push(tempAnswers2);
-			} else { // 单选题没有选中答案
+			} else if(inputRadio.length>0) { // 单选题没有选中答案
 				bootoast({
-					message: '有题目题目没有作答,请全部完成后再提交!',
+					message: '有题目没有作答,请全部完成后再提交!',
 					type: 'warning',
 					position: 'toast-top-center',
 					timeout: 1
@@ -335,7 +336,7 @@ function getTestPaperAnswerJson() {
 
 				} else if(answerCheckboxs.length <= 0) {
 					bootoast({
-						message: '有题目题目没有作答,请全部完成后再提交!',
+						message: '有题目没有作答,请全部完成后再提交!',
 						type: 'warning',
 						position: 'toast-top-center',
 						timeout: 1
