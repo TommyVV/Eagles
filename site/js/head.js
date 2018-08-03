@@ -10,7 +10,7 @@ $(function() {
 	}
 })
 
-$('.navbar-header').on('click', '.collapsed', function(e) {
+$('.navbar-header').on('click', '.main-topf', function(e) {
 	if($('.operate').is(':hidden')) {
 		$('.operate').show();
 	} else {
@@ -150,9 +150,9 @@ $('.sk_sps').on('click', function(e) {
 	}
 	
 })
-$('.main-topf').on('click', function(e) {
+/* $('.main-topf').on('click', function(e) {
 	window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
-})
+}) */
 
 
 function unreadMessage(token) {
