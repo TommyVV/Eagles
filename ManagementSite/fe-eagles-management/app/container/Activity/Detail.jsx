@@ -54,13 +54,26 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
-          const { news } = this.props;
+          const { news, Attachs } = this.props;
+          let { Attachments } = news;
+          let attach = {}; // 存附件对象
+          let index = 0;
+          Attachs.map(obj => {
+            attach[`Attach${++index}`] = obj.AttachmentUrl;
+          });
+          Attachments.map(obj => {
+            if (obj.response) {
+              const url = obj.response.Result.FileUploadResults[0].FileUrl;
+              attach[`Attach${++index}`] = url;
+            }
+          });
           let params = {
             DetailInfo: {
               ...news,
               ...values,
               BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
-              EndTime: moment(EndTime, "yyyy-MM-dd").format()
+              EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+              ...attach
             }
           };
           let { Code } = await createOrEdit(params);
@@ -103,38 +116,29 @@ class Base extends Component {
   }
   // 上传新闻的附件
   handleChange = info => {
-    console.log(info.file, info.fileList);
+    console.log("上传新闻附件：", info);
+    if (info.fileList.length > 4) {
+      message.error("最多只能上传4个附件");
+      return false;
+    }
+    let { news, Attachs, setObj } = this.props;
+    if (info.file.status == "uploading") {
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
+    }
+    if (info.file.status == "removed") {
+      let newKeys = Attachs.filter((v, i) => {
+        return i != info.file.uid;
+      });
+      setObj(newKeys);
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
+    }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
-      let attach = {};
-      let Attachments = [];
-      info.fileList.map((obj, index) => {
-        const url = obj.response.Result.FileUploadResults[0].FileUrl;
-        attach[`Attach${++index}`] = url;
-        if (obj.uid == info.file.uid) {
-          Attachments.push({
-            uid: obj.uid,
-            name: obj.name,
-            status: "done",
-            url: url
-          });
-        } else {
-          Attachments.push(obj);
-        }
-      });
-
-      this.props.saveInfo({ ...this.props.news, ...attach, Attachments });
-    } else if (info.file.status === "removed") {
-      // 删除附件
-      let attach = {};
-      info.fileList.map((obj, index) => {
-        attach[`Attach${++index}`] = obj.url;
-      });
-      this.props.saveInfo({
-        ...this.props.news,
-        ...attach,
-        Attachments: info.fileList
-      });
+      let attach = {}; // 存附件对象
+      let fileList = [];
+      let { news } = this.props;
+      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      return;
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -163,22 +167,22 @@ class Base extends Component {
     let fileList = [];
     news &&
       news.Attachments &&
-      news.Attachments.map((file, index) => {
-        let obj = {
-          uid: index,
-          name: file.AttachmentName,
-          status: "done",
-          url: file.AttachmentUrl
-        };
-        fileList.push(obj);
+      news.Attachments.map((o, i) => {
+        if (o.lastModified) {
+          fileList.push(o);
+        } else {
+          fileList.push({
+            uid: i,
+            name: o.AttachmentName,
+            status: "done",
+            url: o.AttachmentUrl
+          });
+        }
       });
     console.log(fileList);
     const props = {
       name: "file",
       action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
-      headers: {
-        authorization: "authorization-text"
-      },
       onChange: this.handleChange.bind(this),
       fileList: fileList
     };
@@ -461,7 +465,8 @@ class ActivityDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      List: [] // 习题列表
+      List: [], // 习题列表
+      Attachments: []
     };
   }
 
@@ -513,10 +518,17 @@ class ActivityDetail extends Component {
   };
 
   render() {
-    const { List } = this.state;
+    const { List, Attachments } = this.state;
     return (
       <Nav>
-        <FormMap news={this.props.activityReducer} List={List} />
+        <FormMap
+          news={this.props.activityReducer}
+          List={List}
+          setObj={attachs => {
+            this.state.Attachments = attachs;
+          }}
+          Attachs={Attachments}
+        />
       </Nav>
     );
   }

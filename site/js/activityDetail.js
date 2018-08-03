@@ -13,6 +13,7 @@ $(document).ready(function() {
     getActivityDetail();
     //查询活动详情
     function getActivityDetail() {
+        $(".activity-content").addClass("hide");
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/GetActivityDetail",
