@@ -30,15 +30,13 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           const { system } = this.props;
           const { RepeatTime, NoticeTime } = values;
-
           let params = {
             Info: {
               ...system,
               ...values,
-              NoticeTime:
-                RepeatTime == "0"
-                  ? moment(NoticeTime, "MM-dd").format()
-                  : moment(NoticeTime, "yy-MM-dd").format()
+              NoticeTime: new Date(
+                moment(NoticeTime, "yyyy-MM-dd").format()
+              ).format("yyyy-MM-dd")
             }
           };
           let { Code } = await createOrEdit(params);
@@ -59,7 +57,11 @@ class Base extends Component {
     });
   };
   changDate(value) {
-    console.log(value);
+    console.log(moment(value, "yy-MM-dd").format());
+    console.log(
+      new Date(moment(value, "yy-MM-dd").format()).format("yyyy-MM-dd")
+    );
+
     // const { system } = this.props;
     // const { RepeatTime, NoticeTime } = values;
     // const system={
@@ -181,9 +183,7 @@ const FormMap = Form.create({
       }),
       NoticeTime: Form.createFormField({
         value: system.NoticeTime
-          ? system.RepeatTime == "0"
-            ? moment(NoticeTime, "MM-DD").format()
-            : moment(NoticeTime, "YY-MM-DD").format()
+          ? moment(system.NoticeTime, "YYYY-MM-DD")
           : null
       }),
 
@@ -215,7 +215,6 @@ class SystemDetail extends Component {
   getInfo = async NewsId => {
     try {
       const { News } = await getInfoById({ NewsId });
-      debugger;
       this.setState({ system: News });
     } catch (e) {
       message.error("获取详情失败");

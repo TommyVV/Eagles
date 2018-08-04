@@ -32,6 +32,11 @@ class SystemList extends React.Component {
         dataIndex: "NewsName"
       },
       {
+        title: "重复类型",
+        dataIndex: "RepeatTime",
+        render: obj => <span>{obj == "0" ? "每年" : "仅一次"}</span>
+      },
+      {
         title: "提醒时间",
         render: obj => (
           <span>
@@ -47,7 +52,8 @@ class SystemList extends React.Component {
       },
       {
         title: "状态",
-        dataIndex: "Status"
+        dataIndex: "Status",
+        render: obj => <span>{obj == "0" ? "正常" : "禁用"}</span>
       },
       {
         title: "操作",
@@ -168,8 +174,11 @@ class SystemList extends React.Component {
         />
         <Row type="flex" gutter={24}>
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/system/detail`)}>新增</a>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/system/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

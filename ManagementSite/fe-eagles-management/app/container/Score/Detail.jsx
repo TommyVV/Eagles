@@ -57,6 +57,8 @@ class Base extends Component {
             let tip = score.ScoreSetUpId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/intergrallist");
+          } else if (Code == "500") {
+            message.error("积分奖励已存在");
           } else {
             let tip = score.ScoreSetUpId ? "保存失败" : "创建失败";
             message.error(tip);
@@ -70,7 +72,7 @@ class Base extends Component {
     });
   };
   change(value) {
-    debugger
+    debugger;
     // 保存数据
     let { getFieldsValue } = this.props.form;
     let values = getFieldsValue();

@@ -52,9 +52,6 @@ class ImportNews extends React.Component {
   }
   handleUpload = () => {
     const { fileList, newsList } = this.state;
-    if (newsList.length) {
-      return;
-    }
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
@@ -91,7 +88,6 @@ class ImportNews extends React.Component {
   handleImport = async () => {
     try {
       let { newsList } = this.state;
-      debugger;
       let { Code, Result, Message } = await bitchCreate({
         Info: newsList
       });
@@ -121,6 +117,11 @@ class ImportNews extends React.Component {
         });
       },
       beforeUpload: file => {
+        var txt = file.name.slice(file.name.lastIndexOf(".") + 1).toLowerCase();
+        if ("txt" != txt) {
+          message.error("只支持格式为txt的文件!");
+          return false;
+        }
         this.setState({
           fileList: [file]
         });

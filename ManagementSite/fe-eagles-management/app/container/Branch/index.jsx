@@ -15,12 +15,20 @@ class BranchList extends React.Component {
     };
     this.columns = [
       {
+        title: "行号",
+        dataIndex: "line"
+      },
+      {
         title: "支部编号",
         dataIndex: "BranchId"
       },
       {
         title: "支部名称",
         dataIndex: "BranchName"
+      },
+      {
+        title: "创建时间",
+        dataIndex: "CreateTime"
       },
       {
         title: "操作",
@@ -66,8 +74,9 @@ class BranchList extends React.Component {
     try {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
-      List.forEach(v => {
+      List.forEach((v, i) => {
         v.key = v.BranchId;
+        v.line = ++i;
       });
       this.setState({ branchList: List, current: PageNumber });
       this.updatePageConfig(TotalCount);

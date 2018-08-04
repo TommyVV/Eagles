@@ -34,22 +34,26 @@ class ImportMember extends React.Component {
     this.columns = [
       {
         title: "党员名称",
-        dataIndex: "UserName"
+        dataIndex: "UserName",
+        key:"UserName"
       },
       {
         title: "联系电话",
-        dataIndex: "Phone"
+        dataIndex: "Phone",
+        key:"Phone"
       },
       {
         title: "党员类型",
         dataIndex: "MemberType",
         render: MemberType => {
           return MemberType == "0" ? "正式党员" : "预备党员";
-        }
+        },
+        key:"MemberType"
       },
       {
         title: "验证结果",
-        dataIndex: "ErrorReason"
+        dataIndex: "ErrorReason",
+        key:"ErrorReason"
       }
     ];
   }
@@ -75,9 +79,6 @@ class ImportMember extends React.Component {
   };
   handleUpload = () => {
     const { fileList, memberList } = this.state;
-    if (memberList.length) {
-      return;
-    }
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
@@ -156,11 +157,10 @@ class ImportMember extends React.Component {
         });
       },
       beforeUpload: file => {
-        const reg = /^file\/(txt)$/;
-        const type = file.type;
-        const isImage = reg.test(type);
-        if (!isImage) {
+        var txt = file.name.slice(file.name.lastIndexOf(".") + 1).toLowerCase();
+        if ("txt" != txt) {
           message.error("只支持格式为txt的文件!");
+          return false;
         }
         this.setState({
           fileList: [file]
