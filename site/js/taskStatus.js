@@ -4,9 +4,9 @@ $(document).ready(function () {
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
     var score = 0;
-    if (!token) {
-        window.location.href = 'login.html?appId=' + appId + '';
-    }
+    // if (!token) {
+    //     window.location.href = 'login.html?appId=' + appId + '';
+    // }
     //当前用户是上级还是下级（默认是下级）
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => { });

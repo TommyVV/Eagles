@@ -3,9 +3,9 @@ $(document).ready(function() {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var activityId = getRequest("activityId");
-    if(!token) {
-        window.location.href = 'login.html?appId=' + appId + '';
-    }
+    // if(!token) {
+    //     window.location.href = 'login.html?appId=' + appId + '';
+    // }
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
     var userType = 1;
