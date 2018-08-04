@@ -1,10 +1,10 @@
 /* 发布内容图标的css */
 .float-layer{
     position: fixed;
-    right: 2rem;
+    right: 1rem;
     bottom: 4rem;
-    width:2.5rem;
-    height: 2.5rem;
+    width:40px;
+    height: 40px;
 }
 .float-layer img{
     width:100%;
