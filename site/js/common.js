@@ -31,7 +31,7 @@ function setCookie(key, value, days) {
 //发布按钮点击
 function pulicContent(url){
     var elementStr=`<div class="float-layer">
-            <img src="icons/class_partyjob@3x.png" alt="" srcset="">
+            <img src="icons/class_partyjob@3x.png?v=1" alt="" srcset="">
         </div>`;
     $("body").append(elementStr);
     $(".float-layer").click(function(){
