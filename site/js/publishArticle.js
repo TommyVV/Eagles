@@ -7,7 +7,8 @@ var toUserName = '';
 var toUsreInfo = '';
 var imgUrl = "";
 var inputval='';
-var NewsId=''
+var NewsId='';
+var dangyuan='';
 //$("input:radio[name='radio1']").attr("checked",2);
 var onurl=window.location.href
 if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
@@ -19,20 +20,38 @@ $('#footer').load('footer.html')
 //文章发布
 if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 	NewsId=getRequest('NewsId');
-	$('.publish-title').val(getRequest('conretn'));
-	$('#selectpicker').val(getRequest('aryewsType')).attr('selected','selected'); 
-	//imgsrec
-	if(getRequest('aryewsType')==3){
-		$('.assign').show();
-	}
-	$('.publish-content').val(getRequest('comids'))
-	$("input:radio[value='"+getRequest('ispubic')+"']").attr('checked','true');
-	imgUrl = getRequest('imgsrec');
-	$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
-	if(getRequest('status')!=-1){
-		$(".publish-title,#selectpicker,.item-select,#imgupload,.demo--radio,.publish-content").attr("disabled",true);
-		$('.publish-wrap-btn').hide()
-	}
+	$.ajax({
+		type: "post",
+		data: {
+			"NewsId":NewsId,
+			"Token": token,
+			"AppId": appId
+		},
+		url: "http://51service.xyz/Eagles/api/User/CreateArticle",
+		dataType: "json",
+		success: function(res) {
+			var data = res.Result;
+			if(res.Code == 00) {
+				$('.publish-title').val(data.Title);
+				$('#selectpicker').val(data.NewsType).attr('selected','selected'); 
+				//imgsrec
+				if(data.NewsType==3){
+					$('.assign').show();
+				}
+				$('.publish-content').val(data.HtmlContent)
+				$("input:radio[value='"+data.IsPublic+"']").attr('checked','true');
+				imgUrl = data.ImageUrl
+				$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
+				if(data.Status!=-1){
+					$(".publish-title,#selectpicker,.item-select,#imgupload,.demo--radio,.publish-content").attr("disabled",true);
+					$('.publish-wrap-btn').hide()
+				}
+				dangyuan=data.ToUser
+			}
+		}
+	})
+	
+	
 	
 }
 
@@ -183,8 +202,8 @@ function branchUsers(token, appId) {
 							'</div>'
 					}
 					$('.subordinates').append(options);
-					if(getRequest('dangyuan')!=undefined){
-						var idf=getRequest('dangyuan')
+					if(dangyuan!=undefined){
+						var idf=dangyuan
 						$("#name").html($('#' + idf).find('span').text());
 						toUserId=idf
 					}

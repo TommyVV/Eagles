@@ -96,7 +96,7 @@ function myAricle(NewsType, token, page, appId) {
 				if(res.Result.NewsList != '' || res.Result.NewsList != null) {
 					var myAricle = '';
 					for(var i = 0; i < data.NewsList.length; i++) {
-						myAricle += '<div class="article" NewsId="'+data.NewsList[i].NewsId +'" status="'+data.NewsList[i].Status +'" type="'+data.NewsList[i].NewsType +'" conretn="' + data.NewsList[i].Title + '" comids="'+data.NewsList[i].NewsContent+'" dangyuan="'+data.NewsList[i].ToUser+'" ispubic="'+data.NewsList[i].IsPublic+'" imgsrec="'+data.NewsList[i].ImageUrl+'">' +
+						myAricle += '<div class="article" NewsId="'+data.NewsList[i].NewsId +'" type="'+data.NewsList[i].NewsType +'" >' +
 							'<div class="left"><img src="' + data.NewsList[i].ImageUrl + '" alt=""></div>' +
 							'<div class="right">' +
 							'<div class="content overflow-two-line">' + data.NewsList[i].Title + '</div>' +
@@ -165,14 +165,8 @@ $(".select_box").click(function () {
 //点击文章分类
 $('.item').on('click', '.article', function (e) {
 	var aryewsType=$(this).attr('type');
-	var conretn=$(this).attr('conretn');
-	var dangyuan=$(this).attr('dangyuan');
-	var comids=$(this).attr('comids');
-	var ispubic=$(this).attr('ispubic');
-	var imgsrec=$(this).attr('imgsrec');
+	
 	var NewsId=$(this).attr('NewsId');
-	var status=$(this).attr('status');
-	window.location.href = 'publishArticle.html?appId=' + appId + '&NewsId='+NewsId+'&status='+status+'&aryewsType=' +
-		aryewsType + '&conretn=' + conretn + '&dangyuan=' + dangyuan + '&comids='+comids+'&ispubic='+ispubic+'&imgsrec='+imgsrec;
+	window.location.href = 'publishArticle.html?appId=' + appId + '&NewsId='+NewsId+'&aryewsType=' +aryewsType 
 
 })
