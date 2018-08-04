@@ -27,7 +27,7 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/CreateArticle",
+		url: "http://51service.xyz/Eagles/api/User/GetUserArticleDetail",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
