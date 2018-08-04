@@ -94,7 +94,6 @@ $(document).ready(function() {
                         </div>
                         <div class="date">
                             ${element.ActivityDate.substr(0, 10)}
-                            <div class="pub-status line-color">已完成</div>
                         </div>
                     </div>
                 </div>`;

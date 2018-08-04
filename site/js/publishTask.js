@@ -29,6 +29,10 @@ $(document).ready(function () {
     //查询关系列表
     getUserRelationship();
     $('#btnTestSaveLarge').on('click', function () {
+        if($(".subordinate-item").length==0){
+            $(this).parents('.modal').modal('hide');
+            return;
+        }
         if (toUserId) {
             $("#name").html(toUserName);
             $(this).parents('.modal').modal('hide');
@@ -131,7 +135,16 @@ $(document).ready(function () {
             success: function (data) {
                 console.log('GetUserRelationship---', data);
                 if (data.Code == "00") {
-                    dealRelationList(data.Result.UserList);
+                    var list = data.Result.UserList;
+                    dealRelationList(list);
+                    if(list.length==0){
+                        bootoast({
+                            message: '当前用户未查询到可用负责人',
+                            type: 'warning',
+                            position: 'toast-top-center',
+                            timeout: 3
+                        });
+                    }
                 } else {
                     bootoast({
                         message: '' + data.Message,
@@ -145,7 +158,13 @@ $(document).ready(function () {
     }
 
     function dealRelationList(list) {
-        var content = `<div class="subordinates"><div class="subordinate-item subordinate-title">
+        var content=``;
+        if(list.length==0){
+            content+=`<div>当前用户未查询到可用负责人</div>`;
+            $(".modal-body").html(content);
+            return;
+        }
+        content = `<div class="subordinates"><div class="subordinate-item subordinate-title">
         <div class="name">姓名</div>
         <div class="branch">支部名称</div><div class="right-dir"></div></div>`;
         list.forEach(element => {

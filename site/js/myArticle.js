@@ -7,6 +7,10 @@ if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
 }
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('./footer.html')
+
+
+//添加发布按钮
+pulicContent('publishArticle.html?appId=' + appId + '');
 //var token="abc";
 var mescroll;
 var check_value;

@@ -6,6 +6,8 @@ $(document).ready(function() {
     }
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
+    //添加发布按钮
+    pulicContent('publishTask.html?appId=' + appId + '&type=0');
     var currentItemType = '0';
     var pageIndex = 1;
     var pageSize = 10;

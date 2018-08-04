@@ -193,7 +193,9 @@ $(document).ready(function() {
                 console.log("GetActivityFeedBack---", data);
                 if (data.Code == "00") {
                     showActivityResult(data.Result, status);
-                } else {
+                }else if(data.Code=="10"){
+
+                }else {
                     errorTip(data.Message);
                 }
             },

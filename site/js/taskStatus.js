@@ -104,23 +104,29 @@ $(document).ready(function () {
         // <span class="time">${data.CreateTime.substr(0, 10)}</span>
         //  </div>
         var taskInfoStr = `<div class="row">
-            <div class="info-item col-xs-12 col-sm-12 col-md-6">负责人：
-            <span>${data.CreateType == 1 ? data.InitiateUserName : data.AcceptUserName}</span>
+            <div class="info-item col-xs-12 col-sm-12 col-md-6">
+            <div class="item-title">负责人：</div>
+            <div class="item-c">${data.AcceptUserName}</div>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">审核人：
-            <span>${data.CreateType == 0 ? data.InitiateUserName : data.AcceptUserName}</span>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">
+            <div class="item-title">审核人：</div>
+            <div class="item-c">${data.AuditUserName}</div>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">任务标题：
-            <span>${data.TaskName}</span>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">
+            <div class="item-title">任务标题：</div>
+            <div class="item-c">${data.TaskName}</div>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">开始时间：
-            <span>${data.TaskBeginDate.substr(0, 10)}</span>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">
+            <div class="item-title">开始时间：</div>
+            <div>${data.TaskBeginDate.substr(0, 10)}</div>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">截止时间：
-            <span>${data.TaskEndDate.substr(0, 10)}</span>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">
+            <div class="item-title">截止时间：</div>
+            <div>${data.TaskEndDate.substr(0, 10)}</div>
         </div>
-        <div class="info-item col-xs-12 col-sm-12 col-md-6">当前状态：
-            <span class="status">${taskStatus(data.TaskStatus)}</span>
+        <div class="info-item col-xs-12 col-sm-12 col-md-6">
+        <span class="item-title">当前状态：</span>
+            <div class="status">${taskStatus(data.TaskStatus)}</div>
         </div>
     </div>`;
         score = data.Score || 0;

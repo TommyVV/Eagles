@@ -164,7 +164,7 @@ button{
         padding-top: 1.7rem;
     }
     .list-content {
-        top: 1.7rem;
+        top: 3.7rem;
         bottom: 0;
         position: absolute;
         left: 0;
@@ -176,4 +176,7 @@ button{
     .list-content {
         height: 600px !important;
     }
+}
+.list-wrap{
+    min-height: 100%;
 }

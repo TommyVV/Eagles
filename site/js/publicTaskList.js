@@ -59,40 +59,6 @@ $(document).ready(function() {
     function taskList(list) {
         var str = ``;
         var pcStr = ``;
-        var dealStatus = function(status) {
-            var sta = ``;
-            if (status == 0) {
-                sta = `<div class="task-status line-color accept-status">已接受</div>`;
-            } else if (status == 2) {
-                sta = `<div class="task-status line-color accept-status">完成待审核</div>`;
-            } else if (status == 3) {
-                sta = `<div class="task-status line-color accept-status">已完成</div>`;
-            } else if (status == -2) {
-                sta = `<div class="task-status init-status">未接受</div>`;
-            } else if (status == -8) {
-                sta = `<div class="task-status init-status">完成未通过</div>`;
-            } else if (status == -9) {
-                sta = `<div class="task-status init-status">创建未通过</div>`;
-            }
-            return sta;
-        };
-        var dealStatusPC = function(status) {
-            var sta = ``;
-            if (status == 0) {
-                sta = `<span class="props-btn line-color">已接受</span>`;
-            } else if (status == 2) {
-                sta = `<span class="props-btn line-color">完成待审核</span>`;
-            } else if (status == 3) {
-                sta = `<span class="props-btn line-color">已完成</span>`;
-            } else if (status == -2) {
-                sta = `<span class="props-btn already">未接受</span>`;
-            } else if (status == -8) {
-                sta = `<span class="props-btn already">完成未通过</span>`;
-            } else if (status == -9) {
-                sta = `<span class="props-btn already">创建未通过</span>`;
-            }
-            return sta;
-        };
         list.forEach(element => {
             str += `<div class="task-item single-task" id="${element.TaskId}">
                         <div class="task-title">${element.TaskeName}</div>
@@ -104,7 +70,6 @@ $(document).ready(function() {
                     10
                 )}</div>
                             </div>
-                            ${dealStatus(element.TaskStatus)}
                         </div>
                     </div>`;
             pcStr += `<li class="single-task" id="${element.TaskId}">
@@ -124,7 +89,6 @@ $(document).ready(function() {
                 )}</span>
                     </div>
                 </div>
-                ${dealStatusPC(element.TaskStatus)}
             </div>
         </li>`;
         });

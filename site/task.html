@@ -8,10 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="css/common/common.css?v=12">
+    <link rel="stylesheet" href="css/common/common.css?v=2018">
     <link rel="stylesheet" href="css/mescroll.min.css">
     <link href="./css/bootoast.css" rel="stylesheet">
     <link rel="stylesheet" href="css/task.css?v=1234">
+    <link rel="stylesheet" href="css/common/float-layer.css">    
     <title>我的任务</title>
 </head>
 
@@ -59,31 +60,32 @@
     <div class="footer pc" id="footer"></div>
     <div class="container mobile mobile-container">
         <div class="row">
-            <div class="mescroll list-content" id="mescroll">
-                <div>
-                    <div class="head-area">
-                        <div class="task-cate" id="m-cate">
-                            <span class="m-text">我的</span>
-                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                        </div>
-                        <div class="task-cate" id="t-cate">
-                            <span class="t-text">发起的</span>
-                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                        </div>
+            <div>
+                <div class="head-area">
+                    <div class="task-cate" id="m-cate">
+                        <span class="m-text">我的</span>
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                     </div>
-                    <div class="drog-down-menu hide peop-list">
-                        <div class="menu-list">
-                        </div>
+                    <div class="task-cate" id="t-cate">
+                        <span class="t-text">发起的</span>
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                     </div>
-                    <div class="drog-down-menu hide task-type">
-                        <div class="menu-list">
-                            <div class="list-item" id="0">发起的</div>
-                            <div class="list-item" id="1">负责的</div>
-                            <div class="list-item" id="2">审核的</div>
-                        </div>
+                </div>
+                <div class="drog-down-menu hide peop-list">
+                    <div class="menu-list">
                     </div>
-                    <div class="task-list">
+                </div>
+                <div class="drog-down-menu hide task-type">
+                    <div class="menu-list">
+                        <div class="list-item" id="0">发起的</div>
+                        <div class="list-item" id="1">负责的</div>
+                        <div class="list-item" id="2">审核的</div>
                     </div>
+                </div>
+            </div>
+            <div class="list-content">
+                <div class="mescroll" id="mescroll">
+                        <div class="task-list"></div>
                 </div>
             </div>
         </div>
@@ -93,7 +95,7 @@
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
-    <script src="js/common.js"></script>
+    <script src="js/common.js?v=2018"></script>
     <script src="js/bootoast.js"></script>
     <script src="js/mescroll.min.js"></script>
     <script src="js/task.js?v=2018072290999"></script>

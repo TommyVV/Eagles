@@ -1,4 +1,11 @@
 @charset "UTF-8";
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  position: relative; }
+
 .main_content {
   padding: 0px 0.7466666667rem 20px 0.7466666667rem;
   background-color: white; }

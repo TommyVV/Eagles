@@ -1,0 +1,12 @@
+/* 发布内容图标的css */
+.float-layer{
+    position: fixed;
+    right: 2rem;
+    bottom: 4rem;
+    width:2.5rem;
+    height: 2.5rem;
+}
+.float-layer img{
+    width:100%;
+    height: 100%;
+}

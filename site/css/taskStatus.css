@@ -4,6 +4,13 @@
   padding: 0;
   font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
 
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  position: relative; }
+
 .task-info {
   margin: 0 1.0453333333rem 1.3866666667rem 1.3866666667rem;
   font-size: 0.64rem; }
@@ -20,12 +27,25 @@
       float: right; }
   .task-info .info-item {
     color: #949494;
-    margin-top: 1.0026666667rem; }
-    .task-info .info-item span {
+    margin-top: 1.0026666667rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+    .task-info .info-item div {
       color: #141414;
       padding-left: 5px; }
     .task-info .info-item .status {
       color: #F24848; }
+    .task-info .info-item .item-title {
+      width: 3.4133333333rem;
+      display: inline-block; }
+    .task-info .info-item .item-c {
+      word-break: break-all;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1; }
 
 .task-content {
   border-top: 0.2346666667rem solid #F8F8F8;
@@ -132,5 +152,10 @@
 
 #btn-area {
   margin-top: 1.28rem; }
+
+.footer {
+  position: static !important; }
+  .footer .footer {
+    margin-top: 0px !important; }
 
 /*# sourceMappingURL=taskStatus.css.map */

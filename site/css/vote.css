@@ -1,5 +1,8 @@
+html, body {
+  height: 100%; }
+
 .main_content {
-  padding: 0px 0.7466666667rem;
+  padding: 0px 0.7466666667rem 0.4266666667rem 0.7466666667rem;
   background-color: white; }
   .main_content .header {
     padding: 1.1733333333rem 0 1.0666666667rem 0;
@@ -101,5 +104,10 @@
           text-align: center; }
   .main_content .sub-btn {
     margin-top: 1.4506666667rem; }
+
+.footer {
+  position: static !important; }
+  .footer .footer {
+    margin-top: 0px !important; }
 
 /*# sourceMappingURL=vote.css.map */

@@ -4,6 +4,13 @@
     padding: 0;
     font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    position: relative;
+}
 
 .task-info {
     margin: 0 px2rem(49) px2rem(65) px2rem(65);
@@ -25,12 +32,27 @@
     .info-item {
         color: #949494;
         margin-top: px2rem(47);
-        span {
+        display:-webkit-box;
+        display:-webkit-flex;
+        display:-ms-flexbox;
+        display:flex;
+        div {
             color: #141414;
             padding-left: 5px;
         }
         .status {
             color: #F24848;
+        }
+        .item-title{
+            width:px2rem(160);
+            display: inline-block;
+        }
+        .item-c{
+            word-break: break-all;
+            -webkit-box-flex:1;
+            -webkit-flex:1;
+            -ms-flex:1;
+            flex:1;
         }
     }
 }
@@ -162,4 +184,10 @@
 }
 #btn-area{
     margin-top:px2rem(60);
+}
+.footer{
+    position: static !important;
+    .footer{
+        margin-top: 0px !important;
+    }
 }

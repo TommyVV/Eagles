@@ -28,6 +28,16 @@ function setCookie(key, value, days) {
         }))
     }
 }
+//发布按钮点击
+function pulicContent(url){
+    var elementStr=`<div class="float-layer">
+            <img src="icons/class_partyjob@3x.png" alt="" srcset="">
+        </div>`;
+    $("body").append(elementStr);
+    $(".float-layer").click(function(){
+        window.location.href = url;
+    });
+}
 
 function getCookie(name) {
     return localStorage.getItem(name);

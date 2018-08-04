@@ -1,6 +1,9 @@
 @import 'common/px2rem.scss';
+html,body{
+    height: 100%;
+}
 .main_content {
-    padding: 0px px2rem(35);
+    padding: 0px px2rem(35) px2rem(20) px2rem(35);
     background-color: white;
     .header {
         padding: px2rem(55) 0 px2rem(50) 0;
@@ -127,5 +130,11 @@
     }
     .sub-btn{
         margin-top:px2rem(68);
+    }
+}
+.footer{
+    position: static !important;
+    .footer{
+        margin-top: 0px !important;
     }
 }
