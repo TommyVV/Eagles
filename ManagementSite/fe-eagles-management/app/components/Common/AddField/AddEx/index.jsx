@@ -120,55 +120,56 @@ class DynamicFieldSet extends React.Component {
     const keys = getFieldValue("keys");
     return (
       <div>
-        {keys.map((k, index) => {
-          let itemIndex = index + 1;
-          return (
-            <FormItem
-              {...formItemLayout}
-              label={`选项${itemIndex}`}
-              required={false}
-              key={index}
-            >
-              {getFieldDecorator(`names[${itemIndex}]`)(
-                <span>
-                  <Input
-                    placeholder="请输入选项"
-                    style={{ width: "30%", marginRight: 8 }}
-                    onBlur={this.changeInput.bind(this, index)}
-                    defaultValue={k.OptionName}
-                  />
-                  <Checkbox
-                    style={{
-                      display: obj.IsVote ? "none" : null
-                    }}
-                    onChange={this.changeAnswer.bind(this, index)}
-                    checked={k.IsRight == "0" ? true : false}
-                  >
-                    是否正确答案
-                  </Checkbox>
-                  <Checkbox
-                    style={{
-                      display: obj.IsVote ? "none" : null
-                    }}
-                    onChange={this.changeCustom.bind(this, index)}
-                    checked={k.AnswerType == "1" ? true : false}
-                  >
-                    是否允许自定义
-                  </Checkbox>
-                </span>
-              )}
-              <Icon
-                className="dynamic-delete-button"
-                type="minus-circle-o"
-                onClick={() => this.remove(k)}
-              />
-              <AddImage
-                Img={k.Img}
-                changeImg={this.changeImg.bind(this, index)}
-              />
-            </FormItem>
-          );
-        })}
+        {
+          keys.map((k, index) => {
+            let itemIndex = index + 1;
+            return (
+              <FormItem
+                {...formItemLayout}
+                label={`选项${itemIndex}`}
+                required={false}
+                key={index}
+              >
+                {getFieldDecorator(`names[${itemIndex}]`)(
+                  <span>
+                    <Input
+                      placeholder="请输入选项"
+                      style={{ width: "30%", marginRight: 8 }}
+                      onBlur={this.changeInput.bind(this, index)}
+                      defaultValue={k.OptionName}
+                    />
+                    <Checkbox
+                      style={{
+                        display: obj.IsVote ? "none" : null
+                      }}
+                      onChange={this.changeAnswer.bind(this, index)}
+                      checked={k.IsRight == "0" ? true : false}
+                    >
+                      是否正确答案
+                    </Checkbox>
+                    <Checkbox
+                      style={{
+                        display: obj.IsVote ? "none" : null
+                      }}
+                      onChange={this.changeCustom.bind(this, index)}
+                      checked={k.AnswerType == "1" ? true : false}
+                    >
+                      是否允许自定义
+                    </Checkbox>
+                  </span>
+                )}
+                <Icon
+                  className="dynamic-delete-button"
+                  type="minus-circle-o"
+                  onClick={() => this.remove(k)}
+                />
+                <AddImage
+                  Img={k.Img}
+                  changeImg={this.changeImg.bind(this, index)}
+                />
+              </FormItem>
+            );
+          })}
         <Row gutter={24}>
           <Col span={4} offset={2}>
             <Button

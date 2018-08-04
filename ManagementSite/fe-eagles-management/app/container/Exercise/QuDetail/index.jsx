@@ -54,31 +54,31 @@ class QuestionForm extends Component {
           console.log("submit form: ", values);
           const { Info } = this.props.info;
           let { SubjectList, HasLimitedTime } = Info;
-          let idList = [];
-          SubjectList.forEach(v => {
-            idList.push(v.QuestionId);
-          });
-          delete Info["SubjectList"]; // 提交的时候，删除习题列表，只传数组
-          let params = {
-            Info: {
-              ...Info,
-              ...values,
-              HasLimitedTime
-            },
-            Subject: idList
-          };
-          let { Code } = await createOrEditQuestion(params);
-          if (Code === "00") {
-            let tip = this.props.info.Info.ExercisesId
-              ? "保存成功"
-              : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/questionlist");
+          if (SubjectList.length) {
+            let idList = [];
+            SubjectList.forEach(v => {
+              idList.push(v.QuestionId);
+            });
+            delete Info["SubjectList"]; // 提交的时候，删除习题列表，只传数组
+            let params = {
+              Info: {
+                ...Info,
+                ...values,
+                HasLimitedTime
+              },
+              Subject: idList
+            };
+            let { Code } = await createOrEditQuestion(params);
+            if (Code === "00") {
+              let tip = Info.ExercisesId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/questionlist");
+            } else {
+              let tip = Info.ExercisesId ? "保存失败" : "创建失败";
+              message.error(tip);
+            }
           } else {
-            let tip = this.props.info.Info.ExercisesId
-              ? "保存失败"
-              : "创建失败";
-            message.error(tip);
+            message.error("请选择习题");
           }
         } catch (e) {
           throw new Error(e);
@@ -392,11 +392,7 @@ class QuestionForm extends Component {
               <Input placeholder="请输入限制时间，单位：分钟" />
             )}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="是否随机生成习题"
-            style={{ display: ExercisesId ? "none" : null }}
-          >
+          <FormItem {...formItemLayout} label="是否随机生成习题">
             {getFieldDecorator("isRandom")(
               <Select onChange={this.changeRandom.bind(this)}>
                 <Option value="0">否</Option>
@@ -408,7 +404,7 @@ class QuestionForm extends Component {
             {...formItemLayout}
             label="随机生成习题数量"
             style={{
-              display: !ExercisesId && this.state.isRandom ? "block" : "none"
+              display: this.state.isRandom ? "block" : "none"
             }}
           >
             {getFieldDecorator(`randomCount`)(<Input />)}
@@ -435,8 +431,7 @@ class QuestionForm extends Component {
                   span={2}
                   offset={1}
                   style={{
-                    display:
-                      !ExercisesId && this.state.isRandom ? "block" : "none"
+                    display: this.state.isRandom ? "block" : "none"
                   }}
                 >
                   <Button
@@ -523,6 +518,9 @@ const QuestionFormMap = Form.create({
       }),
       isRandom: Form.createFormField({
         value: "0"
+      }),
+      randomCount: Form.createFormField({
+        value: Info.randomCount
       })
     };
   }

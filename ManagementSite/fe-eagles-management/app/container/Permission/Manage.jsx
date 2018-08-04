@@ -14,7 +14,11 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getList, getPageList } from "../../services/authGroupService";
+import {
+  getList,
+  getPageList,
+  createOrEdit
+} from "../../services/authGroupService";
 import Nav from "../Nav";
 import "./style.less";
 import { pageCodeMap } from "../../constants/config/appconfig";
@@ -25,13 +29,39 @@ class SearchForm extends Component {
     super(props);
     this.state = {
       permissionList: [], // 列表数组
-      pageList: [] // 列表数组
+      pageList: [], // 列表数组
+      checkedValues: []
     };
   }
-  handleSearch = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    const view = this;
+    this.props.form.validateFields(async (err, values) => {
       console.log("Received values of form: ", values);
+      if (values.AuthorityGroupId) {
+        const checked = view.state.checkedValues;
+        let newKey = [];
+        checked.map(v => {
+          newKey.push({
+            FunCode: v,
+            EditTime: new Date(),
+            CreateTime: ""
+          });
+        });
+        const param = {
+          GroupId: values.AuthorityGroupId,
+          AuthorityInfo: newKey,
+          OperId: 0
+        };
+        let { Code } = await createOrEdit(param);
+        if (Code === "00") {
+          message.success("保存成功");
+        } else {
+          message.error("保存失败");
+        }
+      } else {
+        message.error("请选择权限组");
+      }
     });
   };
 
@@ -39,9 +69,11 @@ class SearchForm extends Component {
     this.props.form.resetFields();
   };
   onChange(checkedValues) {
-    console.log("checked = ", checkedValues);
+    console.log("checked = ", this, checkedValues);
+    this.state.checkedValues = checkedValues;
   }
   changeGroup(value) {
+    console.log("checked = ", value);
     this.getPageCode(value);
   }
   componentWillMount() {
@@ -98,8 +130,14 @@ class SearchForm extends Component {
         sm: { span: 20 }
       }
     };
+    const pageCodeArr = [...pageCodeMap];
+    console.log(pageList);
+    let newPageList = ["actv0001"];
+    pageList.map((o, i) => {
+      newPageList.push(o.FunCode);
+    });
     return (
-      <Form onSubmit={this.handleSearch}>
+      <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="选择权限组">
           {getFieldDecorator("AuthorityGroupId")(
             <Select onChange={this.changeGroup.bind(this)}>
@@ -114,24 +152,58 @@ class SearchForm extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayoutCheck} label="权限信息">
-          <Checkbox.Group style={{ width: "100%" }} onChange={this.onChange}>
-            <Row>
-              {pageList.map((o, i) => {
-                return (
-                  <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
-                    <Checkbox value={o.FunCode}>
-                      {pageCodeMap.get(o.FunCode)}
-                    </Checkbox>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Checkbox.Group>
+          {pageList.length ? (
+            <Checkbox.Group
+              style={{ width: "100%" }}
+              onChange={this.onChange.bind(this)}
+              defaultValue={newPageList}
+              key={1}
+            >
+              <Row>
+                {pageCodeArr.map((o, i) => {
+                  return (
+                    <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
+                      <Checkbox
+                        value={o[0]}
+                        checked={
+                          pageList.findIndex(v => v.FunCode == o[0]) > -1
+                            ? true
+                            : false
+                        }
+                      >
+                        {o[1]}
+                      </Checkbox>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Checkbox.Group>
+          ) : (
+            <Checkbox.Group
+              style={{ width: "100%" }}
+              onChange={this.onChange.bind(this)}
+              key={2}
+            >
+              <Row>
+                {pageCodeArr.map((o, i) => {
+                  return (
+                    <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
+                      <Checkbox value={o[0]}>{o[1]}</Checkbox>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Checkbox.Group>
+          )}
         </FormItem>
         <Row type="flex" gutter={24}>
           <Col offset={4}>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>更新</a>
+            <Button
+              htmlType="submit"
+              className="btn btn--primary"
+              type="primary"
+            >
+              保存
             </Button>
           </Col>
         </Row>

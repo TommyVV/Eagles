@@ -63,7 +63,7 @@ export const createOrEdit = async params => {
   try {
     let res = await sendRequest({
       method: "post",
-      url: AUTHGROUP.EDIT,
+      url: AUTHGROUP.PERMISSION_EDIT,
       params
     });
     let { Code, Message } = res.data;

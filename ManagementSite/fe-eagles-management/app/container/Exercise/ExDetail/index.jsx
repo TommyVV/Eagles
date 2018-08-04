@@ -46,35 +46,39 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           const { Info } = this.props.info;
           const { OptionList } = Info;
-          let list = [];
-          OptionList.map((o, i) => {
-            list.push({
-              OptionId: o.OptionId,
-              OptionName: o.OptionName,
-              QuestionId: Info.QuestionId,
-              IsRight: o.IsRight,
-              AnswerType: o.AnswerType,
-              Img: o.Img
+          if (OptionList.length) {
+            let list = [];
+            OptionList.map((o, i) => {
+              list.push({
+                OptionId: o.OptionId,
+                OptionName: o.OptionName,
+                QuestionId: Info.QuestionId,
+                IsRight: o.IsRight,
+                AnswerType: o.AnswerType,
+                Img: o.Img
+              });
             });
-          });
-          let params = {
-            Info: {
-              Question: values.Question,
-              QuestionId: values.QuestionId,
-              IsVote: values.IsVote == "1" ? true : false,
-              Multiple: values.Multiple,
-              MultipleCount: values.MultipleCount
-            },
-            Option: list
-          };
-          let { Code } = await createOrEdit(params);
-          if (Code === "00") {
-            let tip = Info.QuestionId ? "保存成功" : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/exerciselist");
+            let params = {
+              Info: {
+                Question: values.Question,
+                QuestionId: values.QuestionId,
+                IsVote: values.IsVote == "1" ? true : false,
+                Multiple: values.Multiple,
+                MultipleCount: values.MultipleCount
+              },
+              Option: list
+            };
+            let { Code } = await createOrEdit(params);
+            if (Code === "00") {
+              let tip = Info.QuestionId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/exerciselist");
+            } else {
+              let tip = Info.QuestionId ? "保存失败" : "创建失败";
+              message.error(tip);
+            }
           } else {
-            let tip = Info.QuestionId ? "保存失败" : "创建失败";
-            message.error(tip);
+            message.error("请添加选项");
           }
         } catch (e) {
           throw new Error(e);
