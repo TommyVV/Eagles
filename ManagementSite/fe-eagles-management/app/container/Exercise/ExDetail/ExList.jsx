@@ -216,14 +216,6 @@ class ExList extends React.Component {
   };
   render() {
     const { List, pageConfig, obj } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
     return (
       <Nav>
         <WrapperSearchForm

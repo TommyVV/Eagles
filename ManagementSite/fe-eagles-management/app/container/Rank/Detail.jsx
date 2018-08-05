@@ -32,7 +32,7 @@ class RankDetail extends React.Component {
         dataIndex: "Comment"
       },
       {
-        title: "积分使用情况",
+        title: "积分变动情况",
         dataIndex: "Score"
       },
       {

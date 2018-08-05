@@ -13,69 +13,169 @@ import {
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import { getNextList, getList, createOrEdit } from "../../services/menuService";
 import "./style.less";
-import DynamicMenuSet from "../../components/Common/AddField/AddMenu";
 
+const FormItem = Form.Item;
+let uuid = 0;
+class DynamicFieldSet extends React.Component {
+  remove = k => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue("keys");
+
+    // can use data-binding to set
+    form.setFieldsValue({
+      keys: keys.filter(key => key !== k)
+    });
+  };
+
+  add = () => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue("keys");
+    const nextKeys = keys.concat(uuid);
+    uuid++;
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      keys: nextKeys
+    });
+  };
+
+  render() {
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { isTwo, List, menuList } = this.props;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 }
+      },
+      wrapperCol: {
+        xs: { span: 8 },
+        sm: { span: 8 }
+      }
+    };
+
+    getFieldDecorator("keys", { initialValue: List });
+    const keys = getFieldValue("keys");
+    const formItems = keys.map((k, index) => {
+      console.log(k, menuList);
+      return (
+        <div
+          key={`wrapper${k}`}
+          style={{ borderBottom: "1px solid #d9d9d9", marginBottom: "16px" }}
+        >
+          {isTwo ? (
+            <FormItem {...formItemLayout} label="所属一级菜单">
+              <Select style={{ width: "80%" }}>
+                {menuList.map((o, i) => {
+                  return (
+                    <Option key={i} value={o.MenuId}>
+                      {o.MenuName}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </FormItem>
+          ) : null}
+
+          <FormItem
+            {...formItemLayout}
+            label="菜单名称"
+            required={true}
+            key={`name${k}`}
+          >
+            {getFieldDecorator(`MenuName`)(
+              <Input
+                placeholder="请输入二级菜单名称"
+                style={{ width: "80%", marginRight: 16 }}
+              />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="菜单链接"
+            required={false}
+            key={`link${k}`}
+          >
+            {getFieldDecorator(`MenuLink`)(
+              <Input
+                placeholder="请输入二级菜单链接"
+                style={{ width: "80%", marginRight: 16 }}
+              />
+            )}
+            <Icon
+              className="dynamic-delete-button"
+              type="minus-circle-o"
+              onClick={() => this.remove(k)}
+            />
+          </FormItem>
+        </div>
+      );
+    });
+    return (
+      <Form>
+        {formItems}
+        <FormItem
+          {...formItemLayout}
+          label={isTwo ? "添加二级菜单" : "添加一级菜单"}
+        >
+          <Button
+            type="dashed"
+            onClick={this.add}
+            style={{ width: "30%", textAlign: "center" }}
+          >
+            <Icon type="plus" /> 添加
+          </Button>
+        </FormItem>
+      </Form>
+    );
+  }
+}
+
+const DynamicMenuSet = Form.create()(DynamicFieldSet);
 class MenuDetailTwo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetails: {} //项目详情
+      List: [], //二级菜单列表
+      menuList: [] // 一级菜单列表
     };
   }
 
   componentWillMount() {
     let { id } = this.props.params;
-    console.log(id);
-    // let author = {
-    //   name: this.props.user.userName,
-    //   user_id: this.props.user.userId,
-    //   avatar: this.props.user.avatar,
-    //   open_id: this.props.user.openId
-    // };
-    // if (projectId) {
-    //   this.getInfo(projectId, author); //当前用户排在第一位
-    // } else {
-    //   let projectMembers = [author];
-    //   this.props.saveProjectInfo({ projectMembers });
-    // }
+    this.getInfo(id);
   }
-
-  componentWillUnmount() {
-    // this.props.clearProjectInfo();
-  }
-  // 根据id查询详情
-  getInfo = async (projectId, author) => {
+  // 根据id查询下级菜单列表
+  getInfo = async MenuId => {
     try {
-      let projectDetails = await getProjectInfoById({ projectId });
-      console.log("projectDetails", projectDetails);
-      this.setState({ projectDetails });
-      let projectMembers = [author, ...projectDetails.membersData];
-      let prevDemandAuthor = {
-        open_id: projectDetails.basicData.open_id,
-        create: true
-      };
-      this.props.saveProjectInfo({
-        projectId,
-        projectMembers,
-        // prevDemandAuthor,
-        open_id: projectDetails.basicData.open_id,
-        projectName: projectDetails.basicData.projectName,
-        requirementId: projectDetails.basicData.requirementId,
-        requirementName: projectDetails.basicData.requirementName
-      });
+      await this.getMenuList();
+      const { List } = await getNextList({ MenuId });
+      this.setState({ List });
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);
     }
   };
 
+  getMenuList = async () => {
+    try {
+      const { List } = await getList();
+      this.setState({ menuList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   render() {
-    const { projectDetails } = this.state;
+    const { List, menuList } = this.state;
+    let { id } = this.props.params;
     return (
       <Nav>
         {/* isTwo 是否维护二级菜单 */}
-        <DynamicMenuSet isTwo={true}/>
+        <DynamicMenuSet isTwo={true} List={List} menuList={menuList} />
         <Row type="flex" justify="flexStart" className="edit" gutter={24}>
           <Col offset={4}>
             <Button
@@ -83,13 +183,13 @@ class MenuDetailTwo extends Component {
               className="btn btn--primary"
               type="primary"
             >
-              {this.props.project === "" ? "新建" : "保存"}
+              {id ? "保存" : "新建"}
             </Button>
           </Col>
           <Col>
             <Button
               className="btn"
-              onClick={() => hashHistory.replace("/project")}
+              onClick={() => hashHistory.replace("/menulist")}
             >
               取消
             </Button>

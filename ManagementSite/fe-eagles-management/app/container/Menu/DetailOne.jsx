@@ -165,9 +165,6 @@ const FormMap = Form.create({
     console.log("机构详情数据回显 - ", props);
     const menu = props.menu;
     return {
-      OrgId: Form.createFormField({
-        value: menu.OrgId ? menu.OrgId : ""
-      }),
       MenuId: Form.createFormField({
         value: menu.MenuId
       }),
@@ -176,6 +173,9 @@ const FormMap = Form.create({
       }),
       MenuLink: Form.createFormField({
         value: menu.MenuLink
+      }),
+      OrgId: Form.createFormField({
+        value: menu.OrgId ? menu.OrgId : ""
       })
     };
   }
@@ -213,9 +213,9 @@ class MenuDetailOne extends Component {
   // 根据id查询详情
   getInfo = async MenuId => {
     try {
+      await this.getOrgList();
       const { Info } = await getInfoById({ MenuId });
       this.setState({ menu: Info });
-      this.getOrgList();
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);

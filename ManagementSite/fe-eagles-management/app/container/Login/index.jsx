@@ -37,7 +37,8 @@ class LoginForm extends React.Component {
       if (IsVerificationCode) {
       } else {
         let info = {
-          Token
+          Token,
+          Account: values.Account
         };
         let Info = localStorage.info ? JSON.parse(localStorage.info) : {}; // 先去取上次返回的url
         localStorage.clear(); // 再清空缓存

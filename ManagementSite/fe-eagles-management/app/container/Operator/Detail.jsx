@@ -13,7 +13,6 @@ class Base extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      IsBranch: "0",
       branchList: []
     };
   }
@@ -27,7 +26,8 @@ class Base extends Component {
           let params = {
             Info: {
               ...operator,
-              ...values
+              ...values,
+              IsBranch: values.IsBranch == "0" ? false : true
             }
           };
           let { Code } = await createOrEdit(params);
@@ -48,22 +48,24 @@ class Base extends Component {
     });
   };
   change(value) {
+    const { setObj, operator } = this.props;
     if (value == "0") {
-      this.setState({
-        IsBranch: value
+      setObj({
+        ...operator,
+        IsBranch: value == "0" ? false : true
       });
     } else {
-      this.getBranchList(value);
+      this.getBranchList();
     }
   }
   // 拿支部列表
-  getBranchList = async value => {
+  getBranchList = async () => {
     try {
       const { List } = await getBranchList({
         PageNumber: 1,
         PageSize: 1000000
       });
-      this.setState({ branchList: List, IsBranch: value });
+      this.state({ branchList: List });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -71,8 +73,8 @@ class Base extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { authList } = this.props;
-    const { IsBranch, branchList } = this.state;
+    const { authList, operator } = this.props;
+    const { branchList } = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -109,6 +111,9 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入操作员姓名" />)}
         </FormItem>
+        <FormItem {...formItemLayout} label="昵称">
+          {getFieldDecorator("NickName")(<Input placeholder="必填，请输入昵称" />)}
+        </FormItem>
         <FormItem {...formItemLayout} label="操作员密码">
           {getFieldDecorator("Password", {
             rules: [
@@ -143,7 +148,7 @@ class Base extends Component {
         <FormItem
           {...formItemLayout}
           label="所属支部"
-          style={{ display: IsBranch == "0" ? "none" : "block" }}
+          style={{ display: operator.IsBranch ? null : "none" }}
         >
           {getFieldDecorator("BranchId")(
             <Select>
@@ -195,14 +200,17 @@ const FormMap = Form.create({
       OperName: Form.createFormField({
         value: operator.OperName
       }),
+      NickName: Form.createFormField({
+        value: operator.NickName
+      }),
       AuthorityGroupId: Form.createFormField({
         value: operator.AuthorityGroupId ? operator.AuthorityGroupId : ""
       }),
       IsBranch: Form.createFormField({
-        value: operator.IsBranch ? operator.IsBranch : "0"
+        value: operator.IsBranch ? (operator.IsBranch ? "1" : "0") : "0"
       }),
       BranchId: Form.createFormField({
-        value: operator.BranchId ? operator.BranchId : ""
+        value: operator.BranchId ? operator.BranchId + "" : ""
       }),
       Password: Form.createFormField({
         value: operator.Password
@@ -224,15 +232,23 @@ class OperatorDetail extends Component {
     if (id) {
       this.getInfo(id); //拿详情
     } else {
-      this.getAuthList(); // 拿权限组列表
+      this.setAuthList(); // 拿权限组列表
     }
   }
+  setAuthList = async () => {
+    await this.getAuthList();
+    const operator = {
+      AuthorityGroupId: this.state.authList[0].AuthorityGroupId
+    };
+    this.setState({ operator });
+  };
 
   // 根据id查询详情
   getInfo = async OperId => {
     try {
       await this.getAuthList(); // 拿权限组列表
       const { Info } = await getInfoById({ OperId });
+
       this.setState({ operator: Info });
     } catch (e) {
       message.error("获取详情失败");
@@ -252,13 +268,18 @@ class OperatorDetail extends Component {
       throw new Error(e);
     }
   };
-
+  changeObj(operator) {
+    this.setState({
+      operator
+    });
+  }
   render() {
     return (
       <Nav>
         <FormMap
           operator={this.state.operator}
           authList={this.state.authList}
+          setObj={this.changeObj.bind(this)}
         />
       </Nav>
     );

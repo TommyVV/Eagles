@@ -187,8 +187,8 @@ class MenuList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/operator/detail`)}>
+            <Button className="btn btn--primary"  type="primary">
+              <a onClick={() => hashHistory.replace(`/menuone/detail`)}>
                 新增
               </a>
             </Button>

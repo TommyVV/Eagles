@@ -322,6 +322,14 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入标题" />)}
         </FormItem>
+        <FormItem {...formItemLayout} label="类型">
+          {getFieldDecorator("NewsType")(
+            <Select>
+              <Option value="0">新闻</Option>
+              <Option value="1">会议</Option>
+            </Select>
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="作者">
           {getFieldDecorator("Author", {
             rules: [
@@ -514,7 +522,7 @@ class Base extends Component {
             name="file"
             listType="text"
             showUploadList={true}
-            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD} 
+            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
             onChange={this.handleChange.bind(this)}
             fileList={fileList}
           >
@@ -559,7 +567,7 @@ const FormMap = Form.create({
         value: news.NewsName
       }),
       NewsType: Form.createFormField({
-        value: "0" // 写死新闻
+        value: news.NewsType ? news.NewsType + "" : "0"
       }),
       Author: Form.createFormField({
         value: news.Author
@@ -626,7 +634,6 @@ class NewsDetail extends Component {
     this.props.clearInfo();
   }
 
-  
   // 查询栏目列表
   getProgramaList = async () => {
     const { List } = await getList();
@@ -660,7 +667,7 @@ class NewsDetail extends Component {
   };
 
   render() {
-    const { programaList, questionList,Attachments } = this.state;
+    const { programaList, questionList, Attachments } = this.state;
     return (
       <Nav>
         <FormMap

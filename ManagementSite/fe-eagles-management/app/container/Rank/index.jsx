@@ -19,12 +19,77 @@ import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
+class SearchForm extends Component {
+  handleSearch = e => {
+    e.preventDefault();
+    const view = this;
+    this.props.form.validateFields((err, values) => {
+      console.log("Received values of form: ", values);
+      let params = {
+        PageNumber: 1,
+        PageSize: 10,
+        ...values
+      };
+      const { getCurrentList, setObj } = view.props;
+      getCurrentList(params);
+      setObj({ ...values });
+    });
+  };
 
+  handleReset = () => {
+    this.props.form.resetFields();
+  };
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch.bind(this)}
+      >
+        <Row gutter={24}>
+          <Col span={5} key={5}>
+            <FormItem label="名称">
+              {getFieldDecorator(`UserName`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    return {
+      UserName: Form.createFormField({
+        value: props.obj.UserName
+      })
+    };
+  }
+})(SearchForm);
 class RankList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rankList: [] // 列表数组
+      rankList: [], // 列表数组
+      obj: {}
     };
     this.columns = [
       {
@@ -41,14 +106,21 @@ class RankList extends React.Component {
       // },
       {
         title: "党员状态",
-        dataIndex: "UserIdentity"
+        dataIndex: "UserIdentity",
+        render: text => <span>{text == "0" ? "正式党员" : "预备党员"}</span>
       },
       {
         title: "操作",
         render: obj => {
           return (
             <div>
-              <a onClick={() => hashHistory.replace(`/rank/detail/${obj.UserId}/${obj.UserName}/${obj.Score}`)}>
+              <a
+                onClick={() =>
+                  hashHistory.replace(
+                    `/rank/detail/${obj.UserId}/${obj.UserName}/${obj.Score}`
+                  )
+                }
+              >
                 查看详细信息
               </a>
             </div>
@@ -98,10 +170,24 @@ class RankList extends React.Component {
     };
     this.setState({ pageConfig });
   }
+  // 间接调用getCurrentList
+  getCurrent(params) {
+    this.getCurrentList(params);
+  }
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { pageConfig, rankList } = this.state;
+    const { pageConfig, rankList, obj } = this.state;
     return (
       <Nav>
+        <WrapperSearchForm
+          getCurrentList={this.getCurrent.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={rankList}
           columns={this.columns}

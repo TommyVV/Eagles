@@ -58,9 +58,7 @@ class OperatorList extends React.Component {
                 编辑
               </a>
               <a
-                onClick={() =>
-                  this.handleDelete(obj.OperId)
-                }
+                onClick={() => this.handleDelete(obj.OperId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
@@ -92,7 +90,7 @@ class OperatorList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List,TotalCount } = await getList(params);
+      let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.OperId;
@@ -113,7 +111,7 @@ class OperatorList extends React.Component {
       onChange: async (page, pagesize) => {
         this.getCurrentList({
           ...this.getListConfig,
-          PageNumber: page,
+          PageNumber: page
         });
       }
     };
@@ -172,8 +170,12 @@ class OperatorList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/operator/detail`)}>新增</a>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() => hashHistory.replace(`/operator/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

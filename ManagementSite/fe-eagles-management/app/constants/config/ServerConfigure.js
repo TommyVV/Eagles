@@ -21,7 +21,8 @@ const MENU = {
   MENU_EDIT: "/api/Menus/EditMenus", //编辑菜单
   MENU_DELETE: "/api/Menus/RemoveMenus", //删除菜单
   MENU_LIST: "/api/Menus/GetMenus", //菜单列表
-  MENU_DETAIL: "/api/Menus/GetMenusDetail" //菜单详情
+  MENU_DETAIL: "/api/Menus/GetMenusDetail", //菜单详情
+  MENU_NEXT_LIST: "/api/Menus/GetSubordinate", //下级菜单列表
 };
 // 栏目
 const MODULE = {

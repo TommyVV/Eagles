@@ -39,6 +39,24 @@ export const getList = async params => {
     throw new Error(e);
   }
 };
+// 查看下级菜单列表
+export const getNextList = async params => {
+  try {
+    let res = await sendRequest({
+      url: MENU.MENU_NEXT_LIST,
+      method: "post",
+      params
+    });
+    let { Code, Result, Message } = res.data;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { List: [] };
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 
 // 创建或编辑
 export const createOrEdit = async params => {

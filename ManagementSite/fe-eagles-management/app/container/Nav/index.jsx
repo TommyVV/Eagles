@@ -53,6 +53,7 @@ export default class App extends React.Component {
   };
   render() {
     let { current, sub, authMap } = this.state;
+    let Info = JSON.parse(localStorage.info);
     return (
       <Layout>
         <Sider
@@ -697,10 +698,7 @@ export default class App extends React.Component {
         <Layout style={{ marginLeft: 260, minHeight: "100vh" }}>
           <Header style={{ background: "#fff", padding: 0 }}>
             <div className="header">
-              <Avatar src={this.props.user.avatar} className="header-avatar" />
-              <span className="header-username">
-                {this.props.user.userName}
-              </span>
+              <span className="header-username">{Info.Account}，欢迎您。</span>
               <span
                 className="header-back"
                 onClick={() => hashHistory.replace("/login")}

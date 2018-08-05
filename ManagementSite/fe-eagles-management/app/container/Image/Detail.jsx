@@ -122,7 +122,7 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("Id")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构名称">
+        <FormItem {...formItemLayout} label="所属机构">
           {getFieldDecorator("OrgId")(
             <Select>
               {Orgs.length &&
