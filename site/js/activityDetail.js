@@ -2,10 +2,11 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
+    var pubType = getRequest("type");
     var activityId = getRequest("activityId");
-    // if(!token) {
-    //     window.location.href = 'login.html?appId=' + appId + '';
-    // }
+    if(!pubType&&!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     $('#top-nav').html('');
     $('#top-nav').load('./head.html');
     var userType = 1;
@@ -14,16 +15,22 @@ $(document).ready(function() {
     //查询活动详情
     function getActivityDetail() {
         $(".activity-content").addClass("hide");
+        var requestUrl="";
+        if(pubType){
+           requestUrl="/api/Activity/GetPublicActivityDetail"; 
+        }else{
+           requestUrl="/api/Activity/GetActivityDetail";  
+        }
         $.ajax({
             type: "POST",
-            url: DOMAIN + "/api/Activity/GetActivityDetail",
+            url: DOMAIN + requestUrl,
             data: {
                 ActivityId: activityId,
                 Token: token,
                 AppId: appId
             },
             success: function(data) {
-                console.log("getActivityDetail---", data);
+                console.log(requestUrl,"---", data);
                 if (data.Code == "00") {
                     var result = data.Result;
                     $(".main_content").html(showContent(result));

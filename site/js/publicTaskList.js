@@ -95,7 +95,7 @@ $(document).ready(function() {
         $(".pc-list").html(pcStr);
         $(".task-list").html(str);
         $(".single-task").click(function() {
-            window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + $(this).attr('id');
+            window.location.href = "taskStatus.html?type=1&appId=" + appId + "&taskId=" + $(this).attr('id');
         });
         return str;
     }

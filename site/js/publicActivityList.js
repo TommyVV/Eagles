@@ -49,7 +49,7 @@ $(document).ready(function() {
                         var testId = tmpArray[2];
                         if (type == '0') {
                             //报名活动
-                            window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
+                            window.location.href = "activityDetail.html?type=1&appId=" + appId + "&activityId=" + id;
                         } else if (type == '1') {
                             //投票活动
                             window.location.href = "vote.html?appId=" + appId + "&testId=" + testId + "&activityId=" + id;

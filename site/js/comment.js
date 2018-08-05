@@ -25,6 +25,10 @@ Comment.prototype = {
             </div>`).removeClass('hide');
         //写评论
         $(".edit-comment").click(function() {
+            if(!info.token){
+                window.location.href = 'login.html?appId=' + info.appId + '';
+                return;
+            }
             if ($('.comment-edit').hasClass('hide')) {
                 $('.comment-edit').removeClass("hide");
             } else {

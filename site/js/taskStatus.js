@@ -3,11 +3,11 @@ $(document).ready(function () {
     var userId = getCookie("userId");
     var appId = getRequest("appId");
     var taskId = getRequest("taskId");
+    var pubType = getRequest("type");
     var score = 0;
-    // if (!token) {
-    //     window.location.href = 'login.html?appId=' + appId + '';
-    // }
-    //当前用户是上级还是下级（默认是下级）
+    if(!pubType&&!token) {
+        window.location.href = 'login.html?appId=' + appId + '';
+    }
     $("#top-nav").html('');
     $("#top-nav").load("head.html", () => { });
     // 0 是审核者 1 不是审核人
@@ -20,16 +20,21 @@ $(document).ready(function () {
     });
     //查询任务详情
     function getTaskDetail() {
+        if(pubType){
+            requestUrl="/api/Task/GetPublicTaskDetail"; 
+         }else{
+            requestUrl="/api/Task/GetTaskDetail";  
+         }
         $.ajax({
             type: "POST",
-            url: DOMAIN + "/api/Task/GetTaskDetail",
+            url: DOMAIN + requestUrl,
             data: {
                 TaskId: taskId,
                 Token: token,
                 AppId: appId
             },
             success: function (data) {
-                console.log("GetTaskDetail---", data);
+                console.log(requestUrl,"---", data);
                 if (data.Code == "00") {
                     dealTaskDetail(data.Result);
                 } else {
