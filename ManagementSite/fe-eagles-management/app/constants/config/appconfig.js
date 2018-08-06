@@ -26,6 +26,20 @@ export const stateMap = [
     text: "审核不通过"
   }
 ];
+export const ProgramaStateMap = [
+  {
+    Status: "5",
+    text: "待审核"
+  },
+  {
+    Status: "10",
+    text: "审核通过"
+  },
+  {
+    Status: "20",
+    text: "审核不通过"
+  }
+];
 export const articleMap = [
   {
     Status: "0",
@@ -58,10 +72,29 @@ export const pageMap = [
     text: "党建学习"
   }
 ];
+export const publicMap = [
+  {
+    value: "0",
+    text: "默认"
+  },
+  {
+    value: "1",
+    text: "活动公开"
+  },
+  {
+    value: "2",
+    text: "任务公开"
+  },
+  {
+    value: "3",
+    text: "文章公开"
+  }
+];
 
 export const fileSize = 1024 * 1024 * 10;
 export const newsTempUrl = "http://51service.xyz/images/system/template.txt";
 export const memberTempUrl = "http://51service.xyz/images/system/template.txt";
+export const meettingTempUrl = "http://51service.xyz/images/system/mettingTemplate.txt";
 export const scoreType = [
   {
     value: "0",

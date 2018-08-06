@@ -16,22 +16,34 @@ import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
 import { getList, createOrEdit, del } from "../../services/programaService";
-import { pageMap, stateMap } from "../../constants/config/appconfig";
+import {
+  pageMap,
+  stateMap,
+  ProgramaStateMap
+} from "../../constants/config/appconfig";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      branchList: []
+    };
+  }
   handleSearch = e => {
     e.preventDefault();
     const view = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
-      console.log("Received values of form: ", values);
       let params = {
-        ...this.props.pageConfig,
+        PageNumber: 1,
+        PageSize: 10,
         ...values
       };
       const getCurrentList = view.props.getCurrentList;
       getCurrentList(params);
+      const { setObj } = this.props;
+      setObj(values);
     });
   };
 
@@ -41,6 +53,7 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { branchList } = this.state;
     return (
       <Form
         className="ant-advanced-search-form"
@@ -48,27 +61,17 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          <Col span={5} key={5}>
-            <FormItem label="所属页面">
-              {getFieldDecorator(`Page`)(
-                <Select>
-                  {pageMap.map((obj, index) => {
-                    return (
-                      <Option key={index} value={obj.value}>
-                        {obj.text}
-                      </Option>
-                    );
-                  })}
-                </Select>
-              )}
+          <Col span={6} key={2}>
+            <FormItem label="栏目名称">
+              {getFieldDecorator(`ColumnName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={5} key={6}>
             <FormItem label="审核状态">
-              {getFieldDecorator(`Status`)(
+              {getFieldDecorator(`AuditStatus`)(
                 <Select>
                   <Option value="0">全部</Option>
-                  {stateMap.map((obj, index) => {
+                  {ProgramaStateMap.map((obj, index) => {
                     return (
                       <Option key={index} value={obj.Status}>
                         {obj.text}
@@ -79,6 +82,21 @@ class SearchForm extends Component {
               )}
             </FormItem>
           </Col>
+          <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col>
         </Row>
       </Form>
     );
@@ -87,13 +105,15 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
+    console.log(this);
+    console.log(props);
     return {
-      Status: Form.createFormField({
-        value: "0"
+      ColumnName: Form.createFormField({
+        value: props.obj.ColumnName
       }),
-      Page: Form.createFormField({
-        value: "0"
-      }),
+      AuditStatus: Form.createFormField({
+        value: props.obj.AuditStatus ? props.obj.AuditStatus : "0"
+      })
     };
   }
 })(SearchForm);
@@ -105,7 +125,8 @@ class ProgramaList extends React.Component {
       programaList: [], // 列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      pageConfig: {}, // 当前页配置
+      obj: {}
     };
     this.columns = [
       {
@@ -118,7 +139,18 @@ class ProgramaList extends React.Component {
       },
       {
         title: "状态",
-        dataIndex: "AuditStatus"
+        dataIndex: "AuditStatus",
+        render: text => {
+          return (
+            <span>
+              {ProgramaStateMap.map(v => {
+                if (v.Status == text) {
+                  return v.text;
+                }
+              })}
+            </span>
+          );
+        }
       },
       {
         title: "排序",
@@ -272,8 +304,13 @@ class ProgramaList extends React.Component {
       throw new Error(e);
     }
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { selectedRowKeys, pageConfig, programaList } = this.state;
+    const { selectedRowKeys, pageConfig, programaList, obj } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -281,29 +318,25 @@ class ProgramaList extends React.Component {
     return (
       <Nav>
         <WrapperSearchForm
-          pageConfig={pageConfig}
-          getCurrentList={this.getCurrent.bind(this)}
+          getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
         />
         <Table
           dataSource={programaList}
           columns={this.columns}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
 
-        <Row
-          type="flex"
-          justify="center"
-          gutter={24}
-          className={programaList.length === 0 ? "init" : ""}
-        >
-          <Col>
+        <Row type="flex" gutter={24}>
+          {/* <Col>
             <Button onClick={this.handleDelete} className="btn">
               批量删除
             </Button>
-          </Col>
+          </Col> */}
           <Col>
             <Button className="btn btn--primary">
               <a onClick={() => hashHistory.replace(`/programa/detail`)}>

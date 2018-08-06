@@ -15,7 +15,7 @@ import {
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
 import { createOrEdit } from "../../services/meettingService";
-import { memberTempUrl } from "../../constants/config/appconfig";
+import { meettingTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -178,7 +178,7 @@ class ImportMeetMember extends React.Component {
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
-              <a href={memberTempUrl}>下载模板</a>
+              <a href={meettingTempUrl}>下载模板</a>
             </Button>
           </Col>
         </Row>

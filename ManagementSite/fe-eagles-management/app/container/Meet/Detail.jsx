@@ -30,11 +30,13 @@ class MeetDetail extends Component {
     this.columns = [
       {
         title: "参与人员姓名",
-        dataIndex: "UserName"
+        dataIndex: "UserName",
+        key: "UserName"
       },
       {
         title: "联系电话",
-        dataIndex: "Phone"
+        dataIndex: "Phone",
+        key: "Phone"
       },
       {
         title: "操作",
@@ -111,10 +113,11 @@ class MeetDetail extends Component {
       return message.error("请选择删除的人员");
     }
     let member = detail.Participants;
-    selectedRowKeys.map((Phone, index) => {
+    selectedRowKeys.map((v, index) => {
+      const user = JSON.parse(v);
       delete member[
         member.findIndex(i => {
-          if (i.Phone == Phone) {
+          if (i.Phone == user.Phone) {
             delete selectedRowKeys[index];
             selectedRowKeys = selectedRowKeys.filter(item => item); // 删掉复选的id
             console.log(selectedRowKeys);
@@ -163,11 +166,13 @@ class MeetDetail extends Component {
   render() {
     const { detail } = this.state;
     let { id, name } = this.props.params;
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
+    const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
+    let keys = detail.Participants;
+    keys && keys.map((v, i) => (v.key = JSON.stringify({ ...v, key: i })));
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -199,9 +204,8 @@ class MeetDetail extends Component {
           </FormItem>
           <FormItem {...formItemLayoutTable} label="参会人员">
             <Table
-              dataSource={detail.Participants}
+              dataSource={keys}
               columns={this.columns}
-              pagination={pageConfig}
               rowSelection={rowSelection}
               locale={{ emptyText: "暂无数据" }}
               bordered

@@ -15,15 +15,52 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/authGroupService";
+import { getOrgList } from "../../services/orgService";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      List: []
+    };
+  }
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getOrgList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   handleSearch = e => {
     e.preventDefault();
+    const view = this;
     this.props.form.validateFields((err, values) => {
       console.log("Received values of form: ", values);
+      let params = {
+        PageNumber: 1,
+        PageSize: 10,
+        ...values
+      };
+      const getCurrentList = view.props.getCurrentList;
+      getCurrentList(params);
+      const { setObj } = this.props;
+      setObj(values);
     });
   };
 
@@ -33,27 +70,33 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { List } = this.state;
     return (
       <Form
         className="ant-advanced-search-form"
         layout="inline"
-        onSubmit={this.handleSearch}
+        onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          <Col span={5} key={1}>
+          <Col span={5} key={6}>
             <FormItem label="机构">
-              {getFieldDecorator("title")(
+              {getFieldDecorator(`OrgId`)(
                 <Select>
-                  <Option value="0">小李</Option>
-                  <Option value="1">小王</Option>
-                  <Option value="2">张三</Option>
+                  <Option value="0">全部</Option>
+                  {List.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.OrgId}>
+                        {o.OrgName}
+                      </Option>
+                    );
+                  })}
                 </Select>
               )}
             </FormItem>
           </Col>
-          <Col span={5} key={5}>
+          <Col span={6} key={2}>
             <FormItem label="权限组名称">
-              {getFieldDecorator(`goods`)(<Input />)}
+              {getFieldDecorator(`AuthorityGroupName`)(<Input />)}
             </FormItem>
           </Col>
           <Col
@@ -79,13 +122,14 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    // const project = props.project;
+    console.log(this);
+    console.log(props);
     return {
-      title: Form.createFormField({
-        value: "0"
+      AuthorityGroupName: Form.createFormField({
+        value: props.obj.AuthorityGroupName
       }),
-      state: Form.createFormField({
-        value: "0"
+      OrgId: Form.createFormField({
+        value: props.obj.OrgId ? props.obj.OrgId : "0"
       })
     };
   }
@@ -94,7 +138,8 @@ class PermissionList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      operatorList: [] // 列表数组
+      operatorList: [], // 列表数组
+      obj: {}
     };
     this.columns = [
       {
@@ -214,8 +259,13 @@ class PermissionList extends React.Component {
       }
     });
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { selectedRowKeys, pageConfig, List } = this.state;
+    const { selectedRowKeys, pageConfig, List, obj } = this.state;
     const formItemLayout = {
       labelCol: {
         xl: { span: 3 }
@@ -226,7 +276,11 @@ class PermissionList extends React.Component {
     };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={List}
           columns={this.columns}

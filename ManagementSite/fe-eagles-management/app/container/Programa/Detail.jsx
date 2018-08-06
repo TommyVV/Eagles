@@ -17,7 +17,7 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/programaService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
-import { fileSize } from "../../constants/config/appconfig";
+import { fileSize, publicMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/programaAction";
 import { pageMap } from "../../constants/config/appconfig";
 
@@ -88,13 +88,13 @@ class Base extends Component {
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {
-      message.error('只支持格式为png,jpeg和jpg的图片!');
+      message.error("只支持格式为png,jpeg和jpg的图片!");
     }
 
     if (file.size > fileSize) {
       message.error("图片必须小于10M");
     }
-    return isImage && file.size <=fileSize;
+    return isImage && file.size <= fileSize;
   }
   // 商品缩略图 或者  详情图
   onChangeImage = (imageTitle, info) => {
@@ -141,20 +141,26 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入栏目名称" />)}
         </FormItem>
+        <FormItem {...formItemLayout} label="栏目类型">
+          {getFieldDecorator("SubCateType")(
+            <Select>
+              {publicMap.map((obj, index) => {
+                return (
+                  <Option key={index} value={obj.value}>
+                    {obj.text}
+                  </Option>
+                );
+              })}
+            </Select>
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="地址">
-          {getFieldDecorator("TargetUrl", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入地址"
-              }
-            ]
-          })(<Input placeholder="必填，请输入地址" />)}
+          {getFieldDecorator("TargetUrl")(<Input placeholder="请输入地址" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="排序码">
           {getFieldDecorator("OrderBy")(<Input placeholder="请输入排序码" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否置顶显示">
+        <FormItem {...formItemLayout} label="是否在首页显示">
           {getFieldDecorator("IsSetTop")(
             <Select>
               <Option value="0">否</Option>
@@ -162,7 +168,6 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-
         <FormItem {...formItemLayout} label="缩略图">
           <Upload
             name="avatar"
@@ -261,6 +266,9 @@ const FormMap = Form.create({
       OrderBy: Form.createFormField({ value: programa.OrderBy }),
       IsSetTop: Form.createFormField({
         value: programa.IsSetTop == 0 ? "0" : "1"
+      }),
+      SubCateType: Form.createFormField({
+        value: programa.SubCateType ? programa.SubCateType + "" : "0"
       }),
       ModuleType: Form.createFormField({
         value: programa.ModuleType ? programa.ModuleType + "" : "0"
