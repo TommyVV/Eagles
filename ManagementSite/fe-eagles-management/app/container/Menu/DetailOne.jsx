@@ -54,13 +54,16 @@ class Base extends Component {
             }
           });
           let params = {
-            Info: {
-              ...menu,
-              ...values,
-              OrgName,
-              ParentId: 0,
-              MenuLevel: 1
-            }
+            Info: [
+              {
+                ...menu,
+                ...values,
+                OrgName,
+                ParentId: 0,
+                MenuLevel: 1
+              }
+            ],
+            type: menu.MenuId ? 1 : 0
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
