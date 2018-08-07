@@ -427,10 +427,10 @@ export default class App extends React.Component {
               </Menu.Item>
               <Menu.Item
                 key="26"
-                onClick={e => hashHistory.replace("/meet/detail")}
+                onClick={e => hashHistory.replace("/importmember")}
                 style={{ display: authMap.get("News0005") ? null : "none" }}
               >
-                会议信息
+                导入会议人员
               </Menu.Item>
             </SubMenu>
             <SubMenu

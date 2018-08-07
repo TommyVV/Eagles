@@ -126,9 +126,9 @@ class MeetList extends React.Component {
         render: obj => {
           return (
             <div>
-              <a onClick={() => hashHistory.replace(`/meet/detail/${obj.NewsId}`)}>
+              {/* <a onClick={() => hashHistory.replace(`/meet/detail/${obj.NewsId}`)}>
                 编辑
-              </a>
+              </a> */}
               <a
                 onClick={() => this.handleDelete(obj.NewsId)}
                 style={{ paddingLeft: "24px" }}

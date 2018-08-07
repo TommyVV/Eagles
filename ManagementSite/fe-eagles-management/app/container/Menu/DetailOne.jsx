@@ -57,7 +57,9 @@ class Base extends Component {
             Info: {
               ...menu,
               ...values,
-              OrgName
+              OrgName,
+              ParentId: 0,
+              MenuLevel: 1
             }
           };
           let { Code } = await createOrEdit(params);

@@ -339,6 +339,16 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入作者" />)}
         </FormItem>
+        <FormItem {...formItemLayout} label="积分奖励">
+          {getFieldDecorator("RewardsScore")(
+            <Input placeholder="请输入积分奖励" />
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="学习时间">
+          {getFieldDecorator("StudyTime")(
+            <Input placeholder="请输入学习时间，单位（分）" />
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="来源">
           {getFieldDecorator("Source", {
             rules: [
@@ -565,6 +575,12 @@ const FormMap = Form.create({
       NewsId: Form.createFormField({ value: news.NewsId ? news.NewsId : "" }),
       NewsName: Form.createFormField({
         value: news.NewsName
+      }),
+      RewardsScore: Form.createFormField({
+        value: news.RewardsScore
+      }),
+      StudyTime: Form.createFormField({
+        value: news.StudyTime
       }),
       NewsType: Form.createFormField({
         value: news.NewsType ? news.NewsType + "" : "0"

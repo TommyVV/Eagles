@@ -186,7 +186,7 @@ class ImportNews extends React.Component {
           </Col>
           <Col>
             <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/exercise/create`)}>
+              <a onClick={() => hashHistory.replace(`/newslist`)}>
                 取消导入
               </a>
             </Button>

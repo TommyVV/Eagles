@@ -38,6 +38,13 @@ class SearchForm extends Component {
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getCurrentList, setObj } = this.props;
+    let params = {
+      PageNumber: 1,
+      PageSize: 10
+    };
+    getCurrentList(params);
+    setObj({});
   };
 
   render() {
@@ -51,7 +58,7 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={5} key={5}>
             <FormItem label="名称">
-              {getFieldDecorator(`NewsName`)(<Input />)}
+              {getFieldDecorator(`SystemMessageName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={5} key={6}>
@@ -88,11 +95,11 @@ class SearchForm extends Component {
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     return {
-      NewsName: Form.createFormField({
-        value: props.obj.NewsName
+      SystemMessageName: Form.createFormField({
+        value: props.obj.SystemMessageName
       }),
       Status: Form.createFormField({
-        value: props.obj.Status
+        value: props.obj.Status ? props.obj.Status + "" : "0"
       })
     };
   }

@@ -163,13 +163,13 @@ const navMap = [
     key: "25",
     sub: "sub13"
   },
+  // {
+  //   pathname: "#/importmember",
+  //   key: "25",
+  //   sub: "sub13"
+  // },
   {
     pathname: "#/importmember",
-    key: "25",
-    sub: "sub13"
-  },
-  {
-    pathname: "#/meet/detail",
     key: "26",
     sub: "sub13"
   },
