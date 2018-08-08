@@ -10,7 +10,8 @@ import {
   Select,
   Checkbox,
   Modal,
-  Table
+  Table,
+  InputNumber
 } from "antd";
 import Nav from "../../Nav";
 import { hashHistory } from "react-router";
@@ -102,11 +103,14 @@ class QuestionForm extends Component {
   };
   rewardHandleChange = value => {
     const { getFieldsValue } = this.props.form;
+    const { Info } = this.props.info;
+    const { SubjectList } = Info;
     let values = getFieldsValue();
     this.props.saveInfo({
       Info: {
         ...values,
-        IsScoreAward: value
+        IsScoreAward: value,
+        SubjectList
       }
     });
   };
@@ -180,7 +184,7 @@ class QuestionForm extends Component {
     try {
       const { getFieldsValue } = this.props.form;
       let values = getFieldsValue();
-      if (!values.randomCount) {
+      if (values.randomCount <= 0) {
         message.error(`请输入随机生成习题数量`);
         return;
       }
@@ -198,6 +202,7 @@ class QuestionForm extends Component {
           SubjectList
         }
       });
+      message.success(`成功生成${SubjectList.length}个习题`);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -358,17 +363,17 @@ class QuestionForm extends Component {
             <Row gutter={24}>
               <Col span={6} key={1}>
                 <FormItem {...formItemLayoutChild} label="及格奖励积分">
-                  {getFieldDecorator(`PassAwardScore`)(<Input />)}
+                  {getFieldDecorator(`PassAwardScore`)(<InputNumber />)}
                 </FormItem>
               </Col>
               <Col span={6} key={2}>
                 <FormItem {...formItemLayoutChild} label="每题分值">
-                  {getFieldDecorator(`SubjectScore`)(<Input />)}
+                  {getFieldDecorator(`SubjectScore`)(<InputNumber />)}
                 </FormItem>
               </Col>
               <Col span={6} key={3}>
                 <FormItem {...formItemLayoutChild} label="及格分">
-                  {getFieldDecorator(`PassScore`)(<Input />)}
+                  {getFieldDecorator(`PassScore`)(<InputNumber />)}
                 </FormItem>
               </Col>
             </Row>
@@ -389,7 +394,7 @@ class QuestionForm extends Component {
             }}
           >
             {getFieldDecorator(`LimitedTime`)(
-              <Input placeholder="请输入限制时间，单位：分钟" />
+              <InputNumber placeholder="请输入限制时间，单位：分钟" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否随机生成习题">
@@ -407,7 +412,7 @@ class QuestionForm extends Component {
               display: this.state.isRandom ? "block" : "none"
             }}
           >
-            {getFieldDecorator(`randomCount`)(<Input />)}
+            {getFieldDecorator(`randomCount`)(<InputNumber />)}
           </FormItem>
           <Table
             columns={columns}
@@ -473,8 +478,12 @@ class QuestionForm extends Component {
           onOk={this.handleOk}
           onCancel={() => this.setState({ visible: false })}
           style={{ width: "100%", marginBottom: "0" }}
+          width="700px"
         >
-          <ExList ref={instance => (this.exList = instance)} />
+          <ExList
+            ref={instance => (this.exList = instance)}
+            SubjectList={SubjectList}
+          />
         </Modal>
       </div>
     );

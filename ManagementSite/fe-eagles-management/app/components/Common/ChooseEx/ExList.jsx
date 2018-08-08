@@ -34,7 +34,8 @@ class ExList extends React.Component {
       },
       {
         title: "习题名称",
-        dataIndex: "Question"
+        dataIndex: "Question",
+        width: "45%"
       },
       {
         title: "是否多选",
@@ -71,7 +72,13 @@ class ExList extends React.Component {
       List.forEach((v, i) => {
         v.key = JSON.stringify(v);
       });
-      this.setState({ List, current: PageNumber });
+      const { SubjectList } = this.props;
+      let newKeys = [];
+      SubjectList.forEach((v, i) => {
+        delete v["key"];
+        newKeys.push(JSON.stringify(v));
+      });
+      this.setState({ List, current: PageNumber, selectedRowKeys: newKeys });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");

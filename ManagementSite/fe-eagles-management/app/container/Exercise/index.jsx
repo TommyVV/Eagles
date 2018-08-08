@@ -14,6 +14,7 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
+import moment from "moment";
 import {
   getQuestionList,
   deleteQuestion
@@ -28,42 +29,52 @@ class SearchForm extends Component {
   handleSearch = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("Received values of form: ", values);
+      e.preventDefault();
+      const view = this;
+      this.props.form.validateFields((err, values) => {
+        console.log("Received values of form: ", values);
+        let params = {
+          PageNumber: 1,
+          PageSize: 10,
+          ...values
+        };
+        const { getCurrentList, setObj } = view.props;
+        getCurrentList(params);
+        setObj({ ...values });
+      });
     });
   };
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getCurrentList, setObj } = this.props;
+    let params = {
+      PageNumber: 1,
+      PageSize: 10
+    };
+    getCurrentList(params);
+    setObj({});
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    return (
-      <Form
-        className="ant-advanced-search-form"
-        layout="inline"
-        onSubmit={this.handleSearch}
-      >
+    return <Form className="ant-advanced-search-form" layout="inline" onSubmit={this.handleSearch}>
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="习题类型">
-              {getFieldDecorator("ExercisesType")(
-                <Select>
-                  <Option value="4">全部</Option>
+              {getFieldDecorator("ExercisesType")(<Select>
+                  <Option value="0">全部</Option>
                   {typeMap.map((obj, index) => {
-                    return (
-                      <Option key={index} value={obj.ExercisesType}>
+                    return <Option key={index} value={obj.ExercisesType}>
                         {obj.text}
-                      </Option>
-                    );
+                      </Option>;
                   })}
-                </Select>
-              )}
+                </Select>)}
             </FormItem>
           </Col>
           <Col span={5} key={2}>
             <FormItem label="标题">
-              {getFieldDecorator(`title`)(<Input />)}
+              {getFieldDecorator(`ExercisesName`)(<Input />)}
             </FormItem>
           </Col>
           <Col span={8} key={3}>
@@ -76,13 +87,7 @@ class SearchForm extends Component {
                 </FormItem>
               </Col>
               <Col span={2}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    textAlign: "center"
-                  }}
-                >
+                <span style={{ display: "inline-block", width: "100%", textAlign: "center" }}>
                   -
                 </span>
               </Col>
@@ -95,11 +100,11 @@ class SearchForm extends Component {
               </Col>
             </FormItem>
           </Col>
-          <Col span={5} key={4}>
+          {/* <Col span={5} key={4}>
             <FormItem label="状态">
               {getFieldDecorator("Status")(
                 <Select>
-                  <Option value="4">全部</Option>
+                  <Option value="0">全部</Option>
                   {stateMap.map((obj, index) => {
                     return (
                       <Option key={index} value={obj.Status}>
@@ -110,10 +115,8 @@ class SearchForm extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={23} style={{ textAlign: "right", paddingRight: "16px" }}>
+          </Col> */}
+          <Col span={5} style={{ textAlign: "left", paddingTop: "4px" }}>
             <Button type="primary" htmlType="submit">
               搜索
             </Button>
@@ -122,21 +125,29 @@ class SearchForm extends Component {
             </Button>
           </Col>
         </Row>
-      </Form>
-    );
+      </Form>;
   }
 }
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    // const project = props.project;
+    const { obj } = props;
     return {
-      ExercisesType: Form.createFormField({
-        value: "4"
+      ExercisesName: Form.createFormField({
+        value: obj.ExercisesName
       }),
-      Status: Form.createFormField({
-        value: "4"
-      })
+      ExercisesType: Form.createFormField({
+        value: obj.ExercisesType ? obj.ExercisesType + "" : "0"
+      }),
+      // Status: Form.createFormField({
+      //   value: obj.Status ? obj.Status + "" : "0"
+      // }),
+      StartTime: Form.createFormField({
+        value: obj.StartTime ? moment(obj.StartTime, "YYYY-MM-dd") : null
+      }),
+      EndTime: Form.createFormField({
+        value: obj.EndTime ? moment(obj.EndTime, "YYYY-MM-dd") : null
+      }),
     };
   }
 })(SearchForm);
@@ -149,7 +160,8 @@ class Exercise extends React.Component {
       questionList: [], // 列表数组
       keyword: "", // 关键字
       current: 1, // 当前页
-      pageConfig: {} // 当前页配置
+      pageConfig: {}, // 当前页配置
+      obj: {}
     };
     this.columns = [
       {
@@ -306,15 +318,28 @@ class Exercise extends React.Component {
       throw new Error(e);
     }
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
+  // 间接调用getCurrentList
+  getCurrent(params) {
+    this.getCurrentList(params);
+  }
   render() {
-    const { selectedRowKeys, pageConfig, questionList } = this.state;
+    const { selectedRowKeys, pageConfig, questionList, obj } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
     return (
       <Nav>
-        <WrapperSearchForm />
+        <WrapperSearchForm
+          getCurrentList={this.getCurrent.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={questionList}
           columns={this.columns}
@@ -327,7 +352,7 @@ class Exercise extends React.Component {
         <Row type="flex" gutter={24}>
           <Col>
             <Button type="primary" className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/exercise/detail`)}>
+              <a onClick={() => hashHistory.replace(`/question/detail`)}>
                 新增试卷
               </a>
             </Button>
