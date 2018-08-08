@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   Button,
   Input,
+  InputNumber,
   Form,
   message,
   Row,
@@ -233,7 +234,7 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 10 }
+        sm: { span: 8 }
       }
     };
     const formItemLayoutDate = {
@@ -341,12 +342,12 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="积分奖励">
           {getFieldDecorator("RewardsScore")(
-            <Input placeholder="请输入积分奖励" />
+            <InputNumber placeholder="请输入积分奖励" min={0}/>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="学习时间">
           {getFieldDecorator("StudyTime")(
-            <Input placeholder="请输入学习时间，单位（分）" />
+            <InputNumber placeholder="请输入学习时间，单位（分）" min={0} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="来源">

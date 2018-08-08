@@ -169,10 +169,12 @@ class SmsSystemList extends React.Component {
         />
         <Row type="flex" gutter={24}>
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/smssystem/detail`)}>
-                新增
-              </a>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() => hashHistory.replace(`/smssystem/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

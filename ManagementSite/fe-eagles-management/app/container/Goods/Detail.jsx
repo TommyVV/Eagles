@@ -169,10 +169,41 @@ class Base extends Component {
       initialContent: goods.Content,
       media: {
         validateFn: file => {
-          return file.size < fileSize;
+          return file.size < 1024 * 1024 * 5;
         },
-        uploadFn: async file => {
+        uploadFn: async param => {
           // const res=await uploadFile(file);
+          console.log(param);
+          let formData = new FormData();
+          formData.append("file", param.file);
+          var request = new XMLHttpRequest();
+          request.open(
+            "POST",
+            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
+          );
+          request.send(formData);
+          request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+              let { Result } = JSON.parse(request.responseText);
+              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
+              // 上传成功后调用param.success并传入上传后的文件地址
+              param.success({
+                url: FileUrl,
+                meta: {
+                  id: FileId,
+                  title: FileName,
+                  alt: FileName,
+                  loop: false, // 指定音视频是否循环播放
+                  autoPlay: false, // 指定音视频是否自动播放
+                  controls: false // 指定音视频是否显示控制栏
+                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
+                }
+              });
+            }
+          };
+        },
+        onInsert: files => {
+          console.log(files);
         }
       },
       onChange: (Content, info) => {
@@ -212,7 +243,7 @@ class Base extends Component {
                 message: "必填，请输入商品所需积分"
               }
             ]
-          })(<Input placeholder="必填，请输入商品所需积分" />)}
+          })(<InputNumber placeholder="必填，请输入商品所需积分" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="已售">
           {getFieldDecorator("Sale")(
