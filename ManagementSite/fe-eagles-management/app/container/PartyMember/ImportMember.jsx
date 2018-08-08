@@ -35,12 +35,12 @@ class ImportMember extends React.Component {
       {
         title: "党员名称",
         dataIndex: "UserName",
-        key:"UserName"
+        key: "UserName"
       },
       {
         title: "联系电话",
         dataIndex: "Phone",
-        key:"Phone"
+        key: "Phone"
       },
       {
         title: "党员类型",
@@ -48,12 +48,12 @@ class ImportMember extends React.Component {
         render: MemberType => {
           return MemberType == "0" ? "正式党员" : "预备党员";
         },
-        key:"MemberType"
+        key: "MemberType"
       },
       {
         title: "验证结果",
         dataIndex: "ErrorReason",
-        key:"ErrorReason"
+        key: "ErrorReason"
       }
     ];
   }
@@ -78,10 +78,11 @@ class ImportMember extends React.Component {
     }
   };
   handleUpload = () => {
-    const { fileList, memberList } = this.state;
+    const { fileList } = this.state;
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
+    let memberList = [];
     //将文件以文本形式读入页面
     reader.readAsText(file, "utf-8");
     // reader.readAsText(file, "gb2312");
@@ -101,40 +102,41 @@ class ImportMember extends React.Component {
                 news["MemberType"] = text.indexOf("正式党员") > -1 ? "0" : "1";
             }
           });
-          memberList.push({ ...news, key: index });
+          memberList.push({ ...news, key: Math.random() });
         }
       });
-      view.setState({
-        memberList
-      });
+      view.setState({ memberList });
     };
   };
 
   handleImport = async () => {
     try {
       let { memberList, currentBranch } = this.state;
-      console.log(memberList);
-      let newKeys = [];
-      memberList.map(o => {
-        newKeys.push({
-          UserName: o.UserName,
-          Phone: o.Phone,
-          MemberType: o.MemberType,
-          ImportStatus: true,
-          ErrorReason: ""
+      if (currentBranch) {
+        let newKeys = [];
+        memberList.map(o => {
+          newKeys.push({
+            UserName: o.UserName,
+            Phone: o.Phone,
+            MemberType: o.MemberType,
+            ImportStatus: true,
+            ErrorReason: ""
+          });
         });
-      });
-      let { Code, Result, Message } = await bitchCreate({
-        UserList: newKeys,
-        BranchId: currentBranch
-      });
-      if (Code === "00") {
-        message.success("导入成功");
-        console.log(Result);
-        hashHistory.replace(`/partymemberlist`);
+        let { Code, Result, Message } = await bitchCreate({
+          UserList: newKeys,
+          BranchId: currentBranch
+        });
+        if (Code === "00") {
+          message.success("导入成功");
+          console.log(Result);
+          hashHistory.replace(`/partymemberlist`);
+        } else {
+          message.success(Message);
+          this.setState({ memberList: Result.UserList });
+        }
       } else {
-        message.success(Message);
-        this.setState({ memberList: Result.UserList });
+        message.error("请选择支部");
       }
     } catch (e) {
       throw new Error(e);

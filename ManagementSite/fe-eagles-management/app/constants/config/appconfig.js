@@ -92,9 +92,9 @@ export const publicMap = [
 ];
 
 export const fileSize = 1024 * 1024 * 10;
-export const newsTempUrl = "http://51service.xyz/images/system/template.txt";
-export const memberTempUrl = "http://51service.xyz/images/system/template.txt";
-export const meettingTempUrl = "http://51service.xyz/images/system/mettingTemplate.txt";
+export const newsTempUrl = "http://51service.xyz/images/system/template.txt"; // 新闻
+export const memberTempUrl = "http://51service.xyz/images/system/member.txt"; // 党员
+export const meettingTempUrl = "http://51service.xyz/images/system/mettingTemplate.txt"; // 参会人员
 export const scoreType = [
   {
     value: "0",

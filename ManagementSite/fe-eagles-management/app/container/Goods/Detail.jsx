@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   Button,
   Input,
+  InputNumber,
   Form,
   message,
   Row,
@@ -53,26 +54,26 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { SellStartTime, SellEndTime } = values;
-          let params = {
-            Info: {
-              ...this.props.goods,
-              ...values,
-              SellStartTime: moment(SellStartTime, "yyyy-MM-dd").format(),
-              SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format()
+          if (moment(SellStartTime).isBefore(SellEndTime)) {
+            let params = {
+              Info: {
+                ...this.props.goods,
+                ...values,
+                SellStartTime: moment(SellStartTime, "yyyy-MM-dd").format(),
+                SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format()
+              }
+            };
+            let { Code } = await createOrEdit(params);
+            if (Code === "00") {
+              let tip = this.props.goods.GoodsId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/goodslist");
+            } else {
+              let tip = this.props.goods.GoodsId ? "保存失败" : "创建失败";
+              message.error(tip);
             }
-          };
-          let { Code } = await createOrEdit(params);
-          if (Code === "00") {
-            let tip = this.props.goods.GoodsId
-              ? "保存商品成功"
-              : "创建商品成功";
-            message.success(tip);
-            hashHistory.replace("/goodslist");
           } else {
-            let tip = this.props.goods.GoodsId
-              ? "保存商品失败"
-              : "创建商品失败";
-            message.error(tip);
+            message.error("开始时间必须小于结束时间");
           }
         } catch (e) {
           throw new Error(e);
@@ -93,18 +94,18 @@ class Base extends Component {
     const reg = /^image\/(png|jpeg|jpg)$/;
     const type = file.type;
     const isImage = reg.test(type);
-    if (!isImage) {
-      message.error('只支持格式为png,jpeg和jpg的图片!');
+    if (isImage) {
+      message.error("只支持格式为png,jpeg和jpg的图片");
     }
 
     if (file.size > fileSize) {
       message.error("图片必须小于10M");
     }
-    return isImage && file.size <=fileSize;
+    return isImage && file.size <= fileSize;
   }
   // 商品缩略图 或者  详情图
   onChangeImage = (imageTitle, info) => {
-    if (info.file.status !== "uploading") {
+    if (info.file.status == "uploading") {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
@@ -190,10 +191,10 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入商品名称!"
+                message: "必填，请输入商品名称"
               }
             ]
-          })(<Input placeholder="必填，请输入商品名称!" />)}
+          })(<Input placeholder="必填，请输入商品名称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
           {getFieldDecorator("GoodsStatus")(
@@ -208,13 +209,15 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入商品所需积分!"
+                message: "必填，请输入商品所需积分"
               }
             ]
-          })(<Input placeholder="必填，请输入商品" />)}
+          })(<Input placeholder="必填，请输入商品所需积分" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="已售">
-          {getFieldDecorator("Sale")(<Input placeholder="请输入已售数量" />)}
+          {getFieldDecorator("Sale")(
+            <InputNumber placeholder="请输入已售数量" min={0} />
+          )}
         </FormItem>
         <FormItem label="销售时间" {...formItemLayoutDate}>
           <Col span={6}>
@@ -223,7 +226,7 @@ class Base extends Component {
                 rules: [
                   {
                     required: true,
-                    message: "必填，请选择开始时间!"
+                    message: "必填，请选择开始时间"
                   }
                 ]
               })(<DatePicker placeholder="请选择开始时间" />)}
@@ -246,7 +249,7 @@ class Base extends Component {
                 rules: [
                   {
                     required: true,
-                    message: "必填，请选择结束时间!"
+                    message: "必填，请选择结束时间"
                   }
                 ]
               })(<DatePicker placeholder="请选择结束时间" />)}
@@ -258,30 +261,32 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入每人兑换最大数量!"
+                message: "必填，请输入每人兑换最大数量"
               }
             ]
-          })(<Input placeholder="必填，请输入每人兑换最大数量" />)}
+          })(
+            <InputNumber placeholder="必填，请输入每人兑换最大数量" min={0} />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="商品参考价格">
           {getFieldDecorator("ReferePrice", {
             rules: [
               {
                 required: true,
-                message: "必填，请输入参考价格!"
+                message: "必填，请输入参考价格"
               }
             ]
-          })(<Input placeholder="必填，请输入参考价格!" />)}
+          })(<InputNumber placeholder="必填，请输入参考价格" min={0} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="库存">
           {getFieldDecorator("Stock", {
             rules: [
               {
                 required: true,
-                message: "必填，请输入库存!"
+                message: "必填，请输入库存"
               }
             ]
-          })(<Input placeholder="必填，请输入库存!" />)}
+          })(<InputNumber placeholder="必填，请输入库存" min={0} />)}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="产品描述">
           {getFieldDecorator("Content", {
@@ -353,7 +358,7 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {!this.props.goods.GoodsId ? "新建" : "保存"}
+                {this.props.goods.GoodsId ? "保存" : "新建"}
               </Button>
             </Col>
             <Col span={2} offset={1}>

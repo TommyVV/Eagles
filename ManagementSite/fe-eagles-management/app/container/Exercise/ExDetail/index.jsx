@@ -7,8 +7,7 @@ import {
   Row,
   Col,
   Select,
-  Avatar,
-  Icon
+  InputNumber
 } from "antd";
 import { connect } from "react-redux";
 import Nav from "../../Nav";
@@ -48,7 +47,12 @@ class Base extends Component {
           const { OptionList } = Info;
           if (OptionList.length) {
             let list = [];
+            let isEmptyOption = false;
             OptionList.map((o, i) => {
+              if (!o.OptionName) {
+                isEmptyOption = true;
+                return;
+              }
               list.push({
                 OptionId: o.OptionId,
                 OptionName: o.OptionName,
@@ -58,6 +62,9 @@ class Base extends Component {
                 Img: o.Img
               });
             });
+            if (isEmptyOption) {
+              message.error("选项不能为空");
+            }
             let params = {
               Info: {
                 Question: values.Question,
@@ -117,7 +124,7 @@ class Base extends Component {
       return;
     }
     if (attr == "MultipleCount") {
-      value = value.target.value;
+      value = value;
     }
     this.props.saveInfo({
       Info: {
@@ -196,7 +203,8 @@ class Base extends Component {
             style={{ display: Info.Multiple == "1" ? "block" : "none" }}
           >
             {getFieldDecorator("MultipleCount")(
-              <Input
+              <InputNumber
+                min={2}
                 placeholder="请输入多选数量"
                 onChange={this.change.bind(this, "MultipleCount")}
               />

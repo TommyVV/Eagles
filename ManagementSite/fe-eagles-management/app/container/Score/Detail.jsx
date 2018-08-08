@@ -72,7 +72,6 @@ class Base extends Component {
     });
   };
   change(value) {
-    debugger;
     // 保存数据
     let { getFieldsValue } = this.props.form;
     let values = getFieldsValue();

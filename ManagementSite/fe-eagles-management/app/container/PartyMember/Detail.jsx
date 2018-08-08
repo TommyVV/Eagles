@@ -112,7 +112,7 @@ class Base extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { branch, member } = this.props;
-    console.log(branch,member)
+    console.log(branch, member);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -130,10 +130,16 @@ class Base extends Component {
           {getFieldDecorator("UserId")(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="所属支部">
-          {getFieldDecorator("BranchId")(
+          {getFieldDecorator("BranchId", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请选择支部"
+              }
+            ]
+          })(
             <Select>
               {branch.map((o, i) => {
-                console.log(o.BranchId,o.BranchName)
                 return (
                   <Option value={o.BranchId} key={i}>
                     {o.BranchName}
@@ -215,7 +221,7 @@ class Base extends Component {
               {
                 required: true,
                 message: "必填，请输入手机号码",
-                pattern: /^1(3|4|5|7|8)\d{9}$/,
+                pattern: /^1(3|4|5|6|7|8)\d{9}$/,
                 message: "手机号格式不正确!"
               }
             ]
@@ -226,7 +232,8 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入身份证"
+                pattern:/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+                message: "必填，身份证格式不正确",
               }
             ]
           })(<Input placeholder="必填，请输入身份证" />)}
@@ -266,8 +273,8 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="人员类别（正式/预备党员）">
           {getFieldDecorator("MemberType")(
             <Select>
-              <Option value="0">预备党员</Option>
-              <Option value="1">正式党员</Option>
+              <Option value="0">正式党员</Option>
+              <Option value="1">预备党员</Option>
             </Select>
           )}
         </FormItem>
@@ -291,8 +298,7 @@ class Base extends Component {
           {getFieldDecorator("MemberStatus")(
             <Select>
               <Option value="0">正常</Option>
-              <Option value="1">预备</Option>
-              <Option value="2">开除</Option>
+              <Option value="1">禁用</Option>
             </Select>
           )}
         </FormItem>
@@ -338,7 +344,7 @@ const FormMap = Form.create({
         value: member.Sex ? member.Sex + "" : "0"
       }),
       BranchId: Form.createFormField({
-        value: member.BranchId ? member.BranchId + "" : ""
+        value: member.BranchId ? member.BranchId : ""
       }),
       Nation: Form.createFormField({
         value: member.Nation
