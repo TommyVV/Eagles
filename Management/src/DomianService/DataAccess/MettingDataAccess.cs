@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Eagles.Application.Model.Meeting.Requset;
 using Eagles.Base.DataBase;
@@ -14,6 +11,11 @@ namespace Ealges.DomianService.DataAccess
     public class MettingDataAccess: IMettingDataAccess
     {
         private readonly IDbManager dbManager;
+
+        public MettingDataAccess(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
 
         public List<TbUserInfo> GetUserInfoByPhone(List<string> list)
         {
