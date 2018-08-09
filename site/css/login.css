@@ -114,7 +114,8 @@ html, body {
         margin: 77px  auto 0;
         text-align: center;
         width: 172px;
-        height: 67px; }
+        height: 67px;overflow:hidden; }
+				.loginModal .loginBox .logo img{width:100%;height: 100%;}
   .form-horizontal {
     padding: 70px 40px 0 40px; }
     .form-horizontal .form-group {
