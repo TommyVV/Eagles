@@ -55,10 +55,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 		"Token": token,
 		"AppId": appId
 	};
-	console.log(dataf, JSON.stringify(dataf));
 	if(token && testlist && TestId) { //用户登录并且答案不为空则提交
-	
-	
 		$.ajax({
 			type: "post",
 			data:dataf,
