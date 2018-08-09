@@ -355,13 +355,18 @@ $(document).ready(function () {
     //上级审核活动是否完成
     function editTaskComplete(status) {
         score = $('.s-star').length;
-        var pubFlag = $('.pub-flag').hasClass('select');
+        var ele = $('.select');
+        if(ele.length==0){
+            errorTip('请选择公示方式');
+            return;
+        }
+        var pubFlag = $('.select').attr("id").split('-')[1];
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Task/EditTaskComplete",
             data: {
                 TaskId: taskId,
-                IsPublic: pubFlag == true ? 0 : 1,
+                IsPublic: pubFlag,
                 Score: score,
                 CompleteStatus: status,
                 Token: token,
