@@ -57,7 +57,8 @@ const ORG = {
   ORG_EDIT: "/api/Organization/EditOrganization", //编辑机构
   ORG_DELETE: "/api/Organization/RemoveOrganization", //删除机构
   ORG_LIST: "/api/Organization/GetOrganization", //机构列表
-  ORG_DETAIL: "/api/Organization/GetOrganizationDetail" //机构详情
+  ORG_DETAIL: "/api/Organization/GetOrganizationDetail", //机构详情
+  ORG_TREE: "/api/Organization/GetOrganizationChart", //机构树
 };
 // 商品
 const GOODS = {

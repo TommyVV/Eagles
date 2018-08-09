@@ -4,274 +4,250 @@ const navMap = [
     key: "0"
   },
   {
-    pathname: "#/questionlist",
-    key: "1",
-    sub: "sub1"
-  },
-  {
-    pathname: "#/question/detail",
-    key: "2",
-    sub: "sub1"
-  },
-  {
-    pathname: "#/exerciselist",
-    key: "e1",
-    sub: "sube1"
-  },
-  {
-    pathname: "#/exercise/detail",
-    key: "e2",
-    sub: "sube1"
-  },
-  {
-    pathname: "#/exercise/detail",
-    key: "2",
-    sub: "sub1"
-  },
-  {
     pathname: "#/partymemberlist",
-    key: "3",
-    sub: "sub2"
+    sub: "sub1",
+    key: "sub11"
   },
   {
     pathname: "#/partymember/detail",
-    key: "4",
-    sub: "sub2"
-  },
-  {
-    pathname: "#/partymember/setnext",
-    key: "4",
-    sub: "sub2"
+    sub: "sub1",
+    key: "sub12"
   },
   {
     pathname: "#/partymember/import",
-    key: "5",
-    sub: "sub2"
+    sub: "sub1",
+    key: "sub13"
   },
   {
-    pathname: "#/intergrallist",
-    key: "6",
-    sub: "sub3"
-  },
-  {
-    pathname: "#/intergral/detail",
-    key: "7",
-    sub: "sub3"
-  },
-  {
-    pathname: "#/goodslist",
-    key: "8",
-    sub: "sub4"
-  },
-  {
-    pathname: "#/goods/detail",
-    key: "9",
-    sub: "sub4"
-  },
-  {
-    pathname: "#/sendlist",
-    key: "10",
-    sub: "sub5"
-  },
-  {
-    pathname: "#/send/detail",
-    key: "11",
-    sub: "sub5"
-  },
-  {
-    pathname: "#/checklist",
-    key: "12",
-    sub: "sub6"
-  },
-  {
-    pathname: "#/systemlist",
-    key: "13",
-    sub: "sub7"
-  },
-  {
-    pathname: "#/system/detail",
-    key: "14",
-    sub: "sub7"
+    pathname: "#/partymember/setnext",
+    sub: "sub1",
+    key: "sub14"
   },
   {
     pathname: "#/ranklist",
-    key: "15",
-    sub: "sub8"
-  },
-  {
-    pathname: "#/rank/detail",
-    key: "155",
-    sub: "sub8"
-  },
-  {
-    pathname: "#/operatorlist",
-    key: "16",
-    sub: "sub9"
-  },
-  {
-    pathname: "#/operator/detail",
-    key: "17",
-    sub: "sub9"
-  },
-  {
-    pathname: "#/orglist",
-    key: "18",
-    sub: "sub10"
-  },
-  {
-    pathname: "#/org/detail",
-    key: "19",
-    sub: "sub10"
-  },
-  {
-    pathname: "#/branchlist",
-    key: "188",
-    sub: "sub10"
-  },
-  {
-    pathname: "#/branch/detail",
-    key: "199",
-    sub: "sub10"
-  },
-  {
-    pathname: "#/imagelist",
-    key: "20",
-    sub: "sub11"
-  },
-  {
-    pathname: "#/image/detail",
-    key: "21",
-    sub: "sub11"
-  },
-  {
-    pathname: "#/menulist",
-    key: "22",
-    sub: "sub12"
-  },
-  {
-    pathname: "#/menuone/detail",
-    key: "23",
-    sub: "sub12"
-  },
-  {
-    pathname: "#/menutwo/detail",
-    key: "24",
-    sub: "sub12"
-  },
-  {
-    pathname: "#/meetlist",
-    key: "25",
-    sub: "sub13"
-  },
-  // {
-  //   pathname: "#/importmember",
-  //   key: "25",
-  //   sub: "sub13"
-  // },
-  {
-    pathname: "#/importmember",
-    key: "26",
-    sub: "sub13"
-  },
-  {
-    pathname: "#/programalist",
-    key: "27",
-    sub: "sub14"
-  },
-  {
-    pathname: "#/programa/detail",
-    key: "28",
-    sub: "sub14"
-  },
-  {
-    pathname: "#/activitylist",
-    key: "29",
-    sub: "sub15"
-  },
-  {
-    pathname: "#/activity/detail",
-    key: "30",
-    sub: "sub15"
-  },
-  {
-    pathname: "#/newslist",
-    key: "31",
-    sub: "sub16"
-  },
-  {
-    pathname: "#/news/detail",
-    key: "32",
-    sub: "sub16"
-  },
-  {
-    pathname: "#/news/import",
-    key: "321",
-    sub: "sub16"
-  },
-  {
-    pathname: "#/permissionlist",
-    key: "33",
-    sub: "sub17"
-  },
-  {
-    pathname: "#/permission/detail",
-    key: "34",
-    sub: "sub17"
-  },
-  {
-    pathname: "#/permission/manage",
-    key: "35",
-    sub: "sub17"
-  },
-  {
-    pathname: "#/smssystemlist",
-    key: "36",
-    sub: "sub18"
-  },
-  {
-    pathname: "#/smssystem/detail",
-    key: "37",
-    sub: "sub18"
-  },
-  {
-    pathname: "#/smsorglist",
-    key: "38",
-    sub: "sub19"
-  },
-  {
-    pathname: "#/smsorg/detail",
-    key: "39",
-    sub: "sub19"
-  },
-  {
-    pathname: "#/taskactivitypubliclist",
-    key: "40",
-    sub: "sub20"
-  },
-  {
-    pathname: "#/taskpublic/detail",
-    key: "41",
-    sub: "sub20"
-  },
-  {
-    pathname: "#/activitypubliclist",
-    key: "42",
-    sub: "sub21"
-  },
-  {
-    pathname: "#/activitypublic/detail",
-    key: "43",
-    sub: "sub21"
+    sub: "sub1",
+    key: "sub15"
   },
   {
     pathname: "#/articlelist",
-    key: "44",
-    sub: "sub22"
+    sub: "sub1",
+    key: "sub16"
   },
   {
     pathname: "#/article/detail",
-    key: "45",
-    sub: "sub22"
-  }
+    sub: "sub1",
+    key: "sub17"
+  },
+  {
+    pathname: "#/goodslist",
+    sub: "sub2",
+    key: "sub21"
+  },
+  {
+    pathname: "#/goods/detail",
+    sub: "sub2",
+    key: "sub22"
+  },
+  {
+    pathname: "#/sendlist",
+    sub: "sub2",
+    key: "sub23"
+  },
+  {
+    pathname: "#/newslist",
+    sub: "sub3",
+    key: "sub31"
+  },
+  {
+    pathname: "#/news/detail",
+    sub: "sub3",
+    key: "sub32"
+  },
+  {
+    pathname: "#/news/import",
+    sub: "sub3",
+    key: "sub33"
+  },
+  {
+    pathname: "#/questionlist",
+    sub: "sub3",
+    key: "sub34"
+  },
+  {
+    pathname: "#/question/detail",
+    sub: "sub3",
+    key: "sub35"
+  },
+  {
+    pathname: "#/exerciselist",
+    sub: "sub3",
+    key: "sub36"
+  },
+  {
+    pathname: "#/exercise/detail",
+    sub: "sub3",
+    key: "sub37"
+  },
+  {
+    pathname: "#/meetlist",
+    sub: "sub3",
+    key: "sub38"
+  },
+  {
+    pathname: "#/importmember",
+    sub: "sub3",
+    key: "sub39"
+  },
+  {
+    pathname: "#/intergrallist",
+    sub: "sub3",
+    key: "sub310"
+  },
+  {
+    pathname: "#/intergral/detail",
+    sub: "sub3",
+    key: "sub311"
+  },
+  {
+    pathname: "#/orglist",
+    sub: "sub4",
+    key: "sub41"
+  },
+  {
+    pathname: "#/org/detail",
+    sub: "sub4",
+    key: "sub42"
+  },
+  {
+    pathname: "#/smsorglist",
+    sub: "sub4",
+    key: "sub43"
+  },
+  {
+    pathname: "#/smsorg/detail",
+    sub: "sub4",
+    key: "sub44"
+  },
+  {
+    pathname: "#/branchlist",
+    sub: "sub4",
+    key: "sub45"
+  },
+  {
+    pathname: "#/branch/detail",
+    sub: "sub4",
+    key: "sub46"
+  },
+  {
+    pathname: "#/menulist",
+    sub: "sub5",
+    key: "sub51"
+  },
+  {
+    pathname: "#/menuone/detail",
+    sub: "sub5",
+    key: "sub52"
+  },
+  {
+    pathname: "#/menutwo/detail",
+    sub: "sub5",
+    key: "sub53"
+  },
+  {
+    pathname: "#/imagelist",
+    sub: "sub5",
+    key: "sub54"
+  },
+  {
+    pathname: "#/image/detail",
+    sub: "sub5",
+    key: "sub55"
+  },
+  {
+    pathname: "#/programalist",
+    sub: "sub5",
+    key: "sub56"
+  },
+  {
+    pathname: "#/programa/detail",
+    sub: "sub5",
+    key: "sub57"
+  },
+  {
+    pathname: "#/activitylist",
+    sub: "sub6",
+    key: "sub61"
+  },
+  {
+    pathname: "#/activity/detail",
+    sub: "sub6",
+    key: "sub62"
+  },
+  {
+    pathname: "#/activitypubliclist",
+    sub: "sub6",
+    key: "sub63"
+  },
+  {
+    pathname: "#/activitypublic/detail",
+    sub: "sub6",
+    key: "sub64"
+  },
+  {
+    pathname: "#/taskactivitypubliclist",
+    sub: "sub7",
+    key: "sub71"
+  },
+  {
+    pathname: "#/taskpublic/detail",
+    sub: "sub7",
+    key: "sub72"
+  },
+  {
+    pathname: "#/smssystemlist",
+    sub: "sub8",
+    key: "sub81"
+  },
+  {
+    pathname: "#/smssystem/detail",
+    sub: "sub8",
+    key: "sub82"
+  },
+  {
+    pathname: "#/systemlist",
+    sub: "sub8",
+    key: "sub83"
+  },
+  {
+    pathname: "#/system/detail",
+    sub: "sub8",
+    key: "sub84"
+  },
+  {
+    pathname: "#/operatorlist",
+    sub: "sub9",
+    key: "sub91"
+  },
+  {
+    pathname: "#/operator/detail",
+    sub: "sub9",
+    key: "sub92"
+  },
+  {
+    pathname: "#/permissionlist",
+    sub: "sub9",
+    key: "sub93"
+  },
+  {
+    pathname: "#/permission/detail",
+    sub: "sub9",
+    key: "sub94"
+  },
+  {
+    pathname: "#/permission/manage",
+    sub: "sub9",
+    key: "sub95"
+  },
+  
 ];
 export default navMap;
