@@ -25,7 +25,9 @@ class ImageList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageList: [] // 列表数组
+      imageList: [], // 列表数组
+      current: 1, // 当前页
+      pageConfig: {}, // 当前页配置
     };
     this.columns = [
       {
@@ -91,7 +93,7 @@ class ImageList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = this.getListConfig;
+    const { PageNumber } = params;
     try {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);

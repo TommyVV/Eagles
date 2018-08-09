@@ -17,7 +17,7 @@ import { hashHistory } from "react-router";
 import {
   getList,
   getPageList,
-  createOrEdit
+  manageCreateOrEdit
 } from "../../services/authGroupService";
 import Nav from "../Nav";
 import "./style.less";
@@ -53,7 +53,7 @@ class SearchForm extends Component {
           AuthorityInfo: newKey,
           OperId: 0
         };
-        let { Code } = await createOrEdit(param);
+        let { Code } = await manageCreateOrEdit(param);
         if (Code === "00") {
           message.success("保存成功");
         } else {
@@ -82,6 +82,7 @@ class SearchForm extends Component {
   // 拿权限的页面
   getPageCode = async value => {
     try {
+      this.setState({ pageList: [] });
       let { List } = await getPageList({
         GroupId: value
       });
@@ -132,7 +133,7 @@ class SearchForm extends Component {
     };
     const pageCodeArr = [...pageCodeMap];
     console.log(pageList);
-    let newPageList = ["actv0001"];
+    let newPageList = [];
     pageList.map((o, i) => {
       newPageList.push(o.FunCode);
     });

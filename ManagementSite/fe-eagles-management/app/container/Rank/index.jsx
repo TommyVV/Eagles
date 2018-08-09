@@ -38,6 +38,12 @@ class SearchForm extends Component {
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getCurrentList, setObj } = this.props;
+    getCurrentList({
+      PageNumber: 1,
+      PageSize: 10
+    });
+    setObj({});
   };
 
   render() {

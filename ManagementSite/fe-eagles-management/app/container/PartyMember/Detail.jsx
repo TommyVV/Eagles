@@ -52,24 +52,24 @@ class Base extends Component {
           const { branch, member } = this.props;
           const { BranchId } = values;
           const bra = branch.filter(o => o.BranchId == BranchId);
-          let { IsMoney } = values;
-          IsMoney = IsMoney ? true : false;
+          // let { IsMoney } = values;
+          // IsMoney = IsMoney ? true : false;
           let params = {
             Info: {
               ...member,
               ...values,
-              IsMoney,
+              // IsMoney,
               Password: "abc123",
               BranchName: bra && bra[0].BranchName
             }
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
-            let tip = member.Id ? "保存成功" : "创建成功";
+            let tip = member.UserId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/partymemberlist");
           } else {
-            let tip = member.Id ? "保存失败" : "创建失败";
+            let tip = member.UserId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -278,16 +278,16 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="党费缴纳情况">
+        {/* <FormItem {...formItemLayout} label="党费缴纳情况">
           {getFieldDecorator("IsMoney")(
             <Select>
               <Option value="1">已缴纳</Option>
               <Option value="0">未缴纳</Option>
             </Select>
           )}
-        </FormItem>
+        </FormItem> */}
         <FormItem {...formItemLayout} label="党费缴纳到期时间">
-          {getFieldDecorator("ExpireDateFee")(
+          {getFieldDecorator("FeeExpireDate")(
             <DatePicker
               placeholder="请选择党费缴纳到期时间"
               style={{ width: "100%" }}
@@ -392,12 +392,12 @@ const FormMap = Form.create({
       MemberType: Form.createFormField({
         value: member.MemberType ? member.MemberType + "" : "0"
       }),
-      IsMoney: Form.createFormField({
-        value: member.IsMoney ? "1" : "0"
-      }),
-      ExpireDateFee: Form.createFormField({
-        value: member.ExpireDateFee
-          ? moment(member.ExpireDateFee, "YYYY-MM-DD")
+      // IsMoney: Form.createFormField({
+      //   value: member.IsMoney ? "1" : "0"
+      // }),
+      FeeExpireDate: Form.createFormField({
+        value: member.FeeExpireDate
+          ? moment(member.FeeExpireDate, "YYYY-MM-DD")
           : null
       }),
       MemberStatus: Form.createFormField({

@@ -47,7 +47,7 @@ class DynamicFieldSet extends React.Component {
               let tip = menu.Id ? "保存失败" : "创建失败";
               message.error(tip);
             }
-          }else{
+          } else {
             message.error("请选择一级菜单");
           }
         } catch (e) {
@@ -127,7 +127,11 @@ class DynamicFieldSet extends React.Component {
               defaultValue={menu.MenuId}
             >
               {menuList.map((o, i) => {
-                return <Option key={i}>{o.MenuName}</Option>;
+                return (
+                  <Option key={i} value={o.MenuId}>
+                    {o.MenuName}
+                  </Option>
+                );
               })}
             </Select>
           </FormItem>

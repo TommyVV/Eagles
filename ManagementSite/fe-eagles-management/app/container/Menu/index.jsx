@@ -63,16 +63,18 @@ class MenuList extends React.Component {
         render: obj => {
           return (
             <div>
-              <a
-                onClick={() =>
-                  hashHistory.replace(`/menuone/detail/${obj.MenuId}`)
-                }
-              >
-                编辑
-              </a>
+              {obj.MenuLevel == 1 ? (
+                <a
+                  onClick={() =>
+                    hashHistory.replace(`/menuone/detail/${obj.MenuId}`)
+                  }
+                >
+                  编辑
+                </a>
+              ) : null}
               <a
                 onClick={() => this.handleDelete(obj.MenuId)}
-                style={{ paddingLeft: "24px" }}
+                style={{ paddingLeft: obj.MenuLevel == 1 ? "24px" : "0" }}
               >
                 删除
               </a>
@@ -187,10 +189,8 @@ class MenuList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary"  type="primary">
-              <a onClick={() => hashHistory.replace(`/menuone/detail`)}>
-                新增
-              </a>
+            <Button className="btn btn--primary" type="primary">
+              <a onClick={() => hashHistory.replace(`/menuone/detail`)}>新增</a>
             </Button>
           </Col>
         </Row>

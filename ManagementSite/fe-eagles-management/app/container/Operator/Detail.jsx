@@ -112,7 +112,7 @@ class Base extends Component {
           })(<Input placeholder="必填，请输入操作员姓名" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="昵称">
-          {getFieldDecorator("NickName")(<Input placeholder="必填，请输入昵称" />)}
+          {getFieldDecorator("Nickname")(<Input placeholder="必填，请输入昵称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="操作员密码">
           {getFieldDecorator("Password", {
@@ -200,8 +200,8 @@ const FormMap = Form.create({
       OperName: Form.createFormField({
         value: operator.OperName
       }),
-      NickName: Form.createFormField({
-        value: operator.NickName
+      Nickname: Form.createFormField({
+        value: operator.Nickname
       }),
       AuthorityGroupId: Form.createFormField({
         value: operator.AuthorityGroupId ? operator.AuthorityGroupId : ""

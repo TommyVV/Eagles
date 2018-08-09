@@ -95,3 +95,23 @@ export const del = async params => {
     throw new Error(e);
   }
 };
+
+
+// 创建或编辑
+export const manageCreateOrEdit = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: AUTHGROUP.PERMISSION_EDIT,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};

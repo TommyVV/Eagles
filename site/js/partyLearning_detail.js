@@ -4,11 +4,18 @@ var newsIds = getRequest('NewsId'); //获取来源d的新闻id
 var token = localStorage.getItem('token');
 var appId = getRequest('appId');
 var TestId = getRequest('testId'); //试卷ID
-var testlist = getRequest('testlist'); //试卷答案
+var datalist =getRequest('datalist'); //试卷答案
+
+if(datalist){
+	var testlistwarp=JSON.parse(datalist);
+	console.log(testlistwarp)
+	var testlist=testlistwarp.TestList
+	console.log(testlist)
+}
 var testListJson;
 addNewsViewCount(newsIds, token, appId) //更新新闻阅读量(页面一打开调用一下)
 getNewsDetail(newsIds, token, appId); //加载页面详情
-if(TestId && testlist) {
+if(TestId && datalist) {
 	//进入页面默认调用一下，为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
 	submitTestPaperAnswer(TestId, 0, token, appId);
 }
@@ -37,20 +44,21 @@ $('#answer-submit').on('click', function() {
 function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 	if(testlist) { //获取本地存储的答案信息 为了给用户提交时未登录，登录成功后再进来
 		//testlist = localStorage.getItem("testlist");
-		testlist = decodeURI(testlist); //解码
+		testlist = testlist; //解码
 	} else {
 		testlist = getTestPaperAnswerJson(); //获取页面答案的JSON数据
 	}
+	var dataf = {
+		"TestId": TestId, //试卷ID
+		"UseTime": UseTime, //试卷用时
+		"TestList": testlist,
+		"Token": token,
+		"AppId": appId
+	};
 	if(token && testlist && TestId) { //用户登录并且答案不为空则提交
 		$.ajax({
 			type: "post",
-			data: {
-				"TestId": TestId, //试卷ID
-				"UseTime": UseTime, //试卷用时
-				"TestList": testlist,
-				"Token": token,
-				"AppId": appId
-			},
+			data:dataf,
 			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function(res) {
@@ -63,7 +71,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 					});
 					//刷新当前页面,为了清空选中的答案
 					//window.location.reload();
-					window.location.href = 'partyLearning_detail.html?NewsId=' + newsIds + '&appId=' + appId;
+					//window.location.href = 'partyLearning_detail.html?NewsId=' + newsIds + '&appId=' + appId;
 				}else if(res.Code == 11){
 					localStorage.clear();
 			  		window.location.href = 'login.html?appId=' + appId;
@@ -82,7 +90,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 		})
 	} 
 	else if(!token&&testListJson) { //用户未登录
-		window.location.href = "login.html?testId=" + TestId + '&appId='+appId+'&NewsId='+newsIds+'&testlist=' + encodeURI(testlist);
+		window.location.href = "login.html?appId="+appId+'&datalist=' + encodeURI(JSON.stringify(dataf))+'&NewsId=' + newsIds+'&testId=' + TestId;
 	}
 }
 
