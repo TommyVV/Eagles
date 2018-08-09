@@ -3,7 +3,6 @@ import Nav from "../Nav";
 import { getTreeInfo } from "../../services/orgService";
 import { Tree, Icon } from "antd";
 const TreeNode = Tree.TreeNode;
-const org = require("../../../static/image/svg/org.svg");
 
 class HomePage extends Component {
   constructor(props) {
