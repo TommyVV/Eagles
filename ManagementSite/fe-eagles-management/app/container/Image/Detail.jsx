@@ -123,12 +123,19 @@ class Base extends Component {
           {getFieldDecorator("Id")(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="所属机构">
-          {getFieldDecorator("OrgId")(
+          {getFieldDecorator("OrgId", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请选择所属机构"
+              }
+            ]
+          })(
             <Select>
               {Orgs.length &&
                 Orgs.map((obj, index) => {
                   return (
-                    <Option key={index} value={obj.OrgId + ""}>
+                    <Option key={index} value={obj.OrgId}>
                       {obj.OrgName}
                     </Option>
                   );
@@ -137,11 +144,18 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="页面类型">
-          {getFieldDecorator("PageId")(
+          {getFieldDecorator("PageId", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请选择页面类型"
+              }
+            ]
+          })(
             <Select>
               {pageMap.map((obj, index) => {
                 return (
-                  <Option key={index} value={obj.value + ""}>
+                  <Option key={index} value={obj.value}>
                     {obj.text}
                   </Option>
                 );
@@ -151,11 +165,16 @@ class Base extends Component {
         </FormItem>
 
         <FormItem {...formItemLayout} label="跳转链接">
-          {getFieldDecorator("TargetUrl")(
-            <Input placeholder="请输入跳转链接" />
-          )}
+          {getFieldDecorator("TargetUrl", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请输入跳转链接"
+              }
+            ]
+          })(<Input placeholder="请输入跳转链接" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构Logo">
+        <FormItem {...formItemLayout} label="滚动图片">
           <Upload
             name="avatar"
             listType="picture-card"
@@ -210,13 +229,13 @@ const FormMap = Form.create({
         value: image.Id
       }),
       OrgId: Form.createFormField({
-        value: image.OrgId ? image.OrgId + "" : ""
+        value: image.OrgId ? image.OrgId : ""
       }),
       OrgName: Form.createFormField({
         value: image.OrgName
       }),
       PageId: Form.createFormField({
-        value: image.OrgId ? image.PageId + "" : "0"
+        value: image.OrgId ? image.PageId : "0"
       }),
       TargetUrl: Form.createFormField({
         value: image.TargetUrl
@@ -266,8 +285,8 @@ class ImageDetail extends Component {
   // 根据id查询详情
   getInfo = async Id => {
     try {
+      await this.getOrgList();
       const { Info } = await getInfoById({ Id });
-      this.getOrgList();
       this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");

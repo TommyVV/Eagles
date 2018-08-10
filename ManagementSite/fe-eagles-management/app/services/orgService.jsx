@@ -77,3 +77,22 @@ export const deleteOrg = async params => {
     throw new Error(e);
   }
 };
+
+// 查看机构数
+export const getTreeInfo = async params => {
+  try {
+    let res = await sendRequest({
+      url: ORG.ORG_TREE,
+      method: "post",
+      params
+    });
+    let { Code, Result, Message } = res.data;
+    if (res.status === 200) {
+      return Result;
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};

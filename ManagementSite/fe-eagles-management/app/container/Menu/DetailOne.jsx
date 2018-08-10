@@ -117,14 +117,7 @@ class Base extends Component {
           })(<Input placeholder="必填，请输入菜单名称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="菜单链接">
-          {getFieldDecorator("MenuLink", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入菜单链接"
-              }
-            ]
-          })(<Input placeholder="必填，请输入菜单链接" />)}
+          {getFieldDecorator("MenuLink")(<Input placeholder="必填，请输入菜单链接" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="所属机构">
           {getFieldDecorator("OrgId")(

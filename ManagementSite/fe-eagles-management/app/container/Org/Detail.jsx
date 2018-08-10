@@ -294,8 +294,8 @@ class OrgDetail extends Component {
   // 根据id查询详情
   getInfo = async OrgId => {
     try {
+      await this.getAreaList();
       const { Info } = await getOrgInfoById({ OrgId });
-      this.getAreaList();
       this.props.saveOrgInfo(Info);
     } catch (e) {
       message.error("获取详情失败");

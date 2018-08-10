@@ -28,7 +28,8 @@ class BranchList extends React.Component {
       },
       {
         title: "创建时间",
-        dataIndex: "CreateTime"
+        dataIndex: "CreateTime",
+        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
         title: "操作",

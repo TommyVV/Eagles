@@ -30,8 +30,8 @@ export const getList = async params => {
       params
     });
     let { Code, Result, Message } = res.data;
-    if (Code === "00") {
-      return Result;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { List: [] };
     } else {
       throw new Error(`${Code} - ${Message}`);
     }

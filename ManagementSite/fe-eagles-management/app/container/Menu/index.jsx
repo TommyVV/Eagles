@@ -36,10 +36,10 @@ class MenuList extends React.Component {
         title: "菜单链接",
         dataIndex: "MenuLink"
       },
-      {
-        title: "机构名称",
-        dataIndex: "OrgName"
-      },
+      // {
+      //   title: "机构名称",
+      //   dataIndex: "OrgName"
+      // },
       {
         title: "二级菜单",
         render: obj => {

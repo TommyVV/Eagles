@@ -116,7 +116,14 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="提醒时间">
-          {getFieldDecorator("NoticeTime")(
+          {getFieldDecorator("NoticeTime", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请选择提醒时间"
+              }
+            ]
+          })(
             <DatePicker placeholder="请选择提醒时间" />
           )}
         </FormItem>
