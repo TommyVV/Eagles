@@ -28,23 +28,23 @@ $(document).ready(function () {
     }
     //查询关系列表
     getUserRelationship();
-    $('#btnTestSaveLarge').on('click', function () {
-        if($(".subordinate-item").length==0){
-            $(this).parents('.modal').modal('hide');
-            return;
-        }
-        if (toUserId) {
-            $("#name").html(toUserName);
-            $(this).parents('.modal').modal('hide');
-        } else {
-            bootoast({
-                message: "请选择负责人",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-        }
-    });
+    // $('#btnTestSaveLarge').on('click', function () {
+    //     if($(".subordinate-item").length==0){
+    //         $(this).parents('.modal').modal('hide');
+    //         return;
+    //     }
+    //     if (toUserId) {
+    //         $("#name").html(toUserName);
+    //         $(this).parents('.modal').modal('hide');
+    //     } else {
+    //         bootoast({
+    //             message: "请选择负责人",
+    //             type: "info",
+    //             position: "toast-top-center",
+    //             timeout: 2
+    //         });
+    //     }
+    // });
     //图片上传
     $("#imgupload").fileupload({
         url: UPLOAD,
@@ -188,6 +188,8 @@ $(document).ready(function () {
             $($(this).find('.glyphicon')).addClass('glyphicon-ok');
             toUserId = $(this).attr("id");
             toUserName = $($(this).find('div')[0]).text();
+            $("#name").html(toUserName);
+            $('#myModal').modal('hide');
         });
     }
 
