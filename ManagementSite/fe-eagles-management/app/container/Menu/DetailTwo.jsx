@@ -224,6 +224,8 @@ class MenuDetailTwo extends Component {
     let { id } = this.props.params;
     if (id) {
       this.getInfo(id);
+    }else{
+      this.getMenuList();
     }
   }
   // 根据id查询下级菜单列表

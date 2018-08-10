@@ -49,32 +49,15 @@ class Base extends Component {
   };
   change(value) {
     const { setObj, operator } = this.props;
-    if (value == "0") {
-      setObj({
-        ...operator,
-        IsBranch: value == "0" ? false : true
-      });
-    } else {
-      this.getBranchList();
-    }
+    setObj({
+      ...operator,
+      IsBranch: value == "0" ? false : true
+    });
   }
-  // 拿支部列表
-  getBranchList = async () => {
-    try {
-      const { List } = await getBranchList({
-        PageNumber: 1,
-        PageSize: 1000000
-      });
-      this.state({ branchList: List });
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { authList, operator } = this.props;
-    const { branchList } = this.state;
+    const { authList, operator,branchList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -112,7 +95,9 @@ class Base extends Component {
           })(<Input placeholder="必填，请输入操作员姓名" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="昵称">
-          {getFieldDecorator("Nickname")(<Input placeholder="必填，请输入昵称" />)}
+          {getFieldDecorator("Nickname")(
+            <Input placeholder="必填，请输入昵称" />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="操作员密码">
           {getFieldDecorator("Password", {
@@ -210,7 +195,7 @@ const FormMap = Form.create({
         value: operator.IsBranch ? (operator.IsBranch ? "1" : "0") : "0"
       }),
       BranchId: Form.createFormField({
-        value: operator.BranchId ? operator.BranchId + "" : ""
+        value: operator.BranchId ? operator.BranchId : ""
       }),
       Password: Form.createFormField({
         value: operator.Password
@@ -223,7 +208,8 @@ class OperatorDetail extends Component {
     super(props);
     this.state = {
       authList: [],
-      operator: {}
+      operator: {},
+      branchList:[]
     };
   }
 
@@ -247,8 +233,8 @@ class OperatorDetail extends Component {
   getInfo = async OperId => {
     try {
       await this.getAuthList(); // 拿权限组列表
+      await this.getBranchList(); // 拿支部列表
       const { Info } = await getInfoById({ OperId });
-
       this.setState({ operator: Info });
     } catch (e) {
       message.error("获取详情失败");
@@ -268,6 +254,19 @@ class OperatorDetail extends Component {
       throw new Error(e);
     }
   };
+  // 拿支部列表
+  getBranchList = async () => {
+    try {
+      const { List } = await getBranchList({
+        PageNumber: 1,
+        PageSize: 1000000
+      });
+      this.setState({ branchList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
   changeObj(operator) {
     this.setState({
       operator
@@ -279,6 +278,7 @@ class OperatorDetail extends Component {
         <FormMap
           operator={this.state.operator}
           authList={this.state.authList}
+          branchList={this.state.branchList}
           setObj={this.changeObj.bind(this)}
         />
       </Nav>

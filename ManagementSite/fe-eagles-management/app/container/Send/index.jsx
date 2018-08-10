@@ -38,6 +38,12 @@ class SearchForm extends Component {
 
   handleReset = () => {
     this.props.form.resetFields();
+    const { getCurrentList, setObj } = this.props;
+    getCurrentList({
+      PageNumber: 1,
+      PageSize: 10
+    });
+    setObj({});
   };
 
   render() {
@@ -54,9 +60,9 @@ class SearchForm extends Component {
               {getFieldDecorator(`GoodsName`)(<Input />)}
             </FormItem>
           </Col>
-          <Col span={8} key={3}>
+          <Col span={10} key={3}>
             <FormItem label="下单日期">
-              <Col span={11}>
+              <Col span={10}>
                 <FormItem>
                   {getFieldDecorator("StartTime")(
                     <DatePicker placeholder="开始时间" />

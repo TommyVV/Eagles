@@ -209,6 +209,7 @@ class OrgList extends React.Component {
                   options={AreaInfos}
                   onChange={this.onChange.bind(this)}
                   placeholder="请选择地区"
+                  changeOnSelect
                 />
               </FormItem>
             </Form>

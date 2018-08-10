@@ -94,7 +94,7 @@ class Base extends Component {
     const reg = /^image\/(png|jpeg|jpg)$/;
     const type = file.type;
     const isImage = reg.test(type);
-    if (isImage) {
+    if (!isImage) {
       message.error("只支持格式为png,jpeg和jpg的图片");
     }
 

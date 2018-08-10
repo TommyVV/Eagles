@@ -41,7 +41,8 @@ class SearchForm extends Component {
     const { getCurrentList, setObj } = this.props;
     let params = {
       PageNumber: 1,
-      PageSize: 10
+      PageSize: 10,
+      Status: "-1"
     };
     getCurrentList(params);
     setObj({});
@@ -65,6 +66,7 @@ class SearchForm extends Component {
             <FormItem label="状态">
               {getFieldDecorator("Status")(
                 <Select>
+                  <Option value="-1">全部</Option>
                   <Option value="0">正常</Option>
                   <Option value="1">禁用</Option>
                 </Select>
@@ -99,7 +101,7 @@ const WrapperSearchForm = Form.create({
         value: props.obj.SystemMessageName
       }),
       Status: Form.createFormField({
-        value: props.obj.Status ? props.obj.Status + "" : "0"
+        value: props.obj.Status ? props.obj.Status + "" : "-1"
       })
     };
   }
@@ -131,10 +133,10 @@ class SystemList extends React.Component {
           </span>
         )
       },
-      {
-        title: "内容",
-        dataIndex: "HtmlDesc"
-      },
+      // {
+      //   title: "内容",
+      //   dataIndex: "HtmlDesc"
+      // },
       {
         title: "状态",
         dataIndex: "Status",
@@ -167,7 +169,7 @@ class SystemList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      Status: "",
+      Status: "-1",
       SystemMessageName: ""
     };
   }
