@@ -197,7 +197,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("(下级申请)活动完成---", data);
                 if (data.Code == "00") {
-                    window.location.href = "exchangeResult.html?code=1&tip=申请已提交成功&appId=" + appId;
+                    window.location.href = "exchangeResult.html?code=1&tip=申请已提交成功&appId=" + appId+ "&cb=task.html";
                 } else {
                     bootoast({
                         message: data.Message,

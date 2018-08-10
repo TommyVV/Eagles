@@ -13,9 +13,17 @@ $(document).ready(function() {
         $("img").attr('src', 'icons/mistake@2x.png');
     }
     if(cbUrl){
-        setTimeout(() => {
-            window.location.href=cbUrl+"?appId="+appId;
-        }, 5000);
+        var time = 5;
+        $(".df_don").html(`<span id="result_psf">5</span>秒后跳转`);
+        var timer=setInterval(() => {
+            time--;
+            console.log('time----',time);
+            $("#result_psf").html(time);
+            if(time==0){
+                clearInterval(timer);
+                window.location.href=cbUrl+"?appId="+appId;
+            }
+        }, 1000);
     }
     console.log('code---', code);
 });
