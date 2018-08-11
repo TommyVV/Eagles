@@ -1,0 +1,107 @@
+{"DetailInfo":{"ActivityTaskId":"","ActivityTaskName":"1111","ActivityTaskType":"0","BeginTime":"2018-07-17T11:11:27+08:00","EndTime":"2018-07-31T11:11:29+08:00","Content":"<p>11111</p >","MaxPartakePeople":"2222","IsComment":"0","EverybodyPeople":"222222","ExampleId":17,"ImageUrl":"http://51service.xyz/Images/4bf904303e8848a9bfff23d949b630cd.jpg","Attach1":"http://51service.xyz/Images/0f928b836bb34942a1b362f297e8fe24.doc","Attach2":"http://51service.xyz/Images/257fe6123a144814ac51ffa8ea4121de.xls"},"Token":"241fefc2-b227-483c-ad50-d5ed5d17f7d9"}
+
+
+{
+  "ActivityId": "2",
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+{"DetailInfo":{"ActivityTaskId":"2","ActivityTaskName":"1111","ActivityTaskType":"0","BeginTime":"2018-07-17T11:11:27+08:00","EndTime":"2018-07-31T11:11:29+08:00","Content":"<p>11111</p >","MaxPartakePeople":"2222","IsComment":"0","EverybodyPeople":"222222","ExampleId":17,"ImageUrl":"http://51service.xyz/Images/4bf904303e8848a9bfff23d949b630cd.jpg","Attach1":"http://51service.xyz/Images/0f928b836bb34942a1b362f297e8fe24.doc","Attach2":"http://51service.xyz/Images/257fe6123a144814ac51ffa8ea4121de.xls"},"Token":"241fefc2-b227-483c-ad50-d5ed5d17f7d9"}
+
+
+{"DetailInfo":{"ActivityTaskId":"2","ActivityTaskName":"1111","ActivityTaskType":"0","BeginTime":"2018-07-17T11:11:27+08:00","EndTime":"2018-07-31T11:11:29+08:00","Content":"<p>11111</p >","MaxPartakePeople":"2222","IsComment":"0","EverybodyPeople":"222222","ExampleId":17,"ImageUrl":"http://51service.xyz/Images/4bf904303e8848a9bfff23d949b630cd.jpg","Attach1":"","Attach2":""},"Token":"241fefc2-b227-483c-ad50-d5ed5d17f7d9"}
+
+SELECT `tb_oper`.`OrgId`,
+    `tb_oper`.`OperId`,
+    `tb_oper`.`OperName`,
+    `tb_oper`.`CreateTime`,
+    `tb_oper`.`GroupId`,
+    `tb_oper`.`Status`,
+    `tb_oper`.`Password`
+FROM `eagles`.`tb_oper`
+
+
+{
+  "OperId": "10000002",
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+{
+  "ScoreSetUpId": 10000003,
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+{
+  "RewardType": 1,
+ 
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+{
+  "Info": {
+    "Password": "10000002",
+    "AuthorityGroupId": 0,
+    "Status": 0,
+    "BranchId": 10000000,
+    "OperId": 0,
+    "OperName": "tommy1",    
+  },
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+{
+  
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+
+{
+  "Type": 1,
+  "Token": "04407059a91449948c176c98db8ee421",
+  "AppId": 10000000
+}
+
+{
+  "QuestionId": "18",
+  "PageNumber": 0,
+  "PageSize": 10,
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+
+{
+  "Info": {
+    "Question": "tommy测试",
+    "QuestionId": 0,
+    "AnswerType": 0,
+    "Multiple": 1,
+    "MultipleCount": 2
+  },
+  "Option": [
+    {
+      "OptionId": 0,
+      "OptionName": "答案3",
+      "QuestionId": 0,
+      "IsRight": 1,
+      "AnswerType": 0,
+      "IsImg": false,
+    },
+	{
+      "OptionId": 1,
+      "OptionName": "答案4",
+      "QuestionId": 0,
+      "IsRight": 0,
+      "AnswerType": 0,
+      "IsImg": false,
+    }
+  ],
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+{
+  "QuestionId": 18,
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}
+
+
+{
+  "QuestionId": 18,
+  "Token": "241fefc2-b227-483c-ad50-d5ed5d17f7d9"
+}0131a263c9ee4f8fa2f72814e94bcfd8
