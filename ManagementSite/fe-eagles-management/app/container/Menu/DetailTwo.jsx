@@ -9,7 +9,6 @@ import {
   Select,
   Avatar,
   Icon,
-  DatePicker
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";

@@ -15,6 +15,8 @@ const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import { getList, edit } from "../../services/sendService";
+import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import "./style.less";
 

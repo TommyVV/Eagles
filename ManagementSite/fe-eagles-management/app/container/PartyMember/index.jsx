@@ -249,7 +249,10 @@ class PartyMemberList extends React.Component {
                     `/partymember/setnext/${obj.UserId}/${obj.UserName}`
                   )
                 }
-                style={{ paddingLeft: "24px" }}
+                style={{
+                  paddingLeft: "24px",
+                  display: this.state.authMap.get("User0003") ? null : "none"
+                }}
               >
                 设置数据权限
               </a>
@@ -457,10 +460,11 @@ class PartyMemberList extends React.Component {
           gutter={24}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/partymember/detail`)}>
-                新增
-              </a>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/partymember/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>

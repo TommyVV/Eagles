@@ -44,20 +44,18 @@ class ImportMeetMember extends React.Component {
     ];
   }
   handleUpload = () => {
-    const { fileList, memberList } = this.state;
-    if (memberList.length) {
-      return;
-    }
+    const { fileList } = this.state;
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
     //将文件以文本形式读入页面
     reader.readAsText(file, "utf-8");
+    let memberList = [];
     // reader.readAsText(file, "gb2312");
     reader.onload = function(e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
-        if (data.length) {
+        if (data.length && index > 0) {
           data = data.split(",");
           let news = {};
           data.map((text, i) => {
@@ -68,7 +66,7 @@ class ImportMeetMember extends React.Component {
                 news["Phone"] = text;
             }
           });
-          memberList.push({ ...news, key: index });
+          memberList.push({ ...news, key: Math.random() });
         }
       });
       view.setState({
@@ -101,7 +99,7 @@ class ImportMeetMember extends React.Component {
         message.error("保存失败");
       }
     } catch (e) {
-      throw new Error(e);
+      message.error(e);
     }
   };
 
@@ -154,7 +152,8 @@ class ImportMeetMember extends React.Component {
           <Col span={3} key={2}>
             <Upload {...props}>
               <Button>
-                <Icon type="upload" />选择
+                <Icon type="upload" />
+                选择
               </Button>
             </Upload>
           </Col>
@@ -178,7 +177,9 @@ class ImportMeetMember extends React.Component {
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
-              <a href={meettingTempUrl}>下载模板</a>
+              <a href={meettingTempUrl} download="member.txt">
+                下载模板
+              </a>
             </Button>
           </Col>
         </Row>

@@ -15,6 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import {
   getQuestionList,
   deleteQuestion

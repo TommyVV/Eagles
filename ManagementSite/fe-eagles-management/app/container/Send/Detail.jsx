@@ -13,6 +13,8 @@ import {
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
+import moment from "moment";
+import "moment/locale/zh-cn";
 import "./style.less";
 
 const FormItem = Form.Item;

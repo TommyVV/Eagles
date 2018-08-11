@@ -6,10 +6,6 @@ import {
   message,
   Row,
   Col,
-  Select,
-  Upload,
-  Icon,
-  DatePicker,
   Table
 } from "antd";
 import Nav from "../Nav";

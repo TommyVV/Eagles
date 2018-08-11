@@ -18,6 +18,7 @@ import { hashHistory } from "react-router";
 import { getNewsList, deleteNews } from "../../services/newsService";
 import { audit } from "../../services/auditService";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import "./style.less";
 

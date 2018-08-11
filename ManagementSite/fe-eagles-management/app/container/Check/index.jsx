@@ -9,7 +9,6 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;

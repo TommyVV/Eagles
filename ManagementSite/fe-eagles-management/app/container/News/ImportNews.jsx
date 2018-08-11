@@ -51,17 +51,18 @@ class ImportNews extends React.Component {
     ];
   }
   handleUpload = () => {
-    const { fileList, newsList } = this.state;
+    const { fileList } = this.state;
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
     //将文件以文本形式读入页面
     reader.readAsText(file, "utf-8");
+    let newsList = [];
     // reader.readAsText(file, "gb2312");
     reader.onload = function(e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
-        if (data.length) {
+        if (data.length && index > 0) {
           data = data.split(",");
           let news = {};
           data.map((text, i) => {
@@ -76,7 +77,7 @@ class ImportNews extends React.Component {
                 news["Source"] = text;
             }
           });
-          newsList.push({ ...news, key: index });
+          newsList.push({ ...news, key: Math.random() });
         }
       });
       view.setState({
@@ -99,7 +100,7 @@ class ImportNews extends React.Component {
         this.setState({ memberList: Result.UserList });
       }
     } catch (e) {
-      throw new Error(e);
+      message.error(e);
     }
   };
 
@@ -139,7 +140,8 @@ class ImportNews extends React.Component {
           <Col span={3} key={2}>
             <Upload {...props}>
               <Button>
-                <Icon type="upload" />选择
+                <Icon type="upload" />
+                选择
               </Button>
             </Upload>
           </Col>
@@ -186,9 +188,7 @@ class ImportNews extends React.Component {
           </Col>
           <Col>
             <Button className="btn ">
-              <a onClick={() => hashHistory.replace(`/newslist`)}>
-                取消导入
-              </a>
+              <a onClick={() => hashHistory.replace(`/newslist`)}>取消导入</a>
             </Button>
           </Col>
         </Row>

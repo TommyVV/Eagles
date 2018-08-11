@@ -1,16 +1,5 @@
 import React, { Component } from "react";
-import {
-  Table,
-  Row,
-  Col,
-  Button,
-  message,
-  Modal,
-  Form,
-  Input,
-  Select,
-  DatePicker
-} from "antd";
+import { Table, Row, Col, message } from "antd";
 import { hashHistory } from "react-router";
 import { getRankInfoById } from "../../services/scoreService";
 import Nav from "../Nav";

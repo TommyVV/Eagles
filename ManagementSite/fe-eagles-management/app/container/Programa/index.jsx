@@ -66,7 +66,7 @@ class SearchForm extends Component {
               {getFieldDecorator(`ColumnName`)(<Input />)}
             </FormItem>
           </Col>
-          <Col span={5} key={6}>
+          {/* <Col span={5} key={6}>
             <FormItem label="审核状态">
               {getFieldDecorator(`AuditStatus`)(
                 <Select>
@@ -81,7 +81,7 @@ class SearchForm extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
           <Col
             span={6}
             style={{
@@ -137,21 +137,21 @@ class ProgramaList extends React.Component {
         title: "地址",
         dataIndex: "TargetUrl"
       },
-      {
-        title: "状态",
-        dataIndex: "AuditStatus",
-        render: text => {
-          return (
-            <span>
-              {ProgramaStateMap.map(v => {
-                if (v.Status == text) {
-                  return v.text;
-                }
-              })}
-            </span>
-          );
-        }
-      },
+      // {
+      //   title: "状态",
+      //   dataIndex: "AuditStatus",
+      //   render: text => {
+      //     return (
+      //       <span>
+      //         {ProgramaStateMap.map(v => {
+      //           if (v.Status == text) {
+      //             return v.text;
+      //           }
+      //         })}
+      //       </span>
+      //     );
+      //   }
+      // },
       {
         title: "排序",
         dataIndex: "OrderBy"

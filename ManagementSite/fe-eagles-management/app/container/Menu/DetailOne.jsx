@@ -117,7 +117,9 @@ class Base extends Component {
           })(<Input placeholder="必填，请输入菜单名称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="菜单链接">
-          {getFieldDecorator("MenuLink")(<Input placeholder="必填，请输入菜单链接" />)}
+          {getFieldDecorator("MenuLink")(
+            <Input placeholder="必填，请输入菜单链接" />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="所属机构">
           {getFieldDecorator("OrgId")(
@@ -221,7 +223,10 @@ class MenuDetailOne extends Component {
   };
   getOrgList = async () => {
     try {
-      const { List } = await getOrgList();
+      const { List } = await getOrgList({
+        PageNumber: 1,
+        PageSize: 1000000
+      });
       this.setState({ orgList: List });
     } catch (e) {
       message.error("获取失败");

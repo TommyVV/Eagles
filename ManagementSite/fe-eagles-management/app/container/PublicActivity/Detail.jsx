@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Input,
-  Form,
-  message,
-  Row,
-  Col,
-  Select,
-  DatePicker
-} from "antd";
-import moment from "moment";
+import { Button, Input, Form, message, Row, Col, Select } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById } from "../../services/publicActivityService";

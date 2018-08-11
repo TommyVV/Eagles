@@ -16,6 +16,7 @@ const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/activityService";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -59,14 +60,14 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="标题">
-              {getFieldDecorator(`NewsName`)(<Input />)}
+              {getFieldDecorator(`ActivityTaskName`)(<Input />)}
             </FormItem>
           </Col>
-          <Col span={8} key={3}>
+          {/* <Col span={8} key={3}>
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("StarTime")(
+                  {getFieldDecorator("StartTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
@@ -90,7 +91,7 @@ class SearchForm extends Component {
                 </FormItem>
               </Col>
             </FormItem>
-          </Col>
+          </Col> */}
           <Col
             span={6}
             style={{
@@ -117,11 +118,11 @@ const WrapperSearchForm = Form.create({
     const config = props.getListConfig;
     console.log(config);
     return {
-      NewsName: Form.createFormField({
-        value: config.NewsName
+      ActivityTaskName: Form.createFormField({
+        value: config.ActivityTaskName
       }),
-      StarTime: Form.createFormField({
-        value: config.StarTime ? moment(config.StarTime, "YYYY-MM-dd") : null
+      StartTime: Form.createFormField({
+        value: config.StartTime ? moment(config.StartTime, "YYYY-MM-dd") : null
       }),
       EndTime: Form.createFormField({
         value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
@@ -163,11 +164,11 @@ class NewsList extends React.Component {
           );
         }
       },
-      {
-        title: "发布时间",
-        dataIndex: "CreateTime",
-        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
-      },
+      // {
+      //   title: "发布时间",
+      //   dataIndex: "CreateTime",
+      //   render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
+      // },
       {
         title: "操作",
         dataIndex: "ActivityTaskId",
@@ -195,7 +196,7 @@ class NewsList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      ActivityName: ""
+      ActivityTaskName: ""
       // StarTime: "",
       // EndTime: ""
     };
@@ -302,10 +303,12 @@ class NewsList extends React.Component {
             </Button>
           </Col> */}
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/activity/detail`)}>
-                新增
-              </a>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() => hashHistory.replace(`/activity/detail`)}
+            >
+              新增
             </Button>
           </Col>
         </Row>
