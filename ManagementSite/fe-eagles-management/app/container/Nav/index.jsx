@@ -89,17 +89,19 @@ export default class App extends React.Component {
                   <span>党员管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("User0001") ||
+                  authMap.get("User0002") ||
+                  authMap.get("User0004") ||
+                  authMap.get("User0005")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub11"
                 onClick={e => hashHistory.replace("/partymemberlist")}
-                style={{ display: authMap.get("User0001") ? null : "none" }}
-              >
-                党员列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub12"
-                onClick={e => hashHistory.replace("/partymember/detail")}
                 style={{ display: authMap.get("User0001") ? null : "none" }}
               >
                 党员维护
@@ -111,13 +113,13 @@ export default class App extends React.Component {
               >
                 党员导入
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 key="sub14"
                 onClick={e => hashHistory.replace("/partymember/setnext")}
                 style={{ display: authMap.get("User0003") ? null : "none" }}
               >
                 党员上下级关系维护
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 key="sub15"
                 onClick={e => hashHistory.replace("/ranklist")}
@@ -136,14 +138,7 @@ export default class App extends React.Component {
                 }}
                 style={{ display: authMap.get("User0005") ? null : "none" }}
               >
-                用户文章列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub17"
-                onClick={e => hashHistory.replace("/article/detail")}
-                style={{ display: authMap.get("User0005") ? null : "none" }}
-              >
-                用户文章详情
+                用户文章维护
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -154,17 +149,16 @@ export default class App extends React.Component {
                   <span>商品管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("Prod0001") || authMap.get("Prod0002")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub21"
                 onClick={e => hashHistory.replace("/goodslist")}
-                style={{ display: authMap.get("Prod0001") ? null : "none" }}
-              >
-                商品列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub22"
-                onClick={e => hashHistory.replace("/goods/detail")}
                 style={{ display: authMap.get("Prod0001") ? null : "none" }}
               >
                 商品维护
@@ -174,7 +168,7 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/sendlist")}
                 style={{ display: authMap.get("Prod0002") ? null : "none" }}
               >
-                商品发货列表
+                商品发货维护
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -185,17 +179,21 @@ export default class App extends React.Component {
                   <span>新闻管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("News0001") ||
+                  authMap.get("News0002") ||
+                  authMap.get("News0003") ||
+                  authMap.get("News0004") ||
+                  authMap.get("News0005") ||
+                  authMap.get("News0006")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub31"
                 onClick={e => hashHistory.replace("/newslist")}
-                style={{ display: authMap.get("News0001") ? null : "none" }}
-              >
-                新闻列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub32"
-                onClick={e => hashHistory.replace("/news/detail")}
                 style={{ display: authMap.get("News0001") ? null : "none" }}
               >
                 新闻维护
@@ -212,25 +210,11 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/questionlist")}
                 style={{ display: authMap.get("News0002") ? null : "none" }}
               >
-                试卷列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub35"
-                onClick={e => hashHistory.replace("/question/detail")}
-                style={{ display: authMap.get("News0002") ? null : "none" }}
-              >
                 试卷维护
               </Menu.Item>
               <Menu.Item
                 key="sub36"
                 onClick={e => hashHistory.replace("/exerciselist")}
-                style={{ display: authMap.get("News0003") ? null : "none" }}
-              >
-                习题列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub37"
-                onClick={e => hashHistory.replace("/exercise/detail")}
                 style={{ display: authMap.get("News0003") ? null : "none" }}
               >
                 习题维护
@@ -240,7 +224,7 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/meetlist")}
                 style={{ display: authMap.get("News0004") ? null : "none" }}
               >
-                会议列表
+                会议维护
               </Menu.Item>
               <Menu.Item
                 key="sub39"
@@ -254,14 +238,7 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/intergrallist")}
                 style={{ display: authMap.get("News0006") ? null : "none" }}
               >
-                积分配置列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub311"
-                onClick={e => hashHistory.replace("/intergral/detail")}
-                style={{ display: authMap.get("News0006") ? null : "none" }}
-              >
-                积分配置详情
+                积分配置维护
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -272,17 +249,18 @@ export default class App extends React.Component {
                   <span>机构管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("orgs0001") ||
+                  authMap.get("orgs0002") ||
+                  authMap.get("orgs0003")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub41"
                 onClick={e => hashHistory.replace("/orglist")}
-                style={{ display: authMap.get("orgs0001") ? null : "none" }}
-              >
-                机构列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub42"
-                onClick={e => hashHistory.replace("/org/detail")}
                 style={{ display: authMap.get("orgs0001") ? null : "none" }}
               >
                 机构维护
@@ -292,25 +270,11 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/smsorglist")}
                 style={{ display: authMap.get("orgs0002") ? null : "none" }}
               >
-                机构短信列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub44"
-                onClick={e => hashHistory.replace("/smsorg/detail")}
-                style={{ display: authMap.get("orgs0002") ? null : "none" }}
-              >
                 机构短信维护
               </Menu.Item>
               <Menu.Item
                 key="sub45"
                 onClick={e => hashHistory.replace("/branchlist")}
-                style={{ display: authMap.get("orgs0003") ? null : "none" }}
-              >
-                支部列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub46"
-                onClick={e => hashHistory.replace("/branch/detail")}
                 style={{ display: authMap.get("orgs0003") ? null : "none" }}
               >
                 支部维护
@@ -324,15 +288,23 @@ export default class App extends React.Component {
                   <span>应用管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("menu0001") ||
+                  authMap.get("menu0002") ||
+                  authMap.get("menu0003")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub51"
                 onClick={e => hashHistory.replace("/menulist")}
                 style={{ display: authMap.get("menu0001") ? null : "none" }}
               >
-                菜单列表
+                菜单维护
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 key="sub52"
                 onClick={e => hashHistory.replace("/menuone/detail")}
                 style={{ display: authMap.get("menu0001") ? null : "none" }}
@@ -345,17 +317,10 @@ export default class App extends React.Component {
                 style={{ display: authMap.get("menu0001") ? null : "none" }}
               >
                 二级菜单维护
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 key="sub54"
                 onClick={e => hashHistory.replace("/imagelist")}
-                style={{ display: authMap.get("menu0002") ? null : "none" }}
-              >
-                滚动图片列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub55"
-                onClick={e => hashHistory.replace("/image/detail")}
                 style={{ display: authMap.get("menu0002") ? null : "none" }}
               >
                 滚动图片维护
@@ -363,13 +328,6 @@ export default class App extends React.Component {
               <Menu.Item
                 key="sub56"
                 onClick={e => hashHistory.replace("/programalist")}
-                style={{ display: authMap.get("menu0003") ? null : "none" }}
-              >
-                栏目列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub57"
-                onClick={e => hashHistory.replace("/programa/detail")}
                 style={{ display: authMap.get("menu0003") ? null : "none" }}
               >
                 栏目维护
@@ -383,17 +341,16 @@ export default class App extends React.Component {
                   <span>活动管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("actv0001") || authMap.get("actv0002")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub61"
                 onClick={e => hashHistory.replace("/activitylist")}
-                style={{ display: authMap.get("actv0001") ? null : "none" }}
-              >
-                活动列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub62"
-                onClick={e => hashHistory.replace("/activity/detail")}
                 style={{ display: authMap.get("actv0001") ? null : "none" }}
               >
                 活动维护
@@ -409,14 +366,7 @@ export default class App extends React.Component {
                 }}
                 style={{ display: authMap.get("actv0002") ? null : "none" }}
               >
-                活动公开列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub64"
-                onClick={e => hashHistory.replace("/activitypublic/detail")}
-                style={{ display: authMap.get("actv0002") ? null : "none" }}
-              >
-                活动公开详情
+                活动公开维护
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -427,6 +377,7 @@ export default class App extends React.Component {
                   <span>任务管理</span>
                 </span>
               }
+              style={{ display: authMap.get("task0002") ? null : "none" }}
             >
               <Menu.Item
                 key="sub71"
@@ -439,14 +390,7 @@ export default class App extends React.Component {
                 }}
                 style={{ display: authMap.get("task0002") ? null : "none" }}
               >
-                任务公开列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub72"
-                onClick={e => hashHistory.replace("/taskpublic/detail")}
-                style={{ display: authMap.get("task0002") ? null : "none" }}
-              >
-                任务公开详情
+                任务公开维护
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -457,17 +401,16 @@ export default class App extends React.Component {
                   <span>系统管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("snew0001") || authMap.get("ssms0001")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub81"
                 onClick={e => hashHistory.replace("/smssystemlist")}
-                style={{ display: authMap.get("ssms0001") ? null : "none" }}
-              >
-                短信列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub82"
-                onClick={e => hashHistory.replace("/smssystem/detail")}
                 style={{ display: authMap.get("ssms0001") ? null : "none" }}
               >
                 短信维护
@@ -475,13 +418,6 @@ export default class App extends React.Component {
               <Menu.Item
                 key="sub83"
                 onClick={e => hashHistory.replace("/systemlist")}
-                style={{ display: authMap.get("snew0001") ? null : "none" }}
-              >
-                系统信息列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub84"
-                onClick={e => hashHistory.replace("/system/detail")}
                 style={{ display: authMap.get("snew0001") ? null : "none" }}
               >
                 系统信息维护
@@ -495,17 +431,18 @@ export default class App extends React.Component {
                   <span>操作员管理</span>
                 </span>
               }
+              style={{
+                display:
+                  authMap.get("oper0001") ||
+                  authMap.get("oper0002") ||
+                  authMap.get("oper0003")
+                    ? null
+                    : "none"
+              }}
             >
               <Menu.Item
                 key="sub91"
                 onClick={e => hashHistory.replace("/operatorlist")}
-                style={{ display: authMap.get("oper0001") ? null : "none" }}
-              >
-                操作员列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub92"
-                onClick={e => hashHistory.replace("/operator/detail")}
                 style={{ display: authMap.get("oper0001") ? null : "none" }}
               >
                 操作员维护
@@ -515,14 +452,7 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/permissionlist")}
                 style={{ display: authMap.get("oper0002") ? null : "none" }}
               >
-                权限组列表
-              </Menu.Item>
-              <Menu.Item
-                key="sub94"
-                onClick={e => hashHistory.replace("/permission/detail")}
-                style={{ display: authMap.get("oper0002") ? null : "none" }}
-              >
-                权限组详情
+                权限组维护
               </Menu.Item>
               <Menu.Item
                 key="sub95"

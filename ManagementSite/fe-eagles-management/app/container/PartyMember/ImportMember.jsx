@@ -89,7 +89,7 @@ class ImportMember extends React.Component {
     reader.onload = function(e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
-        if (data.length) {
+        if (data.length && index > 0) {
           data = data.split(",");
           let news = {};
           data.map((text, i) => {
@@ -99,7 +99,7 @@ class ImportMember extends React.Component {
               case 1:
                 news["Phone"] = text;
               case 2:
-                news["MemberType"] = text.indexOf("正式党员") > -1 ? "0" : "1";
+                news["MemberType"] = text;
             }
           });
           memberList.push({ ...news, key: Math.random() });
@@ -139,7 +139,7 @@ class ImportMember extends React.Component {
         message.error("请选择支部");
       }
     } catch (e) {
-      throw new Error(e);
+      message.error(e);
     }
   };
   changeSelect(value) {
@@ -200,7 +200,8 @@ class ImportMember extends React.Component {
           <Col span={3} key={2}>
             <Upload {...props}>
               <Button>
-                <Icon type="upload" />选择
+                <Icon type="upload" />
+                选择
               </Button>
             </Upload>
           </Col>

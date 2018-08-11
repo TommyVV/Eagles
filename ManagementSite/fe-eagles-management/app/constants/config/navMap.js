@@ -11,7 +11,7 @@ const navMap = [
   {
     pathname: "#/partymember/detail",
     sub: "sub1",
-    key: "sub12"
+    key: "sub11"
   },
   {
     pathname: "#/partymember/import",
@@ -21,7 +21,7 @@ const navMap = [
   {
     pathname: "#/partymember/setnext",
     sub: "sub1",
-    key: "sub14"
+    key: "sub11"
   },
   {
     pathname: "#/ranklist",
@@ -36,7 +36,7 @@ const navMap = [
   {
     pathname: "#/article/detail",
     sub: "sub1",
-    key: "sub17"
+    key: "sub16"
   },
   {
     pathname: "#/goodslist",
@@ -46,7 +46,7 @@ const navMap = [
   {
     pathname: "#/goods/detail",
     sub: "sub2",
-    key: "sub22"
+    key: "sub21"
   },
   {
     pathname: "#/sendlist",
@@ -61,7 +61,7 @@ const navMap = [
   {
     pathname: "#/news/detail",
     sub: "sub3",
-    key: "sub32"
+    key: "sub31"
   },
   {
     pathname: "#/news/import",
@@ -76,7 +76,7 @@ const navMap = [
   {
     pathname: "#/question/detail",
     sub: "sub3",
-    key: "sub35"
+    key: "sub34"
   },
   {
     pathname: "#/exerciselist",
@@ -86,7 +86,7 @@ const navMap = [
   {
     pathname: "#/exercise/detail",
     sub: "sub3",
-    key: "sub37"
+    key: "sub36"
   },
   {
     pathname: "#/meetlist",
@@ -106,7 +106,7 @@ const navMap = [
   {
     pathname: "#/intergral/detail",
     sub: "sub3",
-    key: "sub311"
+    key: "sub310"
   },
   {
     pathname: "#/orglist",
@@ -116,7 +116,7 @@ const navMap = [
   {
     pathname: "#/org/detail",
     sub: "sub4",
-    key: "sub42"
+    key: "sub41"
   },
   {
     pathname: "#/smsorglist",
@@ -126,7 +126,7 @@ const navMap = [
   {
     pathname: "#/smsorg/detail",
     sub: "sub4",
-    key: "sub44"
+    key: "sub43"
   },
   {
     pathname: "#/branchlist",
@@ -136,7 +136,7 @@ const navMap = [
   {
     pathname: "#/branch/detail",
     sub: "sub4",
-    key: "sub46"
+    key: "sub45"
   },
   {
     pathname: "#/menulist",
@@ -146,12 +146,12 @@ const navMap = [
   {
     pathname: "#/menuone/detail",
     sub: "sub5",
-    key: "sub52"
+    key: "sub51"
   },
   {
     pathname: "#/menutwo/detail",
     sub: "sub5",
-    key: "sub53"
+    key: "sub51"
   },
   {
     pathname: "#/imagelist",
@@ -161,7 +161,7 @@ const navMap = [
   {
     pathname: "#/image/detail",
     sub: "sub5",
-    key: "sub55"
+    key: "sub54"
   },
   {
     pathname: "#/programalist",
@@ -171,7 +171,7 @@ const navMap = [
   {
     pathname: "#/programa/detail",
     sub: "sub5",
-    key: "sub57"
+    key: "sub56"
   },
   {
     pathname: "#/activitylist",
@@ -181,7 +181,7 @@ const navMap = [
   {
     pathname: "#/activity/detail",
     sub: "sub6",
-    key: "sub62"
+    key: "sub61"
   },
   {
     pathname: "#/activitypubliclist",
@@ -191,7 +191,7 @@ const navMap = [
   {
     pathname: "#/activitypublic/detail",
     sub: "sub6",
-    key: "sub64"
+    key: "sub63"
   },
   {
     pathname: "#/taskactivitypubliclist",
@@ -201,7 +201,7 @@ const navMap = [
   {
     pathname: "#/taskpublic/detail",
     sub: "sub7",
-    key: "sub72"
+    key: "sub71"
   },
   {
     pathname: "#/smssystemlist",
@@ -211,7 +211,7 @@ const navMap = [
   {
     pathname: "#/smssystem/detail",
     sub: "sub8",
-    key: "sub82"
+    key: "sub81"
   },
   {
     pathname: "#/systemlist",
@@ -221,7 +221,7 @@ const navMap = [
   {
     pathname: "#/system/detail",
     sub: "sub8",
-    key: "sub84"
+    key: "sub83"
   },
   {
     pathname: "#/operatorlist",
@@ -231,7 +231,7 @@ const navMap = [
   {
     pathname: "#/operator/detail",
     sub: "sub9",
-    key: "sub92"
+    key: "sub91"
   },
   {
     pathname: "#/permissionlist",
@@ -241,7 +241,7 @@ const navMap = [
   {
     pathname: "#/permission/detail",
     sub: "sub9",
-    key: "sub94"
+    key: "sub93"
   },
   {
     pathname: "#/permission/manage",

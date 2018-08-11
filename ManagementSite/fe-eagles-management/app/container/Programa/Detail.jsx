@@ -9,10 +9,8 @@ import {
   Col,
   Select,
   Upload,
-  Icon,
-  DatePicker
+  Icon
 } from "antd";
-import moment from "moment";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/programaService";
@@ -220,11 +218,11 @@ class Base extends Component {
           {getFieldDecorator("ModuleType")(
             <Select>
               {pageMap.map((obj, index) => {
-                return (
+                return index > 0 ? (
                   <Option key={index} value={obj.value}>
                     {obj.text}
                   </Option>
-                );
+                ) : null;
               })}
             </Select>
           )}

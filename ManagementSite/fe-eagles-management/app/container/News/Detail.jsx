@@ -11,10 +11,11 @@ import {
   Select,
   Upload,
   Icon,
-  DatePicker,
-  Checkbox
+  Checkbox,
+  DatePicker
 } from "antd";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getNewsInfoById, createOrEditNews } from "../../services/newsService";

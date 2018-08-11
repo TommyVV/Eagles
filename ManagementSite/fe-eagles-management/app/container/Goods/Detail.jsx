@@ -14,6 +14,7 @@ import {
   DatePicker
 } from "antd";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/goodsService";

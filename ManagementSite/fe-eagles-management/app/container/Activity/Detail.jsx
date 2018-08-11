@@ -14,6 +14,7 @@ import {
   Checkbox
 } from "antd";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/activityService";
@@ -54,36 +55,40 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
-          const { news, Attachs } = this.props;
-          let { Attachments } = news;
-          let attach = {}; // 存附件对象
-          let index = 0;
-          Attachs.map(obj => {
-            attach[`Attach${++index}`] = obj.AttachmentUrl;
-          });
-          Attachments.map(obj => {
-            if (obj.response) {
-              const url = obj.response.Result.FileUploadResults[0].FileUrl;
-              attach[`Attach${++index}`] = url;
+          if (moment(BeginTime).isBefore(EndTime)) {
+            const { news, Attachs } = this.props;
+            let { Attachments } = news;
+            let attach = {}; // 存附件对象
+            let index = 0;
+            Attachs.map(obj => {
+              attach[`Attach${++index}`] = obj.AttachmentUrl;
+            });
+            Attachments.map(obj => {
+              if (obj.response) {
+                const url = obj.response.Result.FileUploadResults[0].FileUrl;
+                attach[`Attach${++index}`] = url;
+              }
+            });
+            let params = {
+              DetailInfo: {
+                ...news,
+                ...values,
+                BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
+                EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+                ...attach
+              }
+            };
+            let { Code } = await createOrEdit(params);
+            if (Code === "00") {
+              let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/activitylist");
+            } else {
+              let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
+              message.error(tip);
             }
-          });
-          let params = {
-            DetailInfo: {
-              ...news,
-              ...values,
-              BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
-              EndTime: moment(EndTime, "yyyy-MM-dd").format(),
-              ...attach
-            }
-          };
-          let { Code } = await createOrEdit(params);
-          if (Code === "00") {
-            let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/activitylist");
           } else {
-            let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
-            message.error(tip);
+            message.error("开始时间必须小于结束时间");
           }
         } catch (e) {
           throw new Error(e);
@@ -396,7 +401,7 @@ class Base extends Component {
                 className="btn btn--primary"
                 type="primary"
               >
-                {news.ActivityTaskId ? "更新" : "新建"}
+                {news.ActivityTaskId ? "保存" : "新建"}
               </Button>
             </Col>
             <Col span={2} offset={1}>
