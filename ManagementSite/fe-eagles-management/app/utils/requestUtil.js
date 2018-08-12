@@ -23,6 +23,7 @@ function redirectLogin() {
       ...info
     });
     hashHistory.replace("/login");
+    return;
   }
 }
 /**
@@ -116,7 +117,7 @@ export default async config => {
       throw new Error(res.data.message); //直接抛出错误
     }
     // oken过期
-    if (Code === "M20") {
+    if (Code === "M12") {
       message.error("页面过期，请重新登录"); 
       return redirectLogin(); //重定向到login页面
     }

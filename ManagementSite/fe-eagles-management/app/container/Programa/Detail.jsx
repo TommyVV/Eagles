@@ -100,12 +100,21 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
-      // 保存数据
-      let { getFieldsValue } = this.props.form;
-      let values = getFieldsValue();
-      this.props.saveInfo({ ...values, [imageTitle]: imageUrl });
+
+      const { Code, Result, Message } = info.file.response;
+      if (Code == "00") {
+      
+        message.success(`${info.file.name} 上传成功`);
+        const imageUrl = Result.FileUploadResults[0].FileUrl;
+        // 保存数据
+        let { getFieldsValue } = this.props.form;
+        let values = getFieldsValue();
+        this.props.saveInfo({ ...values, [imageTitle]: imageUrl });
+      } else {
+        message.error(`${Message}`);
+      }
+
+
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }

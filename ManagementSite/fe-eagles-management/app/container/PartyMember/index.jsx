@@ -145,7 +145,7 @@ const WrapperAuditForm = Form.create({
     return {
       AuditStatus: Form.createFormField({
         ...props.AuditStatus,
-        value: props.AuditStatus.value
+        value: props.AuditStatus.value ? props.AuditStatus.value : "0"
       }),
       Reason: Form.createFormField({
         ...props.Reason,
@@ -462,6 +462,7 @@ class PartyMemberList extends React.Component {
           <Col>
             <Button
               className="btn btn--primary"
+              type="primary"
               onClick={() => hashHistory.replace(`/partymember/detail`)}
             >
               新增

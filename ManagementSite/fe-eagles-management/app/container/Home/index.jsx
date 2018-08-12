@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Nav from "../Nav";
 import { getTreeInfo } from "../../services/orgService";
-import { Tree, Icon } from "antd";
+import { Tree, Icon ,message} from "antd";
 const TreeNode = Tree.TreeNode;
 
 class HomePage extends Component {

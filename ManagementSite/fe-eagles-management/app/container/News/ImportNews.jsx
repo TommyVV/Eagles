@@ -14,7 +14,6 @@ import {
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
 import { bitchCreate } from "../../services/newsService";
-import { newsTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -59,7 +58,7 @@ class ImportNews extends React.Component {
     reader.readAsText(file, "utf-8");
     let newsList = [];
     // reader.readAsText(file, "gb2312");
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
         if (data.length && index > 0) {
@@ -92,13 +91,16 @@ class ImportNews extends React.Component {
       let { Code, Result, Message } = await bitchCreate({
         Info: newsList
       });
+      let { NewList } = Result;
       if (Code === "00") {
         message.success("导入成功");
-        this.setState({ memberList: Result.UserList });
       } else {
         message.error(Message);
-        this.setState({ memberList: Result.UserList });
       }
+      NewList.forEach(v => {
+        v.key = Math.random();
+      });
+      this.setState({ newsList: NewList })
     } catch (e) {
       message.error(e);
     }
@@ -165,7 +167,7 @@ class ImportNews extends React.Component {
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
-              <a href={newsTempUrl}>下载模板</a>
+              <a href="../../file/news.txt" download="news.txt">下载模板</a>
             </Button>
           </Col>
         </Row>

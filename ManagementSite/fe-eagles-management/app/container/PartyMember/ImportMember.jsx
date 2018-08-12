@@ -16,7 +16,6 @@ const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { bitchCreate } from "../../services/memberService";
 import { getList } from "../../services/branchService";
-import { memberTempUrl } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -46,7 +45,8 @@ class ImportMember extends React.Component {
         title: "党员类型",
         dataIndex: "MemberType",
         render: MemberType => {
-          return MemberType == "0" ? "正式党员" : "预备党员";
+          console.log(MemberType)
+          return MemberType == 0 ? "正式党员" : "预备党员";
         },
         key: "MemberType"
       },
@@ -86,7 +86,7 @@ class ImportMember extends React.Component {
     //将文件以文本形式读入页面
     reader.readAsText(file, "utf-8");
     // reader.readAsText(file, "gb2312");
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
         if (data.length && index > 0) {
@@ -127,14 +127,17 @@ class ImportMember extends React.Component {
           UserList: newKeys,
           BranchId: currentBranch
         });
+        let { UserList } = Result;
         if (Code === "00") {
           message.success("导入成功");
-          console.log(Result);
-          hashHistory.replace(`/partymemberlist`);
         } else {
           message.success(Message);
-          this.setState({ memberList: Result.UserList });
         }
+
+        UserList.forEach(v => {
+          v.key = Math.random();
+        });
+        this.setState({ memberList: Result })
       } else {
         message.error("请选择支部");
       }
@@ -225,7 +228,7 @@ class ImportMember extends React.Component {
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
-              <a href={memberTempUrl}>下载模板</a>
+              <a href="../../file/member.txt" download="member.txt">下载模板</a>
             </Button>
           </Col>
         </Row>

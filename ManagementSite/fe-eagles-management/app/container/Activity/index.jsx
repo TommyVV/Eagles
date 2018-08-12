@@ -60,10 +60,10 @@ class SearchForm extends Component {
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="标题">
-              {getFieldDecorator(`ActivityTaskName`)(<Input />)}
+              {getFieldDecorator(`ActivityName`)(<Input />)}
             </FormItem>
           </Col>
-          {/* <Col span={8} key={3}>
+           <Col span={8} key={3}>
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
@@ -91,7 +91,7 @@ class SearchForm extends Component {
                 </FormItem>
               </Col>
             </FormItem>
-          </Col> */}
+          </Col> 
           <Col
             span={6}
             style={{
@@ -118,8 +118,8 @@ const WrapperSearchForm = Form.create({
     const config = props.getListConfig;
     console.log(config);
     return {
-      ActivityTaskName: Form.createFormField({
-        value: config.ActivityTaskName
+      ActivityName: Form.createFormField({
+        value: config.ActivityName
       }),
       StartTime: Form.createFormField({
         value: config.StartTime ? moment(config.StartTime, "YYYY-MM-dd") : null
@@ -196,7 +196,7 @@ class NewsList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      ActivityTaskName: ""
+      ActivityName: ""
       // StarTime: "",
       // EndTime: ""
     };

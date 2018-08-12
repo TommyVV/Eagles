@@ -64,8 +64,10 @@ class Base extends Component {
               BranchName: bra && bra[0].BranchName
             }
           };
-          let { Code } = await createOrEdit(params);
-          if (Code === "00") {
+          let { Code, Message } = await createOrEdit(params);
+          if (Code == "M08") {
+            message.error(Message);
+          } else if (Code === "00") {
             let tip = member.UserId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/partymemberlist");
@@ -100,12 +102,20 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
-      // 保存数据
-      let { getFieldsValue } = this.props.form;
-      let values = getFieldsValue();
-      this.props.saveInfo({ ...values, PhotoUrl: imageUrl });
+
+      const { Code, Result, Message } = info.file.response;
+      if (Code == "00") {
+
+        message.success(`${info.file.name} 上传成功`);
+        const imageUrl = Result.FileUploadResults[0].FileUrl;
+        // 保存数据
+        let { getFieldsValue } = this.props.form;
+        let values = getFieldsValue();
+        this.props.saveInfo({ ...values, PhotoUrl: imageUrl });
+      } else {
+        message.error(`${Message}`);
+      }
+
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -185,11 +195,11 @@ class Base extends Component {
                 style={{ width: "100%" }}
               />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="民族">
@@ -233,7 +243,7 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                pattern:/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+                pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
                 message: "必填，身份证格式不正确",
               }
             ]
@@ -332,7 +342,7 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    const { member } = props;
+    const { member, branch } = props;
     console.log("机构详情数据回显 - ", member);
     return {
       UserId: Form.createFormField({
@@ -345,7 +355,7 @@ const FormMap = Form.create({
         value: member.Sex ? member.Sex + "" : "0"
       }),
       BranchId: Form.createFormField({
-        value: member.BranchId ? member.BranchId : ""
+        value: member.BranchId ? member.BranchId : branch[0] ? branch[0].BranchId : ""
       }),
       Nation: Form.createFormField({
         value: member.Nation

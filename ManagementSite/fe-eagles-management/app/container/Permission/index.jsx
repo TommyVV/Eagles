@@ -96,7 +96,7 @@ class SearchForm extends Component {
           </Col>
           <Col span={6} key={2}>
             <FormItem label="权限组名称">
-              {getFieldDecorator(`AuthorityGroupName`)(<Input />)}
+              {getFieldDecorator(`AuthorityName`)(<Input />)}
             </FormItem>
           </Col>
           <Col
@@ -125,8 +125,8 @@ const WrapperSearchForm = Form.create({
     console.log(this);
     console.log(props);
     return {
-      AuthorityGroupName: Form.createFormField({
-        value: props.obj.AuthorityGroupName
+      AuthorityName: Form.createFormField({
+        value: props.obj.AuthorityName
       }),
       OrgId: Form.createFormField({
         value: props.obj.OrgId ? props.obj.OrgId : "0"

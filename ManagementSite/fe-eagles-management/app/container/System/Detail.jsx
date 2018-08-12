@@ -14,6 +14,10 @@ import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/systemService";
+import { serverConfig } from "../../constants/config/ServerConfigure";
+// 引入编辑器以及编辑器样式
+import BraftEditor from "braft-editor";
+import "braft-editor/dist/braft.css";
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -72,7 +76,7 @@ class Base extends Component {
     // }
   }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldsValue, setFieldsValue } = this.props.form;
     const { system } = this.props;
     const formItemLayout = {
       labelCol: {
@@ -84,7 +88,67 @@ class Base extends Component {
         sm: { span: 6 }
       }
     };
-
+    const formItemLayoutContent = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 17 }
+      }
+    };
+    // 编辑器属性
+    const editorProps = {
+      height: 300,
+      contentFormat: "html",
+      placeholder: "请输入内容",
+      initialContent: system.HtmlDesc,
+      media: {
+        validateFn: file => {
+          return file.size < 1024 * 1024 * 5;
+        },
+        uploadFn: async param => {
+          // const res=await uploadFile(file);
+          console.log(param);
+          let formData = new FormData();
+          formData.append("file", param.file);
+          var request = new XMLHttpRequest();
+          request.open(
+            "POST",
+            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
+          );
+          request.send(formData);
+          request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) {
+              let { Result } = JSON.parse(request.responseText);
+              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
+              // 上传成功后调用param.success并传入上传后的文件地址
+              param.success({
+                url: FileUrl,
+                meta: {
+                  id: FileId,
+                  title: FileName,
+                  alt: FileName,
+                  loop: false, // 指定音视频是否循环播放
+                  autoPlay: false, // 指定音视频是否自动播放
+                  controls: false // 指定音视频是否显示控制栏
+                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
+                }
+              });
+            }
+          };
+        },
+        onInsert: files => {
+          console.log(files);
+        }
+      },
+      onChange: (HtmlDesc, info) => {
+        setFieldsValue({ HtmlDesc });
+        console.log("消息内容：", getFieldsValue());
+      }
+      // onRawChange: this.handleRawChange
+    };
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -128,7 +192,7 @@ class Base extends Component {
             <DatePicker placeholder="请选择提醒时间" />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="内容">
+        <FormItem {...formItemLayoutContent} label="内容">
           {getFieldDecorator("HtmlDesc", {
             rules: [
               {
@@ -136,7 +200,9 @@ class Base extends Component {
                 message: "必填，请输入内容"
               }
             ]
-          })(<TextArea rows={4} placeholder="必填，请输入内容" />)}
+          })(<div className="editor-wrap">
+            <BraftEditor {...editorProps} />
+          </div>)}
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
           {getFieldDecorator("Status")(
@@ -194,7 +260,6 @@ const FormMap = Form.create({
           ? moment(system.NoticeTime, "YYYY-MM-DD")
           : null
       }),
-
       HtmlDesc: Form.createFormField({
         value: system.HtmlDesc
       }),

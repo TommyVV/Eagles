@@ -455,6 +455,7 @@ class NewsList extends React.Component {
           <Col>
             <Button
               className="btn btn--primary"
+              type="primary"
               onClick={() => hashHistory.replace(`/news/detail`)}
             >
               新增

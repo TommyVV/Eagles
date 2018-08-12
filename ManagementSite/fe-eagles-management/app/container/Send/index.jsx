@@ -133,9 +133,9 @@ const WrapperSendForm = Form.create({
       ExpressId: Form.createFormField({
         value: props.ExpressId
       }),
-      Address: Form.createFormField({
-        value: props.Address
-      })
+      // Address: Form.createFormField({
+      //   value: props.Address
+      // })
     };
   }
 })(props => {
@@ -143,7 +143,7 @@ const WrapperSendForm = Form.create({
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 7 }
+      sm: { span: 8 }
     },
     wrapperCol: {
       xs: { span: 24 },
@@ -152,17 +152,17 @@ const WrapperSendForm = Form.create({
   };
   return (
     <Form className="ant-advanced-search-form">
-      <Row gutter={24}>
+      {/* <Row gutter={24}>
         <Col span={20} key={1}>
-          <FormItem {...formItemLayout} label="快递单号">
-            {getFieldDecorator(`ExpressId`)(<Input />)}
+          <FormItem {...formItemLayout} label="">
+            {getFieldDecorator(``)(<Input />)}
           </FormItem>
         </Col>
-      </Row>
+      </Row> */}
       <Row gutter={24}>
         <Col span={20} key={2}>
-          <FormItem {...formItemLayout} label="快递信息备注">
-            {getFieldDecorator(`Address`)(<TextArea rows={4} />)}
+          <FormItem {...formItemLayout} label="快递单号及备注">
+            {getFieldDecorator(`ExpressId`)(<TextArea rows={4} />)}
           </FormItem>
         </Col>
       </Row>
@@ -207,8 +207,8 @@ class SendList extends React.Component {
         render: text => <span>{text == "0" ? "可以发货" : "不能发货"}</span>
       },
       {
-        title: "快递信息备注",
-        dataIndex: "Address"
+        title: "快递单号及备注",
+        dataIndex: "ExpressId"
       },
       {
         title: "操作",
@@ -231,8 +231,8 @@ class SendList extends React.Component {
                   发货
                 </a>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           );
         }
