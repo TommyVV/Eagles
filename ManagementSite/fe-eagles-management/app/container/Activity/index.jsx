@@ -63,7 +63,7 @@ class SearchForm extends Component {
               {getFieldDecorator(`ActivityName`)(<Input />)}
             </FormItem>
           </Col>
-           <Col span={8} key={3}>
+          <Col span={8} key={3}>
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
@@ -91,7 +91,7 @@ class SearchForm extends Component {
                 </FormItem>
               </Col>
             </FormItem>
-          </Col> 
+          </Col>
           <Col
             span={6}
             style={{
@@ -295,7 +295,7 @@ class NewsList extends React.Component {
           type="flex"
           // justify="center"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           {/* <Col>
             <Button onClick={this.handleDelete} className="btn">

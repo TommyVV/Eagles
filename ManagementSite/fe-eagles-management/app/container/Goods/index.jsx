@@ -108,7 +108,7 @@ const WrapperAuditForm = Form.create({
     return {
       AuditStatus: Form.createFormField({
         ...props.AuditStatus,
-        value: props.AuditStatus.value
+        value: props.AuditStatus.value ? props.AuditStatus.value + "" : "0"
       }),
       Reason: Form.createFormField({
         ...props.Reason,
