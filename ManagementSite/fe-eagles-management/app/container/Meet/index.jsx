@@ -125,17 +125,17 @@ class MeetList extends React.Component {
         render: obj => {
           return (
             <div>
-              {/* <a onClick={() => hashHistory.replace(`/meet/detail/${obj.NewsId}`)}>
-                编辑
-              </a> */}
               <a
                 onClick={() => this.handleDelete(obj.NewsId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
+              <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}/1`)}>
+              会议人员
+              </a>
               <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}`)}>
-              导入
+                导入
               </a>
             </div>
           );

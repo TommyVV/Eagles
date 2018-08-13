@@ -14,8 +14,7 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
-import { createOrEdit } from "../../services/meettingService";
-import { meettingTempUrl } from "../../constants/config/appconfig";
+import { createOrEdit, getInfoById } from "../../services/meettingService";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -52,7 +51,7 @@ class ImportMeetMember extends React.Component {
     reader.readAsText(file, "utf-8");
     let memberList = [];
     // reader.readAsText(file, "gb2312");
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       var fileText = e.target.result.split("\n");
       fileText.map((data, index) => {
         if (data.length && index > 0) {
@@ -102,10 +101,25 @@ class ImportMeetMember extends React.Component {
       message.error(e);
     }
   };
+  componentDidMount() {
+    const { id } = this.props.params;
+    this.getInfo({
+      MeetingId: id,
+      PageNumber: 1,
+      PageSize: 1000000,
+    });
+  }
 
+  getInfo = async params => {
+    let { List } = await getInfoById(params);
+    List.forEach(v => {
+      v.key = Math.random();
+    });
+    this.setState({ memberList: List });
+  }
   render() {
     const { fileList, memberList } = this.state;
-    const { name } = this.props.params;
+    const { name, isDetail } = this.props.params;
     const props = {
       name: "file",
       action: "",
@@ -145,7 +159,7 @@ class ImportMeetMember extends React.Component {
             </FormItem>
           </Col>
         </Row>
-        <Row gutter={24}>
+        <Row gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
           <Col span={2} key={1}>
             <FormItem label="选择导入文件" />
           </Col>
@@ -168,7 +182,7 @@ class ImportMeetMember extends React.Component {
             </Button>
           </Col>
         </Row>
-        <Row gutter={24}>
+        <Row gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
           <Col span={2} key={4}>
             <FormItem label="规则说明" />
           </Col>
@@ -177,7 +191,7 @@ class ImportMeetMember extends React.Component {
           </Col>
           <Col span={3} key={6}>
             <Button type="button">
-              <a href={meettingTempUrl} download="member.txt">
+              <a href="../../file/meeting.txt" download="meeting.txt">
                 下载模板
               </a>
             </Button>
@@ -190,7 +204,7 @@ class ImportMeetMember extends React.Component {
           bordered
         />
 
-        <Row type="flex" justify="center" gutter={24}>
+        <Row type="flex" justify="center" gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
           <Col>
             <Button
               type="primary"

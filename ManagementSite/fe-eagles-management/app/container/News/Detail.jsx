@@ -67,8 +67,9 @@ class Base extends Component {
           });
           Attachments.map(obj => {
             if (obj.response) {
-              const url = obj.response.Result.FileUploadResults[0].FileUrl;
-              attach[`Attach${++index}`] = url;
+              const file = obj.response.Result.FileUploadResults[0];
+              attach[`Attach${++index}`] = file.FileUrl;
+              attach[`AttachName${++index}`] = file.FileName;
             }
           });
           let params = {
@@ -196,12 +197,17 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
-      // 保存数据
-      let { getFieldsValue } = this.props.form;
-      let values = getFieldsValue();
-      this.props.saveInfo({ ...values, NewsImg: imageUrl });
+      const { Code, Result, Message } = info.file.response;
+      if (Code == "00") {
+        message.success(`${info.file.name} 上传成功`);
+        const imageUrl = Result.FileUploadResults[0].FileUrl;
+        // 保存数据
+        let { getFieldsValue } = this.props.form;
+        let values = getFieldsValue();
+        this.props.saveInfo({ ...values, NewsImg: imageUrl });
+      } else {
+        message.error(`${Message}`);
+      }
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -283,7 +289,7 @@ class Base extends Component {
             serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
           );
           request.send(formData);
-          request.onreadystatechange = function() {
+          request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200) {
               let { Result } = JSON.parse(request.responseText);
               let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
@@ -343,7 +349,7 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="积分奖励">
           {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0}/>
+            <InputNumber placeholder="请输入积分奖励" min={0} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="学习时间">
@@ -393,11 +399,11 @@ class Base extends Component {
             {news.NewsImg ? (
               <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
@@ -464,10 +470,10 @@ class Base extends Component {
                   有图片
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsImage")}>
-                  有图片
+                  <Checkbox onChange={this.changeBox.bind(this, "IsImage")}>
+                    有图片
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.IsVideo == "0" || news.IsVideo == "1" ? (
@@ -478,10 +484,10 @@ class Base extends Component {
                   有视频
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
-                  有视频
+                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                    有视频
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
@@ -492,10 +498,10 @@ class Base extends Component {
                   有附件
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
-                  有附件
+                  <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
+                    有附件
                 </Checkbox>
-              )}
+                )}
             </Col>
           </Row>
           <Row>
@@ -508,10 +514,10 @@ class Base extends Component {
                   有课件
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
-                  有课件
+                  <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
+                    有课件
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
@@ -522,10 +528,10 @@ class Base extends Component {
                   有否允许学习
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                  有否允许学习
+                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                    有否允许学习
                 </Checkbox>
-              )}
+                )}
             </Col>
           </Row>
         </FormItem>

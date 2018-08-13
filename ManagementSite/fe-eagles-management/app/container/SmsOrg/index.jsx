@@ -15,14 +15,119 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList } from "../../services/orgSmsService";
+import { getOrgList } from "../../services/orgService";
 import Nav from "../Nav";
 import "./style.less";
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      List: []
+    };
+  }
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getOrgList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
+  handleSearch = value => {
+    let params = {
+      PageNumber: 1,
+      PageSize: 10,
+      OrgId: value
+    };
+    const { getCurrentList, setObj } = this.props;
+    getCurrentList(params);
+    setObj({ OrgId: value });
+  };
 
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const { List } = this.state;
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch.bind(this)}
+      >
+        <Row gutter={24}>
+          <Col span={5} key={6}>
+            <FormItem label="机构">
+              {getFieldDecorator(`OrgId`)(
+                <Select onChange={this.handleSearch.bind(this)}>
+                  <Option value="0">全部</Option>
+                  {List.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.OrgId}>
+                        {o.OrgName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          {/* <Col span={6} key={2}>
+            <FormItem label="权限组名称">
+              {getFieldDecorator(`AuthorityGroupName`)(<Input />)}
+            </FormItem>
+          </Col> */}
+          {/* <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col> */}
+        </Row>
+      </Form>
+    );
+  }
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    console.log(this);
+    console.log(props);
+    return {
+      // AuthorityGroupName: Form.createFormField({
+      //   value: props.obj.AuthorityGroupName
+      // }),
+      OrgId: Form.createFormField({
+        value: props.obj.OrgId ? props.obj.OrgId : "0"
+      })
+    };
+  }
+})(SearchForm);
 class SmsOrgList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      systemList: [] // 列表数组
+      systemList: [], // 列表数组
+      obj: {}
     };
     this.columns = [
       {
@@ -63,7 +168,8 @@ class SmsOrgList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10
+      PageSize: 10,
+      OrgId: ""
     };
   }
   componentWillMount() {
@@ -81,13 +187,11 @@ class SmsOrgList extends React.Component {
     try {
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
-      if (List && List.length) {
-        List.forEach((v, i) => {
-          v.key = i;
-        });
-        this.setState({ systemList: List, current: PageNumber });
-        this.updatePageConfig(TotalCount);
-      }
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ systemList: List, current: PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -108,18 +212,20 @@ class SmsOrgList extends React.Component {
     };
     this.setState({ pageConfig });
   }
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { selectedRowKeys, pageConfig, systemList } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { obj, pageConfig, systemList } = this.state;
     return (
       <Nav>
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={systemList}
           columns={this.columns}
@@ -131,6 +237,7 @@ class SmsOrgList extends React.Component {
           <Col>
             <Button
               className="btn btn--primary"
+              type="primary"
               onClick={() => hashHistory.replace(`/smsorg/detail`)}
             >
               新增

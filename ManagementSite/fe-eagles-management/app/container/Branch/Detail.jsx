@@ -79,6 +79,12 @@ class Base extends Component {
             <TextArea placeholder="必填，请输入支部描述" rows={4} />
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="书记">
+          {getFieldDecorator("Secretary")(<Input placeholder="请输入书记姓名" />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="副书记">
+          {getFieldDecorator("ViceSecretary")(<Input placeholder="请输入副书记姓名" />)}
+        </FormItem>
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -115,6 +121,12 @@ const FormMap = Form.create({
       }),
       BranchName: Form.createFormField({
         value: branch.BranchName
+      }),
+      Secretary: Form.createFormField({
+        value: branch.Secretary
+      }),
+      ViceSecretary: Form.createFormField({
+        value: branch.ViceSecretary
       }),
       BranchDesc: Form.createFormField({
         value: branch.BranchDesc

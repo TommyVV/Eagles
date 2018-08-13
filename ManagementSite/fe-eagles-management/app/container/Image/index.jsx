@@ -15,12 +15,116 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/imageService";
+import { getOrgList } from "../../services/orgService";
 import { pageMap } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      List: []
+    };
+  }
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getOrgList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
+  handleSearch = value => {
+    let params = {
+      PageNumber: 1,
+      PageSize: 10,
+      OrgId: value
+    };
+    const { getCurrentList, setObj } = this.props;
+    getCurrentList(params);
+    setObj({ OrgId: value });
+  };
 
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const { List } = this.state;
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch.bind(this)}
+      >
+        <Row gutter={24}>
+          <Col span={5} key={6}>
+            <FormItem label="机构">
+              {getFieldDecorator(`OrgId`)(
+                <Select onChange={this.handleSearch.bind(this)}>
+                  <Option value="0">全部</Option>
+                  {List.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.OrgId}>
+                        {o.OrgName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+          {/* <Col span={6} key={2}>
+            <FormItem label="权限组名称">
+              {getFieldDecorator(`AuthorityGroupName`)(<Input />)}
+            </FormItem>
+          </Col> */}
+          {/* <Col
+            span={6}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              清空
+            </Button>
+          </Col> */}
+        </Row>
+      </Form>
+    );
+  }
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    console.log(this);
+    console.log(props);
+    return {
+      // AuthorityGroupName: Form.createFormField({
+      //   value: props.obj.AuthorityGroupName
+      // }),
+      OrgId: Form.createFormField({
+        value: props.obj.OrgId ? props.obj.OrgId : "0"
+      })
+    };
+  }
+})(SearchForm);
 class ImageList extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +132,7 @@ class ImageList extends React.Component {
       imageList: [], // 列表数组
       current: 1, // 当前页
       pageConfig: {}, // 当前页配置
+      obj: {}
     };
     this.columns = [
       {
@@ -84,7 +189,8 @@ class ImageList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10
+      PageSize: 10,
+      OrgId: ""
     };
   }
   componentWillMount() {
@@ -148,10 +254,20 @@ class ImageList extends React.Component {
       }
     });
   };
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
-    const { pageConfig, imageList } = this.state;
+    const { pageConfig, imageList, obj } = this.state;
     return (
       <Nav>
+        <WrapperSearchForm
+          getCurrentList={this.getCurrentList.bind(this)}
+          obj={obj}
+          setObj={this.changeSearch.bind(this)}
+        />
         <Table
           dataSource={imageList}
           columns={this.columns}

@@ -25,6 +25,16 @@ import { pageCodeMap } from "../../constants/config/appconfig";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
+
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    // const project = props.project;
+    return {};
+  }
+})(SearchForm);
+class PermissionManage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,6 +112,9 @@ class SearchForm extends Component {
       });
       console.log("List - ", List);
       this.setState({ permissionList: List });
+      if (List.length) {
+        this.changeGroup(List[0].AuthorityGroupId);
+      }
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -109,7 +122,6 @@ class SearchForm extends Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const { permissionList, pageList } = this.state;
     const formItemLayout = {
       labelCol: {
@@ -131,6 +143,7 @@ class SearchForm extends Component {
         sm: { span: 20 }
       }
     };
+    // const auth = JSON.parse(localStorage.info).authList;
     const pageCodeArr = [...pageCodeMap];
     console.log(pageList);
     let newPageList = [];
@@ -138,10 +151,10 @@ class SearchForm extends Component {
       newPageList.push(o.FunCode);
     });
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="选择权限组">
-          {getFieldDecorator("AuthorityGroupId")(
-            <Select onChange={this.changeGroup.bind(this)}>
+      <Nav>
+        <Form onSubmit={this.handleSubmit}>
+          <FormItem {...formItemLayout} label="选择权限组">
+            {permissionList.length ? <Select onChange={this.changeGroup.bind(this)} defaultValue={permissionList[0].AuthorityGroupId}>
               {permissionList.map((o, i) => {
                 return (
                   <Option key={i} value={o.AuthorityGroupId}>
@@ -149,108 +162,66 @@ class SearchForm extends Component {
                   </Option>
                 );
               })}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayoutCheck} label="权限信息">
-          {pageList.length ? (
-            <Checkbox.Group
-              style={{ width: "100%" }}
-              onChange={this.onChange.bind(this)}
-              defaultValue={newPageList}
-              key={1}
-            >
-              <Row>
-                {pageCodeArr.map((o, i) => {
-                  return (
-                    <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
-                      <Checkbox
-                        value={o[0]}
-                        checked={
-                          pageList.findIndex(v => v.FunCode == o[0]) > -1
-                            ? true
-                            : false
-                        }
-                      >
-                        {o[1]}
-                      </Checkbox>
-                    </Col>
-                  );
-                })}
-              </Row>
-            </Checkbox.Group>
-          ) : (
-            <Checkbox.Group
-              style={{ width: "100%" }}
-              onChange={this.onChange.bind(this)}
-              key={2}
-            >
-              <Row>
-                {pageCodeArr.map((o, i) => {
-                  return (
-                    <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
-                      <Checkbox value={o[0]}>{o[1]}</Checkbox>
-                    </Col>
-                  );
-                })}
-              </Row>
-            </Checkbox.Group>
-          )}
-        </FormItem>
-        <Row type="flex" gutter={24}>
-          <Col offset={4}>
-            <Button
-              htmlType="submit"
-              className="btn btn--primary"
-              type="primary"
-            >
-              保存
+            </Select> : null}
+
+          </FormItem>
+          <FormItem {...formItemLayoutCheck} label="权限信息">
+            {pageList.length ? (
+              <Checkbox.Group
+                style={{ width: "100%" }}
+                onChange={this.onChange.bind(this)}
+                defaultValue={newPageList}
+                key={1}
+              >
+                <Row>
+                  {pageCodeArr.map((o, i) => {
+                    return (
+                      <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
+                        <Checkbox
+                          value={o[0]}
+                          checked={
+                            pageList.findIndex(v => v.FunCode == o[0]) > -1
+                              ? true
+                              : false
+                          }
+                        >
+                          {o[1]}
+                        </Checkbox>
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </Checkbox.Group>
+            ) : (
+                <Checkbox.Group
+                  style={{ width: "100%" }}
+                  onChange={this.onChange.bind(this)}
+                  key={2}
+                >
+                  <Row>
+                    {pageCodeArr.map((o, i) => {
+                      return (
+                        <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
+                          <Checkbox value={o[0]}>{o[1]}</Checkbox>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </Checkbox.Group>
+              )}
+          </FormItem>
+          <Row type="flex" gutter={24}>
+            <Col offset={4}>
+              <Button
+                htmlType="submit"
+                className="btn btn--primary"
+                type="primary"
+              >
+                保存
             </Button>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
-}
-
-const WrapperSearchForm = Form.create({
-  mapPropsToFields: props => {
-    // const project = props.project;
-    return {};
-  }
-})(SearchForm);
-class PermissionManage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedRowKeys: [], // 项目id数组
-      projectList: [], // 项目列表数组
-      keyword: "", // 关键字
-      current: 1, // 当前页
-      pageConfig: {} // 当前页配置
-    };
-  }
-  componentWillMount() {
-    // this.getCurrentList(this.getListConfig);
-  }
-
-  render() {
-    const { selectedRowKeys, pageConfig, projectList } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 2 }
-      },
-      wrapperCol: {
-        xl: { span: 6 }
-      }
-    };
-    return (
-      <Nav>
-        <WrapperSearchForm />
+            </Col>
+          </Row>
+        </Form>
       </Nav>
     );
   }

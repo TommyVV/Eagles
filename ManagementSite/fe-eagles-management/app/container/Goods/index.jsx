@@ -56,10 +56,11 @@ class SearchForm extends Component {
           </Col>
           <Col span={5} key={6}>
             <FormItem label="商品状态">
-              {getFieldDecorator(`GoodsStatus`)(
+              {getFieldDecorator(`SaleStatus`)(
                 <Select>
-                  <Option value="0">正常</Option>
-                  <Option value="1">下架</Option>
+                  <Option value="-1">全部</Option>
+                  <Option value="10">正常</Option>
+                  <Option value="5">下架</Option>
                 </Select>
               )}
             </FormItem>
@@ -88,8 +89,8 @@ class SearchForm extends Component {
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
     return {
-      GoodsStatus: Form.createFormField({
-        value: props.obj.GoodsStatus ? props.obj.GoodsStatus : ""
+      SaleStatus: Form.createFormField({
+        value: props.obj.SaleStatus ? props.obj.SaleStatus : "-1"
       }),
       GoodsName: Form.createFormField({
         value: props.obj.GoodsName
@@ -187,8 +188,8 @@ class GoodsList extends React.Component {
       },
       {
         title: "状态",
-        dataIndex: "GoodsStatus",
-        render: text => <span>{text == "0" ? "正常" : "下架"}</span>,
+        dataIndex: "SaleStatus",
+        render: text => <span>{text == "10" ? "正常" : "下架"}</span>,
         width: "20%"
       },
       {
@@ -214,7 +215,7 @@ class GoodsList extends React.Component {
                 onClick={() => this.changeStatus(obj)}
                 style={{ paddingLeft: "24px" }}
               >
-                {obj.GoodsStatus == "0" ? "下架" : "上架"}
+                {obj.SaleStatus == "10" ? "下架" : "上架"}
               </a>
               <a
                 onClick={() =>
@@ -222,7 +223,7 @@ class GoodsList extends React.Component {
                 }
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") ? null : "none"
+                  display: this.state.authMap.get("Audit001") && obj.Status == "-1" ? null : "none"
                 }}
               >
                 审核
@@ -237,7 +238,7 @@ class GoodsList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       GoodsName: "",
-      GoodsStatus: ""
+      SaleStatus: "-1"
     };
   }
   componentWillMount() {
@@ -296,7 +297,7 @@ class GoodsList extends React.Component {
   }
   // 快速上下架
   changeStatus = async goods => {
-    const tipTitle = goods.GoodsStatus == "0" ? "下架" : "上架";
+    const tipTitle = goods.SaleStatus == "10" ? "下架" : "上架";
     confirm({
       title: `是否确认${tipTitle}“${goods.GoodsName}”?`,
       okText: "确认",
@@ -306,7 +307,7 @@ class GoodsList extends React.Component {
           const params = {
             Info: {
               ...goods,
-              GoodsStatus: goods.GoodsStatus == "0" ? "1" : "0"
+              SaleStatus: goods.SaleStatus == "10" ? "5" : "10"
             }
           };
           let { Code } = await createOrEdit(params);

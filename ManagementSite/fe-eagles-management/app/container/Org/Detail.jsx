@@ -119,12 +119,20 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      const imageUrl = info.file.response.Result.FileUploadResults[0].FileUrl;
-      // 保存数据
-      let { getFieldsValue } = this.props.form;
-      let values = getFieldsValue();
-      this.props.saveOrgInfo({ ...values, Logo: imageUrl });
+
+      const { Code, Result, Message } = info.file.response;
+      if (Code == "00") {
+        message.success(`${info.file.name} 上传成功`);
+        const imageUrl = Result.FileUploadResults[0].FileUrl;
+        // 保存数据
+        let { getFieldsValue } = this.props.form;
+        let values = getFieldsValue();
+        this.props.saveOrgInfo({ ...values, Logo: imageUrl });
+      } else {
+        message.error(`${Message}`);
+      }
+
+
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -166,6 +174,12 @@ class Base extends Component {
               }
             ]
           })(<Input placeholder="必填，请输入机构名称" />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="书记">
+          {getFieldDecorator("Secretary")(<Input placeholder="请输入书记姓名" />)}
+        </FormItem>
+        <FormItem {...formItemLayout} label="副书记">
+          {getFieldDecorator("ViceSecretary")(<Input placeholder="请输入副书记姓名" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="所属地区">
           {/* {AreaHtml} */}
@@ -254,6 +268,12 @@ const FormMap = Form.create({
       }),
       OrgName: Form.createFormField({
         value: org.OrgName
+      }),
+      Secretary: Form.createFormField({
+        value: org.Secretary
+      }),
+      ViceSecretary: Form.createFormField({
+        value: org.ViceSecretary
       }),
       Address: Form.createFormField({
         value: org.Address
