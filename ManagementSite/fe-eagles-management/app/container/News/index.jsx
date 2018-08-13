@@ -69,7 +69,7 @@ class SearchForm extends Component {
             <FormItem label="发布时间">
               <Col span={11}>
                 <FormItem>
-                  {getFieldDecorator("StarTime")(
+                  {getFieldDecorator("StartTime")(
                     <DatePicker placeholder="开始时间" />
                   )}
                 </FormItem>
@@ -123,8 +123,8 @@ const WrapperSearchForm = Form.create({
       NewsName: Form.createFormField({
         value: config.NewsName
       }),
-      StarTime: Form.createFormField({
-        value: config.StarTime ? moment(config.StarTime, "YYYY-MM-dd") : null
+      StartTime: Form.createFormField({
+        value: config.StartTime ? moment(config.StartTime, "YYYY-MM-dd") : null
       }),
       EndTime: Form.createFormField({
         value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
@@ -143,7 +143,7 @@ const WrapperAuditForm = Form.create({
     return {
       AuditStatus: Form.createFormField({
         ...props.AuditStatus,
-        value: props.AuditStatus.value
+        value: props.AuditStatus.value ? props.AuditStatus.value + "" : "0"
       }),
       Reason: Form.createFormField({
         ...props.Reason,
@@ -212,6 +212,11 @@ class NewsList extends React.Component {
         width: "30%"
       },
       {
+        title: "类型",
+        dataIndex: "NewsType",
+        render: text => <span>{text == 0 ? "新闻" : "会议"}</span>
+      },
+      {
         title: "作者",
         dataIndex: "Author"
       },
@@ -270,7 +275,7 @@ class NewsList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       NewsName: "",
-      StarTime: "",
+      StartTime: "",
       EndTime: "",
       NewsType: "0"
     };

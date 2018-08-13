@@ -61,12 +61,17 @@ class Base extends Component {
             let attach = {}; // 存附件对象
             let index = 0;
             Attachs.map(obj => {
-              attach[`Attach${++index}`] = obj.AttachmentUrl;
+              let i = index + 1;
+              ++index;
+              attach[`Attach${i}`] = obj.AttachmentUrl;
+              attach[`AttachName${i}`] = obj.AttachmentName;
             });
             Attachments.map(obj => {
+              let i = index + 1;
+              ++index;
               const file = obj.response.Result.FileUploadResults[0];
-              attach[`Attach${++index}`] = file.FileUrl;
-              attach[`AttachName${++index}`] = file.FileName;
+              attach[`Attach${i}`] = file.FileUrl;
+              attach[`AttachName${i}`] = file.FileName;
             });
             let params = {
               DetailInfo: {
@@ -151,8 +156,6 @@ class Base extends Component {
   onChangeImage = info => {
     console.log(info.file, info.fileList);
     if (info.file.status === "done") {
-
-
       const { Code, Result, Message } = info.file.response;
       if (Code == "00") {
         message.success(`${info.file.name} 上传成功`);
@@ -164,8 +167,6 @@ class Base extends Component {
       } else {
         message.error(`${Message}`);
       }
-
-
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
@@ -186,7 +187,7 @@ class Base extends Component {
         } else {
           fileList.push({
             uid: i,
-            name: o.AttachmentName,
+            name: o.AttachmentName || o.name,
             status: "done",
             url: o.AttachmentUrl
           });
@@ -254,7 +255,7 @@ class Base extends Component {
             serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
           );
           request.send(formData);
-          request.onreadystatechange = function () {
+          request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
               let { Result } = JSON.parse(request.responseText);
               let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
@@ -387,11 +388,11 @@ class Base extends Component {
             {news.ImageUrl ? (
               <img src={news.ImageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
-                <div>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
