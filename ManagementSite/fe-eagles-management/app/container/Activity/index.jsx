@@ -188,6 +188,17 @@ class NewsList extends React.Component {
               >
                 删除
               </a>
+              {/* <a
+                onClick={() =>
+                  this.setState({ visible: true, currentId: NewsId })
+                }
+                style={{
+                  paddingLeft: "24px",
+                  display: this.state.authMap.get("Audit001") ? null : "none"
+                }}
+              >
+                审核
+              </a> */}
             </div>
           );
         }

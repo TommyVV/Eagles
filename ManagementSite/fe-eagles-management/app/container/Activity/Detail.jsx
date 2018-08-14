@@ -18,7 +18,7 @@ import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/activityService";
-import { getList } from "../../services/exerciseService";
+import { getQuestionList } from "../../services/questionService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/activityAction";
@@ -67,11 +67,13 @@ class Base extends Component {
               attach[`AttachName${i}`] = obj.AttachmentName;
             });
             Attachments.map(obj => {
-              let i = index + 1;
-              ++index;
-              const file = obj.response.Result.FileUploadResults[0];
-              attach[`Attach${i}`] = file.FileUrl;
-              attach[`AttachName${i}`] = file.FileName;
+              if (obj.response) {
+                let i = index + 1;
+                ++index;
+                const file = obj.response.Result.FileUploadResults[0];
+                attach[`Attach${i}`] = file.FileUrl;
+                attach[`AttachName${i}`] = file.FileName;
+              }
             });
             let params = {
               DetailInfo: {
@@ -362,13 +364,13 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入每人可参与次数" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="习题选择">
+        <FormItem {...formItemLayout} label="试卷选择">
           {getFieldDecorator("ExampleId")(
             <Select>
               {List.map((o, i) => {
                 return (
-                  <Option value={o.QuestionId} key={i}>
-                    {o.Question}
+                  <Option value={o.ExercisesId} key={i}>
+                    {o.ExercisesName}
                   </Option>
                 );
               })}
@@ -487,7 +489,7 @@ class ActivityDetail extends Component {
   componentWillMount() {
     let { id } = this.props.params;
     if (id) {
-      this.getInfo(id); //拿新闻详情
+      this.getInfo(id); //拿详情
     } else {
       this.props.clearInfo();
       // 拿习题详情
@@ -501,7 +503,7 @@ class ActivityDetail extends Component {
 
   // 查询栏目列表
   getList = async () => {
-    const { List } = await getList();
+    const { List } = await getQuestionList();
     console.log("List", List);
     this.setState({ List });
   };
@@ -516,15 +518,6 @@ class ActivityDetail extends Component {
         isTest: Info.TestId ? "1" : "0"
       };
       this.props.saveInfo(Info);
-      // 拿栏目详情
-      // 说明有试卷
-      if (Info.TestId > 0) {
-        // const { List } = await getQuestionList();
-        // console.log(List);
-      } else {
-        // const { List } = await getQuestionList();
-        // console.log(List);
-      }
     } catch (e) {
       message.error("获取详情失败");
       throw new Error(e);

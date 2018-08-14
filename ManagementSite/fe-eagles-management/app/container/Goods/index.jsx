@@ -223,7 +223,10 @@ class GoodsList extends React.Component {
                 }
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") && obj.Status == "-1" ? null : "none"
+                  display:
+                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                      ? null
+                      : "none"
                 }}
               >
                 审核
@@ -361,7 +364,7 @@ class GoodsList extends React.Component {
       const { currentId, fields } = this.state;
       const { AuditStatus, Reason } = fields;
       let params = {
-        AuditStatus: AuditStatus.value,
+        AuditStatus: AuditStatus.value ? AuditStatus.value : "0",
         Reason: Reason.value,
         Type: "3", // 商品
         AuditId: currentId,
