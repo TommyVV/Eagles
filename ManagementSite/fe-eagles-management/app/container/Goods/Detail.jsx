@@ -239,10 +239,10 @@ class Base extends Component {
           })(<Input placeholder="必填，请输入商品名称" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
-          {getFieldDecorator("GoodsStatus")(
+          {getFieldDecorator("SaleStatus")(
             <Select>
-              <Option value="0">正常</Option>
-              <Option value="1">下架</Option>
+              <Option value="10">正常</Option>
+              <Option value="5">下架</Option>
             </Select>
           )}
         </FormItem>
@@ -425,8 +425,8 @@ const FormMap = Form.create({
     return {
       GoodsId: Form.createFormField({ value: goods.GoodsId }),
       GoodsName: Form.createFormField({ value: goods.GoodsName }),
-      GoodsStatus: Form.createFormField({
-        value: goods.GoodsStatus == 0 ? "0" : "1"
+      SaleStatus: Form.createFormField({
+        value: goods.SaleStatus == 10 ? "10" : "5"
       }),
       Score: Form.createFormField({ value: goods.Score }),
       Sale: Form.createFormField({ value: goods.Sale }),
