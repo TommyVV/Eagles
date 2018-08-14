@@ -7,7 +7,7 @@ import {
   message,
   Modal,
   Form,
-  Input,
+  Card,
   Select,
   Checkbox
 } from "antd";
@@ -21,7 +21,7 @@ import {
 } from "../../services/authGroupService";
 import Nav from "../Nav";
 import "./style.less";
-import { pageCodeMap } from "../../constants/config/appconfig";
+import { pageCodeGroup } from "../../constants/config/appconfig";
 
 const confirm = Modal.confirm;
 class SearchForm extends Component {
@@ -40,39 +40,36 @@ class PermissionManage extends React.Component {
     this.state = {
       permissionList: [], // 列表数组
       pageList: [], // 列表数组
-      checkedValues: []
+      checkedValues: [],
+      groupId: ""
     };
   }
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
-    const view = this;
-    this.props.form.validateFields(async (err, values) => {
-      console.log("Received values of form: ", values);
-      if (values.AuthorityGroupId) {
-        const checked = view.state.checkedValues;
-        let newKey = [];
-        checked.map(v => {
-          newKey.push({
-            FunCode: v,
-            EditTime: new Date(),
-            CreateTime: ""
-          });
+    const { checkedValues, groupId } = this.state;
+    if (groupId) {
+      let newKey = [];
+      checkedValues.map(v => {
+        newKey.push({
+          FunCode: v,
+          EditTime: new Date(),
+          CreateTime: ""
         });
-        const param = {
-          GroupId: values.AuthorityGroupId,
-          AuthorityInfo: newKey,
-          OperId: 0
-        };
-        let { Code } = await manageCreateOrEdit(param);
-        if (Code === "00") {
-          message.success("保存成功");
-        } else {
-          message.error("保存失败");
-        }
+      });
+      const param = {
+        GroupId: groupId,
+        AuthorityInfo: newKey,
+        OperId: 0
+      };
+      let { Code } = await manageCreateOrEdit(param);
+      if (Code === "00") {
+        message.success("保存成功");
       } else {
-        message.error("请选择权限组");
+        message.error("保存失败");
       }
-    });
+    } else {
+      message.error("请选择权限组");
+    }
   };
 
   handleReset = () => {
@@ -84,6 +81,7 @@ class PermissionManage extends React.Component {
   }
   changeGroup(value) {
     console.log("checked = ", value);
+    this.state.groupId = value;
     this.getPageCode(value);
   }
   componentWillMount() {
@@ -144,7 +142,7 @@ class PermissionManage extends React.Component {
       }
     };
     // const auth = JSON.parse(localStorage.info).authList;
-    const pageCodeArr = [...pageCodeMap];
+    const pageCodeArr = [...pageCodeGroup];
     console.log(pageList);
     let newPageList = [];
     pageList.map((o, i) => {
@@ -152,7 +150,7 @@ class PermissionManage extends React.Component {
     });
     return (
       <Nav>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
           <FormItem {...formItemLayout} label="选择权限组">
             {permissionList.length ? <Select onChange={this.changeGroup.bind(this)} defaultValue={permissionList[0].AuthorityGroupId}>
               {permissionList.map((o, i) => {
@@ -175,20 +173,25 @@ class PermissionManage extends React.Component {
               >
                 <Row>
                   {pageCodeArr.map((o, i) => {
-                    return (
-                      <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
-                        <Checkbox
-                          value={o[0]}
-                          checked={
-                            pageList.findIndex(v => v.FunCode == o[0]) > -1
-                              ? true
-                              : false
-                          }
-                        >
-                          {o[1]}
-                        </Checkbox>
-                      </Col>
-                    );
+                    return <Card title={o.text} key={i} style={{ width: 900, marginTop: i > 0 ? "12px" : "0" }}>
+                      {[...o.next].map((arr, index) => {
+                        return (
+
+                          <Col key={index} span={5} style={{ paddingBottom: "16px" }}>
+                            <Checkbox
+                              value={arr[0]}
+                              checked={
+                                pageList.findIndex(v => v.FunCode == arr[0]) > -1
+                                  ? true
+                                  : false
+                              }
+                            >
+                              {arr[1]}
+                            </Checkbox>
+                          </Col>
+                        );
+                      })}
+                    </Card>
                   })}
                 </Row>
               </Checkbox.Group>
@@ -201,9 +204,17 @@ class PermissionManage extends React.Component {
                   <Row>
                     {pageCodeArr.map((o, i) => {
                       return (
-                        <Col key={i} span={5} style={{ paddingBottom: "16px" }}>
-                          <Checkbox value={o[0]}>{o[1]}</Checkbox>
-                        </Col>
+                        <Card title={o.text} key={i} style={{ width: 900, marginTop: i > 0 ? "12px" : "0" }}>
+                          {
+                            [...o.next].map((arr, index) => {
+                              return (
+                                <Col key={index} span={5} style={{ paddingBottom: "16px" }}>
+                                  <Checkbox value={arr[0]}>{arr[1]}</Checkbox>
+                                </Col>
+                              )
+                            })}
+                        </Card>
+
                       );
                     })}
                   </Row>

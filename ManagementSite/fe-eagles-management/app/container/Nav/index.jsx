@@ -92,9 +92,9 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("User0001") ||
-                  authMap.get("User0002") ||
-                  authMap.get("User0004") ||
-                  authMap.get("User0005")
+                    authMap.get("User0002") ||
+                    authMap.get("User0004") ||
+                    authMap.get("User0005")
                     ? null
                     : "none"
               }}
@@ -182,11 +182,11 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("News0001") ||
-                  authMap.get("News0002") ||
-                  authMap.get("News0003") ||
-                  authMap.get("News0004") ||
-                  authMap.get("News0005") ||
-                  authMap.get("News0006")
+                    authMap.get("News0002") ||
+                    authMap.get("News0003") ||
+                    authMap.get("News0004") ||
+                    authMap.get("News0005") ||
+                    authMap.get("News0006")
                     ? null
                     : "none"
               }}
@@ -252,8 +252,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("orgs0001") ||
-                  authMap.get("orgs0002") ||
-                  authMap.get("orgs0003")
+                    authMap.get("orgs0002") ||
+                    authMap.get("orgs0003")
                     ? null
                     : "none"
               }}
@@ -291,8 +291,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("menu0001") ||
-                  authMap.get("menu0002") ||
-                  authMap.get("menu0003")
+                    authMap.get("menu0002") ||
+                    authMap.get("menu0003")
                     ? null
                     : "none"
               }}
@@ -434,8 +434,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("oper0001") ||
-                  authMap.get("oper0002") ||
-                  authMap.get("oper0003")
+                    authMap.get("oper0002") ||
+                    authMap.get("oper0003")
                     ? null
                     : "none"
               }}
@@ -460,6 +460,29 @@ export default class App extends React.Component {
                 style={{ display: authMap.get("oper0003") ? null : "none" }}
               >
                 权限管理
+              </Menu.Item>
+
+            </SubMenu>
+            <SubMenu key="sub10"
+              title={
+                <span>
+                  <Icon type="mail" />
+                  <span>审核流水</span>
+                </span>
+              }
+              style={{
+                display:
+                  authMap.get("Audit001")
+                    ? null
+                    : "none"
+              }}>
+
+              <Menu.Item
+                key="sub101"
+                onClick={e => hashHistory.replace("/auditlist")}
+                // style={{ display: authMap.get("Audit001") ? null : "none" }}
+              >
+                审核流水记录
               </Menu.Item>
             </SubMenu>
           </Menu>

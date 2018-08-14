@@ -20,3 +20,22 @@ export const audit = async params => {
     throw new Error(e);
   }
 };
+
+// 审核
+export const getList = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: AUDIT.LIST,
+      params
+    });
+    let { Code, Result, Message } = res.data;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { List: [] };
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};

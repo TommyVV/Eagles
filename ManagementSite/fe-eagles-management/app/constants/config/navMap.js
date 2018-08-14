@@ -248,6 +248,11 @@ const navMap = [
     sub: "sub9",
     key: "sub95"
   },
+  {
+    pathname: "#/auditlist",
+    sub: "sub10",
+    key: "sub101"
+  },
   
 ];
 export default navMap;

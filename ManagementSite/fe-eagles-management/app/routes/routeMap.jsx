@@ -59,6 +59,7 @@ import PublicActivityList from "../container/PublicActivity";
 import PublicActivityDetail from "../container/PublicActivity/Detail";
 import PublicArticleList from "../container/PublicArticle";
 import PublicArticleDetail from "../container/PublicArticle/Detail";
+import AuditList from "../container/Audit";
 
 class RouteMap extends Component {
   render() {
@@ -171,6 +172,10 @@ class RouteMap extends Component {
           <route
             path="/article/detail(/:id/:audit/:type)"
             component={PublicArticleDetail}
+          />
+          <route
+            path="/auditlist"
+            component={AuditList}
           />
         </Route>
       </Router>

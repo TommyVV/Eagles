@@ -194,7 +194,8 @@ const PUBLIC_ARTICLE = {
 };
 //审核
 const AUDIT = {
-  AUDIT: "/api/Audit/Audit"
+  AUDIT: "/api/Audit/Audit",
+  LIST:"/api/Audit/GetAudit"
 };
 
 export const serverConfig = {
