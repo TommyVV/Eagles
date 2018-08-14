@@ -1,56 +1,237 @@
-body {
-    background-color: #f8f8f8 !important;
+// body {
+//     background-color: #f8f8f8 !important;
+// }
+
+// .qtui-loading {
+//     margin: 20px 0 0 !important;
+// }
+
+// .btn.btn {
+//     width: 120px;
+//     height: 40px;
+//     font-family: "Microsoft YaHei", 'sans-serif ';
+//     color: #333;
+// }
+
+// .btn--primary.btn--primary {
+//     background: #2678E7;
+//     border-radius: 2px;
+//     color: #fff;
+// }
+
+// .ant-table-thead.ant-table-thead {
+//     tr {
+//         height: 32px;
+//     }
+//     th {
+//         color: #666;
+//         padding: 0 16px;
+//     }
+// }
+
+// .ant-table-tbody.ant-table-tbody {
+//     tr {
+//         height: 40px;
+//     }
+//     td {
+//         color: #333;
+//         padding: 0 16px;
+//     }
+// }
+
+// .ant-table-placeholder.ant-table-placeholder {
+//     height: 40px;
+//     padding: 0;
+//     line-height: 40px;
+// }
+
+// .modal_disables {
+//     position: fixed;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     margin: auto;
+//     background: rgba(0, 0, 0, 0);
+// }
+
+// body {
+//     background-color: #325CB3;
+// }
+
+
+
+.area {
+    width: 90%;
+    margin: 24px auto;
+    h1 {
+        padding: 10px;
+        border-left: 5px solid #FFC700;
+        color: #FFC700;
+        background-color: #1C4AA9;
+    }
+    
+table {
+    table-layout: fixed;
+    word-break: break-all;
 }
 
-.qtui-loading {
-    margin: 20px 0 0 !important;
+td {
+    text-align: center;
+    vertical-align: middle;
 }
 
-.btn.btn {
+.head img {
+    width: 25px;
+    height: auto;
+    float: left;
+}
+
+.img-d {
+    float: left;
+}
+
+.h-spa {
+    width: 40px;
+    display: table-cell;
+}
+
+.hs-spa {
+    width: 20px;
+}
+
+.first-level {
+    // border: 2px solid #7DCDED;
+    background-color: #5C7CC1;
+    color: white;
+}
+
+.head .first-level {
+    padding: 8px 15px;
+    border-radius: 10px;
+    width: 150px;
+    max-width: 220px;
+}
+
+.head .aleft {
+    font-size: 12px;
+    color: white;
+}
+
+.head .aright {
+    float: right;
+    font-size: 16px;
+    color: white;
+}
+
+.second-level {
+    background-color: #0097FF;
+    border: 2px solid white;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
     width: 120px;
-    height: 40px;
-    font-family: "Microsoft YaHei", 'sans-serif ';
-    color: #333;
+    max-width: 200px;
+    text-align: left;
 }
 
-.btn--primary.btn--primary {
-    background: #2678E7;
-    border-radius: 2px;
-    color: #fff;
+.bleft {
+    border-left: 1px solid #7997CD;
 }
 
-.ant-table-thead.ant-table-thead {
-    tr {
-        height: 32px;
-    }
-    th {
-        color: #666;
-        padding: 0 16px;
-    }
+.bright {
+    border-right: 1px solid #7997CD;
 }
 
-.ant-table-tbody.ant-table-tbody {
-    tr {
-        height: 40px;
-    }
-    td {
-        color: #333;
-        padding: 0 16px;
-    }
+.btop {
+    border-top: 1px solid #7997CD;
 }
 
-.ant-table-placeholder.ant-table-placeholder {
-    height: 40px;
-    padding: 0;
-    line-height: 40px;
+.bbottom {
+    border-bottom: 1px solid #7997CD;
 }
 
-.modal_disables {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    background: rgba(0, 0, 0, 0);
+.b-left {
+    border-left: 1px solid #7997CD;
+}
+
+.b-top {
+    border-top: 2px solid #7997CD;
+}
+
+.v-spa {
+    height: 10px;
+}
+
+.list .first-level {
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+// .list .next-item {
+//     position: relative;
+//     left: 40px;
+//     span{
+//         position: absolute;
+//     }
+// }
+.list .first-level div {
+    width: 150px;
+}
+
+.list .item {
+    position: relative;
+    height: 100px;
+}
+
+.list table {
+    left: 15px;
+    position: absolute;
+    top: 0px;
+    width: 60px;
+}
+
+.item td {
+    height: 20px;
+    width: 30px;
+}
+
+
+/* 交点 */
+
+.jd {
+    position: relative;
+}
+
+.jd span {
+    width: 8px;
+    height: 8px;
+    background-color: #7d9bd0ab;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: -5px;
+    bottom: -4px;
+}
+
+.item-c {
+    color: white;
+    background-color: #587AC1;
+    padding: 5px 10px;
+    width: 120px;
+    position: relative;
+    left: -1px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.item-c .right {
+    float: right;
+}
+
+.textover {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 }

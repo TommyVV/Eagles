@@ -174,7 +174,8 @@ export const pageCodeMap = new Map([
   ["open0004", "活动公开机构审核"],
   ["open0005", "任务公开机构审核"],
   ["open0006", "用户文章公开机构审核"],
-  ["Audit001", "审核"]
+  ["Audit001", "审核"],
+  ["Audit002", "审核流水"],
 ]);
 export const pageCodeGroup = [
   {
@@ -244,7 +245,8 @@ export const pageCodeGroup = [
     ["open0004", "活动公开机构审核"],
     ["open0005", "任务公开机构审核"],
     ["open0006", "用户文章公开机构审核"],
-    ["Audit001", "审核"]])
+    ["Audit001", "审核"],
+    ["Audit002", "审核流水"]])
   },
 ];
 

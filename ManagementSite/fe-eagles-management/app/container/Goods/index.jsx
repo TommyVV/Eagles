@@ -448,8 +448,8 @@ class GoodsList extends React.Component {
             </Button>
           </Col> */}
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/goods/detail`)}>新增</a>
+            <Button className="btn btn--primary" type="primary" onClick={() => hashHistory.replace(`/goods/detail`)}>
+              新增
             </Button>
           </Col>
         </Row>
