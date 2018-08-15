@@ -146,21 +146,27 @@ class ImportMeetMember extends React.Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 12 }
       }
     };
 
     return (
       <Nav>
-        <Row gutter={24}>
-          <Col span={24} key={111}>
-            <FormItem {...formItemLayout} label="会议名称">
+        <Row gutter={24} >
+          {/* <Col span={24} key={111}>
+            <FormItem {...formItemLayout} label="会议名称" >
               <span>{name}</span>
             </FormItem>
+          </Col> */}
+          <Col span={2} key={1111} style={{ textAlign: "right" }}>
+            <FormItem label="会议名称:" />
+          </Col>
+          <Col span={12} key={222222} style={{ paddingTop: "8px" }}>
+            <span>{name}</span>
           </Col>
         </Row>
         <Row gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
-          <Col span={2} key={1}>
+          <Col span={2} key={1} style={{ textAlign: "right" }}>
             <FormItem label="选择导入文件" />
           </Col>
           <Col span={3} key={2}>
@@ -184,9 +190,9 @@ class ImportMeetMember extends React.Component {
         </Row>
         <Row gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
           <Col span={2} key={4}>
-            <FormItem label="规则说明" />
+            <FormItem label="规则说明" className="rule" />
           </Col>
-          <Col span={8} key={5} className="upload-tip">
+          <Col span={6} key={5} className="upload-tip">
             <span>仅支持txt文件，格式为XXXXX，请注意区分中英文符号</span>
           </Col>
           <Col span={3} key={6}>
@@ -195,6 +201,14 @@ class ImportMeetMember extends React.Component {
                 下载模板
               </a>
             </Button>
+          </Col>
+        </Row>
+        <Row gutter={24} style={{ display: isDetail != 1 ? null : "none" }}>
+          <Col span={2} key={4}>
+            <FormItem label="注意事项" className="rule" />
+          </Col>
+          <Col span={6} key={5} className="upload-tip">
+            <b>导入人员，会替换掉历史数据</b>
           </Col>
         </Row>
         <Table

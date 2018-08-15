@@ -134,7 +134,7 @@ class MeetList extends React.Component {
               <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}/1`)}>
               会议人员
               </a>
-              <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}`)}>
+              <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}/0`)}>
                 导入
               </a>
             </div>

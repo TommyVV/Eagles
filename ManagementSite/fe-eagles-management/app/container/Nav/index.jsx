@@ -185,7 +185,6 @@ export default class App extends React.Component {
                     authMap.get("News0002") ||
                     authMap.get("News0003") ||
                     authMap.get("News0004") ||
-                    authMap.get("News0005") ||
                     authMap.get("News0006")
                     ? null
                     : "none"
@@ -225,13 +224,6 @@ export default class App extends React.Component {
                 style={{ display: authMap.get("News0004") ? null : "none" }}
               >
                 会议维护
-              </Menu.Item>
-              <Menu.Item
-                key="sub39"
-                onClick={e => hashHistory.replace("/importmember")}
-                style={{ display: authMap.get("News0005") ? null : "none" }}
-              >
-                导入会议人员
               </Menu.Item>
               <Menu.Item
                 key="sub310"
@@ -480,7 +472,7 @@ export default class App extends React.Component {
               <Menu.Item
                 key="sub101"
                 onClick={e => hashHistory.replace("/auditlist")}
-                // style={{ display: authMap.get("Audit001") ? null : "none" }}
+              // style={{ display: authMap.get("Audit001") ? null : "none" }}
               >
                 审核流水记录
               </Menu.Item>
