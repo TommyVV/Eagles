@@ -88,11 +88,11 @@ class Base extends Component {
           };
           let { Code } = await createOrEditNews(params);
           if (Code === "00") {
-            let tip = this.props.news.NewsId ? "保存新闻成功" : "创建新闻成功";
+            let tip = this.props.news.NewsId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/newslist");
           } else {
-            let tip = this.props.news.NewsId ? "保存新闻失败" : "创建新闻失败";
+            let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
 
             message.error(tip);
           }
@@ -294,7 +294,7 @@ class Base extends Component {
             serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
           );
           request.send(formData);
-          request.onreadystatechange = function() {
+          request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200) {
               let { Result } = JSON.parse(request.responseText);
               let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
@@ -352,14 +352,14 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入作者" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="积分奖励">
+        <FormItem {...formItemLayout} label="积分奖励" >
           {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0} />
+            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="学习时间">
           {getFieldDecorator("StudyTime")(
-            <InputNumber placeholder="请输入学习时间，单位（分）" min={0} />
+            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }}/>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="来源">
@@ -404,11 +404,11 @@ class Base extends Component {
             {news.NewsImg ? (
               <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
@@ -475,10 +475,10 @@ class Base extends Component {
                   有图片
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsImage")}>
-                  有图片
+                  <Checkbox onChange={this.changeBox.bind(this, "IsImage")}>
+                    有图片
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.IsVideo == "0" || news.IsVideo == "1" ? (
@@ -489,10 +489,10 @@ class Base extends Component {
                   有视频
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
-                  有视频
+                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                    有视频
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
@@ -503,10 +503,10 @@ class Base extends Component {
                   有附件
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
-                  有附件
+                  <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
+                    有附件
                 </Checkbox>
-              )}
+                )}
             </Col>
           </Row>
           <Row>
@@ -519,10 +519,10 @@ class Base extends Component {
                   有课件
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
-                  有课件
+                  <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
+                    有课件
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
@@ -533,10 +533,10 @@ class Base extends Component {
                   有否允许学习
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                  有否允许学习
+                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                    有否允许学习
                 </Checkbox>
-              )}
+                )}
             </Col>
           </Row>
         </FormItem>

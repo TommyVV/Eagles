@@ -212,6 +212,10 @@ class NewsList extends React.Component {
         width: "30%"
       },
       {
+        title: "栏目",
+        dataIndex: "ColumnName",
+      },
+      {
         title: "类型",
         dataIndex: "NewsType",
         render: text => <span>{text == 0 ? "新闻" : "会议"}</span>
@@ -242,26 +246,25 @@ class NewsList extends React.Component {
       },
       {
         title: "操作",
-        dataIndex: "NewsId",
-        render: NewsId => {
+        render: obj => {
           return (
             <div>
-              <a onClick={() => hashHistory.replace(`/news/detail/${NewsId}`)}>
+              <a onClick={() => hashHistory.replace(`/news/detail/${obj.NewsId}`)}>
                 编辑
               </a>
               <a
-                onClick={() => this.handleDelete(NewsId)}
+                onClick={() => this.handleDelete(obj.NewsId)}
                 style={{ paddingLeft: "24px" }}
               >
                 删除
               </a>
               <a
                 onClick={() =>
-                  this.setState({ visible: true, currentId: NewsId })
+                  this.setState({ visible: true, currentId: obj.NewsId })
                 }
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") ? null : "none"
+                  display: this.state.authMap.get("Audit001") && obj.Status == "-1" ? null : "none"
                 }}
               >
                 审核
@@ -450,7 +453,7 @@ class NewsList extends React.Component {
           type="flex"
           // justify="center"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           {/* <Col>
             <Button onClick={this.handleDelete} className="btn">

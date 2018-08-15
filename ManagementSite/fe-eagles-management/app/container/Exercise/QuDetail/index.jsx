@@ -363,17 +363,17 @@ class QuestionForm extends Component {
             <Row gutter={24}>
               <Col span={6} key={1}>
                 <FormItem {...formItemLayoutChild} label="及格奖励积分">
-                  {getFieldDecorator(`PassAwardScore`)(<InputNumber min={1} />)}
+                  {getFieldDecorator(`PassAwardScore`)(<InputNumber min={1} style={{ width: "100%" }} />)}
                 </FormItem>
               </Col>
               <Col span={6} key={2}>
                 <FormItem {...formItemLayoutChild} label="每题分值">
-                  {getFieldDecorator(`SubjectScore`)(<InputNumber min={1} />)}
+                  {getFieldDecorator(`SubjectScore`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
                 </FormItem>
               </Col>
               <Col span={6} key={3}>
                 <FormItem {...formItemLayoutChild} label="及格分">
-                  {getFieldDecorator(`PassScore`)(<InputNumber min={1} />)}
+                  {getFieldDecorator(`PassScore`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
                 </FormItem>
               </Col>
             </Row>
@@ -394,7 +394,7 @@ class QuestionForm extends Component {
             }}
           >
             {getFieldDecorator(`LimitedTime`)(
-              <InputNumber placeholder="请输入限制时间，单位：分钟" min={1} />
+              <InputNumber placeholder="请输入限制时间，单位：分钟" min={1} style={{ width: "100%" }}/>
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否随机生成习题">
@@ -412,7 +412,7 @@ class QuestionForm extends Component {
               display: this.state.isRandom ? "block" : "none"
             }}
           >
-            {getFieldDecorator(`randomCount`)(<InputNumber min={1} />)}
+            {getFieldDecorator(`randomCount`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
           </FormItem>
           <Table
             columns={columns}

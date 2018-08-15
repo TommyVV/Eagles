@@ -75,6 +75,12 @@ class Base extends Component {
                 attach[`AttachName${i}`] = file.FileName;
               }
             });
+            let newArr = [...Attachs, ...Attachments];
+            if (values.ActivityTaskType == "0" && !newArr.length) {
+              message.error("请上传附件");
+              return;
+            }
+
             let params = {
               DetailInfo: {
                 ...news,
@@ -257,7 +263,7 @@ class Base extends Component {
             serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
           );
           request.send(formData);
-          request.onreadystatechange = function() {
+          request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200) {
               let { Result } = JSON.parse(request.responseText);
               let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
@@ -390,11 +396,11 @@ class Base extends Component {
             {news.ImageUrl ? (
               <img src={news.ImageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
@@ -402,6 +408,7 @@ class Base extends Component {
             <Button>
               <Icon type="upload" /> 上传
             </Button>
+            <span style={{ paddingLeft: "12px" }}>如活动类型为投票，必须上传附件</span>
           </Upload>
         </FormItem>
         <FormItem>
@@ -517,6 +524,7 @@ class ActivityDetail extends Component {
         ...Info,
         isTest: Info.TestId ? "1" : "0"
       };
+      this.state.Attachments = Info.Attachments;
       this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");

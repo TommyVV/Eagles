@@ -254,11 +254,11 @@ class Base extends Component {
                 message: "必填，请输入商品所需积分"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入商品所需积分" />)}
+          })(<InputNumber placeholder="必填，请输入商品所需积分" style={{ width: "100%" }}/>)}
         </FormItem>
         <FormItem {...formItemLayout} label="已售">
           {getFieldDecorator("Sale")(
-            <InputNumber placeholder="请输入已售数量" min={0} />
+            <InputNumber placeholder="请输入已售数量" min={0} style={{ width: "100%" }}/>
           )}
         </FormItem>
         <FormItem label="销售时间" {...formItemLayoutDate}>
@@ -307,7 +307,7 @@ class Base extends Component {
               }
             ]
           })(
-            <InputNumber placeholder="必填，请输入每人兑换最大数量" min={0} />
+            <InputNumber placeholder="必填，请输入每人兑换最大数量" min={0} style={{ width: "100%" }}/>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="商品参考价格">
@@ -318,7 +318,7 @@ class Base extends Component {
                 message: "必填，请输入参考价格"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入参考价格" min={0} />)}
+          })(<InputNumber placeholder="必填，请输入参考价格" min={0} style={{ width: "100%" }} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="库存">
           {getFieldDecorator("Stock", {
@@ -328,7 +328,7 @@ class Base extends Component {
                 message: "必填，请输入库存"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入库存" min={0} />)}
+          })(<InputNumber placeholder="必填，请输入库存" min={0} style={{ width: "100%" }}/>)}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="产品描述">
           {getFieldDecorator("Content", {

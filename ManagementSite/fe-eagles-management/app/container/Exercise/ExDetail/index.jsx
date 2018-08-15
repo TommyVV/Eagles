@@ -207,6 +207,7 @@ class Base extends Component {
                 min={2}
                 placeholder="请输入多选数量"
                 onChange={this.change.bind(this, "MultipleCount")}
+                style={{ width: "100%" }}
               />
             )}
           </FormItem>

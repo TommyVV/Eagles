@@ -86,7 +86,8 @@ class MenuList extends React.Component {
 
     this.getListConfig = {
       PageNumber: 1,
-      PageSize: 10
+      PageSize: 10,
+      MenuLevel: 1
     };
   }
   componentWillMount() {
@@ -186,7 +187,7 @@ class MenuList extends React.Component {
         <Row
           type="flex"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button className="btn btn--primary" type="primary">

@@ -29,6 +29,11 @@ const navMap = [
     key: "sub15"
   },
   {
+    pathname: "#/rank/detail",
+    sub: "sub1",
+    key: "sub15"
+  },
+  {
     pathname: "#/articlelist",
     sub: "sub1",
     key: "sub16"
@@ -96,7 +101,7 @@ const navMap = [
   {
     pathname: "#/importmember",
     sub: "sub3",
-    key: "sub39"
+    key: "sub38"
   },
   {
     pathname: "#/intergrallist",
