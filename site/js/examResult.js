@@ -25,9 +25,9 @@ var examResult='';
 for(var i = 0; i < TestLists.length; i++) {
 	var fend='<span>'+TestLists[i].QuestionId +'</span>'
 	if(TestLists[i].IsRight==true){
-		fend='<span class="wrong">'+TestLists[i].QuestionId +'</span>'
-	}else{
 		fend='<span class="right">'+TestLists[i].QuestionId +'</span>'
+	}else{
+		fend='<span class="wrong">'+TestLists[i].QuestionId +'</span>'
 	}
 	examResult+=fend
 }
