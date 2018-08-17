@@ -64,6 +64,7 @@ class Base extends Component {
             });
             if (isEmptyOption) {
               message.error("选项不能为空");
+              return;
             }
             let params = {
               Info: {
