@@ -337,6 +337,14 @@ class QuestionForm extends Component {
               </Select>
             )}
           </FormItem>
+          <FormItem {...formItemLayout} label="是否图片投票">
+            {getFieldDecorator("IsImageVote")(
+              <Select>
+                <Option value="0">否</Option>
+                <Option value="1">是</Option>
+              </Select>
+            )}
+          </FormItem>
           <FormItem {...formItemLayout} label="内容">
             {getFieldDecorator("HtmlDescription")(
               <TextArea rows={4} placeholder="请输入试卷内容" />
@@ -363,17 +371,23 @@ class QuestionForm extends Component {
             <Row gutter={24}>
               <Col span={6} key={1}>
                 <FormItem {...formItemLayoutChild} label="及格奖励积分">
-                  {getFieldDecorator(`PassAwardScore`)(<InputNumber min={1} style={{ width: "100%" }} />)}
+                  {getFieldDecorator(`PassAwardScore`)(
+                    <InputNumber min={1} style={{ width: "100%" }} />
+                  )}
                 </FormItem>
               </Col>
               <Col span={6} key={2}>
                 <FormItem {...formItemLayoutChild} label="每题分值">
-                  {getFieldDecorator(`SubjectScore`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
+                  {getFieldDecorator(`SubjectScore`)(
+                    <InputNumber min={1} style={{ width: "100%" }} />
+                  )}
                 </FormItem>
               </Col>
               <Col span={6} key={3}>
                 <FormItem {...formItemLayoutChild} label="及格分">
-                  {getFieldDecorator(`PassScore`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
+                  {getFieldDecorator(`PassScore`)(
+                    <InputNumber min={1} style={{ width: "100%" }} />
+                  )}
                 </FormItem>
               </Col>
             </Row>
@@ -394,7 +408,11 @@ class QuestionForm extends Component {
             }}
           >
             {getFieldDecorator(`LimitedTime`)(
-              <InputNumber placeholder="请输入限制时间，单位：分钟" min={1} style={{ width: "100%" }}/>
+              <InputNumber
+                placeholder="请输入限制时间，单位：分钟"
+                min={1}
+                style={{ width: "100%" }}
+              />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="是否随机生成习题">
@@ -412,7 +430,9 @@ class QuestionForm extends Component {
               display: this.state.isRandom ? "block" : "none"
             }}
           >
-            {getFieldDecorator(`randomCount`)(<InputNumber min={1} style={{ width: "100%" }}/>)}
+            {getFieldDecorator(`randomCount`)(
+              <InputNumber min={1} style={{ width: "100%" }} />
+            )}
           </FormItem>
           <Table
             columns={columns}
@@ -503,6 +523,9 @@ const QuestionFormMap = Form.create({
       }),
       ExercisesType: Form.createFormField({
         value: Info.ExercisesType ? Info.ExercisesType + "" : "5"
+      }),
+      IsImageVote: Form.createFormField({
+        value: Info.IsImageVote ? Info.IsImageVote + "" : "0"
       }),
       HtmlDescription: Form.createFormField({
         value: Info.HtmlDescription

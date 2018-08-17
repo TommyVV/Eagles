@@ -29,7 +29,7 @@ export default class App extends React.Component {
   componentWillMount() {
     let { hash } = window.location;
     let index = hash.indexOf("?");
-    const current = hash.slice(0, index);
+    const current = index > -1 ? hash.slice(0, index) : hash;
     const obj = navMap.find(item => current.indexOf(item.pathname) > -1);
     const auth = JSON.parse(localStorage.info).authList;
     if (obj && auth) {
@@ -92,9 +92,9 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("User0001") ||
-                    authMap.get("User0002") ||
-                    authMap.get("User0004") ||
-                    authMap.get("User0005")
+                  authMap.get("User0002") ||
+                  authMap.get("User0004") ||
+                  authMap.get("User0005")
                     ? null
                     : "none"
               }}
@@ -182,10 +182,10 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("News0001") ||
-                    authMap.get("News0002") ||
-                    authMap.get("News0003") ||
-                    authMap.get("News0004") ||
-                    authMap.get("News0006")
+                  authMap.get("News0002") ||
+                  authMap.get("News0003") ||
+                  authMap.get("News0004") ||
+                  authMap.get("News0006")
                     ? null
                     : "none"
               }}
@@ -244,8 +244,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("orgs0001") ||
-                    authMap.get("orgs0002") ||
-                    authMap.get("orgs0003")
+                  authMap.get("orgs0002") ||
+                  authMap.get("orgs0003")
                     ? null
                     : "none"
               }}
@@ -283,8 +283,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("menu0001") ||
-                    authMap.get("menu0002") ||
-                    authMap.get("menu0003")
+                  authMap.get("menu0002") ||
+                  authMap.get("menu0003")
                     ? null
                     : "none"
               }}
@@ -426,8 +426,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("oper0001") ||
-                    authMap.get("oper0002") ||
-                    authMap.get("oper0003")
+                  authMap.get("oper0002") ||
+                  authMap.get("oper0003")
                     ? null
                     : "none"
               }}
@@ -453,9 +453,9 @@ export default class App extends React.Component {
               >
                 权限管理
               </Menu.Item>
-
             </SubMenu>
-            <SubMenu key="sub10"
+            <SubMenu
+              key="sub10"
               title={
                 <span>
                   <Icon type="mail" />
@@ -463,16 +463,13 @@ export default class App extends React.Component {
                 </span>
               }
               style={{
-                display:
-                  authMap.get("Audit002")
-                    ? null
-                    : "none"
-              }}>
-
+                display: authMap.get("Audit002") ? null : "none"
+              }}
+            >
               <Menu.Item
                 key="sub101"
                 onClick={e => hashHistory.replace("/auditlist")}
-              // style={{ display: authMap.get("Audit001") ? null : "none" }}
+                // style={{ display: authMap.get("Audit001") ? null : "none" }}
               >
                 审核流水记录
               </Menu.Item>
