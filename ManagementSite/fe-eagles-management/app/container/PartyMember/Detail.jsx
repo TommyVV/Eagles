@@ -85,7 +85,7 @@ class Base extends Component {
   };
 
   beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
+    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {

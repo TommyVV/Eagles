@@ -17,6 +17,7 @@ const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import { getNewsList, deleteNews } from "../../services/newsService";
 import { audit } from "../../services/auditService";
+import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
 import "moment/locale/zh-cn";
 import Nav from "../Nav";
@@ -94,8 +95,24 @@ class SearchForm extends Component {
               </Col>
             </FormItem>
           </Col>
+          <Col span={6} key={33}>
+            <FormItem label="审核状态">
+              {getFieldDecorator("Status")(
+                <Select >
+                  <Option value="">全部</Option>
+                  {auditStatus.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.Status}>
+                        {o.text}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
           <Col
-            span={6}
+            span={5}
             style={{
               textAlign: "cnter",
               paddingLeft: "7px",
@@ -128,7 +145,10 @@ const WrapperSearchForm = Form.create({
       }),
       EndTime: Form.createFormField({
         value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
-      })
+      }),
+      Status: Form.createFormField({
+        value: config.Status ? config.Status:""
+      }),
     };
   }
 })(SearchForm);
@@ -171,7 +191,7 @@ const WrapperAuditForm = Form.create({
             {getFieldDecorator("AuditStatus")(
               <Select>
                 <Option value="0">通过</Option>
-                <Option value="1">拒绝</Option>
+                <Option value="1">不通过</Option>
               </Select>
             )}
           </FormItem>
@@ -213,7 +233,7 @@ class NewsList extends React.Component {
       },
       {
         title: "栏目",
-        dataIndex: "ColumnName",
+        dataIndex: "ModuleName",
       },
       {
         title: "类型",
@@ -243,6 +263,15 @@ class NewsList extends React.Component {
         title: "发布时间",
         dataIndex: "CreateTime",
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
+      },
+      {
+        title: "审核状态",
+        dataIndex: "Status",
+        render: text => {
+          return auditStatus.map(o => {
+            return o.Status == text ? <span key="1">{o.text}</span> : null
+          })
+        }
       },
       {
         title: "操作",
@@ -280,7 +309,8 @@ class NewsList extends React.Component {
       NewsName: "",
       StartTime: "",
       EndTime: "",
-      NewsType: "0"
+      NewsType: "0",
+      Status: ""
     };
   }
   componentWillMount() {

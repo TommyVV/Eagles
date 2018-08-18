@@ -137,7 +137,7 @@ class ImportMember extends React.Component {
         UserList.forEach(v => {
           v.key = Math.random();
         });
-        this.setState({ memberList: Result })
+        this.setState({ memberList: UserList })
       } else {
         message.error("请选择支部");
       }
@@ -182,18 +182,20 @@ class ImportMember extends React.Component {
             <FormItem label="选择支部" />
           </Col>
           <Col span={5} key={22}>
-            <Select
+            {branchList.length ? (<Select
               onChange={this.changeSelect.bind(this)}
               style={{ width: "100%" }}
+              defaultValue={branchList[0].BranchId}
             >
               {branchList.map((o, i) => {
                 return (
-                  <Option key={i} value={o.BranchId}>
+                  <Option key={i} value={o.BranchId} >
                     {o.BranchName}
                   </Option>
                 );
               })}
-            </Select>
+            </Select>) : null}
+
           </Col>
         </Row>
         <Row gutter={24}>

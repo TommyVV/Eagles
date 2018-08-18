@@ -80,7 +80,7 @@ class Base extends Component {
           {getFieldDecorator("AuditStatus")(
             <Select>
               <Option value="0">同意</Option>
-              <Option value="1">拒绝</Option>
+              <Option value="1">不通过</Option>
             </Select>
           )}
         </FormItem>

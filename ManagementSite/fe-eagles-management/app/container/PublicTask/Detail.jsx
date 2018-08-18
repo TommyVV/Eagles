@@ -25,7 +25,7 @@ class Base extends Component {
           let params = {
             AuditStatus,
             Reason,
-            Type: "5", // 任务
+            Type: "7", // 任务
             AuditId: TaskId,
             AuditType: type
           };
@@ -63,7 +63,7 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="任务标题">
           {getFieldDecorator("TaskTitle")(<Input disabled />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="发起人">
+        <FormItem {...formItemLayout} label="审核人">
           {getFieldDecorator("FromUser")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="负责人">
@@ -104,7 +104,7 @@ class Base extends Component {
           {getFieldDecorator("AuditStatus")(
             <Select>
               <Option value="0">同意</Option>
-              <Option value="1">拒绝</Option>
+              <Option value="1">不通过</Option>
             </Select>
           )}
         </FormItem>

@@ -1,24 +1,17 @@
 import React, { Component } from "react";
 import {
   Table,
-  Row,
-  Col,
-  Button,
   message,
   Modal,
   Form,
-  Input,
   Select,
-  Cascader
 } from "antd";
-const FormItem = Form.Item;
-const Option = Select.Option;
 import { hashHistory } from "react-router";
 import {
   getListBranch,
   getListOrg
 } from "../../services/publicActivityService";
-import { scoreType } from "../../constants/config/appconfig";
+import { auditStatus } from "../../constants/config/appconfig";
 import Nav from "../Nav";
 import "./style.less";
 
@@ -36,8 +29,8 @@ class PublicActivityList extends React.Component {
         dataIndex: "ActivityName"
       },
       {
-        title: "发起人",
-        dataIndex: "FromUser"
+        title: "审核人",
+        dataIndex: "AduitUserName"
       },
       {
         title: "负责人",
@@ -53,6 +46,15 @@ class PublicActivityList extends React.Component {
         dataIndex: "UserCount"
       },
       {
+        title: "审核状态",
+        dataIndex: "Status",
+        render: text => {
+          return auditStatus.map(o => {
+            return o.Status == text ? <span key="1">{o.text}</span> : null
+          })
+        }
+      },
+      {
         title: "操作",
         render: obj => {
           return (
@@ -61,7 +63,7 @@ class PublicActivityList extends React.Component {
                 onClick={() =>
                   hashHistory.replace(
                     `/activitypublic/detail/${obj.ActivityId}/0/${
-                      this.props.params.type
+                    this.props.params.type
                     }`
                   )
                 }
@@ -72,7 +74,7 @@ class PublicActivityList extends React.Component {
                 onClick={() =>
                   hashHistory.replace(
                     `/activitypublic/detail/${obj.ActivityId}/1/${
-                      this.props.params.type
+                    this.props.params.type
                     }`
                   )
                 }
@@ -108,11 +110,13 @@ class PublicActivityList extends React.Component {
         res = await getListOrg(params);
       }
       console.log("res - ", res);
-      res.Activitys.forEach(v => {
-        v.key = v.ActivityId;
-      });
-      this.setState({ List: res.Activitys, current: PageNumber });
-      this.updatePageConfig(res.TotalCount);
+      if (res.Activitys) {
+        res.Activitys.forEach(v => {
+          v.key = v.ActivityId;
+        });
+        this.setState({ List: res.Activitys, current: PageNumber });
+        this.updatePageConfig(res.TotalCount);
+      }
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);

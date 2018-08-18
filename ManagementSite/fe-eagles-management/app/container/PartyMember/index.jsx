@@ -18,6 +18,7 @@ import Nav from "../Nav";
 import "./style.less";
 import { getList, del } from "../../services/memberService";
 import { getList as getBranchList } from "../../services/branchService";
+import { auditStatus } from "../../constants/config/appconfig";
 import { audit } from "../../services/auditService";
 
 const confirm = Modal.confirm;
@@ -82,7 +83,8 @@ class SearchForm extends Component {
           <Col span={6} key={1}>
             <FormItem label="支部名称">
               {getFieldDecorator("BranchId")(
-                <Select>
+                <Select >
+                  <Option value="">全部</Option>
                   {branchList.map((o, i) => {
                     return (
                       <Option key={i} value={o.BranchId}>
@@ -97,6 +99,22 @@ class SearchForm extends Component {
           <Col span={6} key={2}>
             <FormItem label="党员名称">
               {getFieldDecorator(`UserName`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col span={6} key={3}>
+            <FormItem label="审核状态">
+              {getFieldDecorator("Status")(
+                <Select >
+                  <Option value="">全部</Option>
+                  {auditStatus.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.Status}>
+                        {o.text}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
             </FormItem>
           </Col>
           <Col
@@ -126,11 +144,14 @@ const WrapperSearchForm = Form.create({
     console.log(props);
     return {
       BranchId: Form.createFormField({
-        value: props.obj.BranchId
+        value: props.obj.BranchId ? props.obj.BranchId : ""
       }),
       UserName: Form.createFormField({
         value: props.obj.UserName
-      })
+      }),
+      Status: Form.createFormField({
+        value: props.obj.Status ? props.obj.Status:""
+      }),
     };
   }
 })(SearchForm);
@@ -173,7 +194,7 @@ const WrapperAuditForm = Form.create({
             {getFieldDecorator("AuditStatus")(
               <Select>
                 <Option value="0">通过</Option>
-                <Option value="1">拒绝</Option>
+                <Option value="1">不通过</Option>
               </Select>
             )}
           </FormItem>
@@ -224,6 +245,15 @@ class PartyMemberList extends React.Component {
         title: "党员类型",
         dataIndex: "MemberType",
         render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
+      },
+      {
+        title: "审核状态",
+        dataIndex: "Status",
+        render: text => {
+          return auditStatus.map(o => {
+            return o.Status == text ? <span key="1">{o.text}</span> : null
+          })
+        }
       },
       {
         title: "操作",
@@ -280,7 +310,8 @@ class PartyMemberList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       UserName: "",
-      BranchId: ""
+      BranchId: "",
+      Status: ""
     };
   }
   componentWillMount() {

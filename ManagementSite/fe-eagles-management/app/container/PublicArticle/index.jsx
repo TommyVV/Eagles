@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import {
   Table,
-  Row,
-  Col,
-  Button,
   message,
   Modal,
   Form,
-  Input,
   Select,
-  Cascader
 } from "antd";
-const FormItem = Form.Item;
-const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getListBranch, getListOrg } from "../../services/publicArticleService";
-import { articleMap } from "../../constants/config/appconfig";
+import { articleMap, auditStatus } from "../../constants/config/appconfig";
+
 import Nav from "../Nav";
 import "./style.less";
 
@@ -54,6 +48,15 @@ class PublicArticleList extends React.Component {
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
+        title: "审核状态",
+        dataIndex: "Status",
+        render: text => {
+          return auditStatus.map(o => {
+            return o.Status == text ? <span key="1">{o.text}</span> : null
+          })
+        }
+      },
+      {
         title: "操作",
         render: obj => {
           return (
@@ -62,7 +65,7 @@ class PublicArticleList extends React.Component {
                 onClick={() =>
                   hashHistory.replace(`/article/detail/${obj.NewsId}/0/${
                     this.props.params.type
-                  }`)
+                    }`)
                 }
               >
                 详情
@@ -71,7 +74,7 @@ class PublicArticleList extends React.Component {
                 onClick={() =>
                   hashHistory.replace(`/article/detail/${obj.NewsId}/1/${
                     this.props.params.type
-                  }`)
+                    }`)
                 }
                 style={{ paddingLeft: "24px" }}
               >
@@ -105,11 +108,13 @@ class PublicArticleList extends React.Component {
         res = await getListOrg(params);
       }
       console.log("res - ", res);
-      res.Aritcles.forEach(v => {
-        v.key = v.NewsId;
-      });
-      this.setState({ List: res.Aritcles, current: PageNumber });
-      this.updatePageConfig(res.TotalCount);
+      if (res.Aritcles) {
+        res.Aritcles.forEach(v => {
+          v.key = v.NewsId;
+        });
+        this.setState({ List: res.Aritcles, current: PageNumber });
+        this.updatePageConfig(res.TotalCount);
+      }
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);

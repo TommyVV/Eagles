@@ -76,7 +76,7 @@ class Base extends Component {
   };
 
   beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
+    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {
@@ -202,6 +202,7 @@ class Base extends Component {
               </div>
             )}
           </Upload>
+          <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  滚动图片建议长宽比为1 : 2.1</b>
         </FormItem>
         <FormItem>
           <Row gutter={24}>

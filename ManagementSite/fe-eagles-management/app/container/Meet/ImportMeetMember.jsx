@@ -90,10 +90,17 @@ class ImportMeetMember extends React.Component {
         MeetingId: id,
         List
       };
-      let { Code } = await createOrEdit(params);
+      let { Code, Result } = await createOrEdit(params);
       if (Code === "00") {
         message.success("保存成功");
-        hashHistory.replace("/meetlist");
+        let memList = Result.ImportUsersResult;
+        memList.forEach(v => {
+          v.key = Math.random();
+          v.UserName = v.MeetUserName;
+          v.Phone = v.MeetUserPhone;
+        });
+        this.setState({ memberList: memList });
+        // hashHistory.replace("/meetlist");
       } else {
         message.error("保存失败");
       }
@@ -112,10 +119,13 @@ class ImportMeetMember extends React.Component {
 
   getInfo = async params => {
     let { List } = await getInfoById(params);
-    List.forEach(v => {
-      v.key = Math.random();
-    });
-    this.setState({ memberList: List });
+    if (List.length) {
+      let memberList = List[0].Participants;
+      memberList.forEach(v => {
+        v.key = Math.random();
+      });
+      this.setState({ memberList });
+    }
   }
   render() {
     const { fileList, memberList } = this.state;

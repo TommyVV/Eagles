@@ -159,7 +159,7 @@ class AuditList extends React.Component {
       {
         title: "审核状态",
         dataIndex: "AuditStatus",
-        render: text => <span>{text == "0" ? "通过" : "拒绝"}</span>,
+        render: text => <span>{text == "0" ? "通过" : "不通过"}</span>,
       },
       {
         title: "原因",

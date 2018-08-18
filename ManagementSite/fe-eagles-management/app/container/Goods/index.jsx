@@ -18,6 +18,7 @@ import Nav from "../Nav";
 import "./style.less";
 import { getList, createOrEdit, del } from "../../services/goodsService";
 import { audit } from "../../services/auditService";
+import { auditStatus } from "../../constants/config/appconfig";
 const confirm = Modal.confirm;
 class SearchForm extends Component {
   handleSearch = e => {
@@ -65,6 +66,22 @@ class SearchForm extends Component {
               )}
             </FormItem>
           </Col>
+          <Col span={6} key={3}>
+            <FormItem label="审核状态">
+              {getFieldDecorator("Status")(
+                <Select >
+                  <Option value="">全部</Option>
+                  {auditStatus.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.Status}>
+                        {o.text}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+          </Col>
           <Col
             span={6}
             style={{
@@ -94,7 +111,10 @@ const WrapperSearchForm = Form.create({
       }),
       GoodsName: Form.createFormField({
         value: props.obj.GoodsName
-      })
+      }),
+      Status: Form.createFormField({
+        value: props.obj.Status ? props.obj.Status : ""
+      }),
     };
   }
 })(SearchForm);
@@ -136,7 +156,7 @@ const WrapperAuditForm = Form.create({
             {getFieldDecorator("AuditStatus")(
               <Select>
                 <Option value="0">通过</Option>
-                <Option value="1">拒绝</Option>
+                <Option value="1">不通过</Option>
               </Select>
             )}
           </FormItem>
@@ -174,27 +194,31 @@ class GoodsList extends React.Component {
       {
         title: "商品名称",
         dataIndex: "GoodsName",
-        width: "20%"
       },
       {
         title: "库存",
         dataIndex: "Stock",
-        width: "20%"
       },
       {
         title: "所需积分",
         dataIndex: "Score",
-        width: "20%"
       },
       {
         title: "状态",
         dataIndex: "SaleStatus",
         render: text => <span>{text == "10" ? "正常" : "下架"}</span>,
-        width: "20%"
+      },
+      {
+        title: "审核状态",
+        dataIndex: "Status",
+        render: text => {
+          return auditStatus.map(o => {
+            return o.Status == text ? <span key="1">{o.text}</span> : null
+          })
+        }
       },
       {
         title: "操作",
-        width: "20%",
         render: obj => {
           return (
             <div>
@@ -241,7 +265,8 @@ class GoodsList extends React.Component {
       PageNumber: 1,
       PageSize: 10,
       GoodsName: "",
-      SaleStatus: "-1"
+      SaleStatus: "-1",
+      Status: ""
     };
   }
   componentWillMount() {
@@ -358,7 +383,7 @@ class GoodsList extends React.Component {
       }
     });
   };
-  // 批量操作
+
   handleOk = async () => {
     try {
       const { currentId, fields } = this.state;

@@ -31,7 +31,7 @@ export const getListBranch = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { Tasks: [] };
+      return Code == "00" ? Result : { Activitys: [] };
     } else {
       throw new Error(`${Code} - ${Message}`);
     }
@@ -49,7 +49,7 @@ export const getListOrg = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { Tasks: [] };
+      return Code == "00" ? Result : { Activitys: [] };
     } else {
       throw new Error(`${Code} - ${Message}`);
     }

@@ -57,7 +57,7 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { StarTime, EndTime } = values;
+          let { StarTime, EndTime, IsPublic } = values;
           let { news, Attachs } = this.props;
           let { Attachments } = news;
           let attach = {}; // 存附件对象
@@ -81,6 +81,7 @@ class Base extends Component {
             Info: {
               ...news,
               ...values,
+              IsPublic: IsPublic == "true" ? true : false,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
               EndTime: moment(EndTime, "yyyy-MM-dd").format(),
               ...attach
@@ -113,7 +114,7 @@ class Base extends Component {
   };
 
   beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
+    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {
@@ -132,49 +133,22 @@ class Base extends Component {
       message.error("最多只能上传4个附件");
       return false;
     }
-    let { news, Attachs, setObj } = this.props;
+    let { news, Attachs, setObj, form } = this.props;
+    let { getFieldsValue } = form;
     if (info.file.status == "uploading") {
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
     }
     if (info.file.status == "removed") {
       let newKeys = Attachs.filter((v, i) => {
         return i != info.file.uid;
       });
       setObj(newKeys);
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
-      let attach = {}; // 存附件对象
-      let fileList = [];
       let { news } = this.props;
-      // info.fileList.map((obj, index) => {
-      //   let url = "";
-      //   if (obj.response) {
-      //     url = obj.response.Result.FileUploadResults[0].FileUrl;
-      //     // attach[`Attach${++index}`] = url;
-      //     fileList.push({
-      //       AttachmentName: info.file.name,
-      //       AttachmentUrl: url
-      //     });
-      //   }
-      // });
-      // let newFileList = [];
-      // Attachments.map((o, i) => {
-      //   if (o.url) {
-      //     newFileList.push({
-      //       uid: i,
-      //       name: o.AttachmentName,
-      //       status: "done",
-      //       url: o.AttachmentUrl
-      //     });
-      //   }
-      // });
-      // this.props.saveInfo({
-      //   ...news,
-      //   Attachments: newFileList.concat(fileList)
-      // });
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
       return;
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
@@ -223,6 +197,7 @@ class Base extends Component {
       setFieldsValue,
       getFieldsValue
     } = this.props.form;
+    const view = this;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
     console.log("保存的附件：", Attachs);
     let fileList = [];
@@ -279,6 +254,12 @@ class Base extends Component {
         setFieldsValue({ Content });
         console.log("新闻内容：", getFieldsValue());
       },
+      onBlur: () => {
+        // todo
+        if (view.editorInstance.isEmpty()) {
+          setFieldsValue({ Content: "" });
+        }
+      },
       media: {
         validateFn: file => {
           return file.size < fileSize;
@@ -330,10 +311,10 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入标题"
+                message: "必填，请输入标题，不超过50个字"
               }
             ]
-          })(<Input placeholder="必填，请输入标题" />)}
+          })(<Input placeholder="必填，请输入标题" maxLength={50} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="类型">
           {getFieldDecorator("NewsType")(
@@ -352,16 +333,7 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入作者" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="积分奖励" >
-          {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="学习时间">
-          {getFieldDecorator("StudyTime")(
-            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }}/>
-          )}
-        </FormItem>
+
         <FormItem {...formItemLayout} label="来源">
           {getFieldDecorator("Source", {
             rules: [
@@ -410,17 +382,19 @@ class Base extends Component {
                 </div>
               )}
           </Upload>
+          <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
           {getFieldDecorator("Content", {
             rules: [
               {
-                required: true
+                required: true,
+                message: "必填，请输入内容"
               }
             ]
           })(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps} />
+              <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance} />
             </div>
           )}
         </FormItem>
@@ -447,6 +421,14 @@ class Base extends Component {
                     </Option>
                   );
                 })}
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="是否显示公开栏目">
+          {getFieldDecorator("IsPublic")(
+            <Select>
+              <Option value="false">否</Option>
+              <Option value="true">是</Option>
             </Select>
           )}
         </FormItem>
@@ -540,7 +522,18 @@ class Base extends Component {
             </Col>
           </Row>
         </FormItem>
-        <FormItem {...formItemLayout} label="附件">
+
+        <FormItem {...formItemLayout} label="积分奖励" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+          {getFieldDecorator("RewardsScore")(
+            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} />
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="学习时间" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+          {getFieldDecorator("StudyTime")(
+            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} />
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}>
           <Upload
             name="file"
             listType="text"
@@ -621,6 +614,9 @@ const FormMap = Form.create({
       }),
       ModuleId: Form.createFormField({
         value: news.ModuleId ? news.ModuleId + "" : ""
+      }),
+      IsPublic: Form.createFormField({
+        value: news.IsPublic ? news.IsPublic + "" : "false"
       })
       // Category: Form.createFormField({
       //   value: news.TestId <= "0" ? "0" : "1"

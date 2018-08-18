@@ -92,7 +92,7 @@ class Base extends Component {
     // console.log('上传图片记录表单数据 - ', values, this.props.share)
   };
   beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
+    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {

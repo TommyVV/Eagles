@@ -66,7 +66,7 @@ class Base extends Component {
               attach[`Attach${i}`] = obj.AttachmentUrl;
               attach[`AttachName${i}`] = obj.AttachmentName;
             });
-            Attachments.map(obj => {
+            Attachments && Attachments.map(obj => {
               if (obj.response) {
                 let i = index + 1;
                 ++index;
@@ -75,11 +75,15 @@ class Base extends Component {
                 attach[`AttachName${i}`] = file.FileName;
               }
             });
-            let newArr = [...Attachs, ...Attachments];
-            if (values.ActivityTaskType == "0" && !newArr.length) {
-              message.error("请上传附件");
-              return;
+
+            let newArr = [...Attachs];
+            if (Attachments && Attachments.length) {
+              newArr = [...newArr, ...Attachments]
             }
+            // if (values.ActivityTaskType == "0" && !newArr.length) {
+            //   message.error("请上传附件");
+            //   return;
+            // }
 
             let params = {
               DetailInfo: {
@@ -119,7 +123,7 @@ class Base extends Component {
   };
 
   beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg)$/;
+    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
     const isImage = reg.test(type);
     if (!isImage) {
@@ -138,23 +142,22 @@ class Base extends Component {
       message.error("最多只能上传4个附件");
       return false;
     }
-    let { news, Attachs, setObj } = this.props;
+    let { news, Attachs, setObj, form } = this.props;
+    let { getFieldsValue } = form;
     if (info.file.status == "uploading") {
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
     }
     if (info.file.status == "removed") {
       let newKeys = Attachs.filter((v, i) => {
         return i != info.file.uid;
       });
       setObj(newKeys);
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
-      let attach = {}; // 存附件对象
-      let fileList = [];
       let { news } = this.props;
-      this.props.saveInfo({ ...news, Attachments: info.fileList });
+      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
       return;
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
@@ -349,7 +352,7 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="最大参与人数">
           {getFieldDecorator("MaxPartakePeople")(
-            <Input placeholder="必填，20字以内" />
+            <Input placeholder="请输入最大参与人数" />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="是否允许评论">
@@ -408,7 +411,7 @@ class Base extends Component {
             <Button>
               <Icon type="upload" /> 上传
             </Button>
-            <span style={{ paddingLeft: "12px" }}>如活动类型为投票，必须上传附件</span>
+            {/* <span style={{ paddingLeft: "12px" }}>如活动类型为投票，必须上传附件</span> */}
           </Upload>
         </FormItem>
         <FormItem>

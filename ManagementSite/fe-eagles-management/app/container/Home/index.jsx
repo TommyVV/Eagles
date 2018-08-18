@@ -37,20 +37,32 @@ class HomePage extends Component {
         return (
           <table className="list" cellSpacing="0" key={i}>
             <tbody>
+              {i != 0 ? (
+                <Fragment key={Math.random()}>
+                  <tr>
+                    <td colSpan="8" className="b-left v-spa" />
+                  </tr>
+                  <tr>
+                    <td colSpan="8" className="b-left v-spa" />
+                  </tr>
+                </Fragment>
+              ) : (
+                  <tr>
+                    <td colSpan="8" className="b-left v-spa" />
+                  </tr>
+                )}
+
               <tr>
-                <td colSpan="8" className="b-left v-spa" />
-              </tr>
-              <tr>
-                <td className="h-spa b-left bbottom jd">
+                {/* <td className="h-spa b-left bbottom jd">
                   <span />
-                </td>
-                <td className="h-spa  bbottom ">
+                </td> */}
+                {/* <td className="h-spa  bbottom ">
                   <span />
-                </td>
+                </td> */}
                 {arr.map((o, index) => {
                   return (
                     <Fragment key={Math.random()}>
-                      <td className="h-spa bbottom" key={Math.random()} />
+                      <td className={index == 0 ? "h-spa b-left bbottom " : "h-spa  bbottom "} key={Math.random()} />
                       <td
                         rowSpan="2"
                         className="first-level"
@@ -66,9 +78,62 @@ class HomePage extends Component {
                 {i == result.length - 1 ? null : (
                   <td className="spa b-left btop" />
                 )}
+                <td className="btop" />
+                <td className="btop" />
+                {/* <td className="btop" /> */}
+              </tr>
+              <tr>
+                {arr.map((o, index) => {
+                  return (
+                    <Fragment key={Math.random()}>
+                      <td className={index == 0 && i < result.length - 1 ? "spa b-left" : "spa "}></td>
+                      <td className="item">
+                        <table cellSpacing="0">
+                          <tbody>
+                            <tr>
+                              <td className="hs-spa b-left bbottom"></td>
+                              <td rowSpan="2">
+                                <div className="item-c">
+                                  <span>书记</span>
+                                  <span className="right">{o.BranchSecretary}</span>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="b-left btop"></td>
+                            </tr>
+                            <tr>
+                              <td className="hs-spa b-left bbottom"></td>
+                              <td rowSpan="2">
+                                <div className="item-c">
+                                  <span>副书记</span>
+                                  <span className="right">{o.BranchViceSecretary}</span>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="b-left btop"></td>
+                            </tr>
+                            <tr>
+                              <td className="hs-spa b-left bbottom"></td>
+                              <td rowSpan="2">
+                                <div className="item-c">
+                                  <span>党员数</span>
+                                  <span className="right">{o.BranchUserCount}</span>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="btop"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </Fragment>
+                  );
+                })}
 
-                <td className="btop" />
-                <td className="btop" />
+
               </tr>
             </tbody>
           </table>
@@ -96,12 +161,36 @@ class HomePage extends Component {
                     />
                     <div className="img-d">{tree.OrgName}</div>
                   </td>
+                  <td className="bbottom"></td>
+                  <td className="bbottom"></td>
+                  <td className="bbottom"></td>
+                  <td className="bbottom"></td>
+                  <td className="bbottom"></td>
                 </tr>
                 <tr>
-                  <td className="h-spa b-left btop" />
+                  <td className="h-spa b-left btop"></td>
+                  <td className="btop"></td>
+                  <td className="bright btop"></td>
+                  <td className="btop bleft"></td>
+                  <td className="btop"></td>
+                  <td className="btop bright"></td>
+                  <td className="bleft"></td>
                 </tr>
                 <tr>
-                  <td colSpan="8" className="b-left v-spa" />
+                  <td className="h-spa b-left" colSpan="2"></td>
+                  <td className="h-spa"></td>
+                  <td colSpan="2" className="second-level">
+                    <span className="aleft">书记</span>
+                    <span className="aright">{tree.OrgSecretary}</span>
+                  </td>
+                  <td className="h-spa"></td>
+                  <td colSpan="2" className="second-level">
+                    <span className="aleft">副书记</span>
+                    <span className="aright">{tree.OrgViceSecretary}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan="8" className="b-left v-spa"></td>
                 </tr>
               </tbody>
             </table>

@@ -24,7 +24,7 @@ class Base extends Component {
           let params = {
             AuditStatus,
             Reason,
-            Type: "4", // 活动
+            Type: "8", // 活动
             AuditId: ActivityId,
             AuditType: type
           };
@@ -62,7 +62,7 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="活动标题">
           {getFieldDecorator("ActivityName")(<Input disabled />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="发起人">
+        <FormItem {...formItemLayout} label="审核人">
           {getFieldDecorator("FromUser")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="负责人">
@@ -95,7 +95,7 @@ class Base extends Component {
           {getFieldDecorator("AuditStatus")(
             <Select>
               <Option value="0">同意</Option>
-              <Option value="1">拒绝</Option>
+              <Option value="1">不通过</Option>
             </Select>
           )}
         </FormItem>

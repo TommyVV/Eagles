@@ -40,6 +40,20 @@ export const ProgramaStateMap = [
     text: "审核不通过"
   }
 ];
+export const auditStatus = [
+  {
+    Status: "-1",
+    text: "待审核"
+  },
+  {
+    Status: "0",
+    text: "审核通过"
+  },
+  {
+    Status: "1",
+    text: "审核不通过"
+  }
+];
 export const articleMap = [
   {
     Status: "0",
