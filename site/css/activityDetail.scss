@@ -79,12 +79,20 @@ body{
         font-size: px2rem(36);
         line-height: px2rem(106);
         padding-left: 5px;
+        font-weight: 400;
     }
     .content {
-        margin-top: px2rem(66);
+        margin-top: px2rem(40);
         color: #141414;
-        font-size: px2rem(30);
         margin-bottom: px2rem(32);
+        .name{
+            font-size: px2rem(32);
+            font-weight: 400;
+        }
+        .txt{
+            margin-top: px2rem(20);
+            font-size: px2rem(30);
+        }
     }
     .img-area {
         display: flex;

@@ -31,23 +31,18 @@ class DynamicFieldSet extends React.Component {
         try {
           console.log("Received values of form: ", values);
           const { nextMenuList, menu } = this.props;
-          let hasParent = nextMenuList.findIndex(v => v.ParentId);
-          if (hasParent > -1) {
-            let params = {
-              Info: nextMenuList,
-              type: 0
-            };
-            let { Code } = await createOrEdit(params);
-            if (Code === "00") {
-              let tip = menu.Id ? "保存成功" : "创建成功";
-              message.success(tip);
-              hashHistory.replace("/menulist");
-            } else {
-              let tip = menu.Id ? "保存失败" : "创建失败";
-              message.error(tip);
-            }
+          let params = {
+            Info: nextMenuList,
+            type: 1
+          };
+          let { Code } = await createOrEdit(params);
+          if (Code === "00") {
+            let tip = menu.Id ? "保存成功" : "创建成功";
+            message.success(tip);
+            hashHistory.replace("/menulist");
           } else {
-            message.error("请选择一级菜单");
+            let tip = menu.Id ? "保存失败" : "创建失败";
+            message.error(tip);
           }
         } catch (e) {
           throw new Error(e);
@@ -223,7 +218,7 @@ class MenuDetailTwo extends Component {
     let { id } = this.props.params;
     if (id) {
       this.getInfo(id);
-    }else{
+    } else {
       this.getMenuList();
     }
   }

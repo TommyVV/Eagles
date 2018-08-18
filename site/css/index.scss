@@ -12,6 +12,8 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
+	height: 1.4rem;
+	line-height: 0.7rem;
 }
 .pc,.mobile{
 	display:none;
@@ -145,7 +147,7 @@
 	margin-top: px2rem(70);
 }
 .main_content{
-	background-color: #f8f8f8;
+	background-color: #fff;
 	padding-top:px2rem(20);
 	.list-box{
 		background-color: #fff;

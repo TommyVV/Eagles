@@ -249,11 +249,14 @@ $(document).ready(function() {
         var list = result.FeedBackList;
         var str = `<div class="title">活动结果</div>`;
         list.forEach(function(element) {
-            str += ` <div class="content">${element.UserFeedBack}</div>
+            str += `<div class="content">
+            <div class="name">${element.UserName}</div>
+            <div class="txt">${element.UserFeedBack}</div>
+            </div>
             <div class="attaches">
                 ${attachmentList(element.AttachList,0)}
             </div>
-            <div class="result-time">${result.DateTime.substr(0,10)}</div>`;
+            <div class="result-time">${element.FeedBackTime}</div>`;
         });
         if (status == 1) {
             str += `<div class="pub-area">
