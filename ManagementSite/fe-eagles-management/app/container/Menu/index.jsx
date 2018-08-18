@@ -51,7 +51,7 @@ class MenuList extends React.Component {
                     hashHistory.replace(`/menutwo/detail/${obj.MenuId}`);
                   }}
                 >
-                  去维护
+                  维护二级菜单
                 </a>
               ) : null}
             </div>
