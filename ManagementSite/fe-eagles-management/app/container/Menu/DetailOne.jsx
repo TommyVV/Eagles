@@ -48,6 +48,7 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           const { menu, orgList } = this.props;
           let OrgName = menu.OrgName;
+          var menuId=this.props.menu.MenuId;
           orgList.map((org, i) => {
             if (org.OrgId == values.OrgId) {
               OrgName = org.OrgName;
@@ -63,7 +64,7 @@ class Base extends Component {
                 MenuLevel: 1
               }
             ],
-            type: menu.MenuId ? 1 : 0
+            type: menuId ? 1 : 0
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
