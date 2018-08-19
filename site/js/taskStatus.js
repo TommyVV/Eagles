@@ -130,7 +130,7 @@ $(document).ready(function () {
             <div>${data.TaskEndDate.substr(0, 10)}</div>
         </div>
         <div class="info-item col-xs-12 col-sm-12 col-md-6">
-        <span class="item-title">当前状态：</span>
+            <div class="item-title">当前状态：</div>
             <div class="status">${taskStatus(data.TaskStatus)}</div>
         </div>
     </div>`;
@@ -149,9 +149,9 @@ $(document).ready(function () {
 
     function taskStatus(status) {
         if (status == -2) {
-            return "待审核";
+            return "待接受";
         } else if (status == -1) {
-            return "未接受";
+            return "待审核";
         } else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {

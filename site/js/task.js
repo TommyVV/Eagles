@@ -166,9 +166,9 @@ $(document).ready(function() {
             } else if (status == 3) {
                 sta = `<div class="task-status line-color accept-status">已完成</div>`;
             } else if (status == -1) {
-                sta = `<div class="task-status init-status">未接受</div>`;
-            } else if (status == -2) {
                 sta = `<div class="task-status init-status">待审核</div>`;
+            } else if (status == -2) {
+                sta = `<div class="task-status init-status">待接受</div>`;
             }else if (status == -8) {
                 sta = `<div class="task-status init-status">完成未通过</div>`;
             } else if (status == -9) {
