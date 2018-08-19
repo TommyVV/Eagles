@@ -139,8 +139,7 @@ class BranchList extends React.Component {
           pagination={pageConfig}
           locale={{ emptyText: "暂无数据" }}
           bordered
-        />
-        <a href='../../testrequest.txt' download="a.txt">下载</a>
+        />        
         <Row
           type="flex"
           gutter={24}

@@ -69,22 +69,10 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          <Col span={5} key={6}>
-            <FormItem label="机构">
-              {getFieldDecorator(`OrgId`)(
-                <Select onChange={this.handleSearch.bind(this)}>
-                  <Option value="0">全部</Option>
-                  {List.map((o, i) => {
-                    return (
-                      <Option key={i} value={o.OrgId}>
-                        {o.OrgName}
-                      </Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </FormItem>
-          </Col>
+          {/* <Col span={5} key={6}>            
+            
+            
+          </Col> */}
           {/* <Col span={6} key={2}>
             <FormItem label="权限组名称">
               {getFieldDecorator(`AuthorityGroupName`)(<Input />)}
