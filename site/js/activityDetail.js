@@ -86,7 +86,7 @@ $(document).ready(function() {
                 });
             }
         } else if (status == 0) {
-            //下级创建
+            //上级创建
             var exist = false;
             if (joinList) {
                 var resultArray = joinList.find(function(element) {

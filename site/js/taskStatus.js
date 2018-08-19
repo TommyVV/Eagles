@@ -173,7 +173,18 @@ $(document).ready(function () {
         var acceptUserId = data.AcceptUserId;
         var auditUserId = data.AuditUserId;
         var createType = data.CreateType;
-        if (status == -2 || status == -1) {
+        if(status==-2){
+            //上级创建任务，下级需要接受任务
+            if (userId == acceptUserId) {
+                $("#btn-area").html(`<div class="sub-btn">接受任务</div>`);
+                $(".sub-btn").click(function () {
+                    if (!requestFlag) {
+                        requestFlag = true;
+                        editTaskAccept(2, "0");
+                    }
+                });
+            }
+        }else if (status == -1) {
             //任务为开始，需要审核
             if (userId == auditUserId) {
                 $("#btn-area").addClass('points-result').html(`<div class="pass">通过</div>
