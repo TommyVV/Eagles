@@ -202,7 +202,7 @@ $(document).ready(function () {
                     }
                 });
             }
-        } else if (status == 0) {
+        } else if (status == 0||status==-8) {
             //任务开始，接受者可制度计划
             if (userId == acceptUserId) {
                 $("#btn-area").html(`<div class="sub-btn">制定计划</div>`);
