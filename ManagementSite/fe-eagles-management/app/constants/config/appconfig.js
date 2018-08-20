@@ -260,6 +260,13 @@ export const pageCodeGroup = [
     ["Audit001", "审核"],
     ["Audit002", "审核流水"]])
   },
+  {
+    text: "数据统计",
+    next: new Map([["rept001", "党员报表"],
+    ["rept002", "活动报表"],
+    ["rept003", "任务报表"],
+    ["rept004", "文章统计报表"]])
+  },
 ];
 
 // export const pageCodeMap = new Map([

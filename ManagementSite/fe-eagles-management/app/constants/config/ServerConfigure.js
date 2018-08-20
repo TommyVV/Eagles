@@ -197,7 +197,12 @@ const AUDIT = {
   AUDIT: "/api/Audit/Audit",
   LIST:"/api/Audit/GetAudit"
 };
-
+//报表
+const REPORT = {
+  PARTYMEMBER: "/api/Chart/GetPieChart",
+  ACTIVITY_TASK:"/api/Chart/GetHistogram",
+  ARTICLE:"/api/Chart/GetLineChart",
+};
 export const serverConfig = {
   API_SERVER,
   LOGIN,
@@ -227,5 +232,6 @@ export const serverConfig = {
   PUBLIC_TASK,
   PUBLIC_ACTIVITY,
   PUBLIC_ARTICLE,
-  AUDIT
+  AUDIT,
+  REPORT
 };

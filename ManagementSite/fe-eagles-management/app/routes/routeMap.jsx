@@ -60,6 +60,10 @@ import PublicActivityDetail from "../container/PublicActivity/Detail";
 import PublicArticleList from "../container/PublicArticle";
 import PublicArticleDetail from "../container/PublicArticle/Detail";
 import AuditList from "../container/Audit";
+import PartyMemberReport from "../container/Report/PartyMember";
+import ActivityReport from "../container/Report/Activity";
+import TaskReport from "../container/Report/Task";
+import ArticleReport from "../container/Report/Article";
 
 class RouteMap extends Component {
   render() {
@@ -173,10 +177,13 @@ class RouteMap extends Component {
             path="/article/detail(/:id/:audit/:type)"
             component={PublicArticleDetail}
           />
-          <route
-            path="/auditlist"
-            component={AuditList}
-          />
+          <route path="/auditlist" component={AuditList}/>
+
+
+          <route path="/partymemberreport" component={PartyMemberReport}/>
+          <route path="/activityreport" component={ActivityReport}/>
+          <route path="/taskreport" component={TaskReport}/>
+          <route path="/articlereport" component={ArticleReport}/>
         </Route>
       </Router>
     );
