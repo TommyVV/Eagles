@@ -166,9 +166,9 @@ $(document).ready(function() {
             } else if (status == 3) {
                 sta = `<div class="task-status line-color accept-status">已完成</div>`;
             } else if (status == -1) {
-                sta = `<div class="task-status init-status">未接受</div>`;
-            } else if (status == -2) {
                 sta = `<div class="task-status init-status">待审核</div>`;
+            } else if (status == -2) {
+                sta = `<div class="task-status init-status">待接受</div>`;
             }else if (status == -8) {
                 sta = `<div class="task-status init-status">完成未通过</div>`;
             } else if (status == -9) {
@@ -196,7 +196,7 @@ $(document).ready(function() {
             return sta;
         };
         list.forEach(element => {
-            str += `<div class="task-item single-task" id="${element.TaskId}">
+            str += `<div class="task-item single-task" id="${element.TaskId}_${element.TaskStatus}">
                         <div class="task-title">${element.TaskeName}</div>
                         <div class="task-content">
                             <div class="task-info">
@@ -233,7 +233,15 @@ $(document).ready(function() {
         $(".pc-list").append(pcStr);
         $(".task-list").append(str);
         $(".single-task").click(function() {
-            window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + $(this).attr('id');
+            var tmpArray =$(this).attr('id').split('_');
+            var id = tmpArray[0];
+            var csta = tmpArray[1];
+            if(csta==-9){
+                //需要再次编辑
+                window.location.href = "publishTask.html?appId=" + appId + "&type=1&updateId=" + id;
+            }else{
+                window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + id;
+            }
         });
         return str;
     }

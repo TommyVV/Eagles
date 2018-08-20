@@ -85,8 +85,8 @@ $(document).ready(function() {
                     editActivityReview(1, 1);
                 });
             }
-        } else if (status == 0) {
-            //下级创建
+        } else if (status == 0||status == -8) {
+            //活动开始  申请完成不通过
             var exist = false;
             if (joinList) {
                 var resultArray = joinList.find(function(element) {
@@ -250,13 +250,12 @@ $(document).ready(function() {
         var str = `<div class="title">活动结果</div>`;
         list.forEach(function(element) {
             str += `<div class="content">
-            <div class="name">${element.UserName}</div>
             <div class="txt">${element.UserFeedBack}</div>
             </div>
             <div class="attaches">
                 ${attachmentList(element.AttachList,0)}
             </div>
-            <div class="result-time">${element.FeedBackTime}</div>`;
+            <div class="result-time">${element.FeedBackTime+"&nbsp;&nbsp;&nbsp;"+element.UserName}</div>`;
         });
         if (status == 1) {
             str += `<div class="pub-area">

@@ -130,7 +130,7 @@ $(document).ready(function () {
             <div>${data.TaskEndDate.substr(0, 10)}</div>
         </div>
         <div class="info-item col-xs-12 col-sm-12 col-md-6">
-        <span class="item-title">当前状态：</span>
+            <div class="item-title">当前状态：</div>
             <div class="status">${taskStatus(data.TaskStatus)}</div>
         </div>
     </div>`;
@@ -149,9 +149,9 @@ $(document).ready(function () {
 
     function taskStatus(status) {
         if (status == -2) {
-            return "待审核";
+            return "待接受";
         } else if (status == -1) {
-            return "未接受";
+            return "待审核";
         } else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {
@@ -173,7 +173,18 @@ $(document).ready(function () {
         var acceptUserId = data.AcceptUserId;
         var auditUserId = data.AuditUserId;
         var createType = data.CreateType;
-        if (status == -2 || status == -1) {
+        if(status==-2){
+            //上级创建任务，下级需要接受任务
+            if (userId == acceptUserId) {
+                $("#btn-area").html(`<div class="sub-btn">接受任务</div>`);
+                $(".sub-btn").click(function () {
+                    if (!requestFlag) {
+                        requestFlag = true;
+                        editTaskAccept(2, "0");
+                    }
+                });
+            }
+        }else if (status == -1) {
             //任务为开始，需要审核
             if (userId == auditUserId) {
                 $("#btn-area").addClass('points-result').html(`<div class="pass">通过</div>
@@ -191,7 +202,7 @@ $(document).ready(function () {
                     }
                 });
             }
-        } else if (status == 0) {
+        } else if (status == 0||status==-8) {
             //任务开始，接受者可制度计划
             if (userId == acceptUserId) {
                 $("#btn-area").html(`<div class="sub-btn">制定计划</div>`);

@@ -87,6 +87,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" value="" id="nowDate">
     <div class="footer pc" id="footer"></div>
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
@@ -99,7 +100,7 @@
     <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
     <script src="js/bootoast.js"></script>
-    <script src="js/publishTask.js?v=201808"></script>
+    <script src="js/publishTask.js?v=201808021"></script>
     <script type="text/javascript">
         //日期插件
         var date = new Date();
@@ -107,6 +108,11 @@
         var month = date.getMonth() + 1;
         var day = date.getDate();
         console.log(year, month, day);
+        var makeUpZero = function(str){
+            return str.length==2?str:'0'+str;
+        }
+        var nowDate = year + makeUpZero(month+'') + makeUpZero(day+'');
+        $("#nowDate").val(nowDate);
         $(".form_datetime").datetimepicker({
             format: 'yyyy-mm-dd', //显示格式
             minView: "month", //设置只显示到月份
