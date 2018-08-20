@@ -2,9 +2,11 @@ $(document).ready(function () {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
+    var updateId = getRequest("updateId");
     if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
+    var requestFlag = false;
     //指派人员
     var toUserId = '';
     var toUserName = '';
@@ -24,10 +26,123 @@ $(document).ready(function () {
     $('.plan-text').attr("placeholder", textareaPlaceholder);
 
     if (pageType == 1) {
+        //任务
         $("#imgUpload").hide();
+        //活动
+        if(updateId){
+            getTaskDetail(updateId);
+        }else{
+            //查询关系列表
+            getUserRelationship();
+        }
+        
+    }else{
+        //活动
+        if(updateId){
+            getActivityDetail(updateId);
+        }else{
+            //查询关系列表
+            getUserRelationship();
+        }
     }
-    //查询关系列表
-    getUserRelationship();
+
+    //查询任务详情
+    function getTaskDetail(id) {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/Task/GetTaskDetail",
+            data: {
+                TaskId: id,
+                Token: token,
+                AppId: appId
+            },
+            success: function (data) {
+                console.log("GetTaskDetail---", data);
+                if (data.Code == "00") {
+                    var result = data.Result;
+                    fillTaskData(result);
+                    //查询关系列表
+                    getUserRelationship();
+                } else {
+                    errorTip(data.Message);
+                }
+            },
+            error: function () {
+                errorTip("网络错误");
+            },
+            complete: function () {
+                
+            }
+        });
+    }
+    function fillTaskData(result){
+        $("#title").val(result.TaskName);
+        toUserId = result.AcceptUserId; 
+        $("#name").html(result.AcceptUserName);
+        $("#start").val(dealDate(result.TaskBeginDate));
+        $("#end").val(dealDate(result.TaskEndDate));
+        $("#content").val(result.TaskContent);
+        fileArray = result.AttachmentList;
+        dealAttachment();
+    }
+    //查询活动详情
+    function getActivityDetail(id) {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/Activity/GetActivityDetail",
+            data: {
+                ActivityId: id,
+                Token: token,
+                AppId: appId
+            },
+            success: function(data) {
+                console.log("GetActivityDetail---", data);
+                if (data.Code == "00") {
+                    var result = data.Result;
+                    fillActivityData(result);
+                    //查询关系列表
+                    getUserRelationship();
+                } else {
+                    errorTip(data.Message);
+                }
+            },
+            error:function(){
+                errorTip("网络错误");
+            }
+        });
+    }
+    function fillActivityData(result){
+        $("#title").val(result.ActivityName);
+        toUserId = result.AcceptUserId; 
+        $("#name").html(result.AcceptUserName);
+        imgUrl=result.ActivityImageUrl;
+        $(".add").html(`<img src="${imgUrl}" class="upload-img">`);
+        $("#start").val(dealDate(result.ActivityBeginTime));
+        $("#end").val(dealDate(result.ActivityEndTime));
+        $("#content").val(result.ActivityContent);
+        fileArray = result.AttachmentList;
+        dealAttachment();
+    }
+    function errorTip(str){
+        bootoast({
+            message: ""+str,
+            type: "warning",
+            position: "toast-top-center",
+            timeout: 2
+        });
+    }
+    function dealDate(date){
+       try {
+        if(date.length<10){
+            return date;
+        }else{
+            return date.substr(0,10);
+        } 
+       } catch (error) {
+           return "";
+       }
+        
+    }
     // $('#btnTestSaveLarge').on('click', function () {
     //     if($(".subordinate-item").length==0){
     //         $(this).parents('.modal').modal('hide');
@@ -52,7 +167,7 @@ $(document).ready(function () {
         done: function (e, data) {
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
-                console.log(data.result.Result.FileUploadResults);
+                //console.log(data.result.Result.FileUploadResults);
                 imgUrl = array[0].FileUrl;
                 $(".add").html(`<img src="${imgUrl}" class="upload-img">`);
             } else {
@@ -93,14 +208,7 @@ $(document).ready(function () {
                 if (fileArray.length == 4) {
                     $(".upload-file").hide();
                 }
-                $(".attaches").html(attachmentList(fileArray, 1));
-                $(".glyphicon-remove").click(function () {
-                    var index = $('.glyphicon-remove').index(this);
-                    fileArray.splice(index, 1);
-                    $(this).parents('.file').remove();
-                    $(".upload-file").show();
-                    console.log('index---', index);
-                })
+                dealAttachment();
             } else {
                 console.log(data.result);
                 bootoast({
@@ -112,7 +220,20 @@ $(document).ready(function () {
             }
         }
     });
+    function dealAttachment(){
+        $(".attaches").html(attachmentList(fileArray, 1));
+        $(".glyphicon-remove").click(function () {
+            var index = $('.glyphicon-remove').index(this);
+            fileArray.splice(index, 1);
+            $(this).parents('.file').remove();
+            $(".upload-file").show();
+            console.log('index---', index);
+        })
+    }
     $(".sub-btn").click(function () {
+        if(requestFlag){
+            return;
+        }
         if (pageType == 0) {
             //活动
             createActivity();
@@ -172,7 +293,7 @@ $(document).ready(function () {
                 <div class="name">${element.Name}</div>
                 <div class="branch">${element.BranchName}</div>
                 <div class="right-dir">
-                    <span class="glyphicon" aria-hidden="true"></span>
+                    <span class="glyphicon ${element.UserId==toUserId?'glyphicon-ok':''}" aria-hidden="true"></span>
                 </div>
             </div>`;
         });
@@ -198,7 +319,9 @@ $(document).ready(function () {
         if (!validCheck()) {
             return;
         }
+        requestFlag = true;
         var data = {
+            TaskId:updateId,
             TaskName: $("#title").val(),
             TaskFromUser: userId,
             TaskToUserId: toUserId,
@@ -209,7 +332,7 @@ $(document).ready(function () {
             Token: token,
             AppId: appId
         };
-        console.log(data, JSON.stringify(data));
+        //console.log(data, JSON.stringify(data));
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Task/CreateTask",
@@ -226,6 +349,9 @@ $(document).ready(function () {
                         timeout: 3
                     });
                 }
+            },
+            complete:function(){
+                requestFlag = false;
             }
         });
     }
@@ -243,7 +369,9 @@ $(document).ready(function () {
             });
             return;
         }
+        requestFlag = true;
         var data = {
+            ActivityId:updateId,
             ActivityType: 0,
             ActivityName: $("#title").val(),
             ActivityFromUser: userId,
@@ -257,7 +385,6 @@ $(document).ready(function () {
             Token: token,
             AppId: appId
         };
-        console.log(data, JSON.stringify(data));
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/CreateActivity",
@@ -274,6 +401,9 @@ $(document).ready(function () {
                         timeout: 3
                     });
                 }
+            },
+            complete:function(){
+                requestFlag = false;
             }
         });
     }
@@ -300,6 +430,11 @@ $(document).ready(function () {
         }
         var startDate = start.replace(/\-/g, "");
         var endDate = end.replace(/\-/g, "");
+        var nowDate = $("#nowDate").val();
+        if(startDate<nowDate){
+            validTip("活动开始日期早于当前日期");
+            return false;
+        }
         if (startDate > endDate) {
             validTip("活动开始日期晚于结束日期");
             return false;

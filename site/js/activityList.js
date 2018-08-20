@@ -65,14 +65,20 @@ $(document).ready(function() {
                     //给每列数据绑定事件
                     $(".article").click(function() {
                         var par = $(this).attr('id');
-                        var tmpArray = par.split('-');
+                        var tmpArray = par.split('_');
                         console.log(tmpArray);
                         var id = tmpArray[0];
                         var type = tmpArray[1];
                         var testId = tmpArray[2];
+                        var status = tmpArray[3];
                         if (type == '0') {
                             //报名活动
-                            window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
+                            if(status==-9){
+                                //需要再次编辑
+                                window.location.href = "publishTask.html?appId=" + appId + "&type=0&updateId=" + id;
+                            }else{
+                                window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
+                            }
                         } else if (type == '1') {
                             //投票活动
                             window.location.href = "vote.html?appId=" + appId + "&testId=" + testId + "&activityId=" + id;
@@ -106,7 +112,7 @@ $(document).ready(function() {
     function dealReturnList(list) {
         var content = '';
         list.forEach(element => {
-            content += `<div class="article" id="${element.ActivityId}-${element.ActivityType}-${element.TestId}">
+            content += `<div class="article" id="${element.ActivityId}_${element.ActivityType}_${element.TestId}_${element.Status}">
                     <div class="left">
                         <img src="${element.ImageUrl}"
                             alt="">
