@@ -45,7 +45,7 @@ function exchangeRecord(token, appId, page) {
 			"PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://ruisuikj.com/Eagles/api/Order/GetOrderLs",
+		url: "http://51service.xyz/Eagles/api/Order/GetOrderLs",
 		dataType: "json",
 		success: function(res) {
 			//$('.dj-container').html('')

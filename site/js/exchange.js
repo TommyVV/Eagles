@@ -55,7 +55,7 @@ function exchange(token,appId,page) {
 			 "PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://ruisuikj.com/Eagles/api/Product/GetProduct",
+		url: "http://51service.xyz/Eagles/api/Product/GetProduct",
 		dataType: "json",
 		success: function(res) {
 			//$('.goods-area').html('')

@@ -92,7 +92,7 @@ function myAricle(NewsType, token, page, appId) {
 			"PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://ruisuikj.com/Eagles/api/User/GetUserArticle",
+		url: "http://51service.xyz/Eagles/api/User/GetUserArticle",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;

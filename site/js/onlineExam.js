@@ -21,7 +21,7 @@ $('#exam-button-jump').on('click', function() {
 function getIsJoinTest() {
 	$.ajax({
 		type: "POST",
-		url: "http://ruisuikj.com/Eagles/api/Activity/IsJoinActivity",
+		url: "http://51service.xyz/Eagles/api/Activity/IsJoinActivity",
 		data: {
 			"ActivityId": activityId,
 			"Token": token,
@@ -53,7 +53,7 @@ function onlineexam() {
 			"AppId": appId,
 			"TestId": testId,
 		},
-		url: "http://ruisuikj.com/Eagles/api/TestPaper/GetTestPaper",
+		url: "http://51service.xyz/Eagles/api/TestPaper/GetTestPaper",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -256,7 +256,7 @@ function submit(testId,token,appId) {
 				"Token": token,
 				"AppId": appId
 			},
-			url: "http://ruisuikj.com/Eagles/api/TestPaper/TestPaperAnswer",
+			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function(res) {
 				if(res.Code == 00) {

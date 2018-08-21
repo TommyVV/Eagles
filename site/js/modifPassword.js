@@ -11,7 +11,7 @@ function navbar(appId) {
         data: {
             "AppId": appId
         },
-        url: "http://ruisuikj.com/Eagles/api/AppMenu/GetAppMenu",
+        url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
         dataType: "json",
         success: function(res) {
             var data = res.Result;
@@ -53,7 +53,7 @@ $('.btn-login').on('click', function(e) {
 		  "Token": token,
 		  "AppId": appId
         },
-        url: "http://ruisuikj.com/Eagles/api/User/EditUserPwd",
+        url: "http://51service.xyz/Eagles/api/User/EditUserPwd",
         dataType: "json",
         success: function(res) {
             var data = res.Result;

@@ -15,7 +15,7 @@ function rank(token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://ruisuikj.com/Eagles/api/Score/GetScoreRank",
+		url: "http://51service.xyz/Eagles/api/Score/GetScoreRank",
 		dataType: "json",
 		success: function(res) {
 			$('#t_bodys,#t_bodystwo').html('')

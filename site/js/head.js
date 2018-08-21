@@ -102,7 +102,7 @@ function navbar(appId) {
 		data: {
 			"AppId": appId
 		},
-		url: "http://ruisuikj.com/Eagles/api/AppMenu/GetAppMenu",
+		url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
 		dataType: "json",
 		success: function(res) {
 			
@@ -158,7 +158,7 @@ $('.sk_sps').on('click', function(e) {
 function unreadMessage(token) {
 	$.ajax({
 		type: "get",
-		url: "http://ruisuikj.com/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
+		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
 		dataType: "json",
 		success: function(res) {
 			$('.g_hds').html('')

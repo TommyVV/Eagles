@@ -26,7 +26,7 @@ $(document).ready(function() {
                         window.location.href = "publishTask.html?toUserId=" + arr[0] + "&createType=" + arr[1] + "&appId=" + appId + "&type=" + pageType+"&name="+name;
                     });
                 } else {
-                    alert(data.Code, data.Message);
+                  
                 }
             }
         })

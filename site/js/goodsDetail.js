@@ -21,7 +21,7 @@ $(".sub-btn,.overview-props-btn").click(function() {
             "Token": token,
             "AppId": appId
         },
-        url: "http://ruisuikj.com/Eagles/api/Score/AppScoreExchange",
+        url: "http://51service.xyz/Eagles/api/Score/AppScoreExchange",
         dataType: "json",
         success: function(res) {
             //$('.goods-area').html('')
@@ -43,7 +43,7 @@ function goodDetal(productIds, appId) {
             "ProductId": productIds,
             "AppId": appId
         },
-        url: "http://ruisuikj.com/Eagles/api/Product/GetProductDetail",
+        url: "http://51service.xyz/Eagles/api/Product/GetProductDetail",
         dataType: "json",
         success: function(res) {
             //$('.goods-area').html('')

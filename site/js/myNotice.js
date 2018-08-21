@@ -45,7 +45,7 @@ function noticeList(token, appId, page) {
 			"PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://ruisuikj.com/Eagles/api/User/GetUserNotice",
+		url: "http://51service.xyz/Eagles/api/User/GetUserNotice",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -92,7 +92,7 @@ $('.myNoticeBox').on('click', '.imgturls', function (e) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://ruisuikj.com/Eagles/api/User/EditUserNewsIsRead",
+		url: "http://51service.xyz/Eagles/api/User/EditUserNewsIsRead",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
