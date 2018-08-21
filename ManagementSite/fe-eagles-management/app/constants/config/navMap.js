@@ -258,6 +258,23 @@ const navMap = [
     sub: "sub10",
     key: "sub101"
   },
-  
+  {
+    pathname: "#/partymemberreport",
+    sub: "sub11",
+    key: "sub111"
+  },
+  {
+    pathname: "#/activityreport",
+    sub: "sub11",
+    key: "sub112"
+  },{
+    pathname: "#/taskreport",
+    sub: "sub11",
+    key: "sub113"
+  },{
+    pathname: "#/articlereport",
+    sub: "sub11",
+    key: "sub114"
+  },
 ];
 export default navMap;

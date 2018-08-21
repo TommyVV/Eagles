@@ -92,9 +92,9 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("User0001") ||
-                  authMap.get("User0002") ||
-                  authMap.get("User0004") ||
-                  authMap.get("User0005")
+                    authMap.get("User0002") ||
+                    authMap.get("User0004") ||
+                    authMap.get("User0005")
                     ? null
                     : "none"
               }}
@@ -182,10 +182,10 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("News0001") ||
-                  authMap.get("News0002") ||
-                  authMap.get("News0003") ||
-                  authMap.get("News0004") ||
-                  authMap.get("News0006")
+                    authMap.get("News0002") ||
+                    authMap.get("News0003") ||
+                    authMap.get("News0004") ||
+                    authMap.get("News0006")
                     ? null
                     : "none"
               }}
@@ -244,8 +244,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("orgs0001") ||
-                  authMap.get("orgs0002") ||
-                  authMap.get("orgs0003")
+                    authMap.get("orgs0002") ||
+                    authMap.get("orgs0003")
                     ? null
                     : "none"
               }}
@@ -283,8 +283,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("menu0001") ||
-                  authMap.get("menu0002") ||
-                  authMap.get("menu0003")
+                    authMap.get("menu0002") ||
+                    authMap.get("menu0003")
                     ? null
                     : "none"
               }}
@@ -426,8 +426,8 @@ export default class App extends React.Component {
               style={{
                 display:
                   authMap.get("oper0001") ||
-                  authMap.get("oper0002") ||
-                  authMap.get("oper0003")
+                    authMap.get("oper0002") ||
+                    authMap.get("oper0003")
                     ? null
                     : "none"
               }}
@@ -469,9 +469,50 @@ export default class App extends React.Component {
               <Menu.Item
                 key="sub101"
                 onClick={e => hashHistory.replace("/auditlist")}
-                // style={{ display: authMap.get("Audit001") ? null : "none" }}
+              // style={{ display: authMap.get("Audit001") ? null : "none" }}
               >
                 审核流水记录
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="sub11"
+              title={
+                <span>
+                  <Icon type="mail" />
+                  <span>数据统计</span>
+                </span>
+              }
+              style={{
+                display: authMap.get("rept001") || authMap.get("rept002") || authMap.get("rept003") || authMap.get("rept004") ? null : "none"
+              }}
+            >
+              <Menu.Item
+                key="sub111"
+                onClick={e => hashHistory.replace("/partymemberreport")}
+              style={{ display: authMap.get("rept001") ? null : "none" }}
+              >
+                党员报表
+              </Menu.Item>
+              <Menu.Item
+                key="sub112"
+                onClick={e => hashHistory.replace("/activityreport")}
+              style={{ display: authMap.get("rept001") ? null : "none" }}
+              >
+                活动报表
+              </Menu.Item>
+              <Menu.Item
+                key="sub113"
+                onClick={e => hashHistory.replace("/taskreport")}
+              style={{ display: authMap.get("rept001") ? null : "none" }}
+              >
+                任务报表
+              </Menu.Item>
+              <Menu.Item
+                key="sub114"
+                onClick={e => hashHistory.replace("/articlereport")}
+              style={{ display: authMap.get("rept001") ? null : "none" }}
+              >
+                文章统计报表
               </Menu.Item>
             </SubMenu>
           </Menu>
