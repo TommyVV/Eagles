@@ -21,7 +21,7 @@ function myInfo(token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
+		url: "http://ruisuikj.com/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
 
@@ -75,7 +75,7 @@ $('.lg_left').click(function() {
 })
 $('#fileupload').fileupload({
 	dataType: 'json',
-	url: "http://51service.xyz/Eagles/api/Upload/UploadFile", //文件的后台接受地址
+	url: "http://ruisuikj.com/Eagles/api/Upload/UploadFile", //文件的后台接受地址
 	//设置进度条
 	progressall: function(e, data) {},
 	//上传完成之后的操作，显示在img里面
@@ -105,7 +105,7 @@ $('.confirmBtn').on('click', function() {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/EditUser",
+		url: "http://ruisuikj.com/Eagles/api/User/EditUser",
 		dataType: "json",
 		success: function(res) {
 

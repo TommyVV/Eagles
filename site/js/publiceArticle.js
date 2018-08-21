@@ -37,7 +37,7 @@ function myAricle(page, appId) {
 			"PageSize": page.size,
 			"PageIndex": page.num
 		},
-		url: "http://51service.xyz/Eagles/api/News/GetPublicUserNews",
+		url: "http://ruisuikj.com/Eagles/api/News/GetPublicUserNews",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;

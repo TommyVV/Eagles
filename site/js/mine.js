@@ -111,7 +111,7 @@ function minedel(token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserInfo",
+		url: "http://ruisuikj.com/Eagles/api/User/GetUserInfo",
 		dataType: "json",
 		success: function(res) {
         
@@ -138,7 +138,7 @@ function getScrollNews(token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollNews",
+		url: "http://ruisuikj.com/Eagles/api/Scroll/GetScrollNews",
 		dataType: "json",
 		success: function(res) {
 			$('#scrollobj').html('');
@@ -171,7 +171,7 @@ unreadMessage(token);
 function unreadMessage(token) {
 	$.ajax({
 		type: "get",
-		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
+		url: "http://ruisuikj.com/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;

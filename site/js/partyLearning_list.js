@@ -48,7 +48,7 @@ function partyLearning(moduleId, token, page, appId) {
             "Token": token,
             "AppId": appId
         },
-        url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
+        url: "http://ruisuikj.com/Eagles/api/News/GetModuleNews",
         dataType: "json",
         success: function (res) {
             //$('.list-bottom').html('')
@@ -98,7 +98,7 @@ function partyTitle(ModuleType, moduleId, appId) {
             "ModuleType": ModuleType,
             "AppId": appId
         },
-        url: "http://51service.xyz/Eagles/api/AppModule/GetModule",
+        url: "http://ruisuikj.com/Eagles/api/AppModule/GetModule",
         dataType: "json",
         success: function (res) {
             $('.dropdown-menu').html('');

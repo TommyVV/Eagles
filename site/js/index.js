@@ -46,7 +46,7 @@ function scrollimg(moduleType,token,appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollImg",
+		url: "http://ruisuikj.com/Eagles/api/Scroll/GetScrollImg",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -89,7 +89,7 @@ function moduleListTitle(moduleType,appId) {
 			"ModuleType": moduleType,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/AppModule/GetModule",
+		url: "http://ruisuikj.com/Eagles/api/AppModule/GetModule",
 		dataType: "json",
 		success: function(res) {
 			var moudlesIds = []; //新闻类别属性对象
@@ -142,7 +142,7 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
+		url: "http://ruisuikj.com/Eagles/api/News/GetModuleNews",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;

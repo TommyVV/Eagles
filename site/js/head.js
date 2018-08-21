@@ -102,7 +102,7 @@ function navbar(appId) {
 		data: {
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/AppMenu/GetAppMenu",
+		url: "http://ruisuikj.com/Eagles/api/AppMenu/GetAppMenu",
 		dataType: "json",
 		success: function(res) {
 			
@@ -111,12 +111,12 @@ function navbar(appId) {
 
 			if(res.Code == 00) {
 				var navdiv = '';
-				var ptwo = '';
+				
 				var mobilenav = '';
 				var mobiled = '';
 				for(var i = 0; i < data.AppMenus.length; i++) {
 					var aimgurl = '';
-
+					var ptwo = '';
 					if(!data.AppMenus[i].HasSubMenu) {
 						aimgurl = '<a href="' + data.AppMenus[i].TargetUrl + '">' + data.AppMenus[i].MenuName + '</a>';
 						ptwo = '';
@@ -158,7 +158,7 @@ $('.sk_sps').on('click', function(e) {
 function unreadMessage(token) {
 	$.ajax({
 		type: "get",
-		url: "http://51service.xyz/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
+		url: "http://ruisuikj.com/Eagles/api/UserMessage/GetUserUnreadMessage?token=" + token + "",
 		dataType: "json",
 		success: function(res) {
 			$('.g_hds').html('')

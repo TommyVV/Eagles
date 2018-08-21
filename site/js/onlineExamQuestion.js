@@ -57,7 +57,7 @@ function getNewsTest(testId, token,appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/TestPaper/GetTestPaper",
+		url: "http://ruisuikj.com/Eagles/api/TestPaper/GetTestPaper",
 		dataType: "json",
 		success: function(res) {
 			if(res.Code == 00) {
@@ -227,7 +227,7 @@ function submit(testId,token,appId) {
 				"Token": token,
 				"AppId": appId
 			},
-			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
+			url: "http://ruisuikj.com/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function(res) {
 				if(res.Code == 00) {
