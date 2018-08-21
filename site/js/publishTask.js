@@ -82,7 +82,7 @@ $(document).ready(function () {
         $("#start").val(dealDate(result.TaskBeginDate));
         $("#end").val(dealDate(result.TaskEndDate));
         $("#content").val(result.TaskContent);
-        fileArray = result.AttachmentList;
+        fileArray = delEmptyElement(result.AttachmentList);
         dealAttachment();
     }
     //查询活动详情
@@ -120,9 +120,20 @@ $(document).ready(function () {
         $("#start").val(dealDate(result.ActivityBeginTime));
         $("#end").val(dealDate(result.ActivityEndTime));
         $("#content").val(result.ActivityContent);
-        fileArray = result.AttachmentList;
+        fileArray = delEmptyElement(result.AttachmentList);
         dealAttachment();
     }
+    //去掉数组中的空
+    function delEmptyElement(arr){
+        var resultArr = [];
+        arr.forEach(function(el){
+            if(el.AttachmentDownloadUrl){
+                resultArr.push(el);
+            }
+        });
+        return resultArr;
+    }
+    //错误提示
     function errorTip(str){
         bootoast({
             message: ""+str,
