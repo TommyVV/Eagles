@@ -145,8 +145,16 @@ class SetNextPartyMember extends React.Component {
   };
   handleOk() {
     const { selectedRowKeys } = this.state;
-    let newList = [];
-    selectedRowKeys.map(o => newList.push(JSON.parse(o)));
+    // 需要加上以前以选择的用户
+    let newList = this.state.memberList;
+    selectedRowKeys.map(o =>{
+      //remove exists user
+      var obj=JSON.parse(o);
+      var existsUsers=newList.find(x=>x.UserId==obj.UserId);
+      if(existsUsers==null){
+        newList.push(obj)
+      }      
+    } );
     newList.forEach((v, i) => {
       v.key = i;
     });
