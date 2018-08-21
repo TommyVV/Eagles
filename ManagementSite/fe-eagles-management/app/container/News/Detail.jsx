@@ -424,14 +424,14 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否显示公开栏目">
+        {/* <FormItem {...formItemLayout} label="是否显示公开栏目">
           {getFieldDecorator("IsPublic")(
             <Select>
               <Option value="false">否</Option>
               <Option value="true">是</Option>
             </Select>
           )}
-        </FormItem>
+        </FormItem> */}
         <FormItem {...formItemLayout} label="所属栏目">
           {getFieldDecorator("ModuleId")(
             <Select>
@@ -661,7 +661,7 @@ class NewsDetail extends Component {
 
   // 查询栏目列表
   getProgramaList = async () => {
-    const { List } = await getList();
+    const { List } = await getList({"IsPublic":true});
     console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };
