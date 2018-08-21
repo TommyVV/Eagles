@@ -28,7 +28,8 @@ class LoginForm extends React.Component {
     const { Result, Code, Message } = await login({
       Account: values.Account,
       // Password: md5(values.Password)
-      Password: values.Password
+      Password: values.Password,
+      OrgId:values.OrgId
     });
     if (Code == "00") {
       //保存用户相关信息
@@ -77,6 +78,20 @@ class LoginForm extends React.Component {
               // label="手机号"
               colon={false}
             >
+              {getFieldDecorator("OrgId", {
+                rules: [
+                  {
+                    required: true,
+                    message: "请输入机构号"
+                  }
+                ]
+              })(<Input placeholder="请输入机构号" />)}
+            </FormItem>
+            <FormItem
+              // label="手机号"
+              colon={false}
+            >
+
               {getFieldDecorator("Account", {
                 rules: [
                   {
@@ -85,6 +100,7 @@ class LoginForm extends React.Component {
                   }
                 ]
               })(<Input placeholder="请输入帐号" />)}
+
             </FormItem>
             <FormItem colon={false}>
               {getFieldDecorator("Password", {
@@ -111,8 +127,8 @@ class LoginForm extends React.Component {
           </Form>
         </div>
         <div className="copyright">
-          {/* <p>中冶赛迪重庆信息技术有限公司 版权所有</p>
-          <p>Copyright © 2014-2018 CISDI Info. All Rights Reserved.</p> */}
+          <p>广州睿穗科技有限公司 版权所有</p>
+          <p>Copyright © 2014-2018 CISDI Info. All Rights Reserved.</p>
         </div>
       </div>
     );

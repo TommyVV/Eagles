@@ -265,7 +265,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     console.log("详情数据回显 - ", props);
-    const programa = props.programa;
+    const programa = props.programa;    
     return {
       ColumnId: Form.createFormField({ value: programa.ColumnId }),
       ColumnName: Form.createFormField({ value: programa.ColumnName }),
@@ -278,7 +278,7 @@ const FormMap = Form.create({
         value: programa.SubCateType ? programa.SubCateType + "" : "0"
       }),
       ModuleType: Form.createFormField({
-        value: programa.ModuleType ? programa.ModuleType  : 1
+        value: programa.ModuleType ? programa.ModuleType.toString()  : "1"
       })
     };
   }

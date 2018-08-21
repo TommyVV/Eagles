@@ -28,19 +28,19 @@ class PublicArticleList extends React.Component {
       },
       {
         title: "作者",
-        dataIndex: "Author"
+        dataIndex: "Name"
       },
       {
         title: "类型",
-        dataIndex: "NewsType",
-        render: NewsType => {
-          return articleMap.map((o, i) => {
-            if (o.value === NewsType + "") {
-              console.log(o.text);
-              return <span key={o.value}>{o.text}</span>;
-            }
-          });
-        }
+        dataIndex: "NewsTypeName",
+        // render: NewsType => {
+        //   return articleMap.map((o, i) => {
+        //     if (o.value === NewsType + "") {
+        //       console.log(o.text);
+        //       return <span key={o.value}>{o.text}</span>;
+        //     }
+        //   });
+        // }
       },
       {
         title: "发布时间",
@@ -111,6 +111,20 @@ class PublicArticleList extends React.Component {
       if (res.Aritcles) {
         res.Aritcles.forEach(v => {
           v.key = v.NewsId;
+          switch (v.NewsType) {
+            case "0":
+              v.NewsTypeName="文章";
+              break;
+            case "1":
+            v.NewsTypeName="心得体会";
+              break;
+            case "2":
+            v.NewsTypeName="会议";
+              break;
+            case "3":
+            v.NewsTypeName="入党申请书";
+              break
+          }
         });
         this.setState({ List: res.Aritcles, current: PageNumber });
         this.updatePageConfig(res.TotalCount);

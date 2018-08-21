@@ -64,7 +64,7 @@ class Base extends Component {
           {getFieldDecorator("NewsTitle")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="作者">
-          {getFieldDecorator("Author")(<Input disabled />)}
+          {getFieldDecorator("Name")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="发布时间">
           {getFieldDecorator("CreateTime")(<Input disabled />)}
@@ -120,8 +120,8 @@ const FormMap = Form.create({
       NewsTitle: Form.createFormField({
         value: obj.NewsTitle
       }),
-      Author: Form.createFormField({
-        value: obj.Author
+      Name: Form.createFormField({
+        value: obj.Name
       }),
       CreateTime: Form.createFormField({
         value: obj.CreateTime

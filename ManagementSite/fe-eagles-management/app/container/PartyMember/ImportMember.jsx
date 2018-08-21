@@ -71,7 +71,7 @@ class ImportMember extends React.Component {
       List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ branchList: List });
+      this.setState({ branchList: List,currentBranch:List[0].BranchId });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
