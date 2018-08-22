@@ -30,10 +30,11 @@ class DynamicFieldSet extends React.Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          const { nextMenuList, menu } = this.props;
+          const { nextMenuList, menu } = this.props;          
           let params = {
             Info: nextMenuList,
-            type: 1
+            type: 1,
+            ParentMenuId:this.props.menu.MenuId
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
