@@ -83,13 +83,13 @@
 }
 
 .result-detail-list span.wrong {
-    border: 1px solid #48C52B;
-    color: #48C52B;
+    border: 1px solid #F24848;
+    color: #F24848;
 }
 
 .result-detail-list span.right {
-    border: 1px solid #F24848;
-    color: #F24848;
+    border: 1px solid #48C52B;
+    color: #48C52B;
 }
 
 .result-detail-list span.Unanswered {
