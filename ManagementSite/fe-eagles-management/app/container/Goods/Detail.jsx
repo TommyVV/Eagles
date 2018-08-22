@@ -217,10 +217,14 @@ class Base extends Component {
           console.log(files);
         }
       },
-      onChange: (Content, info) => {
-        setFieldsValue({ Content });
+      onChange: Content => {
+        if (this.editorInstance.isEmpty()) {
+          setFieldsValue({ Content: "" });
+        } else {
+          setFieldsValue({ Content });
+        }
         console.log("新闻内容：", getFieldsValue());
-      }
+      },
       // onRawChange: this.handleRawChange
     };
     return (
@@ -334,7 +338,8 @@ class Base extends Component {
           {getFieldDecorator("Content", {
             rules: [
               {
-                required: true
+                required: true,
+                message: "必填，请输入内容"
               }
             ]
           })(

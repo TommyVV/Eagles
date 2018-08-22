@@ -197,7 +197,6 @@ class Base extends Component {
       setFieldsValue,
       getFieldsValue
     } = this.props.form;
-    const view = this;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
     console.log("保存的附件：", Attachs);
     let fileList = [];
@@ -251,14 +250,12 @@ class Base extends Component {
       initialContent: news.Content,
       placeholder: "必填，请输入新闻内容",
       onChange: Content => {
-        setFieldsValue({ Content });
-        console.log("新闻内容：", getFieldsValue());
-      },
-      onBlur: () => {
-        // todo
-        if (view.editorInstance.isEmpty()) {
+        if (this.editorInstance.isEmpty()) {
           setFieldsValue({ Content: "" });
+        } else {
+          setFieldsValue({ Content });
         }
+        console.log("新闻内容：", getFieldsValue());
       },
       media: {
         validateFn: file => {
@@ -661,7 +658,7 @@ class NewsDetail extends Component {
 
   // 查询栏目列表
   getProgramaList = async () => {
-    const { List } = await getList({"IsPublic":true});
+    const { List } = await getList({ "IsPublic": true });
     console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };

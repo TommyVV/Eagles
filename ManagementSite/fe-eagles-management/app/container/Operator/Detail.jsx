@@ -57,7 +57,7 @@ class Base extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { authList, operator,branchList } = this.props;
+    const { authList, operator, branchList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -209,7 +209,7 @@ class OperatorDetail extends Component {
     this.state = {
       authList: [],
       operator: {},
-      branchList:[]
+      branchList: []
     };
   }
 
@@ -223,8 +223,10 @@ class OperatorDetail extends Component {
   }
   setAuthList = async () => {
     await this.getAuthList();
+    await this.getBranchList(); // 拿支部列表
     const operator = {
-      AuthorityGroupId: this.state.authList[0].AuthorityGroupId
+      AuthorityGroupId: this.state.authList[0] ? this.state.authList[0].AuthorityGroupId : "",
+      BranchId: this.state.branchList[0] ? this.state.branchList[0].BranchId : "",
     };
     this.setState({ operator });
   };

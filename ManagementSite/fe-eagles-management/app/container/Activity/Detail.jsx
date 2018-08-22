@@ -246,9 +246,13 @@ class Base extends Component {
       height: 300,
       contentFormat: "html",
       initialContent: news.Content,
-      placeholder: "必填，请输入新闻内容",
+      placeholder: "必填，请输入活动内容",
       onChange: Content => {
-        setFieldsValue({ Content });
+        if (this.editorInstance.isEmpty()) {
+          setFieldsValue({ Content: "" });
+        } else {
+          setFieldsValue({ Content });
+        }
         console.log("新闻内容：", getFieldsValue());
       },
       media: {
@@ -341,7 +345,8 @@ class Base extends Component {
           {getFieldDecorator("Content", {
             rules: [
               {
-                required: true
+                required: true,
+                message: "必填，请输入内容"
               }
             ]
           })(
