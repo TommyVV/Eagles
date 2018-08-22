@@ -367,17 +367,7 @@ class Base extends Component {
               <Option value="1">否</Option>
             </Select>
           )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="每人可参与次数">
-          {getFieldDecorator("EverybodyPeople", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入每人可参与次数"
-              }
-            ]
-          })(<Input placeholder="必填，请输入每人可参与次数" />)}
-        </FormItem>
+        </FormItem>       
         <FormItem {...formItemLayout} label="试卷选择">
           {getFieldDecorator("ExampleId")(
             <Select>
@@ -473,10 +463,7 @@ const FormMap = Form.create({
       }),
       IsComment: Form.createFormField({
         value: news.IsComment ? news.IsComment + "" : "0"
-      }),
-      EverybodyPeople: Form.createFormField({
-        value: news.EverybodyPeople
-      }),
+      }),    
       ExampleId: Form.createFormField({
         value: news.ExampleId ? news.ExampleId : ""
       })

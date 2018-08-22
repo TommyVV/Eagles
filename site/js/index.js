@@ -140,7 +140,8 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 			"ModuleId": moduleId,
 			"NewsCount": 10,
 			"Token": token,
-			"AppId": appId
+			"AppId": appId,
+			"IsHome": true,
 		},
 		url: "http://51service.xyz/Eagles/api/News/GetModuleNews",
 		dataType: "json",
