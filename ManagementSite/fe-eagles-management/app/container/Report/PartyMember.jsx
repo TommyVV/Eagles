@@ -138,7 +138,6 @@ class PartyMemberReport extends Component {
         top: 20,
         bottom: 20,
         data: time.legendData,
-
         selected: time.selected
       },
       series: [

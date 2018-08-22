@@ -143,10 +143,14 @@ class Base extends Component {
           console.log(files);
         }
       },
-      onChange: (HtmlDesc, info) => {
-        setFieldsValue({ HtmlDesc });
-        console.log("消息内容：", getFieldsValue());
-      }
+      onChange: HtmlDesc => {
+        if (this.editorInstance.isEmpty()) {
+          setFieldsValue({ HtmlDesc: "" });
+        } else {
+          setFieldsValue({ HtmlDesc });
+        }
+        console.log("新闻内容：", getFieldsValue());
+      },
       // onRawChange: this.handleRawChange
     };
     return (
