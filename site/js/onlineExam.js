@@ -59,7 +59,7 @@ function onlineexam() {
 			var data = res.Result;
 			if (res.Code == 00) {
 				$('.exam-title').html(data.TestPaperTitle);
-				$('.exam-img img').attr("src", data.HtmlContent)
+				$('.exam-img').html(data.HtmlContent)
 				$('.zon_scores').text(data.FullScore); //总数
 				$('.jg_scores').text(data.PassScore); //及格
 				$('.st_nums').text(data.TestList.length); //试题数量
@@ -147,12 +147,24 @@ $('.ques-modal').on('click', function () {
 function showQues(question) { //
 	question.show().siblings().hide();
 	$('.ques-newCount').html(question.attr('num')); //当前是第几题
-	if(question.attr('num')!=$('.st_nums').text()){
+	BtnControl();
+}
+
+function BtnControl() {
+	if ($('.ques-newCount').html() != $('.st_nums').text()) {
 		$("#next").show();
-		$("#submit").hide()
-	}else{
+		$("#submit").hide();
+		$("#prev").show();
+	} else {
+		$("#next").show();
 		$("#next").hide();
 		$("#submit").show()
+	}
+	if ($('.ques-newCount').html() != "1") {
+		$("#prev").show();
+	}
+	if ($('.ques-newCount').html() == "1") {
+		$("#prev").hide();
 	}
 }
 
@@ -176,6 +188,7 @@ $('#next').on('click', function () {
 		$('#next').hide();
 		$('#submit').show();
 	}
+	BtnControl();
 })
 
 //判断当前题目 如果是多选题，选择的答案数量是不是超过了规定数量
@@ -207,6 +220,7 @@ function judgeMultiplecount() {
 $('#prev').on('click', function () {
 	$('#submit').hide();
 	var j = 0;
+
 	$('.ques-content-q').each(function (i, element) {
 		if ($(element).css("display") == 'block') {
 			var prevElement = $(element).prev('.ques-content-q');
@@ -218,7 +232,9 @@ $('#prev').on('click', function () {
 				j++;
 			}
 		}
-	})
+	});
+
+	BtnControl();
 })
 
 //点击答题卡题目，跳转到对应的题目
@@ -257,7 +273,14 @@ function submit(testId, token, appId) {
 		//获取数据，提交数据
 		var dataJson = getTestPaperAnswerJson();
 		var UseTime = 0;
-
+		// var request = {
+		// 	"TestId": testId, //试卷ID
+		// 	"UseTime": useTime, //试卷用时,用试卷规定时间减去剩余时间
+		// 	"TestList": dataJson,
+		// 	"Token": token,
+		// 	"AppId": appId
+		// };
+		// var data=JSON.stringify(request);
 		$.ajax({
 			type: "post",
 			data: {

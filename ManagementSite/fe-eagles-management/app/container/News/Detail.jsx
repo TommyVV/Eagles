@@ -57,7 +57,7 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { StarTime, EndTime, IsPublic } = values;
+          let { StarTime, EndTime, IsTop } = values;
           let { news, Attachs } = this.props;
           let { Attachments } = news;
           let attach = {}; // 存附件对象
@@ -81,7 +81,7 @@ class Base extends Component {
             Info: {
               ...news,
               ...values,
-              IsPublic: IsPublic == "true" ? true : false,
+              IsTop: IsTop ,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
               EndTime: moment(EndTime, "yyyy-MM-dd").format(),
               ...attach
@@ -421,14 +421,14 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        {/* <FormItem {...formItemLayout} label="是否显示公开栏目">
-          {getFieldDecorator("IsPublic")(
+        <FormItem {...formItemLayout} label="是否置顶">
+          {getFieldDecorator("IsTop")(
             <Select>
-              <Option value="false">否</Option>
-              <Option value="true">是</Option>
+              <Option value={0}>否</Option>
+              <Option value={1}>是</Option>
             </Select>
           )}
-        </FormItem> */}
+        </FormItem>
         <FormItem {...formItemLayout} label="所属栏目">
           {getFieldDecorator("ModuleId")(
             <Select>
@@ -612,12 +612,9 @@ const FormMap = Form.create({
       ModuleId: Form.createFormField({
         value: news.ModuleId ? news.ModuleId + "" : ""
       }),
-      IsPublic: Form.createFormField({
-        value: news.IsPublic ? news.IsPublic + "" : "false"
-      })
-      // Category: Form.createFormField({
-      //   value: news.TestId <= "0" ? "0" : "1"
-      // })
+      IsTop: Form.createFormField({
+        value: news.IsTop
+      })    
     };
   }
 })(Base);

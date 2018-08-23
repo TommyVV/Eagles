@@ -120,6 +120,14 @@ export const scoreType = [
     text: "文章关键字奖励"
   },
   {
+    value: "3",
+    text: "支部审核文章奖励"
+  },
+  {
+    value: "4",
+    text: "组织审核文章奖励"
+  },
+  {
     value: "10",
     text: "参加活动奖励"
   },

@@ -238,7 +238,10 @@ class MenuDetailTwo extends Component {
   // 获取一级菜单列表
   getMenuList = async () => {
     try {
-      const { List } = await getList();
+      let data={
+        MenuLevel:1
+      }
+      const { List } = await getList(data);
       this.setState({ menuList: List });
     } catch (e) {
       message.error("获取失败");
