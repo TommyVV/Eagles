@@ -229,7 +229,16 @@ class NewsList extends React.Component {
         title: "类型",
         dataIndex: "ActivityTaskType",
         render: type => {
-          return <span>{type == "0" ? "投票" : "调查问卷"}</span>;
+          switch (type) {
+            case 0:
+              return <span>{"报名"}</span>;
+            case 1:
+              return <span>{"投票"}</span>;
+            case 2:
+              return <span>{"调查问卷"}</span>;
+            default:
+              return <span>{"其他"}</span>;
+          }
         }
       },
       {

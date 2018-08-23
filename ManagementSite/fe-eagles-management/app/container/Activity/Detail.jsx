@@ -315,8 +315,8 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="类型">
           {getFieldDecorator("ActivityTaskType")(
             <Select>
-              <Option value="0">投票</Option>
-              <Option value="1">调查问卷</Option>
+              <Option value="1">投票</Option>
+              <Option value="2">调查问卷</Option>
             </Select>
           )}
         </FormItem>
@@ -447,7 +447,7 @@ const FormMap = Form.create({
         value: news.ActivityTaskName
       }),
       ActivityTaskType: Form.createFormField({
-        value: news.ActivityTaskType ? news.ActivityTaskType + "" : "0"
+        value: news.ActivityTaskType?news.ActivityTaskType.toString():"1"
       }),
       BeginTime: Form.createFormField({
         value: news.BeginTime ? moment(news.BeginTime, "YYYY-MM-DD") : null
