@@ -1,6 +1,7 @@
 
 var token=localStorage.getItem("token")
-var appId=getRequest('appId')
+var appId=getRequest('appId');
+var passScore=getRequest('passScore');
 var onurl=window.location.href
 if(!localStorage.getItem('token')||localStorage.getItem('IsInternalUser')==0) {
 	window.location.href = 'login.html?appId=' + appId + '&onurl='+encodeURI(onurl);
@@ -16,18 +17,20 @@ $('#lv_fs').text(TestScore);
 $('#lv_jfs').text(Score);
 $('#lv_dts').text(UseTime );
 var TestLists=examresult.TestList;
-if(TestScore<60){
+if(TestScore<passScore){
 	$('#suces').attr("src","icons/mistake@2x.png")
 }else{
 	$('#suces').attr("src","icons/correct@2x.png")
 }	
 var examResult='';
 for(var i = 0; i < TestLists.length; i++) {
-	var fend='<span>'+TestLists[i].QuestionId +'</span>'
+	var fend='<span>'+TestLists[i].QuestionId +'</span>';
+	var seq=i+1;
 	if(TestLists[i].IsRight==true){
-		fend='<span class="right">'+TestLists[i].QuestionId +'</span>'
+		
+		fend='<span class="right">'+seq +'</span>'
 	}else{
-		fend='<span class="wrong">'+TestLists[i].QuestionId +'</span>'
+		fend='<span class="wrong">'+seq +'</span>'
 	}
 	examResult+=fend
 }

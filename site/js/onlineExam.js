@@ -154,7 +154,6 @@ function BtnControl() {
 	if ($('.ques-newCount').html() != $('.st_nums').text()) {
 		$("#next").show();
 		$("#submit").hide();
-		$("#prev").show();
 	} else {
 		$("#next").show();
 		$("#next").hide();
@@ -273,29 +272,23 @@ function submit(testId, token, appId) {
 		//获取数据，提交数据
 		var dataJson = getTestPaperAnswerJson();
 		var UseTime = 0;
-		// var request = {
-		// 	"TestId": testId, //试卷ID
-		// 	"UseTime": useTime, //试卷用时,用试卷规定时间减去剩余时间
-		// 	"TestList": dataJson,
-		// 	"Token": token,
-		// 	"AppId": appId
-		// };
-		// var data=JSON.stringify(request);
+		var request = {
+			"TestId": testId, //试卷ID
+			"UseTime": useTime, //试卷用时,用试卷规定时间减去剩余时间
+			"TestList": dataJson,
+			"Token": token,
+			"AppId": appId
+		};
 		$.ajax({
 			type: "post",
-			data: {
-				"TestId": testId, //试卷ID
-				"UseTime": useTime, //试卷用时,用试卷规定时间减去剩余时间
-				"TestList": dataJson,
-				"Token": token,
-				"AppId": appId
-			},
+			data: request,
 			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function (res) {
 				if (res.Code == 00) {
 					var datajlist = JSON.stringify(res.Result)
-					window.location.href = 'examResult.html?appId=' + appId + '&TestList=' + datajlist
+					var PassScore=$(".jg_scores").html();
+					window.location.href = 'examResult.html?appId=' + appId +'&passScore='+PassScore+ '&TestList=' + datajlist
 				} else {
 					bootoast({
 						message: '' + res.Message + '',
