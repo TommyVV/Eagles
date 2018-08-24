@@ -89,7 +89,7 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入操作员姓名"
+                message: "必填，请输入操作员姓名"              
               }
             ]
           })(<Input placeholder="必填，请输入操作员姓名" />)}

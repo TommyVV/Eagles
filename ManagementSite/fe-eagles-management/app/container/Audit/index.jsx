@@ -146,11 +146,11 @@ class AuditList extends React.Component {
       },
       {
         title: "审核类型",
-        dataIndex: "NewsType",
+        dataIndex: "AuditType",
       },
       {
         title: "审核人",
-        dataIndex: "UserId",
+        dataIndex: "OperName",
       },
       {
         title: "审核时间",
@@ -163,7 +163,7 @@ class AuditList extends React.Component {
       },
       {
         title: "原因",
-        dataIndex: "Reason",
+        dataIndex: "Result",
       },
     ];
 
@@ -191,6 +191,35 @@ class AuditList extends React.Component {
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i + 1;
+        switch (v.NewsType) {
+          case "1":
+            v.AuditType = '新闻';
+            break;
+          case "2":
+            v.AuditType = '党员';
+            break;
+          case "3":
+            v.AuditType = '产品';
+            break;
+          case "4":
+            v.AuditType = '活动';
+            break;
+          case "5":
+            v.AuditType = '任务';
+            break;
+          case "6":
+            v.AuditType = '用户文章';
+            break;
+          case "7":
+            v.AuditType = '任务公开';
+            break;
+          case "8":
+            v.AuditType = '活动公开';
+            break;
+          default:
+            v.AuditType = '其他';
+            break;
+        }
       });
       this.setState({ List, current: PageNumber });
       this.updatePageConfig(TotalCount);
