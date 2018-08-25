@@ -33,10 +33,9 @@ $(document).ready(function() {
                 console.log(requestUrl,"---", data);
                 if (data.Code == "00") {
                     var result = data.Result;
+                    var isUpdate = result.IsUpdate;
                     $(".main_content").html(showContent(result));
                     $(".names").hide();
-                    var status = result.ActivityStatus;
-                    userActivityStatus(result);
                     //展开折叠报名人数
                     $(".open-names").click(function() {
                         console.log($(".name-flag").attr("class"));
@@ -52,6 +51,44 @@ $(document).ready(function() {
                             $(".names").hide();
                         }
                     });
+                    if(isUpdate&&userId==result.InitiateUserId){
+                        $(".main_content").append(`<div id="btn-area"><div class="pass"  id="edit">编辑</div><div class="nopass" id="cancel">取消</div></div>`);
+                        $("#edit").click(function(){
+                            window.location.href = "publishTask.html?appId=" + appId + "&type=0&updateId=" + activityId;                            
+                        });
+                        $("#cancel").click(function(){
+                            editActivityCancel();
+                        });
+                    }else{
+                        var status = result.ActivityStatus;
+                        userActivityStatus(result);
+                    }
+                } else {
+                    errorTip(data.Message);
+                }
+            },
+            error:function(){
+                errorTip('网络错误');
+            }
+        });
+    }
+    //取消活动
+    function editActivityCancel() {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/Activity/EditActivityCancel",
+            data: {
+                ActivityId: activityId,
+                Token: token,
+                AppId: appId
+            },
+            success: function(data) {
+                console.log("EditActivityCancel---", data);
+                if (data.Code == "00") {
+                    errorTip('活动取消成功');
+                    setTimeout(function(){
+                        window.location.href="activityList.html?appId="+appId;
+                    },500);
                 } else {
                     errorTip(data.Message);
                 }

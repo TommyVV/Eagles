@@ -169,6 +169,8 @@ $(document).ready(function() {
                 sta = `<div class="task-status init-status">待审核</div>`;
             } else if (status == -2) {
                 sta = `<div class="task-status init-status">待接受</div>`;
+            }else if (status == -7) {
+                sta = `<div class="task-status init-status">已取消</div>`;
             }else if (status == -8) {
                 sta = `<div class="task-status init-status">完成未通过</div>`;
             } else if (status == -9) {
@@ -188,7 +190,9 @@ $(document).ready(function() {
                 sta = `<div class="props-btn already">未接受</div>`;
             }else if (status == -2) {
                 sta = `<span class="props-btn already">待审核</span>`;
-            } else if (status == -8) {
+            } else if (status == -7) {
+                sta = `<span class="props-btn already">已取消</span>`;
+            }else if (status == -8) {
                 sta = `<span class="props-btn already">完成未通过</span>`;
             } else if (status == -9) {
                 sta = `<span class="props-btn already">创建未通过</span>`;

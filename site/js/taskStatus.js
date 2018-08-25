@@ -143,8 +143,51 @@ $(document).ready(function () {
         </div>
         <div id="btn-area"></div>`;
         $(".task-desc").html(taskDesc);
-        //根据当前状态，判断显示按钮
-        opersStatus(data);
+        var isUpdate = data.IsUpdate;
+        if(isUpdate&&data.InitiateUserId){
+            $(".task-desc").append(`<div id="btn-area" class="points-result"><div class="pass"  id="edit">编辑</div><div class="nopass" id="cancel">取消</div></div>`);
+            $("#edit").click(function(){
+                window.location.href = "publishTask.html?appId=" + appId + "&type=1&updateId=" + taskId;                            
+            });
+            $("#cancel").click(function(){
+                if(!requestFlag){
+                    editTaskCancel();
+                }
+            });
+        }else{
+            //根据当前状态，判断显示按钮
+            opersStatus(data);
+        }
+    }
+    //取消任务
+    function editTaskCancel() {
+        requestFlag = true;
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/Task/EditTaskCancel",
+            data: {
+                TaskId: taskId,
+                Token: token,
+                AppId: appId
+            },
+            success: function(data) {
+                console.log("EditTaskCancel---", data);
+                if (data.Code == "00") {
+                    errorTip('任务取消成功');
+                    setTimeout(function(){
+                        window.location.href="task.html?appId="+appId;
+                    },500);
+                } else {
+                    errorTip(data.Message);
+                }
+            },
+            error:function(){
+                errorTip('网络错误');
+            },
+            complete:function(){
+                requestFlag = false;
+            }
+        });
     }
 
     function taskStatus(status) {
@@ -152,7 +195,9 @@ $(document).ready(function () {
             return "待接受";
         } else if (status == -1) {
             return "待审核";
-        } else if (status == -8) {
+        } else if (status == -7) {
+            return "已取消";
+        }else if (status == -8) {
             return "完成未通过";
         } else if (status == -9) {
             return "创建未通过";
