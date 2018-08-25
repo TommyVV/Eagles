@@ -59,7 +59,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
 		$.ajax({
 			type: "post",
 			data:dataf,
-			url: "http://51service.xyz/Eagles/api/TestPaper/TestPaperAnswer",
+			url: DOMAIN + "/api/TestPaper/TestPaperAnswer",
 			dataType: "json",
 			success: function(res) {
 				if(res.Code == 00) {
@@ -105,7 +105,7 @@ function getNewsDetail(newsId, token, appId) {
 			"PageSize": 0,
 			"PageIndex": 0
 		},
-		url: "http://51service.xyz/Eagles/api/News/GetNewsDetail",
+		url: DOMAIN + "/api/News/GetNewsDetail",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -172,7 +172,7 @@ function getNewsTest(testId, token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/TestPaper/GetTestPaper",
+		url: DOMAIN + "/api/TestPaper/GetTestPaper",
 		dataType: "json",
 		success: function(res) {
 			if(res.Code == 00) {
@@ -220,7 +220,7 @@ function getStudyTime(NewsId, ModuleId, token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Study/GetStudyTime",
+		url: DOMAIN + "/api/Study/GetStudyTime",
 		dataType: "json",
 		success: function(res) {
 			$('.header .study-time').html('');
@@ -250,7 +250,7 @@ function editStudyTime(NewsId, ModuleId, StudyTime, token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Study/EditStudyTime",
+		url: DOMAIN + "/api/Study/EditStudyTime",
 		dataType: "json",
 		success: function(res) {
 			$('.header .study-time').html('');
@@ -369,7 +369,7 @@ function addNewsViewCount(NewsId, token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/News/AddNewsViewCount",
+		url: DOMAIN + "/api/News/AddNewsViewCount",
 		dataType: "json",
 		success: function(res) {
 			$('.header .study-time').html('');

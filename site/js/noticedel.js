@@ -19,7 +19,7 @@ function mynotice(NewsId,token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Scroll/GetScrollNewsDetail",
+		url: DOMAIN + "/api/Scroll/GetScrollNewsDetail",
 		dataType: "json",
 		success: function(res) {
 			if(res.Code == 00) {

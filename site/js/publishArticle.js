@@ -27,7 +27,7 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetUserArticleDetail",
+		url: DOMAIN + "/api/User/GetUserArticleDetail",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -148,7 +148,7 @@ $('.publish-btn').on('click', function(e) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/CreateArticle",
+		url: DOMAIN + "/api/User/CreateArticle",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -187,7 +187,7 @@ function branchUsers(token, appId) {
 			"Token": token,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/GetBranchUser",
+		url: DOMAIN + "/api/User/GetBranchUser",
 		dataType: "json",
 		success: function(res) {
 			$('#modal-body').html('');

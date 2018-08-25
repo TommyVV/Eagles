@@ -14,7 +14,7 @@ function myart(NewsId,appId) {
 			"Token": "",
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/News/GetPublicUserNewsDetail",
+		url: DOMAIN + "/api/News/GetPublicUserNewsDetail",
 		dataType: "json",
 		success: function(res) {
 			if(res.Code == 00) {

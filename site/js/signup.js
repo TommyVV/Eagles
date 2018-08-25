@@ -41,7 +41,7 @@ $('.btn-signup').on('click', function(e) {
 			"Seq": $('#inputCaptcha').attr('CodeSeq'),
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/Register/Register",
+		url: DOMAIN + "/api/Register/Register",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
@@ -73,7 +73,7 @@ $(".btn-cap").click(function() {
 	$(this).attr("disabled", "disabled");
 	$.ajax({
 		type: "POST",
-		url: 'http://51service.xyz/Eagles/api/Register/GetValidateCode',
+		url: DOMAIN + "/api/Register/GetValidateCode",
 		data: {
 			"Phone": phone,
 			"AppId": appId
@@ -122,7 +122,7 @@ function loginIn(account, UserPwd) {
 			"IsRememberPwd":1,
 			"AppId": appId
 		},
-		url: "http://51service.xyz/Eagles/api/User/Login",
+		url: DOMAIN + "/api/User/Login",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;

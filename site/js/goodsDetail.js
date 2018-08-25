@@ -21,7 +21,7 @@ $(".sub-btn,.overview-props-btn").click(function() {
             "Token": token,
             "AppId": appId
         },
-        url: "http://51service.xyz/Eagles/api/Score/AppScoreExchange",
+        url: DOMAIN + "/api/Score/AppScoreExchange",
         dataType: "json",
         success: function(res) {
             //$('.goods-area').html('')
@@ -43,7 +43,7 @@ function goodDetal(productIds, appId) {
             "ProductId": productIds,
             "AppId": appId
         },
-        url: "http://51service.xyz/Eagles/api/Product/GetProductDetail",
+        url: DOMAIN + "/api/Product/GetProductDetail",
         dataType: "json",
         success: function(res) {
             //$('.goods-area').html('')
