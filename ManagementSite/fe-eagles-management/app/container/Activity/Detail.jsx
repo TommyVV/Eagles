@@ -56,34 +56,7 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
           if (moment(BeginTime).isBefore(EndTime)) {
-            const { news, Attachs } = this.props;
-            let { Attachments } = news;
-            let attach = {}; // 存附件对象
-            let index = 0;
-            Attachs.map(obj => {
-              let i = index + 1;
-              ++index;
-              attach[`Attach${i}`] = obj.AttachmentUrl;
-              attach[`AttachName${i}`] = obj.AttachmentName;
-            });
-            Attachments && Attachments.map(obj => {
-              if (obj.response) {
-                let i = index + 1;
-                ++index;
-                const file = obj.response.Result.FileUploadResults[0];
-                attach[`Attach${i}`] = file.FileUrl;
-                attach[`AttachName${i}`] = file.FileName;
-              }
-            });
-
-            let newArr = [...Attachs];
-            if (Attachments && Attachments.length) {
-              newArr = [...newArr, ...Attachments]
-            }
-            // if (values.ActivityTaskType == "0" && !newArr.length) {
-            //   message.error("请上传附件");
-            //   return;
-            // }
+            const { news} = this.props;      
 
             let params = {
               DetailInfo: {
@@ -91,7 +64,7 @@ class Base extends Component {
                 ...values,
                 BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
                 EndTime: moment(EndTime, "yyyy-MM-dd").format(),
-                ...attach
+              
               }
             };
             let { Code } = await createOrEdit(params);
@@ -135,34 +108,7 @@ class Base extends Component {
     }
     return isImage && file.size <= fileSize;
   }
-  // 上传新闻的附件
-  handleChange = info => {
-    console.log("上传新闻附件：", info);
-    if (info.fileList.length > 4) {
-      message.error("最多只能上传4个附件");
-      return false;
-    }
-    let { news, Attachs, setObj, form } = this.props;
-    let { getFieldsValue } = form;
-    if (info.file.status == "uploading") {
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-    }
-    if (info.file.status == "removed") {
-      let newKeys = Attachs.filter((v, i) => {
-        return i != info.file.uid;
-      });
-      setObj(newKeys);
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      let { news } = this.props;
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-      return;
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} 上传失败`);
-    }
-  };
+  
   // 封面
   onChangeImage = info => {
     console.log(info.file, info.fileList);
@@ -189,28 +135,8 @@ class Base extends Component {
       getFieldsValue
     } = this.props.form;
     const { news, List } = this.props; //是否显示试卷列表
-    let fileList = [];
-    news &&
-      news.Attachments &&
-      news.Attachments.map((o, i) => {
-        if (o.lastModified) {
-          fileList.push(o);
-        } else {
-          fileList.push({
-            uid: i,
-            name: o.AttachmentName || o.name,
-            status: "done",
-            url: o.AttachmentUrl
-          });
-        }
-      });
-    console.log(fileList);
-    const props = {
-      name: "file",
-      action: serverConfig.API_SERVER + serverConfig.FILE.UPLOAD,
-      onChange: this.handleChange.bind(this),
-      fileList: fileList
-    };
+
+   
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -351,7 +277,7 @@ class Base extends Component {
             ]
           })(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps} />
+              <BraftEditor {...editorProps}  ref={(instance) => this.editorInstance = instance}/>
             </div>
           )}
         </FormItem>
@@ -360,14 +286,7 @@ class Base extends Component {
             <Input placeholder="请输入最大参与人数" />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否允许评论">
-          {getFieldDecorator("IsComment")(
-            <Select>
-              <Option value="0">是</Option>
-              <Option value="1">否</Option>
-            </Select>
-          )}
-        </FormItem>       
+               
         <FormItem {...formItemLayout} label="试卷选择">
           {getFieldDecorator("ExampleId")(
             <Select>
@@ -401,14 +320,7 @@ class Base extends Component {
               )}
           </Upload>
         </FormItem>
-        <FormItem {...formItemLayout} label="附件">
-          <Upload {...props}>
-            <Button>
-              <Icon type="upload" /> 上传
-            </Button>
-            {/* <span style={{ paddingLeft: "12px" }}>如活动类型为投票，必须上传附件</span> */}
-          </Upload>
-        </FormItem>
+       
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={2}>
@@ -460,10 +372,7 @@ const FormMap = Form.create({
       }),
       MaxPartakePeople: Form.createFormField({
         value: news.MaxPartakePeople
-      }),
-      IsComment: Form.createFormField({
-        value: news.IsComment ? news.IsComment + "" : "0"
-      }),    
+      }),     
       ExampleId: Form.createFormField({
         value: news.ExampleId ? news.ExampleId : ""
       })

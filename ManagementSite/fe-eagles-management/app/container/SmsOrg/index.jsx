@@ -183,8 +183,8 @@ class SmsOrgList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = params;
-    try {
+    const { PageNumber } = params;    
+    try {     
       let { List, TotalCount } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {

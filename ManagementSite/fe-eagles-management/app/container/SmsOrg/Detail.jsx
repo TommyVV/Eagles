@@ -253,7 +253,8 @@ class SmsSystemDetail extends Component {
     try {
       const { List } = await getList({
         PageNumber: 1,
-        PageSize: 100000
+        PageSize: 100000,
+        Status:0
       });
       this.setState({ vendor: List });
     } catch (e) {

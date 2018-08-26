@@ -46,20 +46,13 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          const { menu, orgList } = this.props;
-          let OrgName = menu.OrgName;
-          var menuId=this.props.menu.MenuId;
-          orgList.map((org, i) => {
-            if (org.OrgId == values.OrgId) {
-              OrgName = org.OrgName;
-            }
-          });
+          const { menu } = this.props;       
+          var menuId=this.props.menu.MenuId;         
           let params = {
             Info: [
               {
                 ...menu,
                 ...values,
-                OrgName,
                 ParentId: 0,
                 MenuLevel: 1
               }
@@ -90,7 +83,6 @@ class Base extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { orgList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -113,28 +105,19 @@ class Base extends Component {
               {
                 required: true,
                 message: "必填，请输入菜单名称"
+              },
+              {
+                max:10,
+                message: "菜单最多只能10个汉字"
               }
             ]
-          })(<Input placeholder="必填，请输入菜单名称" />)}
+          })(<Input placeholder="必填，请输入菜单名称"/>)}
         </FormItem>
         <FormItem {...formItemLayout} label="菜单链接">
           {getFieldDecorator("MenuLink")(
             <Input placeholder="必填，请输入菜单链接" />
           )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="所属机构">
-          {getFieldDecorator("OrgId")(
-            <Select>
-              {orgList.map((obj, index) => {
-                return (
-                  <Option value={obj.OrgId} key={index}>
-                    {obj.OrgName}
-                  </Option>
-                );
-              })}
-            </Select>
-          )}
-        </FormItem>
+        </FormItem>      
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -174,10 +157,7 @@ const FormMap = Form.create({
       }),
       MenuLink: Form.createFormField({
         value: menu.MenuLink
-      }),
-      OrgId: Form.createFormField({
-        value: menu.OrgId ? menu.OrgId : ""
-      })
+      })   
     };
   }
 })(Base);
@@ -204,7 +184,7 @@ class MenuDetailOne extends Component {
     if (id) {
       this.getInfo(id); //拿详情
     } else {
-      this.getOrgList();
+     
     }
   }
 
@@ -213,8 +193,7 @@ class MenuDetailOne extends Component {
   }
   // 根据id查询详情
   getInfo = async MenuId => {
-    try {
-      await this.getOrgList();
+    try {      
       const { Info } = await getInfoById({ MenuId });
       this.setState({ menu: Info });
     } catch (e) {
@@ -222,22 +201,11 @@ class MenuDetailOne extends Component {
       throw new Error(e);
     }
   };
-  getOrgList = async () => {
-    try {
-      const { List } = await getOrgList({
-        PageNumber: 1,
-        PageSize: 1000000
-      });
-      this.setState({ orgList: List });
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
+ 
   render() {
     return (
       <Nav>
-        <FormMap menu={this.state.menu} orgList={this.state.orgList} />
+        <FormMap menu={this.state.menu} />
       </Nav>
     );
   }

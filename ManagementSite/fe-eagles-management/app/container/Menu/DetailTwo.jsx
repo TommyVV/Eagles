@@ -142,6 +142,7 @@ class DynamicFieldSet extends React.Component {
               style={{ width: "80%", marginRight: 16 }}
               onBlur={this.changeInput.bind(this, "MenuName", index)}
               defaultValue={k.MenuName}
+              maxLength={10}
             />
           </FormItem>
           <FormItem

@@ -94,7 +94,11 @@ class SmsSystemList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let request={
+        Status:-1,
+        ...PageNumber
+      }
+      let { List, TotalCount } = await getList(request);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i;

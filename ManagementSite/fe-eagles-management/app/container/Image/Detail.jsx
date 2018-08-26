@@ -14,7 +14,6 @@ import {
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/imageService";
-import { getOrgList } from "../../services/orgService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, pageMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/imageAction";
@@ -47,14 +46,11 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          const { image, Orgs } = this.props;
-          const { OrgId } = values;
-          const org = Orgs.filter(o => o.OrgId == OrgId);
+          const { image } = this.props;          
           let params = {
             Info: {
               ...image,
-              ...values,
-              OrgName: org && org[0].OrgName
+              ...values,           
             }
           };
           let { Code } = await createOrEdit(params);
@@ -130,28 +126,7 @@ class Base extends Component {
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("Id")(<Input />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="所属机构">
-          {getFieldDecorator("OrgId", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请选择所属机构"
-              }
-            ]
-          })(
-            <Select>
-              {Orgs.length &&
-                Orgs.map((obj, index) => {
-                  return (
-                    <Option key={index} value={obj.OrgId}>
-                      {obj.OrgName}
-                    </Option>
-                  );
-                })}
-            </Select>
-          )}
-        </FormItem>
+        </FormItem>        
         <FormItem {...formItemLayout} label="页面类型">
           {getFieldDecorator("PageId", {
             rules: [
@@ -237,10 +212,7 @@ const FormMap = Form.create({
     return {
       Id: Form.createFormField({
         value: image.Id
-      }),
-      OrgId: Form.createFormField({
-        value: image.OrgId ? image.OrgId : ""
-      }),
+      }),      
       OrgName: Form.createFormField({
         value: image.OrgName
       }),
@@ -276,26 +248,16 @@ class ImageDetail extends Component {
       this.getInfo(id); //拿详情
     } else {
       this.props.clearInfo();
-      this.getOrgList();
+     
     }
   }
-  // 加载所有机构
-  getOrgList = async () => {
-    try {
-      const { List } = await getOrgList();
-      this.setState({ Orgs: List });
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
+ 
   componentWillUnmount() {
     this.props.clearInfo();
   }
   // 根据id查询详情
   getInfo = async Id => {
-    try {
-      await this.getOrgList();
+    try {     
       const { Info } = await getInfoById({ Id });
       this.props.saveInfo(Info);
     } catch (e) {
