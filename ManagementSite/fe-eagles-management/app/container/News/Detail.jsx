@@ -81,7 +81,7 @@ class Base extends Component {
             Info: {
               ...news,
               ...values,
-              IsTop: IsTop ,
+              IsTop: IsTop,
               StarTime: moment(StarTime, "yyyy-MM-dd").format(),
               EndTime: moment(EndTime, "yyyy-MM-dd").format(),
               ...attach
@@ -509,11 +509,11 @@ class Base extends Component {
                   checked={news.CanStudy == "1" ? true : false}
                   onChange={this.changeBox.bind(this, "CanStudy")}
                 >
-                  有否允许学习
+                  是否允许学习
                 </Checkbox>
               ) : (
                   <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                    有否允许学习
+                    是否允许学习
                 </Checkbox>
                 )}
             </Col>
@@ -572,7 +572,7 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    const { news, isRewardWrapper } = props;
+    const { news, isRewardWrapper, programaList } = props;
     console.log("新闻详情数据回显 - ", news);
     return {
       NewsId: Form.createFormField({ value: news.NewsId ? news.NewsId : "" }),
@@ -610,11 +610,11 @@ const FormMap = Form.create({
         value: news.Content
       }),
       ModuleId: Form.createFormField({
-        value: news.ModuleId ? news.ModuleId + "" : ""
+        value: news.ModuleId ? news.ModuleId + "" :  ""
       }),
       IsTop: Form.createFormField({
-        value: news.IsTop
-      })    
+        value: news.IsTop ? news.IsTop : 0
+      })
     };
   }
 })(Base);
