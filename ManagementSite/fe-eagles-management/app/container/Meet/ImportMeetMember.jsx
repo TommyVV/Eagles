@@ -92,14 +92,20 @@ class ImportMeetMember extends React.Component {
       };
       let { Code, Result } = await createOrEdit(params);
       if (Code === "00") {
-        message.success("保存成功");
-        let memList = Result.ImportUsersResult;
-        memList.forEach(v => {
+        let { ImportUsersResult, ImportStart } = Result;
+        if (ImportStart == "0") {
+          message.error("导入失败");
+        } else if (ImportStart == "1") {
+          message.success("导入成功");
+        } else if (ImportStart == "2") {
+          message.success("导入部分成功");
+        }
+        ImportUsersResult.forEach(v => {
           v.key = Math.random();
           v.UserName = v.MeetUserName;
           v.Phone = v.MeetUserPhone;
         });
-        this.setState({ memberList: memList });
+        this.setState({ memberList: ImportUsersResult });
         // hashHistory.replace("/meetlist");
       } else {
         message.error("保存失败");

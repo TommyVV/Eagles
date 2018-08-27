@@ -412,7 +412,7 @@ class ActivityDetail extends Component {
     this.props.clearInfo();
   }
 
-  // 查询栏目列表
+  // 查询试卷列表
   getList = async () => {
     const { List } = await getQuestionList();
     console.log("List", List);

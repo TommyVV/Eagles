@@ -56,27 +56,31 @@ class QuestionForm extends Component {
           const { Info } = this.props.info;
           let { SubjectList, HasLimitedTime } = Info;
           if (SubjectList.length) {
-            let idList = [];
-            SubjectList.forEach(v => {
-              idList.push(v.QuestionId);
-            });
-            delete Info["SubjectList"]; // 提交的时候，删除习题列表，只传数组
-            let params = {
-              Info: {
-                ...Info,
-                ...values,
-                HasLimitedTime
-              },
-              Subject: idList
-            };
-            let { Code } = await createOrEditQuestion(params);
-            if (Code === "00") {
-              let tip = Info.ExercisesId ? "保存成功" : "创建成功";
-              message.success(tip);
-              hashHistory.replace("/questionlist");
+            if (Info.ExercisesType == "20" && SubjectList.length > 1) {
+              message.error("投票类型的试卷，最多只能选择一道习题");
             } else {
-              let tip = Info.ExercisesId ? "保存失败" : "创建失败";
-              message.error(tip);
+              let idList = [];
+              SubjectList.forEach(v => {
+                idList.push(v.QuestionId);
+              });
+              delete Info["SubjectList"]; // 提交的时候，删除习题列表，只传数组
+              let params = {
+                Info: {
+                  ...Info,
+                  ...values,
+                  HasLimitedTime
+                },
+                Subject: idList
+              };
+              let { Code } = await createOrEditQuestion(params);
+              if (Code === "00") {
+                let tip = Info.ExercisesId ? "保存成功" : "创建成功";
+                message.success(tip);
+                hashHistory.replace("/questionlist");
+              } else {
+                let tip = Info.ExercisesId ? "保存失败" : "创建失败";
+                message.error(tip);
+              }
             }
           } else {
             message.error("请选择习题");
@@ -110,6 +114,19 @@ class QuestionForm extends Component {
       Info: {
         ...values,
         IsScoreAward: value,
+        SubjectList
+      }
+    });
+  };
+  changeType = value => {
+    const { getFieldsValue } = this.props.form;
+    const { Info } = this.props.info;
+    const { SubjectList } = Info;
+    let values = getFieldsValue();
+    this.props.saveInfo({
+      Info: {
+        ...values,
+        ExercisesType: value,
         SubjectList
       }
     });
@@ -149,7 +166,7 @@ class QuestionForm extends Component {
           //   Subject.findIndex(item => item.QuestionId === QuestionId),
           //   1
           // );
-          let newSubject = SubjectList.filter(function(v) {
+          let newSubject = SubjectList.filter(function (v) {
             return v.QuestionId != QuestionId;
           });
           _this.props.saveInfo({
@@ -326,7 +343,7 @@ class QuestionForm extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="试卷类型">
             {getFieldDecorator("ExercisesType")(
-              <Select>
+              <Select onChange={this.changeType.bind(this)}>
                 {typeMap.map((obj, index) => {
                   return (
                     <Option key={index} value={obj.ExercisesType}>
@@ -337,7 +354,10 @@ class QuestionForm extends Component {
               </Select>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="是否图片投票">
+          <FormItem {...formItemLayout} label="是否图片投票"
+            style={{
+              display: Info.ExercisesType == "20" ? "block" : "none"
+            }}>
             {getFieldDecorator("IsImageVote")(
               <Select>
                 <Option value="0">否</Option>
@@ -392,7 +412,9 @@ class QuestionForm extends Component {
               </Col>
             </Row>
           </div>
-          <FormItem {...formItemLayout} label="是否限制答题时间">
+          <FormItem {...formItemLayout} label="是否限制答题时间" style={{
+              display: Info.ExercisesType == "5" ? "block" : "none"
+            }}>
             {getFieldDecorator("HasLimitedTime")(
               <Select onChange={this.change.bind(this)}>
                 <Option value="0">否</Option>

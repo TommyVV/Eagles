@@ -14,17 +14,20 @@ import {
 const FormItem = Form.Item;
 import { hashHistory } from "react-router";
 import { bitchCreate } from "../../services/newsService";
+import { getList } from "../../services/programaService";
 import Nav from "../Nav";
 import "./style.less";
 
-const confirm = Modal.confirm;
+const Option = Select.Option;
 
 class ImportNews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       newsList: [], // 新闻列表数组
-      fileList: []
+      fileList: [],
+      programaList: [],
+      proId: ""
     };
     this.columns = [
       {
@@ -49,8 +52,21 @@ class ImportNews extends React.Component {
       }
     ];
   }
+
+  componentWillMount() {
+    this.getProgramaList();
+  }
+  // 查询栏目列表
+  getProgramaList = async () => {
+    const { List } = await getList({ "IsPublic": true });
+    console.log("getProgramaList", List);
+    this.setState({
+      programaList: List,
+      proId: List.length ? List[0].ColumnId : ""
+    });
+  };
   handleUpload = () => {
-    const { fileList } = this.state;
+    const { fileList, proId } = this.state;
     const file = fileList[0];
     const view = this;
     var reader = new FileReader();
@@ -76,7 +92,7 @@ class ImportNews extends React.Component {
                 news["Source"] = text;
             }
           });
-          newsList.push({ ...news, key: Math.random() });
+          newsList.push({ ...news, key: Math.random(), ColumnId: proId });
         }
       });
       view.setState({
@@ -91,11 +107,15 @@ class ImportNews extends React.Component {
       let { Code, Result, Message } = await bitchCreate({
         Info: newsList
       });
-      let { NewList } = Result;
+      let { NewList, ImportStart } = Result;
       if (Code === "00") {
-        message.success("导入成功");
-      } else {
-        message.error(Message);
+        if (ImportStart == "0") {
+          message.error("导入失败");
+        } else if (ImportStart == "1") {
+          message.success("导入成功");
+        } else if (ImportStart == "2") {
+          message.success("导入部分成功");
+        }
       }
       NewList.forEach(v => {
         v.key = Math.random();
@@ -105,9 +125,12 @@ class ImportNews extends React.Component {
       message.error(e);
     }
   };
+  setPrograma(value) {
+    this.state.proId = value;
+  }
 
   render() {
-    const { fileList, newsList } = this.state;
+    const { fileList, newsList, programaList } = this.state;
     const props = {
       name: "file",
       action: "",
@@ -156,6 +179,24 @@ class ImportNews extends React.Component {
             >
               预览
             </Button>
+          </Col>
+        </Row>
+        <Row gutter={24}>
+          <Col span={2} key={111111111}>
+            <FormItem label="选择栏目" />
+          </Col>
+          <Col span={6} key={2}>
+            {programaList.length ?
+              <Select defaultValue={programaList[0].ColumnId} onChange={this.setPrograma.bind(this)}>
+                {programaList.map((obj, index) => {
+                  return (
+                    <Option key={index} value={obj.ColumnId}>
+                      {obj.ColumnName}
+                    </Option>
+                  );
+                })}
+              </Select> : null
+            }
           </Col>
         </Row>
         <Row gutter={24}>

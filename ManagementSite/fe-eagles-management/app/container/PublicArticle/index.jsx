@@ -19,7 +19,8 @@ class PublicArticleList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      List: [] // 列表数组
+      List: [], // 列表数组
+      authMap: new Map(),
     };
     this.columns = [
       {
@@ -67,6 +68,7 @@ class PublicArticleList extends React.Component {
                     this.props.params.type
                     }`)
                 }
+                style={{ paddingRight: "24px" }}
               >
                 详情
               </a>
@@ -76,7 +78,12 @@ class PublicArticleList extends React.Component {
                     this.props.params.type
                     }`)
                 }
-                style={{ paddingLeft: "24px" }}
+                style={{
+                  display:
+                    (this.state.authMap.get("open0006") || this.state.authMap.get("open0003")) && obj.Status == "-1"
+                      ? null
+                      : "none"
+                }}
               >
                 审核
               </a>
@@ -92,9 +99,20 @@ class PublicArticleList extends React.Component {
     };
   }
   componentWillMount() {
+    const auth = JSON.parse(localStorage.info).authList;
+    if (auth) {
+      const authMap = new Map();
+      auth.map((a, i) => {
+        authMap.set(a.FunCode, a.FunCode);
+      });
+      this.setState({
+        authMap
+      });
+    }
     const { type } = this.props.params;
     this.getCurrentList(this.getListConfig, type);
   }
+
 
   // 加载当前页
   getCurrentList = async params => {

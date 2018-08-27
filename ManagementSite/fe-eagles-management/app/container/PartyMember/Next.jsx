@@ -147,14 +147,14 @@ class SetNextPartyMember extends React.Component {
     const { selectedRowKeys } = this.state;
     // 需要加上以前以选择的用户
     let newList = this.state.memberList;
-    selectedRowKeys.map(o =>{
+    selectedRowKeys.map(o => {
       //remove exists user
-      var obj=JSON.parse(o);
-      var existsUsers=newList.find(x=>x.UserId==obj.UserId);
-      if(existsUsers==null){
+      var obj = JSON.parse(o);
+      var existsUsers = newList.find(x => x.UserId == obj.UserId);
+      if (existsUsers == null) {
         newList.push(obj)
-      }      
-    } );
+      }
+    });
     newList.forEach((v, i) => {
       v.key = i;
     });
@@ -162,7 +162,7 @@ class SetNextPartyMember extends React.Component {
   }
   getAllMember() {
     this.setState({ visible: true });
-    this.getCurrentList2({ ...this.pageConfig });
+    this.getCurrentList2({ ...this.getListConfig });
   }
   // 加载当前页
   getCurrentList2 = async params => {
@@ -172,6 +172,7 @@ class SetNextPartyMember extends React.Component {
       let { List, TotalCount } = await getList(params);
       // 排除掉当前设置的用户
       console.log("List - ", List);
+      console.log("current user", id)
       let newList = List.filter(v => v.UserId != id);
       newList.forEach(v => {
         v.key = JSON.stringify(v);

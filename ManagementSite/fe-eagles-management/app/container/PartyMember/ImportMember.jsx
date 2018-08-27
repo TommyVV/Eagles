@@ -71,7 +71,7 @@ class ImportMember extends React.Component {
       List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ branchList: List,currentBranch:List[0].BranchId });
+      this.setState({ branchList: List, currentBranch: List[0].BranchId });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -127,13 +127,16 @@ class ImportMember extends React.Component {
           UserList: newKeys,
           BranchId: currentBranch
         });
-        let { UserList } = Result;
+        let { UserList, ImportStart } = Result;
         if (Code === "00") {
-          message.success("导入成功");
-        } else {
-          message.success(Message);
+          if (ImportStart == "0") {
+            message.error("导入失败");
+          } else if (ImportStart == "1") {
+            message.success("导入成功");
+          } else if (ImportStart == "2") {
+            message.success("导入部分成功");
+          }
         }
-
         UserList.forEach(v => {
           v.key = Math.random();
         });

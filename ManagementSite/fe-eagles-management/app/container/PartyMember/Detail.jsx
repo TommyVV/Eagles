@@ -305,14 +305,14 @@ class Base extends Component {
             />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="党籍状态">
+        {/* <FormItem {...formItemLayout} label="党籍状态">
           {getFieldDecorator("MemberStatus")(
             <Select>
               <Option value="0">正常</Option>
               <Option value="1">禁用</Option>
             </Select>
           )}
-        </FormItem>
+        </FormItem> */}
 
         <FormItem>
           <Row gutter={24}>
@@ -411,9 +411,9 @@ const FormMap = Form.create({
           ? moment(member.FeeExpireDate, "YYYY-MM-DD")
           : null
       }),
-      MemberStatus: Form.createFormField({
-        value: member.MemberStatus ? member.MemberStatus + "" : "0"
-      })
+      // MemberStatus: Form.createFormField({
+      //   value: member.MemberStatus ? member.MemberStatus + "" : "0"
+      // })
     };
   }
 })(Base);

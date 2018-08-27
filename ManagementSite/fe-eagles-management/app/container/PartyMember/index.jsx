@@ -241,11 +241,11 @@ class PartyMemberList extends React.Component {
         title: "联系电话",
         dataIndex: "Phone"
       },
-      {
-        title: "党员类型",
-        dataIndex: "MemberType",
-        render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
-      },
+      // {
+      //   title: "党员类型",
+      //   dataIndex: "MemberType",
+      //   render: text => <span>{text == "0" ? "党员" : "预备党员"}</span>
+      // },
       {
         title: "审核状态",
         dataIndex: "Status",

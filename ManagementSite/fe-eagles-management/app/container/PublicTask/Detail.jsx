@@ -113,7 +113,14 @@ class Base extends Component {
           label="审核结果描述"
           style={{ display: audit == "1" ? null : "none" }}
         >
-          {getFieldDecorator("Reason")(<TextArea rows={4} />)}
+          {getFieldDecorator("Reason", {
+            rules: [
+              {
+                required: true,
+                message: "必填，请输入审核结果描述"
+              }
+            ]
+          })(<TextArea rows={4} />)}
         </FormItem>
         <FormItem style={{ display: audit == "1" ? null : "none" }}>
           <Row gutter={24}>
