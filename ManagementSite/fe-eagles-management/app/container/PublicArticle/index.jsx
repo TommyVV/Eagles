@@ -102,27 +102,25 @@ class PublicArticleList extends React.Component {
     try {
       const { type } = this.props.params;
       let res = {};
-      if (type == "2") {
-        res = await getListBranch(params);
-      } else if (type == "1") {
-        res = await getListOrg(params);
-      }
+
+      res = await getListBranch(params);
+
       console.log("res - ", res);
       if (res.Aritcles) {
         res.Aritcles.forEach(v => {
           v.key = v.NewsId;
           switch (v.NewsType) {
             case "0":
-              v.NewsTypeName="文章";
+              v.NewsTypeName = "文章";
               break;
             case "1":
-            v.NewsTypeName="心得体会";
+              v.NewsTypeName = "心得体会";
               break;
             case "2":
-            v.NewsTypeName="会议";
+              v.NewsTypeName = "会议";
               break;
             case "3":
-            v.NewsTypeName="入党申请书";
+              v.NewsTypeName = "入党申请书";
               break
           }
         });

@@ -95,11 +95,9 @@ class PublicTaskList extends React.Component {
     try {
       const { type } = this.props.params;
       let res = {};
-      if (type == "2") {
-        res = await getListBranch(params);
-      } else if (type == "1") {
-        res = await getListOrg(params);
-      }
+
+      res = await getListBranch(params);
+
       console.log("res - ", res);
       if (res.Tasks) {
         res.Tasks.forEach(v => {
