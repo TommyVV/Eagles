@@ -27,14 +27,14 @@ class Base extends Component {
             Info: {
               ...operator,
               ...values,
-              IsBranch: true
+              IsBranch: false
             }
           };
           let { Code } = await createOrEdit(params);
           if (Code === "00") {
             let tip = this.props.operator.OperId ? "保存成功" : "创建成功";
             message.success(tip);
-            hashHistory.replace("/operatorlist");
+            hashHistory.replace("/orgoperatorlist");
           } else {
             let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
             message.error(tip);
@@ -121,24 +121,7 @@ class Base extends Component {
               })}
             </Select>
           )}
-        </FormItem>      
-        <FormItem
-          {...formItemLayout}
-          label="所属支部"
-        >
-          {getFieldDecorator("BranchId")(
-            <Select>
-              {branchList.map((obj, index) => {
-                // todo
-                return (
-                  <Option value={obj.BranchId} key={index}>
-                    {obj.BranchName}
-                  </Option>
-                );
-              })}
-            </Select>
-          )}
-        </FormItem>
+        </FormItem>        
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -153,7 +136,7 @@ class Base extends Component {
             <Col span={2} offset={1}>
               <Button
                 className="btn"
-                onClick={() => hashHistory.replace("/operatorlist")}
+                onClick={() => hashHistory.replace("/orgoperatorlist")}
               >
                 取消
               </Button>
@@ -181,13 +164,7 @@ const FormMap = Form.create({
       }),
       AuthorityGroupId: Form.createFormField({
         value: operator.AuthorityGroupId ? operator.AuthorityGroupId : ""
-      }),
-      IsBranch: Form.createFormField({
-        value: operator.IsBranch ? (operator.IsBranch ? "1" : "0") : "0"
-      }),
-      BranchId: Form.createFormField({
-        value: operator.BranchId ? operator.BranchId : ""
-      }),
+      }),     
       Password: Form.createFormField({
         value: operator.Password
       })
@@ -216,8 +193,7 @@ class OperatorDetail extends Component {
     await this.getAuthList();
     await this.getBranchList(); // 拿支部列表
     const operator = {
-      AuthorityGroupId: this.state.authList[0] ? this.state.authList[0].AuthorityGroupId : "",
-      BranchId: this.state.branchList[0] ? this.state.branchList[0].BranchId : "",
+      AuthorityGroupId: this.state.authList[0] ? this.state.authList[0].AuthorityGroupId : "",     
     };
     this.setState({ operator });
   };

@@ -239,6 +239,16 @@ const navMap = [
     key: "sub91"
   },
   {
+    pathname: "#/orgoperator",
+    sub: "sub9",
+    key: "sub92"
+  },
+  {
+    pathname: "#/orgoperator/detail",
+    sub: "sub9",
+    key: "sub92"
+  },
+  {
     pathname: "#/permissionlist",
     sub: "sub9",
     key: "sub93"

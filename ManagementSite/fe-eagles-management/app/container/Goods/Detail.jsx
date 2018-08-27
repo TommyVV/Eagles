@@ -344,7 +344,7 @@ class Base extends Component {
             ]
           })(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps} />
+              <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance}/>
             </div>
           )}
         </FormItem>

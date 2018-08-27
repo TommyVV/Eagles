@@ -84,6 +84,9 @@ export const pageMap = [
   {
     value: "3",
     text: "党建学习"
+  }, {
+    value: "4",
+    text: "生活社区"
   }
 ];
 export const publicMap = [
@@ -253,7 +256,8 @@ export const pageCodeGroup = [
   },
   {
     text: "操作员管理",
-    next: new Map([["oper0001", "操作员维护"],
+    next: new Map([["oper0001", "支部操作员维护"],
+    ["oper0004", "机构操作员维护"],
     ["oper0002", "权限组维护"],
     ["oper0003", "权限分配"]])
   },

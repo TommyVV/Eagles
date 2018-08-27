@@ -425,9 +425,10 @@ export default class App extends React.Component {
               }
               style={{
                 display:
-                  authMap.get("oper0001") ||
+                  authMap.get("oper0001") ||                  
                     authMap.get("oper0002") ||
-                    authMap.get("oper0003")
+                    authMap.get("oper0003")||
+                    authMap.get("oper0004")
                     ? null
                     : "none"
               }}
@@ -437,7 +438,14 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/operatorlist")}
                 style={{ display: authMap.get("oper0001") ? null : "none" }}
               >
-                操作员维护
+                支部操作员维护
+              </Menu.Item>
+              <Menu.Item
+                key="sub92"
+                onClick={e => hashHistory.replace("/orgoperatorlist")}
+                style={{ display: authMap.get("oper0004") ? null : "none" }}
+              >
+                组织操作员维护
               </Menu.Item>
               <Menu.Item
                 key="sub93"

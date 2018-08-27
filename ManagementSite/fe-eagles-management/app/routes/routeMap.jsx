@@ -64,6 +64,9 @@ import PartyMemberReport from "../container/Report/PartyMember";
 import ActivityReport from "../container/Report/Activity";
 import TaskReport from "../container/Report/Task";
 import ArticleReport from "../container/Report/Article";
+import OrgOperator from "../container/OrgOper";
+import OrgOperatorDetail from "../container/OrgOper/Detail";
+
 
 class RouteMap extends Component {
   render() {
@@ -113,6 +116,8 @@ class RouteMap extends Component {
           {/* 操作员 */}
           <route path="/operatorlist" component={OperatorList} />
           <route path="/operator/detail(/:id)" component={OperatorDetail} />
+          <route path="/orgoperatorlist" component={OrgOperator} />
+          <route path="/orgoperator/detail(/:id)" component={OrgOperatorDetail} />
           {/* 机构管理 */}
           <route path="/orglist" component={OrgList} />
           <route path="/org/detail(/:id)" component={OrgDetail} />
