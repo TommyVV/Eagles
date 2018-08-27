@@ -4,7 +4,7 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/operatorService";
 import { getList } from "../../services/authGroupService";
-import { getList as getBranchList } from "../../services/branchService";
+import { getOrgList } from "../../services/orgService"
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -57,7 +57,7 @@ class Base extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { authList, operator, branchList } = this.props;
+    const { authList, operator, branchList, orgList } = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -71,25 +71,31 @@ class Base extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        {/* <FormItem {...formItemLayout} label="操作员编号">
-          {getFieldDecorator("OperId", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入操作员编号"
-              }
-            ]
-          })(<Input placeholder="必填，请输入操作员名称" />)}
-        </FormItem> */}
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("OperId")(<Input />)}
+        </FormItem>
+        <FormItem  {...formItemLayout} label="机构">
+          {getFieldDecorator(`OrgId`)(
+            <Select>
+              {orgList.map((o, i) => {
+                return (
+                  i==0?
+                  <Option key={i} value={o.OrgId} >
+                    {o.OrgName}
+                  </Option>:<Option key={i} value={o.OrgId} >
+                    {o.OrgName}
+                  </Option>
+                );
+              })}
+            </Select>
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="操作员名称">
           {getFieldDecorator("OperName", {
             rules: [
               {
                 required: true,
-                message: "必填，请输入操作员姓名"              
+                message: "必填，请输入操作员姓名"
               }
             ]
           })(<Input placeholder="必填，请输入操作员姓名" />)}
@@ -121,7 +127,7 @@ class Base extends Component {
               })}
             </Select>
           )}
-        </FormItem>        
+        </FormItem>
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={4}>
@@ -152,6 +158,7 @@ const FormMap = Form.create({
   mapPropsToFields: props => {
     console.log("详情数据回显 - ", props);
     const operator = props.operator;
+    const OrgList=props.orgList;
     return {
       OperId: Form.createFormField({
         value: operator.OperId
@@ -164,9 +171,12 @@ const FormMap = Form.create({
       }),
       AuthorityGroupId: Form.createFormField({
         value: operator.AuthorityGroupId ? operator.AuthorityGroupId : ""
-      }),     
+      }),
       Password: Form.createFormField({
         value: operator.Password
+      }),
+      OrgId: Form.createFormField({
+        value: operator.OrgId ? operator.OrgId : OrgList[0]?OrgList[0].OrgId:""
       })
     };
   }
@@ -177,23 +187,25 @@ class OperatorDetail extends Component {
     this.state = {
       authList: [],
       operator: {},
-      branchList: []
+      branchList: [],
+      orgList: []
     };
   }
 
   componentWillMount() {
     let { id } = this.props.params;
     if (id) {
-      this.getInfo(id); //拿详情
+      this.getInfo(id); //拿详情    
     } else {
       this.setAuthList(); // 拿权限组列表
     }
+    this.loadOrgList();
   }
+
   setAuthList = async () => {
     await this.getAuthList();
-    await this.getBranchList(); // 拿支部列表
     const operator = {
-      AuthorityGroupId: this.state.authList[0] ? this.state.authList[0].AuthorityGroupId : "",     
+      AuthorityGroupId: this.state.authList[0] ? this.state.authList[0].AuthorityGroupId : "",
     };
     this.setState({ operator });
   };
@@ -202,8 +214,8 @@ class OperatorDetail extends Component {
   getInfo = async OperId => {
     try {
       await this.getAuthList(); // 拿权限组列表
-      await this.getBranchList(); // 拿支部列表
       const { Info } = await getInfoById({ OperId });
+
       this.setState({ operator: Info });
     } catch (e) {
       message.error("获取详情失败");
@@ -223,19 +235,19 @@ class OperatorDetail extends Component {
       throw new Error(e);
     }
   };
-  // 拿支部列表
-  getBranchList = async () => {
-    try {
-      const { List } = await getBranchList({
-        PageNumber: 1,
-        PageSize: 1000000
-      });
-      this.setState({ branchList: List });
-    } catch (e) {
-      message.error("获取失败");
-      throw new Error(e);
-    }
-  };
+
+  loadOrgList = async () => {
+    let { List } = await getOrgList({
+      PageNumber: 1,
+      PageSize: 10000
+    });
+    console.log("List - ", List);
+    List.forEach((v, i) => {
+      v.key = i;
+    });
+    this.setState({ orgList: List });
+  }
+
   changeObj(operator) {
     this.setState({
       operator
@@ -248,6 +260,7 @@ class OperatorDetail extends Component {
           operator={this.state.operator}
           authList={this.state.authList}
           branchList={this.state.branchList}
+          orgList={this.state.orgList}
           setObj={this.changeObj.bind(this)}
         />
       </Nav>

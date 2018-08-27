@@ -26,6 +26,14 @@ class OrgOperatorList extends React.Component {
     };
     this.columns = [
       {
+        title: "组织编号",
+        dataIndex: "OrgId"
+      },
+      {
+        title: "组织名称",
+        dataIndex: "OrgName"
+      },
+      {
         title: "操作员编号",
         dataIndex: "OperId"
       },
