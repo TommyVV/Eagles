@@ -187,9 +187,9 @@ $(document).ready(function() {
             } else if (status == 3) {
                 sta = `<span class="props-btn line-color">已完成</span>`;
             } else if (status == -1) {
-                sta = `<div class="props-btn already">未接受</div>`;
+                sta = `<div class="props-btn already">待审核</div>`;
             }else if (status == -2) {
-                sta = `<span class="props-btn already">待审核</span>`;
+                sta = `<span class="props-btn already">待接受</span>`;
             } else if (status == -7) {
                 sta = `<span class="props-btn already">已取消</span>`;
             }else if (status == -8) {

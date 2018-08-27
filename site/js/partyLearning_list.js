@@ -64,10 +64,16 @@ function partyLearning(moduleId, token, page, appId) {
                             externalUrl = 'partyLearning_detail.html?NewsId=' + data.NewsInfos[i].NewsId +
                                 '&appId=' + appId + '' //详情页
                         }
+                        var imgUrl = data.NewsInfos[i].ImageUrl;
+                        var imgEle="";
+                        if(imgUrl){
+                            imgEle='<img class="media-object" src="' + imgUrl+ '">';
+                        }else{
+                            imgEle='<div class="media-object"></div>'
+                        }
                         learningList += '<div class="media"><a href="' + externalUrl + '">' +
                             '<div class="media-left">' +
-                            '<img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' +
-                            data.NewsInfos[i].Title + '">' +
+                            imgEle +
                             '</div>' +
                             '<div class="media-body">' +
                             '<h4 class="media-heading">' + data.NewsInfos[i].Title + '</h4>' +

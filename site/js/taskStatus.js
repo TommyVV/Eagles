@@ -202,7 +202,7 @@ $(document).ready(function () {
         } else if (status == -9) {
             return "创建未通过";
         } else if (status == 0) {
-            return "任务启动";
+            return "已接受";
         } else if (status == 2) {
             return "完成待审核";
         } else if (status == 3) {
@@ -354,16 +354,10 @@ $(document).ready(function () {
                     }
                 });
                 $(".pass").click(function () {
-                    if (!requestFlag) {
-                        requestFlag = true;
-                        editTaskComplete(0);
-                    }
+                    editTaskComplete(0);
                 });
                 $(".nopass").click(function () {
-                    if (!requestFlag) {
-                        requestFlag = true;
-                        editTaskComplete(1);
-                    }
+                    editTaskComplete(1);
                 });
             } else {
                 //下级查看
@@ -415,6 +409,9 @@ $(document).ready(function () {
         if(ele.length==0){
             errorTip('请选择公示方式');
             return;
+        }
+        if (!requestFlag) {
+            requestFlag = true;     
         }
         var pubFlag = $('.select').attr("id").split('-')[1];
         $.ajax({
