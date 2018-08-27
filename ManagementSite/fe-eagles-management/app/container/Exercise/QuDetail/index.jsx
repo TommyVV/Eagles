@@ -137,8 +137,8 @@ class QuestionForm extends Component {
     const { Info } = this.props.info;
     this.props.saveInfo({
       Info: {
-        ...values,
         ...Info,
+        ...values,
         HasLimitedTime: value == "1" ? true : false
       }
     });
@@ -396,14 +396,18 @@ class QuestionForm extends Component {
                   )}
                 </FormItem>
               </Col>
-              <Col span={6} key={2}>
+              <Col span={6} key={2} style={{
+                display: Info.ExercisesType == "20" ? "none" : null
+              }}>
                 <FormItem {...formItemLayoutChild} label="每题分值">
                   {getFieldDecorator(`SubjectScore`)(
                     <InputNumber min={1} style={{ width: "100%" }} />
                   )}
                 </FormItem>
               </Col>
-              <Col span={6} key={3}>
+              <Col span={6} key={3} style={{
+                display: Info.ExercisesType == "20" ? "none" : null
+              }}>
                 <FormItem {...formItemLayoutChild} label="及格分">
                   {getFieldDecorator(`PassScore`)(
                     <InputNumber min={1} style={{ width: "100%" }} />
@@ -413,8 +417,8 @@ class QuestionForm extends Component {
             </Row>
           </div>
           <FormItem {...formItemLayout} label="是否限制答题时间" style={{
-              display: Info.ExercisesType == "5" ? "block" : "none"
-            }}>
+            display: Info.ExercisesType == "5" ? "block" : "none"
+          }}>
             {getFieldDecorator("HasLimitedTime")(
               <Select onChange={this.change.bind(this)}>
                 <Option value="0">否</Option>
