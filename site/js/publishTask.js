@@ -216,9 +216,6 @@ $(document).ready(function () {
                     AttachmentDownloadUrl: array[0].FileUrl
                 };
                 fileArray.push(object);
-                if (fileArray.length == 4) {
-                    $(".upload-file").hide();
-                }
                 dealAttachment();
             } else {
                 console.log(data.result);
@@ -239,7 +236,10 @@ $(document).ready(function () {
             $(this).parents('.file').remove();
             $(".upload-file").show();
             console.log('index---', index);
-        })
+        });
+        if (fileArray.length == 4) {
+            $(".upload-file").hide();
+        }
     }
     $(".sub-btn").click(function () {
         if(requestFlag){
