@@ -4,6 +4,7 @@
 
 // const API_SERVER = ""; //mock
 const API_SERVER = "http://51service.xyz/ManagementService"; //test
+//const API_SERVER = "http://ruisuikj.com/ManagementService"; //prd
 
 const LOGIN = {
   LOGIN: "/api/Login/Login", //登录
