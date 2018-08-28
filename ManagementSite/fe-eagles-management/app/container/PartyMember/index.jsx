@@ -73,6 +73,9 @@ class SearchForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { branchList } = this.state;
+    let userInfo=JSON.parse(localStorage.info);
+    let branchId=userInfo.BranchId;
+    console.log(branchId);
     return (
       <Form
         className="ant-advanced-search-form"
@@ -80,8 +83,8 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          <Col span={6} key={1}>
-            <FormItem label="支部名称">
+        {branchId==0?<Col span={6} key={1}>
+          <FormItem label="支部名称">
               {getFieldDecorator("BranchId")(
                 <Select >
                   <Option value="">全部</Option>
@@ -95,7 +98,8 @@ class SearchForm extends Component {
                 </Select>
               )}
             </FormItem>
-          </Col>
+            
+          </Col>:null}
           <Col span={6} key={2}>
             <FormItem label="党员名称">
               {getFieldDecorator(`UserName`)(<Input />)}

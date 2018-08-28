@@ -13,6 +13,9 @@ if(moduleType==0){
 }else if(moduleType==3){
 	document.title='党建学习';
 }
+else if(moduleType==3){
+	document.title='生活社区';
+}
 
 class CalculateScreen {
 	constructor() {

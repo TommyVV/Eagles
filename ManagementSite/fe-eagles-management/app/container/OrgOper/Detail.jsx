@@ -22,12 +22,14 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
+          var orgId=values.OrgId;
           const { operator } = this.props;
           let params = {
             Info: {
               ...operator,
               ...values,
-              IsBranch: false
+              IsBranch: false,
+              OrgId:orgId
             }
           };
           let { Code } = await createOrEdit(params);

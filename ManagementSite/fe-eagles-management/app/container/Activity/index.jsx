@@ -15,6 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/activityService";
+import {audit} from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
 import "moment/locale/zh-cn";
@@ -22,6 +23,7 @@ import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
+const TextArea = Input.TextArea;
 
 class SearchForm extends Component {
   handleSearch = e => {
