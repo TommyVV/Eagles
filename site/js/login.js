@@ -3,7 +3,7 @@ var testId = getRequest('testId');
 var testlist = getRequest('datalist');
 console.log(testlist)
 var newsIds = getRequest('NewsId'); //获取来源d的新闻id
-var onurl=getRequest('onurl')
+var onurl = getRequest('onurl')
 //var appId = 10000000
 navbar(appId)
 
@@ -23,32 +23,36 @@ function navbar(appId) {
         }
     });
 }
-console.log(getRequest('onurl'))
+
+$(".flag-area").click(function () {
+    window.location.href = "forgotpassword.html?appId=" + appId
+});
+
 $('.login-zc').on('click', function (e) {
-	if(onurl==undefined){
-		window.location.href = "signup.html?appId=" + appId
-	}else{
-		window.location.href = "signup.html?appId=" + appId+"&onurl="+onurl;
-	}
-    
+    if (onurl == undefined) {
+        window.location.href = "signup.html?appId=" + appId
+    } else {
+        window.location.href = "signup.html?appId=" + appId + "&onurl=" + onurl;
+    }
+
 })
-$(".flag-area").click(function() {
-		if ($(".pub-flag").hasClass("select")) {
-				$(".pub-flag")
-						.attr("src", "icons/sel_no@2x.png")
-						.removeClass("select");
-		} else {
-				$(".pub-flag")
-						.attr("src", "icons/sel_yes@2x.png")
-						.addClass("select");
-		}
+$(".flag-area").click(function () {
+    if ($(".pub-flag").hasClass("select")) {
+        $(".pub-flag")
+            .attr("src", "icons/sel_no@2x.png")
+            .removeClass("select");
+    } else {
+        $(".pub-flag")
+            .attr("src", "icons/sel_yes@2x.png")
+            .addClass("select");
+    }
 });
 //登录
 $('.btn-login').on('click', function (e) {
     e.preventDefault();
     let password = $('#inputPassword').val(); //密码
     let account = $('#inputUser').val(); //用户名
-	var pubFlag = $(".pub-flag").hasClass("select");
+    var pubFlag = $(".pub-flag").hasClass("select");
     //let captcha = $('#inputCaptcha').val();
     if (!account) {
         bootoast({
@@ -73,7 +77,7 @@ $('.btn-login').on('click', function (e) {
         data: {
             "Phone": account,
             "UserPwd": password,
-			"IsRememberPwd":pubFlag == true ? 1 : 0,
+            "IsRememberPwd": 1,
             "AppId": appId
         },
         url: DOMAIN + "/api/User/Login",
@@ -90,24 +94,24 @@ $('.btn-login').on('click', function (e) {
                 if (data.IsInternalUser == "0") {
                     window.location.href = 'index.html?moduleType=0&appId=' + appId + '';
                     return false;
-                }else{
-					//登陆成功页面跳转地址
-					var prevLink = document.referrer;
-					if ($.trim(prevLink) == '') {
-						location.href = 'mine.html?appId=' + appId + '';
-					} else {
-						if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
-							location.href = 'signup.html?appId=' + appId + '';
-						} else if (prevLink.indexOf('login.html') != -1) {
-							location.href = 'mine.html?appId=' + appId + '';
-						} else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
-							location.href = 'partyLearning_detail.html?appId=' + appId + '&datalist=' +
-								testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
-						} else {
-							location.href = prevLink;
-						}
-					}
-				}
+                } else {
+                    //登陆成功页面跳转地址
+                    var prevLink = document.referrer;
+                    if ($.trim(prevLink) == '') {
+                        location.href = 'mine.html?appId=' + appId + '';
+                    } else {
+                        if (prevLink.indexOf('signup.html') != -1) { //来自注册页面
+                            location.href = 'signup.html?appId=' + appId + '';
+                        } else if (prevLink.indexOf('login.html') != -1) {
+                            location.href = 'mine.html?appId=' + appId + '';
+                        } else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
+                            location.href = 'partyLearning_detail.html?appId=' + appId + '&datalist=' +
+                                testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
+                        } else {
+                            location.href = prevLink;
+                        }
+                    }
+                }
             } else {
                 bootoast({
                     message: '' + res.Message + '',

@@ -189,23 +189,27 @@ class SendList extends React.Component {
     };
     this.columns = [
       {
-        title: "下单商品",
+        title: "用户姓名",
+        dataIndex: "Name"
+      },
+      {
+        title: "手机号码",
+        dataIndex: "Phone"
+      },
+      {
+        title: "商品名称",
         dataIndex: "GoodsName"
       },
       {
-        title: "下单数量",
+        title: "商品数量",
         dataIndex: "Count"
       },
+
       {
         title: "下单日期",
         dataIndex: "PlaceTime",
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
-      },
-      {
-        title: "状态",
-        dataIndex: "OrderStatus",
-        render: text => <span>{text == "0" ? "可以发货" : "不能发货"}</span>
-      },
+      },      
       {
         title: "快递单号及备注",
         dataIndex: "ExpressId"

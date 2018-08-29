@@ -22,14 +22,14 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          var orgId=values.OrgId;
+          var orgId = values.OrgId;
           const { operator } = this.props;
           let params = {
             Info: {
               ...operator,
               ...values,
               IsBranch: false,
-              OrgId:orgId
+              OrgId: orgId
             }
           };
           let { Code } = await createOrEdit(params);
@@ -37,6 +37,8 @@ class Base extends Component {
             let tip = this.props.operator.OperId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/orgoperatorlist");
+          } else if (Code == "M18") {
+            message.error("操作员账号已被注册");
           } else {
             let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
             message.error(tip);
@@ -81,12 +83,12 @@ class Base extends Component {
             <Select>
               {orgList.map((o, i) => {
                 return (
-                  i==0?
-                  <Option key={i} value={o.OrgId} >
-                    {o.OrgName}
-                  </Option>:<Option key={i} value={o.OrgId} >
-                    {o.OrgName}
-                  </Option>
+                  i == 0 ?
+                    <Option key={i} value={o.OrgId} >
+                      {o.OrgName}
+                    </Option> : <Option key={i} value={o.OrgId} >
+                      {o.OrgName}
+                    </Option>
                 );
               })}
             </Select>
@@ -160,7 +162,7 @@ const FormMap = Form.create({
   mapPropsToFields: props => {
     console.log("详情数据回显 - ", props);
     const operator = props.operator;
-    const OrgList=props.orgList;
+    const OrgList = props.orgList;
     return {
       OperId: Form.createFormField({
         value: operator.OperId
@@ -178,7 +180,7 @@ const FormMap = Form.create({
         value: operator.Password
       }),
       OrgId: Form.createFormField({
-        value: operator.OrgId ? operator.OrgId : OrgList[0]?OrgList[0].OrgId:""
+        value: operator.OrgId ? operator.OrgId : OrgList[0] ? OrgList[0].OrgId : ""
       })
     };
   }

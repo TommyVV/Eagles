@@ -36,17 +36,26 @@ $('.btn-signup').on('click', function(e) {
 		type: "post",
 		data: {
 			"Phone": account,
-			"UserPwd": password,
+			"NewPwd": password,
 			"ValidCode": captcha,
 			"Seq": $('#inputCaptcha').attr('CodeSeq'),
 			"AppId": appId
 		},
-		url: DOMAIN + "/api/Register/Register",
+		url: DOMAIN + "/api/User/ForgetPwd",
 		dataType: "json",
 		success: function(res) {
 			var data = res.Result;
 			if(res.Code == 00) {
-				loginIn($('#inputUser').val(), $('#inputPassword').val()) //调登陆接口
+                bootoast({
+					message: '修改成功，3秒后跳转到登录页面。',
+					type: 'warning',
+					position: 'toast-top-center',
+					timeout: 3
+				});
+                setTimeout(() => {
+                    window.location="login.html?appId="+appId;    
+                }, 3000);
+				
 			} else {
 				bootoast({
 					message: '' + res.Message + '',
