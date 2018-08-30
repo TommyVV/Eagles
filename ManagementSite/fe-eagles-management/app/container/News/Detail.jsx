@@ -381,21 +381,25 @@ class Base extends Component {
           </Upload>
           <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("Content", {
+        <FormItem {...formItemLayout} label="外部链接" style={{display:news.IsExternal=="1"?"block":"none"}}>
+          {getFieldDecorator("ExternalUrl", {
             rules: [
               {
                 required: true,
-                message: "必填，请输入内容"
+                message: "必填，请输入来源"
               }
             ]
-          })(
+          })(<Input placeholder="外部链接" />)}
+        </FormItem>
+        <FormItem {...formItemLayoutContent} label="内容"  style={{display:news.IsExternal=="0"?"block":"none"}}>
+          {getFieldDecorator("Content")(
             <div className="editor-wrap">
               <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance} />
             </div>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否有试卷">
+        <FormItem {...formItemLayout} label="是否有试卷"
+        style={{display:news.IsExternal=="0"?"block":"none"}}>
           {getFieldDecorator("isTest")(
             <Select onChange={this.change.bind(this, "isTest")}>
               <Option value="0">否</Option>
@@ -443,7 +447,7 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="分类">
+        <FormItem {...formItemLayout} label="分类"  style={{display:news.IsExternal=="0"?"block":"none"}}>
           <Row>
             <Col span={8}>
               {news.IsImage == "0" || news.IsImage == "1" ? (
@@ -614,7 +618,10 @@ const FormMap = Form.create({
       }),
       IsTop: Form.createFormField({
         value: news.IsTop ? news.IsTop : 0
-      })
+      }),
+      ExternalUrl: Form.createFormField({
+        value: news.ExternalUrl
+      }),
     };
   }
 })(Base);

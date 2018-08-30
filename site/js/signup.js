@@ -135,7 +135,7 @@ function loginIn(account, UserPwd) {
 				localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
 				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
 
-				if (onurl != undefined) {
+				if (onurl != undefined&&onurl!="") {
 					location.href = onurl + '?appId=' + appId
 					return false;
 				} else {
