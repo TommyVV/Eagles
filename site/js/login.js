@@ -107,6 +107,8 @@ $('.btn-login').on('click', function (e) {
                         } else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
                             location.href = 'partyLearning_detail.html?appId=' + appId + '&datalist=' +
                                 testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
+                        }else if (prevLink.indexOf('forgotpassword.html') != -1) {
+                            location.href = 'mine.html?appId=' + appId + '';
                         } else {
                             location.href = prevLink;
                         }

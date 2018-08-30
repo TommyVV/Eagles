@@ -1,12 +1,12 @@
 var appId = getRequest('appId');
 console.log(getRequest('onurl'))
-var onurl=getRequest('onurl')
-$('.btn-signup').on('click', function(e) {
+var onurl = getRequest('onurl')
+$('.btn-signup').on('click', function (e) {
 	e.preventDefault();
 	let password = $('#inputPassword').val();
 	let account = $('#inputUser').val();
 	let captcha = $('#inputCaptcha').val();
-	if(!account) {
+	if (!account) {
 		bootoast({
 			message: '请输入手机号',
 			type: 'warning',
@@ -15,7 +15,7 @@ $('.btn-signup').on('click', function(e) {
 		});
 		alert('请输入手机号');
 		return;
-	} else if(!password) {
+	} else if (!password) {
 		bootoast({
 			message: '请输入密码',
 			type: 'warning',
@@ -23,7 +23,7 @@ $('.btn-signup').on('click', function(e) {
 			timeout: 3
 		});
 		return;
-	} else if(!captcha) {
+	} else if (!captcha) {
 		bootoast({
 			message: '请输入验证码',
 			type: 'warning',
@@ -43,9 +43,9 @@ $('.btn-signup').on('click', function(e) {
 		},
 		url: DOMAIN + "/api/Register/Register",
 		dataType: "json",
-		success: function(res) {
+		success: function (res) {
 			var data = res.Result;
-			if(res.Code == 00) {
+			if (res.Code == 00) {
 				loginIn($('#inputUser').val(), $('#inputPassword').val()) //调登陆接口
 			} else {
 				bootoast({
@@ -59,9 +59,9 @@ $('.btn-signup').on('click', function(e) {
 	})
 })
 var timer;
-$(".btn-cap").click(function() {
+$(".btn-cap").click(function () {
 	var phone = $('#inputUser').val();
-	if(phone == "" || phone == undefined || phone == null||phone.length != 11) {
+	if (phone == "" || phone == undefined || phone == null || phone.length != 11) {
 		bootoast({
 			message: '请输入有效的手机号！',
 			type: 'warning',
@@ -69,6 +69,9 @@ $(".btn-cap").click(function() {
 			timeout: 3
 		});
 		return false;
+	}
+	if ($(".btn-cap").attr("disabled") == "disabled") {
+		return;
 	}
 	$(this).attr("disabled", "disabled");
 	$.ajax({
@@ -78,23 +81,22 @@ $(".btn-cap").click(function() {
 			"Phone": phone,
 			"AppId": appId
 		},
-		success: function(res) {
-			if(res.Code == 00) {
+		success: function (res) {
+			if (res.Code == 00) {
 				$('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
 				$('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
 				var time = 60
-				$('.btn-cap').text(''+time+'s重新获取');
-				
-				$('.btn-cap').css("background","#D6D6D6")
+				$('.btn-cap').text('' + time + 's重新获取');
+
+				$('.btn-cap').css("background", "#D6D6D6")
 				$(this).attr("disabled", "disabled");
-				timer = setInterval(function() {
+				timer = setInterval(function () {
 					time--;
-					$('.btn-cap').text(''+time+'s重新获取');
-					if(time <= 0) {
-						clearInterval(timer);
-						time = 60;
+					$('.btn-cap').text('' + time + 's重新获取');
+					if (time <= 0) {
+						clearInterval(timer);						
 						$(".btn-cap").text('获取验证码');
-						$('.btn-cap').css("background","#EE2F2F")
+						$('.btn-cap').css("background", "#EE2F2F")
 						$(".btn-cap").removeAttr("disabled");
 					}
 				}, 1000)
@@ -119,32 +121,32 @@ function loginIn(account, UserPwd) {
 		data: {
 			"Phone": account,
 			"UserPwd": UserPwd,
-			"IsRememberPwd":1,
+			"IsRememberPwd": 1,
 			"AppId": appId
 		},
 		url: DOMAIN + "/api/User/Login",
 		dataType: "json",
-		success: function(res) {
+		success: function (res) {
 			var data = res.Result;
-			if(res.Code == 00) {
+			if (res.Code == 00) {
 				localStorage.setItem("token", data.Token); //存储token
 				localStorage.setItem("userId", data.UserId); //用户ID
 				localStorage.setItem("IsInternalUser", data.IsInternalUser); //是否是内部用户
 				localStorage.setItem("IsVerifyCode", data.IsVerifyCode); //是否需要验证码
 				localStorage.setItem("TokenExpTime", data.TokenExpTime); //过期时间
-				
-					if(onurl!=undefined){
-						location.href =onurl+'?appId='+appId
+
+				if (onurl != undefined) {
+					location.href = onurl + '?appId=' + appId
+					return false;
+				} else {
+					if (localStorage.getItem('IsInternalUser') == 1) {
+						location.href = 'mine.html?appId=' + appId + '';
 						return false;
-					}else{
-						if(localStorage.getItem('IsInternalUser')==1){
-							location.href = 'mine.html?appId=' + appId + '';
-							return false;
-						}else{
-							location.href = 'index.html?moduleType=0&appId=' + appId
-							return false;
-						}
+					} else {
+						location.href = 'index.html?moduleType=0&appId=' + appId
+						return false;
 					}
+				}
 
 			}
 		}

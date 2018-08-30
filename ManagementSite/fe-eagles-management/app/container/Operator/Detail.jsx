@@ -36,7 +36,7 @@ class Base extends Component {
             message.success(tip);
             hashHistory.replace("/operatorlist");
           } else if (Code == "M18") {
-            message.error("操作员账号已被注册");
+            message.error("操作员账号已存在");
           }
           else {
             let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
