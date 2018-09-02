@@ -1,4 +1,4 @@
-const DOMAIN = 'http://localhost:54671';
+const DOMAIN = 'http://51service.xyz/Eagles';
 const UPLOAD = "http://51service.xyz/Eagles/api/Upload/UploadFile";
 
 function getRequest(name) {
