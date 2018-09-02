@@ -47,8 +47,9 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 				if(data.BookAuthor){
 					$('#book-author').val(data.BookAuthor);
 				}
-				if(data.UserName){
-					$('#name').html(data.UserName);
+				if(data.Introducer){
+					$('#name').html(data.Introducer);
+					toUserId=data.ToUserId;
 				}
 				$('.publish-content').val(data.HtmlContent)
 				$("input:radio[value='"+data.IsPublic+"']").attr('checked','true');
@@ -227,11 +228,7 @@ function branchUsers(token, appId) {
 							'</div>'
 					}
 					$('.subordinates').append(options);
-					if(dangyuan!=undefined){
-						var idf=dangyuan
-						//$("#name").html($('#' + idf).find('span').text());
-						toUserId=idf
-					}
+					
 				}else{
 					$('#modal .modal-body').html('暂无数据');
 				}
