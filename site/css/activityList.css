@@ -11,9 +11,11 @@
     text-align: center; }
     .head-area .activity-cate span {
       height: 1.7066666667rem;
-      display: inline-block; }
+      display: inline-block;
+      color: black; }
     .head-area .activity-cate .select {
-      border-bottom: 2px solid #F24848; }
+      border-bottom: 2px solid #F24848;
+      color: #F24848; }
 
 .item {
   padding-left: 0.7466666667rem;

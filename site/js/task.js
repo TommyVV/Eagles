@@ -45,19 +45,27 @@ $(document).ready(function() {
         pageIndex = 1;
     });
     //任务类型 分类点击
-    $(".task-type .list-item").click(function() {
+    $("#t-cate .list-item").click(function() {
         var id = $(this).attr("id");
-        var text = $(this).html();
-        $(".t-text").html(text);
-        $(".task-type").addClass("hide");
-        $("#t-cate")
-            .find(".glyphicon")
-            .removeClass("glyphicon-menu-down")
-            .addClass("glyphicon-menu-left");
+        $("#t-cate .list-item").removeClass("select");
+        $(this).addClass("select");
         taskType = id;
         $('.task-list').html('');
         getTaskList();
     });
+    // $(".task-type .list-item").click(function() {
+    //     var id = $(this).attr("id");
+    //     var text = $(this).html();
+    //     $(".t-text").html(text);
+    //     $(".task-type").addClass("hide");
+    //     $("#t-cate")
+    //         .find(".glyphicon")
+    //         .removeClass("glyphicon-menu-down")
+    //         .addClass("glyphicon-menu-left");
+    //     taskType = id;
+    //     $('.task-list').html('');
+    //     getTaskList();
+    // });
     //人员下拉列表
     $("#m-cate").click(function() {
         //关闭类别筛选

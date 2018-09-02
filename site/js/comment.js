@@ -13,6 +13,7 @@ Comment.prototype = {
         this.userId = info.userId;
         this.flag = false;
         $(".comment-content").html(`<div class="title">评论
+                <span class="num"></span>
                 <div class="edit-comment">
                     <span class="glyphicon glyphicon-edit"></span>写评论
                 </div>
@@ -63,6 +64,7 @@ Comment.prototype = {
             success: function(data) {
                 console.log("GetUserComment---", data);
                 if (data.Code == "00") {
+                    $(".comment-content .num").html("("+data.Result.CommentList.length+")");
                     that.commentArea(data.Result.CommentList, that.userType);
                 } else if (data.Code == '10') {
                     $(".comment-content").removeClass('hide');

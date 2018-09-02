@@ -9,9 +9,32 @@ body {
   padding-bottom: 0.256rem; }
   .head-area .task-cate {
     float: left;
-    width: 33.33%;
     line-height: 1.7066666667rem;
     text-align: center; }
+  .head-area .m-text {
+    width: 80%;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center; }
+  .head-area #m-cate {
+    width: 25%;
+    overflow: hidden; }
+  .head-area #t-cate {
+    width: 75%;
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox; }
+    .head-area #t-cate .list-item {
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1; }
+      .head-area #t-cate .list-item span {
+        display: inline-block;
+        height: 100%;
+        padding: 0px 10px; }
+    .head-area #t-cate .select span {
+      border-bottom: 2px solid #F24848;
+      color: #F24848; }
 
 .tip {
   margin: 10px; }
