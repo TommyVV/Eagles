@@ -62,7 +62,7 @@ Comment.prototype = {
             url: DOMAIN + "/api/UserComment/GetUserComment",
             data: parData,
             success: function(data) {
-                console.log("GetUserComment---", data);
+                //console.log("GetUserComment---", data);
                 if (data.Code == "00") {
                     $(".comment-content .num").html("("+data.Result.CommentList.length+")");
                     that.commentArea(data.Result.CommentList, that.userType);
