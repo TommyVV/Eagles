@@ -33,7 +33,8 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 			var data = res.Result;
 			if(res.Code == 00) {
 				$('#title').val(data.Title);
-				$('#selectpicker').val(data.NewsType).attr('selected','selected'); 
+				$('.selectpicker').val(data.NewsType);//.attr("selected","true"); 
+				$(".selectpicker").selectpicker('refresh');
 				//imgsrec
 				if(data.NewsType==3){
 					$('.introducer').show();

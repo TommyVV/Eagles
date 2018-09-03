@@ -198,6 +198,7 @@ class Base extends Component {
       getFieldsValue
     } = this.props.form;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
+    let external=news==null?false:news.IsExternal==1?true:false;
     console.log("保存的附件：", Attachs);
     let fileList = [];
     news.Attachments &&
@@ -381,17 +382,16 @@ class Base extends Component {
           </Upload>
           <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
         </FormItem>
-        <FormItem {...formItemLayout} label="外部链接" style={{display:news.IsExternal=="1"?"block":"none"}}>
+        <FormItem {...formItemLayout} label="外部链接" style={{display:external?"block":"none"}}>
           {getFieldDecorator("ExternalUrl", {
             rules: [
-              {
-                required: true,
-                message: "必填，请输入来源"
+              {                
+                message: "外部链接"
               }
             ]
           })(<Input placeholder="外部链接" />)}
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容"  style={{display:news.IsExternal=="0"?"block":"none"}}>
+        <FormItem {...formItemLayoutContent} label="内容"  style={{display:!external?"block":"none"}}>
           {getFieldDecorator("Content")(
             <div className="editor-wrap">
               <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance} />
@@ -399,7 +399,7 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="是否有试卷"
-        style={{display:news.IsExternal=="0"?"block":"none"}}>
+        style={{display:!external?"block":"none"}}>
           {getFieldDecorator("isTest")(
             <Select onChange={this.change.bind(this, "isTest")}>
               <Option value="0">否</Option>
@@ -447,7 +447,7 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="分类"  style={{display:news.IsExternal=="0"?"block":"none"}}>
+        <FormItem {...formItemLayout} label="分类"  style={{display:!external?"block":"none"}}>
           <Row>
             <Col span={8}>
               {news.IsImage == "0" || news.IsImage == "1" ? (
