@@ -1,5 +1,7 @@
-const DOMAIN = 'http://51service.xyz/Eagles';
-const UPLOAD = "http://51service.xyz/Eagles/api/Upload/UploadFile";
+const DOMAIN = 'http://www.51service.xyz/Eagles';
+const UPLOAD = "http://www.51service.xyz/Eagles/api/Upload/UploadFile";
+// const DOMAIN = 'http://ruisuikj.com/Eagles';
+// const UPLOAD = "http://ruisuikj.com/Eagles/api/Upload/UploadFile";
 
 function getRequest(name) {
     var url = window.location.href; //获取当前页面的URL

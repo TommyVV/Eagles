@@ -121,6 +121,7 @@
 
     .main_content .list-box .list-body .list-top .media .media-body {
         padding-top: 0.42667rem;
+        
     }
 
     .main_content .list-box .list-body .list-top .media .media-body .media-heading {
@@ -147,15 +148,17 @@
         color: #141414;
         font-size: 0.64rem;
     }
-
+    .overflow-two-line{
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
     .main_content .list-box .list-body .list-bottom .media .media-body .list-time {
-        position: absolute;
-        left: 0;
-        bottom: 0;
+       margin-top:15px;
         color: #949494;
         font-size: 0.512rem;
     }
-
     .main_content .list-box .list-body .list-bottom .media .media-body .study-time {
         position: absolute;
         right: 0;

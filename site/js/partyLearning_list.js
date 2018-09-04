@@ -23,11 +23,11 @@ mescroll = new MeScroll("mescroll", {
         isLock: false,
         callback: partyLearningfunc,
         isBounce: false,
-		htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
+        htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
     }
 });
 
-function downcallback() {}
+function downcallback() { }
 
 function partyLearningfunc(page) {
     if (page.module) {
@@ -65,29 +65,29 @@ function partyLearning(moduleId, token, page, appId) {
                                 '&appId=' + appId + '' //详情页
                         }
                         var imgUrl = data.NewsInfos[i].ImageUrl;
-                        var imgEle="";
-                        if(imgUrl){
-                            imgEle='<img class="media-object" src="' + imgUrl+ '">';
-                        }else{
-                            imgEle='<div class="media-object"></div>'
+                        var imgEle = "";
+                        if (imgUrl) {
+                            imgEle = '<div class="media-left"><img class="media-object" src="' + imgUrl + '"></div>';
+                        } else {
+                            imgEle = ''
                         }
-                        learningList += '<div class="media"><a href="' + externalUrl + '">' +
-                            '<div class="media-left">' +
+                        learningList = '<div class="media"><div class="newsbody">' +
                             imgEle +
-                            '</div>' +
-                            '<div class="media-body">' +
-                            '<h4 class="media-heading">' + data.NewsInfos[i].Title + '</h4>' +
-                            '<span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-                            '</div>' +
-                            '</a></div>'
+                            '<div class="media-body ">' +
+                            '<div class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</div>' +
+                            '<div class="list-time">' + data.NewsInfos[i].CreateTime + '</div>' +
+                            '</div></div></div>'
+                        var te = $(learningList);
+                        te.find(".newsbody").click(function () {
+                            window.location = externalUrl;
+                        });
+                        $('.list-bottom').append(te) //新闻列表
                     }
                     mescroll.endSuccess(data.NewsInfos.length);
-                    $('.list-bottom').append(learningList) //新闻列表
                 } else {
                     mescroll.lockDownScroll(true);
                     mescroll.lockUpScroll(true);
                 }
-
             } else {
                 mescroll.lockDownScroll(true);
                 mescroll.lockUpScroll(true);
@@ -152,7 +152,7 @@ $('.dropdown-menu').on('click', 'li', function (e) {
             isLock: false,
             callback: partyLearningfunc,
             isBounce: false,
-			htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
+            htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
         }
     });
 
