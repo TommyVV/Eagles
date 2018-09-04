@@ -35,7 +35,10 @@ class Base extends Component {
             let tip = this.props.operator.OperId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/operatorlist");
-          } else {
+          } else if (Code == "M18") {
+            message.error("操作员账号已存在");
+          }
+          else {
             let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
             message.error(tip);
           }
@@ -89,7 +92,7 @@ class Base extends Component {
             rules: [
               {
                 required: true,
-                message: "必填，请输入操作员姓名"              
+                message: "必填，请输入操作员姓名"
               }
             ]
           })(<Input placeholder="必填，请输入操作员姓名" />)}
@@ -121,7 +124,7 @@ class Base extends Component {
               })}
             </Select>
           )}
-        </FormItem>      
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="所属支部"

@@ -13,6 +13,9 @@ if(moduleType==0){
 }else if(moduleType==3){
 	document.title='党建学习';
 }
+else if(moduleType==3){
+	document.title='生活社区';
+}
 
 class CalculateScreen {
 	constructor() {
@@ -109,6 +112,7 @@ function moduleListTitle(moduleType,appId) {
 					moudle.id = data.Modules[i].ModuleId; //存储新闻类别ID
 					moudle.class1 = 'id-' + data.Modules[i].ModuleId; //存储一个新闻类别classid
 					moudle.flag = '' //存储新闻类别是左边还是右边的标识符
+					moudle.SubCateType = data.Modules[i].SubCateType;
 					title += '<div class="list-box"><div class="list-header"><span class="la_s1"><img src="' + data.Modules[i].SmallImageUrl + '"></span><span class="title">' + data.Modules[i].ModuleName + '</span><a href="' + urls + '" class="more">更多 ></a></div><div class="list-body id-' + data.Modules[i].ModuleId + '"><div class="list-top row"></div><div class="list-bottom"></div></div></div>';
 					if(i % 2 != 0) { //右边的标题
 						pctitietwo += '<div class="right-item"><h4 class="item-title id-' + data.Modules[i].ModuleId + '"><span class="title"><img src="' + data.Modules[i].SmallImageUrl + '" alt="">' + data.Modules[i].ModuleName + '</span><a href="' + urls + '" class="more">更多&gt;&gt;</a></h4><div class="la_divj"></div></div>';
@@ -126,14 +130,14 @@ function moduleListTitle(moduleType,appId) {
                //获取分类下新闻列表   
 				for(var i = 0; i < moudlesIds.length; i++) {
 					//获取分类下新闻列表
-					moduleListcontent(moudlesIds[i].id, moudlesIds[i].class1, moudlesIds[i].flag,token,appId)
+					moduleListcontent(moudlesIds[i].id, moudlesIds[i].class1, moudlesIds[i].flag,token,appId,moudlesIds[i].SubCateType)
 				}
 			}
 		}
 	});
 }
 //获取新闻列表
-function moduleListcontent(moduleId, class1, flag,token,appId) {
+function moduleListcontent(moduleId, class1, flag,token,appId,subCateType) {
 	$.ajax({
 		type: "post",
 		data: {
@@ -162,18 +166,25 @@ function moduleListcontent(moduleId, class1, flag,token,appId) {
 						externalUrl = 'partyLearning_detail.html?NewsId='+data.NewsInfos[i].NewsId+'&appId='+appId+'' //详情页NewsId 
 					}
 					//移动端代码
-					if(i < 2) { 
-						contentone += '<div class="media col-xs-6">' +
-							'<div class="media-top"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-							'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-							'</a></div>' +
-							'</div>';
-					} else if(i >= 2) {
+					if(subCateType!=0){
 						contenttwo += '<div class="media">' +
-							'<div class="media-left"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-							'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-							'</a></div>' +
-							'</div>';
+								'<div class="media-body media-text"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+								'</a></div>' +
+								'</div>';
+					}else{
+						if(i < 2) { 
+							contentone += '<div class="media col-xs-6">' +
+								'<div class="media-top"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
+								'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+								'</a></div>' +
+								'</div>';
+						} else if(i >= 2) {
+							contenttwo += '<div class="media">' +
+								'<div class="media-left"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
+								'</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+								'</a></div>' +
+								'</div>';
+						}
 					}
 					//PC代码 右边列表页
 					if(flag == 'right') { 

@@ -188,6 +188,20 @@ body {
     position: relative;
     width: 100%;
     height: 36px;
+    display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+.mod_select .select_box .cl{
+    height: 36px;
+    line-height: 38px;
+    padding: 0px 10px;
+}
+.mod_select .select_box .select{
+    border-bottom: 2px solid #F24848;
+    color: #F24848;
 }
 
 .mod_select .select_box .select_txt {

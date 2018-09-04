@@ -1,12 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+  font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; 
+}
 
 html, body {
   min-height: 100%;
    }
-
+   .bootstrap-select {width: 100% !important}
+.bootstrap-select .btn-default{border-width: 0 0 1px 0;border-radius: 0;}
 .container {
   padding: 0 1.17333rem; }
 .wrap{margin-bottom:8px ;}
@@ -20,12 +22,12 @@ html, body {
     border-radius: 0.08533rem;
     /*background-color: #eeeeee;*/
     outline: none;
-    padding-left: 0.81067rem;
+    padding-left: 12px;
     margin-bottom: 0.42667rem;
     -webkit-appearance: none;
     border: none;
     border-bottom: 1px solid #ccc;
-    font-size: 0.512rem !important; }
+    font-size: 14px !important; }
   .publish-type {
     width: 6.2rem;
     height: 1.28rem;
@@ -47,26 +49,21 @@ html, body {
     font-size: 0.512rem !important; }
   .publish-btn {
     height: 1.792rem;
-    width: 11.09333rem;
+    width: 40%;
     color: #fff;
     font-size: 0.64rem;
-    border: none;
-    margin: 0 auto;
-    display: block;
-    letter-spacing: 5px;
+    border-radius: 3px;
     background: linear-gradient(to bottom right, #FF5454, #E51A1A);
-    outline: none; }
+    text-align: center;float: left;line-height: 1.792rem; margin-left: 10px }
     .assign{margin-bottom: 10px;display: none;}
     .pub-item{height: 1.7066666667rem;
     line-height: 1.7066666667rem;
     font-size: 0.44rem;
     border-bottom: 1px solid #ccc;margin-bottom: 4px;}
-    .pub-item .item-select {
+    .publish-title .item-select {
     color: #2196F3;
     float: right;
-    font-size: 0.512rem;
-    height: 1.7066666667rem;
-    width: 1.7066666667rem;}
+    font-size: 14px;}
 /* .btn-primary{background:#E51A1A;border-color:#E51A1A;}
 .btn-primary:hover,.btn-primary:active{background:#E51A1A;border-color:#E51A1A;} */
 .flag-area{margin-bottom: 2.58133rem;}
@@ -82,6 +79,8 @@ html, body {
     line-height: 1.1093333333rem;
     color: #949494;
 }
+.introducer{display: none;}
+.book-control{display: none;}
 .img-area .imgs {
   width: 100%;
 }

@@ -21,8 +21,10 @@ function rank(token, appId) {
 			$('#t_bodys,#t_bodystwo').html('')
 			var data = res.Result;
 			if(res.Code == 00) {
-				console.info('22');
-
+				var title=data.BranchRankType==0?"支部总分排行榜":"支部平均分排行榜";
+				var myrank=data.MyRank;
+				$("#branch-title").html(title);
+				$("#my-rank").html("个人排名："+myrank);
 				var rankdy = '';
 				var rankzb = '';
 				if(data.UserRank != '' && data.UserRank != null)

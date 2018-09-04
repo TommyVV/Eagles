@@ -40,6 +40,14 @@ body{
             color: #141414;
             padding-left: 5px;
         }
+        .view-box{
+            -webkit-box-flex:1;
+            -webkit-flex:1;
+            -ms-flex:1;
+            flex:1;
+            color: #949494;
+            text-align: right;
+        }
         .status {
             color: #F24848;
         }

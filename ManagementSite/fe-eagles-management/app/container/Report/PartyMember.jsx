@@ -162,9 +162,9 @@ class PartyMemberReport extends Component {
 
     return (
       <Nav>
-        <Row gutter={16}>
+        <Row gutter={24} >
           <Col span={8}>
-            <Card style={{ width: 500 }}>
+            <Card style={{ width: 800 }}>
               <ReactEcharts
                 option={this.getOptionSex()}
                 notMerge={true}
@@ -173,8 +173,13 @@ class PartyMemberReport extends Component {
               />
             </Card>
           </Col>
+        </Row>
+        <Row style={{ height: 10 }}>
+
+        </Row>
+        <Row  gutter={24} >
           <Col span={8}>
-            <Card style={{ width: 500 }}>
+            <Card style={{ width: 800 }}>
               <ReactEcharts
                 option={this.getOptionAge()}
                 notMerge={true}
@@ -183,8 +188,13 @@ class PartyMemberReport extends Component {
               />
             </Card>
           </Col>
+        </Row>
+        <Row style={{ height: 10 }}>
+
+        </Row>
+        <Row  gutter={24} >
           <Col span={8}>
-            <Card style={{ width: 500 }}>
+            <Card style={{ width: 800 }}>
               <ReactEcharts
                 option={this.getOptionTime()}
                 notMerge={true}

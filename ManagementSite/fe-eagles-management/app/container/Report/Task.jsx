@@ -20,7 +20,7 @@ class TaskReport extends Component {
   getInfo = async () => {
     try {
       const res = await getActivity({
-        HistogramType: "2"
+        HistogramType: "1"
       });
       this.setState({
         task: res

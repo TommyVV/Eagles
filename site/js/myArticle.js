@@ -40,7 +40,6 @@ mescroll = new MeScroll("mescroll", {
 function downcallback() {}
 
 function partyLearningfunc(page) {
-
 	if(page.check_value) {
 		if(check_value == zlValue) {
 			myAricle(0, token, page, appId);
@@ -52,20 +51,37 @@ function partyLearningfunc(page) {
 			myAricle(1, token, page, appId);
 		}
 	} else {
+		// if(NewsTypes == undefined) {
+		// 	$('.select_txt').text("文章");
+		// 	myAricle(0, token, page, appId);
+		// } else if(NewsTypes == 0) {
+		// 	$('.select_txt').text("文章");
+		// 	myAricle(0, token, page, appId);
+		// } else if(NewsTypes == 1) {
+		// 	$('.select_txt').text("心得体会");
+		// 	myAricle(1, token, page, appId);
+		// } else if(NewsTypes == 2) {
+		// 	$('.select_txt').text("会议");
+		// 	myAricle(2, token, page, appId);
+		// } else if(NewsTypes == 3) {
+		// 	$('.select_txt').text("党员申请书");
+		// 	myAricle(3, token, page, appId);
+		// }
+		$(".cl").removeClass("select");
 		if(NewsTypes == undefined) {
-			$('.select_txt').text("文章");
+			$($('.cl')[0]).addClass("select");
 			myAricle(0, token, page, appId);
 		} else if(NewsTypes == 0) {
-			$('.select_txt').text("文章");
+			$($('.cl')[0]).addClass("select");
 			myAricle(0, token, page, appId);
 		} else if(NewsTypes == 1) {
-			$('.select_txt').text("心得体会");
+			$($('.cl')[1]).addClass("select");
 			myAricle(1, token, page, appId);
 		} else if(NewsTypes == 2) {
-			$('.select_txt').text("会议");
+			$($('.cl')[2]).addClass("select");
 			myAricle(2, token, page, appId);
 		} else if(NewsTypes == 3) {
-			$('.select_txt').text("党员申请书");
+			$($('.cl')[3]).addClass("select");
 			myAricle(3, token, page, appId);
 		}
 	}
@@ -124,6 +140,31 @@ function myAricle(NewsType, token, page, appId) {
 		}
 	});
 }
+$(".cl").click(function(){
+	NewsTypes = $(this).index();
+	$('.item').html('');
+	if(mescroll) {
+		mescroll.destroy();
+	}
+	mescroll = new MeScroll("mescroll", {
+		down: {
+			auto: false,
+			isLock: true,
+			callback: downcallback
+		},
+		up: {
+			page: {
+				num: 0,
+				size: 10,
+				time: null,
+			},
+			isLock: false,
+			callback: partyLearningfunc,
+			isBounce: false,
+			htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
+		}
+	});
+});
 $('.option').on('click', 'li', function(e) {
 	check_value = $(this).text();
 	zlValue = $('.option li:eq(1)').html();
@@ -131,7 +172,7 @@ $('.option').on('click', 'li', function(e) {
 	dyValue = $('.option li:eq(3)').html();
 	$(this).parent().siblings(".select_txt").text(check_value);
 	$("#select_value").val(check_value);
-	$('.item').html('')
+	$('.item').html('');
 	if(mescroll) {
 		mescroll.destroy();
 	}

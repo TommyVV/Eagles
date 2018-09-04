@@ -21,6 +21,7 @@ $(document).ready(function () {
     //查询任务详情
     function getTaskDetail() {
         if(pubType){
+            addNewsViewCount();
             requestUrl="/api/Task/GetPublicTaskDetail"; 
          }else{
             requestUrl="/api/Task/GetTaskDetail";  
@@ -47,6 +48,23 @@ $(document).ready(function () {
             },
             complete: function () {
                 requestFlag = false;
+            }
+        });
+    }
+    //更新阅读数量
+    function addNewsViewCount() {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/News/AddNewsViewCount",
+            data: {
+                Type:"1",
+                NewsId: taskId,
+                Token: token,
+                AppId: appId
+            },
+            success: function (data) {
+            },
+            error: function () {
             }
         });
     }
@@ -108,6 +126,12 @@ $(document).ready(function () {
         // <span class="name">${data.InitiateUserName}</span>
         // <span class="time">${data.CreateTime.substr(0, 10)}</span>
         //  </div>
+        var viewStr = ``;
+        if(pubType){
+            viewStr=`<div class="view-box">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        <span>${data.ViewCount}</span></div>`;
+        }
         var taskInfoStr = `<div class="row">
             <div class="info-item col-xs-12 col-sm-12 col-md-6">
             <div class="item-title">负责人：</div>
@@ -131,7 +155,7 @@ $(document).ready(function () {
         </div>
         <div class="info-item col-xs-12 col-sm-12 col-md-6">
             <div class="item-title">当前状态：</div>
-            <div class="status">${taskStatus(data.TaskStatus)}</div>
+            <div class="status">${taskStatus(data.TaskStatus)}</div>${viewStr}
         </div>
     </div>`;
         score = data.Score || 0;

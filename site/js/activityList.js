@@ -21,7 +21,6 @@ $(document).ready(function() {
             isBounce: false
         }
     });
-
     //查询所有活动
     //getActivityList();
     //头部按钮点击

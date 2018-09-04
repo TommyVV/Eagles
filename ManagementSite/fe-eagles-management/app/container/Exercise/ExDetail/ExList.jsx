@@ -100,7 +100,7 @@ class ExList extends React.Component {
       {
         title: "习题名称",
         dataIndex: "Question",
-        width: "60%"
+        width: "50%"
       },
       {
         title: "是否多选",

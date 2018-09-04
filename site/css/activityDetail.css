@@ -11,9 +11,15 @@ body {
   background-color: white; }
   .main_content .header {
     padding: 1.1733333333rem 0 1.0666666667rem 0;
-    font-size: 1.024rem;
-    line-height: 1.2373333333rem;
     border-bottom: 1px solid #EEEEEE; }
+    .main_content .header .title {
+      font-size: 1.024rem;
+      line-height: 1.2373333333rem; }
+    .main_content .header .view-box {
+      color: #949494;
+      margin-top: 5px;
+      font-size: 0.512rem;
+      text-align: right; }
   .main_content .content-box {
     padding-top: 0.128rem; }
     .main_content .content-box .content {

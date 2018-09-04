@@ -21,7 +21,7 @@ class ActivityReport extends Component {
   getInfo = async () => {
     try {
       const res = await getActivity({
-        HistogramType: "1"
+        HistogramType: "2"
       });
       this.setState({
         activity: res

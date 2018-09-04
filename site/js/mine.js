@@ -100,6 +100,10 @@ $("#f_rw,.fb_wrw").click(function() {
 $("#task").click(function() {
 	window.location.href = 'task.html?appId=' + appId + ''
 });
+$("#signout").click(function(){
+	window.location.href = 'login.html?appId=' + appId + ''	
+});
+
 
 
 minedel(token, appId);

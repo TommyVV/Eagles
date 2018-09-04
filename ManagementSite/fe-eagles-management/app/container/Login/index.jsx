@@ -29,17 +29,18 @@ class LoginForm extends React.Component {
       Account: values.Account,
       // Password: md5(values.Password)
       Password: values.Password,
-      OrgId:values.OrgId
+      //OrgId:values.OrgId
     });
     if (Code == "00") {
       //保存用户相关信息
-      let { Token, IsVerificationCode } = Result;
+      let { Token, IsVerificationCode,BranchId } = Result;
       // 密码错误次数超限，出现验证码 todo
       if (IsVerificationCode) {
       } else {
         let info = {
           Token,
-          Account: values.Account
+          Account: values.Account,
+          BranchId:BranchId
         };
         let Info = localStorage.info ? JSON.parse(localStorage.info) : {}; // 先去取上次返回的url
         localStorage.clear(); // 再清空缓存
@@ -74,7 +75,7 @@ class LoginForm extends React.Component {
             <p className="err-msg">{errMsg}</p>
           </div>
           <Form onSubmit={this.handleSubmit} className="login-form">
-            <FormItem
+            {/* <FormItem
               // label="手机号"
               colon={false}
             >
@@ -85,8 +86,8 @@ class LoginForm extends React.Component {
                     message: "请输入组织号"
                   }
                 ]
-              })(<Input placeholder="请输入组织号" />)}
-            </FormItem>
+              })(<Input placeholder="请输入机构号" />)}
+            </FormItem> */}
             <FormItem
               // label="手机号"
               colon={false}

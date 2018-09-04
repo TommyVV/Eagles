@@ -35,6 +35,13 @@ body {
     .task-info .info-item div {
       color: #141414;
       padding-left: 5px; }
+    .task-info .info-item .view-box {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      color: #949494;
+      text-align: right; }
     .task-info .info-item .status {
       color: #F24848; }
     .task-info .info-item .item-title {

@@ -17,6 +17,7 @@ $(document).ready(function() {
         $(".activity-content").addClass("hide");
         var requestUrl="";
         if(pubType){
+            addNewsViewCount();
            requestUrl="/api/Activity/GetPublicActivityDetail"; 
         }else{
            requestUrl="/api/Activity/GetActivityDetail";  
@@ -69,6 +70,23 @@ $(document).ready(function() {
             },
             error:function(){
                 errorTip('网络错误');
+            }
+        });
+    }
+    //更新阅读数量
+    function addNewsViewCount() {
+        $.ajax({
+            type: "POST",
+            url: DOMAIN + "/api/News/AddNewsViewCount",
+            data: {
+                Type:"2",
+                NewsId: activityId,
+                Token: token,
+                AppId: appId
+            },
+            success: function (data) {
+            },
+            error: function () {
             }
         });
     }
@@ -339,8 +357,14 @@ $(document).ready(function() {
     }
     //活动详情展示
     function showContent(data) {
+        var viewStr=``;
+        if(pubType){
+            viewStr=`<div class="view-box">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        <span>${data.ViewCount}</span></div>`;
+         }
         var str = `<div class="header">
-                    ${data.ActivityName}
+                    <div class="title">${data.ActivityName}</div>${viewStr}
                 </div>
                 <div class="content-box">
                     <p class="content">${data.ActivityContent}

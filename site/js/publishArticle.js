@@ -32,11 +32,25 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 		success: function(res) {
 			var data = res.Result;
 			if(res.Code == 00) {
-				$('.publish-title').val(data.Title);
-				$('#selectpicker').val(data.NewsType).attr('selected','selected'); 
+				$('#title').val(data.Title);
+				$('.selectpicker').val(data.NewsType);//.attr("selected","true"); 
+				$(".selectpicker").selectpicker('refresh');
 				//imgsrec
 				if(data.NewsType==3){
-					$('.assign').show();
+					$('.introducer').show();
+				}
+				if(data.NewsType==1){
+					$(".book-control").show()
+				}
+				if(data.BookName){
+					$('#bookId').val(data.BookName);
+				}
+				if(data.BookAuthor){
+					$('#book-author').val(data.BookAuthor);
+				}
+				if(data.Introducer){
+					$('#name').html(data.Introducer);
+					toUserId=data.ToUserId;
 				}
 				$('.publish-content').val(data.HtmlContent)
 				$("input:radio[value='"+data.IsPublic+"']").attr('checked','true');
@@ -46,7 +60,7 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 					$(".publish-title,#selectpicker,.item-select,#imgupload,.demo--radio,.publish-content").attr("disabled",true);
 					$('.publish-wrap-btn').hide()
 				}
-				dangyuan=data.ToUser
+				dangyuan=data.UserName
 			}
 		}
 	})
@@ -75,14 +89,19 @@ $("#imgupload").fileupload({
 		}
 	}
 });
-$('.publish-btn').on('click', function(e) {
+
+function save(publisType){
+	if(publisType==1){
+		inputval=1;	
+	}else{
+		inputval=$('input:radio[name="radio1"]:checked').val();
+	}
 	
-	e.preventDefault();
-	inputval=$('input:radio[name="radio1"]:checked').val();
-	var title = $('.publish-title').val(); //标题
+	var title = $('#title').val(); //标题
 	var type = $('#selectpicker').val(); //文章类型
-	var content = $('.publish-content').val(); //文章内容
-	var pubFlag = $(".pub-flag").hasClass("select");
+	var content = $('.publish-content').val(); //文章内容	
+	var bookName=$("#bookId").val();
+	var bookAuthor=$("#book-author").val();
 	if(!title) {
 		bootoast({
 			message: '请填写文章标题',
@@ -106,15 +125,7 @@ $('.publish-btn').on('click', function(e) {
 			position: 'toast-top-center',
 			timeout: 2
 		});
-		return;
-	}else if (!imgUrl) {
-		bootoast({
-			message: "请上传图片",
-			type: "info",
-			position: "toast-top-center",
-			timeout: 2
-		});
-		return;
+		return;	
 	}else if(!inputval){
         bootoast({
         	message: "请选择公开类型",
@@ -141,12 +152,14 @@ $('.publish-btn').on('click', function(e) {
 			"NewsId":NewsId,
 			"NewsTitle": title,
 			"NewsType": type,
-			"UserId":toUserId,
 			"NewsContent": content,
 			"ImageUrl": imgUrl,
 			"IsPublic": inputval,
 			"Token": token,
-			"AppId": appId
+			"AppId": appId,
+			"BookName":bookName,
+			"BookAuthor":bookAuthor,
+			"ToUser":toUserId
 		},
 		url: DOMAIN + "/api/User/CreateArticle",
 		dataType: "json",
@@ -154,12 +167,12 @@ $('.publish-btn').on('click', function(e) {
 			var data = res.Result;
 			if(res.Code == 00) {
 				bootoast({
-					message: "文章发布成功，待审核",
+					message: "保存成功",
 					type: "success",
 					position: "toast-top-center",
 					timeout: 2
 				});
-				window.location.href = 'public_result.html?code=1&tip=文章发布成功待审核&appId=' + appId +'&mode=文章';
+				window.location.href = 'public_result.html?code=1&tip=保存成功待审核&appId=' + appId +'&mode=文章';
 				//文章发布成功
 			}else{
 				bootoast({
@@ -171,12 +184,26 @@ $('.publish-btn').on('click', function(e) {
 			}
 		}
 	})
-})
+}
+$('#save').on('click', function(e) {	
+	save(1);
+});
+$('#publish').on('click', function(e) {	
+	save(0);
+});
 $("#selectpicker").change(function() {
 	if($(this).val() == 3) {
-		$('.assign').show();
-	} else {
-		$('.assign').hide();
+		$('.introducer').show();
+	} 
+	else {
+		$('.introducer').hide();
+	}
+
+	if($(this).val()==1){
+		$(".book-control").show()
+	}
+	else{
+		$(".book-control").hide()
 	}
 });   
 branchUsers(token, appId); //党员支部信息展示
@@ -198,15 +225,11 @@ function branchUsers(token, appId) {
 					for(var i = 0; i < data.BranchUsers.length; i++) {
 						options +='<div class="subordinate-item" id="' + data.BranchUsers[i].UserId + '">'+
 							'<span>'+data.BranchUsers[i].UserName+'</span>'+
-							'<div class="right-dir"><span class="glyphicon" aria-hidden="true"></span></div>'+
+							''+
 							'</div>'
 					}
 					$('.subordinates').append(options);
-					if(dangyuan!=undefined){
-						var idf=dangyuan
-						$("#name").html($('#' + idf).find('span').text());
-						toUserId=idf
-					}
+					
 				}else{
 					$('#modal .modal-body').html('暂无数据');
 				}
@@ -219,32 +242,20 @@ $('.modal-body').on('click', '.subordinate-item', function (e) {
 		$($(this).find('.glyphicon')).addClass('glyphicon-ok');
 		toUsreInfo = $(this).attr("id");
 		toUserName = $($(this).find('span')).text();
-		console.log(toUsreInfo,toUserName)
+		$("#name").html(toUserName);
+		var arr = toUsreInfo.split("-");
+		toUserId = arr[0];
+		createType = arr[1];
+		$(this).parents('.modal').modal('hide');
 });
-//是否公开
-/* $(".flag-area").click(function() {
-		if ($(".pub-flag").hasClass("select")) {
-				$(".pub-flag")
-						.attr("src", "icons/sel_no@2x.png")
-						.removeClass("select");
-		} else {
-				$(".pub-flag")
-						.attr("src", "icons/sel_yes@2x.png")
-						.addClass("select");
-		}
-}); */
+
 //指派人员
 $('#btnTestSaveLarge').on('click', function() {
 		if (toUsreInfo) {
-			console.log(1)
-				$("#name").html(toUserName);
-				var arr = toUsreInfo.split("-");
-				toUserId = arr[0];
-				createType = arr[1];
-				$(this).parents('.modal').modal('hide');
+			
 		} else {
 				bootoast({
-						message: "请选择指派人员",
+						message: "请选择推荐人人员",
 						type: "info",
 						position: "toast-top-center",
 						timeout: 2

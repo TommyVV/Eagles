@@ -11,9 +11,17 @@ body{
     background-color: white;
     .header {
         padding: px2rem(55) 0 px2rem(50) 0;
-        font-size: px2rem(48);
-        line-height: px2rem(58);
         border-bottom: 1px solid #EEEEEE;
+        .title{
+            font-size: px2rem(48);
+            line-height: px2rem(58);
+        }
+        .view-box{
+            color: #949494;
+            margin-top:5px;
+            font-size: 0.512rem;
+            text-align: right;
+        }
     }
     .content-box {
         padding-top: px2rem(6);

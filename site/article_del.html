@@ -9,6 +9,7 @@
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/partyLearning_detail.css?v=20180715" rel="stylesheet">
     <link href="./css/bootoast.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/common/comment-componet.css">
 	<style>
 		.content-box img,.cont-imgs img{display: block;width: 100%;height: auto;margin-top:20px;}
 		
@@ -19,20 +20,25 @@
     <div class="container" style="overflow-x: hidden;">
         <div id="top-nav" class="pc"></div>
         <div id="mobilenav"></div>
-        <div class="row">
+        <div class="row" style="background-color: white;">
             <!-- 主体内容 -->
             <div class="main_content">
                 <div class="header">
                     <h3 class="title"></h3>
                     <div class="time-box">
                         <span>发布人:</span>
-                        <span class="time">555</span>
+                        <span class="time"></span>
+                        <div style="float:right;">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            <span class="view-count">2</span>
+                        </div>
                     </div>
-
+                    <div class="time-box book-info"></div>
                 </div>
 				<div class="cont-imgs"><img src="" /></div>
                 <div class="content-box"></div>
             </div>
+            <div class="comment-content hide"></div>
         </div>
 
     </div>
@@ -42,7 +48,8 @@
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/bootoast.js"></script>
-    <script src="js/articledel.js?v=20180715"></script>
+    <script src="js/comment.js?v=2018"></script>
+    <script src="js/articledel.js?v=20180901"></script>
     <!--<script src="js/compulicajax.js"></script>-->
 </body>
 

@@ -198,6 +198,7 @@ class Base extends Component {
       getFieldsValue
     } = this.props.form;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
+    let external = news == null ? false : news.IsExternal == 1 ? true : false;
     console.log("保存的附件：", Attachs);
     let fileList = [];
     news.Attachments &&
@@ -381,21 +382,24 @@ class Base extends Component {
           </Upload>
           <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("Content", {
+        <FormItem {...formItemLayout} label="外部链接" style={{ display: external ? "block" : "none" }}>
+          {getFieldDecorator("ExternalUrl", {
             rules: [
               {
-                required: true,
-                message: "必填，请输入内容"
+                message: "外部链接"
               }
             ]
-          })(
+          })(<Input placeholder="外部链接" />)}
+        </FormItem>
+        <FormItem {...formItemLayoutContent} label="内容" style={{ display: !external ? "block" : "none" }}>
+          {getFieldDecorator("Content")(
             <div className="editor-wrap">
               <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance} />
             </div>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否有试卷">
+        <FormItem {...formItemLayout} label="是否有试卷"
+          style={{ display: !external ? "block" : "none" }}>
           {getFieldDecorator("isTest")(
             <Select onChange={this.change.bind(this, "isTest")}>
               <Option value="0">否</Option>
@@ -443,7 +447,7 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="分类">
+        <FormItem {...formItemLayout} label="分类" style={{ display: !external ? "block" : "none" }}>
           <Row>
             <Col span={8}>
               {news.IsImage == "0" || news.IsImage == "1" ? (
@@ -610,11 +614,14 @@ const FormMap = Form.create({
         value: news.Content
       }),
       ModuleId: Form.createFormField({
-        value: news.ModuleId ? news.ModuleId + "" :  ""
+        value: news.ModuleId ? news.ModuleId + "" : ""
       }),
       IsTop: Form.createFormField({
         value: news.IsTop ? news.IsTop : 0
-      })
+      }),
+      ExternalUrl: Form.createFormField({
+        value: news.ExternalUrl
+      }),
     };
   }
 })(Base);
@@ -661,7 +668,7 @@ class NewsDetail extends Component {
   };
   // 查询试卷列表
   getQuestionList = async () => {
-    const res = await getQuestionList();
+    const res = await getQuestionList({ExercisesType:5});
     console.log("getQuestionList", res);
     this.setState({ questionList: res.List });
   };

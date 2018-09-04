@@ -13,41 +13,45 @@
 
 <body>
     <div class="container">
-    	<div id="top-nav" class="pc"></div>
-    	<div id="mobilenav"></div>
+        <div id="top-nav" class="pc"></div>
+        <div id="mobilenav"></div>
         <div class="rank">
             <div class="rank-list">
-                <div class="rank-list-title">党员积分排行榜</div>
+                <div class="rank-list-title">
+                    <div style="float: left;">党员积分排行榜</div>
+                    <div style="float: right; color: #EE2F2F; text-align: right" id="my-rank">个人排名：43</div>
+                    <div style="clear:both"></div>
+                </div>
                 <table class="tableconse">
-                	<thead>
-                		<tr class="head">
-                        <th>排名</th>
-                        <th>姓名</th>
-                        <th>支部</th>
-                        <th>积分</th>
-                    </tr>
-                	</thead>
+                    <thead>
+                        <tr class="head">
+                            <th>排名</th>
+                            <th>姓名</th>
+                            <th>支部</th>
+                            <th>积分</th>
+                        </tr>
+                    </thead>
                     <tbody id="t_bodys">
                     </tbody>
-                    
+
                 </table>
-                
+
             </div>
             <div class="rank-list">
-                <div class="rank-list-title">支部积分排行榜</div>
+                <div class="rank-list-title" id="branch-title"></div>
                 <table class="tableconse">
-                	<thead>
-                		<tr class="head">
-                        <th>排名</th>
-                        <th>支部</th>
-                        <th>积分</th>
-                    </tr>
-                	</thead>
+                    <thead>
+                        <tr class="head">
+                            <th>排名</th>
+                            <th>支部</th>
+                            <th>积分</th>
+                        </tr>
+                    </thead>
                     <tbody id="t_bodystwo">
                     </tbody>
-                    
+
                 </table>
-                
+
             </div>
         </div>
     </div>
@@ -57,7 +61,7 @@
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/rank.js?v=20180715"></script>
-	<script src="js/compulicajax.js"></script>
+    <script src="js/compulicajax.js"></script>
 </body>
 
 </html>
