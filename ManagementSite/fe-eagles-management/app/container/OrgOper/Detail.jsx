@@ -74,7 +74,7 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("OperId")(<Input />)}
         </FormItem>
-        <FormItem  {...formItemLayout} label="机构">
+        <FormItem  {...formItemLayout} label="组织">
           {getFieldDecorator(`OrgId`)(
             <Select>
               {orgList.map((o, i) => {

@@ -238,7 +238,7 @@ export default class App extends React.Component {
               title={
                 <span>
                   <Icon type="mail" />
-                  <span>机构管理</span>
+                  <span>组织管理</span>
                 </span>
               }
               style={{
@@ -255,14 +255,14 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/orglist")}
                 style={{ display: authMap.get("orgs0001") ? null : "none" }}
               >
-                机构维护
+                组织维护
               </Menu.Item>
               <Menu.Item
                 key="sub43"
                 onClick={e => hashHistory.replace("/smsorglist")}
                 style={{ display: authMap.get("orgs0002") ? null : "none" }}
               >
-                机构短信维护
+                组织短信维护
               </Menu.Item>
               <Menu.Item
                 key="sub45"

@@ -53,13 +53,13 @@ const ORDER = {
   ORDER_LIST: "/api/Order/GetOrders", //发货列表
   ORDER_DETAIL: "/api/Order/GetOrdersDetail" //发货详情
 };
-// 组织机构
+// 组织组织
 const ORG = {
-  ORG_EDIT: "/api/Organization/EditOrganization", //编辑机构
-  ORG_DELETE: "/api/Organization/RemoveOrganization", //删除机构
-  ORG_LIST: "/api/Organization/GetOrganization", //机构列表
-  ORG_DETAIL: "/api/Organization/GetOrganizationDetail", //机构详情
-  ORG_TREE: "/api/Organization/GetOrganizationChart", //机构树
+  ORG_EDIT: "/api/Organization/EditOrganization", //编辑组织
+  ORG_DELETE: "/api/Organization/RemoveOrganization", //删除组织
+  ORG_LIST: "/api/Organization/GetOrganization", //组织列表
+  ORG_DETAIL: "/api/Organization/GetOrganizationDetail", //组织详情
+  ORG_TREE: "/api/Organization/GetOrganizationChart", //组织树
 };
 // 商品
 const GOODS = {
@@ -152,7 +152,7 @@ const SYSTEMSMS = {
   DETAIL: "/api/SMS/GetSMSDetail", //详情
   LIST: "/api/SMS/GetSMS" //列表
 };
-//机构短信
+//组织短信
 const ORGSMS = {
   EDIT: "/api/SMS/EditOrgSmsConfig", //编辑
   DETAIL: "/api/SMS/GetSMSOrgDetail", //详情
@@ -175,21 +175,21 @@ const MEETING = {
 //公开任务
 const PUBLIC_TASK = {
   LIST_BRANCH: "/api/Publicity/GetBrnPublicTask", //列表 支部
-  LIST_ORG: "/api/Publicity/GetOrgPublicTask", //列表 机构
+  LIST_ORG: "/api/Publicity/GetOrgPublicTask", //列表 组织
   // EDIT: "/api/Metting/ImportMeetingUser", //审核
   DETAIL: "/api/Publicity/GetPublicTaskDetail" //详情
 };
 //公开活动
 const PUBLIC_ACTIVITY = {
   LIST_BRANCH: "/api/Publicity/GetBrnPublicActivity", //列表 支部
-  LIST_ORG: "/api/Publicity/GetOrgPublicActivity", //列表 机构
+  LIST_ORG: "/api/Publicity/GetOrgPublicActivity", //列表 组织
   // EDIT: "/api/Metting/ImportMeetingUser", //审核
   DETAIL: "/api/Publicity/GetPublicActivityDetail" //详情
 };
 //用户文章
 const PUBLIC_ARTICLE = {
   LIST_BRANCH: "/api/Publicity/GetBrnPublicArticle", //列表 支部
-  LIST_ORG: "/api/Publicity/GetOrgPublicArticle", //列表 机构
+  LIST_ORG: "/api/Publicity/GetOrgPublicArticle", //列表 组织
   // EDIT: "/api/Metting/ImportMeetingUser", //审核
   DETAIL: "/api/Publicity/GetAritcleDetail" //详情
 };

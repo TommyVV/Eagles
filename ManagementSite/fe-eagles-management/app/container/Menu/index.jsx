@@ -37,7 +37,7 @@ class MenuList extends React.Component {
         dataIndex: "MenuLink"
       },
       // {
-      //   title: "机构名称",
+      //   title: "组织名称",
       //   dataIndex: "OrgName"
       // },
       {

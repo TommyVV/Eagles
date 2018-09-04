@@ -30,11 +30,11 @@ class OrgList extends React.Component {
     };
     this.columns = [
       {
-        title: "机构编号",
+        title: "组织编号",
         dataIndex: "OrgId"
       },
       {
-        title: "机构名称",
+        title: "组织名称",
         dataIndex: "OrgName"
       },
       {
@@ -228,8 +228,8 @@ class OrgList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => hashHistory.replace(`/org/detail`)}>新增</a>
+            <Button className="btn btn--primary" onClick={() => hashHistory.replace(`/org/detail`)}>
+              新增
             </Button>
           </Col>
         </Row>

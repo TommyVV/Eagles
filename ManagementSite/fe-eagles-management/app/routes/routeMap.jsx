@@ -118,7 +118,7 @@ class RouteMap extends Component {
           <route path="/operator/detail(/:id)" component={OperatorDetail} />
           <route path="/orgoperatorlist" component={OrgOperator} />
           <route path="/orgoperator/detail(/:id)" component={OrgOperatorDetail} />
-          {/* 机构管理 */}
+          {/* 组织管理 */}
           <route path="/orglist" component={OrgList} />
           <route path="/org/detail(/:id)" component={OrgDetail} />
           {/* 支部管理 */}
@@ -152,7 +152,7 @@ class RouteMap extends Component {
           {/* 系统短信配置 */}
           <route path="/smssystemlist" component={SmsSystemList} />
           <route path="/smssystem/detail(/:id)" component={SmsSystemDetail} />
-          {/* 机构短信配置 */}
+          {/* 组织短信配置 */}
           <route path="/smsorglist" component={SmsOrgList} />
           <route
             path="/smsorg/detail(/:org/:vendor)"

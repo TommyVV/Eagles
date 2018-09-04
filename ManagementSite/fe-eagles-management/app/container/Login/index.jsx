@@ -82,10 +82,10 @@ class LoginForm extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: "请输入机构号"
+                    message: "请输入组织号"
                   }
                 ]
-              })(<Input placeholder="请输入机构号" />)}
+              })(<Input placeholder="请输入组织号" />)}
             </FormItem>
             <FormItem
               // label="手机号"

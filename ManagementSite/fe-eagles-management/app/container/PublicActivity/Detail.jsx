@@ -63,7 +63,7 @@ class Base extends Component {
           {getFieldDecorator("ActivityName")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="审核人">
-          {getFieldDecorator("FromUser")(<Input disabled />)}
+          {getFieldDecorator("AduitUserName")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="负责人">
           {getFieldDecorator("ResponsibleUserName")(<Input disabled />)}
@@ -72,20 +72,20 @@ class Base extends Component {
           {getFieldDecorator("CreateTime")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="活动描述">
-          {getFieldDecorator("TaskContent")(<TextArea rows={4} disabled />)}
+          {getFieldDecorator("ActivityDesc")(<TextArea rows={4} disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="活动反馈">
-          {getFieldDecorator("TaskContent")(<TextArea rows={4} disabled />)}
+          {getFieldDecorator("ActivityContent")(<TextArea rows={4} disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
-          {/* {obj.Attachments &&
+          {obj.Attachments &&
             obj.Attachments.map((o, i) => {
               return (
                 <div key={i}>
                   <a href={o.AttachmentUrl}>{o.AttachmentName}</a>
                 </div>
               );
-            })} */}
+            })}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -94,7 +94,7 @@ class Base extends Component {
         >
           {getFieldDecorator("AuditStatus")(
             <Select>
-              <Option value="0">同意</Option>
+              <Option value="0">通过</Option>
               <Option value="1">不通过</Option>
             </Select>
           )}
@@ -142,8 +142,14 @@ const FormMap = Form.create({
       ActivityName: Form.createFormField({
         value: obj.ActivityName
       }),
-      FromUser: Form.createFormField({
-        value: obj.FromUser
+      AduitUserName: Form.createFormField({
+        value: obj.AduitUserName
+      }),
+      ActivityContent: Form.createFormField({
+        value: obj.ActivityContent
+      }),
+      ActivityDesc: Form.createFormField({
+        value: obj.ActivityDesc
       }),
       ResponsibleUserName: Form.createFormField({
         value: obj.ResponsibleUserName

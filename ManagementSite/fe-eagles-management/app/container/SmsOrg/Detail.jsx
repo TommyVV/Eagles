@@ -92,16 +92,16 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {/* {getFieldDecorator("VendorId")(<Input />)} */}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构名称">
+        <FormItem {...formItemLayout} label="组织名称">
           {getFieldDecorator("OrgId", {
             rules: [
               {
                 required: true,
-                message: "请选择机构"
+                message: "请选择组织"
               }
             ]
           })(
-            <Select placeholder="请选择机构">
+            <Select placeholder="请选择组织">
               {org.map((o, i) => {
                 return (
                   <Option value={o.OrgId} key={i}>
@@ -235,7 +235,7 @@ class SmsSystemDetail extends Component {
       throw new Error(e);
     }
   };
-  // 查机构
+  // 查组织
   getOrg = async () => {
     try {
       const { List } = await getOrgList({

@@ -146,7 +146,7 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("机构详情数据回显 - ", props);
+    console.log("组织详情数据回显 - ", props);
     const menu = props.menu;
     return {
       MenuId: Form.createFormField({

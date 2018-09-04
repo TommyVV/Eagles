@@ -15,7 +15,12 @@ function redirectLogin() {
   } else {
     let { hash } = window.location;
     let index = hash.indexOf("?");
-    const current = hash.slice(1, index);
+    let current = ""
+    if (index > -1) {
+      current = hash.slice(1, index);
+    } else {
+      current = hash.slice(1, hash.length);
+    }
     let info = {
       returnUrl: current
     };
@@ -118,7 +123,8 @@ export default async config => {
     }
     // oken过期
     if (Code === "M12") {
-      message.error("页面过期，请重新登录"); 
+    // if (true) {
+      message.error("页面过期，请重新登录");
       return redirectLogin(); //重定向到login页面
     }
     // if (Code === "500") {

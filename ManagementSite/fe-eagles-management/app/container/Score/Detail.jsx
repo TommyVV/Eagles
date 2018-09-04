@@ -160,24 +160,24 @@ class Base extends Component {
             <div>
               {Keyword.length > 0
                 ? Keyword.map((tag, index) => {
-                    const isLongTag = tag.length > 20;
-                    const tagElem = (
-                      <Tag
-                        key={tag}
-                        closable={true}
-                        afterClose={() => this.handleClose(tag)}
-                      >
-                        {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-                      </Tag>
-                    );
-                    return isLongTag ? (
-                      <Tooltip title={tag} key={tag}>
-                        {tagElem}
-                      </Tooltip>
-                    ) : (
+                  const isLongTag = tag.length > 20;
+                  const tagElem = (
+                    <Tag
+                      key={tag}
+                      closable={true}
+                      afterClose={() => this.handleClose(tag)}
+                    >
+                      {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+                    </Tag>
+                  );
+                  return isLongTag ? (
+                    <Tooltip title={tag} key={tag}>
+                      {tagElem}
+                    </Tooltip>
+                  ) : (
                       tagElem
                     );
-                  })
+                })
                 : null}
               {inputVisible && (
                 <Input
@@ -262,7 +262,7 @@ const FormMap = Form.create({
         value: score.WordCount
       }),
       Status: Form.createFormField({
-        value: score.Status ? score.Status : "0"
+        value: score.Status ? score.Status + "" : "0"
       })
     };
   }

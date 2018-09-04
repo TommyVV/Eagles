@@ -200,7 +200,14 @@ const WrapperAuditForm = Form.create({
       <Row gutter={24}>
         <Col span={20} key={2}>
           <FormItem {...formItemLayout} label="审核结果描述">
-            {getFieldDecorator(`Reason`)(<TextArea rows={4} />)}
+            {getFieldDecorator(`Reason`, {
+              rules: [
+                {
+                  required: true,
+                  message: "必填，请输入审核结果描述"
+                }
+              ]
+            })(<TextArea rows={4} />)}
           </FormItem>
         </Col>
       </Row>
@@ -412,6 +419,10 @@ class NewsList extends React.Component {
     try {
       const { currentId, fields } = this.state;
       const { AuditStatus, Reason } = fields;
+      if (!Reason.value) {
+        message.error("请输入审核结果描述");
+        return;
+      }
       let params = {
         AuditStatus: AuditStatus.value,
         Reason: Reason.value,

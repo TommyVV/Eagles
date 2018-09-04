@@ -57,7 +57,7 @@ class Base extends Component {
       if (!err) {
         try {
           console.log("Received values of form: ", values);
-          let { StarTime, EndTime, IsTop } = values;
+          let { StartTime, EndTime, IsTop } = values;
           let { news, Attachs } = this.props;
           let { Attachments } = news;
           let attach = {}; // 存附件对象
@@ -82,7 +82,7 @@ class Base extends Component {
               ...news,
               ...values,
               IsTop: IsTop,
-              StarTime: moment(StarTime, "yyyy-MM-dd").format(),
+              StartTime: moment(StartTime, "yyyy-MM-dd").format(),
               EndTime: moment(EndTime, "yyyy-MM-dd").format(),
               ...attach
             }
@@ -341,9 +341,9 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入新闻来源" />)}
         </FormItem>
-        <FormItem label="生效时间" {...formItemLayoutDate}>
+        {/* <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
-            <FormItem>{getFieldDecorator("StarTime")(<DatePicker />)}</FormItem>
+            <FormItem>{getFieldDecorator("StartTime")(<DatePicker />)}</FormItem>
           </Col>
           <Col span={1}>
             <span
@@ -359,7 +359,7 @@ class Base extends Component {
           <Col span={6}>
             <FormItem>{getFieldDecorator("EndTime")(<DatePicker />)}</FormItem>
           </Col>
-        </FormItem>
+        </FormItem> */}
         <FormItem {...formItemLayout} label="新闻封面">
           <Upload
             name="avatar"
@@ -594,12 +594,12 @@ const FormMap = Form.create({
       Source: Form.createFormField({
         value: news.Source
       }),
-      StarTime: Form.createFormField({
-        value: news.StarTime ? moment(news.StarTime, "YYYY-MM-DD") : null
-      }),
-      EndTime: Form.createFormField({
-        value: news.EndTime ? moment(news.EndTime, "YYYY-MM-DD") : null
-      }),
+      // StartTime: Form.createFormField({
+      //   value: news.StartTime ? moment(news.StartTime, "YYYY-MM-DD") : null
+      // }),
+      // EndTime: Form.createFormField({
+      //   value: news.EndTime ? moment(news.EndTime, "YYYY-MM-DD") : null
+      // }),
       isTest: Form.createFormField({
         value: news.isTest ? news.isTest + "" : "0"
       }),

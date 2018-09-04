@@ -28,10 +28,10 @@ const programaType = {
   SAVE_INFO: "SAVE_INFO", //保存详情
   CLEAR_INFO: "CLEAR_INFO" // 清空详情
 };
-// 机构
+// 组织
 const orgType = {
-  SAVE_ORG_INFO: "SAVE_ORG_INFO", //保存机构详情
-  CLEAR_ORG_INFO: "CLEAR_ORG_INFO" // 清空机构详情
+  SAVE_ORG_INFO: "SAVE_ORG_INFO", //保存组织详情
+  CLEAR_ORG_INFO: "CLEAR_ORG_INFO" // 清空组织详情
 };
 // 新闻
 const newsType = {

@@ -67,7 +67,7 @@ class SearchForm extends Component {
       >
         <Row gutter={24}>
           <Col span={5} key={6}>
-            <FormItem label="机构">
+            <FormItem label="组织">
               {getFieldDecorator(`OrgId`)(
                 <Select onChange={this.handleSearch.bind(this)}>
                   <Option value="0">全部</Option>
@@ -131,7 +131,7 @@ class SmsOrgList extends React.Component {
     };
     this.columns = [
       {
-        title: "机构名称",
+        title: "组织名称",
         dataIndex: "OrgName"
       },
       {

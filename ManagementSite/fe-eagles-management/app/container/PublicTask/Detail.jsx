@@ -64,7 +64,7 @@ class Base extends Component {
           {getFieldDecorator("TaskTitle")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="审核人">
-          {getFieldDecorator("FromUser")(<Input disabled />)}
+          {getFieldDecorator("AduitUserName")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="负责人">
           {getFieldDecorator("ResponsibleUserName")(<Input disabled />)}
@@ -103,7 +103,7 @@ class Base extends Component {
         >
           {getFieldDecorator("AuditStatus")(
             <Select>
-              <Option value="0">同意</Option>
+              <Option value="0">通过</Option>
               <Option value="1">不通过</Option>
             </Select>
           )}
@@ -151,8 +151,8 @@ const FormMap = Form.create({
       TaskTitle: Form.createFormField({
         value: obj.TaskTitle
       }),
-      FromUser: Form.createFormField({
-        value: obj.FromUser
+      AduitUserName: Form.createFormField({
+        value: obj.AduitUserName
       }),
       ResponsibleUserName: Form.createFormField({
         value: obj.ResponsibleUserName

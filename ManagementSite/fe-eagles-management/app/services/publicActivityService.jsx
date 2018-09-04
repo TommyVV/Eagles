@@ -39,7 +39,7 @@ export const getListBranch = async params => {
     throw new Error(e);
   }
 };
-// 查看列表(机构)
+// 查看列表(组织)
 export const getListOrg = async params => {
   try {
     let res = await sendRequest({

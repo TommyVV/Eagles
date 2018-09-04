@@ -79,7 +79,7 @@ class SearchForm extends Component {
       >
         <Row gutter={24}>
           <Col span={5} key={6}>
-            <FormItem label="机构">
+            <FormItem label="组织">
               {getFieldDecorator(`OrgId`)(
                 <Select>
                   <Option value="0">全部</Option>
@@ -152,7 +152,7 @@ class PermissionList extends React.Component {
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
       },
       {
-        title: "权限组所属机构",
+        title: "权限组所属组织",
         dataIndex: "OrgId"
       },
       {

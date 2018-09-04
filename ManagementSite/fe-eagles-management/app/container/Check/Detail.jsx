@@ -143,7 +143,7 @@ class Base extends Component {
           <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
             {getFieldDecorator("projectId")(<Input />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="所属机构">
+          <FormItem {...formItemLayout} label="所属组织">
             {getFieldDecorator("branch")(
               <Select>
                 <Option value="0">第一支部</Option>

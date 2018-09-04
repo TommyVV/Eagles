@@ -2,7 +2,7 @@ import sendRequest from "../utils/requestUtil";
 import { serverConfig } from "../constants/config/ServerConfigure";
 
 const { ORG } = serverConfig;
-// 根据id查看机构详情
+// 根据id查看组织详情
 export const getOrgInfoById = async params => {
   try {
     let res = await sendRequest({
@@ -21,7 +21,7 @@ export const getOrgInfoById = async params => {
   }
 };
 
-// 查看机构列表
+// 查看组织列表
 export const getOrgList = async params => {
   try {
     let res = await sendRequest({
@@ -40,7 +40,7 @@ export const getOrgList = async params => {
   }
 };
 
-// 创建或编辑机构
+// 创建或编辑组织
 export const createOrEditOrg = async params => {
   try {
     let res = await sendRequest({
@@ -59,7 +59,7 @@ export const createOrEditOrg = async params => {
   }
 };
 
-// 删除机构
+// 删除组织
 export const deleteOrg = async params => {
   try {
     let res = await sendRequest({
@@ -78,7 +78,7 @@ export const deleteOrg = async params => {
   }
 };
 
-// 查看机构数
+// 查看组织数
 export const getTreeInfo = async params => {
   try {
     let res = await sendRequest({

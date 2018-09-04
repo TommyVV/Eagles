@@ -343,7 +343,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     const { member, branch } = props;
-    console.log("机构详情数据回显 - ", member);
+    console.log("组织详情数据回显 - ", member);
     return {
       UserId: Form.createFormField({
         value: member.UserId
@@ -443,7 +443,7 @@ class PartyMemberDetail extends Component {
       this.getBranchList();
     }
   }
-  // 加载所有机构
+  // 加载所有组织
   getBranchList = async () => {
     try {
       const { List } = await getList();

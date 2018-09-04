@@ -71,7 +71,7 @@ class Base extends Component {
             ]
           })(<Input placeholder="必填，请输入权限组名称" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="所属机构">
+        <FormItem {...formItemLayout} label="所属组织">
           {getFieldDecorator("OrgId")(
             <Select>
               {orgList.map((obj, index) => {
@@ -165,7 +165,7 @@ class OperatorDetail extends Component {
       throw new Error(e);
     }
   };
-  // 拿机构列表
+  // 拿组织列表
   getOrgList = async () => {
     try {
       const { List } = await getOrgList({

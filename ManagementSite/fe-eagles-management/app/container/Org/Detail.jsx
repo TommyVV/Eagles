@@ -9,7 +9,9 @@ import {
   Col,
   Cascader,
   Upload,
-  Icon
+  Select,
+  Icon,
+  InputNumber
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
@@ -21,6 +23,7 @@ import { saveOrgInfo, clearInfo } from "../../actions/orgAction";
 import "./style.less";
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 @connect(
   state => {
     return {
@@ -55,11 +58,11 @@ class Base extends Component {
           };
           let { Code } = await createOrEditOrg(params);
           if (Code === "00") {
-            let tip = this.props.org.OrgId ? "保存机构成功" : "创建机构成功";
+            let tip = this.props.org.OrgId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/orglist");
           } else {
-            let tip = this.props.org.OrgId ? "保存机构失败" : "创建机构失败";
+            let tip = this.props.org.OrgId ? "保存失败" : "创建失败";
             message.error(tip);
           }
         } catch (e) {
@@ -105,7 +108,7 @@ class Base extends Component {
     if (file.size > fileSize) {
       message.error("图片必须小于10M");
     }
-    return isImage && file.size <=fileSize;
+    return isImage && file.size <= fileSize;
   }
   onChange(value) {
     // 保存数据
@@ -137,6 +140,11 @@ class Base extends Component {
       message.error(`${info.file.name} 上传失败`);
     }
   };
+  onChangeNotice = value => {
+    let { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveOrgInfo({ ...values, FeeNotice: value });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { org, defaultArea } = this.props;
@@ -166,14 +174,33 @@ class Base extends Component {
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
           {getFieldDecorator("OrgId")(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构名称">
+        <FormItem {...formItemLayout} label="组织名称">
           {getFieldDecorator("OrgName", {
             rules: [
               {
                 required: true
               }
             ]
-          })(<Input placeholder="必填，请输入机构名称" />)}
+          })(<Input placeholder="必填，请输入组织名称" />)}
+        </FormItem>
+        <FormItem  {...formItemLayout} label="积分排序设置">
+          {getFieldDecorator(`ScoreType`)(
+            <Select>
+              <Option value="0" >总分</Option>
+              <Option value="1" >平均分</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem  {...formItemLayout} label="党费过期通知">
+          {getFieldDecorator(`FeeNotice`)(
+            <Select onChange={this.onChangeNotice.bind(this)}>
+              <Option value="1" >通知</Option>
+              <Option value="0" >不通知</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="提前几天通知" style={{ display: org.FeeNotice == "1" ? null : "none" }}>
+          {getFieldDecorator("FeeExpireNoticeDay")(<InputNumber placeholder="请输入提前几天通知" min={1} style={{ width: "100%" }} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="书记">
           {getFieldDecorator("Secretary")(<Input placeholder="请输入书记姓名" />)}
@@ -193,26 +220,26 @@ class Base extends Component {
                 key={1}
               />
             ) : (
+                <Cascader
+                  options={defaultArea}
+                  onChange={this.onChange.bind(this)}
+                  placeholder="请选择地区"
+                  key={3}
+                />
+              )
+          ) : (
               <Cascader
                 options={defaultArea}
                 onChange={this.onChange.bind(this)}
                 placeholder="请选择地区"
-                key={3}
+                key={2}
               />
-            )
-          ) : (
-            <Cascader
-              options={defaultArea}
-              onChange={this.onChange.bind(this)}
-              placeholder="请选择地区"
-              key={2}
-            />
-          )}
+            )}
         </FormItem>
         <FormItem {...formItemLayout} label="详细地址">
           {getFieldDecorator("Address")(<Input placeholder="请输入详细地址" />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="机构Logo">
+        <FormItem {...formItemLayout} label="组织Logo">
           <Upload
             name="avatar"
             listType="picture-card"
@@ -225,11 +252,11 @@ class Base extends Component {
             {org.Logo ? (
               <img src={org.Logo} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem>
@@ -260,7 +287,7 @@ class Base extends Component {
 
 const FormMap = Form.create({
   mapPropsToFields: props => {
-    console.log("机构详情数据回显 - ", props);
+    console.log("组织详情数据回显 - ", props);
     const org = props.org;
     return {
       OrgId: Form.createFormField({
@@ -268,6 +295,15 @@ const FormMap = Form.create({
       }),
       OrgName: Form.createFormField({
         value: org.OrgName
+      }),
+      ScoreType: Form.createFormField({
+        value: org.ScoreType ? org.ScoreType + "" : "0"
+      }),
+      FeeNotice: Form.createFormField({
+        value: org.FeeNotice ? org.FeeNotice + "" : "0"
+      }),
+      FeeExpireNoticeDay: Form.createFormField({
+        value: org.FeeExpireNoticeDay
       }),
       Secretary: Form.createFormField({
         value: org.Secretary

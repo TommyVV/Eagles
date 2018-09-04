@@ -208,7 +208,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     const { image } = props;
-    console.log("机构详情数据回显 - ", image);
+    console.log("组织详情数据回显 - ", image);
     return {
       Id: Form.createFormField({
         value: image.Id

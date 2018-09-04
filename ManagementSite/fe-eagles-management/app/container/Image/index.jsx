@@ -124,11 +124,11 @@ class ImageList extends React.Component {
     };
     this.columns = [
       {
-        title: "机构编号",
+        title: "组织编号",
         dataIndex: "OrgId"
       },
       {
-        title: "机构名称",
+        title: "组织名称",
         dataIndex: "OrgName"
       },
       {

@@ -20,7 +20,7 @@ class ArticleReport extends Component {
   componentDidMount() {
     this.getCurrentList();
   }
-  // 查询机构列表
+  // 查询组织列表
   getCurrentList = async () => {
     try {
       let { List } = await getList({
