@@ -199,7 +199,7 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="提前几天通知" style={{ display: org.FeeNotice == "1" ? null : "none" }}>
+        <FormItem {...formItemLayout} label="提前通知天数" style={{ display: org.FeeNotice == "1" ? null : "none" }}>
           {getFieldDecorator("FeeExpireNoticeDay")(<InputNumber placeholder="请输入提前几天通知" min={1} style={{ width: "100%" }} />)}
         </FormItem>
         <FormItem {...formItemLayout} label="书记">

@@ -513,11 +513,11 @@ class Base extends Component {
                   checked={news.CanStudy == "1" ? true : false}
                   onChange={this.changeBox.bind(this, "CanStudy")}
                 >
-                  是否允许学习
+                  允许学习
                 </Checkbox>
               ) : (
                   <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                    是否允许学习
+                    允许学习
                 </Checkbox>
                 )}
             </Col>

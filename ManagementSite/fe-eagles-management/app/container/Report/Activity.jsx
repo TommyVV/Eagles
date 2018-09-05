@@ -20,13 +20,13 @@ class ActivityReport extends Component {
   // 根据id查询详情
   getInfo = async () => {
     try {
-      const res = await getActivity({
-        HistogramType: "2"
-      });
-      this.setState({
-        activity: res
-      });
-      const res = await getActivityPie({
+      // let res = await getActivity({
+      //   HistogramType: "2"
+      // });
+      // this.setState({
+      //   activity: res
+      // });
+      let res = await getActivityPie({
         HistogramType: "2"
       });
       this.setState({
