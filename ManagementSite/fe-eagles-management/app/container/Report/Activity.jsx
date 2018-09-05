@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Nav from "../Nav";
-import { getActivity } from "../../services/reportService";
+import { getActivity,getActivityPie } from "../../services/reportService";
 import { message, Card, Row, Col } from "antd";
 import ReactEcharts from 'echarts-for-react';
 // const TreeNode = Tree.TreeNode;
@@ -21,6 +21,12 @@ class ActivityReport extends Component {
   getInfo = async () => {
     try {
       const res = await getActivity({
+        HistogramType: "2"
+      });
+      this.setState({
+        activity: res
+      });
+      const res = await getActivityPie({
         HistogramType: "2"
       });
       this.setState({
