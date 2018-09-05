@@ -202,6 +202,7 @@ const AUDIT = {
 const REPORT = {
   PARTYMEMBER: "/api/Chart/GetPieChart",
   ACTIVITY_TASK:"/api/Chart/GetHistogram",
+  ACTIVITY_TASK_PIE:"/api/Chart/GetTaskActivityPie",
   ARTICLE:"/api/Chart/GetLineChart",
 };
 export const serverConfig = {

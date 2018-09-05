@@ -21,7 +21,7 @@ export const getPartyMember = async params => {
     throw new Error(e);
   }
 };
-// 查看活动\任务报表
+// 查看活动\任务报表柱状图
 export const getActivity = async params => {
   try {
     let res = await sendRequest({
@@ -44,6 +44,24 @@ export const getArticle = async params => {
   try {
     let res = await sendRequest({
       url: REPORT.ARTICLE,
+      method: "post",
+      params
+    });
+    let { Code, Result, Message } = res.data;
+    if (res.status === 200) {
+      return Code == "00" ? Result : {};
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+// 查看活动\任务报表饼图
+export const getActivityPie = async params => {
+  try {
+    let res = await sendRequest({
+      url: REPORT.ACTIVITY_TASK_PIE,
       method: "post",
       params
     });

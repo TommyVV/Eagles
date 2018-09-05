@@ -17,7 +17,6 @@ import { hashHistory } from "react-router";
 import { getList, del } from "../../services/activityService";
 import {audit} from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
-import { audit } from "../../services/auditService";
 import moment from "moment";
 import "moment/locale/zh-cn";
 import Nav from "../Nav";
