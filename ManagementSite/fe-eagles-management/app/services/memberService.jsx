@@ -39,6 +39,24 @@ export const getList = async params => {
     throw new Error(e);
   }
 };
+// 查看游客登录列表
+export const getLoginList = async params => {
+  try {
+    let res = await sendRequest({
+      url: MEMBER.LOGIN_LIST,
+      method: "post",
+      params
+    });
+    let { Code, Result, Message } = res.data;
+    if (res.status === 200) {
+      return Code == "00" ? Result : { List: [] };
+    } else {
+      throw new Error(`${Code} - ${Message}`);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 // 根据id查下级列表
 export const getListById = async params => {
   try {

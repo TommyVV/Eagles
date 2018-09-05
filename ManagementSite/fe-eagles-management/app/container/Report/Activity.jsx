@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Nav from "../Nav";
-import { getActivity,getActivityPie } from "../../services/reportService";
+import { getActivity, getActivityPie } from "../../services/reportService";
 import { message, Card, Row, Col } from "antd";
 import ReactEcharts from 'echarts-for-react';
 // const TreeNode = Tree.TreeNode;
@@ -12,7 +12,7 @@ class ActivityReport extends Component {
     super(props);
     this.state = {
       activity: {},
-      activityPieData:{}
+      activityPieData: {}
     };
   }
   componentDidMount() {
@@ -69,6 +69,46 @@ class ActivityReport extends Component {
       series: activity.series ? activity.series : []
     };
   }
+  // 活动饼图
+  getOptionActivityPie() {
+    const { activityPieData } = this.state;
+    return {
+      title: {
+        text: '活动统计',
+        // subtext: '纯属虚构',
+        x: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+        data: activityPieData.legendData,
+        selected: activityPieData.selected
+      },
+      series: [
+        {
+          name: '入党时间',
+          type: 'pie',
+          radius: '55%',
+          center: ['40%', '50%'],
+          data: activityPieData.seriesData,
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+  }
   render() {
     return (
       <Nav>
@@ -77,6 +117,19 @@ class ActivityReport extends Component {
             <Card style={{ width: 800 }}>
               <ReactEcharts
                 option={this.getOptionActivity()}
+                notMerge={true}
+                lazyUpdate={true}
+                theme={"theme_name"}
+              />
+            </Card>
+          </Col>
+        </Row>
+        <Row style={{ height: 10 }}></Row>
+        <Row gutter={12}>
+          <Col span={12}>
+            <Card style={{ width: 800 }}>
+              <ReactEcharts
+                option={this.getOptionActivityPie()}
                 notMerge={true}
                 lazyUpdate={true}
                 theme={"theme_name"}

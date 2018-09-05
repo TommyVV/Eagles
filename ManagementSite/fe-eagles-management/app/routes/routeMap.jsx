@@ -66,6 +66,7 @@ import TaskReport from "../container/Report/Task";
 import ArticleReport from "../container/Report/Article";
 import OrgOperator from "../container/OrgOper";
 import OrgOperatorDetail from "../container/OrgOper/Detail";
+import UserLoginList from "../container/UserLogin";
 
 
 class RouteMap extends Component {
@@ -93,6 +94,8 @@ class RouteMap extends Component {
             component={SetNextPartyMember}
           />
           <route path="/partymember/import" component={ImportMember} />
+          {/* 游客登录 */}
+          <route path="/userloginlist" component={UserLoginList} />
           {/* 积分配置 */}
           <route path="/intergrallist" component={ScoreList} />
           <route path="/intergral/detail(/:id)" component={ScoreDetail} />

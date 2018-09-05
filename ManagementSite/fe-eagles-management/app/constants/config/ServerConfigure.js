@@ -127,6 +127,7 @@ const MEMBER = {
   DELETE: "/api/User/RemovePartyMember", //删除
   DETAIL: "/api/User/GetPartyMemberDetail", //详情
   LIST: "/api/User/GetPartyMember", //列表
+  LOGIN_LIST: "/api/User/GetUserLoginLs", //游客登录列表
   NEXT_LIST: "/api/User/GetAuthorityUserSetUp", //下级列表
   SET_NEXT: "/api/User/CreateAuthorityUserSetUp", //设置下级
   IMPORT: "/api/User/BatchImportUser" //导入

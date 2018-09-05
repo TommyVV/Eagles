@@ -140,6 +140,13 @@ export default class App extends React.Component {
               >
                 用户文章维护
               </Menu.Item>
+              <Menu.Item
+                key="sub17"
+                onClick={e => hashHistory.replace("/userloginlist")}
+                style={{ display: authMap.get("User0006") ? null : "none" }}
+              >
+                游客登录列表
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub2"

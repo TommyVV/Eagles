@@ -44,6 +44,11 @@ const navMap = [
     key: "sub16"
   },
   {
+    pathname: "#/userloginlist",
+    sub: "sub1",
+    key: "sub17"
+  },
+  {
     pathname: "#/goodslist",
     sub: "sub2",
     key: "sub21"

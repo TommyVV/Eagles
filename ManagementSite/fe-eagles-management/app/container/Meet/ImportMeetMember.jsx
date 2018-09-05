@@ -41,6 +41,16 @@ class ImportMeetMember extends React.Component {
         dataIndex: "ErrorMessage"
       }
     ];
+    this.columns2 = [
+      {
+        title: "参与人员姓名",
+        dataIndex: "UserName"
+      },
+      {
+        title: "联系电话",
+        dataIndex: "Phone"
+      }
+    ];
   }
   handleUpload = () => {
     const { fileList } = this.state;
@@ -229,7 +239,7 @@ class ImportMeetMember extends React.Component {
         </Row>
         <Table
           dataSource={memberList}
-          columns={this.columns}
+          columns={isDetail != 1 ? this.columns : this.columns2}
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
@@ -239,7 +249,7 @@ class ImportMeetMember extends React.Component {
             <Button
               type="primary"
               className="btn btn--primary"
-              disabled={memberList.length === 0}
+              disabled={memberList.length === 0 || fileList.length === 0}
             >
               <a onClick={this.handleImport}>确认导入</a>
             </Button>
