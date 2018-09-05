@@ -11,7 +11,8 @@ class ActivityReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activity: {}
+      activity: {},
+      activityPieData:{}
     };
   }
   componentDidMount() {
@@ -20,17 +21,17 @@ class ActivityReport extends Component {
   // 根据id查询详情
   getInfo = async () => {
     try {
-      // let res = await getActivity({
-      //   HistogramType: "2"
-      // });
-      // this.setState({
-      //   activity: res
-      // });
-      let res = await getActivityPie({
+      let res = await getActivity({
         HistogramType: "2"
       });
       this.setState({
         activity: res
+      });
+      let pieData = await getActivityPie({
+        HistogramType: "2"
+      });
+      this.setState({
+        activityPieData: pieData
       });
     } catch (e) {
       message.error("获取详情失败");
