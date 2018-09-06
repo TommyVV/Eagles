@@ -145,7 +145,7 @@ export default class App extends React.Component {
                 onClick={e => hashHistory.replace("/userloginlist")}
                 style={{ display: authMap.get("User0006") ? null : "none" }}
               >
-                游客登录列表
+                用户登录记录
               </Menu.Item>
             </SubMenu>
             <SubMenu
