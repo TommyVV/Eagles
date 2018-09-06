@@ -73,8 +73,9 @@
     .main_content .list-box .list-header {
         padding: 0.55467rem 0.64rem;
         border-bottom: 1px solid #eee;
-        background-color: #fff;
+        background-color: #e7e5e6;
         cursor: pointer;
+       
     }
 
     .main_content .list-box .list-header .glyphicon-book {
@@ -84,7 +85,7 @@
 
     .main_content .list-box .list-header .title {
         font-size: 0.768rem;
-        color: #0F0F0F;
+        color: #FF5555
     }
 
     .main_content .list-box .list-header .more {

@@ -28,7 +28,7 @@ class TaskReport extends Component {
       });
       debugger
       let pieData = await getActivityPie({
-        HistogramType: "1"
+        PieType: "1"
       });
       this.setState({
         taskPieData: pieData

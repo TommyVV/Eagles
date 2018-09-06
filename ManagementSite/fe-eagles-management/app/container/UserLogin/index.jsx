@@ -106,13 +106,14 @@ class UserLoginList extends React.Component {
         title: "手机号",
         dataIndex: "Phone"
       },
+      
       {
-        title: "所属组织",
-        dataIndex: "OrgName"
+        title: "是否是游客",
+        dataIndex: "IsCustomer"
       },
       {
-        title: "所属支部",
-        dataIndex: "BranchName"
+        title: "登录时间",
+        dataIndex: "CreateTime"
       },
     ];
 

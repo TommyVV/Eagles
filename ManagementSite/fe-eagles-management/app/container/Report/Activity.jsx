@@ -28,7 +28,7 @@ class ActivityReport extends Component {
         activity: res
       });
       let pieData = await getActivityPie({
-        HistogramType: "2"
+        PieType: "2"
       });
       this.setState({
         activityPieData: pieData
