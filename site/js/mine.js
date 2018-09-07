@@ -152,8 +152,9 @@ function getScrollNews(token, appId) {
 				for(var i = 0; i < data.length; i++) {
 					divs += '<span class="scroll-r" ids="'+data[i].NewsId+'">' + data[i].NewsName + '</span>';
 				}
-				$('#scrollobj').append(divs)
-				setInterval("scroll(document.getElementById('scrollobj'))", 20);
+				$('#scrollobj').append(divs).css("padding-left",window.screen.width+"px");
+
+				setInterval("scroll(document.getElementById('scrollobj'),"+data.length+")", 20);
 			} else {
 				$('#scrollobj,.newsd').hide();
 			}
@@ -161,12 +162,13 @@ function getScrollNews(token, appId) {
 	})
 }
 
-function scroll(obj) {
+function scroll(obj,n) {
+	console.log('n----',n);
 	var tmp = (obj.scrollLeft) ++;
 	if(obj.scrollLeft == tmp) {
-		obj.innerHTML += obj.innerHTML;
+		obj.innerHTML += "&nbsp;";
 	}
-	if(obj.scrollLeft >= obj.firstChild.offsetWidth) {
+	if(obj.scrollLeft >= obj.firstChild.offsetWidth*n+window.screen.width) {
 		obj.scrollLeft = 0;
 	}
 }
