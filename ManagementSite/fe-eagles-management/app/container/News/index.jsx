@@ -243,6 +243,10 @@ class NewsList extends React.Component {
         dataIndex: "ModuleName",
       },
       {
+        title: "支部名称",
+        dataIndex: "BranchName"
+      },
+      {
         title: "类型",
         dataIndex: "NewsType",
         render: text => <span>{text == 0 ? "新闻" : "会议"}</span>
