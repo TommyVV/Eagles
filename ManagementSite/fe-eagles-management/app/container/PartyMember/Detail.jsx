@@ -51,7 +51,7 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           const { branch, member } = this.props;
-          const { BranchId } = values;
+          const { BranchId,BeforJoinTime,Birth,FeeExpireDate,FormalJoinTime } = values;
           const bra = branch.filter(o => o.BranchId == BranchId);
           // let { IsMoney } = values;
           // IsMoney = IsMoney ? true : false;
@@ -61,7 +61,11 @@ class Base extends Component {
               ...values,
               // IsMoney,
               Password: "abc123",
-              BranchName: bra && bra[0].BranchName
+              BranchName: bra && bra[0].BranchName,
+              BeforJoinTime: moment(BeforJoinTime, "yyyy-MM-dd").format(),
+              Birth: moment(Birth, "yyyy-MM-dd").format(),
+              FeeExpireDate: moment(FeeExpireDate, "yyyy-MM-dd").format(),
+              FormalJoinTime: moment(FormalJoinTime, "yyyy-MM-dd").format(),
             }
           };
           let { Code, Message } = await createOrEdit(params);

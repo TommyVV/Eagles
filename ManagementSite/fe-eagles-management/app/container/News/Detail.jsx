@@ -82,8 +82,8 @@ class Base extends Component {
               ...news,
               ...values,
               IsTop: IsTop,
-              StartTime: moment(StartTime, "yyyy-MM-dd").format(),
-              EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+              // StartTime: moment(StartTime, "yyyy-MM-dd").format(),
+              // EndTime: moment(EndTime, "yyyy-MM-dd").format(),
               ...attach
             }
           };
