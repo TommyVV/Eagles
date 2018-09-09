@@ -83,7 +83,6 @@ class SearchForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     let userInfo=JSON.parse(localStorage.info);
-    let branchList=this.state.branchList;
     
     let tokenBranchId=userInfo.BranchId;
     return (
@@ -97,7 +96,7 @@ class SearchForm extends Component {
               {getFieldDecorator("BranchId")(
                 <Select >
                   <Option value="">全部</Option>                  
-                  {branchList.map((o, i) => {
+                  {this.state.branchList.map((o, i) => {
                     return (
                       <Option key={i} value={o.BranchId}>
                         {o.BranchName}
@@ -164,7 +163,7 @@ const WrapperSearchForm = Form.create({
       Status: Form.createFormField({
         value: config.Status ? config.Status:""
       }),
-      branchId:Form.createFormField({
+      BranchId:Form.createFormField({
         value:config.branchId
       }),    
     };
