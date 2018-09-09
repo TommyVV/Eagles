@@ -120,7 +120,10 @@ class BranchList extends React.Component {
               // keyword: this.state.keyword
             });
             this.setState({ selectedRowKeys: [] });
-          } else {
+          } else if(Code=="M19"){
+            message.error("支部下存在党员信息，无法删除");
+          }
+          else {
             message.error("删除失败");
           }
         } catch (e) {
