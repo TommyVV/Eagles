@@ -171,7 +171,18 @@ html, body {
 	.demo--radio:checked+.demo--checkbox.demo--radioInput:after {
 		border-radius: 0
 	}
-	
+	.publishbtn{   
+    border-radius: 4px;
+    margin: 0 auto;
+    width: 90%;
+    height: 1.792rem;
+    background-color: #EE2F2F;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    line-height: 1.792rem;
+    text-align: center
+  }
 	.demo--radio:checked+.demo--radioInput {
 		border: 1px solid #E51A1A;
 	}
