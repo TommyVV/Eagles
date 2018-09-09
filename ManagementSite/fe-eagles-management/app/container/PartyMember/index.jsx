@@ -143,7 +143,6 @@ class SearchForm extends Component {
 
 const WrapperSearchForm = Form.create({
   mapPropsToFields: props => {
-    console.log(this);
     console.log(props);
     return {
       BranchId: Form.createFormField({

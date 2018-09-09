@@ -197,6 +197,7 @@ const PUBLIC_ARTICLE = {
 //审核
 const AUDIT = {
   AUDIT: "/api/Audit/Audit",
+  BITCH_AUDIT: "/api/Audit/BatchAudit",
   LIST:"/api/Audit/GetAudit"
 };
 //报表

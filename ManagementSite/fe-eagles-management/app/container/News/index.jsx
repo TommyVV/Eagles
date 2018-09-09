@@ -13,16 +13,15 @@ import {
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
-const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import { getNewsList, deleteNews } from "../../services/newsService";
 import { getList as getBranchList } from "../../services/branchService";
-import { audit } from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
 import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import "./style.less";
+import Audit from "../../components/Common/Audit";
 
 const confirm = Modal.confirm;
 
@@ -169,68 +168,6 @@ const WrapperSearchForm = Form.create({
   }
 })(SearchForm);
 
-// 审核的表单
-const WrapperAuditForm = Form.create({
-  onFieldsChange(props, changedFields) {
-    props.onChange(changedFields);
-  },
-  mapPropsToFields: props => {
-    // const project = props.project;
-    return {
-      AuditStatus: Form.createFormField({
-        ...props.AuditStatus,
-        value: props.AuditStatus.value ? props.AuditStatus.value + "" : "0"
-      }),
-      Reason: Form.createFormField({
-        ...props.Reason,
-        value: props.Reason.value
-      })
-    };
-  }
-})(props => {
-  const { getFieldDecorator } = props.form;
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 7 }
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 6 }
-    }
-  };
-  return (
-    <Form className="ant-advanced-search-form">
-      <Row gutter={24}>
-        <Col span={20} key={1}>
-          <FormItem {...formItemLayout} label="审核结果">
-            {getFieldDecorator("AuditStatus")(
-              <Select>
-                <Option value="0">通过</Option>
-                <Option value="1">不通过</Option>
-              </Select>
-            )}
-          </FormItem>
-        </Col>
-      </Row>
-      <Row gutter={24}>
-        <Col span={20} key={2}>
-          <FormItem {...formItemLayout} label="审核结果描述">
-            {getFieldDecorator(`Reason`, {
-              rules: [
-                {
-                  required: true,
-                  message: "必填，请输入审核结果描述"
-                }
-              ]
-            })(<TextArea rows={4} />)}
-          </FormItem>
-        </Col>
-      </Row>
-    </Form>
-  );
-});
-
 class NewsList extends React.Component {
   constructor(props) {
     super(props);
@@ -241,12 +178,7 @@ class NewsList extends React.Component {
       current: 1, // 当前页
       pageConfig: {}, // 当前页配置
       authMap: new Map(),
-      currentId: "", // 当前的id
       visible: false, // 弹出框
-      fields: {
-        AuditStatus: "", //审核结果
-        Reason: "" // 审核结果描述
-      },
       branchList: []
     };
     this.columns = [
@@ -316,8 +248,12 @@ class NewsList extends React.Component {
                 删除
               </a>
               <a
-                onClick={() =>
-                  this.setState({ visible: true, currentId: obj.NewsId })
+                onClick={() => {
+                  let selectedRowKeys = this.state;
+                  selectedRowKeys = [];
+                  selectedRowKeys.push(obj.NewsId);
+                  this.setState({ visible: true, selectedRowKeys: selectedRowKeys })
+                }
                 }
                 style={{
                   paddingLeft: "24px",
@@ -355,14 +291,14 @@ class NewsList extends React.Component {
 
   }
 
-
+  getCurrentListFn() {
+    this.setState({ visible: false, selectedRowKeys: [] });
+    this.getCurrentList(this.getListConfig);
+  }
   // 选择分享时触发的改变
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
   };
-
-
-
   // 加载当前页
   getCurrentList = async params => {
     try {
@@ -373,8 +309,8 @@ class NewsList extends React.Component {
       });
       this.getListConfig = params; // 保存搜索的数据
 
-      this.updatePageConfig(TotalCount);
       this.setState({ newsList: List, current: params.PageNumber });
+      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -440,55 +376,17 @@ class NewsList extends React.Component {
       throw new Error(e);
     }
   };
-  handleOk = async () => {
-    try {
-      const { currentId, fields } = this.state;
-      const { AuditStatus, Reason } = fields;
-      if (!Reason.value) {
-        message.error("请输入审核结果描述");
-        return;
-      }
-      let params = {
-        AuditStatus: AuditStatus.value,
-        Reason: Reason.value,
-        Type: "1", // 新闻
-        AuditId: currentId,
-        AuditType: 0
-      };
-      let { Code } = await audit(params);
-      this.setState({
-        visible: false,
-        fields: {
-          AuditStatus: "",
-          Reason: ""
-        }
-      });
-      if (Code === "00") {
-        message.success("审核成功");
-        await this.getCurrentList({
-          ...this.getListConfig,
-          PageNumber: this.state.current
-        });
-      } else {
-        message.error("审核失败");
-      }
-    } catch (e) {
-      throw new Error(e);
-    }
-  };
-  handleFormChange = changedFields => {
-    this.setState(({ fields }) => ({
-      fields: { ...fields, ...changedFields }
-    }));
-  };
+  setVisible(isVisible) {
+    this.setState({ visible: isVisible });
+  }
+
   render() {
     let {
       selectedRowKeys,
       pageConfig,
       newsList,
       visible,
-      fields,
-      branchList
+      authMap
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -509,14 +407,7 @@ class NewsList extends React.Component {
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-        <Modal
-          title="审核新闻"
-          visible={visible}
-          onOk={this.handleOk}
-          onCancel={() => this.setState({ visible: false })}
-        >
-          <WrapperAuditForm {...fields} onChange={this.handleFormChange} />
-        </Modal>
+        <Audit visible={visible} setVisible={this.setVisible.bind(this)} type={1} selectedRowKeys={selectedRowKeys} getCurrentListFn={this.getCurrentListFn.bind(this)} />
         <Row
           type="flex"
           // justify="center"
@@ -535,6 +426,34 @@ class NewsList extends React.Component {
               onClick={() => hashHistory.replace(`/news/detail`)}
             >
               新增
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() => {
+                let hasAudit = false;
+                if (!selectedRowKeys.length) {
+                  message.error("请选择待审核的新闻");
+                  return;
+                }
+                selectedRowKeys.map(id => {
+                  newsList.map(o => {
+                    // 选中的是没有审核过的，并且有审核权限
+                    if (o.NewsId == id && authMap.get("Audit001") && o.Status != "-1" && !hasAudit) {
+                      message.error("请选择待审核的新闻");
+                      hasAudit = true;
+                      return false;
+                    }
+                  });
+                })
+                if (!hasAudit) {
+                  this.setState({ visible: true })
+                }
+              }}
+            >
+              批量审核
             </Button>
           </Col>
         </Row>
