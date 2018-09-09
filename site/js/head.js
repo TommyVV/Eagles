@@ -35,7 +35,8 @@ function pcnavList(id) {
 		if($(this).hasClass("on")) { return; }
 		$(this).removeClass("hover");
 	});
-	$obj.find("h4").click(function() {		
+	$obj.find("h4").click(function() {
+		
 		var $div = $(this).siblings(".pclist-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(600);
@@ -70,7 +71,8 @@ function navListm(id) {
 		if($(this).hasClass("on")) { return; }
 		$(this).removeClass("hover");
 	});
-	$obj.find("h4").click(function() {		
+	$obj.find("h4").click(function() {
+		
 		var $div = $(this).siblings(".list-item");
 		if($(this).parent().hasClass("selected")) {
 			$div.slideUp(1);
@@ -117,6 +119,7 @@ function navbar(appId) {
 						for(var j = 0; j < data.AppMenus[i].SubMenus.length; j++) {
 							ptwo += '<p><a href="' + data.AppMenus[i].SubMenus[j].TargetUrl + '" target="_self">' + data.AppMenus[i].SubMenus[j].MenuName + '</a></p>';
 						}
+
 					}
 					navdiv += '<li><h4>' + aimgurl + '</h4><div class="pclist-item none">' + ptwo + '</div>';
 					mobilenav += '<li><h4>' + aimgurl + '</h4><div class="list-item none">' + ptwo + '</div>';
