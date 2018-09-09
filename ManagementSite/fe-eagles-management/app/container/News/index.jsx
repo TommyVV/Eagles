@@ -16,6 +16,7 @@ const Option = Select.Option;
 const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import { getNewsList, deleteNews } from "../../services/newsService";
+import { getList as getBranchList } from "../../services/branchService";
 import { audit } from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
@@ -26,6 +27,12 @@ import "./style.less";
 const confirm = Modal.confirm;
 
 class SearchForm extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      branchList:[]
+    }
+  }
   handleSearch = e => {
     e.preventDefault();
     const _this = this;
@@ -38,6 +45,27 @@ class SearchForm extends Component {
       const getCurrentList = this.props.getCurrentList;
       getCurrentList(params);
     });
+  };
+
+  componentWillMount(){
+    this.getBranchListCurrentList();
+  }
+
+  getBranchListCurrentList = async () => {
+    try {
+      let { List } = await getBranchList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ branchList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
   };
 
   handleReset = () => {
@@ -54,47 +82,40 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    let userInfo=JSON.parse(localStorage.info);
+    let branchList=this.state.branchList;
+    
+    let tokenBranchId=userInfo.BranchId;
     return (
       <Form
         className="ant-advanced-search-form"
         layout="inline"
         onSubmit={this.handleSearch.bind(this)}
       >
+      {tokenBranchId==0?<Col span={6} key={1}>
+          <FormItem label="支部名称">
+              {getFieldDecorator("BranchId")(
+                <Select >
+                  <Option value="">全部</Option>                  
+                  {branchList.map((o, i) => {
+                    return (
+                      <Option key={i} value={o.BranchId}>
+                        {o.BranchName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              )}
+            </FormItem>
+            
+          </Col>:null}
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="标题">
               {getFieldDecorator(`NewsName`)(<Input />)}
             </FormItem>
           </Col>
-          <Col span={8} key={3}>
-            <FormItem label="发布时间">
-              <Col span={11}>
-                <FormItem>
-                  {getFieldDecorator("StartTime")(
-                    <DatePicker placeholder="开始时间" />
-                  )}
-                </FormItem>
-              </Col>
-              <Col span={2}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    textAlign: "center"
-                  }}
-                >
-                  -
-                </span>
-              </Col>
-              <Col span={11}>
-                <FormItem>
-                  {getFieldDecorator("EndTime")(
-                    <DatePicker placeholder="结束时间" />
-                  )}
-                </FormItem>
-              </Col>
-            </FormItem>
-          </Col>
+          
           <Col span={6} key={33}>
             <FormItem label="审核状态">
               {getFieldDecorator("Status")(
@@ -139,16 +160,13 @@ const WrapperSearchForm = Form.create({
     return {
       NewsName: Form.createFormField({
         value: config.NewsName
-      }),
-      StartTime: Form.createFormField({
-        value: config.StartTime ? moment(config.StartTime, "YYYY-MM-dd") : null
-      }),
-      EndTime: Form.createFormField({
-        value: config.EndTime ? moment(config.EndTime, "YYYY-MM-dd") : null
-      }),
+      }),     
       Status: Form.createFormField({
         value: config.Status ? config.Status:""
       }),
+      branchId:Form.createFormField({
+        value:config.branchId
+      }),    
     };
   }
 })(SearchForm);
@@ -230,7 +248,8 @@ class NewsList extends React.Component {
       fields: {
         AuditStatus: "", //审核结果
         Reason: "" // 审核结果描述
-      }
+      },
+      branchList:[]
     };
     this.columns = [
       {
@@ -317,11 +336,10 @@ class NewsList extends React.Component {
     this.getListConfig = {
       PageNumber: 1,
       PageSize: 10,
-      NewsName: "",
-      StartTime: "",
-      EndTime: "",
+      NewsName: "",     
       NewsType: "0",
-      Status: ""
+      Status: "",
+      branchId:""
     };
   }
   componentWillMount() {
@@ -336,12 +354,16 @@ class NewsList extends React.Component {
       });
     }
     this.getCurrentList(this.getListConfig);
+    
   }
 
+  
   // 选择分享时触发的改变
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
   };
+
+  
 
   // 加载当前页
   getCurrentList = async params => {
@@ -352,8 +374,9 @@ class NewsList extends React.Component {
         v.key = v.NewsId;
       });
       this.getListConfig = params; // 保存搜索的数据
+    
+      this.updatePageConfig(TotalCount);      
       this.setState({ newsList: List, current: params.PageNumber });
-      this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -461,12 +484,13 @@ class NewsList extends React.Component {
     }));
   };
   render() {
-    const {
+    let {
       selectedRowKeys,
       pageConfig,
       newsList,
       visible,
-      fields
+      fields,
+      branchList
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -477,6 +501,7 @@ class NewsList extends React.Component {
         <WrapperSearchForm
           getCurrentList={this.getCurrentList}
           getListConfig={this.getListConfig}
+          branchList={this.branchList}
         />
         <Table
           dataSource={newsList}
