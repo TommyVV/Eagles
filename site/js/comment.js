@@ -70,7 +70,7 @@ Comment.prototype = {
                     $(".comment-content").removeClass('hide');
                     $(".comment-area").html(`暂无评论数据`);
                 } else {
-                    alert(data.Code, data.Message);
+                   //todo  alert(data.Code, data.Message);
                 }
             }
         });
@@ -97,7 +97,7 @@ Comment.prototype = {
                     $('.comment-edit').addClass("hide");
                     that.getUserComment();
                 } else {
-                    alert(data.Code, data.Message);
+                   //todo  alert(data.Code, data.Message);
                 }
             },
             complete: function() {
@@ -126,7 +126,7 @@ Comment.prototype = {
                 if (data.Code == "00") {
                     that.getUserComment();
                 } else {
-                    alert(data.Code, data.Message);
+                   //todo  alert(data.Code, data.Message);
                 }
             },
             complete: function() {

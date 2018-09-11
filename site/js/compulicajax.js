@@ -11,7 +11,7 @@ console.log(appId)
 			if(jsonData.Code == 11){
 				//console.log(1)
 			  //如果超时就处理 ，指定要跳转的页面(比如登陆页)
-			  alert(jsonData.Message);
+			  //todo alert(jsonData.Message);
 			  localStorage.clear();
 			  window.location.href = 'login.html?appId=' + appId;
 			  

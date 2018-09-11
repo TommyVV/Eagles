@@ -77,11 +77,10 @@ function exchange(token,appId,page) {
 					mescroll.lockUpScroll(true);
 				}
 				
-			}else {
-                alert("亲~暂无产品可以兑换~");
+			}else {                
                 mescroll.lockDownScroll(true);
 				mescroll.lockUpScroll(true);
-				$('.mescroll-hardware').html('没有更多数据')
+				$('.mescroll-hardware').html('亲~暂无产品可以兑换~')
             }
 		}
 	});

@@ -64,7 +64,7 @@ function myAricle(page, appId) {
 			} else {
 				mescroll.lockDownScroll(true);
 				mescroll.lockUpScroll(true);
-				$('.mescroll-hardware').html('没有更多')
+				$('.mescroll-hardware').html('没有更多');//todo？
 			}
 		}
 	});

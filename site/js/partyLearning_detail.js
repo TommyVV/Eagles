@@ -144,7 +144,7 @@ function getNewsDetail(newsId, token, appId) {
 						}, 60000)
 					} else { //用户未登录 需要bootstrap的toast提示框，提示 "登录才可以累计学习时间"
 						bootoast({
-							message: '登录才可以累计学习时间',
+							message: '登录之后才可以累计学习时间哦~',
 							type: 'warning',
 							position: 'toast-top-center',
 							timeout: 2

@@ -83,7 +83,7 @@ $(document).ready(function () {
                 if (data.Code == "00") {
                     taskRecord(data.Result.StepList, status);
                 } else {
-                    errorTip('任务步骤:' + data.Message);
+                    errorTip('任务计划:' + data.Message);
                 }
             },
             error: function () {

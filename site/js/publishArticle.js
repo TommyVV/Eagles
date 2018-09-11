@@ -232,6 +232,7 @@ function branchUsers(token, appId) {
 					
 				}else{
 					$('#modal .modal-body').html('暂无数据');
+					//todo 统一话术
 				}
 			}
 		}
@@ -255,7 +256,7 @@ $('#btnTestSaveLarge').on('click', function() {
 			
 		} else {
 				bootoast({
-						message: "请选择推荐人人员",
+						message: "请选择指派党员",
 						type: "info",
 						position: "toast-top-center",
 						timeout: 2

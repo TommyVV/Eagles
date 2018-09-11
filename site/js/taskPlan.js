@@ -14,7 +14,7 @@ $(document).ready(function() {
     $(".plan-add").click(function() {
         stepId = "";
         $('#step-content').val('');
-        $("#modalLargeLabel").html('新增步骤');
+        $("#modalLargeLabel").html('新增计划');
     });
     //确定计划
     $('#btnTestSaveLarge').on('click', function() {
@@ -23,7 +23,7 @@ $(document).ready(function() {
             editTaskStep(stepContent);
         } else {
             bootoast({
-                message: "请填写任务步骤",
+                message: "请填写任务计划",
                 type: "info",
                 position: "toast-top-center",
                 timeout: 2
@@ -155,7 +155,7 @@ $(document).ready(function() {
                 .attr("id")
                 .split("-");
             stepId = itemInfoArr[1];
-            $("#modalLargeLabel").html('编辑步骤');
+            $("#modalLargeLabel").html('编辑计划');
             $("#step-content").val(list[itemInfoArr[2]].StepName);
         });
         //反馈按钮
