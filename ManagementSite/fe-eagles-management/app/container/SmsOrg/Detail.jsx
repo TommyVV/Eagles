@@ -46,14 +46,14 @@ class Base extends Component {
               OrgName
             }
           };
-          let { Code } = await createOrEdit(params);
+          let { Code,Message } = await createOrEdit(params);
           if (Code === "00") {
             let tip = system.VendorId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/smsorglist");
           } else {
-            let tip = system.VendorId ? "保存失败" : "创建失败";
-            message.error(tip);
+            // let tip = system.VendorId ? "保存失败" : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

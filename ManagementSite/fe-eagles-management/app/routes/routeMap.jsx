@@ -17,7 +17,6 @@ import GoodsList from "../container/Goods";
 import GoodsDetail from "../container/Goods/Detail";
 import SendList from "../container/Send";
 import SendDetail from "../container/Send/Detail";
-import CheckList from "../container/Check";
 import SystemList from "../container/System";
 import SystemDetail from "../container/System/Detail";
 import RankList from "../container/Rank";
@@ -105,8 +104,6 @@ class RouteMap extends Component {
           {/* 发货 */}
           <route path="/sendlist" component={SendList} />
           <route path="/send/detail(/:id)" component={SendDetail} />
-          {/* 审核 */}
-          <route path="/checklist" component={CheckList} />
           {/* 系统消息 */}
           <route path="/systemlist" component={SystemList} />
           <route path="/system/detail(/:id)" component={SystemDetail} />

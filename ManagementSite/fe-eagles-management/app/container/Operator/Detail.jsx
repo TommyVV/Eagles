@@ -30,7 +30,7 @@ class Base extends Component {
               IsBranch: true
             }
           };
-          let { Code } = await createOrEdit(params);
+          let { Code,Message } = await createOrEdit(params);
           if (Code === "00") {
             let tip = this.props.operator.OperId ? "保存成功" : "创建成功";
             message.success(tip);
@@ -39,8 +39,8 @@ class Base extends Component {
             message.error("操作员账号已存在");
           }
           else {
-            let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
-            message.error(tip);
+            // let tip = this.props.operator.OperId ? "保存失败" : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

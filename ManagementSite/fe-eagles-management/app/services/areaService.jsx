@@ -12,7 +12,7 @@ export const getAllArea = async () => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`area error`);
+      throw new Error(`系统繁忙，请稍后再试`);
     }
   } catch (e) {
     throw new Error(e);

@@ -15,7 +15,7 @@ export const getNewsInfoById = async params => {
     if (res.status === 200) {
       return Result;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -32,9 +32,9 @@ export const getNewsList = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { List: [] };
+      return Code == "00" ? Result : { List: [], Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -52,7 +52,7 @@ export const createOrEditNews = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -71,7 +71,7 @@ export const deleteNews = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -90,7 +90,7 @@ export const bitchCreate= async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

@@ -94,10 +94,10 @@ class SmsSystemList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let request={
-        Status:-1,
+      let request = {
+        Status: -1,
         ...PageNumber
-      }
+      };
       let { List, TotalCount } = await getList(request);
       console.log("List - ", List);
       List.forEach((v, i) => {
@@ -133,7 +133,7 @@ class SmsSystemList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({
+          let { Code, Message } = await del({
             VendorId
           });
           if (Code === "00") {
@@ -144,7 +144,7 @@ class SmsSystemList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

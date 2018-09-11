@@ -15,7 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
 import { getList, del } from "../../services/activityService";
-import {audit} from "../../services/auditService";
+import { audit } from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
 import "moment/locale/zh-cn";
@@ -98,7 +98,7 @@ class SearchForm extends Component {
           <Col span={5} key={333}>
             <FormItem label="审核状态">
               {getFieldDecorator("Status")(
-                <Select >
+                <Select>
                   <Option value="">全部</Option>
                   {auditStatus.map((o, i) => {
                     return (
@@ -148,7 +148,7 @@ const WrapperSearchForm = Form.create({
       }),
       Status: Form.createFormField({
         value: config.Status ? config.Status : ""
-      }),
+      })
     };
   }
 })(SearchForm);
@@ -227,7 +227,7 @@ class NewsList extends React.Component {
       fields: {
         AuditStatus: "", //审核结果
         Reason: "" // 审核结果描述
-      },
+      }
     };
     this.columns = [
       {
@@ -266,8 +266,8 @@ class NewsList extends React.Component {
         dataIndex: "Status",
         render: text => {
           return auditStatus.map(o => {
-            return o.Status == text ? <span key="1">{o.text}</span> : null
-          })
+            return o.Status == text ? <span key="1">{o.text}</span> : null;
+          });
         }
       },
       {
@@ -290,11 +290,17 @@ class NewsList extends React.Component {
               </a>
               <a
                 onClick={() =>
-                  this.setState({ visible: true, currentId: obj.ActivityTaskId })
+                  this.setState({
+                    visible: true,
+                    currentId: obj.ActivityTaskId
+                  })
                 }
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") && obj.Status == "-1" ? null : "none"
+                  display:
+                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                      ? null
+                      : "none"
                 }}
               >
                 审核
@@ -372,7 +378,7 @@ class NewsList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({
+          let { Code, Message } = await del({
             ActivityId
           });
           if (Code === "00") {
@@ -384,7 +390,7 @@ class NewsList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
@@ -435,7 +441,13 @@ class NewsList extends React.Component {
   };
 
   render() {
-    const { selectedRowKeys, pageConfig, newsList, visible, fields } = this.state;
+    const {
+      selectedRowKeys,
+      pageConfig,
+      newsList,
+      visible,
+      fields
+    } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -466,7 +478,7 @@ class NewsList extends React.Component {
           type="flex"
           // justify="center"
           gutter={24}
-        // className={projectList.length === 0 ? "init" : ""}
+          // className={projectList.length === 0 ? "init" : ""}
         >
           {/* <Col>
             <Button onClick={this.handleDelete} className="btn">

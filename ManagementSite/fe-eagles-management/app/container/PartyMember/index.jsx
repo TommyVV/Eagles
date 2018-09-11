@@ -83,22 +83,24 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          {branchId == 0 ? <Col span={6} key={1}>
-            <FormItem label="支部名称">
-              {getFieldDecorator("BranchId")(
-                <Select >
-                  <Option value="">全部</Option>
-                  {branchList.map((o, i) => {
-                    return (
-                      <Option key={i} value={o.BranchId}>
-                        {o.BranchName}
-                      </Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </FormItem>
-          </Col> : null}
+          {branchId == 0 ? (
+            <Col span={6} key={1}>
+              <FormItem label="支部名称">
+                {getFieldDecorator("BranchId")(
+                  <Select>
+                    <Option value="">全部</Option>
+                    {branchList.map((o, i) => {
+                      return (
+                        <Option key={i} value={o.BranchId}>
+                          {o.BranchName}
+                        </Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          ) : null}
           <Col span={6} key={2}>
             <FormItem label="党员名称">
               {getFieldDecorator(`UserName`)(<Input />)}
@@ -107,7 +109,7 @@ class SearchForm extends Component {
           <Col span={6} key={3}>
             <FormItem label="审核状态">
               {getFieldDecorator("Status")(
-                <Select >
+                <Select>
                   <Option value="">全部</Option>
                   {auditStatus.map((o, i) => {
                     return (
@@ -153,7 +155,7 @@ const WrapperSearchForm = Form.create({
       }),
       Status: Form.createFormField({
         value: props.obj.Status ? props.obj.Status : ""
-      }),
+      })
     };
   }
 })(SearchForm);
@@ -260,8 +262,8 @@ class PartyMemberList extends React.Component {
         dataIndex: "Status",
         render: text => {
           return auditStatus.map(o => {
-            return o.Status == text ? <span key="1">{o.text}</span> : null
-          })
+            return o.Status == text ? <span key="1">{o.text}</span> : null;
+          });
         }
       },
       {
@@ -381,7 +383,7 @@ class PartyMemberList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({ UserId });
+          let { Code, Message } = await del({ UserId });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -391,7 +393,7 @@ class PartyMemberList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error(`删除失败`);
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

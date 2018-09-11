@@ -76,8 +76,8 @@ class Base extends Component {
             message.success(tip);
             hashHistory.replace("/partymemberlist");
           } else {
-            let tip = member.UserId ? "保存失败" : "创建失败";
-            message.error(tip);
+            // let tip = member.UserId ? "保存失败" : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

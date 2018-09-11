@@ -72,14 +72,14 @@ class QuestionForm extends Component {
                 },
                 Subject: idList
               };
-              let { Code } = await createOrEditQuestion(params);
+              let { Code,Message } = await createOrEditQuestion(params);
               if (Code === "00") {
                 let tip = Info.ExercisesId ? "保存成功" : "创建成功";
                 message.success(tip);
                 hashHistory.replace("/questionlist");
               } else {
-                let tip = Info.ExercisesId ? "保存失败" : "创建失败";
-                message.error(tip);
+                // let tip = Info.ExercisesId ? "保存失败" : "创建失败";
+                message.error(Message);
               }
             }
           } else {

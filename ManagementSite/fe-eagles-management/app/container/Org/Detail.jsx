@@ -56,14 +56,14 @@ class Base extends Component {
               ...values,
             }
           };
-          let { Code } = await createOrEditOrg(params);
+          let { Code,Message } = await createOrEditOrg(params);
           if (Code === "00") {
             let tip = this.props.org.OrgId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/orglist");
           } else {
-            let tip = this.props.org.OrgId ? "保存失败" : "创建失败";
-            message.error(tip);
+            // let tip = this.props.org.OrgId ? "保存失败" : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

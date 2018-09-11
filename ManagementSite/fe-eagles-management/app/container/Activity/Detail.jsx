@@ -56,25 +56,23 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
           if (moment(BeginTime).isBefore(EndTime)) {
-            const { news} = this.props;      
-
+            const { news } = this.props;
             let params = {
               DetailInfo: {
                 ...news,
                 ...values,
                 BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
-                EndTime: moment(EndTime, "yyyy-MM-dd").format(),
-              
+                EndTime: moment(EndTime, "yyyy-MM-dd").format()
               }
             };
-            let { Code } = await createOrEdit(params);
+            let { Code, Message } = await createOrEdit(params);
             if (Code === "00") {
               let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
               message.success(tip);
               hashHistory.replace("/activitylist");
             } else {
-              let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
-              message.error(tip);
+              // let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
+              message.error(Message);
             }
           } else {
             message.error("开始时间必须小于结束时间");
@@ -108,7 +106,7 @@ class Base extends Component {
     }
     return isImage && file.size <= fileSize;
   }
-  
+
   // 封面
   onChangeImage = info => {
     console.log(info.file, info.fileList);
@@ -136,7 +134,6 @@ class Base extends Component {
     } = this.props.form;
     const { news, List } = this.props; //是否显示试卷列表
 
-   
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -196,7 +193,7 @@ class Base extends Component {
             serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
           );
           request.send(formData);
-          request.onreadystatechange = function () {
+          request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
               let { Result } = JSON.parse(request.responseText);
               let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
@@ -277,7 +274,10 @@ class Base extends Component {
             ]
           })(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps}  ref={(instance) => this.editorInstance = instance}/>
+              <BraftEditor
+                {...editorProps}
+                ref={instance => (this.editorInstance = instance)}
+              />
             </div>
           )}
         </FormItem>
@@ -286,7 +286,7 @@ class Base extends Component {
             <Input placeholder="请输入最大参与人数" />
           )}
         </FormItem>
-               
+
         <FormItem {...formItemLayout} label="试卷选择">
           {getFieldDecorator("ExampleId")(
             <Select>
@@ -313,14 +313,14 @@ class Base extends Component {
             {news.ImageUrl ? (
               <img src={news.ImageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
-                <div>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
         </FormItem>
-       
+
         <FormItem>
           <Row gutter={24}>
             <Col span={2} offset={2}>
@@ -359,7 +359,7 @@ const FormMap = Form.create({
         value: news.ActivityTaskName
       }),
       ActivityTaskType: Form.createFormField({
-        value: news.ActivityTaskType?news.ActivityTaskType.toString():"1"
+        value: news.ActivityTaskType ? news.ActivityTaskType.toString() : "1"
       }),
       BeginTime: Form.createFormField({
         value: news.BeginTime ? moment(news.BeginTime, "YYYY-MM-DD") : null
@@ -372,7 +372,7 @@ const FormMap = Form.create({
       }),
       MaxPartakePeople: Form.createFormField({
         value: news.MaxPartakePeople
-      }),     
+      }),
       ExampleId: Form.createFormField({
         value: news.ExampleId ? news.ExampleId : ""
       })
@@ -422,16 +422,21 @@ class ActivityDetail extends Component {
   getInfo = async ActivityId => {
     try {
       this.getList();
-      let { Info } = await getInfoById({ ActivityId });
-      console.log("newsDetails", Info);
-      Info = {
-        ...Info,
-        isTest: Info.TestId ? "1" : "0"
-      };
-      this.state.Attachments = Info.Attachments;
-      this.props.saveInfo(Info);
+      let { Result, Code, Message } = await getInfoById({ ActivityId });
+      if (Code == "00") {
+        let { Info } = Result;
+        console.log("newsDetails");
+        Info = {
+          ...Info,
+          isTest: Info.TestId ? "1" : "0"
+        };
+        this.state.Attachments = Info.Attachments;
+        this.props.saveInfo(Info);
+      } else {
+        message.error(Message);
+      }
     } catch (e) {
-      message.error("获取详情失败");
+      message.error("系统繁忙，请稍后再试");
       throw new Error(e);
     }
   };

@@ -133,7 +133,7 @@ class MenuList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({
+          let { Code, Message } = await del({
             MenuId
           });
           if (Code === "00") {
@@ -145,7 +145,7 @@ class MenuList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
@@ -187,7 +187,7 @@ class MenuList extends React.Component {
         <Row
           type="flex"
           gutter={24}
-        // className={projectList.length === 0 ? "init" : ""}
+          // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button className="btn btn--primary" type="primary">

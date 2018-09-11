@@ -14,7 +14,7 @@ export const getInfoById = async params => {
     if (res.status === 200) {
       return Result;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -31,9 +31,9 @@ export const getListBranch = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { Activitys: [] };
+      return Code == "00" ? Result : { Activitys: [], Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -49,9 +49,9 @@ export const getListOrg = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { Activitys: [] };
+      return Code == "00" ? Result : { Activitys: [], Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

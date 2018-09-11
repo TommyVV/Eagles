@@ -87,15 +87,15 @@ class Base extends Component {
               ...attach
             }
           };
-          let { Code } = await createOrEditNews(params);
+          let { Code,Message } = await createOrEditNews(params);
           if (Code === "00") {
             let tip = this.props.news.NewsId ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/newslist");
           } else {
-            let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
+            // let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
 
-            message.error(tip);
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

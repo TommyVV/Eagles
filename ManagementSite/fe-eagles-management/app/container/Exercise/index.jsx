@@ -59,18 +59,27 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    return <Form className="ant-advanced-search-form" layout="inline" onSubmit={this.handleSearch}>
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch}
+      >
         <Row gutter={24}>
           <Col span={5} key={1}>
             <FormItem label="习题类型">
-              {getFieldDecorator("ExercisesType")(<Select>
+              {getFieldDecorator("ExercisesType")(
+                <Select>
                   <Option value="0">全部</Option>
                   {typeMap.map((obj, index) => {
-                    return <Option key={index} value={obj.ExercisesType}>
+                    return (
+                      <Option key={index} value={obj.ExercisesType}>
                         {obj.text}
-                      </Option>;
+                      </Option>
+                    );
                   })}
-                </Select>)}
+                </Select>
+              )}
             </FormItem>
           </Col>
           <Col span={5} key={2}>
@@ -88,7 +97,13 @@ class SearchForm extends Component {
                 </FormItem>
               </Col>
               <Col span={2}>
-                <span style={{ display: "inline-block", width: "100%", textAlign: "center" }}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center"
+                  }}
+                >
                   -
                 </span>
               </Col>
@@ -126,7 +141,8 @@ class SearchForm extends Component {
             </Button>
           </Col>
         </Row>
-      </Form>;
+      </Form>
+    );
   }
 }
 
@@ -148,7 +164,7 @@ const WrapperSearchForm = Form.create({
       }),
       EndTime: Form.createFormField({
         value: obj.EndTime ? moment(obj.EndTime, "YYYY-MM-dd") : null
-      }),
+      })
     };
   }
 })(SearchForm);
@@ -283,7 +299,7 @@ class Exercise extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await deleteQuestion({
+          let { Code, Message } = await deleteQuestion({
             ExercisesId: id
           });
           if (Code === "00") {
@@ -295,7 +311,7 @@ class Exercise extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

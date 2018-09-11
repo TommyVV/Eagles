@@ -30,7 +30,7 @@ class SearchForm extends Component {
     super(props);
     this.state = {
       branchList: []
-    }
+    };
   }
   handleSearch = e => {
     e.preventDefault();
@@ -91,22 +91,24 @@ class SearchForm extends Component {
         onSubmit={this.handleSearch.bind(this)}
       >
         <Row gutter={24}>
-          {tokenBranchId == 0 ? <Col span={6} key={1111}>
-            <FormItem label="支部名称">
-              {getFieldDecorator("BranchId")(
-                <Select >
-                  <Option value="">全部</Option>
-                  {branchList.map((o, i) => {
-                    return (
-                      <Option key={i} value={o.BranchId}>
-                        {o.BranchName}
-                      </Option>
-                    );
-                  })}
-                </Select>
-              )}
-            </FormItem>
-          </Col> : null}
+          {tokenBranchId == 0 ? (
+            <Col span={6} key={1111}>
+              <FormItem label="支部名称">
+                {getFieldDecorator("BranchId")(
+                  <Select>
+                    <Option value="">全部</Option>
+                    {branchList.map((o, i) => {
+                      return (
+                        <Option key={i} value={o.BranchId}>
+                          {o.BranchName}
+                        </Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          ) : null}
           <Col span={5} key={1}>
             <FormItem label="标题">
               {getFieldDecorator(`NewsName`)(<Input />)}
@@ -116,7 +118,7 @@ class SearchForm extends Component {
           <Col span={6} key={33}>
             <FormItem label="审核状态">
               {getFieldDecorator("Status")(
-                <Select >
+                <Select>
                   <Option value="">全部</Option>
                   {auditStatus.map((o, i) => {
                     return (
@@ -163,7 +165,7 @@ const WrapperSearchForm = Form.create({
       }),
       BranchId: Form.createFormField({
         value: config.BranchId
-      }),
+      })
     };
   }
 })(SearchForm);
@@ -189,7 +191,7 @@ class NewsList extends React.Component {
       },
       {
         title: "栏目",
-        dataIndex: "ModuleName",
+        dataIndex: "ModuleName"
       },
       {
         title: "支部名称",
@@ -229,8 +231,8 @@ class NewsList extends React.Component {
         dataIndex: "Status",
         render: text => {
           return auditStatus.map(o => {
-            return o.Status == text ? <span key="1">{o.text}</span> : null
-          })
+            return o.Status == text ? <span key="1">{o.text}</span> : null;
+          });
         }
       },
       {
@@ -238,7 +240,11 @@ class NewsList extends React.Component {
         render: obj => {
           return (
             <div>
-              <a onClick={() => hashHistory.replace(`/news/detail/${obj.NewsId}`)}>
+              <a
+                onClick={() =>
+                  hashHistory.replace(`/news/detail/${obj.NewsId}`)
+                }
+              >
                 编辑
               </a>
               <a
@@ -252,12 +258,17 @@ class NewsList extends React.Component {
                   let selectedRowKeys = this.state;
                   selectedRowKeys = [];
                   selectedRowKeys.push(obj.NewsId);
-                  this.setState({ visible: true, selectedRowKeys: selectedRowKeys })
-                }
-                }
+                  this.setState({
+                    visible: true,
+                    selectedRowKeys: selectedRowKeys
+                  });
+                }}
                 style={{
                   paddingLeft: "24px",
-                  display: this.state.authMap.get("Audit001") && obj.Status == "-1" ? null : "none"
+                  display:
+                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                      ? null
+                      : "none"
                 }}
               >
                 审核
@@ -288,7 +299,6 @@ class NewsList extends React.Component {
       });
     }
     this.getCurrentList(this.getListConfig);
-
   }
 
   getCurrentListFn() {
@@ -340,7 +350,7 @@ class NewsList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await deleteNews({
+          let { Code, Message } = await deleteNews({
             NewsId
           });
           if (Code === "00") {
@@ -352,7 +362,7 @@ class NewsList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
@@ -407,12 +417,18 @@ class NewsList extends React.Component {
           locale={{ emptyText: "暂无数据" }}
           bordered
         />
-        <Audit visible={visible} setVisible={this.setVisible.bind(this)} type={1} selectedRowKeys={selectedRowKeys} getCurrentListFn={this.getCurrentListFn.bind(this)} />
+        <Audit
+          visible={visible}
+          setVisible={this.setVisible.bind(this)}
+          type={1}
+          selectedRowKeys={selectedRowKeys}
+          getCurrentListFn={this.getCurrentListFn.bind(this)}
+        />
         <Row
           type="flex"
           // justify="center"
           gutter={24}
-        // className={projectList.length === 0 ? "init" : ""}
+          // className={projectList.length === 0 ? "init" : ""}
         >
           {/* <Col>
             <Button onClick={this.handleDelete} className="btn">
@@ -441,15 +457,20 @@ class NewsList extends React.Component {
                 selectedRowKeys.map(id => {
                   newsList.map(o => {
                     // 选中的是没有审核过的，并且有审核权限
-                    if (o.NewsId == id && authMap.get("Audit001") && o.Status != "-1" && !hasAudit) {
+                    if (
+                      o.NewsId == id &&
+                      authMap.get("Audit001") &&
+                      o.Status != "-1" &&
+                      !hasAudit
+                    ) {
                       message.error("请选择待审核的新闻");
                       hasAudit = true;
                       return false;
                     }
                   });
-                })
+                });
                 if (!hasAudit) {
-                  this.setState({ visible: true })
+                  this.setState({ visible: true });
                 }
               }}
             >
