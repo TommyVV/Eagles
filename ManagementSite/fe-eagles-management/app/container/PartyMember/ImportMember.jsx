@@ -37,6 +37,15 @@ class ImportMember extends React.Component {
         key: "UserName"
       },
       {
+        title: "性别",
+        dataIndex: "Sex",
+        key: "Sex",
+        render: Sex => {
+          console.log(Sex)
+          return Sex == 0 ? "男" : "女";
+        },
+      },
+      {
         title: "联系电话",
         dataIndex: "Phone",
         key: "Phone"
@@ -97,8 +106,10 @@ class ImportMember extends React.Component {
               case 0:
                 news["UserName"] = text;
               case 1:
-                news["Phone"] = text;
+                news["Sex"] = text;
               case 2:
+                news["Phone"] = text;
+              case 3:
                 news["MemberType"] = text;
             }
           });
@@ -118,6 +129,7 @@ class ImportMember extends React.Component {
           newKeys.push({
             UserName: o.UserName,
             Phone: o.Phone,
+            Sex: o.Sex,
             MemberType: o.MemberType,
             ImportStatus: true,
             ErrorReason: ""
