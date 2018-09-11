@@ -76,14 +76,14 @@ class Base extends Component {
               },
               Option: list
             };
-            let { Code } = await createOrEdit(params);
+            let { Code,Message } = await createOrEdit(params);
             if (Code === "00") {
               let tip = Info.QuestionId ? "保存成功" : "创建成功";
               message.success(tip);
               hashHistory.replace("/exerciselist");
             } else {
-              let tip = Info.QuestionId ? "保存失败" : "创建失败";
-              message.error(tip);
+              // let tip = Info.QuestionId ? "保存失败" : "创建失败";
+              message.error(Message);
             }
           } else {
             message.error("请添加选项");

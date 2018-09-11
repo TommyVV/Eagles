@@ -198,7 +198,7 @@ class MeetList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await deleteNews({
+          let { Code,Message } = await deleteNews({
             NewsId
           });
           if (Code === "00") {
@@ -210,7 +210,7 @@ class MeetList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

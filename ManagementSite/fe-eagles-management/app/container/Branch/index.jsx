@@ -109,7 +109,7 @@ class BranchList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({
+          let { Code,Message } = await del({
             BranchId
           });
           if (Code === "00") {
@@ -121,10 +121,10 @@ class BranchList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else if(Code=="M19"){
-            message.error("支部下存在党员信息，无法删除");
+            message.error(Message);
           }
           else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

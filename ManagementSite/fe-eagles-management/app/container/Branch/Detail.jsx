@@ -24,7 +24,7 @@ class Base extends Component {
               ...values
             }
           };
-          let { Code } = await createOrEdit(params);
+          let { Code,Message } = await createOrEdit(params);
           if (Code === "00") {
             let tip = branch.BranchId
               ? "保存成功"
@@ -32,10 +32,10 @@ class Base extends Component {
             message.success(tip);
             hashHistory.replace("/branchlist");
           } else {
-            let tip = branch.BranchId
-              ? "保存失败"
-              : "创建失败";
-            message.error(tip);
+            // let tip = branch.BranchId
+            //   ? "保存失败"
+            //   : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

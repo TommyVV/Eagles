@@ -14,7 +14,7 @@ export const getInfoById = async params => {
     if (res.status === 200) {
       return Result;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -31,9 +31,9 @@ export const getList = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { List: [] };
+      return Code == "00" ? Result : { List: [], Message, Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -49,9 +49,9 @@ export const getLoginList = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { List: [] };
+      return Code == "00" ? Result : { List: [], Message, Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -67,9 +67,9 @@ export const getListById = async params => {
     });
     let { Code, Result, Message } = res.data;
     if (res.status === 200) {
-      return Code == "00" ? Result : { User: [] };
+      return Code == "00" ? Result : { User: [], Message };
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -87,7 +87,7 @@ export const setNext = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -107,7 +107,7 @@ export const createOrEdit = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -126,7 +126,7 @@ export const bitchCreate= async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -145,7 +145,7 @@ export const del = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

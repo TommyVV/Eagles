@@ -15,7 +15,7 @@ export const getPartyMember = async params => {
     if (res.status === 200) {
       return Code == "00" ? Result : {};
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -33,7 +33,7 @@ export const getActivity = async params => {
     if (res.status === 200) {
       return Code == "00" ? Result : {};
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -51,7 +51,7 @@ export const getArticle = async params => {
     if (res.status === 200) {
       return Code == "00" ? Result : {};
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -69,7 +69,7 @@ export const getActivityPie = async params => {
     if (res.status === 200) {
       return Code == "00" ? Result : {};
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

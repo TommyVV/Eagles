@@ -36,14 +36,14 @@ class DynamicFieldSet extends React.Component {
             type: 1,
             ParentMenuId:this.props.menu.MenuId
           };
-          let { Code } = await createOrEdit(params);
+          let { Code,Message } = await createOrEdit(params);
           if (Code === "00") {
             let tip = menu.Id ? "保存成功" : "创建成功";
             message.success(tip);
             hashHistory.replace("/menulist");
           } else {
-            let tip = menu.Id ? "保存失败" : "创建失败";
-            message.error(tip);
+            // let tip = menu.Id ? "保存失败" : "创建失败";
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

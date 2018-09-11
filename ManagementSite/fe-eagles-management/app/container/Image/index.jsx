@@ -224,7 +224,7 @@ class ImageList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({ Id });
+          let { Code,Message } = await del({ Id });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -234,7 +234,7 @@ class ImageList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error(`删除失败`);
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

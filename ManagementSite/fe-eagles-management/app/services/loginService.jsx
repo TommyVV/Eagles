@@ -15,7 +15,7 @@ export const login = async params => {
       return res.data;
     } else {
       let { Code, Message } = res.data;
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);
@@ -36,7 +36,7 @@ export const getAuth = async params => {
       return res.data;
     } else {
       let { Code, Message } = res.data;
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

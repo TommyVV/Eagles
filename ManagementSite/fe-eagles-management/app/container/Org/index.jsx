@@ -130,7 +130,7 @@ class OrgList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await deleteOrg({
+          let { Code, Message } = await deleteOrg({
             OrgId
           });
           if (Code === "00") {
@@ -142,7 +142,7 @@ class OrgList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
@@ -228,7 +228,10 @@ class OrgList extends React.Component {
           // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
-            <Button className="btn btn--primary" onClick={() => hashHistory.replace(`/org/detail`)}>
+            <Button
+              className="btn btn--primary"
+              onClick={() => hashHistory.replace(`/org/detail`)}
+            >
               新增
             </Button>
           </Col>

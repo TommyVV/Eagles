@@ -64,14 +64,14 @@ class Base extends Component {
                 SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format()
               }
             };
-            let { Code } = await createOrEdit(params);
+            let { Code,Message } = await createOrEdit(params);
             if (Code === "00") {
               let tip = this.props.goods.GoodsId ? "保存成功" : "创建成功";
               message.success(tip);
               hashHistory.replace("/goodslist");
             } else {
-              let tip = this.props.goods.GoodsId ? "保存失败" : "创建失败";
-              message.error(tip);
+              // let tip = this.props.goods.GoodsId ? "保存失败" : "创建失败";
+              message.error(Message);
             }
           } else {
             message.error("开始时间必须小于结束时间");

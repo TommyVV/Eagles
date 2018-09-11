@@ -221,7 +221,7 @@ class SystemList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({
+          let { Code, Message } = await del({
             NewsId
           });
           if (Code === "00") {
@@ -232,7 +232,7 @@ class SystemList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error("删除失败");
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);

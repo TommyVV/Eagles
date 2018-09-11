@@ -19,7 +19,7 @@ export const uploadFile = async file => {
     if (res.status === 200) {
       return Result;
     } else {
-      throw new Error(`${Code} - ${Message}`);
+      throw new Error(Message);
     }
   } catch (e) {
     throw new Error(e);

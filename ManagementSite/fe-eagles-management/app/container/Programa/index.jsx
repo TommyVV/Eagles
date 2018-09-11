@@ -270,7 +270,7 @@ class ProgramaList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code } = await del({ ColumnId });
+          let { Code, Message } = await del({ ColumnId });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -280,7 +280,7 @@ class ProgramaList extends React.Component {
             });
             this.setState({ selectedRowKeys: [] });
           } else {
-            message.error(`删除失败`);
+            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
