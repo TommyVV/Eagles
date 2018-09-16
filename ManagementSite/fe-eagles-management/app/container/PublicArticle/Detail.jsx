@@ -51,7 +51,7 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 8 }
       }
     };
 
@@ -70,7 +70,7 @@ class Base extends Component {
           {getFieldDecorator("CreateTime")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="文章描述">
-          {getFieldDecorator("NewsDetail")(<TextArea rows={4} disabled />)}
+          {getFieldDecorator("NewsDetail")(<TextArea rows={6} disabled />)}
         </FormItem>
         <FormItem
           {...formItemLayout}

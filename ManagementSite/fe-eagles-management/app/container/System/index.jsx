@@ -186,12 +186,12 @@ class SystemList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.NewsId;
       });
-      this.setState({ systemList: List, current: PageNumber });
+      this.setState({ systemList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -250,15 +250,7 @@ class SystemList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, systemList, obj } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { Message, pageConfig, systemList, obj } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -270,7 +262,7 @@ class SystemList extends React.Component {
           dataSource={systemList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>

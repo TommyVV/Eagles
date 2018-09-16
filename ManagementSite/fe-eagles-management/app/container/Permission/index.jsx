@@ -204,12 +204,12 @@ class PermissionList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ List, current: PageNumber });
+      this.setState({ List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -265,15 +265,7 @@ class PermissionList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, List, obj } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { Message, pageConfig, List, obj } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -285,7 +277,7 @@ class PermissionList extends React.Component {
           dataSource={List}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>

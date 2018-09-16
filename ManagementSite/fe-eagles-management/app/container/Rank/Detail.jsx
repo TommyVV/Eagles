@@ -20,6 +20,10 @@ class RankDetail extends React.Component {
         dataIndex: "Comment"
       },
       {
+        title: "来源",
+        dataIndex: "Source"
+      },
+      {
         title: "积分变动情况",
         dataIndex: "Score"
       },
@@ -85,13 +89,13 @@ class RankDetail extends React.Component {
       <Nav>
         <h2 style={{ paddingLeft: "16px" }}>积分获取使用列表</h2>
         <Row gutter={24} style={{ padding: "16px" }}>
-          <Col span={2}>用户：</Col>
-          <Col span={3}>{userName}</Col>
-          <Col span={2}>当前积分：</Col>
-          <Col span={2}>{score}</Col>
+          <Col span={3}>用户：</Col>
+          <Col span={4}>{userName}</Col>
+          <Col span={3}>当前积分：</Col>
+          <Col span={4}>{score}</Col>
         </Row>
         <Row gutter={24} style={{ padding: "16px" }}>
-          <Col span={2}>积分明细：</Col>
+          <Col span={3}>积分明细：</Col>
         </Row>
         <Table
           dataSource={scoreList}

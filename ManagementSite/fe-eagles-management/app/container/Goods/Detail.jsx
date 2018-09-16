@@ -134,7 +134,9 @@ class Base extends Component {
       message.error(`${info.file.name} 上传失败`);
     }
   };
-
+  disabledDate(current){
+    return current && current < moment().startOf('day');
+  }
   render() {
     const {
       getFieldDecorator,
@@ -275,7 +277,7 @@ class Base extends Component {
                     message: "必填，请选择开始时间"
                   }
                 ]
-              })(<DatePicker placeholder="请选择开始时间" />)}
+              })(<DatePicker disabledDate={this.disabledDate} placeholder="请选择开始时间" />)}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -298,7 +300,7 @@ class Base extends Component {
                     message: "必填，请选择结束时间"
                   }
                 ]
-              })(<DatePicker placeholder="请选择结束时间" />)}
+              })(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间" />)}
             </FormItem>
           </Col>
         </FormItem>

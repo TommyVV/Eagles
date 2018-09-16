@@ -106,7 +106,7 @@ class UserLoginList extends React.Component {
         title: "手机号",
         dataIndex: "Phone"
       },
-      
+
       {
         title: "是否是游客",
         dataIndex: "IsCustomer"
@@ -131,12 +131,12 @@ class UserLoginList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getLoginList(params);
+      let { List, TotalCount, Message } = await getLoginList(params);
       console.log("List - ", List);
-      List.forEach((v,i) => {
+      List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ List, current: PageNumber });
+      this.setState({ List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -168,7 +168,7 @@ class UserLoginList extends React.Component {
     });
   };
   render() {
-    const { pageConfig, List, obj } = this.state;
+    const { pageConfig, List, obj, Message } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -180,7 +180,7 @@ class UserLoginList extends React.Component {
           dataSource={List}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

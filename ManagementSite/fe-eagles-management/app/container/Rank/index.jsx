@@ -149,12 +149,12 @@ class RankList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getRankList(params);
+      let { List, TotalCount, Message } = await getRankList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.UserId;
       });
-      this.setState({ rankList: List, current: PageNumber });
+      this.setState({ rankList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -186,7 +186,7 @@ class RankList extends React.Component {
     });
   };
   render() {
-    const { pageConfig, rankList, obj } = this.state;
+    const { pageConfig, rankList, obj, Message } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -198,7 +198,7 @@ class RankList extends React.Component {
           dataSource={rankList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

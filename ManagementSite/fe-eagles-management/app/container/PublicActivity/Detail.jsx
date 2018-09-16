@@ -50,7 +50,7 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 8 }
       }
     };
 
@@ -72,10 +72,10 @@ class Base extends Component {
           {getFieldDecorator("CreateTime")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="活动描述">
-          {getFieldDecorator("ActivityDesc")(<TextArea rows={4} disabled />)}
+          {getFieldDecorator("ActivityDesc")(<TextArea rows={6} disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="活动反馈">
-          {getFieldDecorator("ActivityContent")(<TextArea rows={4} disabled />)}
+          {getFieldDecorator("ActivityContent")(<TextArea rows={6} disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="附件">
           {obj.Attachments &&

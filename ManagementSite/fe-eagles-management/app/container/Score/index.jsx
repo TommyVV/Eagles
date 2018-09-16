@@ -87,12 +87,12 @@ class ScoreList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.ScoreSetUpId;
       });
-      this.setState({ scoreList: List, current: PageNumber });
+      this.setState({ scoreList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -141,14 +141,14 @@ class ScoreList extends React.Component {
     });
   };
   render() {
-    const { pageConfig, scoreList } = this.state;
+    const { pageConfig, scoreList, Message } = this.state;
     return (
       <Nav>
         <Table
           dataSource={scoreList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>

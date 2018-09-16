@@ -189,12 +189,12 @@ class ImageList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.Id;
       });
-      this.setState({ imageList: List, current: PageNumber });
+      this.setState({ imageList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -224,7 +224,7 @@ class ImageList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code,Message } = await del({ Id });
+          let { Code, Message } = await del({ Id });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -248,7 +248,7 @@ class ImageList extends React.Component {
     });
   };
   render() {
-    const { pageConfig, imageList, obj } = this.state;
+    const { pageConfig, imageList, obj, Message } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -260,7 +260,7 @@ class ImageList extends React.Component {
           dataSource={imageList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>

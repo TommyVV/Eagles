@@ -74,6 +74,16 @@ const navMap = [
     key: "sub31"
   },
   {
+    pathname: "#/newsorglist",
+    sub: "sub3",
+    key: "sub32"
+  },
+  {
+    pathname: "#/newsorg/detail",
+    sub: "sub3",
+    key: "sub32"
+  },
+  {
     pathname: "#/news/import",
     sub: "sub3",
     key: "sub33"

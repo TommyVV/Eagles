@@ -205,6 +205,13 @@ export default class App extends React.Component {
                 新闻维护
               </Menu.Item>
               <Menu.Item
+                key="sub32"
+                onClick={e => hashHistory.replace("/newsorglist")}
+                style={{ display: authMap.get("News0007") ? null : "none" }}
+              >
+                公开到组织新闻
+              </Menu.Item>
+              <Menu.Item
                 key="sub33"
                 onClick={e => hashHistory.replace("/news/import")}
                 style={{ display: authMap.get("News0001") ? null : "none" }}

@@ -265,11 +265,11 @@ class Exercise extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { List, TotalCount } = await getQuestionList(params);
+      let { List, TotalCount, Message } = await getQuestionList(params);
       console.log(List, TotalCount);
       List.forEach(v => (v.key = v.ExercisesId));
       let { PageNumber } = params;
-      this.setState({ questionList: List, current: PageNumber });
+      this.setState({ questionList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -345,7 +345,7 @@ class Exercise extends React.Component {
     this.getCurrentList(params);
   }
   render() {
-    const { selectedRowKeys, pageConfig, questionList, obj } = this.state;
+    const { selectedRowKeys, pageConfig, questionList, obj, Message } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -362,7 +362,7 @@ class Exercise extends React.Component {
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
 

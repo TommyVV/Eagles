@@ -303,12 +303,12 @@ class GoodsList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.GoodsId;
       });
-      this.setState({ goodsList: List, current: PageNumber });
+      this.setState({ goodsList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -372,7 +372,7 @@ class GoodsList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code,Message } = await del({ GoodsId });
+          let { Code, Message } = await del({ GoodsId });
           if (Code === "00") {
             message.success(`删除成功`);
             await this.getCurrentList({
@@ -443,6 +443,7 @@ class GoodsList extends React.Component {
       selectedRowKeys,
       pageConfig,
       goodsList,
+      Message,
       visible,
       fields,
       obj
@@ -463,7 +464,7 @@ class GoodsList extends React.Component {
           columns={this.columns}
           // rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Modal

@@ -90,12 +90,12 @@ class OperatorList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.OperId;
       });
-      this.setState({ operatorList: List, current: PageNumber });
+      this.setState({ operatorList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -146,28 +146,20 @@ class OperatorList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, operatorList } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { Message, pageConfig, operatorList } = this.state;
     return (
       <Nav>
         <Table
           dataSource={operatorList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row
           type="flex"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button

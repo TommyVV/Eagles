@@ -174,6 +174,7 @@ export const pageCodeMap = new Map([
   ["Prod0001", "商品维护"],
   ["Prod0002", "商品发货"],
   ["News0001", "新闻维护"],
+  ["News0007", "审核公开到组织新闻"],
   ["News0002", "试卷维护"],
   ["News0003", "习题维护"],
   ["News0004", "会议列表"],
@@ -222,6 +223,7 @@ export const pageCodeGroup = [
     text: "新闻管理",
     next: new Map([
       ["News0001", "新闻维护"],
+      ["News0007", "审核公开到组织新闻"],
       ["News0002", "试卷维护"],
       ["News0003", "习题维护"],
       ["News0004", "会议列表"],

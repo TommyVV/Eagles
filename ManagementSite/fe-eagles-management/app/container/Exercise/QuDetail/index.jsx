@@ -465,7 +465,7 @@ class QuestionForm extends Component {
             dataSource={SubjectList}
             bordered
             style={{ width: "90%" }}
-            locale={{ emptyText: "暂无数据" }}
+            locale={{ emptyText: "未查询到符合条件的信息" }}
             title={() => (
               <Row gutter={24}>
                 <Col span={4}>习题列表</Col>

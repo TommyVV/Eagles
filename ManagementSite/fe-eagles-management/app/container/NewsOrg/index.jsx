@@ -170,7 +170,7 @@ const WrapperSearchForm = Form.create({
   }
 })(SearchForm);
 
-class NewsList extends React.Component {
+class NewsOrgList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -242,16 +242,10 @@ class NewsList extends React.Component {
             <div>
               <a
                 onClick={() =>
-                  hashHistory.replace(`/news/detail/${obj.NewsId}`)
+                  hashHistory.replace(`/newsorg/detail/${obj.NewsId}`)
                 }
               >
-                编辑
-              </a>
-              <a
-                onClick={() => this.handleDelete(obj.NewsId)}
-                style={{ paddingLeft: "24px" }}
-              >
-                删除
+                详情
               </a>
               <a
                 onClick={() => {
@@ -341,35 +335,6 @@ class NewsList extends React.Component {
     };
     this.setState({ pageConfig });
   }
-  // 删除项目
-  handleDelete = async NewsId => {
-    console.log(NewsId);
-    confirm({
-      title: "是否确认删除?",
-      okText: "确认",
-      cancelText: "取消",
-      onOk: async () => {
-        try {
-          let { Code, Message } = await deleteNews({
-            NewsId
-          });
-          if (Code === "00") {
-            message.success("删除成功");
-            await this.getCurrentList({
-              ...this.getListConfig,
-              requestPage: this.state.current
-              // keyword: this.state.keyword
-            });
-            this.setState({ selectedRowKeys: [] });
-          } else {
-            message.error(Message);
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      }
-    });
-  };
 
   setVisible(isVisible) {
     this.setState({ visible: isVisible });
@@ -412,24 +377,8 @@ class NewsList extends React.Component {
         />
         <Row
           type="flex"
-          // justify="center"
           gutter={24}
-        // className={projectList.length === 0 ? "init" : ""}
         >
-          {/* <Col>
-            <Button onClick={this.handleDelete} className="btn">
-              批量删除
-            </Button>
-          </Col> */}
-          <Col>
-            <Button
-              className="btn btn--primary"
-              type="primary"
-              onClick={() => hashHistory.replace(`/news/detail`)}
-            >
-              新增
-            </Button>
-          </Col>
           <Col>
             <Button
               className="btn btn--primary"
@@ -469,4 +418,4 @@ class NewsList extends React.Component {
   }
 }
 
-export default NewsList;
+export default NewsOrgList;

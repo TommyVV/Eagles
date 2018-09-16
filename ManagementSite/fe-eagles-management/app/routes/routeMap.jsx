@@ -66,6 +66,8 @@ import ArticleReport from "../container/Report/Article";
 import OrgOperator from "../container/OrgOper";
 import OrgOperatorDetail from "../container/OrgOper/Detail";
 import UserLoginList from "../container/UserLogin";
+import NewsOrgList from "../container/NewsOrg";
+import NewsOrgDetail from "../container/NewsOrg/Detail";
 
 
 class RouteMap extends Component {
@@ -145,6 +147,10 @@ class RouteMap extends Component {
           <route path="/newslist" component={NewsList} />
           <route path="/news/detail(/:id)" component={NewsDetail} />
           <route path="/news/import" component={ImportNews} />
+          {/* 公开到组织的新闻 */}
+          <route path="/newsorglist" component={NewsOrgList} />
+          <route path="/newsorg/detail/:id" component={NewsOrgDetail} />
+          
           {/* 权限信息 */}
           <route path="/permissionlist" component={PermissionList} />
           <route path="/permission/detail(/:id)" component={PermissionDetail} />

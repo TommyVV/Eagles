@@ -203,7 +203,7 @@ class MeetDetail extends Component {
               dataSource={keys}
               columns={this.columns}
               rowSelection={rowSelection}
-              locale={{ emptyText: "暂无数据" }}
+              locale={{ emptyText: "未查询到符合条件的信息" }}
               bordered
             />
           </FormItem>

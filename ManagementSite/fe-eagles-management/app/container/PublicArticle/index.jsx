@@ -142,7 +142,7 @@ class PublicArticleList extends React.Component {
               break
           }
         });
-        this.setState({ List: res.Aritcles, current: PageNumber });
+        this.setState({ List: res.Aritcles, current: PageNumber, Message: res.Message });
         this.updatePageConfig(res.TotalCount);
       }
     } catch (e) {
@@ -166,14 +166,14 @@ class PublicArticleList extends React.Component {
     this.setState({ pageConfig });
   }
   render() {
-    const { pageConfig, List } = this.state;
+    const { pageConfig, List, Message } = this.state;
     return (
       <Nav>
         <Table
           dataSource={List}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

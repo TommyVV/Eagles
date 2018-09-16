@@ -187,7 +187,7 @@ class AuditList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount,Message } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i + 1;
@@ -221,7 +221,7 @@ class AuditList extends React.Component {
             break;
         }
       });
-      this.setState({ List, current: PageNumber });
+      this.setState({ List, current: PageNumber,Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -253,6 +253,7 @@ class AuditList extends React.Component {
     const {
       pageConfig,
       List,
+      Message,
       obj
     } = this.state;
     return (
@@ -267,7 +268,7 @@ class AuditList extends React.Component {
           columns={this.columns}
           // rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

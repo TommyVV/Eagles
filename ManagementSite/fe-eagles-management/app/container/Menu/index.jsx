@@ -98,12 +98,12 @@ class MenuList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.MenuId;
       });
-      this.setState({ menuList: List, current: PageNumber });
+      this.setState({ menuList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -154,7 +154,7 @@ class MenuList extends React.Component {
     });
   };
   render() {
-    const { pageConfig, menuList } = this.state;
+    const { pageConfig, menuList, Message } = this.state;
     // const formItemLayout = {
     //   labelCol: {
     //     xl: { span: 3 }
@@ -181,13 +181,13 @@ class MenuList extends React.Component {
           dataSource={menuList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row
           type="flex"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button className="btn btn--primary" type="primary">

@@ -98,12 +98,12 @@ class SmsSystemList extends React.Component {
         Status: -1,
         ...PageNumber
       };
-      let { List, TotalCount } = await getList(request);
+      let { List, TotalCount, Message } = await getList(request);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ systemList: List, current: PageNumber });
+      this.setState({ systemList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -153,22 +153,14 @@ class SmsSystemList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, systemList } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xl: { span: 3 }
-      },
-      wrapperCol: {
-        xl: { span: 10 }
-      }
-    };
+    const { Message, pageConfig, systemList } = this.state;
     return (
       <Nav>
         <Table
           dataSource={systemList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>

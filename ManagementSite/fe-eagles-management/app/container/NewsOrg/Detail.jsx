@@ -309,7 +309,7 @@ class Base extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("NewsId")(<Input />)}
+          {getFieldDecorator("NewsId")(<Input disabled/>)}
         </FormItem>
         <FormItem {...formItemLayout} label="标题">
           {getFieldDecorator("NewsName", {
@@ -319,11 +319,11 @@ class Base extends Component {
                 message: "必填，请输入标题，不超过50个字"
               }
             ]
-          })(<Input placeholder="必填，请输入标题" maxLength={50} />)}
+          })(<Input placeholder="必填，请输入标题" maxLength={50} disabled/>)}
         </FormItem>
         <FormItem {...formItemLayout} label="类型">
           {getFieldDecorator("NewsType")(
-            <Select>
+            <Select disabled>
               <Option value="0">新闻</Option>
               <Option value="1">会议</Option>
             </Select>
@@ -336,7 +336,7 @@ class Base extends Component {
                 required: true
               }
             ]
-          })(<Input placeholder="必填，请输入作者" />)}
+          })(<Input placeholder="必填，请输入作者" disabled/>)}
         </FormItem>
 
         <FormItem {...formItemLayout} label="来源">
@@ -347,7 +347,7 @@ class Base extends Component {
                 message: "必填，请输入来源"
               }
             ]
-          })(<Input placeholder="必填，请输入新闻来源" />)}
+          })(<Input placeholder="必填，请输入新闻来源" disabled/>)}
         </FormItem>
         {/* <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
@@ -377,11 +377,12 @@ class Base extends Component {
             action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
             beforeUpload={this.beforeUpload}
             onChange={this.onChangeImage.bind(this)}
+            disabled={true}
           >
             {news.NewsImg ? (
-              <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} />
+              <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} disabled/>
             ) : (
-                <div>
+                <div disabled>
                   <Icon type={this.state.loading ? "loading" : "plus"} />
                   <div className="ant-upload-text">上传</div>
                 </div>
@@ -396,19 +397,20 @@ class Base extends Component {
                 message: "外部链接"
               }
             ]
-          })(<Input placeholder="外部链接" />)}
+          })(<Input placeholder="外部链接" disabled/>)}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容" style={{ display: !external ? "block" : "none" }}>
           {getFieldDecorator("Content")(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps} hooks={hooks}  ref={(instance) => this.editorInstance = instance} />
+              {/* <BraftEditor {...editorProps} hooks={hooks}  ref={(instance) => this.editorInstance = instance} /> */}
+              <div dangerouslySetInnerHTML={{__html: news.Content}}></div>
             </div>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="是否有试卷"
           style={{ display: !external ? "block" : "none" }}>
           {getFieldDecorator("isTest")(
-            <Select onChange={this.change.bind(this, "isTest")}>
+            <Select onChange={this.change.bind(this, "isTest")} disabled>
               <Option value="0">否</Option>
               <Option value="1">是</Option>
             </Select>
@@ -420,7 +422,7 @@ class Base extends Component {
           style={{ display: news.isTest == "1" ? "block" : "none" }}
         >
           {getFieldDecorator("TestId")(
-            <Select>
+            <Select disabled>
               {questionList.length &&
                 questionList.map((obj, index) => {
                   return (
@@ -434,7 +436,7 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="是否置顶">
           {getFieldDecorator("IsTop")(
-            <Select>
+            <Select disabled>
               <Option value={0}>否</Option>
               <Option value={1}>是</Option>
             </Select>
@@ -442,7 +444,7 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="所属栏目">
           {getFieldDecorator("ModuleId")(
-            <Select>
+            <Select disabled>
               {programaList.length &&
                 programaList.map((obj, index) => {
                   return (
@@ -472,42 +474,42 @@ class Base extends Component {
             </Col> */}
             <Col span={8}>
               {news.IsVideo == "0" || news.IsVideo == "1" ? (
-                <Checkbox
+                <Checkbox disabled
                   checked={news.IsVideo == "1" ? true : false}
                   onChange={this.changeBox.bind(this, "IsVideo")}
                 >
                   有视频
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")} disabled>
                     有视频
                 </Checkbox>
                 )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
-                <Checkbox
+                <Checkbox disabled
                   checked={news.CanStudy == "1" ? true : false}
                   onChange={this.changeBox.bind(this, "CanStudy")}
                 >
                   允许学习
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")} disabled>
                     允许学习
                 </Checkbox>
                 )}
             </Col>
             <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
-                <Checkbox
+                <Checkbox disabled
                   checked={news.IsAttach == "1" ? true : false}
                   onChange={this.changeBox.bind(this, "IsAttach")}
                 >
                   有附件
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsAttach")}>
+                  <Checkbox onChange={this.changeBox.bind(this, "IsAttach")} disabled>
                     有附件
                 </Checkbox>
                 )}
@@ -533,12 +535,12 @@ class Base extends Component {
 
         <FormItem {...formItemLayout} label="积分奖励" style={{ display: news.CanStudy == "1" ? null : "none" }}>
           {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} />
+            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} disabled/>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="学习时间" style={{ display: news.CanStudy == "1" ? null : "none" }}>
           {getFieldDecorator("StudyTime")(
-            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} />
+            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} disabled/>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}>
@@ -549,32 +551,12 @@ class Base extends Component {
             action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
             onChange={this.handleChange.bind(this)}
             fileList={fileList}
+            disabled={true}
           >
-            <Button>
+            <Button disabled>
               <Icon type="upload" /> 点击上传
             </Button>
           </Upload>
-        </FormItem>
-        <FormItem>
-          <Row gutter={24}>
-            <Col span={2} offset={2}>
-              <Button
-                htmlType="submit"
-                className="btn btn--primary"
-                type="primary"
-              >
-                {this.props.news.NewsId ? "更新" : "新建"}
-              </Button>
-            </Col>
-            <Col span={2} offset={1}>
-              <Button
-                className="btn"
-                onClick={() => hashHistory.replace("/newslist")}
-              >
-                取消
-              </Button>
-            </Col>
-          </Row>
         </FormItem>
       </Form>
     );
@@ -641,7 +623,7 @@ const FormMap = Form.create({
   },
   { saveInfo, clearInfo }
 )
-class NewsDetail extends Component {
+class NewsOrgDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -717,4 +699,4 @@ class NewsDetail extends Component {
   }
 }
 
-export default NewsDetail;
+export default NewsOrgDetail;

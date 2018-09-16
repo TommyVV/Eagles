@@ -126,6 +126,9 @@ class Base extends Component {
       message.error(`${info.file.name} 上传失败`);
     }
   };
+  disabledDate(current){
+    return current && current < moment().startOf('day');
+  }
   render() {
     const {
       getFieldDecorator,
@@ -246,7 +249,7 @@ class Base extends Component {
         <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
-              {getFieldDecorator("BeginTime")(<DatePicker />)}
+              {getFieldDecorator("BeginTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择开始时间"/>)}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -254,14 +257,14 @@ class Base extends Component {
               style={{
                 display: "inline-block",
                 width: "100%",
-                textAlign: "center"
+                textAlign: "left"
               }}
             >
               -
             </span>
           </Col>
           <Col span={6}>
-            <FormItem>{getFieldDecorator("EndTime")(<DatePicker />)}</FormItem>
+            <FormItem>{getFieldDecorator("EndTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间"/>)}</FormItem>
           </Col>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">

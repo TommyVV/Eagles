@@ -209,7 +209,7 @@ class SendList extends React.Component {
         title: "下单日期",
         dataIndex: "PlaceTime",
         render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
-      },      
+      },
       {
         title: "快递单号及备注",
         dataIndex: "ExpressId"
@@ -263,11 +263,11 @@ class SendList extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log(List, TotalCount);
       List.forEach(v => (v.key = v.OrderId));
       let { PageNumber } = params;
-      this.setState({ sendList: List, current: PageNumber });
+      this.setState({ sendList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -350,7 +350,7 @@ class SendList extends React.Component {
     });
   };
   render() {
-    const { visible, pageConfig, sendList, fields, obj } = this.state;
+    const { visible, pageConfig, sendList, fields, obj, Message } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -362,7 +362,7 @@ class SendList extends React.Component {
           dataSource={sendList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Modal

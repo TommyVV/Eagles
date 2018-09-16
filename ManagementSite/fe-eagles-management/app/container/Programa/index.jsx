@@ -204,12 +204,12 @@ class ProgramaList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.ColumnId;
       });
-      this.setState({ programaList: List, current: PageNumber });
+      this.setState({ programaList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -310,7 +310,7 @@ class ProgramaList extends React.Component {
     });
   };
   render() {
-    const { selectedRowKeys, pageConfig, programaList, obj } = this.state;
+    const { selectedRowKeys, pageConfig, programaList, obj, Message } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -327,7 +327,7 @@ class ProgramaList extends React.Component {
           columns={this.columns}
           // rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
 

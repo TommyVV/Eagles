@@ -80,7 +80,7 @@ class SearchForm extends Component {
                   style={{
                     display: "inline-block",
                     width: "100%",
-                    textAlign: "center"
+                    textAlign: "left"
                   }}
                 >
                   -
@@ -341,13 +341,13 @@ class NewsList extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i;
       });
       this.getListConfig = params; // 保存搜索的数据
-      this.setState({ newsList: List, current: params.PageNumber });
+      this.setState({ newsList: List, current: params.PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -445,6 +445,7 @@ class NewsList extends React.Component {
       selectedRowKeys,
       pageConfig,
       newsList,
+      Message,
       visible,
       fields
     } = this.state;
@@ -463,7 +464,7 @@ class NewsList extends React.Component {
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Modal
@@ -478,7 +479,7 @@ class NewsList extends React.Component {
           type="flex"
           // justify="center"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           {/* <Col>
             <Button onClick={this.handleDelete} className="btn">

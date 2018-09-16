@@ -51,7 +51,7 @@ class Base extends Component {
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 6 }
+        sm: { span: 8 }
       }
     };
 

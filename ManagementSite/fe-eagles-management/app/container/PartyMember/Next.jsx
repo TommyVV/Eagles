@@ -13,12 +13,127 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { getListById, getList, setNext } from "../../services/memberService";
+import { getList as getBranchList } from "../../services/branchService";
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
 
 const confirm = Modal.confirm;
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      branchList: []
+    };
+  }
+  handleSearch = e => {
+    e.preventDefault();
+    const view = this;
+    this.props.form.validateFields((err, values) => {
+      console.log("Received values of form: ", values);
+      let params = {
+        PageNumber: 1,
+        PageSize: 10,
+        ...values
+      };
+      const getCurrentList = view.props.getCurrentList;
+      getCurrentList(params);
+      const { setObj } = this.props;
+      setObj(values);
+    });
+  };
 
+  handleReset = () => {
+    this.props.form.resetFields();
+  };
+  componentWillMount() {
+    this.getCurrentList();
+  }
+  // 加载当前页
+  getCurrentList = async () => {
+    try {
+      let { List } = await getBranchList({
+        PageNumber: 1,
+        PageSize: 10000
+      });
+      console.log("List - ", List);
+      List.forEach((v, i) => {
+        v.key = i;
+      });
+      this.setState({ branchList: List });
+    } catch (e) {
+      message.error("获取失败");
+      throw new Error(e);
+    }
+  };
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const { branchList } = this.state;
+    let userInfo = JSON.parse(localStorage.info);
+    let branchId = userInfo.BranchId;
+    console.log(branchId);
+    return (
+      <Form
+        className="ant-advanced-search-form"
+        layout="inline"
+        onSubmit={this.handleSearch.bind(this)}
+      >
+        <Row gutter={24}>
+          {branchId == 0 ? (
+            <Col span={10} key={1}>
+              <FormItem label="支部名称">
+                {getFieldDecorator("BranchId")(
+                  <Select style={{ maxWidth: "152px" }}>
+                    <Option value="">全部</Option>
+                    {branchList.map((o, i) => {
+                      return (
+                        <Option key={i} value={o.BranchId}>
+                          {o.BranchName}
+                        </Option>
+                      );
+                    })}
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          ) : null}
+          <Col span={10} key={2}>
+            <FormItem label="党员名称">
+              {getFieldDecorator(`UserName`)(<Input />)}
+            </FormItem>
+          </Col>
+          <Col
+            span={4}
+            style={{
+              textAlign: "cnter",
+              paddingLeft: "7px",
+              paddingTop: "3px"
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              搜索
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+}
+
+const WrapperSearchForm = Form.create({
+  mapPropsToFields: props => {
+    console.log(props);
+    return {
+      BranchId: Form.createFormField({
+        value: props.obj.BranchId ? props.obj.BranchId : ""
+      }),
+      UserName: Form.createFormField({
+        value: props.obj.UserName
+      })
+    };
+  }
+})(SearchForm);
 class SetNextPartyMember extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +144,7 @@ class SetNextPartyMember extends React.Component {
       current2: 1, // 当前页弹窗
       pageConfig: {}, // 当前页配置
       pageConfig2: {}, // 当前页配置
+      obj: {},
       visible: false
     };
     this.columns = [
@@ -100,12 +216,12 @@ class SetNextPartyMember extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { User } = await getListById(params);
+      let { User, Message } = await getListById(params);
       console.log("List - ", User);
       User.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ memberList: User });
+      this.setState({ memberList: User, Message });
     } catch (e) {
       message.error("获取失败");
       throw new Error(e);
@@ -164,12 +280,13 @@ class SetNextPartyMember extends React.Component {
     this.setState({ visible: true });
     this.getCurrentList2({ ...this.getListConfig });
   }
+
   // 加载当前页
   getCurrentList2 = async params => {
     const { id } = this.props.params;
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getList(params);
+      let { List, TotalCount, Message } = await getList(params);
       // 排除掉当前设置的用户
       console.log("List - ", List);
       console.log("current user", id)
@@ -177,7 +294,7 @@ class SetNextPartyMember extends React.Component {
       newList.forEach(v => {
         v.key = JSON.stringify(v);
       });
-      this.setState({ memberList2: newList, current2: PageNumber });
+      this.setState({ memberList2: newList, current2: PageNumber, Message });
       this.updatePageConfig2(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -199,6 +316,11 @@ class SetNextPartyMember extends React.Component {
     };
     this.setState({ pageConfig2: pageConfig });
   }
+  changeSearch = obj => {
+    this.setState({
+      obj
+    });
+  };
   render() {
     const {
       selectedRowKeys,
@@ -206,13 +328,17 @@ class SetNextPartyMember extends React.Component {
       pageConfig2,
       visible,
       memberList,
-      memberList2
+      Message,
+      memberList2,
+      obj
     } = this.state;
     const { id, name } = this.props.params;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
+    let userInfo = JSON.parse(localStorage.info);
+    let branchId = userInfo.BranchId;
     return (
       <Nav>
         <Form className="ant-advanced-search-form" layout="inline">
@@ -241,7 +367,7 @@ class SetNextPartyMember extends React.Component {
           dataSource={memberList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
 
@@ -252,8 +378,8 @@ class SetNextPartyMember extends React.Component {
             </Button>
           </Col> */}
           <Col>
-            <Button className="btn btn--primary">
-              <a onClick={() => this.saveMember()}>保存</a>
+            <Button className="btn btn--primary" onClick={() => this.saveMember()}>
+              保存
             </Button>
           </Col>
           <Col>
@@ -271,12 +397,17 @@ class SetNextPartyMember extends React.Component {
           onOk={this.handleOk.bind(this)}
           onCancel={() => this.setState({ visible: false })}
         >
+          <WrapperSearchForm
+            getCurrentList={this.getCurrentList2.bind(this)}
+            obj={obj}
+            setObj={this.changeSearch.bind(this)}
+          />
           <Table
             dataSource={memberList2}
             columns={this.columns2}
             rowSelection={rowSelection}
             pagination={pageConfig2}
-            locale={{ emptyText: "暂无数据" }}
+            locale={{ emptyText: Message }}
             bordered
             style={{ marginBottom: "0" }}
           />

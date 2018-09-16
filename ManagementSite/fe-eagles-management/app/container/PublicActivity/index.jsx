@@ -104,15 +104,15 @@ class PublicActivityList extends React.Component {
     try {
       const { type } = this.props.params;
       let res = {};
-      
-        res = await getListBranch(params);
-       
+
+      res = await getListBranch(params);
+
       console.log("res - ", res);
       if (res.Activitys) {
         res.Activitys.forEach(v => {
           v.key = v.ActivityId;
         });
-        this.setState({ List: res.Activitys, current: PageNumber });
+        this.setState({ List: res.Activitys, current: PageNumber, Message: res.Message });
         this.updatePageConfig(res.TotalCount);
       }
     } catch (e) {
@@ -136,14 +136,14 @@ class PublicActivityList extends React.Component {
     this.setState({ pageConfig });
   }
   render() {
-    const { pageConfig, List } = this.state;
+    const { pageConfig, List, Message } = this.state;
     return (
       <Nav>
         <Table
           dataSource={List}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

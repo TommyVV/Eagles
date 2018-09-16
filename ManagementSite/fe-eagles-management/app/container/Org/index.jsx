@@ -85,12 +85,12 @@ class OrgList extends React.Component {
   getCurrentList = async params => {
     const { PageNumber } = params;
     try {
-      let { List, TotalCount } = await getOrgList(params);
+      let { List, TotalCount, Message } = await getOrgList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.OrgId;
       });
-      this.setState({ orgList: List, current: PageNumber });
+      this.setState({ orgList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -186,7 +186,7 @@ class OrgList extends React.Component {
     this.getCurrentList(params);
   }
   render() {
-    const { selectedRowKeys, pageConfig, orgList, AreaInfos } = this.state;
+    const { selectedRowKeys, pageConfig, Message, orgList, AreaInfos } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -219,13 +219,13 @@ class OrgList extends React.Component {
           dataSource={orgList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row
           type="flex"
           gutter={24}
-          // className={projectList.length === 0 ? "init" : ""}
+        // className={projectList.length === 0 ? "init" : ""}
         >
           <Col>
             <Button

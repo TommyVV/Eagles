@@ -132,7 +132,7 @@ class MeetList extends React.Component {
                 删除
               </a>
               <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}/1`)}>
-              会议人员
+                会议人员
               </a>
               <a style={{ paddingLeft: "24px" }} onClick={() => hashHistory.replace(`/importmember/${obj.NewsId}/${obj.NewsName}/0`)}>
                 导入
@@ -161,13 +161,13 @@ class MeetList extends React.Component {
   // 加载当前页
   getCurrentList = async params => {
     try {
-      let { List, TotalCount } = await getNewsList(params);
+      let { List, TotalCount, Message } = await getNewsList(params);
       console.log("List - ", List);
       List.forEach(v => {
         v.key = v.NewsId;
       });
       this.getListConfig = params; // 保存搜索的数据
-      this.setState({ newsList: List, current: params.PageNumber });
+      this.setState({ newsList: List, current: params.PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -198,7 +198,7 @@ class MeetList extends React.Component {
       cancelText: "取消",
       onOk: async () => {
         try {
-          let { Code,Message } = await deleteNews({
+          let { Code, Message } = await deleteNews({
             NewsId
           });
           if (Code === "00") {
@@ -235,7 +235,7 @@ class MeetList extends React.Component {
     }
   };
   render() {
-    const { selectedRowKeys, pageConfig, newsList } = this.state;
+    const { selectedRowKeys, pageConfig, newsList, Message } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
@@ -251,7 +251,7 @@ class MeetList extends React.Component {
           columns={this.columns}
           rowSelection={rowSelection}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
       </Nav>

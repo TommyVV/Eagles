@@ -183,14 +183,14 @@ class SmsOrgList extends React.Component {
 
   // 加载当前页
   getCurrentList = async params => {
-    const { PageNumber } = params;    
-    try {     
-      let { List, TotalCount } = await getList(params);
+    const { PageNumber } = params;
+    try {
+      let { List, TotalCount, Message } = await getList(params);
       console.log("List - ", List);
       List.forEach((v, i) => {
         v.key = i;
       });
-      this.setState({ systemList: List, current: PageNumber });
+      this.setState({ systemList: List, current: PageNumber, Message });
       this.updatePageConfig(TotalCount);
     } catch (e) {
       message.error("获取失败");
@@ -218,7 +218,7 @@ class SmsOrgList extends React.Component {
     });
   };
   render() {
-    const { obj, pageConfig, systemList } = this.state;
+    const { obj, pageConfig, systemList, Message } = this.state;
     return (
       <Nav>
         <WrapperSearchForm
@@ -230,7 +230,7 @@ class SmsOrgList extends React.Component {
           dataSource={systemList}
           columns={this.columns}
           pagination={pageConfig}
-          locale={{ emptyText: "暂无数据" }}
+          locale={{ emptyText: Message }}
           bordered
         />
         <Row type="flex" gutter={24}>
