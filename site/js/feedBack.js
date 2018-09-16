@@ -13,8 +13,8 @@ $(document).ready(function() {
     var pageType = getRequest("pageType");
     if (pageType == 0) {
         activityId = getRequest("activityId");
-        $("#content").attr("placeholder", "快让大家知道你的活动进度吧~");
-        $(".sub-btn").html("反馈并完成");
+        $("#content").attr("placeholder", "快让大家知道你的活动结果吧~");
+        $(".sub-btn").html("提交结果");
     } else if (pageType == 1) {
         stepId = getRequest("stepId");
         taskId = getRequest("taskId");

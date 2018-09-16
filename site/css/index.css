@@ -504,10 +504,17 @@ body {
 	height: 20px;
 	margin-right: 8px;
 }
+.carousel-indicators{bottom: -5px;}
+.carousel-indicators li{
+	width: 6px;height: 6px;
+}
+.carousel-indicators .active{
+	width:8px;height: 8px;
+}
 @media screen and (max-width: 768px) {
 	.carousel-box img{height: 8rem;display: block;overflow: hidden;}
 	.carousel{height:8rem;overflow: hidden;}
-	.carousel-box{margin-top:0;}
+	.carousel-box{margin-top:0;margin-left: -15px;margin-right:-15px;}
 	.col-xs-6{padding-left:12px;}
 	.main_content .list-box .list-header{padding: 0.55467rem 15px;margin: 0px -15px;background-color: #e7e5e6;}
 	/* .main_content{padding-top:0.22667rem;padding-left:15px;padding-right:15px;}

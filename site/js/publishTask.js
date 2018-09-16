@@ -362,7 +362,9 @@ $(document).ready(function () {
                 }
             },
             complete:function(){
-                requestFlag = false;
+                setTimeout(() => {
+                    requestFlag = false;
+                }, 2000);
             }
         });
     }
@@ -371,15 +373,15 @@ $(document).ready(function () {
         if (!validCheck()) {
             return;
         }
-        if (!imgUrl) {
-            bootoast({
-                message: "请上传图片",
-                type: "info",
-                position: "toast-top-center",
-                timeout: 2
-            });
-            return;
-        }
+        // if (!imgUrl) {
+        //     bootoast({
+        //         message: "请上传图片",
+        //         type: "info",
+        //         position: "toast-top-center",
+        //         timeout: 2
+        //     });
+        //     return;
+        // }
         requestFlag = true;
         var data = {
             ActivityId:updateId,
@@ -414,7 +416,9 @@ $(document).ready(function () {
                 }
             },
             complete:function(){
-                requestFlag = false;
+                setTimeout(() => {
+                    requestFlag = false;
+                }, 2000);
             }
         });
     }

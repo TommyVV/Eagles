@@ -89,7 +89,7 @@ $('.confirmBtn').on('click', function() {
 	RequestUserInfo.UserId=$('#ld_nameinput').attr("aids")
 	RequestUserInfo.PhotoUrl = $('#ld_img').attr('src');
 	RequestUserInfo.Name = $('.ld_nameinput').val();
-	RequestUserInfo.Gender = $('.ld_sex').val();
+	RequestUserInfo.Gender = $('.ld_sex').text();
 	RequestUserInfo.Ethnic = $('.ld_hinput').val()
 	RequestUserInfo.Birth = $('.ld_datasinput').val()
 	RequestUserInfo.Origin = $('.ld_desinput').val()

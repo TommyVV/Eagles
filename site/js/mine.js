@@ -148,6 +148,7 @@ function getScrollNews(token, appId) {
 			$('#scrollobj').html('');
 			if(res.Code == 00) {
 				var data = res.Result.SystemNewsList;
+				//var data=[{"NewsId":1,"NewsName":"你好啊！"},{"NewsId":2,"NewsName":"你000000好啊！"}];
 				var divs = '';
 				for(var i = 0; i < data.length; i++) {
 					divs += '<span class="scroll-r" ids="'+data[i].NewsId+'">' + data[i].NewsName + '</span>';
@@ -163,7 +164,6 @@ function getScrollNews(token, appId) {
 }
 
 function scroll(obj,n) {
-	console.log('n----',n);
 	var tmp = (obj.scrollLeft) ++;
 	if(obj.scrollLeft == tmp) {
 		obj.innerHTML += "&nbsp;";
@@ -183,6 +183,9 @@ function unreadMessage(token) {
 			var data = res.Result;
 			if(res.Code == 00) {
 				$('.news_list').text(data.UnreadMessageCount);
+				if(data.UnreadMessageCount>0){
+					$(".news-tip").css({"display":"block"});
+				}
 
 			}
 		}

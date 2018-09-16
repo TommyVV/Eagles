@@ -159,7 +159,7 @@ $(document).ready(function() {
             } else {
                 //负责人
                 if(userId==acceptUserId){
-                    $("#btn-area").html(`<div class="sub-btn">我要反馈</div>`);
+                    $("#btn-area").html(`<div class="sub-btn">输入结果</div>`);
                     $(".sub-btn").click(function() {
                         window.location.href =
                             "feedBack.html?pageType=0&appId=" + appId + "&activityId=" + activityId;
