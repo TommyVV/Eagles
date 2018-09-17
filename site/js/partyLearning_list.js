@@ -56,15 +56,8 @@ function partyLearning(moduleId, token, page, appId) {
             if (res.Code == 00) {
                 if (res.Result.NewsInfos != '' || res.Result.NewsInfos != null) {
                     var learningList = '';
-                    for (var i = 0; i < data.NewsInfos.length; i++) {
-                        var externalUrl = data.NewsInfos[i].ExternalUrl
-                        if (data.NewsInfos[i].IsExternal == true) {
-                            externalUrl = data.NewsInfos[i].ExternalUrl
-                        } else {
-                            externalUrl = 'partyLearning_detail.html?NewsId=' + data.NewsInfos[i].NewsId +
-                                '&appId=' + appId + '' //详情页
-                        }
-                        var imgUrl = data.NewsInfos[i].ImageUrl;
+                    $.each(res.Result.NewsInfos,function(i,news){
+                        var imgUrl = news.ImageUrl;
                         var imgEle = "";
                         if (imgUrl) {
                             imgEle = '<div class="media-left"><img class="media-object" src="' + imgUrl + '"></div>';
@@ -74,15 +67,21 @@ function partyLearning(moduleId, token, page, appId) {
                         learningList = '<div class="media"><div class="newsbody">' +
                             imgEle +
                             '<div class="media-body ">' +
-                            '<div class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</div>' +
-                            '<div class="list-time">' + data.NewsInfos[i].CreateTime + '</div>' +
+                            '<div class="media-heading overflow-two-line">' + news.Title + '</div>' +
+                            '<div class="list-time">' + news.CreateTime + '</div>' +
                             '</div></div></div>'
                         var te = $(learningList);
                         te.find(".newsbody").click(function () {
-                            window.location = externalUrl;
+                            if (news.IsExternal == true) {
+                                window.location= news.ExternalUrl
+                            } else {
+                                window.location  = 'partyLearning_detail.html?NewsId=' + news.NewsId +
+                                    '&appId=' + appId + '' //详情页
+                            }                            
                         });
                         $('.list-bottom').append(te) //新闻列表
-                    }
+                    });
+                   
                     mescroll.endSuccess(data.NewsInfos.length);
                 } else {
                     mescroll.lockDownScroll(true);
