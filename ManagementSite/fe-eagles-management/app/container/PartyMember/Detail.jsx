@@ -182,6 +182,14 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="婚姻状况">
+          {getFieldDecorator("Marital")(
+            <Select>
+              <Option value="0">已婚</Option>
+              <Option value="1">未婚</Option>
+            </Select>
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="头像">
           <Upload
             name="avatar"
@@ -357,6 +365,9 @@ const FormMap = Form.create({
       }),
       Sex: Form.createFormField({
         value: member.Sex ? member.Sex + "" : "0"
+      }),
+      Marital: Form.createFormField({
+        value: member.Marital ? member.Marital + "" : "0"
       }),
       BranchId: Form.createFormField({
         value: member.BranchId ? member.BranchId : branch[0] ? branch[0].BranchId : ""
