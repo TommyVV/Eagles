@@ -9,7 +9,8 @@ import {
   Col,
   Select,
   Upload,
-  Icon
+  Icon,
+  InputNumber
 } from "antd";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
@@ -100,10 +101,8 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-
       const { Code, Result, Message } = info.file.response;
       if (Code == "00") {
-      
         message.success(`${info.file.name} 上传成功`);
         const imageUrl = Result.FileUploadResults[0].FileUrl;
         // 保存数据
@@ -113,13 +112,15 @@ class Base extends Component {
       } else {
         message.error(`${Message}`);
       }
-
-
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
   };
-
+  changeTop(value) {
+    let { getFieldsValue } = this.props.form;
+    let values = getFieldsValue();
+    this.props.saveInfo({ ...values, IsSetTop: value });
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { programa } = this.props;
@@ -169,10 +170,23 @@ class Base extends Component {
         </FormItem>
         <FormItem {...formItemLayout} label="是否在首页显示">
           {getFieldDecorator("IsSetTop")(
-            <Select>
+            <Select onChange={this.changeTop.bind(this)}>
               <Option value="0">否</Option>
               <Option value="1">是</Option>
             </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="首页显示数量"
+          style={{ display: programa.IsSetTop == "1" ? null : "none" }}
+        >
+          {getFieldDecorator("IndexPageCount")(
+            <InputNumber
+              placeholder="必填，请输入首页显示数量"
+              min={0}
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="缩略图">
@@ -265,7 +279,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     console.log("详情数据回显 - ", props);
-    const programa = props.programa;    
+    const programa = props.programa;
     return {
       ColumnId: Form.createFormField({ value: programa.ColumnId }),
       ColumnName: Form.createFormField({ value: programa.ColumnName }),
@@ -274,11 +288,12 @@ const FormMap = Form.create({
       IsSetTop: Form.createFormField({
         value: programa.IsSetTop == 0 ? "0" : "1"
       }),
+      IndexPageCount: Form.createFormField({ value: programa.IndexPageCount }),
       SubCateType: Form.createFormField({
         value: programa.SubCateType ? programa.SubCateType + "" : "0"
       }),
       ModuleType: Form.createFormField({
-        value: programa.ModuleType ? programa.ModuleType.toString()  : "1"
+        value: programa.ModuleType ? programa.ModuleType.toString() : "1"
       })
     };
   }
