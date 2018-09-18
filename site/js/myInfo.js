@@ -32,6 +32,7 @@ function myInfo(token, appId) {
 					$('.ld_name').text(data.Name);
 					$('#ld_nameinput').attr("aids",data.UserId);
 					$('.ld_sex').text(data.Gender);
+					$('.ld_marital').text(data.Marital);
 					$('.ld_h').text(data.Ethnic);
 					$('.ld_datas').text(data.Birth);
 					$('.ld_des').text(data.Origin);
@@ -90,6 +91,7 @@ $('.confirmBtn').on('click', function() {
 	RequestUserInfo.PhotoUrl = $('#ld_img').attr('src');
 	RequestUserInfo.Name = $('.ld_nameinput').val();
 	RequestUserInfo.Gender = $('.ld_sex').text();
+	RequestUserInfo.Marital = $('.ld_marital').text();
 	RequestUserInfo.Ethnic = $('.ld_hinput').val()
 	RequestUserInfo.Birth = $('.ld_datasinput').val()
 	RequestUserInfo.Origin = $('.ld_desinput').val()
@@ -118,17 +120,31 @@ $('.confirmBtn').on('click', function() {
 		}
 	})
 })
-$('.add_fj').on('click',function (e) {
-		$('.p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');;
+$('.p_sex .add_fj').on('click',function (e) {
+		$('.showsex .p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');;
 		$('.ld_sex').text($(this).text())
-		$('.p_infofre').hide();
+		$('.p_sex').hide();
 });
 $('.showsex').on('click',function (e) {
-	if($(".p_infofre").css("display")=="none"){
-		$('.p_greinfo').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
-		$(".p_infofre").show();
+	if($(".p_sex").css("display")=="none"){
+		$('.showsex .p_greinfo').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
+		$(".p_sex").show();
 	}else{
-		$('.p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
-		$(".p_infofre").hide();
+		$('.showsex .p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+		$(".p_sex").hide();
+	}
+});
+$('.p_marital .add_fj').on('click',function (e) {
+	$('.show-marital .p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');;
+	$('.ld_marital').text($(this).text())
+	$('.p_marital').hide();
+});
+$('.show-marital').on('click',function (e) {
+	if($(".p_marital").css("display")=="none"){
+		$('.show-marital .p_greinfo').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-down');
+		$(".p_marital").show();
+	}else{
+		$('.show-marital .p_greinfo').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-right');
+		$(".p_marital").hide();
 	}
 })

@@ -6,6 +6,7 @@ var toUserName = '';
 //指派人员信息
 var toUsreInfo = '';
 var imgUrl = "";
+var fileArray = [];
 var inputval = '';
 var NewsId = '';
 var dangyuan = '';
@@ -18,6 +19,55 @@ $('.introducer').show();
 let isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 $('#top-nav,#mobilenav').load('./head.html')
 $('#footer').load('footer.html')
+//附件上传fileupload
+$("#fileupload").fileupload({
+	url: UPLOAD,
+	dataType: "json",
+	//设置进度条
+	progressall: function (e, data) {
+		var progress = parseInt((data.loaded / data.total) * 100);
+		$(".upload-progress").removeClass("hide");
+		console.log("progress", progress);
+		$(".upload-progress .bar").css("width", progress + "%");
+		if (progress == 100) {
+			setTimeout(() => {
+				$(".upload-progress").addClass("hide");
+			}, 1000);
+		}
+	},
+	done: function (e, data) {
+		console.log("上传附件--", data);
+		if (data.result.Code == "00") {
+			var array = data.result.Result.FileUploadResults;
+			var object = {
+				AttachName: array[0].FileName,
+				AttachmentDownloadUrl: array[0].FileUrl
+			};
+			fileArray.push(object);
+			dealAttachment();
+		} else {
+			console.log(data.result);
+			bootoast({
+				message: '' + data.result.Message,
+				type: 'warning',
+				position: 'toast-top-center',
+				timeout: 3
+			});
+		}
+	}
+});
+function dealAttachment(){
+	$(".attaches").html(attachmentList(fileArray, 1));
+	$(".glyphicon-remove").click(function () {
+		var index = $('.glyphicon-remove').index(this);
+		fileArray.splice(index, 1);
+		$(this).parents('.file').remove();
+		$(".upload-file").show();
+	});
+	if (fileArray.length == 4) {
+		$(".upload-file").hide();
+	}
+}
 //文章发布
 if (getRequest('aryewsType') != undefined && getRequest('aryewsType') != '') {
 	NewsId = getRequest('NewsId');
@@ -151,7 +201,8 @@ function save(publisType) {
 			"AppId": appId,
 			"BookName": bookName,
 			"BookAuthor": bookAuthor,
-			"ToUser": toUserId
+			"ToUser": toUserId,
+			"AttachList":fileArray
 		},
 		url: DOMAIN + "/api/User/CreateArticle",
 		dataType: "json",

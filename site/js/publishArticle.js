@@ -69,7 +69,6 @@ function dealAttachment(){
 }
 //文章发布
 if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
-	$("#attList").hide();
 	NewsId=getRequest('NewsId');
 	$.ajax({
 		type: "post",
