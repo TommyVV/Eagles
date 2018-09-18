@@ -498,7 +498,7 @@ class Base extends Component {
                 </Checkbox>
                 )}
             </Col>
-            <Col span={8}>
+            {/* <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
                 <Checkbox
                   checked={news.IsAttach == "1" ? true : false}
@@ -511,7 +511,7 @@ class Base extends Component {
                     有附件
                 </Checkbox>
                 )}
-            </Col>
+            </Col> */}
           </Row>
           {/* <Row>
             <Col span={8}>
@@ -541,7 +541,8 @@ class Base extends Component {
             <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}>
+        {/* <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}> */}
+        <FormItem {...formItemLayout} label="附件" >
           <Upload
             name="file"
             listType="text"
