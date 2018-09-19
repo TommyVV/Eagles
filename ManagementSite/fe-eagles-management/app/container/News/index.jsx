@@ -14,7 +14,7 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getNewsList, deleteNews } from "../../services/newsService";
+import { getNewsList, deleteNews, setNewsOrg } from "../../services/newsService";
 import { getList as getBranchList } from "../../services/branchService";
 import { auditStatus } from "../../constants/config/appconfig";
 import moment from "moment";
@@ -24,6 +24,8 @@ import "./style.less";
 import Audit from "../../components/Common/Audit";
 
 const confirm = Modal.confirm;
+let userInfo = JSON.parse(localStorage.info);
+let tokenBranchId = userInfo.BranchId;
 
 class SearchForm extends Component {
   constructor(props) {
@@ -81,8 +83,7 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    let userInfo = JSON.parse(localStorage.info);
-    let tokenBranchId = userInfo.BranchId;
+
     const { branchList } = this.state;
     return (
       <Form
@@ -273,6 +274,20 @@ class NewsList extends React.Component {
               >
                 审核
               </a>
+              <a
+                onClick={() => {
+                  this.setNewsOrg(obj.NewsId)
+                }}
+                style={{
+                  paddingLeft: "24px",
+                  display:
+                    obj.IsPublicOrg == 0 && tokenBranchId > 0
+                      ? null
+                      : "none"
+                }}
+              >
+                公开到组织
+              </a>
             </div>
           );
         }
@@ -340,6 +355,21 @@ class NewsList extends React.Component {
       }
     };
     this.setState({ pageConfig });
+  }
+  //公开到组织
+  setNewsOrg = async NewsId => {
+    try {
+      let { Code, Message } = await setNewsOrg({
+        NewsId
+      });
+      if (Code === "00") {
+        message.success("公开到组织成功");
+      } else {
+        message.error(Message);
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   }
   // 删除项目
   handleDelete = async NewsId => {

@@ -278,7 +278,8 @@ class NewsOrgList extends React.Component {
       NewsName: "",
       NewsType: "0",
       Status: "",
-      BranchId: ""
+      BranchId: "",
+      isPublicOrg: 0
     };
   }
   componentWillMount() {
@@ -371,7 +372,7 @@ class NewsOrgList extends React.Component {
         <Audit
           visible={visible}
           setVisible={this.setVisible.bind(this)}
-          type={1}
+          type={9} // 公开到组织新闻类型为9
           selectedRowKeys={selectedRowKeys}
           getCurrentListFn={this.getCurrentListFn.bind(this)}
         />
