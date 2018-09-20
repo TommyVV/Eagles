@@ -78,6 +78,24 @@ export const deleteNews = async params => {
   }
 };
 
+// 新闻org
+export const setNewsOrg = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: NEWS.NEWS_ORG,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(Message);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
 // 导入
 export const bitchCreate= async params => {
   try {

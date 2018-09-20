@@ -302,10 +302,10 @@ class Base extends Component {
     };
     const hooks = {
       'toggle-link': ({ href, target }) => {
-          href = href.indexOf('http') === 0 ? href : `http://${href}`
-          return { href, target }
+        href = href.indexOf('http') === 0 ? href : `http://${href}`
+        return { href, target }
       }
-  }
+    }
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -401,7 +401,7 @@ class Base extends Component {
         <FormItem {...formItemLayoutContent} label="内容" style={{ display: !external ? "block" : "none" }}>
           {getFieldDecorator("Content")(
             <div className="editor-wrap">
-              <BraftEditor {...editorProps} hooks={hooks}  ref={(instance) => this.editorInstance = instance} />
+              <BraftEditor {...editorProps} hooks={hooks} ref={(instance) => this.editorInstance = instance} />
             </div>
           )}
         </FormItem>
@@ -676,7 +676,7 @@ class NewsDetail extends Component {
   };
   // 查询试卷列表
   getQuestionList = async () => {
-    const res = await getQuestionList({ ExercisesType: 5 });
+    const res = await getQuestionList({ ExercisesType: 5, IsUser: 0 });
     console.log("getQuestionList", res);
     this.setState({ questionList: res.List });
   };

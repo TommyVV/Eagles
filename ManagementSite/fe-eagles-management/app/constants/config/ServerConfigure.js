@@ -39,6 +39,7 @@ const NEWS = {
   NEWS_LIST: "/api/News/GetNews", //新闻列表
   NEWS_DETAIL: "/api/News/GetNewsDetail", //新闻详情
   NEWS_IMPORT: "/api/News/ImportNews", //新闻导入
+  NEWS_ORG: "/api/News/SetNewsPublicOrg" //公开到组织
 };
 // 操作员
 const OPERATOR = {
@@ -198,14 +199,14 @@ const PUBLIC_ARTICLE = {
 const AUDIT = {
   AUDIT: "/api/Audit/Audit",
   BITCH_AUDIT: "/api/Audit/BatchAudit",
-  LIST:"/api/Audit/GetAudit"
+  LIST: "/api/Audit/GetAudit"
 };
 //报表
 const REPORT = {
   PARTYMEMBER: "/api/Chart/GetPieChart",
-  ACTIVITY_TASK:"/api/Chart/GetHistogram",
-  ACTIVITY_TASK_PIE:"/api/Chart/GetTaskActivityPie",
-  ARTICLE:"/api/Chart/GetLineChart",
+  ACTIVITY_TASK: "/api/Chart/GetHistogram",
+  ACTIVITY_TASK_PIE: "/api/Chart/GetTaskActivityPie",
+  ARTICLE: "/api/Chart/GetLineChart",
 };
 export const serverConfig = {
   API_SERVER,

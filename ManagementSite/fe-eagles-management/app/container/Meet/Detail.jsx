@@ -148,12 +148,12 @@ class MeetDetail extends Component {
         MeetingId: id,
         List
       };
-      let { Code } = await createOrEdit(params);
+      let { Code,Message } = await createOrEdit(params);
       if (Code === "00") {
         message.success("保存成功");
         hashHistory.replace("/meetlist");
       } else {
-        message.error("保存失败");
+        message.error(Message);
       }
     } catch (e) {
       throw new Error(e);
