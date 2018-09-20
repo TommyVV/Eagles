@@ -279,7 +279,7 @@ class NewsOrgList extends React.Component {
       NewsType: "0",
       Status: "",
       BranchId: "",
-      isPublicOrg: 1
+      PublicOrg: 1
     };
   }
   componentWillMount() {
