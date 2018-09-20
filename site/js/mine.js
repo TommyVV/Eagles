@@ -184,7 +184,7 @@ function unreadMessage(token) {
 			if(res.Code == 00) {
 				$('.news_list').text(data.UnreadMessageCount);
 				if(data.UnreadMessageCount>0){
-					$(".news-tip").css({"display":"block"});
+					$('.news_list').parent().css("color","red");
 				}
 
 			}

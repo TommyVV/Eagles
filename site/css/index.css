@@ -86,6 +86,7 @@
 .main_content .list-box .list-body .list-top .media .media-body .list-time {
 	color: #949494;
 	font-size: 0.512rem;
+	float: right;
 }
 
 .main_content .list-box .list-body .list-top .media .media-object {
@@ -110,7 +111,7 @@
 
 .main_content .list-box .list-body .list-bottom .media .media-body .list-time {
 	position: absolute;
-	left: 0;
+	right: 0;
 	bottom: 0;
 	color: #949494;
 	font-size: 0.512rem;
@@ -515,14 +516,13 @@ body {
 .news-source{
 	position: absolute;
     bottom: 0;
-    right: 0;
+    left:0;
     color: #949494;
 	font-size: 0.512rem;
 	width: 50%;
 	overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-align: right;
 }
 @media screen and (max-width: 768px) {
 	.carousel-box img{height: 8rem;display: block;overflow: hidden;}

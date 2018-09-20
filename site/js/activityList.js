@@ -111,11 +111,15 @@ $(document).ready(function() {
     function dealReturnList(list) {
         var content = '';
         list.forEach(element => {
-            content += `<div class="article" id="${element.ActivityId}_${element.ActivityType}_${element.TestId}_${element.Status}">
-                    <div class="left">
+            var leftEl=``;
+            if(element.ImageUrl){
+                leftEl=`<div class="left">
                         <img src="${element.ImageUrl}"
                             alt="">
-                    </div>
+                    </div>`;
+            }
+            content += `<div class="article" id="${element.ActivityId}_${element.ActivityType}_${element.TestId}_${element.Status}">
+                    ${leftEl}
                     <div class="right">
                         <div class="content overflow-two-line">
                             ${element.ActivityName}
