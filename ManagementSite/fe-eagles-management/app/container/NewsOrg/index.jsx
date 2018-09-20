@@ -260,7 +260,7 @@ class NewsOrgList extends React.Component {
                 style={{
                   paddingLeft: "24px",
                   display:
-                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                    this.state.authMap.get("Audit001")
                       ? null
                       : "none"
                 }}
@@ -279,7 +279,7 @@ class NewsOrgList extends React.Component {
       NewsType: "0",
       Status: "",
       BranchId: "",
-      isPublicOrg: 0
+      isPublicOrg: 1
     };
   }
   componentWillMount() {

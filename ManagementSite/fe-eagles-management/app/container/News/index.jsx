@@ -25,7 +25,9 @@ import Audit from "../../components/Common/Audit";
 
 const confirm = Modal.confirm;
 let userInfo = JSON.parse(localStorage.info);
+console.log(userInfo)
 let tokenBranchId = userInfo.BranchId;
+
 
 class SearchForm extends Component {
   constructor(props) {
@@ -239,6 +241,7 @@ class NewsList extends React.Component {
       {
         title: "操作",
         render: obj => {
+          console.log(obj.IsPublicOrg, tokenBranchId);
           return (
             <div>
               <a
@@ -276,7 +279,7 @@ class NewsList extends React.Component {
               </a>
               <a
                 onClick={() => {
-                  this.setNewsOrg(obj.NewsId)
+                  this.setNewsOrgFn(obj.NewsId)
                 }}
                 style={{
                   paddingLeft: "24px",
@@ -357,13 +360,14 @@ class NewsList extends React.Component {
     this.setState({ pageConfig });
   }
   //公开到组织
-  setNewsOrg = async NewsId => {
+  setNewsOrgFn = async NewsId => {
     try {
       let { Code, Message } = await setNewsOrg({
         NewsId
       });
       if (Code === "00") {
         message.success("公开到组织成功");
+        this.getCurrentList(this.getListConfig);
       } else {
         message.error(Message);
       }
