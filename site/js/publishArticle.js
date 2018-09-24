@@ -56,6 +56,7 @@ $("#fileupload").fileupload({
 	}
 });
 function dealAttachment(){
+	fileArray = delEmptyElement(fileArray);
 	$(".attaches").html(attachmentList(fileArray, 1));
 	$(".glyphicon-remove").click(function () {
 		var index = $('.glyphicon-remove').index(this);
@@ -66,6 +67,16 @@ function dealAttachment(){
 	if (fileArray.length == 4) {
 		$(".upload-file").hide();
 	}
+}
+//去掉数组中的空
+function delEmptyElement(arr){
+	var resultArr = [];
+	arr.forEach(function(el){
+		if(el.AttachmentDownloadUrl){
+			resultArr.push(el);
+		}
+	});
+	return resultArr;
 }
 //文章发布
 if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
@@ -106,9 +117,13 @@ if(getRequest('aryewsType')!=undefined&&getRequest('aryewsType')!=''){
 				$("input:radio[value='"+data.IsPublic+"']").attr('checked','true');
 				imgUrl = data.ImageUrl
 				$(".add").html(`<img src="${imgUrl}" class="upload-img">`);
+				fileArray = data.AttachmentList;
+				dealAttachment();
 				if(data.Status!=-1){
+					$(".upload-file").hide();
 					$(".publish-title,#selectpicker,.item-select,#imgupload,.demo--radio,.publish-content").attr("disabled",true);
-					$('.publish-wrap-btn').hide()
+					$('.publish-wrap-btn').hide();
+					$('.file-oper span').hide();
 				}
 				dangyuan=data.UserName
 			}

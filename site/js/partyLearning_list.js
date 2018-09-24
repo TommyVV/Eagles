@@ -64,10 +64,15 @@ function partyLearning(moduleId, token, page, appId) {
                         } else {
                             imgEle = ''
                         }
+                        var isVideo = news.IsVideo;
+                        var videoIcon = '';
+                        if(isVideo=="1"){
+                            videoIcon = '<span class="glyphicon glyphicon-film"></span>';
+                        }
                         learningList = '<div class="media"><div class="newsbody">' +
                             imgEle +
                             '<div class="media-body ">' +
-                            '<div class="media-heading overflow-two-line">' + news.Title + '</div>' +
+                            '<div class="media-heading overflow-two-line">' +videoIcon+ news.Title + '</div>' +
                             '<div class="list-time">' + news.CreateTime + '</div>' +
                             '</div></div></div>'
                         var te = $(learningList);
