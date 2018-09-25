@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
-    if(!token) {
+    if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     $('#top-nav').html('');
@@ -14,15 +14,20 @@ $(document).ready(function() {
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
-            use: false
+            callback: downCallback,
+            auto: false
         },
         up: {
             callback: getActivityList,
-            isBounce: false
+            isBounce: false,
+            auto: true
         }
     });
-    //查询所有活动
-    //getActivityList();
+
+    function downCallback() {
+        pageIndex = 1;
+        getActivityList();
+    }
     //头部按钮点击
     $(".activity-cate").click(function() {
         var id = $(this).attr('id');
@@ -51,8 +56,10 @@ $(document).ready(function() {
                 "PageIndex": pageIndex
             },
             success: function(data) {
-                console.log('GetActivityList---', data);
                 if (data.Code == "00") {
+                    if (pageIndex == 1) {
+                        $(".item").html("");
+                    }
                     var list = data.Result.ActivityList;
                     $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {
@@ -65,17 +72,16 @@ $(document).ready(function() {
                     $(".article").click(function() {
                         var par = $(this).attr('id');
                         var tmpArray = par.split('_');
-                        console.log(tmpArray);
                         var id = tmpArray[0];
                         var type = tmpArray[1];
                         var testId = tmpArray[2];
                         var status = tmpArray[3];
                         if (type == '0') {
                             //报名活动
-                            if(status==-9){
+                            if (status == -9) {
                                 //需要再次编辑
                                 window.location.href = "publishTask.html?appId=" + appId + "&type=0&updateId=" + id;
-                            }else{
+                            } else {
                                 window.location.href = "activityDetail.html?appId=" + appId + "&activityId=" + id;
                             }
                         } else if (type == '1') {
@@ -99,9 +105,10 @@ $(document).ready(function() {
             }
         })
     }
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3
@@ -111,9 +118,9 @@ $(document).ready(function() {
     function dealReturnList(list) {
         var content = '';
         list.forEach(element => {
-            var leftEl=``;
-            if(element.ImageUrl){
-                leftEl=`<div class="left">
+            var leftEl = ``;
+            if (element.ImageUrl) {
+                leftEl = `<div class="left">
                         <img src="${element.ImageUrl}"
                             alt="">
                     </div>`;

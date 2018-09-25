@@ -5,13 +5,12 @@ var ModuleType = getRequest('paramModuleType') //获取来源页面id
 var token = localStorage.getItem("token")
 var appId = getRequest('appId')
 var mescroll;
-var module;
 partyTitle(ModuleType, Moduleid, appId) //来源页面的分类列表
 $('.list-bottom').html('')
 mescroll = new MeScroll("mescroll", {
     down: {
         auto: false,
-        isLock: true,
+        isLock: false,
         callback: downcallback
     },
     up: {
@@ -22,19 +21,16 @@ mescroll = new MeScroll("mescroll", {
         },
         isLock: false,
         callback: partyLearningfunc,
-        isBounce: false,
-        htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
+        isBounce: false
     }
 });
 
-function downcallback() { }
+function downcallback() {
+    partyLearningfunc({ num: 1, size: 10 });
+}
 
 function partyLearningfunc(page) {
-    if (page.module) {
-        partyLearning(page.module, token, page, appId);
-    } else {
-        partyLearning(Moduleid, token, page, appId);
-    }
+    partyLearning(Moduleid, token, page, appId);
 }
 
 function partyLearning(moduleId, token, page, appId) {
@@ -50,13 +46,16 @@ function partyLearning(moduleId, token, page, appId) {
         },
         url: DOMAIN + "/api/News/GetModuleNews",
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             //$('.list-bottom').html('')
             var data = res.Result;
             if (res.Code == 00) {
                 if (res.Result.NewsInfos != '' || res.Result.NewsInfos != null) {
                     var learningList = '';
-                    $.each(res.Result.NewsInfos,function(i,news){
+                    if (page.num == 1) {
+                        $('.list-bottom').html("");
+                    }
+                    $.each(res.Result.NewsInfos, function(i, news) {
                         var imgUrl = news.ImageUrl;
                         var imgEle = "";
                         if (imgUrl) {
@@ -66,36 +65,39 @@ function partyLearning(moduleId, token, page, appId) {
                         }
                         var isVideo = news.IsVideo;
                         var videoIcon = '';
-                        if(isVideo=="1"){
+                        if (isVideo == "1") {
                             videoIcon = '<span class="glyphicon glyphicon-film"></span>';
                         }
                         learningList = '<div class="media"><div class="newsbody">' +
                             imgEle +
                             '<div class="media-body ">' +
-                            '<div class="media-heading overflow-two-line">' +videoIcon+ news.Title + '</div>' +
+                            '<div class="media-heading overflow-two-line">' + videoIcon + news.Title + '</div>' +
                             '<div class="list-time">' + news.CreateTime + '</div>' +
                             '</div></div></div>'
                         var te = $(learningList);
-                        te.find(".newsbody").click(function () {
+                        te.find(".newsbody").click(function() {
                             if (news.IsExternal == true) {
-                                window.location= news.ExternalUrl
+                                window.location = news.ExternalUrl
                             } else {
-                                window.location  = 'partyLearning_detail.html?NewsId=' + news.NewsId +
+                                window.location = 'partyLearning_detail.html?NewsId=' + news.NewsId +
                                     '&appId=' + appId + '' //详情页
-                            }                            
+                            }
                         });
                         $('.list-bottom').append(te) //新闻列表
                     });
-                   
-                    mescroll.endSuccess(data.NewsInfos.length);
+                    if (res.Result.NewsInfos.length < page.size) {
+                        mescroll.endSuccess(100000, false, null);
+                    } else {
+                        mescroll.endSuccess(100000, true, null);
+                    }
                 } else {
                     mescroll.lockDownScroll(true);
                     mescroll.lockUpScroll(true);
                 }
+            } else if (res.Code == '10') {
+                mescroll.endSuccess(100000, false, null);
             } else {
-                mescroll.lockDownScroll(true);
-                mescroll.lockUpScroll(true);
-                $('.mescroll-hardware').html('没有更多数据')
+                mescroll.endErr();
             }
         }
     });
@@ -110,7 +112,7 @@ function partyTitle(ModuleType, moduleId, appId) {
         },
         url: DOMAIN + "/api/AppModule/GetModule",
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             $('.dropdown-menu').html('');
             $('.list-header').html('');
             var data = res.Result;
@@ -132,18 +134,16 @@ function partyTitle(ModuleType, moduleId, appId) {
     });
 }
 //点击分类重新获取新分类的内容
-$('.dropdown-menu').on('click', 'li', function (e) {
-    module = $(this).attr('ids')
-    partyTitle(ModuleType, module, appId) //来源页面的分类列表
+$('.dropdown-menu').on('click', 'li', function(e) {
+    Moduleid = $(this).attr('ids')
+    partyTitle(ModuleType, Moduleid, appId) //来源页面的分类列表
     $('.list-bottom').html('')
     if (mescroll) {
         mescroll.destroy();
     }
     mescroll = new MeScroll("mescroll", {
-
         down: {
             auto: false,
-            isLock: true,
             callback: downcallback
         },
         up: {
@@ -151,12 +151,11 @@ $('.dropdown-menu').on('click', 'li', function (e) {
                 num: 0,
                 size: 10,
                 time: null,
-                module: module
+                module: Moduleid
             },
             isLock: false,
             callback: partyLearningfunc,
-            isBounce: false,
-            htmlNodata: '<p class="upwarp-nodata">没有更多数据</p>'
+            isBounce: false
         }
     });
 

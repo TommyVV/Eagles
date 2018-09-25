@@ -9,21 +9,22 @@
     <title>我的信息</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link href="./css/bootoast.css" rel="stylesheet">
     <link href="./css/myInfo.css?v=20180715" rel="stylesheet">
     <link rel="stylesheet" href="css/leftNav.css">
-    
+
 </head>
 
 <body>
     <div id="top-nav" class="pc"></div>
-    	<div id="mobilenav"></div>
+    <div id="mobilenav"></div>
     <div class="container">
-    	
+
         <!-- 我的信息页 -->
         <div class="row myInfoModal">
-        	
-           <!-- <div id="sideNav"></div> -->
-           	<div id="left-nav" class="left-nav"></div>
+
+            <!-- <div id="sideNav"></div> -->
+            <div id="left-nav" class="left-nav"></div>
             <!--<div class="personal-info">
                 <img class="head-pic" src="" alt="">
                 <ul>
@@ -47,12 +48,12 @@
             <div class="col-md-offset-3 col-md-6 myInfoBox">
                 <div class="item">
                     <div class="photo">
-                        <div class="left" >头像</div>
+                        <div class="left">头像</div>
                         <div class="right">
-                        	<div class="value pc-values">
-                        		<div class="op_div"><input id="fileupload" type="file" name="file"></div>
-	           					<span><img id="ld_img" src="" alt="" /></span>
-	                         </div>
+                            <div class="value pc-values">
+                                <div class="op_div"><input id="fileupload" type="file" name="file"></div>
+                                <span><img id="ld_img" src="" alt="" /></span>
+                            </div>
                         </div>
                     </div>
                     <div class="normal">
@@ -66,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-										
+
                     <div class="normal showsex">
                         <div class="left">
                             性别
@@ -77,8 +78,8 @@
                         </div>
                     </div>
                     <p class="p_infofre p_sex">
-                            <span class="add_fj">男</span>
-                            <span class="add_fj">女</span>
+                        <span class="add_fj">男</span>
+                        <span class="add_fj">女</span>
                     </p>
                     <div class="normal">
                         <div class="left">
@@ -148,7 +149,7 @@
                         </div>
                         <div class="right">
                             <span><label class="ld_phone"></label>&nbsp;</span>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -279,40 +280,41 @@
                 </div>
             </div>
         </div>
-				</div>
+    </div>
 
-        <div id="pc-footer"></div>
-        <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
-        <script src="thirdparty/jquery-2.1.4.min.js"></script>
-        <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/jquery.ui.widget.js"></script>
-        <script src="js/jquery.iframe-transport.js"></script>
-        <script src="js/jquery.fileupload.js"></script>
-        <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-		<script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
-        <script src="js/common.js"></script>
-        <script src="js/myInfo.js?v=201809"></script>
-        <script src="js/compulicajax.js"></script>
-        <script type="text/javascript">
-		    //日期插件
-		    var date = new Date();
-		    var year = date.getFullYear();
-		    var month = date.getMonth() + 1;
-		    var day = date.getDate();
-		   // console.log(year, month, day);
-		    $(".form_datetime").datetimepicker({
-		        format: 'yyyy-mm-dd', //显示格式
-		        minView: "month", //设置只显示到月份
-		        startDate: "",
-		        todayBtn: true,
-		        startView: 2,
-		        forceParse: 0,
-		        showMeridian: 1,
-		        autoclose: 1, //选择后自动关闭
-		        pickerPosition: "bottom-left",
-		        language: "zh-CN"
-		    });
-		</script>
+    <div id="pc-footer"></div>
+    <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
+    <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/bootoast.js"></script>
+    <script src="js/myInfo.js?v=20180901"></script>
+    <script src="js/compulicajax.js"></script>
+    <script type="text/javascript">
+        //日期插件
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        // console.log(year, month, day);
+        $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd', //显示格式
+            minView: "month", //设置只显示到月份
+            startDate: "",
+            todayBtn: true,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            autoclose: 1, //选择后自动关闭
+            pickerPosition: "bottom-left",
+            language: "zh-CN"
+        });
+    </script>
 </body>
 
 </html>

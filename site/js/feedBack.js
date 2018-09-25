@@ -21,24 +21,24 @@ $(document).ready(function() {
         $("#content").attr("placeholder", "快让大家知道你的任务进度吧~");
         $(".sub-btn").html("提交反馈");
         var stepfeed = JSON.parse(localStorage.getItem('stepfeed'));
-        if(stepfeed){
+        if (stepfeed) {
             $("#content").val(stepfeed.Content);
             stepfeed.AttachList.forEach(element => {
-                if(element.AttachName&&element.AttachmentDownloadUrl){
+                if (element.AttachName && element.AttachmentDownloadUrl) {
                     fileArray.push(element);
                 }
             });
-            fileArray = fileArray||[];
+            fileArray = fileArray || [];
             if (fileArray.length == 4) {
                 $(".upload-file").hide();
             }
-            $(".attaches").html(attachmentList(fileArray,1));
-            $(".glyphicon-remove").click(function(){
+            $(".attaches").html(attachmentList(fileArray, 1));
+            $(".glyphicon-remove").click(function() {
                 var index = $('.glyphicon-remove').index(this);
-                fileArray.splice(index,1);
+                fileArray.splice(index, 1);
                 $(this).parents('.file').remove();
                 $(".upload-file").show();
-                console.log('index---',index);
+                console.log('index---', index);
             })
         }
     }
@@ -58,6 +58,19 @@ $(document).ready(function() {
                 }, 1000);
             }
         },
+        add: function(e, data) {
+            //文件大小判断    
+            if (data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > FILESIZE) {      
+                bootoast({
+                    message: "上传附件过大",
+                    type: "warning",
+                    position: "toast-top-center",
+                    timeout: 2
+                });   
+                return; 
+            }
+            data.submit();
+        },
         done: function(e, data) {
             console.log("上传附件--", data);
             if (data.result.Code == "00") {
@@ -70,18 +83,18 @@ $(document).ready(function() {
                 if (fileArray.length == 4) {
                     $(".upload-file").hide();
                 }
-                $(".attaches").html(attachmentList(fileArray,1));
-                $(".glyphicon-remove").click(function(){
+                $(".attaches").html(attachmentList(fileArray, 1));
+                $(".glyphicon-remove").click(function() {
                     var index = $('.glyphicon-remove').index(this);
-                    fileArray.splice(index,1);
+                    fileArray.splice(index, 1);
                     $(this).parents('.file').remove();
                     $(".upload-file").show();
-                    console.log('index---',index);
+                    console.log('index---', index);
                 })
             } else {
                 console.log(data.result);
                 bootoast({
-                    message: ''+data.result.Message,
+                    message: '' + data.result.Message,
                     type: 'warning',
                     position: 'toast-top-center',
                     timeout: 3
@@ -103,9 +116,10 @@ $(document).ready(function() {
             editTaskFeedBack();
         }
     });
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3
@@ -114,10 +128,10 @@ $(document).ready(function() {
     //任务反馈
     function editTaskFeedBack() {
         var pubFlag = $('.pub-flag').hasClass('select');
-        if(requestFlag){
+        if (requestFlag) {
             return;
         }
-        requestFlag=true;
+        requestFlag = true;
         var data = {
             "TaskId": taskId,
             "StepId": stepId,
@@ -141,10 +155,10 @@ $(document).ready(function() {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             },
-            complete:function(){
+            complete: function() {
                 requestFlag = false;
             }
 
@@ -152,10 +166,10 @@ $(document).ready(function() {
     }
     //(活动)提交反馈
     function editActivityFeedBack() {
-        if(requestFlag){
+        if (requestFlag) {
             return;
         }
-        requestFlag=true;
+        requestFlag = true;
         var data = {
             ActivityId: activityId,
             Content: $("#content").val(),
@@ -177,7 +191,7 @@ $(document).ready(function() {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
                 requestFlag = false;
             }
@@ -198,22 +212,22 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
-                    var cb="";
+                    var cb = "";
                     //pageType 0 活动 1 任务
-                    if(pageType==0){
-                        cb='activityList.html';
-                    }else if(pageType==1){
-                        cb='task.html';
+                    if (pageType == 0) {
+                        cb = 'activityList.html';
+                    } else if (pageType == 1) {
+                        cb = 'task.html';
                     }
-                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId+"&cb="+cb;
+                    window.location.href = "exchangeResult.html?code=1&tip=活动反馈成功&appId=" + appId + "&cb=" + cb;
                 } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             },
-            complete:function(){
+            complete: function() {
                 requestFlag = false;
             }
         });

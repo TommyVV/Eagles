@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
-    if(!token) {
+    if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     $('#top-nav').html('');
@@ -12,13 +12,19 @@ $(document).ready(function() {
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
-            use: false
+            auto: false,
+            callback: downCallback
         },
         up: {
             callback: getUserStudy,
             isBounce: false
         }
     });
+
+    function downCallback() {
+        pageIndex = 1;
+        getUserStudy();
+    }
 
     //头部按钮点击
     $(".activity-cate").click(function() {
@@ -50,6 +56,9 @@ $(document).ready(function() {
                 console.log('GetUserStudy---', data);
                 if (data.Code == "00") {
                     var list = data.Result.StudyList;
+                    if (pageIndex == 1) {
+                        $(".item").html("");
+                    }
                     $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {
                         mescroll.endSuccess(100000, false, null);
@@ -75,9 +84,10 @@ $(document).ready(function() {
             }
         })
     }
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3

@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var token = getCookie('token');
     var appId = getRequest("appId");
-    if(!token) {
+    if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     $('#top-nav').html('');
@@ -12,13 +12,19 @@ $(document).ready(function() {
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
-            use: false
+            auto: false,
+            callback: downCallback,
         },
         up: {
             callback: getMeeting,
             isBounce: false
         }
     });
+
+    function downCallback() {
+        pageIndex = 1;
+        getMeeting();
+    }
     //查询会议
     function getMeeting() {
         $.ajax({
@@ -59,9 +65,10 @@ $(document).ready(function() {
             }
         });
     }
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3

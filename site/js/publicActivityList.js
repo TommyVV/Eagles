@@ -8,7 +8,8 @@ $(document).ready(function() {
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
-            use: false
+            auto: false,
+            callback: downCallback
         },
         up: {
             callback: getPublicActivityList,
@@ -16,6 +17,10 @@ $(document).ready(function() {
         }
     });
 
+    function downCallback() {
+        pageIndex = 1;
+        getPublicActivityList();
+    }
     //查询活动
     function getPublicActivityList() {
         $.ajax({
@@ -32,6 +37,9 @@ $(document).ready(function() {
                 console.log('GetActivityList---', data);
                 if (data.Code == "00") {
                     var list = data.Result.ActivityList;
+                    if (pageIndex == 1) {
+                        $(".item").html("");
+                    }
                     $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {
                         mescroll.endSuccess(100000, false, null);
@@ -71,9 +79,10 @@ $(document).ready(function() {
             }
         })
     }
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3

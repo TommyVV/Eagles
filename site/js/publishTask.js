@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
@@ -12,7 +12,7 @@ $(document).ready(function () {
     var toUserName = '';
     //加载导航
     $("#top-nav").html("");
-    $("#top-nav").load("head.html", () => { });
+    $("#top-nav").load("head.html", () => {});
     //pageType 0 活动  1 任务
     var pageType = getRequest("type");
     var imgUrl = "";
@@ -29,18 +29,18 @@ $(document).ready(function () {
         //任务
         $("#imgUpload").hide();
         //活动
-        if(updateId){
+        if (updateId) {
             getTaskDetail(updateId);
-        }else{
+        } else {
             //查询关系列表
             getUserRelationship();
         }
-        
-    }else{
+
+    } else {
         //活动
-        if(updateId){
+        if (updateId) {
             getActivityDetail(updateId);
-        }else{
+        } else {
             //查询关系列表
             getUserRelationship();
         }
@@ -56,7 +56,7 @@ $(document).ready(function () {
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log("GetTaskDetail---", data);
                 if (data.Code == "00") {
                     var result = data.Result;
@@ -67,17 +67,18 @@ $(document).ready(function () {
                     errorTip(data.Message);
                 }
             },
-            error: function () {
+            error: function() {
                 errorTip("网络错误");
             },
-            complete: function () {
-                
+            complete: function() {
+
             }
         });
     }
-    function fillTaskData(result){
+
+    function fillTaskData(result) {
         $("#title").val(result.TaskName);
-        toUserId = result.AcceptUserId; 
+        toUserId = result.AcceptUserId;
         $("#name").html(result.AcceptUserName);
         $("#start").val(dealDate(result.TaskBeginDate));
         $("#end").val(dealDate(result.TaskEndDate));
@@ -106,16 +107,17 @@ $(document).ready(function () {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip("网络错误");
             }
         });
     }
-    function fillActivityData(result){
+
+    function fillActivityData(result) {
         $("#title").val(result.ActivityName);
-        toUserId = result.AcceptUserId; 
+        toUserId = result.AcceptUserId;
         $("#name").html(result.AcceptUserName);
-        imgUrl=result.ActivityImageUrl;
+        imgUrl = result.ActivityImageUrl;
         $(".add").html(`<img src="${imgUrl}" class="upload-img">`);
         $("#start").val(dealDate(result.ActivityBeginTime));
         $("#end").val(dealDate(result.ActivityEndTime));
@@ -124,35 +126,36 @@ $(document).ready(function () {
         dealAttachment();
     }
     //去掉数组中的空
-    function delEmptyElement(arr){
+    function delEmptyElement(arr) {
         var resultArr = [];
-        arr.forEach(function(el){
-            if(el.AttachmentDownloadUrl){
+        arr.forEach(function(el) {
+            if (el.AttachmentDownloadUrl) {
                 resultArr.push(el);
             }
         });
         return resultArr;
     }
     //错误提示
-    function errorTip(str){
+    function errorTip(str) {
         bootoast({
-            message: ""+str,
+            message: "" + str,
             type: "warning",
             position: "toast-top-center",
             timeout: 2
         });
     }
-    function dealDate(date){
-       try {
-        if(date.length<10){
-            return date;
-        }else{
-            return date.substr(0,10);
-        } 
-       } catch (error) {
-           return "";
-       }
-        
+
+    function dealDate(date) {
+        try {
+            if (date.length < 10) {
+                return date;
+            } else {
+                return date.substr(0, 10);
+            }
+        } catch (error) {
+            return "";
+        }
+
     }
     // $('#btnTestSaveLarge').on('click', function () {
     //     if($(".subordinate-item").length==0){
@@ -175,7 +178,19 @@ $(document).ready(function () {
     $("#imgupload").fileupload({
         url: UPLOAD,
         dataType: "json",
-        done: function (e, data) {
+        add: function(e, data) {
+            if (data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > PICSIZE) {      
+                bootoast({
+                    message: "上传图片过大",
+                    type: "warning",
+                    position: "toast-top-center",
+                    timeout: 2
+                });
+                return;  
+            }
+            data.submit();
+        },
+        done: function(e, data) {
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
                 //console.log(data.result.Result.FileUploadResults);
@@ -196,7 +211,7 @@ $(document).ready(function () {
         url: UPLOAD,
         dataType: "json",
         //设置进度条
-        progressall: function (e, data) {
+        progressall: function(e, data) {
             var progress = parseInt((data.loaded / data.total) * 100);
             $(".upload-progress").removeClass("hide");
             console.log("progress", progress);
@@ -207,7 +222,20 @@ $(document).ready(function () {
                 }, 1000);
             }
         },
-        done: function (e, data) {
+        add: function(e, data) {
+            //文件大小判断    
+            if (data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > FILESIZE) {      
+                bootoast({
+                    message: "上传附件过大",
+                    type: "warning",
+                    position: "toast-top-center",
+                    timeout: 2
+                });   
+                return; 
+            }
+            data.submit();
+        },
+        done: function(e, data) {
             console.log("上传附件--", data);
             if (data.result.Code == "00") {
                 var array = data.result.Result.FileUploadResults;
@@ -228,9 +256,10 @@ $(document).ready(function () {
             }
         }
     });
-    function dealAttachment(){
+
+    function dealAttachment() {
         $(".attaches").html(attachmentList(fileArray, 1));
-        $(".glyphicon-remove").click(function () {
+        $(".glyphicon-remove").click(function() {
             var index = $('.glyphicon-remove').index(this);
             fileArray.splice(index, 1);
             $(this).parents('.file').remove();
@@ -241,8 +270,8 @@ $(document).ready(function () {
             $(".upload-file").hide();
         }
     }
-    $(".sub-btn").click(function () {
-        if(requestFlag){
+    $(".sub-btn").click(function() {
+        if (requestFlag) {
             return;
         }
         if (pageType == 0) {
@@ -264,12 +293,12 @@ $(document).ready(function () {
                 "Token": token,
                 "AppId": appId
             },
-            success: function (data) {
+            success: function(data) {
                 console.log('GetUserRelationship---', data);
                 if (data.Code == "00") {
                     var list = data.Result.UserList;
                     dealRelationList(list);
-                    if(list.length==0){
+                    if (list.length == 0) {
                         bootoast({
                             message: '当前用户未查询到可用负责人',
                             type: 'warning',
@@ -290,9 +319,9 @@ $(document).ready(function () {
     }
 
     function dealRelationList(list) {
-        var content=``;
-        if(list.length==0){
-            content+=`<div>当前用户未查询到可用负责人</div>`;
+        var content = ``;
+        if (list.length == 0) {
+            content += `<div>当前用户未查询到可用负责人</div>`;
             $(".modal-body").html(content);
             return;
         }
@@ -310,9 +339,9 @@ $(document).ready(function () {
         });
         content += `</div>`;
         $(".modal-body").html(content);
-        $(".subordinate-item").click(function () {
+        $(".subordinate-item").click(function() {
             var index = $(".subordinate-item").index(this);
-            if(index==0){
+            if (index == 0) {
                 return;
             }
             //console.log('index----',index);
@@ -332,7 +361,7 @@ $(document).ready(function () {
         }
         requestFlag = true;
         var data = {
-            TaskId:updateId,
+            TaskId: updateId,
             TaskName: $("#title").val(),
             TaskFromUser: userId,
             TaskToUserId: toUserId,
@@ -348,7 +377,7 @@ $(document).ready(function () {
             type: "POST",
             url: DOMAIN + "/api/Task/CreateTask",
             data: data,
-            success: function (data) {
+            success: function(data) {
                 console.log("CreateTask---", data);
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=任务创建成功&appId=" + appId + "&cb=task.html";
@@ -361,7 +390,7 @@ $(document).ready(function () {
                     });
                 }
             },
-            complete:function(){
+            complete: function() {
                 setTimeout(() => {
                     requestFlag = false;
                 }, 2000);
@@ -384,7 +413,7 @@ $(document).ready(function () {
         // }
         requestFlag = true;
         var data = {
-            ActivityId:updateId,
+            ActivityId: updateId,
             ActivityType: 0,
             ActivityName: $("#title").val(),
             ActivityFromUser: userId,
@@ -402,7 +431,7 @@ $(document).ready(function () {
             type: "POST",
             url: DOMAIN + "/api/Activity/CreateActivity",
             data: data,
-            success: function (data) {
+            success: function(data) {
                 console.log("CreateActivity---", data);
                 if (data.Code == "00") {
                     window.location.href = "exchangeResult.html?code=1&tip=活动创建成功&appId=" + appId + "&cb=activityList.html";
@@ -415,7 +444,7 @@ $(document).ready(function () {
                     });
                 }
             },
-            complete:function(){
+            complete: function() {
                 setTimeout(() => {
                     requestFlag = false;
                 }, 2000);
@@ -446,7 +475,7 @@ $(document).ready(function () {
         var startDate = start.replace(/\-/g, "");
         var endDate = end.replace(/\-/g, "");
         var nowDate = $("#nowDate").val();
-        if(startDate<nowDate){
+        if (startDate < nowDate) {
             validTip("活动开始日期早于当前日期");
             return false;
         }
@@ -481,7 +510,7 @@ $(document).ready(function () {
             if (!this.isMobile) {
                 $(".mobile").hide();
                 $(".pc").show();
-                $("#footer").load("footer.html", () => { });
+                $("#footer").load("footer.html", () => {});
                 $("body").css("background-color", "rgb(248,248,248)");
                 $(".container").addClass("pc-wrap");
             } else {
@@ -494,7 +523,7 @@ $(document).ready(function () {
     }
     new CalculateScreen();
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         new CalculateScreen();
     });
 });

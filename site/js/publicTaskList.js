@@ -11,13 +11,19 @@ $(document).ready(function() {
     var mescroll;
     mescroll = new MeScroll("mescroll", {
         down: {
-            use: false
+            auto: false,
+            callback: downCallback
         },
         up: {
-            callback:getPublicTask,
+            callback: getPublicTask,
             isBounce: false
         }
     });
+
+    function downCallback() {
+        pageIndex = 1;
+        getPublicTask();
+    }
     //查询活动
     function getPublicTask() {
         $.ajax({
@@ -30,9 +36,12 @@ $(document).ready(function() {
                 PageIndex: pageIndex
             },
             success: function(data) {
-                console.log("Task---", data);
                 if (data.Code == "00") {
                     var list = data.Result.TaskList;
+                    if (pageIndex == 1) {
+                        $(".pc-list").html("");
+                        $(".task-list").html("");
+                    }
                     taskList(list);
                     if (list.length < pageSize) {
                         mescroll.endSuccess(5, false, null);
@@ -45,7 +54,7 @@ $(document).ready(function() {
                     mescroll.endSuccess(10, false, null);
                 } else {
                     bootoast({
-                        message: ''+data.Message,
+                        message: '' + data.Message,
                         type: 'warning',
                         position: 'toast-top-center',
                         timeout: 3
