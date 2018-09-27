@@ -107,9 +107,6 @@ function moduleListTitle(moduleType, appId) {
                         urls = data.Modules[i].TargetUrl;
                     }
                     var pageCount = data.Modules[i].IndexPageCount;
-                    if (pageCount == 0) {
-                        continue;
-                    }
                     var moudle = {}; //存储新闻类别的属性对象
                     moudle.id = data.Modules[i].ModuleId; //存储新闻类别ID
                     moudle.count = pageCount;
