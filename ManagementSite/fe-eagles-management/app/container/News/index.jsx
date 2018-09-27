@@ -24,9 +24,7 @@ import "./style.less";
 import Audit from "../../components/Common/Audit";
 
 const confirm = Modal.confirm;
-let userInfo = JSON.parse(localStorage.info);
-console.log(userInfo)
-let tokenBranchId = userInfo.BranchId;
+
 
 
 class SearchForm extends Component {
@@ -85,7 +83,9 @@ class SearchForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-
+    let userInfo = JSON.parse(localStorage.info);
+    console.log(userInfo)
+    let tokenBranchId = userInfo.BranchId;
     const { branchList } = this.state;
     return (
       <Form
@@ -186,6 +186,9 @@ class NewsList extends React.Component {
       visible: false, // 弹出框
       branchList: []
     };
+    let userInfo = JSON.parse(localStorage.info);
+    console.log(userInfo)
+    let tokenBranchId = userInfo.BranchId;
     this.columns = [
       {
         title: "标题",
