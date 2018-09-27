@@ -146,7 +146,7 @@ const FormMap = Form.create({
         value: obj.AduitUserName
       }),
       ActivityContent: Form.createFormField({
-        value: obj.ActivityContent
+        value: obj.FeedBackList ? obj.FeedBackList.UserFeedBack : ""
       }),
       ActivityDesc: Form.createFormField({
         value: obj.ActivityDesc

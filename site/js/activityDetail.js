@@ -4,7 +4,7 @@ $(document).ready(function() {
     var appId = getRequest("appId");
     var pubType = getRequest("type");
     var activityId = getRequest("activityId");
-    if(!pubType&&!token) {
+    if (!pubType && !token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     $('#top-nav').html('');
@@ -15,12 +15,12 @@ $(document).ready(function() {
     //查询活动详情
     function getActivityDetail() {
         $(".activity-content").addClass("hide");
-        var requestUrl="";
-        if(pubType){
+        var requestUrl = "";
+        if (pubType) {
             addNewsViewCount();
-           requestUrl="/api/Activity/GetPublicActivityDetail"; 
-        }else{
-           requestUrl="/api/Activity/GetActivityDetail";  
+            requestUrl = "/api/Activity/GetPublicActivityDetail";
+        } else {
+            requestUrl = "/api/Activity/GetActivityDetail";
         }
         $.ajax({
             type: "POST",
@@ -31,7 +31,6 @@ $(document).ready(function() {
                 AppId: appId
             },
             success: function(data) {
-                console.log(requestUrl,"---", data);
                 if (data.Code == "00") {
                     var result = data.Result;
                     var isUpdate = result.IsUpdate;
@@ -39,7 +38,6 @@ $(document).ready(function() {
                     $(".names").hide();
                     //展开折叠报名人数
                     $(".open-names").click(function() {
-                        console.log($(".name-flag").attr("class"));
                         if ($(".name-flag").hasClass("glyphicon-menu-left")) {
                             $(".name-flag")
                                 .removeClass("glyphicon-menu-left")
@@ -52,15 +50,15 @@ $(document).ready(function() {
                             $(".names").hide();
                         }
                     });
-                    if(isUpdate&&userId==result.InitiateUserId){
+                    if (isUpdate && userId == result.InitiateUserId) {
                         $(".main_content").append(`<div id="btn-area"><div class="pass"  id="edit">编辑</div><div class="nopass" id="cancel">取消</div></div>`);
-                        $("#edit").click(function(){
-                            window.location.href = "publishTask.html?appId=" + appId + "&type=0&updateId=" + activityId;                            
+                        $("#edit").click(function() {
+                            window.location.href = "publishTask.html?appId=" + appId + "&type=0&updateId=" + activityId;
                         });
-                        $("#cancel").click(function(){
+                        $("#cancel").click(function() {
                             editActivityCancel();
                         });
-                    }else{
+                    } else {
                         var status = result.ActivityStatus;
                         userActivityStatus(result);
                     }
@@ -68,7 +66,7 @@ $(document).ready(function() {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -79,15 +77,13 @@ $(document).ready(function() {
             type: "POST",
             url: DOMAIN + "/api/News/AddNewsViewCount",
             data: {
-                Type:"2",
+                Type: "2",
                 NewsId: activityId,
                 Token: token,
                 AppId: appId
             },
-            success: function (data) {
-            },
-            error: function () {
-            }
+            success: function(data) {},
+            error: function() {}
         });
     }
     //取消活动
@@ -101,17 +97,16 @@ $(document).ready(function() {
                 AppId: appId
             },
             success: function(data) {
-                console.log("EditActivityCancel---", data);
                 if (data.Code == "00") {
                     errorTip('活动取消成功');
-                    setTimeout(function(){
-                        window.location.href="activityList.html?appId="+appId;
-                    },500);
+                    setTimeout(function() {
+                        window.location.href = "activityList.html?appId=" + appId;
+                    }, 500);
                 } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -140,7 +135,7 @@ $(document).ready(function() {
                     editActivityReview(1, 1);
                 });
             }
-        } else if (status == 0||status == -8) {
+        } else if (status == 0 || status == -8) {
             //活动开始  申请完成不通过
             var exist = false;
             if (joinList) {
@@ -158,7 +153,7 @@ $(document).ready(function() {
                 });
             } else {
                 //负责人
-                if(userId==acceptUserId){
+                if (userId == acceptUserId) {
                     $("#btn-area").html(`<div class="sub-btn">输入结果</div>`);
                     $(".sub-btn").click(function() {
                         window.location.href =
@@ -168,10 +163,10 @@ $(document).ready(function() {
             }
         } else if (status == 1) {
             //申请完成
-            if(userId==auditUserId){
+            if (userId == auditUserId) {
                 //查询反馈信息
                 GetActivityFeedBack(1);
-            }else if(userId==acceptUserId){
+            } else if (userId == acceptUserId) {
                 GetActivityFeedBack();
             }
         } else if (status == 2) {
@@ -179,7 +174,7 @@ $(document).ready(function() {
             //1）查询反馈信息
             GetActivityFeedBack(2);
             //评论区域
-            if(userId==auditUserId){
+            if (userId == auditUserId) {
                 userType = 0;
             }
             var comment = new Comment({
@@ -204,14 +199,13 @@ $(document).ready(function() {
                 AppId: appId
             },
             success: function(data) {
-                console.log("EditActivityJoin---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -229,14 +223,13 @@ $(document).ready(function() {
                 AppId: appId
             },
             success: function(data) {
-                console.log("EditActivityReview---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -252,16 +245,15 @@ $(document).ready(function() {
                 AppId: appId
             },
             success: function(data) {
-                console.log("GetActivityFeedBack---", data);
                 if (data.Code == "00") {
                     showActivityResult(data.Result, status);
-                }else if(data.Code=="10"){
+                } else if (data.Code == "10") {
 
-                }else {
+                } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -269,7 +261,7 @@ $(document).ready(function() {
     //活动完成
     function editActivityComplete(type) {
         var ele = $('.select');
-        if(ele.length==0){
+        if (ele.length == 0) {
             errorTip('请选择公示方式');
             return;
         }
@@ -280,20 +272,18 @@ $(document).ready(function() {
             Token: token,
             AppId: appId
         };
-        // console.log(data, JSON.stringify(data));
         $.ajax({
             type: "POST",
             url: DOMAIN + "/api/Activity/EditActivityComplete",
             data: data,
             success: function(data) {
-                console.log("EditActivityComplete---", data);
                 if (data.Code == "00") {
                     getActivityDetail();
                 } else {
                     errorTip(data.Message);
                 }
             },
-            error:function(){
+            error: function() {
                 errorTip('网络错误');
             }
         });
@@ -347,9 +337,10 @@ $(document).ready(function() {
         }
 
     }
-    function errorTip(str){
+
+    function errorTip(str) {
         bootoast({
-            message: ''+str,
+            message: '' + str,
             type: 'warning',
             position: 'toast-top-center',
             timeout: 3
@@ -357,12 +348,12 @@ $(document).ready(function() {
     }
     //活动详情展示
     function showContent(data) {
-        var viewStr=``;
-        if(pubType){
-            viewStr=`<div class="view-box">
+        var viewStr = ``;
+        if (pubType) {
+            viewStr = `<div class="view-box">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
         <span>${data.ViewCount}</span></div>`;
-         }
+        }
         var str = `<div class="header">
                     <div class="title">${data.ActivityName}</div>${viewStr}
                 </div>

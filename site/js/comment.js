@@ -26,7 +26,7 @@ Comment.prototype = {
             </div>`).removeClass('hide');
         //写评论
         $(".edit-comment").click(function() {
-            if(!info.token){
+            if (!info.token) {
                 window.location.href = 'login.html?appId=' + info.appId + '';
                 return;
             }
@@ -64,13 +64,14 @@ Comment.prototype = {
             success: function(data) {
                 //console.log("GetUserComment---", data);
                 if (data.Code == "00") {
-                    $(".comment-content .num").html("("+data.Result.CommentList.length+")");
+                    $(".comment-content .num").html("(" + data.Result.CommentList.length + ")");
                     that.commentArea(data.Result.CommentList, that.userType);
                 } else if (data.Code == '10') {
                     $(".comment-content").removeClass('hide');
                     $(".comment-area").html(`暂无评论数据`);
                 } else {
-                   //todo  alert(data.Code, data.Message);
+                    $(".comment-content").removeClass('hide');
+                    $(".comment-area").html(data.Message);
                 }
             }
         });
@@ -97,7 +98,12 @@ Comment.prototype = {
                     $('.comment-edit').addClass("hide");
                     that.getUserComment();
                 } else {
-                   //todo  alert(data.Code, data.Message);
+                    bootoast({
+                        message: '' + data.Message,
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             },
             complete: function() {
@@ -126,7 +132,12 @@ Comment.prototype = {
                 if (data.Code == "00") {
                     that.getUserComment();
                 } else {
-                   //todo  alert(data.Code, data.Message);
+                    bootoast({
+                        message: '' + data.Message,
+                        type: 'warning',
+                        position: 'toast-top-center',
+                        timeout: 3
+                    });
                 }
             },
             complete: function() {

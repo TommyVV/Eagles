@@ -2,7 +2,7 @@ $(document).ready(function() {
     var token = getCookie("token");
     var userId = getCookie("userId");
     var appId = getRequest("appId");
-    if(!token) {
+    if (!token) {
         window.location.href = 'login.html?appId=' + appId + '';
     }
     var taskType = 0;
@@ -21,10 +21,10 @@ $(document).ready(function() {
     $("#t-cate").click(function() {
         //关闭我的部分
         $("#m-cate")
-                .find(".glyphicon")
-                .removeClass("glyphicon-menu-down")
-                .addClass("glyphicon-menu-left");
-            $(".peop-list").addClass("hide");
+            .find(".glyphicon")
+            .removeClass("glyphicon-menu-down")
+            .addClass("glyphicon-menu-left");
+        $(".peop-list").addClass("hide");
         if (
             $(this)
             .find(".glyphicon")
@@ -70,9 +70,9 @@ $(document).ready(function() {
     $("#m-cate").click(function() {
         //关闭类别筛选
         $("#t-cate")
-                .find(".glyphicon")
-                .removeClass("glyphicon-menu-down")
-                .addClass("glyphicon-menu-left");
+            .find(".glyphicon")
+            .removeClass("glyphicon-menu-down")
+            .addClass("glyphicon-menu-left");
         $(".task-type").addClass("hide");
         if (
             $(this)
@@ -110,6 +110,10 @@ $(document).ready(function() {
                 console.log("Task---", data);
                 if (data.Code == "00") {
                     var list = data.Result.TaskList;
+                    if (pageIndex == 1) {
+                        $(".pc-list").html("");
+                        $(".task-list").html("");
+                    }
                     taskList(list);
                     if (list.length < pageSize) {
                         mescroll.endSuccess(5, false, null);
@@ -125,7 +129,7 @@ $(document).ready(function() {
                     mescroll.endSuccess(10, false, null);
                 } else {
                     bootoast({
-                        message: ''+data.Message,
+                        message: '' + data.Message,
                         type: 'warning',
                         position: 'toast-top-center',
                         timeout: 3
@@ -152,7 +156,7 @@ $(document).ready(function() {
                     dealRelationList(data.Result.UserList);
                 } else {
                     bootoast({
-                        message: ''+data.Message,
+                        message: '' + data.Message,
                         type: 'warning',
                         position: 'toast-top-center',
                         timeout: 3
@@ -177,9 +181,9 @@ $(document).ready(function() {
                 sta = `<div class="task-status init-status">待审核</div>`;
             } else if (status == -2) {
                 sta = `<div class="task-status init-status">待接受</div>`;
-            }else if (status == -7) {
+            } else if (status == -7) {
                 sta = `<div class="task-status init-status">已取消</div>`;
-            }else if (status == -8) {
+            } else if (status == -8) {
                 sta = `<div class="task-status init-status">完成未通过</div>`;
             } else if (status == -9) {
                 sta = `<div class="task-status init-status">创建未通过</div>`;
@@ -196,11 +200,11 @@ $(document).ready(function() {
                 sta = `<span class="props-btn line-color">已完成</span>`;
             } else if (status == -1) {
                 sta = `<div class="props-btn already">待审核</div>`;
-            }else if (status == -2) {
+            } else if (status == -2) {
                 sta = `<span class="props-btn already">待接受</span>`;
             } else if (status == -7) {
                 sta = `<span class="props-btn already">已取消</span>`;
-            }else if (status == -8) {
+            } else if (status == -8) {
                 sta = `<span class="props-btn already">完成未通过</span>`;
             } else if (status == -9) {
                 sta = `<span class="props-btn already">创建未通过</span>`;
@@ -245,26 +249,27 @@ $(document).ready(function() {
         $(".pc-list").append(pcStr);
         $(".task-list").append(str);
         $(".single-task").click(function() {
-            var tmpArray =$(this).attr('id').split('_');
+            var tmpArray = $(this).attr('id').split('_');
             var id = tmpArray[0];
             var csta = tmpArray[1];
-            if(csta==-9){
+            if (csta == -9) {
                 //需要再次编辑
                 window.location.href = "publishTask.html?appId=" + appId + "&type=1&updateId=" + id;
-            }else{
+            } else {
                 window.location.href = "taskStatus.html?appId=" + appId + "&taskId=" + id;
             }
         });
-        return str;
     }
     //当前人员及其下属列表
     function dealRelationList(list) {
-        var str = `<div class="list-item" id="${userId}">我的</div>`;
-        var pcStr = `<li id="${userId}">我的</li>`;
+        var str = ``;
+        var pcStr = ``;
         list.forEach(element => {
-            str += `<div class="list-item" id="${element.UserId}">${
-                element.Name
-                }</div>`;
+            str += `<div class="img-item">
+            <img id="${element.UserId}" src="${element.ImgUrl}" alt="${element.Name}">
+            <div>名字：${element.Name}</div>
+            <div>任务数量：${element.TaskCount}</div>
+            </div>`;
             pcStr += `<li id="${element.UserId}">${element.Name}</li>`;
         });
         $(".peop-list .menu-list").html(str);
@@ -272,9 +277,9 @@ $(document).ready(function() {
         $(".select-name").html('我的');
         $(".select-type").html('发起的');
         //切换人员 分类点击
-        $(".peop-list .list-item").click(function() {
+        $(".img-item img").click(function() {
             var id = $(this).attr("id");
-            var text = $(this).html();
+            var text = $(this).attr("alt");
             checkUserId = id;
             $(".m-text").html(text);
             $(".peop-list").addClass("hide");
@@ -324,17 +329,20 @@ $(document).ready(function() {
         }
         init() {
             if (!this.isMobile) {
-                if(isPC){
+                if (isPC) {
                     return;
                 }
-                isPC=true;
+                isPC = true;
                 mescroll = new MeScroll("mescrollPC", {
                     down: {
-                        use: false
+                        callback: getTaskList,
+                        isBounce: false,
+                        auto: false
                     },
                     up: {
-                        callback:getTaskList,
-                        isBounce: false
+                        callback: getTaskList,
+                        isBounce: false,
+                        auto: true
                     }
                 });
                 $(".pc-list").html("");
@@ -345,11 +353,14 @@ $(document).ready(function() {
             } else {
                 mescroll = new MeScroll("mescroll", {
                     down: {
-                        use: false
+                        callback: getTaskList,
+                        isBounce: false,
+                        auto: false
                     },
                     up: {
-                        callback:getTaskList,
-                        isBounce: false
+                        callback: getTaskList,
+                        isBounce: false,
+                        auto: true
                     }
                 });
                 $(".task-list").html("");

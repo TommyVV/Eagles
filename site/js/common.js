@@ -1,5 +1,15 @@
 const DOMAIN = 'http://www.51service.xyz/Eagles';
 const UPLOAD = "http://www.51service.xyz/Eagles/api/Upload/UploadFile";
+//上传图片
+const PICSIZE = 1000000;
+//附件尺寸
+const FILESIZE = 10000000;
+//字数限制 文章、心得体会、入党申请书、会议纪要字数多少可以在后台设置
+const DEFAULT_FONE_COUNT = 100;
+const ARTICLE_FONE_COUNT = 100;
+const EXPERIENCE_FONE_COUNT = 100;
+const MEETING_FONE_COUNT = 100;
+const APPLICATION_FONE_COUNT = 100;
 // const DOMAIN = 'http://ruisuikj.com/Eagles';
 // const UPLOAD = "http://ruisuikj.com/Eagles/api/Upload/UploadFile";
 
@@ -31,12 +41,12 @@ function setCookie(key, value, days) {
     }
 }
 //发布按钮点击
-function pulicContent(url){
-    var elementStr=`<div class="float-layer">
+function pulicContent(url) {
+    var elementStr = `<div class="float-layer">
             <img src="icons/class_partyjob@3x.png?v=1" alt="" srcset="">
         </div>`;
     $("body").append(elementStr);
-    $(".float-layer").click(function(){
+    $(".float-layer").click(function() {
         window.location.href = url;
     });
 }
@@ -57,7 +67,7 @@ function getCookie(name) {
     // } finally {}
 }
 //附件列表
-function attachmentList(list,type) {
+function attachmentList(list, type) {
     var str = ``;
     if (list) {
         list.forEach(element => {
@@ -92,23 +102,21 @@ function getLocalStorage(key, exp) {
         return dataObjDatatoJson;
     }
 }
-if(localStorage.getItem('TokenExpTime')!=null&&localStorage.getItem('TokenExpTime')){
-	var value = localStorage.getItem("token");
-	setLocalStorage('information', JSON.stringify(value));
-	var str = localStorage.getItem('TokenExpTime')
-	str = str.replace(/-/g, '/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
-	var date1 = new Date(str); // 构造一个日期型数据，值为传入的字符串
-	var date2 = new Date()
-	var s1 = date1.getTime(),
-	    s2 = date2.getTime();
-	var s = Math.round((s1 - s2))
-	var dataObjData = getLocalStorage('information', s)
-	if (dataObjData != "" && dataObjData != null) {
-	} else {
-		//alert("获取的token已经过期");
-	    localStorage.removeItem("token"); //清除token的值
-	    localStorage.removeItem("TokenExpTime"); //清楚时间
-	    
-	}
-}
+if (localStorage.getItem('TokenExpTime') != null && localStorage.getItem('TokenExpTime')) {
+    var value = localStorage.getItem("token");
+    setLocalStorage('information', JSON.stringify(value));
+    var str = localStorage.getItem('TokenExpTime')
+    str = str.replace(/-/g, '/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串
+    var date1 = new Date(str); // 构造一个日期型数据，值为传入的字符串
+    var date2 = new Date()
+    var s1 = date1.getTime(),
+        s2 = date2.getTime();
+    var s = Math.round((s1 - s2))
+    var dataObjData = getLocalStorage('information', s)
+    if (dataObjData != "" && dataObjData != null) {} else {
+        //alert("获取的token已经过期");
+        localStorage.removeItem("token"); //清除token的值
+        localStorage.removeItem("TokenExpTime"); //清楚时间
 
+    }
+}

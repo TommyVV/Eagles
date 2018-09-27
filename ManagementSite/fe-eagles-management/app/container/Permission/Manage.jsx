@@ -61,11 +61,11 @@ class PermissionManage extends React.Component {
         AuthorityInfo: newKey,
         OperId: 0
       };
-      let { Code } = await manageCreateOrEdit(param);
+      let { Code, Message } = await manageCreateOrEdit(param);
       if (Code === "00") {
         message.success("保存成功");
       } else {
-        message.error("保存失败");
+        message.error(Message);
       }
     } else {
       message.error("请选择权限组");

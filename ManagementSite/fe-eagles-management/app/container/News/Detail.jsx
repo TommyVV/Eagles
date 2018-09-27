@@ -656,7 +656,7 @@ class NewsDetail extends Component {
   };
   // 查询试卷列表
   getQuestionList = async () => {
-    const res = await getQuestionList({ ExercisesType: 5 });
+    const res = await getQuestionList({ ExercisesType: 5, IsUser: 0 });
     console.log("getQuestionList", res);
     this.setState({ questionList: res.List });
   };

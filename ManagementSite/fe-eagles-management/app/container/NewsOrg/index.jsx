@@ -260,7 +260,7 @@ class NewsOrgList extends React.Component {
                 style={{
                   paddingLeft: "24px",
                   display:
-                    this.state.authMap.get("Audit001") && obj.Status == "-1"
+                    this.state.authMap.get("Audit001")
                       ? null
                       : "none"
                 }}
@@ -278,7 +278,8 @@ class NewsOrgList extends React.Component {
       NewsName: "",
       NewsType: "0",
       Status: "",
-      BranchId: ""
+      BranchId: "",
+      PublicOrg: 1
     };
   }
   componentWillMount() {
@@ -371,7 +372,7 @@ class NewsOrgList extends React.Component {
         <Audit
           visible={visible}
           setVisible={this.setVisible.bind(this)}
-          type={1}
+          type={9} // 公开到组织新闻类型为9
           selectedRowKeys={selectedRowKeys}
           getCurrentListFn={this.getCurrentListFn.bind(this)}
         />

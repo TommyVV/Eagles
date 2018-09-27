@@ -2,67 +2,84 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	<meta name="hotcss" content="initial-dpr=1">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>发布文章</title>
-	<link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/common/common.css">
-	<link href="./thirdparty/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
-	<link rel="stylesheet" href="css/subordinateList.css">
-	<link href="./css/publishArticle.css?v=20180715" rel="stylesheet">
-	<link href="./css/bootoast.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="hotcss" content="initial-dpr=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发布文章</title>
+    <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/common/common.css">
+    <link href="./thirdparty/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/fs-modal.min.css">
+    <link rel="stylesheet" href="css/subordinateList.css">
+    <link href="./css/publishArticle.css?v=201809" rel="stylesheet">
+    <link href="./css/bootoast.css" rel="stylesheet">
 </head>
 
 <body>
-	<div id="top-nav" class="pc"></div>
-	<div id="mobilenav"></div>
-	<div class="container">
+    <div id="top-nav" class="pc"></div>
+    <div id="mobilenav"></div>
+    <div class="container">
 
-		<div class="publish">
-			<div class="wrap">
-				<input type="text" class="publish-title" id="title" placeholder="请输入标题" value="" />
-			</div>
+        <div class="publish">
+            <div class="wrap">
+                <input type="text" class="publish-title" id="title" placeholder="请输入标题" value="" />
+            </div>
 
-			<div class="wrap">
-				<select name="" id="selectpicker" class="selectpicker">					
+            <div class="wrap">
+                <select name="" id="selectpicker" class="selectpicker">					
 					<option value="3">入党申请书</option>
 				</select>
-			</div>			
-			<div class="wrap introducer"  style="margin-top:16px">
-				<div class="publish-title" style="color:#333 !important">入党介绍人:
-					<span class="item-content" id="name"></span>
-					<button type="button" class="item-select" data-toggle="modal" data-target="#myModal">选择</button>
-				</div>
-			</div>
-			<div class="wrap">
-				<textarea class="publish-content" name="" id="" cols="30" rows="10" placeholder="点击此处开始正文..."></textarea>
-			</div>
-			<div class="img-area" id="imgUpload">
-				<div class="title">图片上传</div>
-				<div class="imgs">
-					<div class='img-wrap'>
-						<div class="img-container">
-							<div class="add">
-								<div>+</div>
-							</div>
-							<input type="file" id="imgupload" accept="image/png, image/gif, image/jpg, image/jpeg">
-						</div>
-					</div>
-				</div>
-			</div>			
+            </div>
+            <div class="wrap introducer" style="margin-top:16px">
+                <div class="publish-title" style="color:#333 !important">入党介绍人:
+                    <input type="text" class="intro-input">
+                    <!-- <span class="item-content" id="name"></span>
+                    <button type="button" class="item-select" data-toggle="modal" data-target="#myModal">选择</button> -->
+                </div>
+                <div class="publish-title intro-person" style="color:#333 !important"></div>
+            </div>
+            <div class="wrap">
+                <textarea class="publish-content" name="" id="" cols="30" rows="10" placeholder="点击此处开始正文..."></textarea>
+            </div>
+            <div class="img-area" id="imgUpload">
+                <div class="title">图片上传</div>
+                <div class="imgs">
+                    <div class='img-wrap'>
+                        <div class="img-container">
+                            <div class="add">
+                                <div>+</div>
+                            </div>
+                            <input type="file" id="imgupload" accept="image/png, image/gif, image/jpg, image/jpeg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="img-area" id="attList" style="border-bottom: none;">
+                <div class="title">附件上传</div>
+                <div class="upload-file">
+                    <input type="file" id="fileupload">
+                    <span class="glyphicon glyphicon-folder-open"></span> 文件上传
+                </div>
+                <div class="upload-progress hide">
+                    <div class="bar" style="width: 0%;"></div>
+                </div>
+                <div class="attaches"></div>
+            </div>
+            <div class="punlic_n">
+                <label class="demo--label"><input class="demo--radio" type="radio" value="2" name="radio1" checked="checked"><span class="demo--radioInput"></span>公开到支部</label>
+                <label class="demo--label"><input class="demo--radio" type="radio" value="3" name="radio1"><span class="demo--radioInput"></span>公开到组织</label>
+            </div>
+            <div class="publish-wrap-btn">
+                <div class="publish-btn" id="save">保存</div>
+                <div class="publish-btn" id="publish">发布</div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+    </div>
 
-			<div class="publish-wrap-btn">
-				<div class="publishbtn" id="publish">申请</div>
-				<div style="clear:both"></div>
-			</div>
-		</div>
-	</div>
-
-	<div class="footer" id="footer"></div>
-	<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="footer" id="footer"></div>
+    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -79,35 +96,35 @@
 	        </div>
 	    </div>
 	</div>-->
-	<div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="modalLargeLabel">选择入党介绍人</h4>
-				</div>
-				<div class="modal-body">
-					<div class="subordinates"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
-	<script src="thirdparty/jquery-2.1.4.min.js"></script>
-	<script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
-	<script src="thirdparty/jquery.ui.widget.js"></script>
-	<script src="thirdparty/jquery.iframe-transport.js"></script>
-	<script src="thirdparty/jquery.fileupload.js"></script>
-	<script src="js/bootoast.js"></script>
-	<script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
-	<script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
-	<script src="js/common.js"></script>
-	<script src="js/JoinMember.js?v=20180815"></script>
-	<script src="js/compulicajax.js"></script>
+    <div class="modal fade modal-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLargeLabel">选择入党介绍人</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="subordinates"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnTestSaveLarge" class="btn btn-default btn-primary" data-glyphicon="glyphicon-ok">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
+    <script src="thirdparty/jquery-2.1.4.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="thirdparty/jquery.ui.widget.js"></script>
+    <script src="thirdparty/jquery.iframe-transport.js"></script>
+    <script src="thirdparty/jquery.fileupload.js"></script>
+    <script src="js/bootoast.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="thirdparty/bootstrap/js/fs-modal.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/JoinMember.js?v=2018099"></script>
+    <script src="js/compulicajax.js"></script>
 </body>
 
 </html>

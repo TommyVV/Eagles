@@ -30,7 +30,7 @@ class RankDetail extends React.Component {
       {
         title: "时间",
         dataIndex: "CreateTime",
-        render: text => <span>{new Date(text).format("yyyy-MM-dd")}</span>
+        render: text => <span>{new Date(text).format("yyyy-MM-dd hh:mm:ss")}</span>
       }
     ];
     this.getListConfig = {
