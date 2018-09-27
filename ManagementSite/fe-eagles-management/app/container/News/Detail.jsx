@@ -14,7 +14,6 @@ import {
   Checkbox,
   DatePicker
 } from "antd";
-import moment from "moment";
 import "moment/locale/zh-cn";
 import Nav from "../Nav";
 import { hashHistory } from "react-router";
@@ -24,11 +23,8 @@ import { getQuestionList } from "../../services/questionService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/newsAction";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
-
 import "./style.less";
+import Editor from "../../components/Common/Editor";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -56,46 +52,51 @@ class Base extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          console.log("Received values of form: ", values);
-          let { StartTime, EndTime, IsTop } = values;
-          let { news, Attachs } = this.props;
-          let { Attachments } = news;
-          let attach = {}; // 存附件对象
-          let index = 0;
-          Attachs.map(obj => {
-            let i = index + 1;
-            ++index;
-            attach[`Attach${i}`] = obj.AttachmentUrl;
-            attach[`AttachName${i}`] = obj.AttachmentName;
-          });
-          Attachments.map(obj => {
-            if (obj.response) {
+          let content = this.editorInstance.state.editorState.toHTML();
+          if (content === "<p></p>" || !content) {
+            message.error("请输入内容");
+          } else {
+            console.log("Received values of form: ", values);
+            let { StartTime, EndTime, IsTop } = values;
+            let { news, Attachs } = this.props;
+            let { Attachments } = news;
+            let attach = {}; // 存附件对象
+            let index = 0;
+            Attachs.map(obj => {
               let i = index + 1;
               ++index;
-              const file = obj.response.Result.FileUploadResults[0];
-              attach[`Attach${i}`] = file.FileUrl;
-              attach[`AttachName${i}`] = file.FileName;
+              attach[`Attach${i}`] = obj.AttachmentUrl;
+              attach[`AttachName${i}`] = obj.AttachmentName;
+            });
+            Attachments.map(obj => {
+              if (obj.response) {
+                let i = index + 1;
+                ++index;
+                const file = obj.response.Result.FileUploadResults[0];
+                attach[`Attach${i}`] = file.FileUrl;
+                attach[`AttachName${i}`] = file.FileName;
+              }
+            });
+            let params = {
+              Info: {
+                ...news,
+                ...values,
+                IsTop: IsTop,
+                // StartTime: moment(StartTime, "yyyy-MM-dd").format(),
+                // EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+                ...attach,
+                Content: content
+              }
+            };
+            let { Code, Message } = await createOrEditNews(params);
+            if (Code === "00") {
+              let tip = this.props.news.NewsId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/newslist");
+            } else {
+              // let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
+              message.error(Message);
             }
-          });
-          let params = {
-            Info: {
-              ...news,
-              ...values,
-              IsTop: IsTop,
-              // StartTime: moment(StartTime, "yyyy-MM-dd").format(),
-              // EndTime: moment(EndTime, "yyyy-MM-dd").format(),
-              ...attach
-            }
-          };
-          let { Code, Message } = await createOrEditNews(params);
-          if (Code === "00") {
-            let tip = this.props.news.NewsId ? "保存成功" : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/newslist");
-          } else {
-            // let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
-
-            message.error(Message);
           }
         } catch (e) {
           throw new Error(e);
@@ -136,19 +137,31 @@ class Base extends Component {
     let { news, Attachs, setObj, form } = this.props;
     let { getFieldsValue } = form;
     if (info.file.status == "uploading") {
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
+      this.props.saveInfo({
+        ...news,
+        ...getFieldsValue(),
+        Attachments: info.fileList
+      });
     }
     if (info.file.status == "removed") {
       let newKeys = Attachs.filter((v, i) => {
         return i != info.file.uid;
       });
       setObj(newKeys);
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
+      this.props.saveInfo({
+        ...news,
+        ...getFieldsValue(),
+        Attachments: info.fileList
+      });
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
       let { news } = this.props;
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
+      this.props.saveInfo({
+        ...news,
+        ...getFieldsValue(),
+        Attachments: info.fileList
+      });
       return;
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
@@ -192,11 +205,7 @@ class Base extends Component {
     }
   };
   render() {
-    const {
-      getFieldDecorator,
-      setFieldsValue,
-      getFieldsValue
-    } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
     let external = news == null ? false : news.IsExternal == 1 ? true : false;
     console.log("保存的附件：", Attachs);
@@ -224,16 +233,6 @@ class Base extends Component {
         sm: { span: 8 }
       }
     };
-    const formItemLayoutDate = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 2 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 }
-      }
-    };
     const formItemLayoutContent = {
       labelCol: {
         xs: { span: 24 },
@@ -244,68 +243,6 @@ class Base extends Component {
         sm: { span: 19 }
       }
     };
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      initialContent: news.Content,
-      placeholder: "必填，请输入新闻内容",
-      onChange: Content => {
-        if (this.editorInstance.isEmpty()) {
-          setFieldsValue({ Content: "" });
-        } else {
-          setFieldsValue({ Content });
-        }
-        console.log("新闻内容：", getFieldsValue());
-      },
-      media: {
-        pasteImage: true,
-        validateFn: file => {
-          return file.size < fileSize;
-        },
-        uploadFn: async param => {
-          // const res=await uploadFile(file);
-          console.log(param);
-          let formData = new FormData();
-          formData.append("file", param.file);
-          var request = new XMLHttpRequest();
-          request.open(
-            "POST",
-            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
-          );
-          request.send(formData);
-          request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-              let { Result } = JSON.parse(request.responseText);
-              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
-              // 上传成功后调用param.success并传入上传后的文件地址
-              param.success({
-                url: FileUrl,
-                meta: {
-                  id: FileId,
-                  title: FileName,
-                  alt: FileName,
-                  loop: false, // 指定音视频是否循环播放
-                  autoPlay: false, // 指定音视频是否自动播放
-                  controls: true // 指定音视频是否显示控制栏
-                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
-                }
-              });
-            }
-          };
-        },
-        onInsert: files => {
-          console.log(files);
-        }
-      }
-      // onRawChange: this.handleRawChange
-    };
-    const hooks = {
-      'toggle-link': ({ href, target }) => {
-          href = href.indexOf('http') === 0 ? href : `http://${href}`
-          return { href, target }
-      }
-  }
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -381,15 +318,29 @@ class Base extends Component {
             {news.NewsImg ? (
               <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} />
             ) : (
-                <div>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
-          <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
+          <b
+            style={{
+              position: "absolute",
+              width: "200px",
+              top: "-112px",
+              left: "120px"
+            }}
+          >
+            {" "}
+            新闻封面建议长宽比为1.6 : 1
+          </b>
         </FormItem>
-        <FormItem {...formItemLayout} label="外部链接" style={{ display: external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="外部链接"
+          style={{ display: external ? "block" : "none" }}
+        >
           {getFieldDecorator("ExternalUrl", {
             rules: [
               {
@@ -398,15 +349,24 @@ class Base extends Component {
             ]
           })(<Input placeholder="外部链接" />)}
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容" style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayoutContent}
+          label="内容"
+          style={{ display: !external ? "block" : "none" }}
+        >
           {getFieldDecorator("Content")(
-            <div className="editor-wrap">
-              <BraftEditor {...editorProps} hooks={hooks}  ref={(instance) => this.editorInstance = instance} />
-            </div>
+            <Editor
+              content={news.Content}
+              text={"必填，请输入内容"}
+              ref={instance => (this.editorInstance = instance)}
+            />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否有试卷"
-          style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="是否有试卷"
+          style={{ display: !external ? "block" : "none" }}
+        >
           {getFieldDecorator("isTest")(
             <Select onChange={this.change.bind(this, "isTest")}>
               <Option value="0">否</Option>
@@ -454,7 +414,11 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="分类" style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="分类"
+          style={{ display: !external ? "block" : "none" }}
+        >
           <Row>
             {/* <Col span={8}>
               {news.IsImage == "0" || news.IsImage == "1" ? (
@@ -479,10 +443,10 @@ class Base extends Component {
                   有视频
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
-                    有视频
+                <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                  有视频
                 </Checkbox>
-                )}
+              )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
@@ -493,10 +457,10 @@ class Base extends Component {
                   允许学习
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                    允许学习
+                <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                  允许学习
                 </Checkbox>
-                )}
+              )}
             </Col>
             {/* <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
@@ -531,18 +495,34 @@ class Base extends Component {
           </Row> */}
         </FormItem>
 
-        <FormItem {...formItemLayout} label="积分奖励" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="积分奖励"
+          style={{ display: news.CanStudy == "1" ? null : "none" }}
+        >
           {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} />
+            <InputNumber
+              placeholder="请输入积分奖励"
+              min={0}
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="学习时间" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="学习时间"
+          style={{ display: news.CanStudy == "1" ? null : "none" }}
+        >
           {getFieldDecorator("StudyTime")(
-            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} />
+            <InputNumber
+              placeholder="请输入学习时间，单位（分钟）"
+              min={0}
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
         {/* <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}> */}
-        <FormItem {...formItemLayout} label="附件" >
+        <FormItem {...formItemLayout} label="附件">
           <Upload
             name="file"
             listType="text"
@@ -629,7 +609,7 @@ const FormMap = Form.create({
       }),
       ExternalUrl: Form.createFormField({
         value: news.ExternalUrl
-      }),
+      })
     };
   }
 })(Base);
@@ -670,7 +650,7 @@ class NewsDetail extends Component {
 
   // 查询栏目列表
   getProgramaList = async () => {
-    const { List } = await getList({ "IsPublic": true });
+    const { List } = await getList({ IsPublic: true });
     console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };

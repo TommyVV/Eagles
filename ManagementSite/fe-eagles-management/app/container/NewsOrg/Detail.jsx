@@ -24,10 +24,6 @@ import { getQuestionList } from "../../services/questionService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/newsAction";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
-
 import "./style.less";
 
 const FormItem = Form.Item;
@@ -51,152 +47,8 @@ class Base extends Component {
     };
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields(async (err, values) => {
-      if (!err) {
-        try {
-          console.log("Received values of form: ", values);
-          let { StartTime, EndTime, IsTop } = values;
-          let { news, Attachs } = this.props;
-          let { Attachments } = news;
-          let attach = {}; // 存附件对象
-          let index = 0;
-          Attachs.map(obj => {
-            let i = index + 1;
-            ++index;
-            attach[`Attach${i}`] = obj.AttachmentUrl;
-            attach[`AttachName${i}`] = obj.AttachmentName;
-          });
-          Attachments.map(obj => {
-            if (obj.response) {
-              let i = index + 1;
-              ++index;
-              const file = obj.response.Result.FileUploadResults[0];
-              attach[`Attach${i}`] = file.FileUrl;
-              attach[`AttachName${i}`] = file.FileName;
-            }
-          });
-          let params = {
-            Info: {
-              ...news,
-              ...values,
-              IsTop: IsTop,
-              // StartTime: moment(StartTime, "yyyy-MM-dd").format(),
-              // EndTime: moment(EndTime, "yyyy-MM-dd").format(),
-              ...attach
-            }
-          };
-          let { Code, Message } = await createOrEditNews(params);
-          if (Code === "00") {
-            let tip = this.props.news.NewsId ? "保存成功" : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/newslist");
-          } else {
-            // let tip = this.props.news.NewsId ? "保存失败" : "创建失败";
-
-            message.error(Message);
-          }
-        } catch (e) {
-          throw new Error(e);
-        }
-      } else {
-        message.error("请检查字段是否正确");
-      }
-    });
-  };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
-
-  beforeUpload(file) {
-    const reg = /^image\/(png|jpeg|jpg|bmp)$/;
-    const type = file.type;
-    const isImage = reg.test(type);
-    if (!isImage) {
-      message.error("只支持格式为png,jpeg和jpg的图片!");
-    }
-
-    if (file.size > fileSize) {
-      message.error("图片必须小于10M");
-    }
-    return isImage && file.size <= fileSize;
-  }
-  // 上传新闻的附件
-  handleChange = info => {
-    console.log("上传新闻附件：", info);
-    if (info.fileList.length > 4) {
-      message.error("最多只能上传4个附件");
-      return false;
-    }
-    let { news, Attachs, setObj, form } = this.props;
-    let { getFieldsValue } = form;
-    if (info.file.status == "uploading") {
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-    }
-    if (info.file.status == "removed") {
-      let newKeys = Attachs.filter((v, i) => {
-        return i != info.file.uid;
-      });
-      setObj(newKeys);
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} 上传成功`);
-      let { news } = this.props;
-      this.props.saveInfo({ ...news, ...getFieldsValue(), Attachments: info.fileList });
-      return;
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} 上传失败`);
-    }
-  };
-  // 是否有试卷
-  change = (attr, value) => {
-    const { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveInfo({
-      ...values,
-      [attr]: value,
-      TestId: value == "0" ? "" : values.TestId
-    });
-  };
-  // 选分类
-  changeBox = (attr, e) => {
-    const { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveInfo({ ...values, [attr]: e.target.checked ? "1" : "0" });
-  };
-  // 新闻封面
-  onChangeImage = info => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      const { Code, Result, Message } = info.file.response;
-      if (Code == "00") {
-        message.success(`${info.file.name} 上传成功`);
-        const imageUrl = Result.FileUploadResults[0].FileUrl;
-        // 保存数据
-        let { getFieldsValue } = this.props.form;
-        let values = getFieldsValue();
-        this.props.saveInfo({ ...values, NewsImg: imageUrl });
-      } else {
-        message.error(`${Message}`);
-      }
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} 上传失败`);
-    }
-  };
   render() {
-    const {
-      getFieldDecorator,
-      setFieldsValue,
-      getFieldsValue
-    } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { news, programaList, questionList, Attachs } = this.props; //是否显示试卷列表
     let external = news == null ? false : news.IsExternal == 1 ? true : false;
     console.log("保存的附件：", Attachs);
@@ -224,16 +76,6 @@ class Base extends Component {
         sm: { span: 8 }
       }
     };
-    const formItemLayoutDate = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 2 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 }
-      }
-    };
     const formItemLayoutContent = {
       labelCol: {
         xs: { span: 24 },
@@ -244,72 +86,10 @@ class Base extends Component {
         sm: { span: 19 }
       }
     };
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      initialContent: news.Content,
-      placeholder: "必填，请输入新闻内容",
-      onChange: Content => {
-        if (this.editorInstance.isEmpty()) {
-          setFieldsValue({ Content: "" });
-        } else {
-          setFieldsValue({ Content });
-        }
-        console.log("新闻内容：", getFieldsValue());
-      },
-      media: {
-        pasteImage: true,
-        validateFn: file => {
-          return file.size < fileSize;
-        },
-        uploadFn: async param => {
-          // const res=await uploadFile(file);
-          console.log(param);
-          let formData = new FormData();
-          formData.append("file", param.file);
-          var request = new XMLHttpRequest();
-          request.open(
-            "POST",
-            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
-          );
-          request.send(formData);
-          request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-              let { Result } = JSON.parse(request.responseText);
-              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
-              // 上传成功后调用param.success并传入上传后的文件地址
-              param.success({
-                url: FileUrl,
-                meta: {
-                  id: FileId,
-                  title: FileName,
-                  alt: FileName,
-                  loop: false, // 指定音视频是否循环播放
-                  autoPlay: false, // 指定音视频是否自动播放
-                  controls: true // 指定音视频是否显示控制栏
-                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
-                }
-              });
-            }
-          };
-        },
-        onInsert: files => {
-          console.log(files);
-        }
-      }
-      // onRawChange: this.handleRawChange
-    };
-    const hooks = {
-      'toggle-link': ({ href, target }) => {
-          href = href.indexOf('http') === 0 ? href : `http://${href}`
-          return { href, target }
-      }
-  }
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
-          {getFieldDecorator("NewsId")(<Input disabled/>)}
+          {getFieldDecorator("NewsId")(<Input disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="标题">
           {getFieldDecorator("NewsName", {
@@ -319,7 +99,7 @@ class Base extends Component {
                 message: "必填，请输入标题，不超过50个字"
               }
             ]
-          })(<Input placeholder="必填，请输入标题" maxLength={50} disabled/>)}
+          })(<Input placeholder="必填，请输入标题" maxLength={50} disabled />)}
         </FormItem>
         <FormItem {...formItemLayout} label="类型">
           {getFieldDecorator("NewsType")(
@@ -336,7 +116,7 @@ class Base extends Component {
                 required: true
               }
             ]
-          })(<Input placeholder="必填，请输入作者" disabled/>)}
+          })(<Input placeholder="必填，请输入作者" disabled />)}
         </FormItem>
 
         <FormItem {...formItemLayout} label="来源">
@@ -347,7 +127,7 @@ class Base extends Component {
                 message: "必填，请输入来源"
               }
             ]
-          })(<Input placeholder="必填，请输入新闻来源" disabled/>)}
+          })(<Input placeholder="必填，请输入新闻来源" disabled />)}
         </FormItem>
         {/* <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
@@ -374,43 +154,54 @@ class Base extends Component {
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
-            action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
-            beforeUpload={this.beforeUpload}
-            onChange={this.onChangeImage.bind(this)}
             disabled={true}
           >
             {news.NewsImg ? (
-              <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} disabled/>
+              <img
+                src={news.NewsImg}
+                alt="avatar"
+                style={{ width: "100%" }}
+                disabled
+              />
             ) : (
-                <div disabled>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div disabled>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
-          <b style={{ position: "absolute", width: "200px", top: "-112px", left: "120px" }}>  新闻封面建议长宽比为1.6 : 1</b>
         </FormItem>
-        <FormItem {...formItemLayout} label="外部链接" style={{ display: external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="外部链接"
+          style={{ display: external ? "block" : "none" }}
+        >
           {getFieldDecorator("ExternalUrl", {
             rules: [
               {
                 message: "外部链接"
               }
             ]
-          })(<Input placeholder="外部链接" disabled/>)}
+          })(<Input placeholder="外部链接" disabled />)}
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容" style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayoutContent}
+          label="内容"
+          style={{ display: !external ? "block" : "none" }}
+        >
           {getFieldDecorator("Content")(
             <div className="editor-wrap">
-              {/* <BraftEditor {...editorProps} hooks={hooks}  ref={(instance) => this.editorInstance = instance} /> */}
-              <div dangerouslySetInnerHTML={{__html: news.Content}}></div>
+              <div dangerouslySetInnerHTML={{ __html: news.Content }} />
             </div>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="是否有试卷"
-          style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="是否有试卷"
+          style={{ display: !external ? "block" : "none" }}
+        >
           {getFieldDecorator("isTest")(
-            <Select onChange={this.change.bind(this, "isTest")} disabled>
+            <Select disabled>
               <Option value="0">否</Option>
               <Option value="1">是</Option>
             </Select>
@@ -456,7 +247,11 @@ class Base extends Component {
             </Select>
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="分类" style={{ display: !external ? "block" : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="分类"
+          style={{ display: !external ? "block" : "none" }}
+        >
           <Row>
             {/* <Col span={8}>
               {news.IsImage == "0" || news.IsImage == "1" ? (
@@ -474,89 +269,64 @@ class Base extends Component {
             </Col> */}
             <Col span={8}>
               {news.IsVideo == "0" || news.IsVideo == "1" ? (
-                <Checkbox disabled
-                  checked={news.IsVideo == "1" ? true : false}
-                  onChange={this.changeBox.bind(this, "IsVideo")}
-                >
+                <Checkbox disabled checked={news.IsVideo == "1" ? true : false}>
                   有视频
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")} disabled>
-                    有视频
-                </Checkbox>
-                )}
+                <Checkbox disabled>有视频</Checkbox>
+              )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
-                <Checkbox disabled
+                <Checkbox
+                  disabled
                   checked={news.CanStudy == "1" ? true : false}
-                  onChange={this.changeBox.bind(this, "CanStudy")}
                 >
                   允许学习
                 </Checkbox>
               ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")} disabled>
-                    允许学习
-                </Checkbox>
-                )}
-            </Col>
-            <Col span={8}>
-              {news.IsAttach == "0" || news.IsAttach == "1" ? (
-                <Checkbox disabled
-                  checked={news.IsAttach == "1" ? true : false}
-                  onChange={this.changeBox.bind(this, "IsAttach")}
-                >
-                  有附件
-                </Checkbox>
-              ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsAttach")} disabled>
-                    有附件
-                </Checkbox>
-                )}
+                <Checkbox disabled>允许学习</Checkbox>
+              )}
             </Col>
           </Row>
-          {/* <Row>
-            <Col span={8}>
-              {news.IsClass == "0" || news.IsClass == "1" ? (
-                <Checkbox
-                  checked={news.IsClass == "1" ? true : false}
-                  onChange={this.changeBox.bind(this, "IsClass")}
-                >
-                  有课件
-                </Checkbox>
-              ) : (
-                  <Checkbox onChange={this.changeBox.bind(this, "IsClass")}>
-                    有课件
-                </Checkbox>
-                )}
-            </Col>
-          </Row> */}
         </FormItem>
-
-        <FormItem {...formItemLayout} label="积分奖励" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="积分奖励"
+          style={{ display: news.CanStudy == "1" ? null : "none" }}
+        >
           {getFieldDecorator("RewardsScore")(
-            <InputNumber placeholder="请输入积分奖励" min={0} style={{ width: "100%" }} disabled/>
+            <InputNumber
+              placeholder="请输入积分奖励"
+              min={0}
+              style={{ width: "100%" }}
+              disabled
+            />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="学习时间" style={{ display: news.CanStudy == "1" ? null : "none" }}>
+        <FormItem
+          {...formItemLayout}
+          label="学习时间"
+          style={{ display: news.CanStudy == "1" ? null : "none" }}
+        >
           {getFieldDecorator("StudyTime")(
-            <InputNumber placeholder="请输入学习时间，单位（分钟）" min={0} style={{ width: "100%" }} disabled/>
+            <InputNumber
+              placeholder="请输入学习时间，单位（分钟）"
+              min={0}
+              style={{ width: "100%" }}
+              disabled
+            />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="附件" style={{ display: news.IsAttach == "1" ? null : "none" }}>
+        <FormItem {...formItemLayout} label="附件">
           <Upload
             name="file"
             listType="text"
             showUploadList={true}
             action={serverConfig.API_SERVER + serverConfig.FILE.UPLOAD}
-            onChange={this.handleChange.bind(this)}
             fileList={fileList}
             disabled={true}
-          >
-            <Button disabled>
-              <Icon type="upload" /> 点击上传
-            </Button>
-          </Upload>
+          />
         </FormItem>
       </Form>
     );
@@ -610,7 +380,7 @@ const FormMap = Form.create({
       }),
       ExternalUrl: Form.createFormField({
         value: news.ExternalUrl
-      }),
+      })
     };
   }
 })(Base);
@@ -651,7 +421,7 @@ class NewsOrgDetail extends Component {
 
   // 查询栏目列表
   getProgramaList = async () => {
-    const { List } = await getList({ "IsPublic": true });
+    const { List } = await getList({ IsPublic: true });
     console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };

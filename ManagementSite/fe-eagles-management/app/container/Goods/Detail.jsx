@@ -21,16 +21,12 @@ import { getInfoById, createOrEdit } from "../../services/goodsService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/goodsAction";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
 
 import "./style.less";
-import { uploadFile } from "../../services/fileService";
+import Editor from "../../components/Common/Editor";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
 @connect(
   state => {
     return {
@@ -56,22 +52,28 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { SellStartTime, SellEndTime } = values;
           if (moment(SellStartTime).isBefore(SellEndTime)) {
-            let params = {
-              Info: {
-                ...this.props.goods,
-                ...values,
-                SellStartTime: moment(SellStartTime, "yyyy-MM-dd").format(),
-                SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format()
-              }
-            };
-            let { Code,Message } = await createOrEdit(params);
-            if (Code === "00") {
-              let tip = this.props.goods.GoodsId ? "保存成功" : "创建成功";
-              message.success(tip);
-              hashHistory.replace("/goodslist");
+            let content = this.editorInstance.state.editorState.toHTML();
+            if (content === "<p></p>" || !content) {
+              message.error("请输入产品描述");
             } else {
-              // let tip = this.props.goods.GoodsId ? "保存失败" : "创建失败";
-              message.error(Message);
+              let params = {
+                Info: {
+                  ...this.props.goods,
+                  ...values,
+                  SellStartTime: moment(SellStartTime, "yyyy-MM-dd").format(),
+                  SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format(),
+                  Content: content
+                }
+              };
+              let { Code, Message } = await createOrEdit(params);
+              if (Code === "00") {
+                let tip = this.props.goods.GoodsId ? "保存成功" : "创建成功";
+                message.success(tip);
+                hashHistory.replace("/goodslist");
+              } else {
+                // let tip = this.props.goods.GoodsId ? "保存失败" : "创建失败";
+                message.error(Message);
+              }
             }
           } else {
             message.error("开始时间必须小于结束时间");
@@ -110,8 +112,6 @@ class Base extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-
-
       const { Code, Result, Message } = info.file.response;
       if (Code == "00") {
         message.success(`${info.file.name} 上传成功`);
@@ -127,22 +127,15 @@ class Base extends Component {
       } else {
         message.error(`${Message}`);
       }
-
-
-
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
   };
-  disabledDate(current){
-    return current && current < moment().startOf('day');
+  disabledDate(current) {
+    return current && current < moment().startOf("day");
   }
   render() {
-    const {
-      getFieldDecorator,
-      setFieldsValue,
-      getFieldsValue
-    } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { goods } = this.props;
     const formItemLayout = {
       labelCol: {
@@ -174,61 +167,7 @@ class Base extends Component {
         sm: { span: 17 }
       }
     };
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      placeholder: "请输入商品详情",
-      initialContent: goods.Content,
-      media: {
-        validateFn: file => {
-          return file.size < 1024 * 1024 * 5;
-        },
-        uploadFn: async param => {
-          // const res=await uploadFile(file);
-          console.log(param);
-          let formData = new FormData();
-          formData.append("file", param.file);
-          var request = new XMLHttpRequest();
-          request.open(
-            "POST",
-            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
-          );
-          request.send(formData);
-          request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-              let { Result } = JSON.parse(request.responseText);
-              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
-              // 上传成功后调用param.success并传入上传后的文件地址
-              param.success({
-                url: FileUrl,
-                meta: {
-                  id: FileId,
-                  title: FileName,
-                  alt: FileName,
-                  loop: false, // 指定音视频是否循环播放
-                  autoPlay: false, // 指定音视频是否自动播放
-                  controls: false // 指定音视频是否显示控制栏
-                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
-                }
-              });
-            }
-          };
-        },
-        onInsert: files => {
-          console.log(files);
-        }
-      },
-      onChange: Content => {
-        if (this.editorInstance.isEmpty()) {
-          setFieldsValue({ Content: "" });
-        } else {
-          setFieldsValue({ Content });
-        }
-        console.log("新闻内容：", getFieldsValue());
-      },
-      // onRawChange: this.handleRawChange
-    };
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -260,11 +199,20 @@ class Base extends Component {
                 message: "必填，请输入商品所需积分"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入商品所需积分" style={{ width: "100%" }}/>)}
+          })(
+            <InputNumber
+              placeholder="必填，请输入商品所需积分"
+              style={{ width: "100%" }}
+            />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="已售">
           {getFieldDecorator("Sale")(
-            <InputNumber placeholder="请输入已售数量" min={0} style={{ width: "100%" }}/>
+            <InputNumber
+              placeholder="请输入已售数量"
+              min={0}
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
         <FormItem label="销售时间" {...formItemLayoutDate}>
@@ -277,7 +225,12 @@ class Base extends Component {
                     message: "必填，请选择开始时间"
                   }
                 ]
-              })(<DatePicker disabledDate={this.disabledDate} placeholder="请选择开始时间" />)}
+              })(
+                <DatePicker
+                  disabledDate={this.disabledDate}
+                  placeholder="请选择开始时间"
+                />
+              )}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -300,7 +253,12 @@ class Base extends Component {
                     message: "必填，请选择结束时间"
                   }
                 ]
-              })(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间" />)}
+              })(
+                <DatePicker
+                  disabledDate={this.disabledDate}
+                  placeholder="请选择结束时间"
+                />
+              )}
             </FormItem>
           </Col>
         </FormItem>
@@ -313,7 +271,11 @@ class Base extends Component {
               }
             ]
           })(
-            <InputNumber placeholder="必填，请输入每人兑换最大数量" min={0} style={{ width: "100%" }}/>
+            <InputNumber
+              placeholder="必填，请输入每人兑换最大数量"
+              min={0}
+              style={{ width: "100%" }}
+            />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="商品参考价格">
@@ -324,7 +286,13 @@ class Base extends Component {
                 message: "必填，请输入参考价格"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入参考价格" min={0} style={{ width: "100%" }} />)}
+          })(
+            <InputNumber
+              placeholder="必填，请输入参考价格"
+              min={0}
+              style={{ width: "100%" }}
+            />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="库存">
           {getFieldDecorator("Stock", {
@@ -334,20 +302,21 @@ class Base extends Component {
                 message: "必填，请输入库存"
               }
             ]
-          })(<InputNumber placeholder="必填，请输入库存" min={0} style={{ width: "100%" }}/>)}
+          })(
+            <InputNumber
+              placeholder="必填，请输入库存"
+              min={0}
+              style={{ width: "100%" }}
+            />
+          )}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="产品描述">
-          {getFieldDecorator("Content", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入内容"
-              }
-            ]
-          })(
-            <div className="editor-wrap">
-              <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance}/>
-            </div>
+          {getFieldDecorator("Content")(
+            <Editor
+              content={goods.Content}
+              text={"必填，请输入产品描述"}
+              ref={instance => (this.editorInstance = instance)}
+            />
           )}
         </FormItem>
 

@@ -100,11 +100,11 @@ class ImportMeetMember extends React.Component {
         MeetingId: id,
         List
       };
-      let { Code, Result } = await createOrEdit(params);
+      let { Code, Result,Message } = await createOrEdit(params);
       if (Code === "00") {
         let { ImportUsersResult, ImportStart } = Result;
         if (ImportStart == "0") {
-          message.error("导入失败");
+          message.error(Message);
         } else if (ImportStart == "1") {
           message.success("导入成功");
         } else if (ImportStart == "2") {
@@ -118,7 +118,7 @@ class ImportMeetMember extends React.Component {
         this.setState({ memberList: ImportUsersResult });
         // hashHistory.replace("/meetlist");
       } else {
-        message.error("保存失败");
+        message.error(Message);
       }
     } catch (e) {
       message.error(e);

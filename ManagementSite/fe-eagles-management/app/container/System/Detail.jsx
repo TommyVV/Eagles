@@ -15,10 +15,8 @@ import Nav from "../Nav";
 import { hashHistory } from "react-router";
 import { getInfoById, createOrEdit } from "../../services/systemService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
 import "./style.less";
+import Editor from "../../components/Common/Editor";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -32,26 +30,32 @@ class Base extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          console.log("Received values of form: ", values);
-          const { system } = this.props;
-          const { RepeatTime, NoticeTime } = values;
-          let params = {
-            Info: {
-              ...system,
-              ...values,
-              NoticeTime: new Date(
-                moment(NoticeTime, "yyyy-MM-dd").format()
-              ).format("yyyy-MM-dd")
-            }
-          };
-          let { Code,Message } = await createOrEdit(params);
-          if (Code === "00") {
-            let tip = system.NewsId ? "保存成功" : "创建成功";
-            message.success(tip);
-            hashHistory.replace("/systemlist");
+          let content = this.editorInstance.state.editorState.toHTML();
+          if (content === "<p></p>" || !content) {
+            message.error("请输入内容");
           } else {
-            // let tip = system.NewsId ? "保存失败" : "创建失败";
-            message.error(Message);
+            console.log("Received values of form: ", values);
+            const { system } = this.props;
+            const { RepeatTime, NoticeTime } = values;
+            let params = {
+              Info: {
+                ...system,
+                ...values,
+                NoticeTime: new Date(
+                  moment(NoticeTime, "yyyy-MM-dd").format()
+                ).format("yyyy-MM-dd"),
+                HtmlDesc: content
+              }
+            };
+            let { Code, Message } = await createOrEdit(params);
+            if (Code === "00") {
+              let tip = system.NewsId ? "保存成功" : "创建成功";
+              message.success(tip);
+              hashHistory.replace("/systemlist");
+            } else {
+              // let tip = system.NewsId ? "保存失败" : "创建失败";
+              message.error(Message);
+            }
           }
         } catch (e) {
           throw new Error(e);
@@ -76,7 +80,7 @@ class Base extends Component {
     // }
   }
   render() {
-    const { getFieldDecorator, getFieldsValue, setFieldsValue } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { system } = this.props;
     const formItemLayout = {
       labelCol: {
@@ -97,61 +101,6 @@ class Base extends Component {
         xs: { span: 24 },
         sm: { span: 17 }
       }
-    };
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      placeholder: "请输入内容",
-      initialContent: system.HtmlDesc,
-      media: {
-        validateFn: file => {
-          return file.size < 1024 * 1024 * 5;
-        },
-        uploadFn: async param => {
-          // const res=await uploadFile(file);
-          console.log(param);
-          let formData = new FormData();
-          formData.append("file", param.file);
-          var request = new XMLHttpRequest();
-          request.open(
-            "POST",
-            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
-          );
-          request.send(formData);
-          request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-              let { Result } = JSON.parse(request.responseText);
-              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
-              // 上传成功后调用param.success并传入上传后的文件地址
-              param.success({
-                url: FileUrl,
-                meta: {
-                  id: FileId,
-                  title: FileName,
-                  alt: FileName,
-                  loop: false, // 指定音视频是否循环播放
-                  autoPlay: false, // 指定音视频是否自动播放
-                  controls: false // 指定音视频是否显示控制栏
-                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
-                }
-              });
-            }
-          };
-        },
-        onInsert: files => {
-          console.log(files);
-        }
-      },
-      onChange: HtmlDesc => {
-        if (this.editorInstance.isEmpty()) {
-          setFieldsValue({ HtmlDesc: "" });
-        } else {
-          setFieldsValue({ HtmlDesc });
-        }
-        console.log("新闻内容：", getFieldsValue());
-      },
-      // onRawChange: this.handleRawChange
     };
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -192,21 +141,16 @@ class Base extends Component {
                 message: "必填，请选择提醒时间"
               }
             ]
-          })(
-            <DatePicker placeholder="请选择提醒时间" />
-          )}
+          })(<DatePicker placeholder="请选择提醒时间" />)}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("HtmlDesc", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入内容"
-              }
-            ]
-          })(<div className="editor-wrap">
-            <BraftEditor {...editorProps} ref={(instance) => this.editorInstance = instance}/>
-          </div>)}
+          {getFieldDecorator("HtmlDesc")(
+            <Editor
+              content={system.HtmlDesc}
+              text={"必填，请输入内容"}
+              ref={instance => (this.editorInstance = instance)}
+            />
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
           {getFieldDecorator("Status")(

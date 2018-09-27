@@ -22,15 +22,11 @@ import { getQuestionList } from "../../services/questionService";
 import { serverConfig } from "../../constants/config/ServerConfigure";
 import { fileSize, newsMap } from "../../constants/config/appconfig";
 import { saveInfo, clearInfo } from "../../actions/activityAction";
-// 引入编辑器以及编辑器样式
-import BraftEditor from "braft-editor";
-import "braft-editor/dist/braft.css";
-
 import "./style.less";
+import Editor from "../../components/Common/Editor";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { TextArea } = Input;
 @connect(
   state => {
     return {
@@ -56,23 +52,29 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
           if (moment(BeginTime).isBefore(EndTime)) {
-            const { news } = this.props;
-            let params = {
-              DetailInfo: {
-                ...news,
-                ...values,
-                BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
-                EndTime: moment(EndTime, "yyyy-MM-dd").format()
+            let content=this.editorInstance.state.editorState.toHTML();
+            if (content === "<p></p>" || !content) {
+              message.error("请输入活动内容");
+            }else{
+              const { news } = this.props;
+              let params = {
+                DetailInfo: {
+                  ...news,
+                  ...values,
+                  BeginTime: moment(BeginTime, "yyyy-MM-dd").format(),
+                  EndTime: moment(EndTime, "yyyy-MM-dd").format(),
+                  Content: content
+                }
+              };
+              let { Code, Message } = await createOrEdit(params);
+              if (Code === "00") {
+                let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
+                message.success(tip);
+                hashHistory.replace("/activitylist");
+              } else {
+                // let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
+                message.error(Message);
               }
-            };
-            let { Code, Message } = await createOrEdit(params);
-            if (Code === "00") {
-              let tip = news.ActivityTaskId ? "保存成功" : "创建成功";
-              message.success(tip);
-              hashHistory.replace("/activitylist");
-            } else {
-              // let tip = news.ActivityTaskId ? "保存失败" : "创建失败";
-              message.error(Message);
             }
           } else {
             message.error("开始时间必须小于结束时间");
@@ -268,20 +270,12 @@ class Base extends Component {
           </Col>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("Content", {
-            rules: [
-              {
-                required: true,
-                message: "必填，请输入内容"
-              }
-            ]
-          })(
-            <div className="editor-wrap">
-              <BraftEditor
-                {...editorProps}
-                ref={instance => (this.editorInstance = instance)}
-              />
-            </div>
+          {getFieldDecorator("Content")(
+            <Editor
+              content={news.Content}
+              text={"必填，请输入活动内容"}
+              ref={instance => (this.editorInstance = instance)}
+            />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="最大参与人数">
