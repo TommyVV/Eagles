@@ -82,6 +82,7 @@ class Base extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { system } = this.props;
+    debugger
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -144,13 +145,11 @@ class Base extends Component {
           })(<DatePicker placeholder="请选择提醒时间" />)}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("HtmlDesc")(
-            <Editor
-              content={system.HtmlDesc}
-              text={"必填，请输入内容"}
-              ref={instance => (this.editorInstance = instance)}
-            />
-          )}
+          <Editor
+            content={system.HtmlDesc}
+            text={"必填，请输入内容"}
+            ref={instance => (this.editorInstance = instance)}
+          />
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
           {getFieldDecorator("Status")(

@@ -106,13 +106,6 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
 
   beforeUpload(file) {
     const reg = /^image\/(png|jpeg|jpg|bmp)$/;
@@ -137,10 +130,12 @@ class Base extends Component {
     let { news, Attachs, setObj, form } = this.props;
     let { getFieldsValue } = form;
     if (info.file.status == "uploading") {
+      let Content = this.editorInstance.state.editorState.toHTML();
       this.props.saveInfo({
         ...news,
         ...getFieldsValue(),
-        Attachments: info.fileList
+        Attachments: info.fileList,
+        Content
       });
     }
     if (info.file.status == "removed") {
@@ -148,19 +143,23 @@ class Base extends Component {
         return i != info.file.uid;
       });
       setObj(newKeys);
+      let Content = this.editorInstance.state.editorState.toHTML();
       this.props.saveInfo({
         ...news,
         ...getFieldsValue(),
-        Attachments: info.fileList
+        Attachments: info.fileList,
+        Content
       });
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} 上传成功`);
       let { news } = this.props;
+      let Content = this.editorInstance.state.editorState.toHTML();
       this.props.saveInfo({
         ...news,
         ...getFieldsValue(),
-        Attachments: info.fileList
+        Attachments: info.fileList,
+        Content
       });
       return;
     } else if (info.file.status === "error") {
@@ -171,17 +170,20 @@ class Base extends Component {
   change = (attr, value) => {
     const { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
+    let Content = this.editorInstance.state.editorState.toHTML();
     this.props.saveInfo({
       ...values,
       [attr]: value,
-      TestId: value == "0" ? "" : values.TestId
+      TestId: value == "0" ? "" : values.TestId,
+      Content
     });
   };
   // 选分类
   changeBox = (attr, e) => {
     const { getFieldsValue } = this.props.form;
     let values = getFieldsValue();
-    this.props.saveInfo({ ...values, [attr]: e.target.checked ? "1" : "0" });
+    let Content = this.editorInstance.state.editorState.toHTML();
+    this.props.saveInfo({ ...values, [attr]: e.target.checked ? "1" : "0", Content });
   };
   // 新闻封面
   onChangeImage = info => {
@@ -196,7 +198,8 @@ class Base extends Component {
         // 保存数据
         let { getFieldsValue } = this.props.form;
         let values = getFieldsValue();
-        this.props.saveInfo({ ...values, NewsImg: imageUrl });
+        let Content = this.editorInstance.state.editorState.toHTML();
+        this.props.saveInfo({ ...values, NewsImg: imageUrl, Content });
       } else {
         message.error(`${Message}`);
       }
@@ -318,11 +321,11 @@ class Base extends Component {
             {news.NewsImg ? (
               <img src={news.NewsImg} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
           <b
             style={{
@@ -354,13 +357,11 @@ class Base extends Component {
           label="内容"
           style={{ display: !external ? "block" : "none" }}
         >
-          {getFieldDecorator("Content")(
-            <Editor
-              content={news.Content}
-              text={"必填，请输入内容"}
-              ref={instance => (this.editorInstance = instance)}
-            />
-          )}
+          <Editor
+            content={news.Content}
+            text={"必填，请输入内容"}
+            ref={instance => (this.editorInstance = instance)}
+          />
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -443,10 +444,10 @@ class Base extends Component {
                   有视频
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
-                  有视频
+                  <Checkbox onChange={this.changeBox.bind(this, "IsVideo")}>
+                    有视频
                 </Checkbox>
-              )}
+                )}
             </Col>
             <Col span={8}>
               {news.CanStudy == "0" || news.CanStudy == "1" ? (
@@ -457,10 +458,10 @@ class Base extends Component {
                   允许学习
                 </Checkbox>
               ) : (
-                <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
-                  允许学习
+                  <Checkbox onChange={this.changeBox.bind(this, "CanStudy")}>
+                    允许学习
                 </Checkbox>
-              )}
+                )}
             </Col>
             {/* <Col span={8}>
               {news.IsAttach == "0" || news.IsAttach == "1" ? (
@@ -640,10 +641,10 @@ class NewsDetail extends Component {
       this.props.clearInfo();
       // 拿栏目、试卷详情
       this.getProgramaList();
-      if(this.state.questionList.length==0){
+      if (this.state.questionList.length == 0) {
         this.getQuestionList();
       }
-      
+
     }
   }
 
@@ -669,16 +670,16 @@ class NewsDetail extends Component {
       this.getQuestionList();
       this.getProgramaList();
       let { Info } = await getNewsInfoById({ NewsId });
-      let questionList=this.state.questionList;
-      questionList.push({"ExercisesId":Info.TestId,"ExercisesName":Info.TestName});
+      let questionList = this.state.questionList;
+      questionList.push({ "ExercisesId": Info.TestId, "ExercisesName": Info.TestName });
       console.log("newsDetails", Info);
       Info = {
         ...Info,
         isTest: Info.TestId ? "1" : "0"
       };
-      
+
       this.state.Attachments = Info.Attachments;
-      this.setState({questionList:questionList});
+      this.setState({ questionList: questionList });
       this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");

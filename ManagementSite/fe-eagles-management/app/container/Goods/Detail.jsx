@@ -86,13 +86,6 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
   beforeUpload(file) {
     const reg = /^image\/(png|jpeg|jpg|bmp)$/;
     const type = file.type;
@@ -119,10 +112,11 @@ class Base extends Component {
         // 保存数据
         let { getFieldsValue } = this.props.form;
         let values = getFieldsValue();
+        let Content = this.editorInstance.state.editorState.toHTML();
         if (imageTitle == "GoodsIcon") {
-          this.props.saveInfo({ ...values, GoodsIcon: imageUrl });
+          this.props.saveInfo({ ...values, GoodsIcon: imageUrl, Content });
         } else if (imageTitle == "GoodsImg") {
-          this.props.saveInfo({ ...values, GoodsImg: imageUrl });
+          this.props.saveInfo({ ...values, GoodsImg: imageUrl, Content });
         }
       } else {
         message.error(`${Message}`);
@@ -311,13 +305,11 @@ class Base extends Component {
           )}
         </FormItem>
         <FormItem {...formItemLayoutContent} label="产品描述">
-          {getFieldDecorator("Content")(
-            <Editor
-              content={goods.Content}
-              text={"必填，请输入产品描述"}
-              ref={instance => (this.editorInstance = instance)}
-            />
-          )}
+          <Editor
+            content={goods.Content}
+            text={"必填，请输入产品描述"}
+            ref={instance => (this.editorInstance = instance)}
+          />
         </FormItem>
 
         <FormItem {...formItemLayout} label="产品缩略图">
@@ -337,11 +329,11 @@ class Base extends Component {
                 style={{ width: "100%" }}
               />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="产品详情图">
@@ -361,11 +353,11 @@ class Base extends Component {
                 style={{ width: "100%" }}
               />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
         <FormItem>

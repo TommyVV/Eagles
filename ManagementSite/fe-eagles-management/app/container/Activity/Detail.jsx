@@ -52,10 +52,10 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
           if (moment(BeginTime).isBefore(EndTime)) {
-            let content=this.editorInstance.state.editorState.toHTML();
+            let content = this.editorInstance.state.editorState.toHTML();
             if (content === "<p></p>" || !content) {
               message.error("请输入活动内容");
-            }else{
+            } else {
               const { news } = this.props;
               let params = {
                 DetailInfo: {
@@ -87,13 +87,6 @@ class Base extends Component {
       }
     });
   };
-  // 传递图片前将数据保存
-  saveInfo = () => {
-    let { getFieldsValue } = this.props.form;
-    let values = getFieldsValue();
-    this.props.saveAgencyInfo(values);
-    // console.log('上传图片记录表单数据 - ', values, this.props.share)
-  };
 
   beforeUpload(file) {
     const reg = /^image\/(png|jpeg|jpg|bmp)$/;
@@ -120,7 +113,8 @@ class Base extends Component {
         // 保存数据
         let { getFieldsValue } = this.props.form;
         let values = getFieldsValue();
-        this.props.saveInfo({ ...values, ImageUrl: imageUrl });
+        let Content = this.editorInstance.state.editorState.toHTML();
+        this.props.saveInfo({ ...values, ImageUrl: imageUrl, Content });
       } else {
         message.error(`${Message}`);
       }
@@ -128,15 +122,11 @@ class Base extends Component {
       message.error(`${info.file.name} 上传失败`);
     }
   };
-  disabledDate(current){
+  disabledDate(current) {
     return current && current < moment().startOf('day');
   }
   render() {
-    const {
-      getFieldDecorator,
-      setFieldsValue,
-      getFieldsValue
-    } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { news, List } = this.props; //是否显示试卷列表
 
     const formItemLayout = {
@@ -169,61 +159,7 @@ class Base extends Component {
         sm: { span: 19 }
       }
     };
-    // 编辑器属性
-    const editorProps = {
-      height: 300,
-      contentFormat: "html",
-      initialContent: news.Content,
-      placeholder: "必填，请输入活动内容",
-      onChange: Content => {
-        if (this.editorInstance.isEmpty()) {
-          setFieldsValue({ Content: "" });
-        } else {
-          setFieldsValue({ Content });
-        }
-        console.log("新闻内容：", getFieldsValue());
-      },
-      media: {
-        validateFn: file => {
-          return file.size < fileSize;
-        },
-        uploadFn: async param => {
-          // const res=await uploadFile(file);
-          console.log(param);
-          let formData = new FormData();
-          formData.append("file", param.file);
-          var request = new XMLHttpRequest();
-          request.open(
-            "POST",
-            serverConfig.API_SERVER + serverConfig.FILE.UPLOAD
-          );
-          request.send(formData);
-          request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-              let { Result } = JSON.parse(request.responseText);
-              let { FileId, FileUrl, FileName } = Result.FileUploadResults[0];
-              // 上传成功后调用param.success并传入上传后的文件地址
-              param.success({
-                url: FileUrl,
-                meta: {
-                  id: FileId,
-                  title: FileName,
-                  alt: FileName,
-                  loop: false, // 指定音视频是否循环播放
-                  autoPlay: false, // 指定音视频是否自动播放
-                  controls: false // 指定音视频是否显示控制栏
-                  // poster: "http://xxx/xx.png" // 指定视频播放器的封面
-                }
-              });
-            }
-          };
-        },
-        onInsert: files => {
-          console.log(files);
-        }
-      }
-      // onRawChange: this.handleRawChange
-    };
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="" style={{ display: "none" }}>
@@ -251,7 +187,7 @@ class Base extends Component {
         <FormItem label="生效时间" {...formItemLayoutDate}>
           <Col span={6}>
             <FormItem>
-              {getFieldDecorator("BeginTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择开始时间"/>)}
+              {getFieldDecorator("BeginTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择开始时间" />)}
             </FormItem>
           </Col>
           <Col span={1}>
@@ -266,17 +202,15 @@ class Base extends Component {
             </span>
           </Col>
           <Col span={6}>
-            <FormItem>{getFieldDecorator("EndTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间"/>)}</FormItem>
+            <FormItem>{getFieldDecorator("EndTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间" />)}</FormItem>
           </Col>
         </FormItem>
         <FormItem {...formItemLayoutContent} label="内容">
-          {getFieldDecorator("Content")(
-            <Editor
-              content={news.Content}
-              text={"必填，请输入活动内容"}
-              ref={instance => (this.editorInstance = instance)}
-            />
-          )}
+          <Editor
+            content={news.Content}
+            text={"必填，请输入活动内容"}
+            ref={instance => (this.editorInstance = instance)}
+          />
         </FormItem>
         <FormItem {...formItemLayout} label="最大参与人数">
           {getFieldDecorator("MaxPartakePeople")(
@@ -310,11 +244,11 @@ class Base extends Component {
             {news.ImageUrl ? (
               <img src={news.ImageUrl} alt="avatar" style={{ width: "100%" }} />
             ) : (
-              <div>
-                <Icon type={this.state.loading ? "loading" : "plus"} />
-                <div className="ant-upload-text">上传</div>
-              </div>
-            )}
+                <div>
+                  <Icon type={this.state.loading ? "loading" : "plus"} />
+                  <div className="ant-upload-text">上传</div>
+                </div>
+              )}
           </Upload>
         </FormItem>
 
