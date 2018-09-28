@@ -505,6 +505,7 @@ body {
 	width: 20px;
 	height: 20px;
 	margin-right: 8px;
+	margin-bottom: 3px;
 }
 .carousel-indicators{bottom: -5px;}
 .carousel-indicators li{
