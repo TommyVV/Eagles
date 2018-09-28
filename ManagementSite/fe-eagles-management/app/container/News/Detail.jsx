@@ -640,7 +640,10 @@ class NewsDetail extends Component {
       this.props.clearInfo();
       // 拿栏目、试卷详情
       this.getProgramaList();
-      this.getQuestionList();
+      if(this.state.questionList.length==0){
+        this.getQuestionList();
+      }
+      
     }
   }
 
@@ -651,12 +654,11 @@ class NewsDetail extends Component {
   // 查询栏目列表
   getProgramaList = async () => {
     const { List } = await getList({ IsPublic: true });
-    console.log("getProgramaList", List);
     this.setState({ programaList: List });
   };
   // 查询试卷列表
   getQuestionList = async () => {
-    const res = await getQuestionList({ ExercisesType: 5, IsUser: 0 });
+    const res = await getQuestionList({ ExercisesType: 5, IsUse: 0 });
     console.log("getQuestionList", res);
     this.setState({ questionList: res.List });
   };
@@ -667,12 +669,16 @@ class NewsDetail extends Component {
       this.getQuestionList();
       this.getProgramaList();
       let { Info } = await getNewsInfoById({ NewsId });
+      let questionList=this.state.questionList;
+      questionList.push({"ExercisesId":Info.TestId,"ExercisesName":Info.TestName});
       console.log("newsDetails", Info);
       Info = {
         ...Info,
         isTest: Info.TestId ? "1" : "0"
       };
+      
       this.state.Attachments = Info.Attachments;
+      this.setState({questionList:questionList});
       this.props.saveInfo(Info);
     } catch (e) {
       message.error("获取详情失败");

@@ -2,7 +2,6 @@
  * 服务器请求URL配置
  */
 
-// const API_SERVER = ""; //mock
 const API_SERVER = "http://51service.xyz/ManagementService"; //test
 //const API_SERVER = "http://ruisuikj.com/ManagementService"; //prd
 

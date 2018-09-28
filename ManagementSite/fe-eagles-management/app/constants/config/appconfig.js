@@ -108,7 +108,7 @@ export const publicMap = [
   }
 ];
 
-export const fileSize = 1024 * 1024 * 10;
+export const fileSize = 1024 * 1024 * 10*10;
 export const scoreType = [
   {
     value: "0",
