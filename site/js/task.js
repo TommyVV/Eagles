@@ -281,6 +281,9 @@ $(document).ready(function() {
             var id = $(this).attr("id");
             var text = $(this).attr("alt");
             checkUserId = id;
+            if(checkUserId==userId){
+                text="我的";
+            }
             $(".m-text").html(text);
             $(".peop-list").addClass("hide");
             $("#m-cate")

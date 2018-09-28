@@ -185,6 +185,16 @@ function unreadMessage(token) {
 				$('.news_list').text(data.UnreadMessageCount);
 				if(data.UnreadMessageCount>0){
 					$('.news_list').parent().css("color","red");
+					var show=true;
+					setInterval(function(){
+						if(show){
+							show=false;
+							$('.news_list').parent().css("visibility","hidden");
+							return;
+						}
+						show=true;
+						$('.news_list').parent().css("visibility","visible");
+					},1000);
 				}
 
 			}
