@@ -137,7 +137,7 @@
           font-size: 47px; }
         .min-wrap .main-content ul li img {
           margin-bottom: 12px; }
-          .newsd{background: #b92428 url(../icons/inform@2x.png) no-repeat 5px center;background-size:6% 50% ;}
+          .newsd{background: #b92428 url(../icons/inform@2x.png) no-repeat 5px center;background-size:6% 50% ; overflow: hidden;}
           /*background: #b92428 url(../icons/inform@2x.png) no-repeat 5px center;*/
           #scrollobj{color: #fff;background: #b92428;
   white-space:nowrap;
