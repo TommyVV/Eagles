@@ -52,13 +52,15 @@ class Base extends Component {
           console.log("Received values of form: ", values);
           let { SellStartTime, SellEndTime } = values;
           if (moment(SellStartTime).isBefore(SellEndTime)) {
-            let content = this.editorInstance.state.editorState.toHTML();
+            let { goods } = this.props;
+            let content = goods.Content;
+            content = typeof content == "string" ? content : content.toHTML();
             if (content === "<p></p>" || !content) {
               message.error("请输入产品描述");
             } else {
               let params = {
                 Info: {
-                  ...this.props.goods,
+                  ...goods,
                   ...values,
                   SellStartTime: moment(SellStartTime, "yyyy-MM-dd").format(),
                   SellEndTime: moment(SellEndTime, "yyyy-MM-dd").format(),
@@ -128,6 +130,13 @@ class Base extends Component {
   disabledDate(current) {
     return current && current < moment().startOf("day");
   }
+  changeContent = content => {
+    const { getFieldsValue } = this.props.form;
+    this.props.saveInfo({
+      ...getFieldsValue(),
+      Content: content
+    });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { goods } = this.props;
@@ -304,11 +313,12 @@ class Base extends Component {
             />
           )}
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="产品描述">
+        <FormItem {...formItemLayoutContent} label="产品描述" className="label-star">
           <Editor
             content={goods.Content}
             text={"必填，请输入产品描述"}
             ref={instance => (this.editorInstance = instance)}
+            onChange={this.changeContent.bind(this)}
           />
         </FormItem>
 
@@ -329,11 +339,11 @@ class Base extends Component {
                 style={{ width: "100%" }}
               />
             ) : (
-                <div>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
         </FormItem>
         <FormItem {...formItemLayout} label="产品详情图">
@@ -353,11 +363,11 @@ class Base extends Component {
                 style={{ width: "100%" }}
               />
             ) : (
-                <div>
-                  <Icon type={this.state.loading ? "loading" : "plus"} />
-                  <div className="ant-upload-text">上传</div>
-                </div>
-              )}
+              <div>
+                <Icon type={this.state.loading ? "loading" : "plus"} />
+                <div className="ant-upload-text">上传</div>
+              </div>
+            )}
           </Upload>
         </FormItem>
         <FormItem>

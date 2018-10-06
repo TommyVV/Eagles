@@ -51,12 +51,13 @@ class Base extends Component {
         try {
           console.log("Received values of form: ", values);
           let { BeginTime, EndTime } = values;
+          const { news } = this.props;
           if (moment(BeginTime).isBefore(EndTime)) {
-            let content = this.editorInstance.state.editorState.toHTML();
+            let content = news.Content;
+            content = typeof content == "string" ? content : content.toHTML();
             if (content === "<p></p>" || !content) {
               message.error("请输入活动内容");
             } else {
-              const { news } = this.props;
               let params = {
                 DetailInfo: {
                   ...news,
@@ -125,6 +126,13 @@ class Base extends Component {
   disabledDate(current) {
     return current && current < moment().startOf('day');
   }
+  changeContent = content => {
+    const { getFieldsValue } = this.props.form;
+    this.props.saveInfo({
+      ...getFieldsValue(),
+      Content: content
+    });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { news, List } = this.props; //是否显示试卷列表
@@ -205,11 +213,12 @@ class Base extends Component {
             <FormItem>{getFieldDecorator("EndTime")(<DatePicker disabledDate={this.disabledDate} placeholder="请选择结束时间" />)}</FormItem>
           </Col>
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容">
+        <FormItem {...formItemLayoutContent} label="内容" className="label-star">
           <Editor
             content={news.Content}
             text={"必填，请输入活动内容"}
             ref={instance => (this.editorInstance = instance)}
+            onChange={this.changeContent.bind(this)}
           />
         </FormItem>
         <FormItem {...formItemLayout} label="最大参与人数">

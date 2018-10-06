@@ -13,13 +13,17 @@
   margin-bottom: 24px;
 }
 
-.editor-wrap {
-  position: relative;
-  height: auto;
-  padding: 5px;
-  overflow: hidden;
-  border: solid 1px #d9d9d9;
-  border-radius: 5px;
-  // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  font-family: initial;
+
+.label-star{
+  label{
+    &::before{
+      display: inline-block;
+      margin-right: 4px;
+      content: "*";
+      font-family: SimSun;
+      line-height: 1;
+      font-size: 14px;
+      color: #f5222d;
+    }
+  }
 }

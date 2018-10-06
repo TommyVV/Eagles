@@ -8,15 +8,25 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: null
+      editorState: EditorState.createFrom("")
     };
   }
 
   componentWillReceiveProps(pre, next) {
-    this.setState({
-      editorState: EditorState.createFrom(pre.content)
-    });
+    console.log("pre:", pre);
+    let content = pre.content;
+    if (content) {
+      console.log("componentWillReceiveProps:", content);
+      this.setState({
+        editorState:
+          typeof content == "string" ? EditorState.createFrom(content) : content
+      });
+    }
   }
+  changeContent = content => {
+    const { onChange } = this.props;
+    onChange(content);
+  };
   render() {
     const { text } = this.props;
     const { editorState } = this.state;
@@ -25,6 +35,7 @@ class Editor extends Component {
       height: 300,
       contentFormat: "html",
       placeholder: text,
+      value: editorState,
       media: {
         pasteImage: true,
         validateFn: file => {
@@ -65,16 +76,11 @@ class Editor extends Component {
           console.log(files);
         }
       },
-      onChange: content => {
-        this.setState({
-          editorState: content
-        });
-      }
+      onChange: this.changeContent
     };
     return (
       <div className="editor-wrap">
         <BraftEditor
-          value={editorState}
           {...editorProps}
           ref={instance => (this.editorInstance = instance)}
         />

@@ -52,13 +52,14 @@ class Base extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          let content = this.editorInstance.state.editorState.toHTML();
+          let { news, Attachs } = this.props;
+          let content = news.Content;
+          content = typeof content == "string" ? content : content.toHTML();
           if (content === "<p></p>" || !content) {
             message.error("请输入内容");
           } else {
             console.log("Received values of form: ", values);
             let { StartTime, EndTime, IsTop } = values;
-            let { news, Attachs } = this.props;
             let { Attachments } = news;
             let attach = {}; // 存附件对象
             let index = 0;
@@ -206,6 +207,13 @@ class Base extends Component {
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} 上传失败`);
     }
+  };
+  changeContent = content => {
+    const { getFieldsValue } = this.props.form;
+    this.props.saveInfo({
+      ...getFieldsValue(),
+      Content: content
+    });
   };
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -355,12 +363,14 @@ class Base extends Component {
         <FormItem
           {...formItemLayoutContent}
           label="内容"
+          className="label-star"
           style={{ display: !external ? "block" : "none" }}
         >
           <Editor
             content={news.Content}
             text={"必填，请输入内容"}
             ref={instance => (this.editorInstance = instance)}
+            onChange={this.changeContent.bind(this)}
           />
         </FormItem>
         <FormItem

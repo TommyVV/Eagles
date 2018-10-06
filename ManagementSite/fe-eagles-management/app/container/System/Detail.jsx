@@ -30,12 +30,13 @@ class Base extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
-          let content = this.editorInstance.state.editorState.toHTML();
+          const { system } = this.props;
+          let content = system.HtmlDesc;
+          content = typeof content == "string" ? content : content.toHTML();
           if (content === "<p></p>" || !content) {
             message.error("请输入内容");
           } else {
             console.log("Received values of form: ", values);
-            const { system } = this.props;
             const { RepeatTime, NoticeTime } = values;
             let params = {
               Info: {
@@ -79,10 +80,19 @@ class Base extends Component {
     // if (value == "0") {
     // }
   }
+  changeContent = content => {
+    const { getFieldsValue } = this.props.form;
+
+    const { changeSystem } = this.props;
+    changeSystem({
+      ...getFieldsValue(),
+      HtmlDesc: content
+    });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { system } = this.props;
-    debugger
+    console.log("富文本内容：", system.HtmlDesc);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -144,11 +154,12 @@ class Base extends Component {
             ]
           })(<DatePicker placeholder="请选择提醒时间" />)}
         </FormItem>
-        <FormItem {...formItemLayoutContent} label="内容">
+        <FormItem {...formItemLayoutContent} label="内容" className="label-star">
           <Editor
             content={system.HtmlDesc}
             text={"必填，请输入内容"}
             ref={instance => (this.editorInstance = instance)}
+            onChange={this.changeContent.bind(this)}
           />
         </FormItem>
         <FormItem {...formItemLayout} label="状态">
@@ -241,10 +252,18 @@ class SystemDetail extends Component {
       throw new Error(e);
     }
   };
+  changeSystem = system => {
+    this.setState({
+      system
+    });
+  };
   render() {
     return (
       <Nav>
-        <FormMap system={this.state.system} />
+        <FormMap
+          system={this.state.system}
+          changeSystem={this.changeSystem.bind(this)}
+        />
       </Nav>
     );
   }

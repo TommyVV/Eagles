@@ -1,14 +1,27 @@
 .ant-advanced-search-form {
-    padding: 24px;
+  padding: 24px;
+}
+
+.ant-advanced-search-form .ant-form-item {
+  display: flex;
+}
+
+.ant-advanced-search-form .ant-form-item-control-wrapper {
+  flex: 1;
+}
+.ant-table-wrapper {
+  margin-bottom: 24px;
+}
+.label-star{
+  label{
+    &::before{
+      display: inline-block;
+      margin-right: 4px;
+      content: "*";
+      font-family: SimSun;
+      line-height: 1;
+      font-size: 14px;
+      color: #f5222d;
+    }
   }
-  
-  .ant-advanced-search-form .ant-form-item {
-    display: flex;
-  }
-  
-  .ant-advanced-search-form .ant-form-item-control-wrapper {
-    flex: 1;
-  }
-  .ant-table-wrapper{
-      margin-bottom: 24px;
-  }
+}
