@@ -92,7 +92,7 @@ class ImportMeetMember extends React.Component {
       memberList.map((obj, index) => {
         List.push({
           MeetUserName: obj.UserName,
-          MeetUserPhone: obj.Phone,
+          MeetUserPhone: obj.Phone.replace('\r',""),
           ErrorMessage: ""
         });
       });
