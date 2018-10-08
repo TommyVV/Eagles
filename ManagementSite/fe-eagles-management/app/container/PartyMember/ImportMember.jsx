@@ -104,13 +104,13 @@ class ImportMember extends React.Component {
           data.map((text, i) => {
             switch (i) {
               case 0:
-                news["UserName"] = text;
+                news["UserName"] = text.replace("\r","");
               case 1:
-                news["Sex"] = text;
+                news["Sex"] = text.replace("\r","");
               case 2:
-                news["Phone"] = text;
+                news["Phone"] = text.replace("\r","");
               case 3:
-                news["MemberType"] = text;
+                news["MemberType"] = text.replace("\r","");
             }
           });
           memberList.push({ ...news, key: Math.random() });

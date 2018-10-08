@@ -83,13 +83,13 @@ class ImportNews extends React.Component {
           data.map((text, i) => {
             switch (i) {
               case 0:
-                news["NewsName"] = text;
+                news["NewsName"] = text.replace("\r","");
               case 1:
-                news["ExternalUrl"] = text;
+                news["ExternalUrl"] = text.replace("\r","");
               case 2:
-                news["NewsImg"] = text;
+                news["NewsImg"] = text.replace("\r","");
               case 3:
-                news["Source"] = text;
+                news["Source"] = text.replace("\r","");
             }
           });
           newsList.push({ ...news, key: Math.random(), ColumnId: proId });
