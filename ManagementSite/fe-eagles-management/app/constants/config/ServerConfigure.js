@@ -156,6 +156,7 @@ const SYSTEMSMS = {
 //组织短信
 const ORGSMS = {
   EDIT: "/api/SMS/EditOrgSmsConfig", //编辑
+  DELETE: "/api/SMS/RemoveOrgSmsConfig", //删除
   DETAIL: "/api/SMS/GetSMSOrgDetail", //详情
   LIST: "/api/SMS/GetSMSOrg" //列表
 };

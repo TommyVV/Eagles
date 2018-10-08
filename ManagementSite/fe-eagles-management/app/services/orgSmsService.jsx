@@ -58,3 +58,21 @@ export const createOrEdit = async params => {
     throw new Error(e);
   }
 };
+// 删除
+export const del = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: ORGSMS.DELETE,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(Message);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};

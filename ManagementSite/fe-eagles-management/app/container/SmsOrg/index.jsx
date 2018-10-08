@@ -7,17 +7,16 @@ import {
   message,
   Modal,
   Form,
-  Input,
   Select,
-  Cascader
 } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
 import { hashHistory } from "react-router";
-import { getList } from "../../services/orgSmsService";
+import { getList, del } from "../../services/orgSmsService";
 import { getOrgList } from "../../services/orgService";
 import Nav from "../Nav";
 import "./style.less";
+const confirm = Modal.confirm;
 class SearchForm extends Component {
   constructor(props) {
     super(props);
@@ -160,6 +159,12 @@ class SmsOrgList extends React.Component {
               >
                 编辑
               </a>
+              <a
+                onClick={() => this.handleDelete(obj.VendorId)}
+                style={{ paddingLeft: "24px" }}
+              >
+                删除
+              </a>
             </div>
           );
         }
@@ -215,6 +220,33 @@ class SmsOrgList extends React.Component {
   changeSearch = obj => {
     this.setState({
       obj
+    });
+  };
+  // 删除项目
+  handleDelete = async VendorId => {
+    confirm({
+      title: "是否确认删除?",
+      okText: "确认",
+      cancelText: "取消",
+      onOk: async () => {
+        try {
+          let { Code, Message } = await del({
+            VendorId
+          });
+          if (Code === "00") {
+            message.success("删除成功");
+            await this.getCurrentList({
+              ...this.getListConfig,
+              PageNumber: this.state.current
+            });
+            // this.setState({ selectedRowKeys: [] });
+          } else {
+            message.error(Message);
+          }
+        } catch (e) {
+          throw new Error(e);
+        }
+      }
     });
   };
   render() {
