@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
     <link href="./thirdparty/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/mescroll.min.css" rel="stylesheet">
     <link href="./css/index.css?v=201808092" rel="stylesheet">
 </head>
 
@@ -42,50 +43,29 @@
     <div class="container mobile">
         <div id="mobilenav"></div>
         <div class="content-wrap">
-            <!--图片轮播-->
-            <div class="carousel-box">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
+            <div id="mescroll" class="mescroll">
+                <div>
+                    <!--图片轮播-->
+                    <div class="carousel-box">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                            </ol>
+                            <div class="carousel-inner" role="listbox">
+                            </div>
+                            <!--显示上一个和下一个的图标-->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
-                    <!--显示上一个和下一个的图标-->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-            <!-- 主体内容 -->
-            <div class="main_content">
-
-            </div>
-            <!--信息展示-->
-            <div style="display: none">
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h2>WelCome</h2>
-                    <p>WelCome to HeiMa!WelCome to HeiMa!WelCome to HeiMa!</p>
-                    <p>
-                        <a href="#" class="btn btn-primary pull-right">See More</a>
-                    </p>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h2>Our Team</h2>
-                    <p>Our Team,Our Team,Our Team,Our Team,Our Team,Our Team</p>
-                    <p>
-                        <a href="#" class="btn btn-primary pull-right">See More</a>
-                    </p>
-                </div>
-                <div class="col-md-4 col-sm-12 col-xs-12">
-                    <h2>About Us</h2>
-                    <p>About Us,About Us,About Us,About Us,About Us,About Us</p>
-                    <p>
-                        <a href="#" class="btn btn-primary pull-right">See More</a>
-                    </p>
+                    <!-- 主体内容 -->
+                    <div class="main_content">
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,6 +75,7 @@
     <script src="js/hotcss.js?ver=1" type="text/javascript" charset="utf-8"></script>
     <script src="thirdparty/jquery-2.1.4.min.js"></script>
     <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/mescroll.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/index.js?v=20180927"></script>
     <script src="js/pagindex.js"></script>

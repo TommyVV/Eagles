@@ -13,9 +13,9 @@
 </head>
 
 <body>
-   
+
     <div class="container">
-    
+
         <!-- 登录页 -->
         <div class="row loginModal">
             <div class="col-md-offset-3 col-md-6 loginBox">
@@ -28,15 +28,16 @@
                         <i class="icon user-icon"></i>
                     </div>
                     <div class="form-group help" style="margin-bottom:22px">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码" onKeyUp="value=value.replace(/[\W]/g,'')">
+                        <img class="eyeFlag" src="icons/close.png">
                         <i class="icon pwd-icon"></i>
                     </div>
                     <div class="help" style="margin-bottom: 16px;text-align: right;color: #EE2F2F;font-size: 0.64rem;">
                         <div class="flag-area" style="float: left;">
-                        	忘记密码
-                        </div><span style="color:#EE2F2F;"class="login-zc">注册</span>
+                            忘记密码
+                        </div><span style="color:#EE2F2F;" class="login-zc">注册</span>
                     </div>
-										
+
                     <!--<div class="form-group help">
                         <input type="text" class="form-control" id="inputCaptcha" placeholder="请输入验证码">
                         <i class="icon cap-icon"></i>

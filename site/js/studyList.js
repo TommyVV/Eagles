@@ -53,11 +53,15 @@ $(document).ready(function() {
                 "PageIndex": pageIndex
             },
             success: function(data) {
-                console.log('GetUserStudy---', data);
                 if (data.Code == "00") {
                     var list = data.Result.StudyList;
                     if (pageIndex == 1) {
                         $(".item").html("");
+                    }
+                    if (currentItemType == 0) {
+                        $(".activity-cate .select").html('已学习(' + data.Result.StudyCount + ')');
+                    } else {
+                        $(".activity-cate .select").html('未学习(' + data.Result.StudyCount + ')');
                     }
                     $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {

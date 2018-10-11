@@ -14,7 +14,25 @@ if (moduleType == 0) {
 } else if (moduleType == 3) {
     document.title = '生活社区';
 }
+var mescroll;
+mescroll = new MeScroll("mescroll", {
+    down: {
+        auto: false,
+        isLock: false,
+        callback: loadPage
+    },
+    up: {
+        use: false
+    }
+});
 
+function loadPage() {
+    scrollimg(moduleType, token, appId); //banner
+    moduleListTitle(moduleType, appId) //名称分类方法
+    setTimeout(() => {
+        mescroll.endSuccess();
+    }, 2000);
+}
 class CalculateScreen {
     constructor() {
         this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -64,9 +82,9 @@ function scrollimg(moduleType, token, appId) {
                         divs += '<div class="item"><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" alt=""></a><div class="carousel-caption"></div></div>';
                         pclicon += '<li><a href="' + data.ImageList[i].TargetUrl + '"><img src="' + data.ImageList[i].ImageUrl + '" /> </a></li>'
                     }
-                    $('#carousel-example-generic .carousel-indicators').append(limobile);
-                    $('#carousel-example-generic .carousel-inner').append(divs);
-                    $('#focus_m ul').append(pclicon);
+                    $('#carousel-example-generic .carousel-indicators').html("").append(limobile);
+                    $('#carousel-example-generic .carousel-inner').html("").append(divs);
+                    $('#focus_m ul').html("").append(pclicon);
 
                     focusRun.init();
                     $('#carousel-example-generic .carousel-indicators li:eq(0)').addClass('active');
@@ -124,9 +142,9 @@ function moduleListTitle(moduleType, appId) {
                     //存储新闻类别ID等属性
                     moudlesIds.push(moudle);
                 }
-                $('.main_content').append(title);
-                $('#la_leftg').append(pctitieone);
-                $('#la_rig').append(pctitietwo);
+                $('.main_content').html("").append(title);
+                $('#la_leftg').html("").append(pctitieone);
+                $('#la_rig').html("").append(pctitietwo);
                 //获取分类下新闻列表   
                 for (var i = 0; i < moudlesIds.length; i++) {
                     //获取分类下新闻列表
@@ -223,12 +241,12 @@ function moduleListcontent(moduleId, class1, flag, token, appId, subCateType, co
                 }
                 pccontentwo += '</ul>';
                 //移动端内容添加
-                $('.' + class1).children('div .list-top').append(contentone);
-                $('.' + class1).children('div .list-bottom').append(contenttwo);
+                $('.' + class1).children('div .list-top').html("").append(contentone);
+                $('.' + class1).children('div .list-bottom').html("").append(contenttwo);
                 //PC端内容添加
-                $('.' + class1).siblings('div .left-item-content').append(pccontenone);
-                $('.' + class1).siblings('div .left-item-content').append(pccontentwo);
-                $('.' + class1).siblings('div .la_divj').append(pclistriht); //右边标题下内容添加
+                $('.' + class1).siblings('div .left-item-content').html("").append(pccontenone);
+                $('.' + class1).siblings('div .left-item-content').html("").append(pccontentwo);
+                $('.' + class1).siblings('div .la_divj').html("").append(pclistriht); //右边标题下内容添加
             }
         }
     });

@@ -59,7 +59,7 @@ function partyLearning(moduleId, token, page, appId) {
                         var imgUrl = news.ImageUrl;
                         var imgEle = "";
                         if (imgUrl) {
-                            imgEle = '<div class="media-left"><img class="media-object" src="' + imgUrl + '"></div>';
+                            imgEle = '<div class="media-left" style="position: relative;"><img class="media-object" src="' + imgUrl + '"></div>';
                         } else {
                             imgEle = ''
                         }
@@ -75,6 +75,9 @@ function partyLearning(moduleId, token, page, appId) {
                             '<div class="list-time">' + news.CreateTime + '</div>' +
                             '</div></div></div>'
                         var te = $(learningList);
+                        if (isVideo == "1") {
+                            te.find(".media-left").append('<img class="is-media" src="icons/videoFlag.png">')
+                        }
                         te.find(".newsbody").click(function() {
                             if (news.IsExternal == true) {
                                 window.location = news.ExternalUrl

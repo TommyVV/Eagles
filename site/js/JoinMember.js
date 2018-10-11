@@ -187,7 +187,7 @@ function save(publisType) {
     if (publisType == 1) {
         inputval = 1;
     } else {
-        inputval = $('input:radio[name="radio1"]:checked').val();
+        inputval = 3;
     }
 
     var title = $('#title').val(); //标题

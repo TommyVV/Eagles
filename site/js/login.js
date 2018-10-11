@@ -4,7 +4,7 @@ var testlist = getRequest('datalist');
 console.log(testlist)
 var newsIds = getRequest('NewsId'); //获取来源d的新闻id
 var onurl = getRequest('onurl')
-//var appId = 10000000
+    //var appId = 10000000
 navbar(appId)
 
 function navbar(appId) {
@@ -15,7 +15,7 @@ function navbar(appId) {
         },
         url: DOMAIN + "/api/AppMenu/GetAppMenu",
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             var data = res.Result;
             if (res.Code == 00) {
                 $('#login_logo').attr("src", data.LogoUrl)
@@ -24,11 +24,11 @@ function navbar(appId) {
     });
 }
 
-$(".flag-area").click(function () {
+$(".flag-area").click(function() {
     window.location.href = "forgotpassword.html?appId=" + appId
 });
 
-$('.login-zc').on('click', function (e) {
+$('.login-zc').on('click', function(e) {
     if (onurl == undefined) {
         window.location.href = "signup.html?appId=" + appId
     } else {
@@ -36,7 +36,7 @@ $('.login-zc').on('click', function (e) {
     }
 
 })
-$(".flag-area").click(function () {
+$(".flag-area").click(function() {
     if ($(".pub-flag").hasClass("select")) {
         $(".pub-flag")
             .attr("src", "icons/sel_no@2x.png")
@@ -48,7 +48,7 @@ $(".flag-area").click(function () {
     }
 });
 //登录
-$('.btn-login').on('click', function (e) {
+$('.btn-login').on('click', function(e) {
     e.preventDefault();
     let password = $('#inputPassword').val(); //密码
     let account = $('#inputUser').val(); //用户名
@@ -82,7 +82,7 @@ $('.btn-login').on('click', function (e) {
         },
         url: DOMAIN + "/api/User/Login",
         dataType: "json",
-        success: function (res) {
+        success: function(res) {
             var data = res.Result;
             if (res.Code == 00) {
                 var f = localStorage.setItem("token", data.Token); //存储token
@@ -107,7 +107,7 @@ $('.btn-login').on('click', function (e) {
                         } else if (prevLink.indexOf('partyLearning_detail.html') != -1) { //来自注册页面
                             location.href = 'partyLearning_detail.html?appId=' + appId + '&datalist=' +
                                 testlist + '&NewsId=' + newsIds + '&testId=' + testId + '';
-                        }else if (prevLink.indexOf('forgotpassword.html') != -1) {
+                        } else if (prevLink.indexOf('forgotpassword.html') != -1) {
                             location.href = 'mine.html?appId=' + appId + '';
                         } else {
                             location.href = prevLink;
@@ -124,4 +124,14 @@ $('.btn-login').on('click', function (e) {
             }
         }
     })
-})
+});
+$('.eyeFlag').on('click', function(e) {
+    var src = $(this).attr('src');
+    if (src == 'icons/close.png') {
+        $(this).attr('src', 'icons/open.png');
+        $("#inputPassword").attr('type', "text");
+    } else {
+        $(this).attr('src', 'icons/close.png');
+        $("#inputPassword").attr('type', "password");
+    }
+});
