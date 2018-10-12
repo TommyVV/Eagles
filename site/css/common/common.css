@@ -34,20 +34,25 @@
     padding-top: 0.64rem;
     display: flex;
 }
-.file-oper{
+
+.file-oper {
     justify-content: space-between;
 }
+
 .file img {
-    width:1rem;
+    width: 1rem;
     height: 1rem;
+    margin-right: 8px;
 }
-.file a{
+
+.file a {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     line-height: 1.2rem;
 }
-.file .glyphicon-remove{
+
+.file .glyphicon-remove {
     color: red;
     font-size: 0.8rem;
 }
@@ -90,21 +95,25 @@
     align-items: center;
     margin-top: 0.7rem;
 }
+
 .pub-area {
     margin-top: 1.7066666667rem;
     font-size: 0.64rem;
 }
-.pub-area .item{
+
+.pub-area .item {
     height: 1.4933333333rem;
-    line-height: 1.4933333333rem; 
+    line-height: 1.4933333333rem;
     margin-top: 0px;
 }
+
 .pub-flag {
     width: 20px;
     height: 20px;
     margin-right: 5px;
 }
-button{
+
+button {
     border: none;
     background: transparent;
     outline: none;
@@ -177,6 +186,7 @@ button{
         height: 600px !important;
     }
 }
-.list-wrap{
+
+.list-wrap {
     min-height: 100%;
 }

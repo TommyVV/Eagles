@@ -72,9 +72,30 @@ function attachmentList(list, type) {
     if (list) {
         list.forEach(element => {
             if (element.AttachmentDownloadUrl || element.AttachName) {
+                var imgSrc = "icons/file/defaultFile.png";
+                var imgUrl = element.AttachmentDownloadUrl;
+                if (/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/pic.png";
+                } else if (/\.(pdf)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/pdf.png";
+                } else if (/\.(mp4|rmvb|avi|ts)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/media.png";
+                } else if (/\.(rar|zip)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/zip.png";
+                } else if (/\.(xls|xlsx)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/excel.png";
+                } else if (/\.(mp3)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/music.png";
+                } else if (/\.(ppt|pptx)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/ppt.png";
+                } else if (/\.(txt)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/txt.png";
+                } else if (/\.(doc|docx)$/.test(imgUrl)) {
+                    imgSrc = "icons/file/txt.png";
+                }
                 str +=
                     `<div class="file ${type==1?'file-oper':''}">
-                    <img src="icons/downloadfolder@2x.png">
+                    <img src="${imgSrc}">
                     <a href="${element.AttachmentDownloadUrl}" target="_blank">${element.AttachName}</a>
                     ${type==1?'<span class="glyphicon glyphicon-remove"></span>':''}
                 </div>`;
