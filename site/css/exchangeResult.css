@@ -6,7 +6,7 @@ body {
   margin-top: 3.1146666667rem;
   width: 70%;
   margin-left: 15%;
-  height: 9.1093333333rem;
+  min-height: 9.1093333333rem;
   background-color: white;
   display: inline-block;
   text-align: center;
@@ -16,7 +16,9 @@ body {
   width: 3.7973333333rem;
   height: 3.7973333333rem;
 }
-
+.df_don{
+  margin: 10px;
+}
 .result-des {
   margin-top: 0.704rem;
   font-size: 0.64rem;

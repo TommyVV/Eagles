@@ -272,7 +272,11 @@ function save(publisType) {
                     position: "toast-top-center",
                     timeout: 2
                 });
-                window.location.href = 'public_result.html?code=1&tip=保存成功待审核&appId=' + appId + '&mode=3';
+                if(inputval == 1){
+                    window.location.href = 'public_result.html?code=1&tip=保存成功&appId=' + appId + '&mode=3';
+                }else{
+                    window.location.href = 'public_result.html?code=1&tip='+introduceTip($(".intro-input").val())+'&appId=' + appId + '&mode=3';
+                }
                 //文章发布成功
             } else {
                 bootoast({

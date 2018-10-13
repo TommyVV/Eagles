@@ -66,7 +66,7 @@ function partyLearning(moduleId, token, page, appId) {
                         var isVideo = news.IsVideo;
                         var videoIcon = '';
                         if (isVideo == "1") {
-                            videoIcon = '<span class="glyphicon glyphicon-film"></span>';
+                            videoIcon = '<span class="glyphicon glyphicon-film" style="margin-right:10px;"></span>';
                         }
                         learningList = '<div class="media"><div class="newsbody">' +
                             imgEle +

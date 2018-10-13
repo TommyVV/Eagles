@@ -10,6 +10,10 @@ const ARTICLE_FONE_COUNT = 100;
 const EXPERIENCE_FONE_COUNT = 100;
 const MEETING_FONE_COUNT = 100;
 const APPLICATION_FONE_COUNT = 100;
+//入党申请书提交成功
+function introduceTip(intro){
+    return "入党申请书提交成功,系统将通知到您的介绍人："+intro+"同志";
+}
 // const DOMAIN = 'http://ruisuikj.com/Eagles';
 // const UPLOAD = "http://ruisuikj.com/Eagles/api/Upload/UploadFile";
 

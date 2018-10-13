@@ -183,26 +183,33 @@ function moduleListcontent(moduleId, class1, flag, token, appId, subCateType, co
                     } else {
                         externalUrl = 'partyLearning_detail.html?NewsId=' + data.NewsInfos[i].NewsId + '&appId=' + appId + '' //详情页NewsId 
                     }
+                    var isVideo = data.NewsInfos[i].IsVideo;
+                    var videoIcon = '';
+                    var playIcon='';
+                    if (isVideo == "1") {
+                        videoIcon = '<span class="glyphicon glyphicon-film" style="margin-right:10px;"></span>';
+                        playIcon ='<img class="is-media" src="icons/videoFlag.png">';
+                    }
                     //移动端代码
                     if (subCateType != 0) {
                         contenttwo += '<div class="media">' +
-                            '<div class="media-body media-text"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-                            '<span class="news-source">' + data.NewsInfos[i].Source + '</span>' +
+                            '<div class="media-body media-text"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' +videoIcon + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+                            '<span class="news-source">'+ data.NewsInfos[i].Source + '</span>' +
                             '</a></div>' +
                             '</div>';
                     } else {
                         if (i < 2) {
                             contentone += '<div class="media col-xs-6">' +
-                                '<div class="media-top"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-                                '</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-                                '<span class="news-source">' + data.NewsInfos[i].Source + '</span>' +
+                                '<div class="media-top"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '">'+playIcon+'</a>' +
+                                '</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">'+videoIcon  + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+                                '<span class="news-source">'+ data.NewsInfos[i].Source + '</span>' +
                                 '</a></div>' +
                                 '</div>';
                         } else if (i >= 2) {
                             contenttwo += '<div class="media">' +
-                                '<div class="media-left"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '"></a>' +
-                                '</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
-                                '<span class="news-source">' + data.NewsInfos[i].Source + '</span>' +
+                                '<div class="media-left"><a href="' + externalUrl + '"><img class="media-object" src="' + data.NewsInfos[i].ImageUrl + '" alt="' + data.NewsInfos[i].Title + '">'+playIcon+'</a>' +
+                                '</div><div class="media-body"><a href="' + externalUrl + '"><h4 class="media-heading overflow-two-line">' +videoIcon + data.NewsInfos[i].Title + '</h4><span class="list-time">' + data.NewsInfos[i].CreateTime + '</span>' +
+                                '<span class="news-source">'+ data.NewsInfos[i].Source + '</span>' +
                                 '</a></div>' +
                                 '</div>';
                         }
