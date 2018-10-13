@@ -311,7 +311,8 @@ body {
 .menu-list .img-item img {
     width: 60px;
     height: 60px;
-    border-radius: 50px;
+    border-radius: 30px;
+    display: inline-block;
 }
 
 .menu-list .img-item div {
