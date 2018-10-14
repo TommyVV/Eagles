@@ -16,7 +16,7 @@ const TextArea = Input.TextArea;
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
-import { getList, createOrEdit, del } from "../../services/goodsService";
+import { getList, createOrEdit, del,setSaleSatus } from "../../services/goodsService";
 import { audit } from "../../services/auditService";
 import { auditStatus } from "../../constants/config/appconfig";
 const confirm = Modal.confirm;
@@ -345,7 +345,7 @@ class GoodsList extends React.Component {
               SaleStatus: goods.SaleStatus == "10" ? "5" : "10"
             }
           };
-          let { Code } = await createOrEdit(params);
+          let { Code } = await setSaleSatus(params);
           if (Code === "00") {
             message.success(`${tipTitle}成功`);
             await this.getCurrentList({
@@ -363,6 +363,8 @@ class GoodsList extends React.Component {
       }
     });
   };
+
+  
 
   // 删除
   handleDelete = async GoodsId => {

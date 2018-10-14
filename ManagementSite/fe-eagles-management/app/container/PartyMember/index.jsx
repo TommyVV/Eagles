@@ -16,7 +16,7 @@ const Option = Select.Option;
 import { hashHistory } from "react-router";
 import Nav from "../Nav";
 import "./style.less";
-import { getList, del } from "../../services/memberService";
+import { getList, del,sendMsg } from "../../services/memberService";
 import { getList as getBranchList } from "../../services/branchService";
 import { auditStatus } from "../../constants/config/appconfig";
 import { audit } from "../../services/auditService";
@@ -222,6 +222,110 @@ const WrapperAuditForm = Form.create({
   );
 });
 
+
+
+// 
+const SendMsgForm = Form.create({
+  onFieldsChange(props, changedFields) {
+    props.onChange(changedFields);
+  },
+  mapPropsToFields: props => {
+    // const project = props.project;
+    return {
+      Title: Form.createFormField({
+        ...props.Title,
+        value: props.Title.value ? props.Title.value : ""
+      }),
+      NewsType: Form.createFormField({
+        ...props.NewsType,
+        value: props.NewsType.value ? props.NewsType.value : "0"
+      }),
+      TargetUrl: Form.createFormField({
+        ...props.Title,
+        value: props.TargetUrl.value ? props.TargetUrl.value : ""
+      }),
+      Content: Form.createFormField({
+        ...props.Content,
+        value: props.Content.value
+      })
+    };
+  }
+})(props => {
+  const { getFieldDecorator } = props.form;
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 7 }
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 6 }
+    }
+  };
+  return (
+    <Form className="ant-advanced-search-form">
+      <Row gutter={24}>
+        <Col span={20} key={1}>
+          <FormItem {...formItemLayout} label="标题">
+            {getFieldDecorator("Title", {
+              rules: [
+                {
+                  required: true,
+                  message: "必填，请输入标题"
+                }
+              ]
+            })(<Input placeholder="必填，请输入标题" />)}
+          </FormItem>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col span={20} key={2}>
+          <FormItem {...formItemLayout} label="类型">
+            {getFieldDecorator("NewsType", {
+              initialValue: "0",
+              rules: [
+                {
+                  required: true,
+                  message: "必填，请选择类型"
+                }
+              ]
+            })(
+              <Select >
+                <Option value="0">待定</Option>
+                {/* {branch.map((o, i) => {
+                return (
+                  <Option value={o.BranchId} key={i}>
+                    {o.BranchName}
+                  </Option>
+                );
+              })} */}
+              </Select>
+            )}
+          </FormItem>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col span={20} key={2}>
+          <FormItem {...formItemLayout} label="跳转链接">
+            {getFieldDecorator("TargetUrl")(
+              <Input placeholder="请输入跳转链接" />
+            )}
+          </FormItem>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col span={20} key={2}>
+          <FormItem {...formItemLayout} label="内容">
+            {getFieldDecorator("Content")(
+              <TextArea rows={4} placeholder="请输入内容" />
+            )}
+          </FormItem>
+        </Col>
+      </Row>
+    </Form>
+  );
+});
+
 class PartyMemberList extends React.Component {
   constructor(props) {
     super(props);
@@ -233,11 +337,18 @@ class PartyMemberList extends React.Component {
       authMap: new Map(),
       currentId: "", // 当前的id
       visible: false, // 弹出框
+      sendmsgvisible: false,
       obj: {},
       fields: {
         AuditStatus: "", //审核结果
         Reason: "" // 审核结果描述
-      }
+      },
+      SendMsgfields: {
+        NewsType: "0", //审核结果
+        Title: "", // 审核结果描述
+        Content:"", // 审核结果描述
+        TargetUrl:"", // 审核结果描述
+      },
     };
     this.columns = [
       {
@@ -453,11 +564,60 @@ class PartyMemberList extends React.Component {
       throw new Error(e);
     }
   };
+
+
+  SendMsghandleOk = async () => {
+    try {
+      const { selectedRowKeys, SendMsgfields } = this.state;
+      const { NewsType, Title,Content,TargetUrl } = SendMsgfields;
+      if (!Title.value) {
+        message.error("请输入标题");
+        return;
+      }
+      let params = {
+        Title: Title.value,
+        Content: Content.value,
+        NewsType: 0, // 党员
+        TargetUrl: TargetUrl.value,
+        id:selectedRowKeys
+      };
+      console.log(params);
+      let { Code } = await sendMsg(params);
+      this.setState({
+        sendmsgvisible: false,
+        SendMsgfields: {
+          Title: "",
+          Content: "",
+          TargetUrl:"",
+          NewsType:"0"
+        }
+      });
+      if (Code === "00") {
+        message.success("发送成功");
+        await this.getCurrentList({
+          ...this.getListConfig,
+          PageNumber: this.state.current
+        });
+      } else {
+        message.error("发送失败");
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+
   handleFormChange = changedFields => {
     this.setState(({ fields }) => ({
       fields: { ...fields, ...changedFields }
     }));
   };
+  SendMsghandleFormChange = changedFields => {
+    this.setState(({ SendMsgfields }) => ({
+      SendMsgfields: { ...SendMsgfields, ...changedFields }
+    }));
+  };
+  
   changeSearch = obj => {
     this.setState({
       obj
@@ -471,7 +631,9 @@ class PartyMemberList extends React.Component {
       Message,
       visible,
       fields,
-      obj
+      SendMsgfields,
+      obj,
+      sendmsgvisible
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -498,7 +660,16 @@ class PartyMemberList extends React.Component {
           onOk={this.handleOk}
           onCancel={() => this.setState({ visible: false })}
         >
-          <WrapperAuditForm {...fields} onChange={this.handleFormChange} />
+          <WrapperAuditForm  {...fields} onChange={this.handleFormChange} />
+        </Modal>
+
+        <Modal
+          title="发送通知消息"
+          visible={sendmsgvisible}
+          onOk={this.SendMsghandleOk}
+          onCancel={() => this.setState({ sendmsgvisible: false })}
+        >
+          <SendMsgForm {...SendMsgfields} onChange={this.SendMsghandleFormChange} />
         </Modal>
 
         <Row
@@ -513,6 +684,21 @@ class PartyMemberList extends React.Component {
               onClick={() => hashHistory.replace(`/partymember/detail`)}
             >
               新增
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              className="btn btn--primary"
+              type="primary"
+              onClick={() =>
+
+                this.setState({ sendmsgvisible: true, id: this.state.selectedRowKeys })
+
+
+                //hashHistory.hashHistory(`/partymember/SendMsg`)
+              }
+            >
+              发送消息
             </Button>
           </Col>
         </Row>

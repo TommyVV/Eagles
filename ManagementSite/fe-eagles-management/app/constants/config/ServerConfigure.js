@@ -66,7 +66,8 @@ const GOODS = {
   GOODS_EDIT: "/api/Product/EditGoods", //编辑商品
   GOODS_DELETE: "/api/Product/RemoveGoods", //删除商品
   GOODS_LIST: "/api/Product/GetGoods", //商品列表
-  GOODS_DETAIL: "/api/Product/GetGoodsDetail" //商品详情
+  GOODS_DETAIL: "/api/Product/GetGoodsDetail", //商品详情
+  GOODS_SETSALESTATUS: "/api/Product/EditGoodsSaleStatus" //上下架
 };
 // 滚动图片
 const IMAGE = {
@@ -130,7 +131,8 @@ const MEMBER = {
   LOGIN_LIST: "/api/User/GetUserLoginLs", //用户登录记录
   NEXT_LIST: "/api/User/GetAuthorityUserSetUp", //下级列表
   SET_NEXT: "/api/User/CreateAuthorityUserSetUp", //设置下级
-  IMPORT: "/api/User/BatchImportUser" //导入
+  IMPORT: "/api/User/BatchImportUser", //导入
+  SENDMSG:"/api/User/SendMsg"
 };
 //支部
 const BRANCH = {

@@ -90,6 +90,7 @@ class RouteMap extends Component {
             path="/partymember/detail(/:id)"
             component={PartyMemberDetail}
           />
+          
           <route
             path="/partymember/setnext(/:id/:name)"
             component={SetNextPartyMember}

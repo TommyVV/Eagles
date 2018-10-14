@@ -66,6 +66,12 @@ class Base extends Component {
               message.error("选项不能为空");
               return;
             }
+            console.log(list);
+            if(values.IsVote=="0" && list.filter(x=>x.IsRight=="0").length!=values.MultipleCount){
+              message.error("正确答案数量设置有误！");
+              return;
+            }
+
             let params = {
               Info: {
                 Question: values.Question,
@@ -127,6 +133,8 @@ class Base extends Component {
     if (attr == "MultipleCount") {
       value = value;
     }
+
+   
     this.props.saveInfo({
       Info: {
         ...Info,
@@ -256,6 +264,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     const { Info } = props.info;
+   
     console.log("项目详情数据回显  ", Info);
     return {
       QuestionId: Form.createFormField({
@@ -299,6 +308,7 @@ class QuestionDetail extends Component {
   componentWillMount() {
     let { id } = this.props.params;
     if (id) {
+      this.props.clearInfo();
       this.getInfo(id); //拿详情
     } else {
       this.props.clearInfo();
@@ -309,6 +319,7 @@ class QuestionDetail extends Component {
     try {
       const { Info } = await getInfoById({ QuestionId });
       console.log(Info);
+     
       const obj = {
         Info
       };

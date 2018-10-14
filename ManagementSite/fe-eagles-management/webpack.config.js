@@ -12,6 +12,7 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const port = 3000;
 
 module.exports = {
+ 
   devtool: "cheap-module-eval-source-map",
   entry: {
     // bundle: './app/main.jsx',

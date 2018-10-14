@@ -151,3 +151,22 @@ export const del = async params => {
     throw new Error(e);
   }
 };
+
+export const sendMsg = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: MEMBER.SENDMSG,
+      params
+    });
+    let { Code, Message } = res.data;
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      throw new Error(Message);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+

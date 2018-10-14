@@ -60,6 +60,9 @@ export const createOrEdit = async params => {
   }
 };
 
+
+
+
 // 删除
 export const del = async params => {
   try {
@@ -72,6 +75,27 @@ export const del = async params => {
     if (res.status === 200) {
       return res.data;
     } else {
+      throw new Error(Message);
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
+
+
+// 快速上下架
+export const setSaleSatus = async params => {
+  try {
+    let res = await sendRequest({
+      method: "post",
+      url: GOODS.GOODS_SETSALESTATUS,
+      params
+    });
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      let { Code, Message } = res.data;
       throw new Error(Message);
     }
   } catch (e) {
