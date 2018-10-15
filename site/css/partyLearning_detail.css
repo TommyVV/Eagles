@@ -266,3 +266,20 @@ audio, canvas, progress, video {
     text-align: center;
     color: blue;
 }
+.add_content{
+    font-size: 16px;
+    height: 40px;
+    padding: 0rem 0.74667rem;
+    line-height: 40px;
+    display: none;
+}
+.add_content .like{
+    float: left;
+}
+.add_content .fav{
+    float: right;
+}
+.add_content span{
+    color: red;
+    margin-right: 10px;
+}

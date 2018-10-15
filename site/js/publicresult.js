@@ -32,5 +32,5 @@ if (mode == "文章" && mode != undefined) {
 } else if (mode == "商品0" && mode != undefined) {
 	$('.df_don').hide()
 } else if (mode == 3) {
-	countDown(5, 'index.html?appId=' + appId + '');
+	countDown(5, 'index.html?moduleType=0&appId=' + appId + '');
 }

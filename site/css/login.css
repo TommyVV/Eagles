@@ -85,16 +85,20 @@ body {
         position: absolute;
         display: inline-block;
         box-sizing: border-box;
-        width: 2.45333rem;
-        height: 0.85333rem;
+        width: 4.25333rem;
+        height: 1.35333rem;
         right: 0.42667rem;
         bottom: 0.27733rem;
-        line-height: 0.85333rem;
+        line-height: 1.35333rem;
         border-radius: 0.21333rem;
         color: #fff;
-        background-color: #b5b5b5;
+        background-color: #EE2F2F;
         font-size: 0.64rem;
+        border: none;
         text-align: center;
+    }
+    #verCode{
+        display: none;
     }
     .form-horizontal .form-group .btn-login {
         display: block;

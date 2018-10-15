@@ -77,6 +77,8 @@ $('.btn-login').on('click', function(e) {
         data: {
             "Phone": account,
             "UserPwd": password,
+            "ValidCode":$("#inputCaptcha").val(),
+            "Seq":$('#inputCaptcha').attr('CodeSeq'),
             "IsRememberPwd": 1,
             "AppId": appId
         },
@@ -114,6 +116,14 @@ $('.btn-login').on('click', function(e) {
                         }
                     }
                 }
+            }else if(res.Code==100){
+                bootoast({
+                    message: '' + res.Message + '',
+                    type: 'warning',
+                    position: 'toast-top-center',
+                    timeout: 3
+                });
+                $("#verCode").css("display","block");
             } else {
                 bootoast({
                     message: '' + res.Message + '',
@@ -135,3 +145,59 @@ $('.eyeFlag').on('click', function(e) {
         $("#inputPassword").attr('type', "password");
     }
 });
+var timer;
+$(".btn-cap").click(function() {
+    var phone = $('#inputUser').val();
+    if (phone == "" || phone == undefined || phone == null || phone.length != 11) {
+        bootoast({
+            message: '请输入有效的手机号！',
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 3
+        });
+        return false;
+    }
+    if ($(".btn-cap").attr("disabled") == "disabled") {
+        return;
+    }
+    $(this).attr("disabled", "disabled");
+    $.ajax({
+        type: "POST",
+        url: DOMAIN + "/api/Register/GetValidateCode",
+        data: {
+            "Phone": phone,
+            "AppId": appId
+        },
+        success: function(res) {
+            if (res.Code == 00) {
+                $('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
+                $('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
+                var time = 60
+                $('.btn-cap').text('' + time + 's重新获取');
+
+                $('.btn-cap').css("background", "#D6D6D6")
+                $(this).attr("disabled", "disabled");
+                timer = setInterval(function() {
+                        time--;
+                        $('.btn-cap').text('' + time + 's重新获取');
+                        if (time <= 0) {
+                            clearInterval(timer);
+                            $(".btn-cap").text('获取验证码');
+                            $('.btn-cap').css("background", "#EE2F2F")
+                            $(".btn-cap").removeAttr("disabled");
+                        }
+                    }, 1000)
+                    //$('.btn-cap').removeAttr("disabled");
+                return
+            } else {
+                bootoast({
+                    message: '' + res.Message + '',
+                    type: 'warning',
+                    position: 'toast-top-center',
+                    timeout: 3
+                });
+                $('.btn-cap').removeAttr("disabled");
+            }
+        }
+    });
+})

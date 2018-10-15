@@ -20,7 +20,7 @@ $(document).ready(function() {
             isBounce: false
         }
     });
-
+    getUserStudy('init');
     function downCallback() {
         pageIndex = 1;
         getUserStudy();
@@ -41,12 +41,13 @@ $(document).ready(function() {
     });
 
     //查询学习时间
-    function getUserStudy() {
+    function getUserStudy(sType) {
+        var studyType = sType=="init"?'1':currentItemType;
         $.ajax({
             type: 'POST',
             url: DOMAIN + '/api/Study/GetUserStudy',
             data: {
-                "StudyType": currentItemType,
+                "StudyType": studyType,
                 "Token": token,
                 "AppId": appId,
                 "PageSize": pageSize,
@@ -58,12 +59,14 @@ $(document).ready(function() {
                     if (pageIndex == 1) {
                         $(".item").html("");
                     }
-                    if (currentItemType == 0) {
-                        $(".activity-cate .select").html('已学习(' + data.Result.StudyCount + ')');
+                    if (studyType == 0) {
+                        $(".head-area #0").html('已学习(' + data.Result.StudyCount + ')');
                     } else {
-                        $(".activity-cate .select").html('未学习(' + data.Result.StudyCount + ')');
+                        $(".head-area #1").html('未学习(' + data.Result.StudyCount + ')');
                     }
-                    $(".item").append(dealReturnList(list));
+                    if(studyType==currentItemType){
+                        $(".item").append(dealReturnList(list));
+                    }
                     if (list.length < pageSize) {
                         mescroll.endSuccess(100000, false, null);
                     } else {
