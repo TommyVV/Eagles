@@ -25,7 +25,7 @@ class DynamicFieldSet extends React.Component {
         OptionId: "",
         OptionName: "",
         IsRight: "1",
-        AnswerType: "0",
+        AnswerType: "50",
         Img: ""
       }
     ]);
@@ -56,15 +56,23 @@ class DynamicFieldSet extends React.Component {
       }
     });
     OptionList.map((k, i) => {
+      
       if (obj.Multiple == "0") {
         // 单选，只能选一个
         if (i == index) {
           k.IsRight = e.target.checked ? "0" : "1";
-        } else {
-          k.IsRight = e.target.checked ? "1" : "0";
+        } 
+        else {
+          k.IsRight =  "1";
         }
       } else {
         // 多选，根据多选数量判定
+        
+        //多选至少2个
+        if(obj.MultipleCount==0){
+          obj.MultipleCount=2;
+        }
+        
         if (e.target.checked && IsRightCount >= obj.MultipleCount) {
           if (!tipCount) {
             ++tipCount;

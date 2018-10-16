@@ -238,7 +238,7 @@ const SendMsgForm = Form.create({
       }),
       NewsType: Form.createFormField({
         ...props.NewsType,
-        value: props.NewsType.value ? props.NewsType.value : "0"
+        value: props.NewsType.value ? props.NewsType.value : "50"
       }),
       TargetUrl: Form.createFormField({
         ...props.Title,
@@ -281,26 +281,11 @@ const SendMsgForm = Form.create({
       <Row gutter={24}>
         <Col span={20} key={2}>
           <FormItem {...formItemLayout} label="类型">
-            {getFieldDecorator("NewsType", {
-              initialValue: "0",
-              rules: [
-                {
-                  required: true,
-                  message: "必填，请选择类型"
-                }
-              ]
-            })(
-              <Select >
-                <Option value="0">待定</Option>
-                {/* {branch.map((o, i) => {
-                return (
-                  <Option value={o.BranchId} key={i}>
-                    {o.BranchName}
-                  </Option>
-                );
-              })} */}
+           {getFieldDecorator("NewsType")(
+              <Select>
+                 <Option value="50">会议通知</Option>
               </Select>
-            )}
+            )}               
           </FormItem>
         </Col>
       </Row>
@@ -344,7 +329,7 @@ class PartyMemberList extends React.Component {
         Reason: "" // 审核结果描述
       },
       SendMsgfields: {
-        NewsType: "0", //审核结果
+        NewsType: "50", //审核结果
         Title: "", // 审核结果描述
         Content:"", // 审核结果描述
         TargetUrl:"", // 审核结果描述
@@ -577,7 +562,7 @@ class PartyMemberList extends React.Component {
       let params = {
         Title: Title.value,
         Content: Content.value,
-        NewsType: 0, // 党员
+        NewsType: NewsType, // 党员
         TargetUrl: TargetUrl.value,
         id:selectedRowKeys
       };
@@ -589,7 +574,7 @@ class PartyMemberList extends React.Component {
           Title: "",
           Content: "",
           TargetUrl:"",
-          NewsType:"0"
+          NewsType:"50"
         }
       });
       if (Code === "00") {

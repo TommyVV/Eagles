@@ -66,8 +66,19 @@ class Base extends Component {
               message.error("选项不能为空");
               return;
             }
-            console.log(list);
-            if(values.IsVote=="0" && list.filter(x=>x.IsRight=="0").length!=values.MultipleCount){
+            console.log(values);
+            
+            if(values.Multiple == "0" && values.IsVote == "0" && list.filter(x => x.IsRight == "0").length==0){
+              message.error("单选非投票至少设置一个正确答案！");
+              return;
+            }
+
+            if(values.Multiple == "0" && list.filter(x => x.IsRight == "0").length>1){
+              message.error("单选只能设置一个正确答案！");
+              return;
+            }
+
+            if (values.IsVote == "0" && values.Multiple == "1" && list.filter(x => x.IsRight == "0").length != values.MultipleCount) {
               message.error("正确答案数量设置有误！");
               return;
             }
@@ -82,7 +93,7 @@ class Base extends Component {
               },
               Option: list
             };
-            let { Code,Message } = await createOrEdit(params);
+            let { Code, Message } = await createOrEdit(params);
             if (Code === "00") {
               let tip = Info.QuestionId ? "保存成功" : "创建成功";
               message.success(tip);
@@ -134,7 +145,29 @@ class Base extends Component {
       value = value;
     }
 
-   
+    // if (attr == "Multiple") {
+
+    //   //切换习题类型时 重置是否正确答案复选框 解决由多选切换到单选时验证保存数量问题
+    //   for (let index = 0; index < Info.OptionList.length; index++) {
+    //     if (index == 0) {
+    //       Info.OptionList[index].IsRight = 1;
+    //     } else {
+    //       Info.OptionList[index].IsRight = "0";
+    //     }
+    //   }
+
+
+    //   this.props.saveInfo({
+    //     Info: {
+    //       ...Info,
+    //       ...values,
+    //       [attr]: value
+    //     }
+    //   });
+    //   return;
+
+    // }
+
     this.props.saveInfo({
       Info: {
         ...Info,
@@ -264,7 +297,7 @@ class Base extends Component {
 const FormMap = Form.create({
   mapPropsToFields: props => {
     const { Info } = props.info;
-   
+
     console.log("项目详情数据回显  ", Info);
     return {
       QuestionId: Form.createFormField({
@@ -319,7 +352,7 @@ class QuestionDetail extends Component {
     try {
       const { Info } = await getInfoById({ QuestionId });
       console.log(Info);
-     
+
       const obj = {
         Info
       };
