@@ -14,8 +14,11 @@
     background-color: #f8f8f8;
 }
 
-audio, canvas, progress, video { 
-    width:100%
+audio,
+canvas,
+progress,
+video {
+    width: 100%
 }
 
 .main_content {
@@ -266,20 +269,24 @@ audio, canvas, progress, video {
     text-align: center;
     color: blue;
 }
-.add_content{
+
+.add_content {
     font-size: 16px;
     height: 40px;
     padding: 0rem 0.74667rem;
     line-height: 40px;
     display: none;
 }
-.add_content .like{
+
+.add_content .fav {
     float: left;
 }
-.add_content .fav{
+
+.add_content .col {
     float: right;
 }
-.add_content span{
+
+.add_content span {
     color: red;
     margin-right: 10px;
 }

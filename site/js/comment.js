@@ -97,6 +97,8 @@ Comment.prototype = {
                     $("#comment").val("");
                     $('.comment-edit').addClass("hide");
                     that.getUserComment();
+                } else if (data.Code == "11") {
+                    window.location.href = 'login.html?appId=' + that.appId + '';
                 } else {
                     bootoast({
                         message: '' + data.Message,
