@@ -291,7 +291,7 @@ const SendMsgForm = Form.create({
       </Row>
       <Row gutter={24}>
         <Col span={20} key={2}>
-          <FormItem {...formItemLayout} label="跳转链接">
+          <FormItem {...formItemLayout} label="通知详情链接">
             {getFieldDecorator("TargetUrl")(
               <Input placeholder="请输入跳转链接" />
             )}
@@ -300,9 +300,9 @@ const SendMsgForm = Form.create({
       </Row>
       <Row gutter={24}>
         <Col span={20} key={2}>
-          <FormItem {...formItemLayout} label="内容">
+          <FormItem {...formItemLayout} label="通知描述">
             {getFieldDecorator("Content")(
-              <TextArea rows={4} placeholder="请输入内容" />
+              <TextArea rows={4} placeholder="通知描述" />
             )}
           </FormItem>
         </Col>
