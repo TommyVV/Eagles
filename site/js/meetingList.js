@@ -13,34 +13,60 @@ $(document).ready(function() {
     mescroll = new MeScroll("mescroll", {
         down: {
             auto: false,
-            callback: downCallback,
+            callback: downCallback
         },
         up: {
-            callback: getMeeting,
+            callback: getUserStudy,
             isBounce: false
         }
     });
-
+    getUserStudy('init');
     function downCallback() {
         pageIndex = 1;
-        getMeeting();
+        getUserStudy();
     }
-    //查询会议
-    function getMeeting() {
+
+    //头部按钮点击
+    $(".activity-cate").click(function() {
+        var id = $(this).attr('id');
+        if (id != currentItemType) {
+            currentItemType = id;
+            $(".activity-cate").find("span").removeClass("select");
+            $(this).find("span").addClass("select");
+            $(".item").html('');
+            pageIndex = 1;
+            getUserStudy();
+        }
+
+    });
+
+    //查询学习时间
+    function getUserStudy(sType) {
+        var studyType = sType=="init"?'1':currentItemType;
         $.ajax({
             type: 'POST',
             url: DOMAIN + '/api/News/GetMeeting',
             data: {
+                "MeetType": studyType,
                 "Token": token,
                 "AppId": appId,
                 "PageSize": pageSize,
                 "PageIndex": pageIndex
             },
             success: function(data) {
-                console.log('GetMeeting---', data);
                 if (data.Code == "00") {
                     var list = data.Result.MeetingList;
-                    $(".item").append(dealReturnList(list));
+                    if (pageIndex == 1) {
+                        $(".item").html("");
+                    }
+                    if (studyType == 0) {
+                        $(".head-area #0 span").html('已参加(' + data.Result.MeetingCount + ')');
+                    } else {
+                        $(".head-area #1 span").html('未参加(' + data.Result.MeetingCount + ')');
+                    }
+                    if(studyType==currentItemType){
+                        $(".item").append(dealReturnList(list));
+                    }
                     if (list.length < pageSize) {
                         mescroll.endSuccess(100000, false, null);
                     } else {
@@ -53,6 +79,11 @@ $(document).ready(function() {
                         window.location.href = "partyLearning_detail.html?appId=" + appId + "&NewsId=" + newsId;
                     });
                 } else if (data.Code == '10') {
+                    if (studyType == 0) {
+                        $(".head-area #0 span").html('已参加(0)');
+                    } else {
+                        $(".head-area #1 span").html('未参加(0)');
+                    }
                     mescroll.endSuccess(10, false, null);
                 } else {
                     errorTip(data.Message);
@@ -63,7 +94,7 @@ $(document).ready(function() {
                 errorTip('网络错误');
                 mescroll.endErr();
             }
-        });
+        })
     }
 
     function errorTip(str) {
@@ -84,11 +115,9 @@ $(document).ready(function() {
                             alt="">
                     </div>
                     <div class="right">
-                        <div class="content overflow-two-line">
-                            ${element.Title}
-                        </div>
+                        <div class="content overflow-two-line">${element.Title}</div>
                         <div class="date">
-                            ${element.CreateTime}
+                            <div>${element.CreateTime.substr(0, 10)}</div>   
                         </div>
                     </div>
                 </div>`;

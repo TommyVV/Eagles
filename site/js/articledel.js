@@ -92,7 +92,7 @@ function editUserCollectLog(cType, status) {
         success: function(data) {
             if (data.Code == 00) {
                 myart(NewsId, appId);
-            } else if (Date.Code == 10) {
+            } else if (data.Code==11) {
                 window.location.href = 'login.html?appId=' + appId + '';
             }
         },
@@ -106,7 +106,7 @@ function getUserCollectLogExists(type) {
         type: "POST",
         url: DOMAIN + "/api/User/GetUserCollectLogExists",
         data: {
-            Type: type,
+            CollectType: type,
             NewsId: NewsId,
             Token: token,
             AppId: appId,
@@ -126,10 +126,10 @@ function getUserCollectLogExists(type) {
                     }
                 } else {
                     if (type == 0) {
-                        $(".fav").remove("select");
+                        $(".fav").removeClass("select");
                         $(".fav .glyphicon").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");
                     } else {
-                        $(".col").remove("select");
+                        $(".col").removeClass("select");
                         $(".col .glyphicon").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
                     }
                 }

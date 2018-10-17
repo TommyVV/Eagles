@@ -71,17 +71,30 @@ $('.btn-login').on('click', function(e) {
         });
         return;
     }
+    var validFlage =$("#verCode").css("display")=="block";
+    if(validFlage&&(!$("#inputCaptcha").val())){
+        bootoast({
+            message: '请输入验证码',
+            type: 'warning',
+            position: 'toast-top-center',
+            timeout: 1
+        });
+        return;
+    }
+    var data = {
+        "Phone": account,
+        "UserPwd": password,
+        "IsRememberPwd": 1,
+        "AppId": appId
+    };
+    if(validFlage){
+        data.ValidCode=$("#inputCaptcha").val();
+        data.Seq =$('#inputCaptcha').attr('CodeSeq');
+    }
     //var hash = hex_md5(password);
     $.ajax({
         type: "post",
-        data: {
-            "Phone": account,
-            "UserPwd": password,
-            "ValidCode":$("#inputCaptcha").val(),
-            "Seq":$('#inputCaptcha').attr('CodeSeq'),
-            "IsRememberPwd": 1,
-            "AppId": appId
-        },
+        data: data,
         url: DOMAIN + "/api/User/Login",
         dataType: "json",
         success: function(res) {
@@ -166,11 +179,12 @@ $(".btn-cap").click(function() {
         url: DOMAIN + "/api/Register/GetValidateCode",
         data: {
             "Phone": phone,
-            "AppId": appId
+            "AppId": appId,
+            "type":1
         },
         success: function(res) {
             if (res.Code == 00) {
-                $('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
+                $('#inputCaptcha').attr('placeholder', '验证码序号为' + res.Result.CodeSeq + '');
                 $('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
                 var time = 60
                 $('.btn-cap').text('' + time + 's重新获取');

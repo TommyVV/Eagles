@@ -79,6 +79,10 @@ $("#myproduct,.fb_profuct").click(function() {
 $("#mystudy").click(function() {
 	window.location.href = 'studyList.html?appId=' + appId + ''
 });
+//我的收藏
+$("#mycol").click(function() {
+	window.location.href = 'myColList.html?appId=' + appId + ''
+});
 //我的会议
 $("#mymeeting").click(function() {
 	window.location.href = 'meetingList.html?appId=' + appId + ''

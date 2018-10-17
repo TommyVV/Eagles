@@ -13,60 +13,35 @@ $(document).ready(function() {
     mescroll = new MeScroll("mescroll", {
         down: {
             auto: false,
-            callback: downCallback
+            callback: downCallback,
         },
         up: {
-            callback: getUserStudy,
+            callback: getMeeting,
             isBounce: false
         }
     });
-    getUserStudy('init');
+
     function downCallback() {
         pageIndex = 1;
-        getUserStudy();
+        getMeeting();
     }
-
-    //头部按钮点击
-    $(".activity-cate").click(function() {
-        var id = $(this).attr('id');
-        if (id != currentItemType) {
-            currentItemType = id;
-            $(".activity-cate").find("span").removeClass("select");
-            $(this).find("span").addClass("select");
-            $(".item").html('');
-            pageIndex = 1;
-            getUserStudy();
-        }
-
-    });
-
-    //查询学习时间
-    function getUserStudy(sType) {
-        var studyType = sType=="init"?'1':currentItemType;
+    //查询会议
+    function getMeeting() {
         $.ajax({
             type: 'POST',
-            url: DOMAIN + '/api/Study/GetUserStudy',
+            url: DOMAIN + '/api/User/GetUserCollectLog',
             data: {
-                "StudyType": studyType,
+                "CollectType":"1",
                 "Token": token,
                 "AppId": appId,
                 "PageSize": pageSize,
                 "PageIndex": pageIndex
             },
             success: function(data) {
+                console.log('GetMeeting---', data);
                 if (data.Code == "00") {
-                    var list = data.Result.StudyList;
-                    if (pageIndex == 1) {
-                        $(".item").html("");
-                    }
-                    if (studyType == 0) {
-                        $(".head-area #0 span").html('已学习(' + data.Result.StudyCount + ')');
-                    } else {
-                        $(".head-area #1 span").html('未学习(' + data.Result.StudyCount + ')');
-                    }
-                    if(studyType==currentItemType){
-                        $(".item").append(dealReturnList(list));
-                    }
+                    var list = data.Result.CollectsList;
+                    $(".item").append(dealReturnList(list));
                     if (list.length < pageSize) {
                         mescroll.endSuccess(100000, false, null);
                     } else {
@@ -76,7 +51,7 @@ $(document).ready(function() {
                     //给每列数据绑定事件
                     $(".article").click(function() {
                         var newsId = $(this).attr('id');
-                        window.location.href = "partyLearning_detail.html?appId=" + appId + "&NewsId=" + newsId;
+                        window.location.href = newsId;
                     });
                 } else if (data.Code == '10') {
                     mescroll.endSuccess(10, false, null);
@@ -89,7 +64,7 @@ $(document).ready(function() {
                 errorTip('网络错误');
                 mescroll.endErr();
             }
-        })
+        });
     }
 
     function errorTip(str) {
@@ -104,18 +79,17 @@ $(document).ready(function() {
     function dealReturnList(list) {
         var content = '';
         list.forEach(element => {
-            content += `<div class="article" id="${element.NewsId}">
+            content += `<div class="article" id="${element.NewsUrl}">
                     <div class="left">
                         <img src="${element.ImageUrl}"
                             alt="">
                     </div>
                     <div class="right">
-                        <div class="content overflow-two-line">${element.Title}</div>
+                        <div class="content overflow-two-line">
+                            ${element.Title}
+                        </div>
                         <div class="date">
-                            <div>${element.CreateTime.substr(0, 10)}</div>
-                            <div>
-                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span><span>已学习:</span><span class="studyTime">${element.StudyTime}分钟</span>
-                            </div>    
+                            ${element.CreateTime}
                         </div>
                     </div>
                 </div>`;

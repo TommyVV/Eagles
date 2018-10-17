@@ -92,7 +92,7 @@ $(".btn-cap").click(function () {
         },
         success: function (res) {
             if (res.Code == 00) {
-                $('#inputCaptcha').attr('placeholder', '请输入序号为' + res.Result.CodeSeq + '的验证码');
+                $('#inputCaptcha').attr('placeholder', '验证码序号为' + res.Result.CodeSeq + '');
                 $('#inputCaptcha').attr('CodeSeq', res.Result.CodeSeq);
                 var time = 60
                 $('.btn-cap').text('' + time + 's重新获取');
