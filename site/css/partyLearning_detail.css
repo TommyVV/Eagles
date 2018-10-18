@@ -290,3 +290,19 @@ video {
     color: red;
     margin-right: 10px;
 }
+.demo--label .glyphicon{
+    margin-right: 5px;
+    display: none;
+}
+.demo--label .glyphicon-ok{
+    color: #4bdc11;
+}
+.demo--label .glyphicon-remove{
+    color: #E51A1A;
+}
+.right .demo--radioInput {
+    border: 1px solid #4bdc11;
+}
+.right .demo--radioInput:after{
+    background-color: #4bdc11;
+}

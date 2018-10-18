@@ -45,6 +45,20 @@ $(".over-layer .foot").click(function() {
 //提交试题的答案; 
 //firstIn=1 为用户首次进入，自动提交答案 为了解决用户提交答案后未登录，登录后再跳转回来答案自动提交
 function submitTestPaperAnswer(TestId, UseTime, token, appId) {
+    var labels=$(".content").find(".demo--label");
+    for(var i=0;i<labels.length;i++){
+        var flag=$($(labels[i]).find(".demo--radio")).is(':checked');
+        var right = $(labels[i]).hasClass("isRight");
+        if(flag&&right){
+            $(labels[i]).find(".glyphicon-ok").css("display","inline-block");
+        }else if(flag){
+            //被选中不是正确答案
+            $(labels[i]).find(".glyphicon-remove").css("display","inline-block");
+        }else if(right){
+            //是正确答案没被选中
+            $(labels[i]).addClass("right").find(".glyphicon-ok").css("display","inline-block");
+        }
+    }
     if (testlist) { //获取本地存储的答案信息 为了给用户提交时未登录，登录成功后再进来
         //testlist = localStorage.getItem("testlist");
         testlist = testlist; //解码
@@ -194,10 +208,11 @@ function getNewsTest(testId, token, appId) {
                     //遍历获取选项
                     for (var j = 0; j < data[i].AnswerList.length; j++) {
                         if (data[i].AnswerList[j].AnswerType == 0) { //选项是默认的选择项
+                            var isRight = data[i].AnswerList[j].IsRight =='0'?"isRight":"";
                             if (data[i].Multiple == 1) { //多选
-                                answerLabel += '<label class="demo--label"><input class="demo--radio" type="checkbox" name="question-" ' + data[i].QuestionId + '" AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + '><span class="demo--radioInput"></span>' + data[i].AnswerList[j].Answer + ' </label>';
+                                answerLabel += '<label class="demo--label '+isRight+'"><span class="glyphicon glyphicon-ok"></span><span class="glyphicon glyphicon-remove"></span><input class="demo--radio" type="checkbox" name="question-" ' + data[i].QuestionId + '" AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + '><span class="demo--radioInput"></span>' + data[i].AnswerList[j].Answer + ' </label>';
                             } else { //单选
-                                answerLabel += '<label class="demo--label"><input class="demo--radio" type="radio"  AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + ' name="question-' + data[i].QuestionId + ' "><span class="demo--radioInput"></span>' + data[i].AnswerList[j].Answer + ' </label>';
+                                answerLabel += '<label class="demo--label '+isRight+'"><span class="glyphicon glyphicon-ok"></span><span class="glyphicon glyphicon-remove"></span><input class="demo--radio" type="radio"  AnswerId=' + data[i].AnswerList[j].AnswerId + ' isRight=' + data[i].AnswerList[j].IsRight + ' name="question-' + data[i].QuestionId + ' "><span class="demo--radioInput"></span>' + data[i].AnswerList[j].Answer + ' </label>';
                             }
                         } else if (data[i].AnswerList[j].AnswerType == 1) { //选项是文本框
                             //写文本框的代码
