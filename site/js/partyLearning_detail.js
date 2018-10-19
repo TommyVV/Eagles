@@ -170,9 +170,9 @@ function getNewsDetail(newsId, token, appId) {
                 $('.header .author-box .author').append(data.Author); //作者	
                 $('.content-box .content').append(contentBoxText); //内容
                 //去除广告
-                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("x5-playsinline", "");
-                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("playsinline", "");
-                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("webkit-playsinline", "");
+                $("video").attr("x5-playsinline", "");
+                $("video").attr("playsinline", "");
+                $("video").attr("webkit-playsinline", "");
 
                 $('.person-box').append(personBoxText); //浏览人数
                 $('.file').append(filesText); //附件
