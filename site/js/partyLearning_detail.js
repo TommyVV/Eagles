@@ -6,6 +6,9 @@ var appId = getRequest('appId');
 var TestId = getRequest('testId'); //试卷ID
 var datalist = getRequest('datalist'); //试卷答案
 
+
+
+
 if (datalist) {
     var testlistwarp = JSON.parse(datalist);
     console.log(testlistwarp)
@@ -21,7 +24,7 @@ if (TestId && datalist) {
 }
 var timeoutflag = null;
 //点击试卷提交 手动提交答案
-$('#answer-submit').on('click', function() {
+$('#answer-submit').on('click', function () {
 
     if (localStorage.getItem("IsInternalUser") == 0) {
         bootoast({
@@ -35,11 +38,11 @@ $('#answer-submit').on('click', function() {
     if (timeoutflag != null) {
         clearTimeout(timeoutflag);
     }
-    timeoutflag = setTimeout(function() {
+    timeoutflag = setTimeout(function () {
         submitTestPaperAnswer(TestId, 0, token, appId);
     }, 500);
 })
-$(".over-layer .foot").click(function() {
+$(".over-layer .foot").click(function () {
     $(".over-layer").hide();
 });
 //提交试题的答案; 
@@ -67,7 +70,7 @@ function submitTestPaperAnswer(TestId, UseTime, token, appId) {
             data: dataf,
             url: DOMAIN + "/api/TestPaper/TestPaperAnswer",
             dataType: "json",
-            success: function(res) {
+            success: function (res) {
                 if (res.Code == 00) {
                     bootoast({
                         message: '试卷提交成功',
@@ -140,7 +143,7 @@ function getNewsDetail(newsId, token, appId) {
         },
         url: DOMAIN + "/api/News/GetNewsDetail",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             var data = res.Result;
             var headerText = ''; //头部内容
             var contentBoxText = ''; //新闻正文
@@ -153,7 +156,7 @@ function getNewsDetail(newsId, token, appId) {
                 contentBoxText = data.HtmlContent;
                 //浏览次数
                 personBoxText = '<span>' + data.ViewCount + '</span>'
-                    //添加附件
+                //添加附件
                 for (var j = 0; j < data.Attach.length; j++) {
 
                     if (data.Attach[j].AttachName) {
@@ -166,13 +169,18 @@ function getNewsDetail(newsId, token, appId) {
                 $('.header .source-box .source').append(data.Source); //来源
                 $('.header .author-box .author').append(data.Author); //作者	
                 $('.content-box .content').append(contentBoxText); //内容
+                //去除广告
+                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("x5-playsinline", "");
+                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("playsinline", "");
+                $("#af34512a3ca84a2aa9b47862bbea9d59").attr("webkit-playsinline", "");
+
                 $('.person-box').append(personBoxText); //浏览人数
                 $('.file').append(filesText); //附件
                 if (data.CanStudy == 1 && localStorage.getItem("IsInternalUser") == 1) { //获取学习时间
                     getStudyTime(newsId, data.Module, token, appId); //学习时间
                     //文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟
                     if (token) {
-                        setInterval(function() {
+                        setInterval(function () {
                             editStudyTime(data.NewsId, data.Module, 1, token, appId);
                         }, 60000)
                     } else { //用户未登录 需要bootstrap的toast提示框，提示 "登录才可以累计学习时间"
@@ -188,7 +196,7 @@ function getNewsDetail(newsId, token, appId) {
                 if (data.TestId != 0) {
                     getNewsTest(data.TestId, token, appId);
                     $('.footermid .submit-box').show()
-                } else(
+                } else (
                     $('.dels-mid').hide()
                 )
             }
@@ -207,7 +215,7 @@ function getNewsTest(testId, token, appId) {
         },
         url: DOMAIN + "/api/TestPaper/GetTestPaper",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             if (res.Code == 00) {
                 var data = res.Result.TestList;
                 var question = ''; //问题标题
@@ -256,7 +264,7 @@ function getStudyTime(NewsId, ModuleId, token, appId) {
         },
         url: DOMAIN + "/api/Study/GetStudyTime",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             $('.header .study-time').html('');
             var data = res.Result;
             if (res.Code == 00) {
@@ -286,7 +294,7 @@ function editStudyTime(NewsId, ModuleId, StudyTime, token, appId) {
         },
         url: DOMAIN + "/api/Study/EditStudyTime",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             $('.header .study-time').html('');
             var data = res.Result;
             if (res.Code == 00) {
@@ -405,7 +413,7 @@ function addNewsViewCount(NewsId, token, appId) {
         },
         url: DOMAIN + "/api/News/AddNewsViewCount",
         dataType: "json",
-        success: function(res) {
+        success: function (res) {
             $('.header .study-time').html('');
             var data = res.Result;
             if (res.Code == 00) {
