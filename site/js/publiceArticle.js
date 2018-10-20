@@ -71,7 +71,6 @@ function myAricle(page, appId) {
                     if (list.length < page.size) {
                         mescroll.endSuccess(100000, false, null);
                     } else {
-                        pageIndex = pageIndex + 1;
                         mescroll.endSuccess(100000, true, null);
                     }
                     $('.item').append(myAricle) //文章列表

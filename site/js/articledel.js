@@ -9,6 +9,9 @@ $('#pc-footer').load('./footer.html')
 myart(NewsId, appId);
 //点赞、收藏按钮
 $(".fav").click(function() {
+    if(!token){
+        window.location.href = 'login.html?appId=' + appId;
+    }
     if ($(this).hasClass("select")) {
         //取消点赞
         editUserCollectLog(0, 1);
@@ -17,6 +20,9 @@ $(".fav").click(function() {
     }
 });
 $(".col").click(function() {
+    if(!token){
+        window.location.href = 'login.html?appId=' + appId;
+    }
     if ($(this).hasClass("select")) {
         //取消收藏
         editUserCollectLog(1, 1);
@@ -48,8 +54,10 @@ function myart(NewsId, appId) {
                 $('.main_content .view-count').html(result.ViewCount);
                 $(".add_content").css("display", "block");
                 $(".favNum").text(result.FavoritesCount);
-                getUserCollectLogExists(0);
-                getUserCollectLogExists(1);
+                if(token){
+                    getUserCollectLogExists(0);
+                    getUserCollectLogExists(1);
+                }
                 if (result.BookName) {
                     var authorStr = result.BookAuthor ? ("(" + result.BookAuthor + ")") : "";
                     $(".book-info").html("书名：" + result.BookName + authorStr);
