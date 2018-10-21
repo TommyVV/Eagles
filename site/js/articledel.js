@@ -53,7 +53,7 @@ function myart(NewsId, appId) {
                 $('.main_content .cont-imgs img').attr("src", result.ImageUrl);
                 $('.main_content .view-count').html(result.ViewCount);
                 $(".add_content").css("display", "block");
-                $(".favNum").text(result.FavoritesCount);
+                $(".favNum").text(result.LikeCount);
                 if(token){
                     getUserCollectLogExists(0);
                     getUserCollectLogExists(1);

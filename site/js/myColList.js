@@ -23,6 +23,7 @@ $(document).ready(function() {
 
     function downCallback() {
         pageIndex = 1;
+        $(".item").html('')
         getMeeting();
     }
     //查询会议
