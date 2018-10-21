@@ -157,12 +157,13 @@ function getNewsDetail(newsId, token, appId) {
                 //浏览次数
                 personBoxText = '<span>' + data.ViewCount + '</span>'
                 //添加附件
-                for (var j = 0; j < data.Attach.length; j++) {
+                filesText=attachmentList(data.Attach, 0);
+                // for (var j = 0; j < data.Attach.length; j++) {
 
-                    if (data.Attach[j].AttachName) {
-                        filesText += ' <p><span class="filebackbg"><img src="icons/downloadfolder@2x.png" /></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
-                    }
-                }
+                //     if (data.Attach[j].AttachName) {
+                //         filesText += ' <p><span class="filebackbg"><img src="icons/downloadfolder@2x.png" /></span>' + '<span><a href="' + data.Attach[j].AttachmentDownloadUrl + '" download="">' + data.Attach[j].AttachName + '</a></span></p>';
+                //     }
+                // }
                 //头部内容
                 $('.header .title').append(data.Title); //标题
                 $('.header .time-box .time').append(data.CreateTime); //创建时间
@@ -175,7 +176,7 @@ function getNewsDetail(newsId, token, appId) {
                 $("video").attr("webkit-playsinline", "");
 
                 $('.person-box').append(personBoxText); //浏览人数
-                $('.file').append(filesText); //附件
+                $('.add-area').append(filesText); //附件
                 if (data.CanStudy == 1 && localStorage.getItem("IsInternalUser") == 1) { //获取学习时间
                     getStudyTime(newsId, data.Module, token, appId); //学习时间
                     //文章如果允许学习，并且用户已登录，每隔1分钟上报一次学习时间，学习时间增加1分钟 60000毫秒=1分钟

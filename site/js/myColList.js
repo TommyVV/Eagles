@@ -80,20 +80,36 @@ $(document).ready(function() {
     function dealReturnList(list) {
         var content = '';
         list.forEach(element => {
-            content += `<div class="article" id="${element.NewsUrl}">
-                    <div class="left">
-                        <img src="${element.ImageUrl}"
-                            alt="">
+            if(element.ImageUrl){
+                content += `<div class="article" id="${element.NewsUrl}">
+                <div class="left">
+                    <img src="${element.ImageUrl}"
+                        alt="">
+                </div>
+                <div class="right">
+                    <div class="content overflow-two-line">
+                        ${element.Title}
                     </div>
-                    <div class="right">
-                        <div class="content overflow-two-line">
-                            ${element.Title}
-                        </div>
-                        <div class="date">
-                            ${element.CreateTime}
-                        </div>
+                    <div class="date">
+                        ${element.CreateTime}
                     </div>
-                </div>`;
+                </div>
+            </div>`; 
+            }else{
+                content += `<div class="article" id="${element.NewsUrl}">
+                <div class="right">
+                    <div class="content overflow-two-line">
+                        ${element.Title}
+                    </div>
+                    <div class="date">
+                        发布人:${element.Author}
+                    </div>
+                    <div class="date">
+                        收藏日期:${element.CreateTime}
+                    </div>
+                </div>
+            </div>`;
+            }
         });
         return content;
     }

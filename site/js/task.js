@@ -266,8 +266,8 @@ $(document).ready(function() {
         var pcStr = ``;
         list.forEach(element => {
             str += `<div class="img-item">
-            <img id="${element.UserId}" src="${element.ImgUrl}" alt="${element.Name}">
-            <div>名字：${element.Name}</div>
+            <img id="${element.UserId}" src="${element.ImgUrl}">
+            <div class="user-name">名字：${element.Name}</div>
             <div>任务数量：${element.TaskCount}</div>
             </div>`;
             pcStr += `<li id="${element.UserId}">${element.Name}</li>`;

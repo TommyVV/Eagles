@@ -314,7 +314,11 @@ body {
     border-radius: 30px;
     display: inline-block;
 }
-
+.user-name{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+}
 .menu-list .img-item div {
     padding: 2px;
 }
