@@ -90,7 +90,7 @@ function editUserCollectLog(cType, status) {
             NewsId: NewsId,
             NewsType: detailObj.NewsType,
             Title: detailObj.Title,
-            Author: detailObj.Author,
+            Author: detailObj.UserName,
             ImageUrl: detailObj.ImageUrl,
             NewsUrl: window.location.href,
             Status: status,

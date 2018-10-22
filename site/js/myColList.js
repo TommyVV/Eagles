@@ -91,7 +91,7 @@ $(document).ready(function() {
                         ${element.Title}
                     </div>
                     <div class="date">
-                        ${element.CreateTime}
+                        ${element.CreateDate}
                     </div>
                 </div>
             </div>`; 
@@ -105,7 +105,7 @@ $(document).ready(function() {
                         发布人:${element.Author}
                     </div>
                     <div class="date">
-                        收藏日期:${element.CreateTime}
+                        收藏日期:${element.CreateDate}
                     </div>
                 </div>
             </div>`;
