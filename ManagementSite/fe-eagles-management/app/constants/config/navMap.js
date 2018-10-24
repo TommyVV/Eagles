@@ -36,7 +36,7 @@ const navMap = [
   },
   {
     pathname: "#/articlelist",
-    sub: "sub1",
+    sub: "sub10",
     key: "sub16"
   },
   {
@@ -206,7 +206,7 @@ const navMap = [
   },
   {
     pathname: "#/activitypubliclist",
-    sub: "sub6",
+    sub: "sub10",
     key: "sub63"
   },
   {
@@ -216,7 +216,7 @@ const navMap = [
   },
   {
     pathname: "#/taskactivitypubliclist",
-    sub: "sub7",
+    sub: "sub10",
     key: "sub71"
   },
   {

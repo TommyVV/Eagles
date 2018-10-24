@@ -127,19 +127,7 @@ export default class App extends React.Component {
               >
                 积分排行
               </Menu.Item>
-              <Menu.Item
-                key="sub16"
-                onClick={e => {
-                  if (authMap.get("open0003")) {
-                    hashHistory.replace(`/articlelist/2`);
-                  } else if (authMap.get("open0006")) {
-                    hashHistory.replace(`/articlelist/1`);
-                  }
-                }}
-                style={{ display: authMap.get("User0005") ? null : "none" }}
-              >
-                用户文章维护
-              </Menu.Item>
+              
               <Menu.Item
                 key="sub17"
                 onClick={e => hashHistory.replace("/userloginlist")}
@@ -361,21 +349,9 @@ export default class App extends React.Component {
               >
                 活动维护
               </Menu.Item>
-              <Menu.Item
-                key="sub63"
-                onClick={e => {
-                  if (authMap.get("open0002")) {
-                    hashHistory.replace(`/activitypubliclist/2`);
-                  } else if (authMap.get("open0005")) {
-                    hashHistory.replace(`/activitypubliclist/1`);
-                  }
-                }}
-                style={{ display: authMap.get("actv0002") ? null : "none" }}
-              >
-                活动公开维护
-              </Menu.Item>
+              
             </SubMenu>
-            <SubMenu
+            {/* <SubMenu
               key="sub7"
               title={
                 <span>
@@ -385,20 +361,8 @@ export default class App extends React.Component {
               }
               style={{ display: authMap.get("task0002") ? null : "none" }}
             >
-              <Menu.Item
-                key="sub71"
-                onClick={e => {
-                  if (authMap.get("open0001")) {
-                    hashHistory.replace(`/taskactivitypubliclist/2`);
-                  } else if (authMap.get("open0004")) {
-                    hashHistory.replace(`/taskactivitypubliclist/1`);
-                  }
-                }}
-                style={{ display: authMap.get("task0002") ? null : "none" }}
-              >
-                任务公开维护
-              </Menu.Item>
-            </SubMenu>
+
+            </SubMenu> */}
             <SubMenu
               key="sub8"
               title={
@@ -481,13 +445,52 @@ export default class App extends React.Component {
               title={
                 <span>
                   <Icon type="mail" />
-                  <span>审核流水</span>
+                  <span>审核</span>
                 </span>
               }
               style={{
                 display: authMap.get("Audit002") ? null : "none"
               }}
             >
+                          <Menu.Item
+                key="sub71"
+                onClick={e => {
+                  if (authMap.get("open0001")) {
+                    hashHistory.replace(`/taskactivitypubliclist/2`);
+                  } else if (authMap.get("open0004")) {
+                    hashHistory.replace(`/taskactivitypubliclist/1`);
+                  }
+                }}
+                style={{ display: authMap.get("task0002") ? null : "none" }}
+              >
+                任务公开审核
+              </Menu.Item>
+            <Menu.Item
+                key="sub16"
+                onClick={e => {
+                  if (authMap.get("open0003")) {
+                    hashHistory.replace(`/articlelist/2`);
+                  } else if (authMap.get("open0006")) {
+                    hashHistory.replace(`/articlelist/1`);
+                  }
+                }}
+                style={{ display: authMap.get("User0005") ? null : "none" }}
+              >
+                用户文章审核
+              </Menu.Item>
+              <Menu.Item
+                key="sub63"
+                onClick={e => {
+                  if (authMap.get("open0002")) {
+                    hashHistory.replace(`/activitypubliclist/2`);
+                  } else if (authMap.get("open0005")) {
+                    hashHistory.replace(`/activitypubliclist/1`);
+                  }
+                }}
+                style={{ display: authMap.get("actv0002") ? null : "none" }}
+              >
+                活动公开审核
+              </Menu.Item>
               <Menu.Item
                 key="sub101"
                 onClick={e => hashHistory.replace("/auditlist")}
