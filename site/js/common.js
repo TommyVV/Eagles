@@ -158,9 +158,22 @@ $.ajaxSetup({
                 localStorage.clear();
                 window.location.href = 'login.html?appId=' + appId;
 
-            } else {
+            } else if(jsonData.Code == 105){
                 //正常情况就不统一处理了
-            }
+                bootoast({
+                    message: ''+jsonData.Message,
+                    type: 'warning',
+                    position: 'toast-top-center',
+                    timeout: 1
+                });
+                setTimeout(() => {
+                    localStorage.clear();
+                    window.location.href = 'login.html?appId=' + appId;
+                }, 1000);
+            }else if(jsonData.Code == 13){
+                localStorage.clear();
+                window.location.href = 'login.html?appId=' + appId;
+            }else{}
         } catch (e) {}
     }
 });

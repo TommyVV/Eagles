@@ -576,6 +576,9 @@ body {
 .media-top{
 	position: relative;
 }
+.list-bottom .media-left{
+	position: relative;
+}
 .is-media {
     position: absolute;
     top: 50%;
